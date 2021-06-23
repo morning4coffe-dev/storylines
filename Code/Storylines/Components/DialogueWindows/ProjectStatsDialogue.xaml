@@ -1,0 +1,64 @@
+﻿<ContentDialog
+    x:Class="Storylines.Components.DialogueWindows.ProjectStatsDialogue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Storylines.Components.DialogueWindows"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Closed="ContentDialog_Closed" Background="{ThemeResource DialogueWindowBackground}" CornerRadius="5">
+    <Grid Width="350" MaxHeight="500">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="36"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="42"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="Information " Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25" Grid.ColumnSpan="1"/>
+
+            <Button x:Name="closeButton" Grid.Column="4" CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTipService.ToolTip="New character" Click="OnCloseButton_Click">
+                <FontIcon Glyph=""/>
+            </Button>
+        </Grid>
+
+        <RichTextBlock x:Name="statsText" x:FieldModifier="public" Grid.Row="2" LineHeight="28" SelectionHighlightColor="{x:Bind appColor}">
+            <!--<Paragraph>
+                <Run FontWeight="SemiBold" FontSize="16">Project</Run>
+            </Paragraph>-->
+            <!--<Paragraph>
+                <Run x:Name="projectRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>-->
+
+            <Paragraph>
+                <Run Foreground="{x:Bind appColor}" FontWeight="SemiBold" FontSize="17">Story</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="storyRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+            
+            <Paragraph>
+                <Run Foreground="{x:Bind appColor}" FontWeight="SemiBold" FontSize="17">Characters</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="charactersRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+
+            <Paragraph>
+                <Run Foreground="{x:Bind appColor}" FontWeight="SemiBold" FontSize="17">Chapters</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="chaptersRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+
+            <Paragraph>
+                <Run Foreground="{x:Bind appColor}" FontWeight="SemiBold" FontSize="17">Selected chapter</Run>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="textRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+        </RichTextBlock>
+    </Grid>
+</ContentDialog>

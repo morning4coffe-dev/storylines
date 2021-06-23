@@ -1,0 +1,6 @@
+MainPackage=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0_ARM64.msix
+SymbolPackage=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0\Storylines_0.4.6.0_ARM64.appxsym
+ResourcePack=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0_scale-100.msix
+ResourcePack=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0_scale-125.msix
+ResourcePack=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0_scale-150.msix
+ResourcePack=D:\Dokumenty\Projekty\Storylines\Storylines\bin\ARM64\Release\Upload\Storylines_0.4.6.0_scale-400.msix

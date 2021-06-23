@@ -1,0 +1,2 @@
+MainPackage=D:\Dokumenty\Projekty\Storylines\Storylines\bin\x86\Release\Storylines_0.5.0.0_x86.msix
+SymbolPackage=D:\Dokumenty\Projekty\Storylines\Storylines\obj\x86\Release\Symbols\Storylines_0.5.0.0_x86.appxsym

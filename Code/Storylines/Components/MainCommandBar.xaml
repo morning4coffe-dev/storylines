@@ -1,0 +1,80 @@
+﻿<UserControl
+    x:Class="Storylines.Components.MainCommandBar"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Storylines.Components"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    d:DesignHeight="50"
+    d:DesignWidth="1500">
+    <UserControl.Resources>
+        <Storyboard x:Name="rotateAutosaveToggleButtonIconAnimation">
+            <DoubleAnimation EnableDependentAnimation="True" Storyboard.TargetName="autosaveToggleButton" Storyboard.TargetProperty="Angle" From="0" To="360" Duration="0:0:0.1" />
+        </Storyboard>
+    </UserControl.Resources>
+
+    <Grid>
+        <CommandBar x:Name="mainCommandBar" x:FieldModifier="public" CornerRadius="4" Grid.ColumnSpan="2" Margin="5, 0" UseLayoutRounding="True" HorizontalAlignment="Left" IsOpen="False" DefaultLabelPosition="Right" CompositeMode="Inherit"  Height="50" OverflowButtonVisibility="Auto" Background="Transparent">
+            <AppBarButton Icon="Save" CornerRadius="4" Label="Save" Click="OnSaveButton_Click">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="S"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+
+            <AppBarButton CornerRadius="4" Label="Save Copy" Click="OnSaveCopyButton_Click">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control, Shift" Key="S"/>
+                </AppBarButton.KeyboardAccelerators>
+
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xEA35;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarButton CornerRadius="4" Label="Load" Click="OnLoadButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE1A5;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+            
+            <AppBarToggleButton x:Name="autosaveToggleButton" x:FieldModifier="public" CornerRadius="4" Label="Autosave" Click="OnAutosaveToggleButton_Click">
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon x:Name="autosaveToggleButtonIcon" RenderTransformOrigin="0.5, 0.5" Symbol="Sync"/>
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+            <AppBarSeparator/>
+
+            <AppBarButton Icon="Print" CornerRadius="4" Label="Print" Visibility="Collapsed" Click="OnPrintButton_Click">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="P"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+
+            <AppBarButton CornerRadius="4" Label="Export" Click="OnExportButton_Click">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="E"/>
+                </AppBarButton.KeyboardAccelerators>
+
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE792;"/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarSeparator/>
+
+            <AppBarButton CornerRadius="4" Label="Characters" Click="OnCharactersButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph=""/>
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+            <AppBarSeparator/>
+            <AppBarButton Icon="Setting" CornerRadius="4" Label="Settings" Click="OnSettingsButton_Click">
+                <AppBarButton.KeyboardAccelerators>
+                    <KeyboardAccelerator Modifiers="Control" Key="I"/>
+                </AppBarButton.KeyboardAccelerators>
+            </AppBarButton>
+        </CommandBar>
+    </Grid>
+</UserControl>
