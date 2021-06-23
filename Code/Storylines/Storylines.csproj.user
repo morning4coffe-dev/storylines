@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <UapAppxPackageBuildMode>StoreAndSideload</UapAppxPackageBuildMode>
+    <AppxShowAllApps>True</AppxShowAllApps>
+    <AppxBuildConfigurationSelection>x86|x64</AppxBuildConfigurationSelection>
+    <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
+    <Source>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</Source>
+    <SmallTileSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</SmallTileSource>
+    <MediumTileSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</MediumTileSource>
+    <WideTileSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</WideTileSource>
+    <LargeTileSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</LargeTileSource>
+    <AppIconSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</AppIconSource>
+    <SplashScreenSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</SplashScreenSource>
+    <PackageLogoSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</PackageLogoSource>
+    <BadgeLogoSource>D:\Dokumenty\Projekty\Storylines\Storylines\Assets\Icons\Storylines-icon.png</BadgeLogoSource>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM64'">
+    <DeviceId>30f105c9-681e-420b-a277-7c086ead8a4e</DeviceId>
+    <UseEmulator>true</UseEmulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x86'">
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM64'">
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|x64'">
+    <UseSimulator>false</UseSimulator>
+  </PropertyGroup>
+</Project>

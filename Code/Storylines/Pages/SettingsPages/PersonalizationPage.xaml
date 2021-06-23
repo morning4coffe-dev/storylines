@@ -1,0 +1,41 @@
+﻿<Page
+    x:Class="Storylines.Pages.SettingsPages.PersonalizationPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Storylines.Pages.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Loaded="OnPersonalizationPage_Loaded" Unloaded="Page_Unloaded">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel x:Name="personalizationPage" Margin="40" Spacing="30">
+            <TextBlock Text="Personalization" FontSize="25" FontWeight="SemiBold"/>
+            <StackPanel Margin="10, 0" Spacing="2">
+                <TextBlock Text="Application theme" FontSize="15" FontWeight="Medium"/>
+                <RadioButton x:Name="themeSelector0" Tag="0" GroupName="themeSelectors" Content="Light" Click="OnThemeChangeRadioButton_Click"/>
+                <RadioButton x:Name="themeSelector1" Tag="1" GroupName="themeSelectors" Content="Dark" Click="OnThemeChangeRadioButton_Click"/>
+                <RadioButton x:Name="themeSelector2" Tag="2" GroupName="themeSelectors" Content="System theme" IsChecked="True" Click="OnThemeChangeRadioButton_Click"/>
+                <TextBlock Text="*You may need to restart the application to take effect." Margin="0,5,0,0" FontSize="13"/>
+            </StackPanel>
+
+            <StackPanel Margin="10, 0" Spacing="2">
+                <TextBlock Text="Color" FontSize="15" TextWrapping="WrapWholeWords" FontWeight="Medium"/>
+                <ToggleSwitch x:Name="systemColorToggleSwitch" x:FieldModifier="public" OffContent="System color" OnContent="App color" Toggled="OnSystemColorToggleSwitch_Toggled"/>
+            </StackPanel>
+
+            <StackPanel Margin="10, 0" Spacing="2">
+                <TextBlock Text="Chapter text box white background" FontSize="15" TextWrapping="WrapWholeWords" FontWeight="Medium" />
+                <ToggleSwitch x:Name="textBoxBackgroundToggleSwitch" x:FieldModifier="public" OffContent="Theme" OnContent="White" Toggled="OnTextBoxBackgroundToggleSwitch_Toggled" />
+            </StackPanel>
+
+            <StackPanel Margin="10, 0" Spacing="2">
+                <TextBlock Text="Do you want to save before you quit?" FontSize="15" TextWrapping="WrapWholeWords" FontWeight="Medium"/>
+                <ToggleSwitch x:Name="exitDialogueToggleSwitch" x:FieldModifier="public" IsOn="true" OnContent="On (Recomended leaving on)" Toggled="OnExitDialogueToggleSwitch_Toggled"/>
+            </StackPanel>
+
+            <StackPanel Margin="10, 0" Spacing="2">
+                <TextBlock Text="Add a new chapter when Ctrl+PageDown is pressed" FontSize="15" TextWrapping="WrapWholeWords" FontWeight="Medium"/>
+                <ToggleSwitch x:Name="addChapterOnPageDownToggleSwitch" x:FieldModifier="public" Toggled="OnAddChapterOnPageDownToggleSwitch_Toggled"/>
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>

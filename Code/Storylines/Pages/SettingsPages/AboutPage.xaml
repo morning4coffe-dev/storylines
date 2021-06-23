@@ -1,0 +1,27 @@
+﻿<Page
+    x:Class="Storylines.Pages.SettingsPages.AboutPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:local="using:Storylines.Pages.SettingsPages"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" SizeChanged="Page_SizeChanged">
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel x:Name="personalizationPage" Margin="40" Spacing="30">
+        <TextBlock Text="About" FontSize="25" FontWeight="SemiBold"/>
+        <Image Source="/Assets/Icons/Storylines-icon.png" Width="120"  HorizontalAlignment="Left"/>
+            <StackPanel Spacing="7">
+                <TextBlock Text="Storylines" FontWeight="Medium" FontSize="20"/>
+                <TextBlock Text="Storylines is a modern, open-source program for writing stories that inspire. It focuses on simplicity and accessibility so anyone can write their own stories. From a simple draft to complex dialogues between characters, you can write anything you want." TextWrapping="WrapWholeWords" MaxWidth="850" HorizontalAlignment="Left" LineHeight="25" FontSize="15"/>
+                <HyperlinkButton Content="GitHub repository (Available soon)" IsEnabled="False" NavigateUri="https://github.com/morning4coffe-dev/storylines" FontSize="15" FontWeight="Medium"/>
+                <HyperlinkButton Content="Report a bug" IsEnabled="True" FontSize="15" FontWeight="Medium" Click="OnReport_Click"/>
+
+                <StackPanel x:Name="reportStack" Orientation="Horizontal" Visibility="Collapsed" Spacing="10">
+                    <TextBox x:Name="reportTextBox" Height="35" PlaceholderText="Please be specific, but keep it short." Width="700" HorizontalAlignment="Left" MaxLength="150" Style="{StaticResource SmallTextBoxStyle}" TextChanged="reportTextBox_TextChanged"/>
+                    <Button x:Name="sendButton" Content="Send" Width="100" Height="35" CornerRadius="4" Style="{StaticResource ButtonRevealStyle}" Click="OnSentReport_Click"/>
+                </StackPanel>
+                <!--NavigateUri="https://github.com/morning4coffe-dev/storylines/pulls-->
+            </StackPanel>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
