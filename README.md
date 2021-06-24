@@ -24,7 +24,7 @@ You can find this app for free on [Microsoft Store](https://www.microsoft.com/st
 - [ ] "Focused writing" mode
 - [ ] Dialogues (markup symbols, exporting)
 - [ ] In app InfoBars - when file has not been saved, or when file could not load, etc.
-- [ ] Animations
+- [ ] Animations and Windows 11 design
 - [ ] General improvements and fixes
 
 ## **Notes**
