@@ -1,11 +1,13 @@
 # Storylines
-<img src="./GitHub/Storylines-icon.png" width="100"/>
+<img src="./Logo and Screenshots/Storylines-icon.png" width="100"/>
 
-Storylines is a modern, open-source program for writing stories that inspire. It focuses on simplicity and accessibility so anyone can write their own stories. From a simple draft to complex dialogues between characters, you can write anything you want.
+Storylines is a modern text editor for writing stories divided into chapters. 
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you could ever think of. There are many options from just a plain text document to a quick draft of your story to an extensive multichapter story with dialogues between characters.
 
 [![Microsoft Store](https://img.shields.io/static/v1?label=Microsoft&message=Download&color=blue&style=for-the-badge&logo=microsoft)](https://www.microsoft.com/store/apps/9PN77P9WJ3CX) 
 
-<img src="./GitHub/Screenshot1 (Small).png" width="600"/>
+<img src="./Logo and Screenshots/0-6/Storylines-0-6-image-1.png" width="600"/>
+
 ## **Installation**
 You can find this app on [Microsoft Store](https://www.microsoft.com/store/apps/9PN77P9WJ3CX), or you can download the source code and build it on your own.
 
@@ -29,6 +31,7 @@ Introducing Storylines 2.0, or at least just 0.6. Here is a list of most of the 
 * Animations across the whole app
 * A lot of other improvements and bug fixes
 
+<img src="./Logo and Screenshots/Storylines-0-5vs0-6.png" width="400"/>
 
 ## **How to help me?**
 1. You can Report a bug, submit a feature idea, soon you will be able to help with translations, and of course, if you know C#, you can jump into the code and help me with that.
