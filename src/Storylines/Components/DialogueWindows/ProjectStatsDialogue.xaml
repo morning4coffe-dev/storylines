@@ -1,0 +1,61 @@
+﻿<ContentDialog
+    x:Class="Storylines.Components.DialogueWindows.ProjectStatsDialogue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d" Closed="ContentDialog_Closed" CornerRadius="8">
+    
+    <Grid Width="350" MaxHeight="500" Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="42"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:Uid="information" Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25"/>
+
+            <Button x:Name="closeButton" Width="42" Height="38" Grid.Column="2" Click="OnCloseButton_Click">
+                <FontIcon Glyph="" Width="23" RenderTransformOrigin="-.25,.5">
+                    <FontIcon.RenderTransform>
+                        <CompositeTransform ScaleX=".9" ScaleY=".9"/>
+                    </FontIcon.RenderTransform>
+                </FontIcon>
+            </Button>
+        </Grid>
+
+        <RichTextBlock x:Name="statsText" x:FieldModifier="public" Grid.Row="2" LineHeight="26" SelectionHighlightColor="{ThemeResource SystemAccentColor}">
+            <Paragraph Margin="0,8,0,0">
+                <Run x:Uid="storyText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="storyRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+
+            <Paragraph Margin="0,8,0,0">
+                <Run x:Uid="charactersText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="charactersRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+
+            <Paragraph Margin="0,8,0,0">
+                <Run x:Uid="chaptersText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="chaptersRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+
+            <Paragraph Margin="0,8,0,0">
+                <Run x:Uid="selectedChapterText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+            </Paragraph>
+            <Paragraph>
+                <Run x:Name="textRun" FontWeight="Normal">N/A</Run>
+            </Paragraph>
+        </RichTextBlock>
+    </Grid>
+</ContentDialog>

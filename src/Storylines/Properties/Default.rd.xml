@@ -1,0 +1,31 @@
+<!--
+    Tento soubor obsahuje direktivy modulu runtime, které používá .NET Native. Výchozí nastavení by mělo vyhovovat většině
+    vývojářů. Pokud ale chcete změnit chování optimalizátoru .NET Native, můžete tyto parametry 
+    upravit.
+
+    Direktivy modulu runtime jsou zdokumentovány na adrese https://go.microsoft.com/fwlink/?LinkID=391919.
+
+    Úplné povolení reflexe pro třídu App1.MyClass a všechny její veřejné nebo soukromé členy
+    <Type Name="App1.MyClass" Dynamic="Required All"/>
+
+    Povolení dynamického vytváření specifických instancí třídy AppClass<T> přes System.Int32
+    <TypeInstantiation Name="App1.AppClass" Arguments="System.Int32" Activate="Required Public" />
+
+    Použití zásady reflexe pro všechny typy v určitém oboru názvů pomocí direktivy oboru názvů
+    <Namespace Name="DataClasses.ViewModels" Serialize="All" />
+-->
+
+<Directives xmlns="http://schemas.microsoft.com/netfx/2013/01/metadata">
+  <Application>
+    <!--
+      Prvek sestavení s názvem *Application* se vztahuje na všechna sestavení
+      v balíčku aplikace. Hvězdičky nejsou zástupné znaky.
+    -->
+    <Assembly Name="*Application*" Dynamic="Required All" />
+    
+    
+    <!-- Sem přidejte direktivy modulu runtime specifické pro aplikace. -->
+
+
+  </Application>
+</Directives>
