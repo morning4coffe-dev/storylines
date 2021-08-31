@@ -1,5 +1,5 @@
 # Shortcut cheatsheet
-| Shortcut      | What does it do?| Where? |
+| **Shortcut**      | **What does it do?**| **Where?** |
 | ------------- | --------------- | ------ |
 | Tab           | Navigate between controls in order | E |
 | Shift + Tab   | Navigate between controls in reversed order | E |
@@ -21,7 +21,10 @@
 | Ctrl + Shift + T | Strikethrough | M |
 | Enter | (If Dialogue Mode enabled) Adds dialogue | M |
 
-E - Works everywhere 
-M - Works on Main page (page where you have chapters, text and all the most important things)
-Ch - Characters page (page where you have characters)
-S - Settings
+E - Works everywhere
+
+M - Works on **Main page** (page where you have chapters, text and all the most important things)
+
+Ch - Works on **Characters page** (page where you have characters)
+
+S - Works in **Settings**
