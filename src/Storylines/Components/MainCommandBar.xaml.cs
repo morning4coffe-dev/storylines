@@ -104,7 +104,7 @@ namespace Storylines.Components
         private void OnChapterAddButton_Click(object sender, RoutedEventArgs e)
         {
             if(MainPage.chapterList.canAdd)
-                _ = ChapterCreatorOrRenamer.Open(null);
+                ChapterCreatorOrRenamer.Open(null, false);
         }
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
@@ -126,33 +126,33 @@ namespace Storylines.Components
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational, "This feature has been temporarily disabled.", "Sorry, this feature has been disabled, but it will be brought back with the next update. Currently, you can add a chapter and press Win+H to type with your voice.");
+            //NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational, "This feature has been temporarily disabled.", "Sorry, this feature has been disabled, but it will be brought back with the next update. Currently, you can add a chapter and press Win+H to type with your voice.");
 
-            //if (Chapter.chapters.Count == 0)
-            //{
-            //    Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-            //    MainPage.chapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
-            //}
+            if (Chapter.chapters.Count == 0)
+            {
+                Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                MainPage.chapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
+            }
 
-            //_ = MainPage.chapterText.textBox.Focus(FocusState.Pointer);
+            _ = MainPage.chapterText.textBox.Focus(FocusState.Pointer);
 
-            //InputInjector inputInjector = InputInjector.TryCreate();
+            InputInjector inputInjector = InputInjector.TryCreate();
 
-            //InjectedInputKeyboardInfo win = new InjectedInputKeyboardInfo
-            //{
-            //    VirtualKey = (ushort)VirtualKey.LeftWindows,
-            //    KeyOptions = InjectedInputKeyOptions.None
-            //};
-
-
-            //InjectedInputKeyboardInfo h = new InjectedInputKeyboardInfo
-            //{
-            //    VirtualKey = (ushort)VirtualKey.H,
-            //    KeyOptions = InjectedInputKeyOptions.None
-            //};
+            InjectedInputKeyboardInfo win = new InjectedInputKeyboardInfo
+            {
+                VirtualKey = (ushort)VirtualKey.LeftWindows,
+                KeyOptions = InjectedInputKeyOptions.None
+            };
 
 
-            //inputInjector.InjectKeyboardInput(new[] { win, h });
+            InjectedInputKeyboardInfo h = new InjectedInputKeyboardInfo
+            {
+                VirtualKey = (ushort)VirtualKey.H,
+                KeyOptions = InjectedInputKeyOptions.None
+            };
+
+
+            inputInjector.InjectKeyboardInput(new[] { win, h });
         }
         #endregion
 

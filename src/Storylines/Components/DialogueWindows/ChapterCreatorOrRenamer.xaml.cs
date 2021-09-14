@@ -17,6 +17,8 @@ namespace Storylines.Components.DialogueWindows
 
         public static Chapter chapterToRename;
 
+        private static bool doubleTapped;
+
         public ChapterCreatorOrRenamer()
         {
             this.InitializeComponent();
@@ -28,7 +30,7 @@ namespace Storylines.Components.DialogueWindows
             chapterCreator.RequestedTheme = AppView.current.RequestedTheme;
         }
 
-        public static async System.Threading.Tasks.Task Open(Chapter chapter)
+        public static void Open(Chapter chapter, bool doubleTap)
         {
             if (chapter != null)
             {
@@ -38,7 +40,8 @@ namespace Storylines.Components.DialogueWindows
             else
                 currentTask = Task.Create;
 
-            await new ChapterCreatorOrRenamer().ShowAsync();
+            doubleTapped = doubleTap;
+            _ = new ChapterCreatorOrRenamer().ShowAsync();
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
@@ -94,7 +97,7 @@ namespace Storylines.Components.DialogueWindows
         {
             Window.Current.CoreWindow.PointerPressed += (s, e) =>
             {
-                if (isHide)
+                if (isHide && !doubleTapped)
                     Hide();
             };
 

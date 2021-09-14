@@ -307,7 +307,7 @@
     <value>Zrušit</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Ou, zpomal trochu!
+    <value>Zpomal trochu!
 Opravdu chceš odejít bez uložení své práce?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">

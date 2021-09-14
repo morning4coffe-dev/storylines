@@ -340,7 +340,7 @@
     <value>Cancel</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Wou, slow down!
+    <value>Hey! Slow down a little bit!
 Did you want to exit without saving your progress?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">

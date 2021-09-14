@@ -538,6 +538,11 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <!--<AppBarElementContainer>
+                        <muxc:InfoBar Severity="Warning"  Width="200" IsClosable="False" Content="Hello there"/>
+                    </AppBarElementContainer>-->
+
+
                     <AppBarSeparator/>
                     <AppBarButton x:Name="dictationButton" x:FieldModifier="public" x:Uid="dictation" CornerRadius="4" Click="OnDictationButton_Click">
                         <AppBarButton.Icon>
@@ -791,5 +796,7 @@
         </controls:TabbedCommandBar>-->
 
         <MediaElement x:Name="readAloudMediaElement" AudioCategory="Speech" MediaEnded="OnReadAloudMediaElement_MediaEnded"/>
+        
+        <muxc:InfoBar Severity="Warning"  Width="200" IsClosable="False" Content="Hello there"/>
     </Grid>
 </UserControl>

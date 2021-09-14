@@ -71,6 +71,12 @@ namespace Storylines.Components
             chaptersListViewFlyout.ShowAt((Grid)sender, e.GetPosition((Grid)sender));
         }
 
+        private void OnChaptersListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            var ch = (sender as Grid).Tag.ToString();
+            ChapterCreatorOrRenamer.Open(Chapter.Find(ch), true);
+        }
+
         private void OnChaptersListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
             if (chapterItemFlyoutedToken == null && listView.IsEnabled)
@@ -87,13 +93,13 @@ namespace Storylines.Components
 
         private void OnChapterAdd_Click(object sender, RoutedEventArgs e)
         {
-            _ = ChapterCreatorOrRenamer.Open(null);
+            ChapterCreatorOrRenamer.Open(null, false);
         }
 
         private void OnChapterRename_Click(object sender, RoutedEventArgs e)
         {
             if (chapterItemFlyoutedToken != null)
-                _ = ChapterCreatorOrRenamer.Open(Chapter.Find(chapterItemFlyoutedToken));
+               ChapterCreatorOrRenamer.Open(Chapter.Find(chapterItemFlyoutedToken), false);
         }
 
         private void OnChapterDeleteFlyout_Click(object sender, RoutedEventArgs e)
@@ -107,7 +113,7 @@ namespace Storylines.Components
 
         private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
-            _ = ChapterCreatorOrRenamer.Open(null);
+            ChapterCreatorOrRenamer.Open(null, false);
         }
 
         private void OnChaptersList_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -18,7 +18,7 @@ namespace Storylines.Pages.SettingsPages
         public AccessibilityPage()
         { 
             loading = true;
-            this.InitializeComponent();
+            InitializeComponent();
             current = this;
         }
 

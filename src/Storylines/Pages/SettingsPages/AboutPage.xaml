@@ -30,6 +30,18 @@
                 </StackPanel>
             </Grid>
 
+            <!--<Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Image Source="/Assets/Icons/Storylines-icon.png" Margin="10, 0" Width="35" HorizontalAlignment="Center"/>
+                <StackPanel VerticalAlignment="Center" Spacing="1" Grid.Column="1">
+                    <TextBlock Text="Made by" VerticalAlignment="Center" TextWrapping="Wrap"/>
+                    <TextBlock Text="Morning4coffe" FontWeight="Light" Opacity="0.8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+                </StackPanel>
+            </Grid>-->
+
             <muxc:Expander Style="{StaticResource CustomExpanderStyle}" BorderBrush="{ThemeResource LayerFillColorDefaultBrush}" BorderThickness="{ThemeResource ElementBorderThickness}" HorizontalAlignment="Stretch" VerticalAlignment="Top" HorizontalContentAlignment="Left" IsExpanded="True">
                 <muxc:Expander.Header>
                     <Grid Padding="-15,20,-12,20">

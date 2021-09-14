@@ -1,6 +1,7 @@
 ﻿using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Storylines.Components;
 using Storylines.Components.DialogueWindows;
 using Storylines.Scripts.Functions;
@@ -62,6 +63,8 @@ namespace Storylines
                 }
 
                 Start();
+
+                SystemInformation.Instance.TrackAppUse(e);
 
                 _ = LoadLastProject();
             }

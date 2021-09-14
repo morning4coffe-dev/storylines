@@ -2,7 +2,7 @@
 using Storylines.Pages;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
-using Windows.System;
+using System;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -13,7 +13,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using System;
 
 namespace Storylines.Components
 {

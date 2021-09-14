@@ -49,7 +49,7 @@
         <ListView x:Name="listView" x:FieldModifier="public" ItemsSource="{x:Bind variables:Chapter.chapters}" CanReorderItems="True" Grid.Row="3" CanDragItems="True" AllowDrop="True" SelectionMode="Single" Margin="-4,0" SelectionChanged="OnChaptersList_SelectionChanged" DragItemsCompleted="OnChaptersListView_DragItemsCompleted" DragItemsStarting="OnChaptersListView_DragItemsStarting">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="variables:Chapter">
-                    <Grid Tag="{Binding token}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Padding="6" RightTapped="OnChaptersListViewItem_RightTapped" Holding="OnChaptersListViewItem_Holding">
+                    <Grid Tag="{Binding token}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"  Padding="6" RightTapped="OnChaptersListViewItem_RightTapped" DoubleTapped="OnChaptersListViewItem_DoubleTapped" Holding="OnChaptersListViewItem_Holding">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="auto"/>
                             <ColumnDefinition Width="*"/>

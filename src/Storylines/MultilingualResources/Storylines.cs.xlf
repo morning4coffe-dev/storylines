@@ -407,9 +407,9 @@
           <target state="final">Zrušit</target>
         </trans-unit>
         <trans-unit id="exitWithoutSaveDialogDescription" translate="yes" xml:space="preserve">
-          <source>Wou, slow down!
+          <source>Hey! Slow down a little bit!
 Did you want to exit without saving your progress?</source>
-          <target state="needs-review-translation">Ou, zpomal trochu!
+          <target state="translated">Zpomal trochu!
 Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="exitWithoutSaveDialogDontSave" translate="yes" xml:space="preserve">

@@ -101,7 +101,7 @@ namespace Storylines.Scripts.Functions
                 { "OS information", $"{SystemInformation.Instance.OperatingSystem} {SystemInformation.Instance.OperatingSystemArchitecture} - {SystemInformation.Instance.DeviceFamily}" },
                 { "OS version", $"{SystemInformation.Instance.OperatingSystemVersion.Major}.{SystemInformation.Instance.OperatingSystemVersion.Minor}.{SystemInformation.Instance.OperatingSystemVersion.Build}.{SystemInformation.Instance.OperatingSystemVersion.Revision}" },
                 { "App version", SystemInformation.Instance.ApplicationVersion.ToFormattedString() },
-                { "First time?", SystemInformation.Instance.IsFirstRun ? SystemInformation.Instance.IsFirstRun.ToString() : $"{SystemInformation.Instance.TotalLaunchCount}" },
+                { "First time?", SystemInformation.Instance.IsFirstRun ? SystemInformation.Instance.IsFirstRun.ToString() : SystemInformation.Instance.TotalLaunchCount.ToString() },
                 { "Settings - theme", SettingsValues.selectedTheme.ToString() },
                 { "Settings - accent", $"{SettingsValues.selectedAccent} ({(SettingsValues.selectedAccent == SettingsValues.SelectedAccent.Custom ? SettingsValues.customAccentColor.ToString() : "")})" },
                 { "Settings - autosave", SettingsValues.autosaveEnabled.ToString() },
@@ -115,9 +115,10 @@ namespace Storylines.Scripts.Functions
 
         public static void SendAnalyticData_OnLeave()
         {
+            var uptime = SystemInformation.Instance.AppUptime;
             Dictionary<string, string> appLaunchSettings = new Dictionary<string, string>()
             {
-                { "Uptime", SystemInformation.Instance.AppUptime.ToString() },
+                { "Uptime", $"{Math.Round(uptime.TotalHours)}:{Math.Round(uptime.TotalMinutes)}" },
             };
 
             Analytics.TrackEvent("App leave", appLaunchSettings);

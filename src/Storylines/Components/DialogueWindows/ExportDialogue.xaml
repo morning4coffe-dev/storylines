@@ -6,6 +6,10 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
     mc:Ignorable="d" CornerRadius="8" KeyDown="ContentDialog_KeyDown" Closed="ContentDialog_Closed">
+    
+    <!--<ContentDialog.Resources>
+        <Thickness x:Key="ContentDialogPadding">0</Thickness>
+    </ContentDialog.Resources>-->
 
     <StackPanel Spacing="8" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="300" Margin="4">
         <TextBlock x:Uid="exportText" Style="{StaticResource DialogueWindowHeaderStyle}"/>

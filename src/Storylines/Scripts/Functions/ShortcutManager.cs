@@ -72,7 +72,7 @@ namespace Storylines.Scripts.Functions
                             {
                                 case Windows.System.VirtualKey.Q:
                                     if (MainPage.chapterList.canAdd && AppView.currentlyOpenedDialogue == null)
-                                        _ = ChapterCreatorOrRenamer.Open(null); break;
+                                        ChapterCreatorOrRenamer.Open(null, false); break;
                                 case Windows.System.VirtualKey.Delete:
                                     if (MainPage.chapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
                                         Chapter.Remove((MainPage.chapterList.listView.SelectedItem as Chapter).token); break;

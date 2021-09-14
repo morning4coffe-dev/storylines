@@ -399,6 +399,11 @@ namespace Storylines.Pages
             picturesHolderFlyout.ShowAt(sender as FrameworkElement);
         }
 
+        private void OnCharactersListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
+        {
+            EnableEditMode(true);
+        }
+
         private async Task RemovePicture(CharacterPicture cp)
         {
             StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
