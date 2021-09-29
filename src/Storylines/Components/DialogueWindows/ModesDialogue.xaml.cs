@@ -1,6 +1,7 @@
 ﻿using Storylines.Scripts.Functions;
 using Storylines.Scripts.Modes;
 using Storylines.Scripts.Services;
+using Storylines.Scripts.Variables;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -40,6 +41,9 @@ namespace Storylines.Components.DialogueWindows
                 }
             }
             timePicker.Time = new System.TimeSpan(0, 15, 0);
+
+            if (Character.characters.Count < 1)
+                noCharacters.IsOpen = true;
         }
 
         public static void Open(ModeType mode)

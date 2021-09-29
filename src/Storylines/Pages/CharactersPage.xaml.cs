@@ -51,20 +51,18 @@ namespace Storylines.Pages
 
             editButton.IsChecked = enable;
 
-            if (enable)
+            if (enable && listView.SelectedItem != null)//makes DisplayNoCharactersInProjectDialogue to add a character without editing (change if possible)
             {
                 var ch = listView.SelectedItem as Character;
                 characterBeforeChange = new Character() { name = ch.name, description = ch.description, picture = ch.picture };
                 characterBeforeChange.SetToken(ch.token);
 
-                //charactersCommandBar.IsEnabled = false;
                 listView.IsEnabled = false;
 
                 IsEditEnabled(EditButton.Cancel);
             }
             else
             {
-                //charactersCommandBar.IsEnabled = true;
                 listView.IsEnabled = true;
 
                 IsEditEnabled(EditButton.Edit);
@@ -221,7 +219,6 @@ namespace Storylines.Pages
             Random rn = new Random();
             int value = rn.Next(0, 2);
 
-            //charactersHolder.SelectedItem = Character.CreateNew(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), ResourceLoader.GetForCurrentView().GetString("ownDescription"));
             listView.SelectedItem = Character.CreateNew(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
             EnableEditMode(true);
 

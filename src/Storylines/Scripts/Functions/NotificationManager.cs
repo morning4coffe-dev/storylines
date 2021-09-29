@@ -273,5 +273,33 @@ namespace Storylines.Scripts.Functions
             }
             AppView.currentlyOpenedDialogue = null;
         }
+
+        public static async Task DisplayNoCharactersInProjectDialogue()
+        {
+            CheckForOpenDialogueAndClose();
+
+            ContentDialog noCharactersDialog = new ContentDialog
+            {
+                Title = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueTitle"),
+                Content = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueDescription"),
+                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueAddNew"),
+                CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
+                DefaultButton = ContentDialogButton.Primary,
+                RequestedTheme = MainPage.current.RequestedTheme,
+            };
+            AppView.currentlyOpenedDialogue = noCharactersDialog;
+            noCharactersDialog.RequestedTheme = AppView.current.ActualTheme;
+
+            ContentDialogResult result = await noCharactersDialog.ShowAsync();
+
+            switch (result)
+            {
+                case ContentDialogResult.Primary:
+                    AppView.current.ChangePage(AppView.Pages.Characters);
+                    CharactersPage.current.Add();
+                    break;
+            }
+            AppView.currentlyOpenedDialogue = null;
+        }
     }
 }

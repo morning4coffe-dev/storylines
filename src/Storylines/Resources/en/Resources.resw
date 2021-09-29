@@ -204,6 +204,9 @@
   <data name="cancelText" xml:space="preserve">
     <value>Cancel</value>
   </data>
+  <data name="cancelTxt.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
   <data name="changesCharactersPageDialogueApplyChanges" xml:space="preserve">
     <value>Apply changes</value>
   </data>
@@ -492,6 +495,22 @@ Did you want to exit without saving your progress?</value>
   </data>
   <data name="noCharacters.Text" xml:space="preserve">
     <value>There are no characters yet.</value>
+  </data>
+  <data name="noCharactersDialogueAddNew" xml:space="preserve">
+    <value>Add new character</value>
+  </data>
+  <data name="noCharactersDialogueDescription" xml:space="preserve">
+    <value>You can easily add a new character by tapping on
+the "Add new character" button.</value>
+  </data>
+  <data name="noCharactersDialogueTitle" xml:space="preserve">
+    <value>There are no characters in this project.</value>
+  </data>
+  <data name="noCharactersModes.Message" xml:space="preserve">
+    <value>You will have to leave Focus Mode before you can add a new one.</value>
+  </data>
+  <data name="noCharactersModes.Title" xml:space="preserve">
+    <value>There are no characters in this project.</value>
   </data>
   <data name="none" xml:space="preserve">
     <value>None</value>

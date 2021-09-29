@@ -5,11 +5,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    mc:Ignorable="d" CornerRadius="8" KeyDown="ContentDialog_KeyDown" Closed="ContentDialog_Closed">
-    
-    <!--<ContentDialog.Resources>
-        <Thickness x:Key="ContentDialogPadding">0</Thickness>
-    </ContentDialog.Resources>-->
+    mc:Ignorable="d" CornerRadius="8" KeyDown="ContentDialog_KeyDown" Closed="ContentDialog_Closed" Background="{ThemeResource AppAcrylicBackground}">
 
     <StackPanel Spacing="8" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="300" Margin="4">
         <TextBlock x:Uid="exportText" Style="{StaticResource DialogueWindowHeaderStyle}"/>
@@ -50,7 +46,7 @@
         </StackPanel>
 
         <Grid x:Name="chooseExportChaptersPanel" Visibility="Collapsed">
-            <StackPanel Spacing="12">
+            <StackPanel Spacing="14">
                 <!--For animation to work properly-->
                 <StackPanel Spacing="5">
                     <TextBlock x:Uid="fileName"/>
@@ -103,10 +99,27 @@
                         </DropDownButton.Flyout>
                     </DropDownButton>
                 </StackPanel>
-                <StackPanel Margin="0, 8, 0, 0" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-                    <Button x:Name="submitButton" x:Uid="exportContent" Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Width="100" Height="38" Background="{ThemeResource SystemAccentColorDark1}" Click="OnExportButton_Click"/>
-                    <Button x:Uid="cancel" Width="100" Height="38" Click="OnCancelButton_Click"/>
-                </StackPanel>
+                <Grid Margin="0, 8, 0, 0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition/>
+                        <ColumnDefinition Width="8"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <Button x:Name="submitButton" Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Height="38" Background="{ThemeResource SystemAccentColorDark1}" HorizontalAlignment="Stretch" Click="OnExportButton_Click">
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <FontIcon Glyph=""/>
+                            <TextBlock x:Uid="exportText"/>
+                        </StackPanel>
+                        <!--x:Uid="exportContent"-->
+                    </Button>
+                    <Button x:Name="cancelButton" Height="38" Grid.Column="2" HorizontalAlignment="Stretch" Click="OnCancelButton_Click">
+                        <!--x:Uid="cancel"-->
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <SymbolIcon Symbol="Cancel"/>
+                            <TextBlock x:Uid="cancelTxt"/>
+                        </StackPanel><!--Custom control: button with symbols-->
+                    </Button>
+                </Grid>
             </StackPanel>
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.65" From="0, -10, 0" To="0"/>

@@ -1,5 +1,6 @@
 ﻿using Storylines.DialogueWindows;
 using Storylines.Pages;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using System;
@@ -255,7 +256,7 @@ namespace Storylines.Components
             for (int i = 0; i < Character.characters.Count; i++)
             {
                 var item = new MenuFlyoutItem() { Tag = Character.characters[i], Text = Character.characters[i].name };
-                item.Click += OnTextBoxDialogueNamesFlyoutItem_Click;;
+                item.Click += OnTextBoxDialogueNamesFlyoutItem_Click; ;
                 textBoxDialogueNamesFlyout.Items.Add(item);
             }
 
@@ -304,16 +305,31 @@ namespace Storylines.Components
         public DialogueMode currentDialogueMode;
         public void AddDialogue()
         {
-            currentDialogueMode = DialogueMode.Complex;
-            PopulateFlyout();
-            textBoxDialogueNamesFlyout.ShowAt(textBox);
+            if (Character.characters.Count > 0)
+            {
+                currentDialogueMode = DialogueMode.Complex;
+                PopulateFlyout();
+                textBoxDialogueNamesFlyout.ShowAt(textBox);
+            }
+            else
+                NoCharactersYet();
         }
 
         public void AddSimpleDialogue()
         {
-            currentDialogueMode = DialogueMode.Simple;
-            PopulateFlyout();
-            textBoxDialogueNamesFlyout.ShowAt(textBox);
+            if (Character.characters.Count > 0)
+            {
+                currentDialogueMode = DialogueMode.Simple;
+                PopulateFlyout();
+                textBoxDialogueNamesFlyout.ShowAt(textBox);
+            }
+            else
+                NoCharactersYet();
+        }
+
+        private void NoCharactersYet()
+        {
+            _ = NotificationManager.DisplayNoCharactersInProjectDialogue();
         }
         #endregion
 

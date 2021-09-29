@@ -768,6 +768,33 @@ Opravdu chceš odejít bez uložení své práce?</target>
           <source>Report a bug</source>
           <target state="translated">Nahlásit chybu</target>
         </trans-unit>
+        <trans-unit id="cancelTxt.Text" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">Zrušit</target>
+        </trans-unit>
+        <trans-unit id="noCharactersModes.Message" translate="yes" xml:space="preserve">
+          <source>You will have to leave Focus Mode before you can add a new one.</source>
+          <target state="translated">Nejdříve budeš muset opustit Režim soustředění pro přidání nové.</target>
+        </trans-unit>
+        <trans-unit id="noCharactersModes.Title" translate="yes" xml:space="preserve">
+          <source>There are no characters in this project.</source>
+          <target state="translated">V aktuálním projektu zatím nejsou žádné postavy.</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueAddNew" translate="yes" xml:space="preserve">
+          <source>Add new character</source>
+          <target state="translated">Přidat novou postavu</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueDescription" translate="yes" xml:space="preserve">
+          <source>You can easily add a new character by tapping on
+the "Add new character" button.</source>
+          <target state="translated">Jednoduše můžeš přidat novou postavu kliknutím
+na tlačítko "Přidat novou postavu".</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueTitle" translate="yes" xml:space="preserve">
+          <source>There are no characters in this project.</source>
+          <target state="translated">V aktuálním projektu zatím nejsou
+žádné postavy.</target>
+        </trans-unit>
       </group>
     </body>
   </file>

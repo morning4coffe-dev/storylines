@@ -54,6 +54,8 @@
                             <ComboBoxItem x:Uid="paragraphsContent"/>
                         </ComboBox>
                     </StackPanel>
+
+                    <controls:InfoBar x:Name="noCharacters" x:Uid="noCharactersModes" IsOpen="False" IsClosable="False" Severity="Warning"/>
                 </StackPanel>
 
                 <StackPanel Margin="0, 8, 0, 0" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">

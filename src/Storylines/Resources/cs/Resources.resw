@@ -568,4 +568,24 @@ Opravdu chceš odejít bez uložení své práce?</value>
   <data name="reportABug.Text" xml:space="preserve">
     <value>Nahlásit chybu</value>
   </data>
+  <data name="cancelTxt.Text" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="noCharactersModes.Message" xml:space="preserve">
+    <value>Nejdříve budeš muset opustit Režim soustředění pro přidání nové.</value>
+  </data>
+  <data name="noCharactersModes.Title" xml:space="preserve">
+    <value>V aktuálním projektu zatím nejsou žádné postavy.</value>
+  </data>
+  <data name="noCharactersDialogueAddNew" xml:space="preserve">
+    <value>Přidat novou postavu</value>
+  </data>
+  <data name="noCharactersDialogueDescription" xml:space="preserve">
+    <value>Jednoduše můžeš přidat novou postavu kliknutím
+na tlačítko "Přidat novou postavu".</value>
+  </data>
+  <data name="noCharactersDialogueTitle" xml:space="preserve">
+    <value>V aktuálním projektu zatím nejsou
+žádné postavy.</value>
+  </data>
 </root>

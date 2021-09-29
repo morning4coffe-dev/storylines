@@ -95,7 +95,7 @@
                     </animations:Implicit.HideAnimations>-->
             </TextBox>
         </Grid>
-               
+
         <ScrollViewer x:Name="textBoxScrollViewer" x:FieldModifier="public" Background="{ThemeResource LayerFillColorDefaultBrush}" Canvas.ZIndex="1" Grid.Row="3" HorizontalScrollBarVisibility="Hidden" HorizontalScrollMode="Auto" VerticalScrollBarVisibility="Auto" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" CornerRadius="8" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Tapped="OnTextBoxRectangle_Tapped">
             <components:MyRichEditBox x:Name="textBox" x:FieldModifier="public" x:Uid="yourStory" IsHitTestVisible="False" Style="{StaticResource MainRichTextBoxStyle}" Foreground="{ThemeResource TextForeground}" Background="Transparent" BorderThickness="0" IsSpellCheckEnabled="True" HorizontalAlignment="Left" VerticalAlignment="Top" 
                              SelectionChanging="OnTextBox_SelectionChanging" TextChanged="OnTextBox_TextChanged" PreviewKeyDown="OnTextBox_PreviewKeyDown" Loaded="REBCustom_Loaded" Unloaded="REBCustom_Unloaded" LostFocus="OnTextBox_LostFocus" PointerWheelChanged="OnTextBox_PointerWheelChanged" Tapped="OnTextBoxRectangle_Tapped">

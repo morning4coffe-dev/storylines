@@ -2,6 +2,7 @@
 using Storylines.Components.DialogueWindows;
 using Storylines.Pages;
 using Storylines.Scripts.Functions;
+using Storylines.Scripts.Variables;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.ViewManagement;
@@ -144,8 +145,12 @@ namespace Storylines.Scripts.Modes
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesEnableButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
 
+                mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Character.characters.Count > 0;
+
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesAddButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
+
+            mainCommandBarInstance.dialoguesAddButton.IsEnabled = Character.characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(MainPage.commandBar.dictationButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.dictationButton);
