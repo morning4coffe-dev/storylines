@@ -13,548 +13,547 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="zoom.Text" xml:space="preserve">
-    <value>Přiblížení</value>
+    <value>Масштаб</value>
   </data>
   <data name="downBarText.Text" xml:space="preserve">
-    <value>Nejdříve přidej novou kapitolu a poté začni psát.</value>
+    <value>Добавьте новую главу и начните печатать.</value>
   </data>
   <data name="clickHere" xml:space="preserve">
-    <value>Klikněte zde</value>
+    <value>Нажмите здесь</value>
   </data>
   <data name="newUpdateAvailable.Text" xml:space="preserve">
-    <value>Vypadá to, že je k dispozici nová aktualizace!</value>
+    <value>Похоже, в Microsoft Store доступно обновление!</value>
   </data>
   <data name="newUpdateAvailable2.Text" xml:space="preserve">
-    <value>pro stažení.</value>
+    <value>для загрузки.</value>
   </data>
   <data name="reviewDialog.Text" xml:space="preserve">
-    <value>Líbí se ti tato aplikace? Pokud ano, byli bychom rádi, kdybys zvážil/a ji ohodnotit na Microsoft Store.</value>
+    <value>Вам нравится это приложение? Пожалуйста, оставьте отзыв в Microsoft Store.</value>
   </data>
   <data name="reviewDialogOption1.Content" xml:space="preserve">
-    <value>Ohodnotit</value>
+    <value>Оценить</value>
   </data>
   <data name="reviewDialogOption2.Content" xml:space="preserve">
-    <value>Později</value>
+    <value>Не сейчас</value>
   </data>
   <data name="reviewDialogOption3.Content" xml:space="preserve">
-    <value>Znovu nezobrazovat</value>
+    <value>Не показывать снова</value>
   </data>
   <data name="reviewRequestThankYou.Title" xml:space="preserve">
-    <value>Děkujeme!</value>
+    <value>Спасибо!</value>
   </data>
   <data name="autosave.Label" xml:space="preserve">
-    <value>Automatické ukládání</value>
+    <value>Автосохранение</value>
   </data>
   <data name="export.Label" xml:space="preserve">
-    <value>Exportovat</value>
+    <value>Экспортировать</value>
   </data>
   <data name="load.Label" xml:space="preserve">
-    <value>Načíst</value>
+    <value>Загрузить</value>
   </data>
   <data name="readAloud.Label" xml:space="preserve">
-    <value>Předčítat</value>
+    <value>Прочитать вслух</value>
   </data>
   <data name="save.Label" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Сохранить</value>
   </data>
   <data name="saveCopy.Label" xml:space="preserve">
-    <value>Uložit kopii</value>
+    <value>Сохранить копию</value>
   </data>
   <data name="addDialogue.Label" xml:space="preserve">
-    <value>Přidat repliku</value>
+    <value>Добавить диалог</value>
   </data>
   <data name="dialogueMode.Label" xml:space="preserve">
-    <value>Režim replik</value>
+    <value>Режим диалога</value>
   </data>
   <data name="dictation.Label" xml:space="preserve">
-    <value>Diktování</value>
+    <value>Голосовой ввод</value>
   </data>
   <data name="edit.Label" xml:space="preserve">
-    <value>Upravit</value>
+    <value>Изменить</value>
   </data>
   <data name="focusMode.Label" xml:space="preserve">
-    <value>Režim soustředění</value>
+    <value>Режим концентрации</value>
   </data>
   <data name="loadSaveSystemErrorText" xml:space="preserve">
-    <value>Narazili jsme na problém, projekt nemohl být načten.</value>
+    <value>Произошла ошибка, файл не может быть загружен.</value>
   </data>
   <data name="readMode.Label" xml:space="preserve">
-    <value>Režim čtení</value>
+    <value>Режим чтения</value>
   </data>
   <data name="saveSaveSystemErrorText" xml:space="preserve">
-    <value>Narazili jsme na problém, projekt nemohl být uložen.</value>
+    <value>Произошла ошибка, файл не может быть сохранен.</value>
   </data>
   <data name="add.Label" xml:space="preserve">
-    <value>Přidat</value>
+    <value>Добавить</value>
   </data>
   <data name="remove.Label" xml:space="preserve">
-    <value>Odstranit</value>
+    <value>Удалить</value>
   </data>
   <data name="sort.Label" xml:space="preserve">
-    <value>Seřadit</value>
+    <value>Сортировать</value>
   </data>
   <data name="addText.Text" xml:space="preserve">
-    <value>Přidat</value>
+    <value>Добавить</value>
   </data>
   <data name="removeFlyout.Text" xml:space="preserve">
-    <value>Odstranit</value>
+    <value>Удалить</value>
   </data>
   <data name="renameFlyout.Text" xml:space="preserve">
-    <value>Přejmenovat</value>
+    <value>Переименовать</value>
   </data>
   <data name="nothingHere.Text" xml:space="preserve">
-    <value>Zatím zde není žádný projekt.</value>
+    <value>Проектов пока нет.</value>
   </data>
   <data name="or.Text" xml:space="preserve">
-    <value>nebo</value>
+    <value>или</value>
   </data>
   <data name="projects.Text" xml:space="preserve">
-    <value>Projekty</value>
+    <value>Проекты</value>
   </data>
   <data name="janeDoe" xml:space="preserve">
-    <value>Jana Nováková</value>
+    <value>Джейн Доу</value>
   </data>
   <data name="johnDoe" xml:space="preserve">
-    <value>Jan Novák</value>
+    <value>Джон Доу</value>
   </data>
   <data name="app.Content" xml:space="preserve">
-    <value>Aplikace</value>
+    <value>Стандартный</value>
   </data>
   <data name="custom.Content" xml:space="preserve">
-    <value>Vlastní</value>
+    <value>Собственный</value>
   </data>
   <data name="dark.Content" xml:space="preserve">
-    <value>Tmavý</value>
+    <value>Темная</value>
   </data>
   <data name="light.Content" xml:space="preserve">
-    <value>Světlý</value>
+    <value>Светлая</value>
   </data>
   <data name="newChapterShortcut.Text" xml:space="preserve">
-    <value>Zkratka pro novou kapitolu</value>
+    <value>Новая глава при сочетании клавиш</value>
   </data>
   <data name="system.Content" xml:space="preserve">
-    <value>Systémový</value>
+    <value>Системный</value>
   </data>
   <data name="unsavedProgressAlert.Text" xml:space="preserve">
-    <value>Oznámení o neuloženém projektu</value>
+    <value>Уведомление о несохраненном проекте</value>
   </data>
   <data name="yourStory.PlaceholderText" xml:space="preserve">
-    <value>Sem začni psát příběh.</value>
+    <value>Начните писать историю здесь.</value>
   </data>
   <data name="about.Content" xml:space="preserve">
-    <value>O aplikaci</value>
+    <value>О приложении</value>
   </data>
   <data name="aboutText.Text" xml:space="preserve">
-    <value>O aplikaci</value>
+    <value>О приложении</value>
   </data>
   <data name="accessibility.Content" xml:space="preserve">
-    <value>Přístupnost</value>
+    <value>Специальные возможности</value>
   </data>
   <data name="accessibilityText.Text" xml:space="preserve">
-    <value>Přístupnost</value>
+    <value>Специальные возможности</value>
   </data>
   <data name="general.Content" xml:space="preserve">
-    <value>Obecné</value>
+    <value>Основные</value>
   </data>
   <data name="generalText.Text" xml:space="preserve">
-    <value>Obecné</value>
+    <value>Основные</value>
   </data>
   <data name="personalization.Content" xml:space="preserve">
-    <value>Přizpůsobení</value>
+    <value>Персонализация</value>
   </data>
   <data name="personalizationText.Text" xml:space="preserve">
-    <value>Přizpůsobení</value>
+    <value>Персонализация</value>
   </data>
   <data name="website.Content" xml:space="preserve">
-    <value>Webová stránka</value>
+    <value>Веб-сайт</value>
   </data>
   <data name="fileName.Text" xml:space="preserve">
-    <value>Jméno souboru:</value>
+    <value>Имя файла:</value>
   </data>
   <data name="location.Text" xml:space="preserve">
-    <value>Umístění:</value>
+    <value>Расположение:</value>
   </data>
   <data name="exportText.Text" xml:space="preserve">
-    <value>Exportovat</value>
+    <value>Экспортировать</value>
   </data>
   <data name="chaptersExport.Text" xml:space="preserve">
-    <value>Kapitoly</value>
+    <value>Главы</value>
   </data>
   <data name="charactersExport.Text" xml:space="preserve">
-    <value>Postavy</value>
+    <value>Главы</value>
   </data>
   <data name="dialoguesExport.Text" xml:space="preserve">
-    <value>Repliky</value>
+    <value>Диалоги</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
-    <value>Tento soubor se již v této složce nachází! Pokud nechceš o původní přijít, změň název nebo umísti soubor jinam.</value>
+    <value>Этот файл уже существует! Измените имя или расположение, иначе файл будет заменен.</value>
   </data>
   <data name="noneText.Text" xml:space="preserve">
-    <value>Žádná</value>
+    <value>Отсутствует</value>
   </data>
   <data name="all" xml:space="preserve">
-    <value>Vše</value>
+    <value>Все</value>
   </data>
   <data name="cancel.Content" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Отмена</value>
   </data>
   <data name="chaptersToExport.Text" xml:space="preserve">
-    <value>Kapitoly pro export:</value>
+    <value>Главы для экспорта:</value>
   </data>
   <data name="charactersText1.Text" xml:space="preserve">
-    <value>Postavy:</value>
+    <value>Символы:</value>
   </data>
   <data name="exportContent.Content" xml:space="preserve">
-    <value>Exportovat</value>
+    <value>Экспортировать</value>
   </data>
   <data name="includeChapterName.Content" xml:space="preserve">
-    <value>Včetně názvu kapitoly</value>
+    <value>В том числе название главы</value>
   </data>
   <data name="none" xml:space="preserve">
-    <value>Žádná</value>
+    <value>Отсутствует</value>
   </data>
   <data name="searchBox.PlaceholderText" xml:space="preserve">
-    <value>Vyhledat</value>
+    <value>Поиск</value>
   </data>
   <data name="information.Text" xml:space="preserve">
-    <value>Informace</value>
+    <value>Информация</value>
   </data>
   <data name="chaptersText.Text" xml:space="preserve">
-    <value>Kapitoly</value>
+    <value>Главы</value>
   </data>
   <data name="characters" xml:space="preserve">
-    <value>Postavy</value>
+    <value>Символы</value>
   </data>
   <data name="charactersStory" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Символы</value>
   </data>
   <data name="charactersText.Text" xml:space="preserve">
-    <value>Postavy</value>
+    <value>Символы</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
-    <value>Odhadovaný počet stran</value>
+    <value>Предполагаемое количество страниц</value>
   </data>
   <data name="paragraphs" xml:space="preserve">
-    <value>Odstavce</value>
+    <value>Абзацы</value>
   </data>
   <data name="selectedChapterText.Text" xml:space="preserve">
-    <value>Vybraná kapitola</value>
+    <value>Выбранная глава</value>
   </data>
   <data name="selectedCharacters" xml:space="preserve">
-    <value>Vybrané znaky</value>
+    <value>Выбранные символы</value>
   </data>
   <data name="storyText.Text" xml:space="preserve">
-    <value>Příběh</value>
+    <value>История</value>
   </data>
   <data name="words" xml:space="preserve">
-    <value>Slova</value>
+    <value>Слова</value>
   </data>
   <data name="charactersLabel.Label" xml:space="preserve">
-    <value>Postavy</value>
+    <value>Символы</value>
   </data>
   <data name="chapters" xml:space="preserve">
-    <value>Kapitoly</value>
+    <value>Главы</value>
   </data>
   <data name="withoutSpaces" xml:space="preserve">
-    <value>bez mezer</value>
+    <value>без пробелов</value>
   </data>
   <data name="withSpaces" xml:space="preserve">
-    <value>s mezerami</value>
+    <value>с пробелами</value>
   </data>
   <data name="picturesNotFound" xml:space="preserve">
-    <value>Některé obrázky se nepodařilo načíst.</value>
+    <value>Некоторые изображения не были загружены.</value>
   </data>
   <data name="chapterName" xml:space="preserve">
-    <value>Kapitola {cislo}</value>
+    <value>Глава {номер}</value>
   </data>
   <data name="chapterNameSetting.Text" xml:space="preserve">
-    <value>Názvy kapitol</value>
+    <value>Название главы</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Zvol vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidej k textu {cislo}.</value>
+    <value>Задайте название главы. Для выбора места нумерации используйте {номер}.</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
-    <value>Barva motivu</value>
+    <value>Контрастный цвет</value>
   </data>
   <data name="chooseThemeSetting.Text" xml:space="preserve">
-    <value>Motiv</value>
+    <value>Тема приложения</value>
   </data>
   <data name="projectOnStartSetting.Text" xml:space="preserve">
-    <value>Poslední projekt při spuštění</value>
+    <value>Последний проект при запуске</value>
   </data>
   <data name="newChapterShortcutDesc.Text" xml:space="preserve">
-    <value>Automatické přidání nové kapitoly na konci listu pomocí stisku Ctrl+PageDown.</value>
+    <value>Автоматическое добавление новой главы при нажатии Ctrl + Page Down.</value>
   </data>
   <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve">
-    <value>Motiv</value>
+    <value>Откл.</value>
   </data>
   <data name="whiteTextBackgroundToggle.OnContent" xml:space="preserve">
-    <value>Bílé</value>
+    <value>Белый</value>
   </data>
   <data name="languageSetting.Text" xml:space="preserve">
-    <value>Jazyk</value>
+    <value>Язык</value>
   </data>
   <data name="readAloudVoiceSetting.Text" xml:space="preserve">
-    <value>Hlas</value>
+    <value>Голос</value>
   </data>
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
-    <value>Hlasitost</value>
+    <value>Громкость</value>
   </data>
   <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
-    <value>Bílé pozadí hlavního textu</value>
+    <value>Белый фон для текста</value>
   </data>
   <data name="exitWithoutSaveDialogCancel" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Отмена</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Zpomal trochu!
-Opravdu chceš odejít bez uložení své práce?</value>
+    <value>Вы уверены, что хотите выйти без сохранения текущего прогресса?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
-    <value>Neukládat</value>
+    <value>Не сохранять</value>
   </data>
   <data name="exitWithoutSaveDialogSave" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Сохранить</value>
   </data>
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
-    <value>Neuložený postup</value>
+    <value>Несохраненный прогресс</value>
   </data>
   <data name="chapterDialogueCreate" xml:space="preserve">
-    <value>Vytvořit kapitolu</value>
+    <value>Создать главу</value>
   </data>
   <data name="chapterDialogueRename" xml:space="preserve">
-    <value>Přejmenovat kapitolu:</value>
+    <value>Переименовать главу:</value>
   </data>
   <data name="chapterDialogueName.Text" xml:space="preserve">
-    <value>Jméno kapitoly:</value>
+    <value>Название главы:</value>
   </data>
   <data name="submit.Content" xml:space="preserve">
-    <value>Potvrdit</value>
+    <value>Подтвердить</value>
   </data>
   <data name="projectName.Text" xml:space="preserve">
-    <value>Jméno projektu:</value>
+    <value>Название проекта:</value>
   </data>
   <data name="saveContent.Content" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Сохранить</value>
   </data>
   <data name="characterNotSelected.Text" xml:space="preserve">
-    <value>Není vybrána žádná postava.</value>
+    <value>Персонаж не выбран.</value>
   </data>
   <data name="highlighterFlyout.Text" xml:space="preserve">
-    <value>Zvýrazňovač</value>
+    <value>Выделение</value>
   </data>
   <data name="chapterWithoutName" xml:space="preserve">
-    <value>Klikni pravým na tento text nebo na šipku výše pro přejmenování této kapitoly</value>
+    <value>Кликните правой кнопкой на этот текст или стрелку выше, чтобы переименовать главу</value>
   </data>
   <data name="feedbackLabel.Label" xml:space="preserve">
-    <value>Zpětná vazba</value>
+    <value>Обратная связь</value>
   </data>
   <data name="modeDialogueFocus.Text" xml:space="preserve">
-    <value>Soustředění</value>
+    <value>Концентрация</value>
   </data>
   <data name="modeDialogueFullScreen.Content" xml:space="preserve">
-    <value>Přes celou obrazovku</value>
+    <value>На весь экран</value>
   </data>
   <data name="modeDialogueRead.Text" xml:space="preserve">
-    <value>Čtení</value>
+    <value>Чтение</value>
   </data>
   <data name="modeDialogueTimer.Content" xml:space="preserve">
-    <value>Časovač</value>
+    <value>Таймер</value>
   </data>
   <data name="modeDialogueTitle.Text" xml:space="preserve">
-    <value>Přepnout režim</value>
+    <value>Переключение режима</value>
   </data>
   <data name="switchContent.Content" xml:space="preserve">
-    <value>Přepnout</value>
+    <value>Переключить</value>
   </data>
   <data name="charactersContent.Content" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Символы</value>
   </data>
   <data name="paragraphsContent.Content" xml:space="preserve">
-    <value>Odstavce</value>
+    <value>Абзацы</value>
   </data>
   <data name="wordsContent.Content" xml:space="preserve">
-    <value>Slova</value>
+    <value>Слова</value>
   </data>
   <data name="downBarTextS" xml:space="preserve">
-    <value>Nejdříve přidej novou kapitolu a poté začni psát.</value>
+    <value>Добавьте новую главу и начните печатать.</value>
   </data>
   <data name="languageSettingDesc.Text" xml:space="preserve">
-    <value>Po změně tohoto nastavení bude nutný restart, aby se plně projevily změny.</value>
-  </data>
-  <data name="czech.Content" xml:space="preserve">
-    <value>Čeština</value>
+    <value>Для применения другого языка необходим перезапуск приложения.</value>
   </data>
   <data name="english.Content" xml:space="preserve">
-    <value>Angličtina</value>
+    <value>Английский</value>
   </data>
   <data name="russian.Content" xml:space="preserve">
-    <value>Řuština</value>
+    <value>Русский</value>
+  </data>
+  <data name="czech.Content" xml:space="preserve">
+    <value>Чешский</value>
   </data>
   <data name="noChapters.Text" xml:space="preserve">
-    <value>Zatím zde nejsou žádné kapitoly.</value>
+    <value>Главы отсутствуют.</value>
   </data>
   <data name="projectOnStartSettingDesc.Text" xml:space="preserve">
-    <value>Aplikace si zapamatuje jaký projekt byl naposledy otevřený a pokusí se ho načíst při dalším spuštění.</value>
+    <value>Приложение запомнит последний открытый проект и попробует загрузить его при запуске.</value>
   </data>
   <data name="saveCopyText" xml:space="preserve">
-    <value>Uložit kopii</value>
+    <value>Сохранить копию</value>
   </data>
   <data name="saveText" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Сохранить</value>
   </data>
   <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"o-kralovne-koblih-scenar"</value>
+    <value>"сценарий-лесной-королевы"</value>
   </data>
   <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"O královně koblih"</value>
+    <value>"О лесной королеве"</value>
   </data>
   <data name="fileLocation.Text" xml:space="preserve">
-    <value>"C:\Uživatelé\Dokumenty"</value>
+    <value>"C:\Users\Documents"</value>
   </data>
   <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
-    <value>"o-kralovne-koblih-export"</value>
+    <value>"экспорт-лесной-королевы"</value>
   </data>
   <data name="file.Content" xml:space="preserve">
-    <value>Soubor</value>
+    <value>Файл</value>
   </data>
   <data name="help.Content" xml:space="preserve">
-    <value>Nápověda</value>
+    <value>Помощь</value>
   </data>
   <data name="view.Content" xml:space="preserve">
-    <value>Zobrazení</value>
+    <value>Вид</value>
   </data>
   <data name="insert.Content" xml:space="preserve">
-    <value>Vložení</value>
+    <value>Вставка</value>
   </data>
   <data name="createNew.Text" xml:space="preserve">
-    <value>Vytvořit nový</value>
+    <value>Создать новый</value>
   </data>
   <data name="findOne.Text" xml:space="preserve">
-    <value>Najít</value>
+    <value>Найти</value>
   </data>
   <data name="experience.Title" xml:space="preserve">
-    <value>Poděl se o svojí zkušenost</value>
+    <value>Расскажите о своем опыте</value>
   </data>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
-    <value>Nová aktualizace je dostupná</value>
+    <value>Доступно обновление</value>
   </data>
   <data name="autosaveEnable.Text" xml:space="preserve">
-    <value>Povolit</value>
+    <value>Разрешить</value>
   </data>
   <data name="autosaveInterval.Text" xml:space="preserve">
-    <value>Interval</value>
+    <value>Интервал</value>
   </data>
   <data name="clickHereText.Text" xml:space="preserve">
-    <value>Klikni sem</value>
+    <value>Нажмите</value>
   </data>
   <data name="autosaveText.Text" xml:space="preserve">
-    <value>Automatické ukládání</value>
+    <value>Автосохранение</value>
   </data>
   <data name="projectSetting.Text" xml:space="preserve">
-    <value>Projekt</value>
+    <value>Проект</value>
   </data>
   <data name="readAloudText.Text" xml:space="preserve">
-    <value>Předčítání</value>
+    <value>Чтение вслух</value>
   </data>
   <data name="autosaveInterval1.Content" xml:space="preserve">
-    <value>Ihned</value>
+    <value>Сразу</value>
   </data>
   <data name="autosaveInterval2.Content" xml:space="preserve">
-    <value>2 minuty</value>
+    <value>2 минуты</value>
   </data>
   <data name="autosaveInterval5.Content" xml:space="preserve">
-    <value>5 minut</value>
+    <value>5 минут</value>
   </data>
   <data name="autosaveContent.Content" xml:space="preserve">
-    <value>Automatické ukládání</value>
+    <value>Автосохранение</value>
   </data>
   <data name="done" xml:space="preserve">
-    <value>Hotovo</value>
+    <value>Готово</value>
   </data>
   <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
-    <value>Nastavený cíl zatím nebyl splněn, vážně chceš už odejít?</value>
+    <value>Установленная цель еще не выполнена, вы действительно хотите уйти?</value>
   </data>
   <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
-    <value>Odejít</value>
+    <value>Уйти</value>
   </data>
   <data name="focusModeLeaveDialogueStay" xml:space="preserve">
-    <value>Zůstat a dokončit</value>
+    <value>Остаться</value>
   </data>
   <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
-    <value>Nějak brzy, ne?</value>
+    <value>Уже уходите?</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
-    <value>"Tato postava má krátké hnědé vlasy. Je hodná a milá..."</value>
+    <value>"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</value>
   </data>
   <data name="noCharacters.Text" xml:space="preserve">
-    <value>Zatím zde nejsou žádné postavy.</value>
+    <value>Персонажей пока нет.</value>
   </data>
   <data name="toAddNew.Text" xml:space="preserve">
-    <value>pro přidání nové.</value>
+    <value>для добавления.</value>
   </data>
   <data name="applyChanges" xml:space="preserve">
-    <value>Použít změny</value>
+    <value>Применить</value>
   </data>
   <data name="editText" xml:space="preserve">
-    <value>Upravit</value>
+    <value>Изменить</value>
   </data>
   <data name="cancelText" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Отмена</value>
   </data>
   <data name="changesCharactersPageDialogueApplyChanges" xml:space="preserve">
-    <value>Použít změny</value>
+    <value>Применить</value>
   </data>
   <data name="changesCharactersPageDialogueDescription" xml:space="preserve">
-    <value>Opravdu chceš odejít bez použití změn?</value>
+    <value>Вы действительно хотите уйти без применения изменений?</value>
   </data>
   <data name="changesCharactersPageDialogueDontApplyChanges" xml:space="preserve">
-    <value>Nepoužít změny</value>
+    <value>Не использовать</value>
   </data>
   <data name="changesCharactersPageDialogueTitle" xml:space="preserve">
-    <value>Změny nebyly uplatněny!</value>
+    <value>Изменения не были применены!</value>
   </data>
   <data name="autosaveInterval10.Content" xml:space="preserve">
-    <value>10 minut</value>
+    <value>10 минут</value>
   </data>
   <data name="autosaveInterval12.Content" xml:space="preserve">
-    <value>12 minut</value>
+    <value>12 минут</value>
   </data>
   <data name="autosaveInterval15.Content" xml:space="preserve">
-    <value>15 minut</value>
+    <value>15 минут</value>
   </data>
   <data name="autosaveInterval30.Content" xml:space="preserve">
-    <value>30 minut</value>
+    <value>30 минут</value>
   </data>
   <data name="autosaveInterval60.Content" xml:space="preserve">
-    <value>1 hodina</value>
+    <value>1 час</value>
   </data>
   <data name="addChapter.Label" xml:space="preserve">
-    <value>Přidat kapitolu</value>
+    <value>Добавить главу</value>
   </data>
   <data name="editFlyout.Text" xml:space="preserve">
-    <value>Upravit</value>
+    <value>Изменить</value>
   </data>
   <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Přidat jednoduchou repliku</value>
+    <value>Добавить простой диалог</value>
   </data>
   <data name="appHeaderEdited" xml:space="preserve">
-    <value>Upraveno</value>
+    <value>Изменено</value>
   </data>
   <data name="keyboardShortcutsLabel.Label" xml:space="preserve">
-    <value>Klávesové zkratky</value>
+    <value>Сочетания клавиш</value>
   </data>
   <data name="version" xml:space="preserve">
-    <value>Verze</value>
+    <value>Версия</value>
   </data>
   <data name="charactersPageCharactersCount.Text" xml:space="preserve">
-    <value>Postavy: </value>
+    <value>Символы: </value>
   </data>
   <data name="links.Text" xml:space="preserve">
-    <value>Odkazy</value>
+    <value>Полезные ссылки</value>
   </data>
   <data name="githubRepository.Text" xml:space="preserve">
-    <value>GitHub repozitář</value>
+    <value>Репозиторий на GitHub</value>
   </data>
   <data name="personalGithub.Text" xml:space="preserve">
     <value>Morning4coffe GitHub</value>
@@ -563,32 +562,31 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Morning4coffe Twitter</value>
   </data>
   <data name="privacyPolicy.Text" xml:space="preserve">
-    <value>Zásady ochrany osobních údajů</value>
+    <value>Политика конфиденциальности</value>
   </data>
   <data name="rateAndReview.Text" xml:space="preserve">
-    <value>Ohodnotit na Microsoft Store</value>
+    <value>Оценить приложение в Microsoft Store</value>
   </data>
   <data name="reportABug.Text" xml:space="preserve">
-    <value>Nahlásit chybu</value>
+    <value>Сообщить о проблеме</value>
   </data>
   <data name="cancelTxt.Text" xml:space="preserve">
-    <value>Zrušit</value>
+    <value>Отмена</value>
   </data>
   <data name="noCharactersModes.Message" xml:space="preserve">
-    <value>Nejdříve budeš muset opustit Režim soustředění pro přidání nové.</value>
+    <value>Вам придется покинуть режим концентрации, чтобы добавить новых.</value>
   </data>
   <data name="noCharactersModes.Title" xml:space="preserve">
-    <value>V aktuálním projektu zatím nejsou žádné postavy.</value>
+    <value>В текущем проекте нет персонажей.</value>
   </data>
   <data name="noCharactersDialogueAddNew" xml:space="preserve">
-    <value>Přidat novou postavu</value>
+    <value>Добавить нового персонажа</value>
   </data>
   <data name="noCharactersDialogueDescription" xml:space="preserve">
-    <value>Jednoduše můžeš přidat novou postavu kliknutím
-na tlačítko "Přidat novou postavu".</value>
+    <value>Вы можете легко добавить персонажа, нажав
+на кнопку "Добавить нового персонажа".</value>
   </data>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
-    <value>V aktuálním projektu zatím nejsou
-žádné postavy.</value>
+    <value>В текущем проекте нет персонажей.</value>
   </data>
 </root>

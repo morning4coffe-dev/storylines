@@ -1,0 +1,803 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xliff version="1.2" xmlns="urn:oasis:names:tc:xliff:document:1.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="urn:oasis:names:tc:xliff:document:1.2 xliff-core-1.2-transitional.xsd">
+  <file datatype="xml" source-language="en" target-language="ru" original="STORYLINES/RESOURCES/EN/RESOURCES.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6916.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="zoom.Text" translate="yes" xml:space="preserve">
+          <source>Zoom</source>
+          <target state="translated">Масштаб</target>
+        </trans-unit>
+        <trans-unit id="downBarText.Text" translate="yes" xml:space="preserve">
+          <source>Add a new chapter and then start typing.</source>
+          <target state="translated">Добавьте новую главу и начните печатать.</target>
+        </trans-unit>
+        <trans-unit id="clickHere" translate="yes" xml:space="preserve">
+          <source>Click here</source>
+          <target state="translated">Нажмите здесь</target>
+        </trans-unit>
+        <trans-unit id="newUpdateAvailable.Text" translate="yes" xml:space="preserve">
+          <source>It seems that there is new update in the store!</source>
+          <target state="translated">Похоже, в Microsoft Store доступно обновление!</target>
+        </trans-unit>
+        <trans-unit id="newUpdateAvailable2.Text" translate="yes" xml:space="preserve">
+          <source>to download it.</source>
+          <target state="translated">для загрузки.</target>
+        </trans-unit>
+        <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
+          <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
+          <target state="translated">Вам нравится это приложение? Пожалуйста, оставьте отзыв в Microsoft Store.</target>
+        </trans-unit>
+        <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
+          <source>Rate now</source>
+          <target state="translated">Оценить</target>
+        </trans-unit>
+        <trans-unit id="reviewDialogOption2.Content" translate="yes" xml:space="preserve">
+          <source>Not now</source>
+          <target state="translated">Не сейчас</target>
+        </trans-unit>
+        <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
+          <source>Never show again</source>
+          <target state="translated">Не показывать снова</target>
+        </trans-unit>
+        <trans-unit id="reviewRequestThankYou.Title" translate="yes" xml:space="preserve">
+          <source>Thank you!</source>
+          <target state="translated">Спасибо!</target>
+        </trans-unit>
+        <trans-unit id="autosave.Label" translate="yes" xml:space="preserve">
+          <source>Autosave</source>
+          <target state="translated">Автосохранение</target>
+        </trans-unit>
+        <trans-unit id="export.Label" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="translated">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="load.Label" translate="yes" xml:space="preserve">
+          <source>Load</source>
+          <target state="translated">Загрузить</target>
+        </trans-unit>
+        <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
+          <source>Read aloud</source>
+          <target state="translated">Прочитать вслух</target>
+        </trans-unit>
+        <trans-unit id="save.Label" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Сохранить</target>
+        </trans-unit>
+        <trans-unit id="saveCopy.Label" translate="yes" xml:space="preserve">
+          <source>Save copy</source>
+          <target state="translated">Сохранить копию</target>
+        </trans-unit>
+        <trans-unit id="addDialogue.Label" translate="yes" xml:space="preserve">
+          <source>Add dialogue</source>
+          <target state="translated">Добавить диалог</target>
+        </trans-unit>
+        <trans-unit id="aToZ.Text" translate="no" xml:space="preserve">
+          <source>A-Z</source>
+          <target state="translated">A-Z</target>
+        </trans-unit>
+        <trans-unit id="dialogueMode.Label" translate="yes" xml:space="preserve">
+          <source>Dialogue mode</source>
+          <target state="translated">Режим диалога</target>
+        </trans-unit>
+        <trans-unit id="dictation.Label" translate="yes" xml:space="preserve">
+          <source>Dictation</source>
+          <target state="translated">Голосовой ввод</target>
+        </trans-unit>
+        <trans-unit id="edit.Label" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="translated">Изменить</target>
+        </trans-unit>
+        <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
+          <source>Focus mode</source>
+          <target state="translated">Режим концентрации</target>
+        </trans-unit>
+        <trans-unit id="loadSaveSystemErrorText" translate="yes" xml:space="preserve">
+          <source>An error occurred your file couldn't be load.</source>
+          <target state="translated">Произошла ошибка, файл не может быть загружен.</target>
+        </trans-unit>
+        <trans-unit id="readMode.Label" translate="yes" xml:space="preserve">
+          <source>Read mode</source>
+          <target state="translated">Режим чтения</target>
+        </trans-unit>
+        <trans-unit id="saveSaveSystemErrorText" translate="yes" xml:space="preserve">
+          <source>An error occurred your file couldn't be saved.</source>
+          <target state="translated">Произошла ошибка, файл не может быть сохранен.</target>
+        </trans-unit>
+        <trans-unit id="zToA.Text" translate="no" xml:space="preserve">
+          <source>Z-A</source>
+          <target state="translated">Z-A</target>
+        </trans-unit>
+        <trans-unit id="add.Label" translate="yes" xml:space="preserve">
+          <source>Add</source>
+          <target state="translated">Добавить</target>
+        </trans-unit>
+        <trans-unit id="remove.Label" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="translated">Удалить</target>
+        </trans-unit>
+        <trans-unit id="sort.Label" translate="yes" xml:space="preserve">
+          <source>Sort</source>
+          <target state="translated">Сортировать</target>
+        </trans-unit>
+        <trans-unit id="addText.Text" translate="yes" xml:space="preserve">
+          <source>Add</source>
+          <target state="translated">Добавить</target>
+        </trans-unit>
+        <trans-unit id="removeFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="translated">Удалить</target>
+        </trans-unit>
+        <trans-unit id="renameFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Rename</source>
+          <target state="translated">Переименовать</target>
+        </trans-unit>
+        <trans-unit id="nothingHere.Text" translate="yes" xml:space="preserve">
+          <source>There are no projects yet.</source>
+          <target state="translated">Проектов пока нет.</target>
+        </trans-unit>
+        <trans-unit id="or.Text" translate="yes" xml:space="preserve">
+          <source>or</source>
+          <target state="translated">или</target>
+        </trans-unit>
+        <trans-unit id="projects.Text" translate="yes" xml:space="preserve">
+          <source>Projects</source>
+          <target state="translated">Проекты</target>
+        </trans-unit>
+        <trans-unit id="janeDoe" translate="yes" xml:space="preserve">
+          <source>Jane Doe</source>
+          <target state="translated">Джейн Доу</target>
+        </trans-unit>
+        <trans-unit id="johnDoe" translate="yes" xml:space="preserve">
+          <source>John Doe</source>
+          <target state="translated">Джон Доу</target>
+        </trans-unit>
+        <trans-unit id="app.Content" translate="yes" xml:space="preserve">
+          <source>App</source>
+          <target state="translated">Стандартный</target>
+        </trans-unit>
+        <trans-unit id="custom.Content" translate="yes" xml:space="preserve">
+          <source>Custom</source>
+          <target state="translated">Собственный</target>
+        </trans-unit>
+        <trans-unit id="dark.Content" translate="yes" xml:space="preserve">
+          <source>Dark</source>
+          <target state="translated">Темная</target>
+        </trans-unit>
+        <trans-unit id="light.Content" translate="yes" xml:space="preserve">
+          <source>Light</source>
+          <target state="translated">Светлая</target>
+        </trans-unit>
+        <trans-unit id="newChapterShortcut.Text" translate="yes" xml:space="preserve">
+          <source>New chapter with shortcut</source>
+          <target state="translated">Новая глава при сочетании клавиш</target>
+        </trans-unit>
+        <trans-unit id="system.Content" translate="yes" xml:space="preserve">
+          <source>System</source>
+          <target state="translated">Системный</target>
+        </trans-unit>
+        <trans-unit id="unsavedProgressAlert.Text" translate="yes" xml:space="preserve">
+          <source>Unsaved progress alert</source>
+          <target state="translated">Уведомление о несохраненном проекте</target>
+        </trans-unit>
+        <trans-unit id="yourStory.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Type your story here.</source>
+          <target state="translated">Начните писать историю здесь.</target>
+        </trans-unit>
+        <trans-unit id="about.Content" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">О приложении</target>
+        </trans-unit>
+        <trans-unit id="aboutText.Text" translate="yes" xml:space="preserve">
+          <source>About</source>
+          <target state="translated">О приложении</target>
+        </trans-unit>
+        <trans-unit id="accessibility.Content" translate="yes" xml:space="preserve">
+          <source>Accessibility</source>
+          <target state="translated">Специальные возможности</target>
+        </trans-unit>
+        <trans-unit id="accessibilityText.Text" translate="yes" xml:space="preserve">
+          <source>Accessibility</source>
+          <target state="translated">Специальные возможности</target>
+        </trans-unit>
+        <trans-unit id="general.Content" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">Основные</target>
+        </trans-unit>
+        <trans-unit id="generalText.Text" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="translated">Основные</target>
+        </trans-unit>
+        <trans-unit id="personalization.Content" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="translated">Персонализация</target>
+        </trans-unit>
+        <trans-unit id="personalizationText.Text" translate="yes" xml:space="preserve">
+          <source>Personalization</source>
+          <target state="translated">Персонализация</target>
+        </trans-unit>
+        <trans-unit id="website.Content" translate="yes" xml:space="preserve">
+          <source>Website</source>
+          <target state="translated">Веб-сайт</target>
+        </trans-unit>
+        <trans-unit id="fileName.Text" translate="yes" xml:space="preserve">
+          <source>File name:</source>
+          <target state="translated">Имя файла:</target>
+        </trans-unit>
+        <trans-unit id="location.Text" translate="yes" xml:space="preserve">
+          <source>Location:</source>
+          <target state="translated">Расположение:</target>
+        </trans-unit>
+        <trans-unit id="exportText.Text" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="translated">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="chaptersExport.Text" translate="yes" xml:space="preserve">
+          <source>Chapters</source>
+          <target state="translated">Главы</target>
+        </trans-unit>
+        <trans-unit id="charactersExport.Text" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Главы</target>
+        </trans-unit>
+        <trans-unit id="dialoguesExport.Text" translate="yes" xml:space="preserve">
+          <source>Dialogues</source>
+          <target state="translated">Диалоги</target>
+        </trans-unit>
+        <trans-unit id="fileDoesNotExist.Text" translate="yes" xml:space="preserve">
+          <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
+          <target state="translated">Этот файл уже существует! Измените имя или расположение, иначе файл будет заменен.</target>
+        </trans-unit>
+        <trans-unit id="noneText.Text" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="translated">Отсутствует</target>
+        </trans-unit>
+        <trans-unit id="all" translate="yes" xml:space="preserve">
+          <source>All</source>
+          <target state="translated">Все</target>
+        </trans-unit>
+        <trans-unit id="cancel.Content" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">Отмена</target>
+        </trans-unit>
+        <trans-unit id="chaptersToExport.Text" translate="yes" xml:space="preserve">
+          <source>Chapters to export:</source>
+          <target state="translated">Главы для экспорта:</target>
+        </trans-unit>
+        <trans-unit id="charactersText1.Text" translate="yes" xml:space="preserve">
+          <source>Characters:</source>
+          <target state="translated">Символы:</target>
+        </trans-unit>
+        <trans-unit id="exportContent.Content" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="translated">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="includeChapterName.Content" translate="yes" xml:space="preserve">
+          <source>Include chapter name</source>
+          <target state="translated">В том числе название главы</target>
+        </trans-unit>
+        <trans-unit id="none" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="translated">Отсутствует</target>
+        </trans-unit>
+        <trans-unit id="searchBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">Поиск</target>
+        </trans-unit>
+        <trans-unit id="information.Text" translate="yes" xml:space="preserve">
+          <source>Information</source>
+          <target state="translated">Информация</target>
+        </trans-unit>
+        <trans-unit id="chaptersText.Text" translate="yes" xml:space="preserve">
+          <source>Chapters</source>
+          <target state="translated">Главы</target>
+        </trans-unit>
+        <trans-unit id="characters" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Символы</target>
+        </trans-unit>
+        <trans-unit id="charactersStory" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Символы</target>
+        </trans-unit>
+        <trans-unit id="charactersText.Text" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Символы</target>
+        </trans-unit>
+        <trans-unit id="estimatedPageCount" translate="yes" xml:space="preserve">
+          <source>Estimated page count</source>
+          <target state="translated">Предполагаемое количество страниц</target>
+        </trans-unit>
+        <trans-unit id="paragraphs" translate="yes" xml:space="preserve">
+          <source>Paragraphs</source>
+          <target state="translated">Абзацы</target>
+        </trans-unit>
+        <trans-unit id="selectedChapterText.Text" translate="yes" xml:space="preserve">
+          <source>Selected chapter</source>
+          <target state="translated">Выбранная глава</target>
+        </trans-unit>
+        <trans-unit id="selectedCharacters" translate="yes" xml:space="preserve">
+          <source>Selected characters</source>
+          <target state="translated">Выбранные символы</target>
+        </trans-unit>
+        <trans-unit id="storyText.Text" translate="yes" xml:space="preserve">
+          <source>Story</source>
+          <target state="translated">История</target>
+        </trans-unit>
+        <trans-unit id="words" translate="yes" xml:space="preserve">
+          <source>Words</source>
+          <target state="translated">Слова</target>
+        </trans-unit>
+        <trans-unit id="charactersLabel.Label" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Символы</target>
+        </trans-unit>
+        <trans-unit id="chapters" translate="yes" xml:space="preserve">
+          <source>Chapters</source>
+          <target state="translated">Главы</target>
+        </trans-unit>
+        <trans-unit id="withoutSpaces" translate="yes" xml:space="preserve">
+          <source>without spaces</source>
+          <target state="translated">без пробелов</target>
+        </trans-unit>
+        <trans-unit id="withSpaces" translate="yes" xml:space="preserve">
+          <source>with spaces</source>
+          <target state="translated">с пробелами</target>
+        </trans-unit>
+        <trans-unit id="picturesNotFound" translate="yes" xml:space="preserve">
+          <source>Some images failed to load.</source>
+          <target state="translated">Некоторые изображения не были загружены.</target>
+        </trans-unit>
+        <trans-unit id="chapterName" translate="yes" xml:space="preserve">
+          <source>Chapter {number}</source>
+          <target state="translated">Глава {номер}</target>
+        </trans-unit>
+        <trans-unit id="chapterNameSetting.Text" translate="yes" xml:space="preserve">
+          <source>Chapter name</source>
+          <target state="translated">Название главы</target>
+        </trans-unit>
+        <trans-unit id="chapterNameSettingDesc.Text" translate="yes" xml:space="preserve">
+          <source>Set a custom name. To set the place of numbering use {number}</source>
+          <target state="translated">Задайте название главы. Для выбора места нумерации используйте {номер}.</target>
+        </trans-unit>
+        <trans-unit id="chooseAccentColorSetting.Text" translate="yes" xml:space="preserve">
+          <source>Accent color</source>
+          <target state="translated">Контрастный цвет</target>
+        </trans-unit>
+        <trans-unit id="chooseThemeSetting.Text" translate="yes" xml:space="preserve">
+          <source>Theme</source>
+          <target state="translated">Тема приложения</target>
+        </trans-unit>
+        <trans-unit id="projectOnStartSetting.Text" translate="yes" xml:space="preserve">
+          <source>Last project on startup</source>
+          <target state="translated">Последний проект при запуске</target>
+        </trans-unit>
+        <trans-unit id="newChapterShortcutDesc.Text" translate="yes" xml:space="preserve">
+          <source>If you are on the last chapter and Ctrl+Page down is pressed, should it automatically add a new chapter?</source>
+          <target state="translated">Автоматическое добавление новой главы при нажатии Ctrl + Page Down.</target>
+        </trans-unit>
+        <trans-unit id="whiteTextBackgroundToggle.OffContent" translate="yes" xml:space="preserve">
+          <source>Theme</source>
+          <target state="translated">Откл.</target>
+        </trans-unit>
+        <trans-unit id="whiteTextBackgroundToggle.OnContent" translate="yes" xml:space="preserve">
+          <source>White</source>
+          <target state="translated">Белый</target>
+        </trans-unit>
+        <trans-unit id="languageSetting.Text" translate="yes" xml:space="preserve">
+          <source>Language</source>
+          <target state="translated">Язык</target>
+        </trans-unit>
+        <trans-unit id="readAloudVoiceSetting.Text" translate="yes" xml:space="preserve">
+          <source>Voice</source>
+          <target state="translated">Голос</target>
+        </trans-unit>
+        <trans-unit id="readAloudVolumeSetting.Text" translate="yes" xml:space="preserve">
+          <source>Volume</source>
+          <target state="translated">Громкость</target>
+        </trans-unit>
+        <trans-unit id="whiteTextBackgroundSetting.Text" translate="yes" xml:space="preserve">
+          <source>White text background</source>
+          <target state="translated">Белый фон для текста</target>
+        </trans-unit>
+        <trans-unit id="exitWithoutSaveDialogCancel" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">Отмена</target>
+        </trans-unit>
+        <trans-unit id="exitWithoutSaveDialogDescription" translate="yes" xml:space="preserve">
+          <source>Hey! Slow down a little bit!
+Did you want to exit without saving your progress?</source>
+          <target state="translated">Вы уверены, что хотите выйти без сохранения текущего прогресса?</target>
+        </trans-unit>
+        <trans-unit id="exitWithoutSaveDialogDontSave" translate="yes" xml:space="preserve">
+          <source>Don't save</source>
+          <target state="translated">Не сохранять</target>
+        </trans-unit>
+        <trans-unit id="exitWithoutSaveDialogSave" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Сохранить</target>
+        </trans-unit>
+        <trans-unit id="exitWithoutSaveDialogTitle" translate="yes" xml:space="preserve">
+          <source>Unsaved progress</source>
+          <target state="translated">Несохраненный прогресс</target>
+        </trans-unit>
+        <trans-unit id="chapterDialogueCreate" translate="yes" xml:space="preserve">
+          <source>Create chapter</source>
+          <target state="translated">Создать главу</target>
+        </trans-unit>
+        <trans-unit id="chapterDialogueRename" translate="yes" xml:space="preserve">
+          <source>Rename chapter</source>
+          <target state="translated">Переименовать главу:</target>
+        </trans-unit>
+        <trans-unit id="chapterDialogueName.Text" translate="yes" xml:space="preserve">
+          <source>Chapter name:</source>
+          <target state="translated">Название главы:</target>
+        </trans-unit>
+        <trans-unit id="submit.Content" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="translated">Подтвердить</target>
+        </trans-unit>
+        <trans-unit id="projectName.Text" translate="yes" xml:space="preserve">
+          <source>Project name:</source>
+          <target state="translated">Название проекта:</target>
+        </trans-unit>
+        <trans-unit id="saveContent.Content" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Сохранить</target>
+        </trans-unit>
+        <trans-unit id="characterNotSelected.Text" translate="yes" xml:space="preserve">
+          <source>No character selected.</source>
+          <target state="translated">Персонаж не выбран.</target>
+        </trans-unit>
+        <trans-unit id="highlighterFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Highlighter</source>
+          <target state="translated">Выделение</target>
+        </trans-unit>
+        <trans-unit id="profilePicturesFlyout.Text" translate="no" xml:space="preserve">
+          <source>Character pictures</source>
+          <target state="translated">Character pictures</target>
+        </trans-unit>
+        <trans-unit id="chapterWithoutName" translate="yes" xml:space="preserve">
+          <source>Right click on this text or on the arrow above to rename</source>
+          <target state="translated">Кликните правой кнопкой на этот текст или стрелку выше, чтобы переименовать главу</target>
+        </trans-unit>
+        <trans-unit id="feedbackLabel.Label" translate="yes" xml:space="preserve">
+          <source>Feedback</source>
+          <target state="translated">Обратная связь</target>
+        </trans-unit>
+        <trans-unit id="modeDialogueFocus.Text" translate="yes" xml:space="preserve">
+          <source>Focus</source>
+          <target state="translated">Концентрация</target>
+        </trans-unit>
+        <trans-unit id="modeDialogueFullScreen.Content" translate="yes" xml:space="preserve">
+          <source>Full screen</source>
+          <target state="translated">На весь экран</target>
+        </trans-unit>
+        <trans-unit id="modeDialogueRead.Text" translate="yes" xml:space="preserve">
+          <source>Read</source>
+          <target state="translated">Чтение</target>
+        </trans-unit>
+        <trans-unit id="modeDialogueTimer.Content" translate="yes" xml:space="preserve">
+          <source>Timer</source>
+          <target state="translated">Таймер</target>
+        </trans-unit>
+        <trans-unit id="modeDialogueTitle.Text" translate="yes" xml:space="preserve">
+          <source>Switch mode</source>
+          <target state="translated">Переключение режима</target>
+        </trans-unit>
+        <trans-unit id="switchContent.Content" translate="yes" xml:space="preserve">
+          <source>Switch</source>
+          <target state="translated">Переключить</target>
+        </trans-unit>
+        <trans-unit id="charactersContent.Content" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="translated">Символы</target>
+        </trans-unit>
+        <trans-unit id="paragraphsContent.Content" translate="yes" xml:space="preserve">
+          <source>Paragraphs</source>
+          <target state="translated">Абзацы</target>
+        </trans-unit>
+        <trans-unit id="wordsContent.Content" translate="yes" xml:space="preserve">
+          <source>Words</source>
+          <target state="translated">Слова</target>
+        </trans-unit>
+        <trans-unit id="downBarTextS" translate="yes" xml:space="preserve">
+          <source>Add a new chapter and then start typing.</source>
+          <target state="translated">Добавьте новую главу и начните печатать.</target>
+        </trans-unit>
+        <trans-unit id="languageSettingDesc.Text" translate="yes" xml:space="preserve">
+          <source>After changing this setting, a restart is required for changes to fully apply.</source>
+          <target state="translated">Для применения другого языка необходим перезапуск приложения.</target>
+        </trans-unit>
+        <trans-unit id="english.Content" translate="yes" xml:space="preserve">
+          <source>English</source>
+          <target state="translated">Английский</target>
+        </trans-unit>
+        <trans-unit id="russian.Content" translate="yes" xml:space="preserve">
+          <source>Russian</source>
+          <target state="translated">Русский</target>
+        </trans-unit>
+        <trans-unit id="czech.Content" translate="yes" xml:space="preserve">
+          <source>Czech</source>
+          <target state="translated">Чешский</target>
+        </trans-unit>
+        <trans-unit id="noChapters.Text" translate="yes" xml:space="preserve">
+          <source>There are no chapters yet.</source>
+          <target state="translated">Главы отсутствуют.</target>
+        </trans-unit>
+        <trans-unit id="projectOnStartSettingDesc.Text" translate="yes" xml:space="preserve">
+          <source>The application remembers what project was last open and tries to load it on the next startup.</source>
+          <target state="translated">Приложение запомнит последний открытый проект и попробует загрузить его при запуске.</target>
+        </trans-unit>
+        <trans-unit id="saveCopyText" translate="yes" xml:space="preserve">
+          <source>Save copy</source>
+          <target state="translated">Сохранить копию</target>
+        </trans-unit>
+        <trans-unit id="saveText" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="translated">Сохранить</target>
+        </trans-unit>
+        <trans-unit id="fileNamePlaceh.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>"the-queen-of-donuts-script"</source>
+          <target state="translated">"сценарий-лесной-королевы"</target>
+        </trans-unit>
+        <trans-unit id="projectNamePlaceh.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>"About The Queen of Donuts"</source>
+          <target state="translated">"О лесной королеве"</target>
+        </trans-unit>
+        <trans-unit id="fileLocation.Text" translate="yes" xml:space="preserve">
+          <source>"C:\Users\Documents"</source>
+          <target state="translated">"C:\Users\Documents"</target>
+        </trans-unit>
+        <trans-unit id="fileNameExportPlaceh.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>"the-queen-of-donuts-export"</source>
+          <target state="translated">"экспорт-лесной-королевы"</target>
+        </trans-unit>
+        <trans-unit id="file.Content" translate="yes" xml:space="preserve">
+          <source>File</source>
+          <target state="translated">Файл</target>
+        </trans-unit>
+        <trans-unit id="help.Content" translate="yes" xml:space="preserve">
+          <source>Help</source>
+          <target state="translated">Помощь</target>
+        </trans-unit>
+        <trans-unit id="view.Content" translate="yes" xml:space="preserve">
+          <source>View</source>
+          <target state="translated">Вид</target>
+        </trans-unit>
+        <trans-unit id="insert.Content" translate="yes" xml:space="preserve">
+          <source>Insert</source>
+          <target state="translated">Вставка</target>
+        </trans-unit>
+        <trans-unit id="createNew.Text" translate="yes" xml:space="preserve">
+          <source>Create new</source>
+          <target state="translated">Создать новый</target>
+        </trans-unit>
+        <trans-unit id="findOne.Text" translate="yes" xml:space="preserve">
+          <source>Find one</source>
+          <target state="translated">Найти</target>
+        </trans-unit>
+        <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
+          <source>Tell us about your experience</source>
+          <target state="translated">Расскажите о своем опыте</target>
+        </trans-unit>
+        <trans-unit id="updateAvailableTitle.Title" translate="yes" xml:space="preserve">
+          <source>Update available</source>
+          <target state="translated">Доступно обновление</target>
+        </trans-unit>
+        <trans-unit id="autosaveEnable.Text" translate="yes" xml:space="preserve">
+          <source>Enable</source>
+          <target state="translated">Разрешить</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval.Text" translate="yes" xml:space="preserve">
+          <source>Interval</source>
+          <target state="translated">Интервал</target>
+        </trans-unit>
+        <trans-unit id="clickHereText.Text" translate="yes" xml:space="preserve">
+          <source>Click here</source>
+          <target state="translated">Нажмите</target>
+        </trans-unit>
+        <trans-unit id="autosaveText.Text" translate="yes" xml:space="preserve">
+          <source>Autosave</source>
+          <target state="translated">Автосохранение</target>
+        </trans-unit>
+        <trans-unit id="projectSetting.Text" translate="yes" xml:space="preserve">
+          <source>Project</source>
+          <target state="translated">Проект</target>
+        </trans-unit>
+        <trans-unit id="readAloudText.Text" translate="yes" xml:space="preserve">
+          <source>Read aloud</source>
+          <target state="translated">Чтение вслух</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval1.Content" translate="yes" xml:space="preserve">
+          <source>Instantly</source>
+          <target state="translated">Сразу</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval2.Content" translate="yes" xml:space="preserve">
+          <source>2 minutes</source>
+          <target state="translated">2 минуты</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval5.Content" translate="yes" xml:space="preserve">
+          <source>5 minutes</source>
+          <target state="translated">5 минут</target>
+        </trans-unit>
+        <trans-unit id="autosaveContent.Content" translate="yes" xml:space="preserve">
+          <source>Autosave</source>
+          <target state="translated">Автосохранение</target>
+        </trans-unit>
+        <trans-unit id="done" translate="yes" xml:space="preserve">
+          <source>Done</source>
+          <target state="translated">Готово</target>
+        </trans-unit>
+        <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
+          <source>You did not finish the goal you set. Do you really want to quit?</source>
+          <target state="translated">Установленная цель еще не выполнена, вы действительно хотите уйти?</target>
+        </trans-unit>
+        <trans-unit id="focusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
+          <source>Leave</source>
+          <target state="translated">Уйти</target>
+        </trans-unit>
+        <trans-unit id="focusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
+          <source>Stay and finish</source>
+          <target state="translated">Остаться</target>
+        </trans-unit>
+        <trans-unit id="focusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
+          <source>Leaving so soon?</source>
+          <target state="translated">Уже уходите?</target>
+        </trans-unit>
+        <trans-unit id="ownDescription.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>"This character has short brown hair. Is smart and kind..."</source>
+          <target state="translated">"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</target>
+        </trans-unit>
+        <trans-unit id="newChapter.PlaceholderText" translate="no" xml:space="preserve">
+          <source>"Uten navn"</source>
+          <target state="translated">"Uten navn"</target>
+        </trans-unit>
+        <trans-unit id="characterPlaceholderName.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>"Alex White"</source>
+          <target state="new">"Alex White"</target>
+        </trans-unit>
+        <trans-unit id="noCharacters.Text" translate="yes" xml:space="preserve">
+          <source>There are no characters yet.</source>
+          <target state="translated">Персонажей пока нет.</target>
+        </trans-unit>
+        <trans-unit id="toAddNew.Text" translate="yes" xml:space="preserve">
+          <source>to add new.</source>
+          <target state="translated">для добавления.</target>
+        </trans-unit>
+        <trans-unit id="applyChanges" translate="yes" xml:space="preserve">
+          <source>Apply changes</source>
+          <target state="translated">Применить</target>
+        </trans-unit>
+        <trans-unit id="editText" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="translated">Изменить</target>
+        </trans-unit>
+        <trans-unit id="cancelText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">Отмена</target>
+        </trans-unit>
+        <trans-unit id="changesCharactersPageDialogueApplyChanges" translate="yes" xml:space="preserve">
+          <source>Apply changes</source>
+          <target state="translated">Применить</target>
+        </trans-unit>
+        <trans-unit id="changesCharactersPageDialogueDescription" translate="yes" xml:space="preserve">
+          <source>Did you want to leave without applying changes?</source>
+          <target state="translated">Вы действительно хотите уйти без применения изменений?</target>
+        </trans-unit>
+        <trans-unit id="changesCharactersPageDialogueDontApplyChanges" translate="yes" xml:space="preserve">
+          <source>Don't apply</source>
+          <target state="translated">Не использовать</target>
+        </trans-unit>
+        <trans-unit id="changesCharactersPageDialogueTitle" translate="yes" xml:space="preserve">
+          <source>Changes weren't applied!</source>
+          <target state="translated">Изменения не были применены!</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval10.Content" translate="yes" xml:space="preserve">
+          <source>10 minutes</source>
+          <target state="translated">10 минут</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval12.Content" translate="yes" xml:space="preserve">
+          <source>12 minutes</source>
+          <target state="translated">12 минут</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval15.Content" translate="yes" xml:space="preserve">
+          <source>15 minutes</source>
+          <target state="translated">15 минут</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval30.Content" translate="yes" xml:space="preserve">
+          <source>30 minutes</source>
+          <target state="translated">30 минут</target>
+        </trans-unit>
+        <trans-unit id="autosaveInterval60.Content" translate="yes" xml:space="preserve">
+          <source>1 hour</source>
+          <target state="translated">1 час</target>
+        </trans-unit>
+        <trans-unit id="addChapter.Label" translate="yes" xml:space="preserve">
+          <source>Add chapter</source>
+          <target state="translated">Добавить главу</target>
+        </trans-unit>
+        <trans-unit id="editFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Edit</source>
+          <target state="translated">Изменить</target>
+        </trans-unit>
+        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
+          <source>Add simple dialogue</source>
+          <target state="translated">Добавить простой диалог</target>
+        </trans-unit>
+        <trans-unit id="appHeaderEdited" translate="yes" xml:space="preserve">
+          <source>Edited</source>
+          <target state="translated">Изменено</target>
+        </trans-unit>
+        <trans-unit id="keyboardShortcutsLabel.Label" translate="yes" xml:space="preserve">
+          <source>Keyboard shortcuts</source>
+          <target state="translated">Сочетания клавиш</target>
+        </trans-unit>
+        <trans-unit id="version" translate="yes" xml:space="preserve">
+          <source>Version</source>
+          <target state="translated">Версия</target>
+        </trans-unit>
+        <trans-unit id="charactersPageCharactersCount.Text" translate="yes" xml:space="preserve">
+          <source>Characters: </source>
+          <target state="translated">Символы: </target>
+        </trans-unit>
+        <trans-unit id="links.Text" translate="yes" xml:space="preserve">
+          <source>Links</source>
+          <target state="translated">Полезные ссылки</target>
+        </trans-unit>
+        <trans-unit id="githubRepository.Text" translate="yes" xml:space="preserve">
+          <source>GitHub repository</source>
+          <target state="translated">Репозиторий на GitHub</target>
+        </trans-unit>
+        <trans-unit id="personalGithub.Text" translate="yes" xml:space="preserve">
+          <source>Morning4coffe's GitHub</source>
+          <target state="translated">Morning4coffe GitHub</target>
+        </trans-unit>
+        <trans-unit id="personalTwitter.Text" translate="yes" xml:space="preserve">
+          <source>Morning4coffe's Twitter</source>
+          <target state="translated">Morning4coffe Twitter</target>
+        </trans-unit>
+        <trans-unit id="privacyPolicy.Text" translate="yes" xml:space="preserve">
+          <source>Privacy policy</source>
+          <target state="translated">Политика конфиденциальности</target>
+        </trans-unit>
+        <trans-unit id="rateAndReview.Text" translate="yes" xml:space="preserve">
+          <source>Rate and review on Microsoft Store</source>
+          <target state="translated">Оценить приложение в Microsoft Store</target>
+        </trans-unit>
+        <trans-unit id="reportABug.Text" translate="yes" xml:space="preserve">
+          <source>Report a bug</source>
+          <target state="translated">Сообщить о проблеме</target>
+        </trans-unit>
+        <trans-unit id="cancelTxt.Text" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">Отмена</target>
+        </trans-unit>
+        <trans-unit id="noCharactersModes.Message" translate="yes" xml:space="preserve">
+          <source>You will have to leave Focus Mode before you can add a new one.</source>
+          <target state="translated">Вам придется покинуть режим концентрации, чтобы добавить новых.</target>
+        </trans-unit>
+        <trans-unit id="noCharactersModes.Title" translate="yes" xml:space="preserve">
+          <source>There are no characters in this project.</source>
+          <target state="translated">В текущем проекте нет персонажей.</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueAddNew" translate="yes" xml:space="preserve">
+          <source>Add new character</source>
+          <target state="translated">Добавить нового персонажа</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueDescription" translate="yes" xml:space="preserve">
+          <source>You can easily add a new character by tapping on
+the "Add new character" button.</source>
+          <target state="translated">Вы можете легко добавить персонажа, нажав
+на кнопку "Добавить нового персонажа".</target>
+        </trans-unit>
+        <trans-unit id="noCharactersDialogueTitle" translate="yes" xml:space="preserve">
+          <source>There are no characters in this project.</source>
+          <target state="translated">В текущем проекте нет персонажей.</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+</xliff>

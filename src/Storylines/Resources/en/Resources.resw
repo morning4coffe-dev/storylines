@@ -581,6 +581,9 @@ the "Add new character" button.</value>
   <data name="readAloudText.Text" xml:space="preserve">
     <value>Read aloud</value>
   </data>
+  <data name="russian.Content" xml:space="preserve">
+    <value>Russian</value>
+  </data>
   <data name="readAloudVoiceSetting.Text" xml:space="preserve">
     <value>Voice</value>
   </data>
