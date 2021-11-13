@@ -37,14 +37,14 @@
             </Paragraph>
 
             <Paragraph Margin="0,8,0,0">
-                <Run x:Uid="charactersText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+                <Run x:Uid="charactersText1" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
             </Paragraph>
             <Paragraph>
                 <Run x:Name="charactersRun" FontWeight="Normal">N/A</Run>
             </Paragraph>
 
             <Paragraph Margin="0,8,0,0">
-                <Run x:Uid="chaptersText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+                <Run x:Uid="chaptersText1" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
             </Paragraph>
             <Paragraph>
                 <Run x:Name="chaptersRun" FontWeight="Normal">N/A</Run>

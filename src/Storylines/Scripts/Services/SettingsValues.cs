@@ -68,6 +68,7 @@ namespace Storylines.Scripts.Services
 
         public static bool whiteTextBackground => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false);
         public static bool newChapterShortcut => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveInterval] ?? true);
+        public static string language => string.IsNullOrEmpty((string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage]) ? "" : (string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage];
 
         public static void LoadSettings()
         {
@@ -116,6 +117,8 @@ namespace Storylines.Scripts.Services
 
     public static class SettingsValueStrings
     {
+        public static string UserLanguage { get; } = "UserLang";
+
         public static string AppTheme { get; } = "AppTheme";
 
         public static string AppAccent { get; } = "AppAccentColor";

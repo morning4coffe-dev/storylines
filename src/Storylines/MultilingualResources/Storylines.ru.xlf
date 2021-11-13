@@ -230,10 +230,6 @@
           <source>Location:</source>
           <target state="translated">Расположение:</target>
         </trans-unit>
-        <trans-unit id="exportText.Text" translate="yes" xml:space="preserve">
-          <source>Export</source>
-          <target state="translated">Экспортировать</target>
-        </trans-unit>
         <trans-unit id="chaptersExport.Text" translate="yes" xml:space="preserve">
           <source>Chapters</source>
           <target state="translated">Главы</target>
@@ -290,7 +286,7 @@
           <source>Information</source>
           <target state="translated">Информация</target>
         </trans-unit>
-        <trans-unit id="chaptersText.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="chaptersText" translate="yes" xml:space="preserve">
           <source>Chapters</source>
           <target state="translated">Главы</target>
         </trans-unit>
@@ -302,7 +298,7 @@
           <source>Characters</source>
           <target state="translated">Символы</target>
         </trans-unit>
-        <trans-unit id="charactersText.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="charactersText" translate="yes" xml:space="preserve">
           <source>Characters</source>
           <target state="translated">Символы</target>
         </trans-unit>
@@ -796,6 +792,245 @@ the "Add new character" button.</source>
         <trans-unit id="noCharactersDialogueTitle" translate="yes" xml:space="preserve">
           <source>There are no characters in this project.</source>
           <target state="translated">В текущем проекте нет персонажей.</target>
+        </trans-unit>
+        <trans-unit id="charactersSText" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="needs-review-translation">Символы</target>
+        </trans-unit>
+        <trans-unit id="chinese.Content" translate="yes" xml:space="preserve">
+          <source>Chinese</source>
+          <target state="new">Chinese</target>
+        </trans-unit>
+        <trans-unit id="dialoguesText" translate="yes" xml:space="preserve">
+          <source>Dialogues</source>
+          <target state="needs-review-translation">Диалоги</target>
+        </trans-unit>
+        <trans-unit id="exportText" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="needs-review-translation">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="Bold" translate="yes" xml:space="preserve">
+          <source>Bold</source>
+          <target state="new">Bold</target>
+        </trans-unit>
+        <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
+          <source>Chapter above</source>
+          <target state="new">Chapter above</target>
+        </trans-unit>
+        <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
+          <source>Chapter below</source>
+          <target state="new">Chapter below</target>
+        </trans-unit>
+        <trans-unit id="Italic" translate="yes" xml:space="preserve">
+          <source>Italic</source>
+          <target state="new">Italic</target>
+        </trans-unit>
+        <trans-unit id="Redo" translate="yes" xml:space="preserve">
+          <source>Redo</source>
+          <target state="new">Redo</target>
+        </trans-unit>
+        <trans-unit id="Search" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">Поиск</target>
+        </trans-unit>
+        <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
+          <source>Strikethrough</source>
+          <target state="new">Strikethrough</target>
+        </trans-unit>
+        <trans-unit id="Underline" translate="yes" xml:space="preserve">
+          <source>Underline</source>
+          <target state="new">Underline</target>
+        </trans-unit>
+        <trans-unit id="Undo" translate="yes" xml:space="preserve">
+          <source>Undo</source>
+          <target state="new">Undo</target>
+        </trans-unit>
+        <trans-unit id="chaptersText1.Text" translate="yes" xml:space="preserve">
+          <source>Chapters</source>
+          <target state="new">Chapters</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en" target-language="ru" original="STORYLINES/RESOURCES/EN/SHORTCUTSDIALOGUE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/SHORTCUTSDIALOGUE.RESW" datatype="resx">
+        <trans-unit id="Title" translate="yes" xml:space="preserve">
+          <source>Shortcuts</source>
+          <target state="new">Shortcuts</target>
+        </trans-unit>
+        <trans-unit id="Bold" translate="yes" xml:space="preserve">
+          <source>Bold</source>
+          <target state="new">Bold</target>
+        </trans-unit>
+        <trans-unit id="Export" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="needs-review-translation">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="Italic" translate="yes" xml:space="preserve">
+          <source>Italic</source>
+          <target state="new">Italic</target>
+        </trans-unit>
+        <trans-unit id="ReadAloud" translate="yes" xml:space="preserve">
+          <source>Read aloud</source>
+          <target state="needs-review-translation">Чтение вслух</target>
+        </trans-unit>
+        <trans-unit id="Redo" translate="yes" xml:space="preserve">
+          <source>Redo</source>
+          <target state="new">Redo</target>
+        </trans-unit>
+        <trans-unit id="RemoveChapter" translate="yes" xml:space="preserve">
+          <source>Remove chapter</source>
+          <target state="new">Remove chapter</target>
+        </trans-unit>
+        <trans-unit id="RemoveCharacter" translate="yes" xml:space="preserve">
+          <source>Remove character</source>
+          <target state="new">Remove character</target>
+        </trans-unit>
+        <trans-unit id="Save" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="needs-review-translation">Сохранить</target>
+        </trans-unit>
+        <trans-unit id="SaveCopy" translate="yes" xml:space="preserve">
+          <source>Save copy</source>
+          <target state="needs-review-translation">Сохранить копию</target>
+        </trans-unit>
+        <trans-unit id="Search" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">Поиск</target>
+        </trans-unit>
+        <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
+          <source>Strikethrough</source>
+          <target state="new">Strikethrough</target>
+        </trans-unit>
+        <trans-unit id="Underline" translate="yes" xml:space="preserve">
+          <source>Underline</source>
+          <target state="new">Underline</target>
+        </trans-unit>
+        <trans-unit id="Undo" translate="yes" xml:space="preserve">
+          <source>Undo</source>
+          <target state="new">Undo</target>
+        </trans-unit>
+        <trans-unit id="AddChapter" translate="yes" xml:space="preserve">
+          <source>Add chapter</source>
+          <target state="needs-review-translation">Добавить главу</target>
+        </trans-unit>
+        <trans-unit id="AddCharacter" translate="yes" xml:space="preserve">
+          <source>Add character</source>
+          <target state="new">Add character</target>
+        </trans-unit>
+        <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
+          <source>Chapter above</source>
+          <target state="new">Chapter above</target>
+        </trans-unit>
+        <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
+          <source>Chapter below</source>
+          <target state="new">Chapter below</target>
+        </trans-unit>
+        <trans-unit id="CharactersPage" translate="yes" xml:space="preserve">
+          <source>Characters Page</source>
+          <target state="new">Characters Page</target>
+        </trans-unit>
+        <trans-unit id="General" translate="yes" xml:space="preserve">
+          <source>General</source>
+          <target state="new">General</target>
+        </trans-unit>
+        <trans-unit id="MainPage" translate="yes" xml:space="preserve">
+          <source>Main Page</source>
+          <target state="new">Main Page</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en" target-language="ru" original="STORYLINES/RESOURCES/EN/EXPORTDIALOGUE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/EXPORTDIALOGUE.RESW" datatype="resx">
+        <trans-unit id="All" translate="yes" xml:space="preserve">
+          <source>All</source>
+          <target state="needs-review-translation">Все</target>
+        </trans-unit>
+        <trans-unit id="FileLocation" translate="yes" xml:space="preserve">
+          <source>File location:</source>
+          <target state="new">File location:</target>
+        </trans-unit>
+        <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
+          <source>"C:\Users\Documents"</source>
+          <target state="new">"C:\Users\Documents"</target>
+        </trans-unit>
+        <trans-unit id="FileName" translate="yes" xml:space="preserve">
+          <source>File name:</source>
+          <target state="needs-review-translation">Имя файла:</target>
+        </trans-unit>
+        <trans-unit id="FileNameCollisionError" translate="yes" xml:space="preserve">
+          <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
+          <target state="needs-review-translation">Этот файл уже существует! Измените имя или расположение, иначе файл будет заменен.</target>
+        </trans-unit>
+        <trans-unit id="FileNamePlaceholder" translate="yes" xml:space="preserve">
+          <source>"the-queen-of-donuts-export"</source>
+          <target state="needs-review-translation">"экспорт-лесной-королевы"</target>
+        </trans-unit>
+        <trans-unit id="IncludeChapterName" translate="yes" xml:space="preserve">
+          <source>Include chapter name</source>
+          <target state="needs-review-translation">В том числе название главы</target>
+        </trans-unit>
+        <trans-unit id="None" translate="yes" xml:space="preserve">
+          <source>None</source>
+          <target state="needs-review-translation">Отсутствует</target>
+        </trans-unit>
+        <trans-unit id="OptionChapters" translate="yes" xml:space="preserve">
+          <source>Chapters</source>
+          <target state="new">Chapters</target>
+        </trans-unit>
+        <trans-unit id="OptionCharacters" translate="yes" xml:space="preserve">
+          <source>Characters</source>
+          <target state="needs-review-translation">Символы</target>
+        </trans-unit>
+        <trans-unit id="OptionDialogues" translate="yes" xml:space="preserve">
+          <source>Dialogues</source>
+          <target state="needs-review-translation">Диалоги</target>
+        </trans-unit>
+        <trans-unit id="Submit" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="needs-review-translation">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="Title" translate="yes" xml:space="preserve">
+          <source>Export</source>
+          <target state="needs-review-translation">Экспортировать</target>
+        </trans-unit>
+        <trans-unit id="ChaptersToExport" translate="yes" xml:space="preserve">
+          <source>Chapters to export:</source>
+          <target state="needs-review-translation">Главы для экспорта:</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en" target-language="ru" original="STORYLINES/RESOURCES/EN/SAVEDIALOGUE.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/SAVEDIALOGUE.RESW" datatype="resx">
+        <trans-unit id="ProjectName" translate="yes" xml:space="preserve">
+          <source>Project name:</source>
+          <target state="needs-review-translation">Название проекта:</target>
+        </trans-unit>
+        <trans-unit id="ProjectNamePlaceholder" translate="yes" xml:space="preserve">
+          <source>"About The Queen of Donuts"</source>
+          <target state="needs-review-translation">"О лесной королеве"</target>
+        </trans-unit>
+        <trans-unit id="SaveCopyTitle" translate="yes" xml:space="preserve">
+          <source>Save Copy</source>
+          <target state="needs-review-translation">Сохранить копию</target>
+        </trans-unit>
+        <trans-unit id="SaveTitle" translate="yes" xml:space="preserve">
+          <source>Save</source>
+          <target state="needs-review-translation">Сохранить</target>
         </trans-unit>
       </group>
     </body>

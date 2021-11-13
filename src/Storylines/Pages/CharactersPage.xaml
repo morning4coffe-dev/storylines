@@ -88,7 +88,7 @@
                 <RowDefinition Height="*"/>
             </Grid.RowDefinitions>
             <Grid>
-                <TextBlock x:Uid="charactersText" FontWeight="Medium" VerticalAlignment="Center"/>
+                <TextBlock x:Uid="charactersText1" FontWeight="Medium" VerticalAlignment="Center"/>
                 <StackPanel HorizontalAlignment="Right" Spacing="4" Orientation="Horizontal">
                     <Button x:Name="flyoutDisplayButton" Width="32" Height="28" Background="Transparent" BorderThickness="0" IsEnabled="{x:Bind listView.IsEnabled, Mode=OneWay}" Click="OnFlyoutDisplayButton_Click">
                         <FontIcon Glyph="" Width="20" RenderTransformOrigin=".5,.5" Margin="-8">

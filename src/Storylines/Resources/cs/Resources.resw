@@ -174,9 +174,6 @@
   <data name="location.Text" xml:space="preserve">
     <value>Umístění:</value>
   </data>
-  <data name="exportText.Text" xml:space="preserve">
-    <value>Exportovat</value>
-  </data>
   <data name="chaptersExport.Text" xml:space="preserve">
     <value>Kapitoly</value>
   </data>
@@ -219,7 +216,7 @@
   <data name="information.Text" xml:space="preserve">
     <value>Informace</value>
   </data>
-  <data name="chaptersText.Text" xml:space="preserve">
+  <data name="chaptersText" xml:space="preserve">
     <value>Kapitoly</value>
   </data>
   <data name="characters" xml:space="preserve">
@@ -227,9 +224,6 @@
   </data>
   <data name="charactersStory" xml:space="preserve">
     <value>Znaky</value>
-  </data>
-  <data name="charactersText.Text" xml:space="preserve">
-    <value>Postavy</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
     <value>Odhadovaný počet stran</value>
@@ -387,9 +381,6 @@ Opravdu chceš odejít bez uložení své práce?</value>
   </data>
   <data name="english.Content" xml:space="preserve">
     <value>Angličtina</value>
-  </data>
-  <data name="russian.Content" xml:space="preserve">
-    <value>Ruština</value>
   </data>
   <data name="noChapters.Text" xml:space="preserve">
     <value>Zatím zde nejsou žádné kapitoly.</value>

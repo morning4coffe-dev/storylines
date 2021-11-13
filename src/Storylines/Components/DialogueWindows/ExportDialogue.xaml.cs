@@ -32,7 +32,7 @@ namespace Storylines.Components.DialogueWindows
 
             AppView.currentlyOpenedDialogue = exportDialogue;
 
-            fileNameText.Text = $"{(SaveSystem.currentProject.file != null ? SaveSystem.currentProject.file.DisplayName : "my-story")}-export";
+            fileNameText.Text = $"{(SaveSystem.currentProject.file != null ? SaveSystem.currentProject.file.DisplayName : "my-story")}-{Storylines.Resources.ExportDialogue.Title.ToLower()}";
 
             SomethingChanged(false);
 
@@ -123,10 +123,10 @@ namespace Storylines.Components.DialogueWindows
             SomethingChanged(true);
 
             if (listView.SelectedItems.Count == listView.Items.Count && listView.SelectedItems.Count > 0)
-                return ResourceLoader.GetForCurrentView().GetString("all");
+                return Storylines.Resources.ExportDialogue.All;
             else
             if (listView.SelectedItems.Count == 0)
-                return ResourceLoader.GetForCurrentView().GetString("none");
+                return Storylines.Resources.ExportDialogue.None;
             else
             {
                 string txt = "";

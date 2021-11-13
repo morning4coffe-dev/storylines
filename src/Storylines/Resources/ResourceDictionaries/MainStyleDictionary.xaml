@@ -6,6 +6,7 @@
         <ResourceDictionary x:Key="Light">
             <AcrylicBrush x:Key="AppAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="#EDEDED" TintOpacity="0.95" FallbackColor="LightGray"/>
             <AcrylicBrush x:Key="ElementAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="1" Opacity="1" FallbackColor="White"/>
+            <AcrylicBrush x:Key="DialogueAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="White" TintOpacity=".9" Opacity="1" FallbackColor="White"/>
 
             <SolidColorBrush x:Key="SeparatorFill" Color="Black"/>
             <SolidColorBrush x:Key="TextForeground" Color="Black"/>
@@ -24,6 +25,7 @@
         <ResourceDictionary x:Key="Dark">
             <AcrylicBrush x:Key="AppAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.98" FallbackColor="#1C1C1C"/>
             <AcrylicBrush x:Key="ElementAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.95" Opacity="1" FallbackColor="#0F0F0F"/>
+            <AcrylicBrush x:Key="DialogueAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.9" Opacity="1" FallbackColor="#0F0F0F"/>
 
             <SolidColorBrush x:Key="SeparatorFill" Color="White"/>
             <SolidColorBrush x:Key="TextForeground" Color="White"/>
@@ -42,6 +44,7 @@
         <ResourceDictionary x:Key="HighContrast">
             <SolidColorBrush x:Key="AppAcrylicBackground" Color="#323232"/>
             <SolidColorBrush x:Key="ElementAcrylicBackground" Color="Black"/>
+            <SolidColorBrush x:Key="DialogueAcrylicBackground" Color="Black"/>
 
             <SolidColorBrush x:Key="SeparatorFill" Color="White"/>
             <SolidColorBrush x:Key="TextForeground" Color="White"/>

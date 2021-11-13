@@ -206,9 +206,9 @@ namespace Storylines.Scripts.Services
                   Application.Current.Resources["SystemAccentColorDark1"] = ChangeColorBrightness(color, -0.05f);
                   Application.Current.Resources["SystemAccentColorDark2"] = ChangeColorBrightness(color, -0.10f);
                   Application.Current.Resources["SystemAccentColorDark3"] = ChangeColorBrightness(color, -0.15f);
-                  Application.Current.Resources["SystemAccentColorLight1"] = ChangeColorBrightness(color, 0.05f);
-                  Application.Current.Resources["SystemAccentColorLight2"] = ChangeColorBrightness(color, 0.10f);
-                  Application.Current.Resources["SystemAccentColorLight3"] = ChangeColorBrightness(color, 0.15f);
+                  Application.Current.Resources["SystemAccentColorLight1"] = ChangeColorBrightness(color, 0.20f);
+                  Application.Current.Resources["SystemAccentColorLight2"] = ChangeColorBrightness(color, 0.30f);
+                  Application.Current.Resources["SystemAccentColorLight3"] = ChangeColorBrightness(color, 0.40f);
 
                   ApplyThemeForTitleBar(ApplicationView.GetForCurrentView().TitleBar, color, AppView.current.RequestedTheme);
 

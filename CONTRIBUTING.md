@@ -18,10 +18,23 @@ You can contribute to Storylines by:
 **If x64 doesn't work, use the architecture of your system*
 
 # Internationalization and localization
-  
- * Since Storylines is still preview - there will be changes to strings and new ones will be added over time. Whenever that happens, you will be notified.
- * Here are the steps you need to follow if you want to contribute:
-  1. Make sure you can build and run Storylines on your machine so that you can test during your work.
-  2. Click [here](https://github.com/morning4coffe-dev/storylines/discussions/9) and provide some information about the chosen language.
-  3. Continuously test your app while translating to make sure you are not breaking any existing layout.
-  4. When you are finished, create a new PR.
+
+### Adding a new language (requires Visual Studio 2019 and Multilingual App Toolkit)
+- Ensure you have Visual Studio 2019 and the [Multilingual App Toolkit extension](https://marketplace.visualstudio.com/items?itemName=MultilingualAppToolkit.MultilingualAppToolkit-18308).
+- Fork and clone this repo.
+- Open in VS 2019.
+- Right click on the `Storylines` project.
+- Select Multilingual App Toolkit > Add translation language.
+    - If you get a message saying "Translation Provider Manager Issue," just click Ok and ignore it. It's unrelated to adding a language.
+- Select a language. 
+- Once you select a language, new `.xlf` files will be created in the `MultilingualResources` folder.
+- Now follow the `Improving an existing language` steps below.
+
+### Improving an existing language (can be done with any text editor)
+- Inside the `MultilingualResources` folder, open all the `.xlf`s of the language you want to translate.
+    - You can open using any text editor, or you can use the [Multilingual Editor](https://developer.microsoft.com/windows/develop/multilingual-app-toolkit)
+- If you're using a text editor, translate the strings inside the `<target>` node. Then change the `state` property to `translated`.
+    ![]()
+- If you're using the Multilingual Editor, translate the strings inside the `Translation` text field. Make sure to save to preserve your changes.
+    ![]()
+- Once you're done, commit your changes, push to GitHub, and make a pull request.

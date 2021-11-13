@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="All" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>Имя файла:</value>
+  </data>
+  <data name="FileNameCollisionError" xml:space="preserve">
+    <value>Этот файл уже существует! Измените имя или расположение, иначе файл будет заменен.</value>
+  </data>
+  <data name="FileNamePlaceholder" xml:space="preserve">
+    <value>"экспорт-лесной-королевы"</value>
+  </data>
+  <data name="IncludeChapterName" xml:space="preserve">
+    <value>В том числе название главы</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>Отсутствует</value>
+  </data>
+  <data name="OptionCharacters" xml:space="preserve">
+    <value>Символы</value>
+  </data>
+  <data name="OptionDialogues" xml:space="preserve">
+    <value>Диалоги</value>
+  </data>
+  <data name="Submit" xml:space="preserve">
+    <value>Экспортировать</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Экспортировать</value>
+  </data>
+  <data name="ChaptersToExport" xml:space="preserve">
+    <value>Главы для экспорта:</value>
+  </data>
+</root>

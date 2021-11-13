@@ -174,9 +174,6 @@
   <data name="location.Text" xml:space="preserve">
     <value>Расположение:</value>
   </data>
-  <data name="exportText.Text" xml:space="preserve">
-    <value>Экспортировать</value>
-  </data>
   <data name="chaptersExport.Text" xml:space="preserve">
     <value>Главы</value>
   </data>
@@ -219,7 +216,7 @@
   <data name="information.Text" xml:space="preserve">
     <value>Информация</value>
   </data>
-  <data name="chaptersText.Text" xml:space="preserve">
+  <data name="chaptersText" xml:space="preserve">
     <value>Главы</value>
   </data>
   <data name="characters" xml:space="preserve">
@@ -228,7 +225,7 @@
   <data name="charactersStory" xml:space="preserve">
     <value>Символы</value>
   </data>
-  <data name="charactersText.Text" xml:space="preserve">
+  <data name="charactersText" xml:space="preserve">
     <value>Символы</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
@@ -588,5 +585,17 @@
   </data>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
     <value>В текущем проекте нет персонажей.</value>
+  </data>
+  <data name="charactersSText" xml:space="preserve">
+    <value>Символы</value>
+  </data>
+  <data name="dialoguesText" xml:space="preserve">
+    <value>Диалоги</value>
+  </data>
+  <data name="exportText" xml:space="preserve">
+    <value>Экспортировать</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Поиск</value>
   </data>
 </root>

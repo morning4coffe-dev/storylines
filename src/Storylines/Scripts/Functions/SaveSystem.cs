@@ -55,12 +55,12 @@ namespace Storylines.Components
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
-                SaveDialogue.Open(SaveDialogue.ToDo.Save);
+                SaveDialogue.Open(SaveDialogue.Type.Save);
         }
 
         public static void SaveCopy()
         {
-            SaveDialogue.Open(SaveDialogue.ToDo.SaveCopy);
+            SaveDialogue.Open(SaveDialogue.Type.SaveCopy);
         }
 
         public static void SaveAndExitOrClearAll(bool exit)
@@ -76,7 +76,7 @@ namespace Storylines.Components
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
-                SaveDialogue.Open(SaveDialogue.ToDo.Save);
+                SaveDialogue.Open(SaveDialogue.Type.Save);
         }
 
         private static string GetSaveValues()

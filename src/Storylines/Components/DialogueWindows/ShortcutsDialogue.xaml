@@ -1,0 +1,76 @@
+﻿<ContentDialog
+    x:Class="Storylines.Components.DialogueWindows.ShortcutsDialogue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:customcontrols="using:Storylines.Components.CustomControls" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:resources="using:Storylines.Resources"
+    mc:Ignorable="d" Closed="ContentDialog_Closed" CornerRadius="8" Background="{ThemeResource DialogueAcrylicBackground}" x:DefaultBindMode="OneTime">
+    <ContentDialog.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/CustomExpanderStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentDialog.Resources>
+
+    <Grid Width="350" MaxHeight="500" MinHeight="320" Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="42"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock Text="{x:Bind resources:ShortcutsDialogue.Title}" Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25"/>
+
+            <Button x:Name="closeButton" Width="42" Height="38" Grid.Column="2" Click="OnCloseButton_Click">
+                <FontIcon Glyph="" Width="23" RenderTransformOrigin="-.25,.5">
+                    <FontIcon.RenderTransform>
+                        <CompositeTransform ScaleX=".9" ScaleY=".9"/>
+                    </FontIcon.RenderTransform>
+                </FontIcon>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2">
+            <StackPanel Spacing="8">
+                <!--Global-->
+                <muxc:Expander Style="{StaticResource CustomExpanderStyle}" Header="{x:Bind resources:ShortcutsDialogue.Global}" HorizontalAlignment="Stretch" IsExpanded="True">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Save}" UseControl="True" Shortcut="S"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.SaveCopy}" UseControl="True" UseShift="True" Shortcut="S"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Export}" UseControl="True" Shortcut="E"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Undo}" UseControl="True" Shortcut="Z"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Redo}" UseControl="True" Shortcut="Y"/>
+                    </StackPanel>
+                </muxc:Expander>
+                <!--MainPage-->
+                <muxc:Expander Style="{StaticResource CustomExpanderStyle}" Header="{x:Bind resources:ShortcutsDialogue.MainPage}" HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.AddChapter}" UseControl="True" Shortcut="Q"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.RemoveChapter}" UseControl="True" Shortcut="Del"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ChapterAbove}" UseControl="True" Shortcut="PageUp"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ChapterBelow}" UseControl="True" Shortcut="PageDown"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ReadAloud}" UseControl="True" Shortcut="R"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Search}" UseControl="True" Shortcut="F"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Bold}" UseControl="True" UseShift="True" Shortcut="B"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Italic}" UseControl="True" UseShift="True" Shortcut="I"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Underline}" UseControl="True" UseShift="True" Shortcut="U"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Strikethrough}" UseControl="True" UseShift="True" Shortcut="T"/>
+                        <!--<customcontrols:ShortcutLineControl Description="{x:Bind RemoveChapter}" Shortcut="Enter"/>????-->
+                    </StackPanel>
+                </muxc:Expander>
+                <!--CharactersPage-->
+                <muxc:Expander Style="{StaticResource CustomExpanderStyle}" Header="{x:Bind resources:ShortcutsDialogue.CharactersPage}" HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.AddCharacter}" UseControl="True" Shortcut="Q"/>
+                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.RemoveCharacter}" UseControl="True" Shortcut="Del"/>
+                    </StackPanel>
+                </muxc:Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</ContentDialog>

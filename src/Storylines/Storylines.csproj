@@ -148,6 +148,12 @@
     <Compile Include="AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\CustomControls\SymbolButton.xaml.cs">
+      <DependentUpon>SymbolButton.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\CustomControls\ShortcutLineControl.xaml.cs">
+      <DependentUpon>ShortcutLineControl.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml.cs">
       <DependentUpon>ProjectRenamerDialogue.xaml</DependentUpon>
     </Compile>
@@ -156,6 +162,9 @@
     </Compile>
     <Compile Include="Components\DialogueWindows\FeedbackDialogue.xaml.cs">
       <DependentUpon>FeedbackDialogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\DialogueWindows\ShortcutsDialogue.xaml.cs">
+      <DependentUpon>ShortcutsDialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\CharactersPage.xaml.cs">
       <DependentUpon>CharactersPage.xaml</DependentUpon>
@@ -193,6 +202,7 @@
     <Compile Include="Pages\SettingsPages\PersonalizationPage.xaml.cs">
       <DependentUpon>PersonalizationPage.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Resources\Strings.cs" />
     <Compile Include="Scripts\Functions\NotificationManager.cs" />
     <Compile Include="Scripts\Functions\ExportSystem.cs" />
     <Compile Include="Scripts\Functions\ShortcutManager.cs" />
@@ -306,6 +316,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\CustomControls\SymbolButton.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Components\CustomControls\ShortcutLineControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -315,6 +333,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Components\DialogueWindows\FeedbackDialogue.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Components\DialogueWindows\ShortcutsDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -422,8 +444,30 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <PRIResource Include="Resources\en\Resources.resw" />
+    <PRIResource Include="Resources\en\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
     <PRIResource Include="Resources\cs\Resources.resw" />
+    <PRIResource Include="Resources\cs\Resources.resw" />
+    <PRIResource Include="Resources\zh-CN\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Resources\cs\Resources.resw" />
+    <PRIResource Include="Resources\ru\Resources.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+    <PRIResource Include="Resources\en\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\cs\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\ru\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\zh-CN\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\en\ExportDialogue.resw" />
+    <PRIResource Include="Resources\cs\ExportDialogue.resw" />
+    <PRIResource Include="Resources\ru\ExportDialogue.resw" />
+    <PRIResource Include="Resources\zh-CN\ExportDialogue.resw" />
+    <PRIResource Include="Resources\en\SaveDialogue.resw" />
+    <PRIResource Include="Resources\cs\SaveDialogue.resw" />
+    <PRIResource Include="Resources\ru\SaveDialogue.resw" />
+    <PRIResource Include="Resources\zh-CN\SaveDialogue.resw" />
     <None Include="Storylines_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
@@ -434,6 +478,8 @@
   <ItemGroup />
   <ItemGroup>
     <XliffResource Include="MultilingualResources\Storylines.cs.xlf" />
+    <XliffResource Include="MultilingualResources\Storylines.ru.xlf" />
+    <XliffResource Include="MultilingualResources\Storylines.zh-CN.xlf" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

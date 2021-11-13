@@ -10,8 +10,7 @@ namespace Storylines.Pages.SettingsPages
     public sealed partial class AccessibilityPage : Page
     {
         public static AccessibilityPage current;
-
-        ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
+        readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         private bool loading;
 
@@ -53,7 +52,11 @@ namespace Storylines.Pages.SettingsPages
         private void OnLanguageComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!loading)
-                ApplicationLanguages.PrimaryLanguageOverride = (langComboBox.SelectedItem as ComboBoxItem).Tag.ToString();
+            {
+                var lang = (langComboBox.SelectedItem as ComboBoxItem).Tag.ToString();
+                ApplicationLanguages.PrimaryLanguageOverride = lang;
+                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage] = lang;
+            }
         }
 
         private void OnReadAloudVolumeSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)

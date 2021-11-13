@@ -17,7 +17,7 @@ namespace Storylines.Components
     public sealed partial class MainCommandBar : UserControl
     {
         private readonly string feedbackLink = "https://github.com/morning4coffe-dev/Storylines/issues/new";
-        private readonly string shortcutsLink = "https://github.com/morning4coffe-dev/storylines/blob/main/shortcuts.md";
+        //private readonly string shortcutsLink = "https://github.com/morning4coffe-dev/storylines/blob/main/shortcuts.md";
 
         public MainCommandBar()
         {
@@ -186,7 +186,8 @@ namespace Storylines.Components
 
         private void OnShortcutsButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = Launcher.LaunchUriAsync(new Uri(shortcutsLink));
+            //_ = Launcher.LaunchUriAsync(new Uri(shortcutsLink));
+            ShortcutsDialogue.Open();
         }
 
         #region ReadAloud

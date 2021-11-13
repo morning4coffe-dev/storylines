@@ -243,7 +243,10 @@
   <data name="chaptersExport.Text" xml:space="preserve">
     <value>Chapters</value>
   </data>
-  <data name="chaptersText.Text" xml:space="preserve">
+  <data name="chaptersText" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="chaptersText1.Text" xml:space="preserve">
     <value>Chapters</value>
   </data>
   <data name="chaptersToExport.Text" xml:space="preserve">
@@ -273,14 +276,20 @@
   <data name="charactersPageCharactersCount.Text" xml:space="preserve">
     <value>Characters: </value>
   </data>
+  <data name="charactersSText" xml:space="preserve">
+    <value>Characters</value>
+  </data>
   <data name="charactersStory" xml:space="preserve">
     <value>Characters</value>
   </data>
-  <data name="charactersText.Text" xml:space="preserve">
+  <data name="charactersText" xml:space="preserve">
     <value>Characters</value>
   </data>
   <data name="charactersText1.Text" xml:space="preserve">
     <value>Characters:</value>
+  </data>
+  <data name="chinese.Content" xml:space="preserve">
+    <value>Chinese</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
     <value>Accent color</value>
@@ -310,6 +319,9 @@
     <value>Dialogue mode</value>
   </data>
   <data name="dialoguesExport.Text" xml:space="preserve">
+    <value>Dialogues</value>
+  </data>
+  <data name="dialoguesText" xml:space="preserve">
     <value>Dialogues</value>
   </data>
   <data name="dictation.Label" xml:space="preserve">
@@ -364,7 +376,7 @@ Did you want to exit without saving your progress?</value>
   <data name="exportContent.Content" xml:space="preserve">
     <value>Export</value>
   </data>
-  <data name="exportText.Text" xml:space="preserve">
+  <data name="exportText" xml:space="preserve">
     <value>Export</value>
   </data>
   <data name="feedbackLabel.Label" xml:space="preserve">
@@ -581,9 +593,6 @@ the "Add new character" button.</value>
   <data name="readAloudText.Text" xml:space="preserve">
     <value>Read aloud</value>
   </data>
-  <data name="russian.Content" xml:space="preserve">
-    <value>Russian</value>
-  </data>
   <data name="readAloudVoiceSetting.Text" xml:space="preserve">
     <value>Voice</value>
   </data>
@@ -619,6 +628,9 @@ the "Add new character" button.</value>
   </data>
   <data name="reviewRequestThankYou.Title" xml:space="preserve">
     <value>Thank you!</value>
+  </data>
+  <data name="russian.Content" xml:space="preserve">
+    <value>Russian</value>
   </data>
   <data name="save.Label" xml:space="preserve">
     <value>Save</value>

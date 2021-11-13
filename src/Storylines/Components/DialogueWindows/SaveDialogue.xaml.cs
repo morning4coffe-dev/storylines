@@ -3,7 +3,6 @@ using Storylines.Scripts.Variables;
 using System;
 using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -18,8 +17,8 @@ namespace Storylines.Components.DialogueWindows
 
         public ObservableCollection<string> extensions { get; private set; } = new ObservableCollection<string>();
 
-        public enum ToDo { Save, SaveCopy }
-        private static ToDo todo;
+        public enum Type { Save, SaveCopy }
+        private static Type type;
 
         public SaveDialogue()
         {
@@ -40,15 +39,15 @@ namespace Storylines.Components.DialogueWindows
 
             extensionComboBox.SelectedIndex = 0;
 
-            saveTitle.Text = todo == ToDo.Save ? ResourceLoader.GetForCurrentView().GetString("saveText") : ResourceLoader.GetForCurrentView().GetString("saveCopyText");
+            title.Text = Storylines.Resources.SaveDialogue.Title(type);
         }
 
-        public static void Open(ToDo todo)
+        public static void Open(Type type)
         {
             if(AppView.currentlyOpenedDialogue != null)
                 AppView.currentlyOpenedDialogue.Hide();
 
-            SaveDialogue.todo = todo;
+            SaveDialogue.type = type;
             _ = new SaveDialogue().ShowAsync();
         }
 

@@ -13,6 +13,7 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
 using Windows.ApplicationModel.Core;
+using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Core.Preview;
 using Windows.UI.ViewManagement;
@@ -72,10 +73,15 @@ namespace Storylines
 
         private void LanguageCheck()
         {
-            if (!SettingsValues.IsUserLanguageSupported())
-                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en";
+            if (!string.IsNullOrEmpty(SettingsValues.language))
+                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = SettingsValues.language;
             else
-                Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
+            {
+                if (!SettingsValues.IsUserLanguageSupported())
+                    Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en";
+                else
+                    Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
+            }
         }
 
         private void Start()

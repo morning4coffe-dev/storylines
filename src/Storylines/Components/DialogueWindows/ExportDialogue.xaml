@@ -4,11 +4,11 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    mc:Ignorable="d" CornerRadius="8" KeyDown="ContentDialog_KeyDown" Closed="ContentDialog_Closed" Background="{ThemeResource AppAcrylicBackground}">
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations" xmlns:customcontrols="using:Storylines.Components.CustomControls" xmlns:resources="using:Storylines.Resources"
+    mc:Ignorable="d" CornerRadius="8" KeyDown="ContentDialog_KeyDown" Closed="ContentDialog_Closed" Background="{ThemeResource DialogueAcrylicBackground}" x:DefaultBindMode="OneTime">
 
     <StackPanel Spacing="8" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="300" Margin="4">
-        <TextBlock x:Uid="exportText" Style="{StaticResource DialogueWindowHeaderStyle}"/>
+        <TextBlock Text="{x:Bind resources:ExportDialogue.Title}" Style="{StaticResource DialogueWindowHeaderStyle}"/>
         
         <StackPanel Spacing="8" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible" Margin="0, 8, 0, 0">
             <StackPanel.ChildrenTransitions>
@@ -21,7 +21,7 @@
                 <ToggleButton.Content>
                     <StackPanel Spacing="10">
                         <FontIcon Glyph=""/>
-                        <TextBlock x:Uid="chaptersExport"/>
+                        <TextBlock Text="{x:Bind resources:ExportDialogue.OptionChapters}"/>
                     </StackPanel>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -30,7 +30,7 @@
                 <ToggleButton.Content>
                     <StackPanel Spacing="10">
                         <FontIcon Glyph=""/>
-                        <TextBlock x:Uid="dialoguesExport"/>
+                        <TextBlock Text="{x:Bind resources:ExportDialogue.OptionDialogues}"/>
                     </StackPanel>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -39,7 +39,7 @@
                 <ToggleButton.Content>
                     <StackPanel Spacing="10">
                         <FontIcon Glyph=""/>
-                        <TextBlock x:Uid="charactersExport"/>
+                        <TextBlock Text="{x:Bind resources:ExportDialogue.OptionCharacters}"/>
                     </StackPanel>
                 </ToggleButton.Content>
             </ToggleButton>
@@ -49,19 +49,19 @@
             <StackPanel Spacing="14">
                 <!--For animation to work properly-->
                 <StackPanel Spacing="5">
-                    <TextBlock x:Uid="fileName"/>
+                    <TextBlock Text="{x:Bind resources:ExportDialogue.FileName}"/>
                     <StackPanel Spacing="8" Orientation="Horizontal">
-                        <TextBox x:Name="fileNameText" x:Uid="fileNameExportPlaceh" Width="212" Height="38" Style="{StaticResource SmallTextBoxStyle}" TextChanged="OnNameTextBox_TextChanged"/>
+                        <TextBox x:Name="fileNameText" PlaceholderText="{x:Bind resources:ExportDialogue.FileNamePlaceholder}" Width="212" Height="38" Style="{StaticResource SmallTextBoxStyle}" TextChanged="OnNameTextBox_TextChanged"/>
                         <ComboBox x:Name="extensionComboBox" ItemsSource="{x:Bind extensions, Mode=OneWay}" SelectedIndex="0" Height="38" CornerRadius="4" Width="80" VerticalAlignment="Bottom" HorizontalAlignment="Right" SelectionChanged="OnExtensionComboBox_SelectionChanged" DropDownOpened="Flyout_Opened" DropDownClosed="Flyout_Closed"/>
                     </StackPanel>
-                    <TextBlock x:Name="nameCollisionWarning" x:Uid="fileDoesNotExist" Foreground="Red" FontSize="12" TextWrapping="WrapWholeWords" Visibility="Collapsed"/>
+                    <TextBlock x:Name="nameCollisionWarning" Text="{x:Bind resources:ExportDialogue.FileNameCollisionError}" Foreground="Red" FontSize="12" TextWrapping="WrapWholeWords" Visibility="Collapsed"/>
                 </StackPanel>
                 
                 <StackPanel Spacing="8">
-                    <TextBlock x:Uid="location"/>
+                    <TextBlock Text="{x:Bind resources:ExportDialogue.FileLocation}"/>
                     <StackPanel Spacing="8" Orientation="Horizontal">
                         <Grid Width="248" Background="{x:Bind fileNameText.Background, Mode=OneWay}" CornerRadius="4" BorderThickness="1" BorderBrush="{x:Bind fileNameText.BorderBrush, Mode=OneWay}" Padding="10,0" Tapped="OnExportLocationFrame_Tapped">
-                            <TextBlock x:Name="locationTextPlaceholder" x:Uid="fileLocation" Opacity="0.8" VerticalAlignment="Center"/>
+                            <TextBlock x:Name="locationTextPlaceholder" Text="{x:Bind resources:ExportDialogue.FileLocationPlaceholder}" Opacity="0.8" VerticalAlignment="Center"/>
                             <TextBlock x:Name="locationText" VerticalAlignment="Center" Visibility="Collapsed"/>
                         </Grid>
                         <Button Height="38" CornerRadius="4" Width="44" VerticalAlignment="Bottom" HorizontalAlignment="Right" Click="OnExportToLocationButton_Click">
@@ -76,11 +76,11 @@
                     </StackPanel>
                 </StackPanel>
 
-                <CheckBox x:Name="withChapterNameCheckBox" x:Uid="includeChapterName" IsChecked="True"/>
+                <CheckBox x:Name="withChapterNameCheckBox" Content="{x:Bind resources:ExportDialogue.IncludeChapterName}" IsChecked="True"/>
                 
                 <StackPanel Spacing="8">
-                    <TextBlock x:Name="chaptersToExportText" x:Uid="chaptersToExport"/>
-                    <DropDownButton x:Name="chaptersToExport" Height="38" Content="All" HorizontalContentAlignment="Left" CornerRadius="4" HorizontalAlignment="Stretch">
+                    <TextBlock x:Name="chaptersToExportText" Text="{x:Bind resources:ExportDialogue.ChaptersToExport}"/>
+                    <DropDownButton x:Name="chaptersToExport" Height="38" Content="{x:Bind resources:ExportDialogue.All}" HorizontalContentAlignment="Left" CornerRadius="4" HorizontalAlignment="Stretch">
                         <DropDownButton.Flyout>
                             <Flyout Opened="Flyout_Opened" Closed="Flyout_Closed">
                                 <ListView x:Name="chaptersToExportList" Width="266" SelectionMode="Multiple" IsMultiSelectCheckBoxEnabled="True" SelectionChanged="OnChaptersToExportList_SelectionChanged"/>
@@ -90,8 +90,8 @@
                 </StackPanel>
 
                 <StackPanel x:Name="characterDialoguesToExportHolder" Spacing="8">
-                    <TextBlock x:Name="characterDialoguesToExportText" x:Uid="charactersText1"/>
-                    <DropDownButton x:Name="characterDialoguesToExport" Height="38" Content="All" HorizontalContentAlignment="Left" CornerRadius="4" HorizontalAlignment="Stretch">
+                    <TextBlock x:Name="characterDialoguesToExportText"/> <!--Text="{x:Bind Characters}"-->
+                    <DropDownButton x:Name="characterDialoguesToExport" Height="38" Content="{x:Bind resources:ExportDialogue.All}" HorizontalContentAlignment="Left" CornerRadius="4" HorizontalAlignment="Stretch">
                         <DropDownButton.Flyout>
                             <Flyout Opened="Flyout_Opened" Closed="Flyout_Closed">
                                 <ListView x:Name="characterDialoguesToExportList" Width="266" SelectionMode="Multiple" IsMultiSelectCheckBoxEnabled="True" SelectionChanged="OnCharacterDialoguesToList_SelectionChanged"/>
@@ -105,20 +105,8 @@
                         <ColumnDefinition Width="8"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <Button x:Name="submitButton" Style="{StaticResource AccentButtonStyle}" IsEnabled="False" Height="38" Background="{ThemeResource SystemAccentColorDark1}" HorizontalAlignment="Stretch" Click="OnExportButton_Click">
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <FontIcon Glyph=""/>
-                            <TextBlock x:Uid="exportText"/>
-                        </StackPanel>
-                        <!--x:Uid="exportContent"-->
-                    </Button>
-                    <Button x:Name="cancelButton" Height="38" Grid.Column="2" HorizontalAlignment="Stretch" Click="OnCancelButton_Click">
-                        <!--x:Uid="cancel"-->
-                        <StackPanel Orientation="Horizontal" Spacing="8">
-                            <SymbolIcon Symbol="Cancel"/>
-                            <TextBlock x:Uid="cancelTxt"/>
-                        </StackPanel><!--Custom control: button with symbols-->
-                    </Button>
+                    <customcontrols:SymbolButton x:Name="submitButton" Text="{x:Bind resources:ExportDialogue.Submit}" Glyph="" IsPrimary="True" HorizontalAlignment="Stretch" Click="OnExportButton_Click"/>
+                    <customcontrols:SymbolButton IsCancel="True" Grid.Column="2" HorizontalAlignment="Stretch" Click="OnCancelButton_Click"/>
                 </Grid>
             </StackPanel>
             <animations:Implicit.ShowAnimations>

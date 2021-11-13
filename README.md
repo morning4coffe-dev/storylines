@@ -30,6 +30,7 @@ Introducing Storylines 2.0, or at least just 0.6. Here is a list of most of the 
 * More story information
 * Animations across the whole app
 * A lot of other improvements and bug fixes
+You can find more [here]().
 
 <img src="./Logo and Screenshots/Storylines-0-5vs0-6.png" width="400"/>
 
@@ -39,6 +40,14 @@ Introducing Storylines 2.0, or at least just 0.6. Here is a list of most of the 
 3. Review this app on [Microsoft Store](https://www.microsoft.com/store/apps/9PN77P9WJ3CX).
 4. Star this repository here on GitHub.
 <!--5. If this still is not enough for you, you can support me and my work on GitHub Sponsors.-->
+
+## **Notes**
+| Language | Initial contributor | Maintained by |
+|---|---|---|
+| English | @morning4coffe-dev | @morning4coffe-dev |
+| Czech | @morning4coffe-dev | @morning4coffe-dev |
+| Russian | @vladimirkosolapov |  |
+| Chinesse | @moleng09 | @moleng09 |
 
 ## **Notes**
 I am learning as I work on this project, so the code is not perfect, but I will try to improve and improve the code with it.

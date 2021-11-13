@@ -32,8 +32,8 @@
                 </StackPanel>
                 <ComboBox x:Name="langComboBox" HorizontalAlignment="Right" HorizontalContentAlignment="Left" VerticalAlignment="Center" Height="30" Width="120" Grid.Column="2" SelectionChanged="OnLanguageComboBox_SelectionChanged">
                     <ComboBox.Items>
-                        <!--<ComboBoxItem x:Uid="english" Tag=""/>-->
                         <ComboBoxItem x:Uid="english" Tag="en"/>
+                        <ComboBoxItem x:Uid="chinese" Tag="zh-Hans-CN"/>
                         <ComboBoxItem x:Uid="russian" Tag="ru"/>
                         <ComboBoxItem x:Uid="czech" Tag="cs"/>
                     </ComboBox.Items>

@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="Export" xml:space="preserve">
+    <value>Exportovat</value>
+  </data>
+  <data name="RemoveChapter" xml:space="preserve">
+    <value>Odstranit kapitolu</value>
+  </data>
+  <data name="RemoveCharacter" xml:space="preserve">
+    <value>Odstranit postavu</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Uložit</value>
+  </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>Uložit kopii</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Vyhledat v textu</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>Podtržení textu</value>
+  </data>
+  <data name="CharactersPage" xml:space="preserve">
+    <value>Stránka s postavami</value>
+  </data>
+  <data name="General" xml:space="preserve">
+    <value>Obecné</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Hlavní stránka</value>
+  </data>
+</root>
