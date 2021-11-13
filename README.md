@@ -30,9 +30,10 @@ Introducing Storylines 2.0, or at least just 0.6. Here is a list of most of the 
 * More story information
 * Animations across the whole app
 * A lot of other improvements and bug fixes
-You can find more [here]().
 
 <img src="./Logo and Screenshots/Storylines-0-5vs0-6.png" width="400"/>
+
+You can find more [here](https://github.com/morning4coffe-dev/storylines/blob/9ef1773e93ad0264aa8c4cda3b34fca56d644c3e/change-log.md).
 
 ## **How to help me?**
 1. You can Report a bug, submit a feature idea, soon you will be able to help with translations, and of course, if you know C#, you can jump into the code and help me with that.
@@ -41,13 +42,13 @@ You can find more [here]().
 4. Star this repository here on GitHub.
 <!--5. If this still is not enough for you, you can support me and my work on GitHub Sponsors.-->
 
-## **Notes**
+## **Localization**
 | Language | Initial contributor | Maintained by |
 |---|---|---|
-| English | @morning4coffe-dev | @morning4coffe-dev |
-| Czech | @morning4coffe-dev | @morning4coffe-dev |
-| Russian | @vladimirkosolapov |  |
-| Chinesse | @moleng09 | @moleng09 |
+| English | [@morning4coffe-dev](https://github.com/morning4coffe-dev) | [@morning4coffe-dev](https://github.com/morning4coffe-dev) |
+| Czech | [@morning4coffe-dev](https://github.com/morning4coffe-dev) | [@morning4coffe-dev](https://github.com/morning4coffe-dev) |
+| Russian | [@vladimirkosolapov](https://github.com/vladimirkosolapov) | - |
+| Chinesse | [@moleng09](https://github.com/moleng09) | [@moleng09](https://github.com/moleng09) |
 
 ## **Notes**
 I am learning as I work on this project, so the code is not perfect, but I will try to improve and improve the code with it.
