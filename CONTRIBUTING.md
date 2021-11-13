@@ -31,10 +31,10 @@ You can contribute to Storylines by:
 - Now follow the `Improving an existing language` steps below.
 
 ### Improving an existing language (can be done with any text editor)
-- Inside the `MultilingualResources` folder, open all the `.xlf`s of the language you want to translate.
+- Inside the `MultilingualResources` folder, open the `.xlf` of the language you want to translate.
     - You can open using any text editor, or you can use the [Multilingual Editor](https://developer.microsoft.com/windows/develop/multilingual-app-toolkit)
 - If you're using a text editor, translate the strings inside the `<target>` node. Then change the `state` property to `translated`.
-    ![]()
+    ![](https://github.com/morning4coffe-dev/storylines/blob/d47dd56aa43dbbd0ce2ba38038ae93fc1e9e5504/Logo%20and%20Screenshots/GitHub/code-translation.png)
 - If you're using the Multilingual Editor, translate the strings inside the `Translation` text field. Make sure to save to preserve your changes.
-    ![]()
+<img src="https://github.com/morning4coffe-dev/storylines/blob/d47dd56aa43dbbd0ce2ba38038ae93fc1e9e5504/Logo%20and%20Screenshots/GitHub/multilingual-app-toolkit.png" width="650">
 - Once you're done, commit your changes, push to GitHub, and make a pull request.
