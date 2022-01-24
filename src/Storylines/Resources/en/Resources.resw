@@ -442,6 +442,9 @@ Did you want to exit without saving your progress?</value>
   <data name="insert.Content" xml:space="preserve">
     <value>Insert</value>
   </data>
+  <data name="italian.Content" xml:space="preserve">
+    <value>Italian</value>
+  </data>
   <data name="janeDoe" xml:space="preserve">
     <value>Jane Doe</value>
   </data>

@@ -25,7 +25,7 @@ namespace Storylines
 {
     public sealed partial class App : Application, INotifyPropertyChanged
     {
-        public static Windows.Storage.IStorageItem item;
+        public static IStorageItem item;
         private ApplicationViewTitleBar titleBar;
 
         public event PropertyChangedEventHandler PropertyChanged;

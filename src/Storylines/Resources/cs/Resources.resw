@@ -532,6 +532,9 @@ Opravdu chceš odejít bez uložení své práce?</value>
   <data name="appHeaderEdited" xml:space="preserve">
     <value>Upraveno</value>
   </data>
+  <data name="italian.Content" xml:space="preserve">
+    <value>Italština</value>
+  </data>
   <data name="keyboardShortcutsLabel.Label" xml:space="preserve">
     <value>Klávesové zkratky</value>
   </data>
@@ -581,5 +584,47 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
     <value>V aktuálním projektu zatím nejsou
 žádné postavy.</value>
+  </data>
+  <data name="chinese.Content" xml:space="preserve">
+    <value>Čínština</value>
+  </data>
+  <data name="russian.Content" xml:space="preserve">
+    <value>Ruština</value>
+  </data>
+  <data name="dialoguesText" xml:space="preserve">
+    <value>Repliky</value>
+  </data>
+  <data name="exportText" xml:space="preserve">
+    <value>Exportovat</value>
+  </data>
+  <data name="Bold" xml:space="preserve">
+    <value>Tučně</value>
+  </data>
+  <data name="ChapterAbove" xml:space="preserve">
+    <value>O kapitolu nad aktivní</value>
+  </data>
+  <data name="ChapterBelow" xml:space="preserve">
+    <value>O kapitolu pod aktivní</value>
+  </data>
+  <data name="Italic" xml:space="preserve">
+    <value>Kurzíva</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Znovu</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Vyhledat</value>
+  </data>
+  <data name="Strikethrough" xml:space="preserve">
+    <value>Přeškrtnutí</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>Podtržení</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Zpět</value>
+  </data>
+  <data name="chaptersText1.Text" xml:space="preserve">
+    <value>Kapitoly</value>
   </data>
 </root>

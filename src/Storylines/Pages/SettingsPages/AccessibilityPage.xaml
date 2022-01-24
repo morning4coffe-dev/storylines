@@ -35,6 +35,7 @@
                         <ComboBoxItem x:Uid="english" Tag="en"/>
                         <ComboBoxItem x:Uid="chinese" Tag="zh-Hans-CN"/>
                         <ComboBoxItem x:Uid="russian" Tag="ru"/>
+                        <ComboBoxItem x:Uid="italian" Tag="it"/>
                         <ComboBoxItem x:Uid="czech" Tag="cs"/>
                     </ComboBox.Items>
                 </ComboBox>

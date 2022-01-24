@@ -52,7 +52,7 @@
         </trans-unit>
         <trans-unit id="export.Label" translate="yes" xml:space="preserve">
           <source>Export</source>
-          <target state="needs-review-translation">Exportovat</target>
+          <target state="final">Exportovat</target>
         </trans-unit>
         <trans-unit id="load.Label" translate="yes" xml:space="preserve">
           <source>Load</source>
@@ -72,7 +72,7 @@
         </trans-unit>
         <trans-unit id="addDialogue.Label" translate="yes" xml:space="preserve">
           <source>Add dialogue</source>
-          <target state="needs-review-translation">Přidat repliku</target>
+          <target state="final">Přidat repliku</target>
         </trans-unit>
         <trans-unit id="aToZ.Text" translate="no" xml:space="preserve">
           <source>A-Z</source>
@@ -196,11 +196,11 @@
         </trans-unit>
         <trans-unit id="accessibility.Content" translate="yes" xml:space="preserve">
           <source>Accessibility</source>
-          <target state="needs-review-translation">Přístupnost</target>
+          <target state="final">Přístupnost</target>
         </trans-unit>
         <trans-unit id="accessibilityText.Text" translate="yes" xml:space="preserve">
           <source>Accessibility</source>
-          <target state="needs-review-translation">Přístupnost</target>
+          <target state="final">Přístupnost</target>
         </trans-unit>
         <trans-unit id="general.Content" translate="yes" xml:space="preserve">
           <source>General</source>
@@ -260,7 +260,7 @@
         </trans-unit>
         <trans-unit id="chaptersToExport.Text" translate="yes" xml:space="preserve">
           <source>Chapters to export:</source>
-          <target state="needs-review-translation">Kapitoly pro export:</target>
+          <target state="final">Kapitoly pro export:</target>
         </trans-unit>
         <trans-unit id="charactersText1.Text" translate="yes" xml:space="preserve">
           <source>Characters:</source>
@@ -442,7 +442,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="characterNotSelected.Text" translate="yes" xml:space="preserve">
           <source>No character selected.</source>
-          <target state="needs-review-translation">Není vybrána žádná postava.</target>
+          <target state="translated">Není vybrána žádná postava.</target>
         </trans-unit>
         <trans-unit id="highlighterFlyout.Text" translate="yes" xml:space="preserve">
           <source>Highlighter</source>
@@ -720,6 +720,10 @@ Opravdu chceš odejít bez uložení své práce?</target>
           <source>Edited</source>
           <target state="translated">Upraveno</target>
         </trans-unit>
+        <trans-unit id="italian.Content" translate="yes" xml:space="preserve">
+          <source>Italian</source>
+          <target state="final">Italština</target>
+        </trans-unit>
         <trans-unit id="keyboardShortcutsLabel.Label" translate="yes" xml:space="preserve">
           <source>Keyboard shortcuts</source>
           <target state="translated">Klávesové zkratky</target>
@@ -789,11 +793,11 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="chinese.Content" translate="yes" xml:space="preserve">
           <source>Chinese</source>
-          <target state="new">Chinese</target>
+          <target state="final">Čínština</target>
         </trans-unit>
         <trans-unit id="russian.Content" translate="yes" xml:space="preserve">
           <source>Russian</source>
-          <target state="new">Russian</target>
+          <target state="final">Ruština</target>
         </trans-unit>
         <trans-unit id="charactersSText" translate="yes" xml:space="preserve">
           <source>Characters</source>
@@ -805,51 +809,51 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="dialoguesText" translate="yes" xml:space="preserve">
           <source>Dialogues</source>
-          <target state="new">Dialogues</target>
+          <target state="needs-review-translation">Repliky</target>
         </trans-unit>
         <trans-unit id="exportText" translate="yes" xml:space="preserve">
           <source>Export</source>
-          <target state="new">Export</target>
+          <target state="final">Exportovat</target>
         </trans-unit>
         <trans-unit id="Bold" translate="yes" xml:space="preserve">
           <source>Bold</source>
-          <target state="new">Bold</target>
+          <target state="translated">Tučně</target>
         </trans-unit>
         <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
           <source>Chapter above</source>
-          <target state="new">Chapter above</target>
+          <target state="translated">O kapitolu nad aktivní</target>
         </trans-unit>
         <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
           <source>Chapter below</source>
-          <target state="new">Chapter below</target>
+          <target state="translated">O kapitolu pod aktivní</target>
         </trans-unit>
         <trans-unit id="Italic" translate="yes" xml:space="preserve">
           <source>Italic</source>
-          <target state="new">Italic</target>
+          <target state="final">Kurzíva</target>
         </trans-unit>
         <trans-unit id="Redo" translate="yes" xml:space="preserve">
           <source>Redo</source>
-          <target state="new">Redo</target>
+          <target state="translated">Znovu</target>
         </trans-unit>
         <trans-unit id="Search" translate="yes" xml:space="preserve">
           <source>Search</source>
-          <target state="new">Search</target>
+          <target state="translated">Vyhledat</target>
         </trans-unit>
         <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
           <source>Strikethrough</source>
-          <target state="new">Strikethrough</target>
+          <target state="translated">Přeškrtnutí</target>
         </trans-unit>
         <trans-unit id="Underline" translate="yes" xml:space="preserve">
           <source>Underline</source>
-          <target state="new">Underline</target>
+          <target state="translated">Podtržení</target>
         </trans-unit>
         <trans-unit id="Undo" translate="yes" xml:space="preserve">
           <source>Undo</source>
-          <target state="new">Undo</target>
+          <target state="translated">Zpět</target>
         </trans-unit>
         <trans-unit id="chaptersText1.Text" translate="yes" xml:space="preserve">
           <source>Chapters</source>
-          <target state="new">Chapters</target>
+          <target state="translated">Kapitoly</target>
         </trans-unit>
       </group>
     </body>
@@ -862,11 +866,11 @@ na tlačítko "Přidat novou postavu".</target>
       <group id="STORYLINES/RESOURCES/EN/SHORTCUTSDIALOGUE.RESW" datatype="resx">
         <trans-unit id="Title" translate="yes" xml:space="preserve">
           <source>Shortcuts</source>
-          <target state="new">Shortcuts</target>
+          <target state="translated">Zkratky</target>
         </trans-unit>
         <trans-unit id="Bold" translate="yes" xml:space="preserve">
           <source>Bold</source>
-          <target state="new">Bold</target>
+          <target state="translated">Tučně</target>
         </trans-unit>
         <trans-unit id="Export" translate="yes" xml:space="preserve">
           <source>Export</source>
@@ -874,15 +878,15 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="Italic" translate="yes" xml:space="preserve">
           <source>Italic</source>
-          <target state="new">Italic</target>
+          <target state="translated">Kurzíva</target>
         </trans-unit>
         <trans-unit id="ReadAloud" translate="yes" xml:space="preserve">
           <source>Read aloud</source>
-          <target state="new">Read aloud</target>
+          <target state="translated">Přečíst nahlas</target>
         </trans-unit>
         <trans-unit id="Redo" translate="yes" xml:space="preserve">
           <source>Redo</source>
-          <target state="new">Redo</target>
+          <target state="translated">Znovu</target>
         </trans-unit>
         <trans-unit id="RemoveChapter" translate="yes" xml:space="preserve">
           <source>Remove chapter</source>
@@ -906,7 +910,7 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
           <source>Strikethrough</source>
-          <target state="new">Strikethrough</target>
+          <target state="translated">Přeškrtnutí</target>
         </trans-unit>
         <trans-unit id="Underline" translate="yes" xml:space="preserve">
           <source>Underline</source>
@@ -914,35 +918,35 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="Undo" translate="yes" xml:space="preserve">
           <source>Undo</source>
-          <target state="new">Undo</target>
+          <target state="translated">Zpět</target>
         </trans-unit>
         <trans-unit id="AddChapter" translate="yes" xml:space="preserve">
           <source>Add chapter</source>
-          <target state="new">Add chapter</target>
+          <target state="final">Přidat kapitolu</target>
         </trans-unit>
         <trans-unit id="AddCharacter" translate="yes" xml:space="preserve">
           <source>Add character</source>
-          <target state="new">Add character</target>
+          <target state="final">Přidat postavu</target>
         </trans-unit>
         <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
           <source>Chapter above</source>
-          <target state="new">Chapter above</target>
+          <target state="translated">O kapitolu nad aktivní</target>
         </trans-unit>
         <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
           <source>Chapter below</source>
-          <target state="new">Chapter below</target>
+          <target state="translated">O kapitolu pod aktivní</target>
         </trans-unit>
         <trans-unit id="CharactersPage" translate="yes" xml:space="preserve">
           <source>Characters Page</source>
-          <target state="needs-review-translation">Stránka s postavami</target>
-        </trans-unit>
-        <trans-unit id="General" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="translated">Obecné</target>
+          <target state="needs-review-translation">Stránka Postavy</target>
         </trans-unit>
         <trans-unit id="MainPage" translate="yes" xml:space="preserve">
           <source>Main Page</source>
           <target state="translated">Hlavní stránka</target>
+        </trans-unit>
+        <trans-unit id="Global" translate="yes" xml:space="preserve">
+          <source>Global</source>
+          <target state="translated">Globální</target>
         </trans-unit>
       </group>
     </body>
@@ -959,11 +963,11 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="FileLocation" translate="yes" xml:space="preserve">
           <source>File location:</source>
-          <target state="new">File location:</target>
+          <target state="final">Umístění souboru:</target>
         </trans-unit>
         <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
-          <target state="new">"C:\Users\Documents"</target>
+          <target state="needs-review-translation">"C:\Uživatelé\Dokumenty"</target>
         </trans-unit>
         <trans-unit id="FileName" translate="yes" xml:space="preserve">
           <source>File name:</source>
@@ -971,11 +975,11 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="FileNameCollisionError" translate="yes" xml:space="preserve">
           <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
-          <target state="new">This file already exists! Change the name or location otherwise, the file is gonna be replaced.</target>
+          <target state="final">Tento soubor již existuje! Doporučujeme změnit jeho název nebo umístění, jinak bude nahrazen.</target>
         </trans-unit>
         <trans-unit id="FileNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-export"</source>
-          <target state="new">"the-queen-of-donuts-export"</target>
+          <target state="needs-review-translation">"kralovna-koblih-export"</target>
         </trans-unit>
         <trans-unit id="IncludeChapterName" translate="yes" xml:space="preserve">
           <source>Include chapter name</source>
@@ -983,23 +987,23 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="None" translate="yes" xml:space="preserve">
           <source>None</source>
-          <target state="new">None</target>
+          <target state="final">Žádné</target>
         </trans-unit>
         <trans-unit id="OptionChapters" translate="yes" xml:space="preserve">
           <source>Chapters</source>
-          <target state="new">Chapters</target>
+          <target state="translated">Kapitoly</target>
         </trans-unit>
         <trans-unit id="OptionCharacters" translate="yes" xml:space="preserve">
           <source>Characters</source>
-          <target state="new">Characters</target>
+          <target state="needs-review-translation">Postavy</target>
         </trans-unit>
         <trans-unit id="OptionDialogues" translate="yes" xml:space="preserve">
           <source>Dialogues</source>
-          <target state="new">Dialogues</target>
+          <target state="needs-review-translation">Repliky</target>
         </trans-unit>
         <trans-unit id="Submit" translate="yes" xml:space="preserve">
           <source>Export</source>
-          <target state="new">Export</target>
+          <target state="final">Exportovat</target>
         </trans-unit>
         <trans-unit id="Title" translate="yes" xml:space="preserve">
           <source>Export</source>
@@ -1007,7 +1011,7 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="ChaptersToExport" translate="yes" xml:space="preserve">
           <source>Chapters to export:</source>
-          <target state="new">Chapters to export:</target>
+          <target state="final">Kapitoly pro export:</target>
         </trans-unit>
       </group>
     </body>
@@ -1020,19 +1024,73 @@ na tlačítko "Přidat novou postavu".</target>
       <group id="STORYLINES/RESOURCES/EN/SAVEDIALOGUE.RESW" datatype="resx">
         <trans-unit id="ProjectName" translate="yes" xml:space="preserve">
           <source>Project name:</source>
-          <target state="new">Project name:</target>
+          <target state="needs-review-translation">Název projektu:</target>
         </trans-unit>
         <trans-unit id="ProjectNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"About The Queen of Donuts"</source>
-          <target state="new">"About The Queen of Donuts"</target>
+          <target state="final">"O královně koblih"</target>
         </trans-unit>
         <trans-unit id="SaveCopyTitle" translate="yes" xml:space="preserve">
           <source>Save Copy</source>
-          <target state="new">Save Copy</target>
+          <target state="final">Uložit kopii</target>
         </trans-unit>
         <trans-unit id="SaveTitle" translate="yes" xml:space="preserve">
           <source>Save</source>
-          <target state="new">Save</target>
+          <target state="translated">Uložit</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en" target-language="cs" original="STORYLINES/RESOURCES/EN/GENERAL.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/GENERAL.RESW" datatype="resx">
+        <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
+          <source>Storylines is a modern text editor for writing stories divided into chapters. 
+
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you could ever think of. There are many options from just a plain text document to a quick draft of your story to an extensive multichapter story with dialogues between characters.
+
+Please note this app is currently in preview, and you may experience some issues when using it.</source>
+          <target state="new">Storylines is a modern text editor for writing stories divided into chapters. 
+
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you could ever think of. There are many options from just a plain text document to a quick draft of your story to an extensive multichapter story with dialogues between characters.
+
+Please note this app is currently in preview, and you may experience some issues when using it.</target>
+        </trans-unit>
+        <trans-unit id="AppFeatures" translate="yes" xml:space="preserve">
+          <source>Write stories divided into chapters
+-
+Write dialogues and export them into popular formats like TXT or JSON
+-
+Add characters to your stories
+-
+Create and edit text documents
+-
+Focus on what matters with Focus Mode, and don’t let any other things distract you while you write
+-
+Write your stories with either your keyboard, touch, voice, or a pen</source>
+          <target state="new">Write stories divided into chapters
+-
+Write dialogues and export them into popular formats like TXT or JSON
+-
+Add characters to your stories
+-
+Create and edit text documents
+-
+Focus on what matters with Focus Mode, and don’t let any other things distract you while you write
+-
+Write your stories with either your keyboard, touch, voice, or a pen</target>
+        </trans-unit>
+        <trans-unit id="AppName" translate="yes" xml:space="preserve">
+          <source>Storylines</source>
+          <target state="new">Storylines</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">NOT FOR TRANSLATION</note>
+        </trans-unit>
+        <trans-unit id="Preview" translate="yes" xml:space="preserve">
+          <source>Preview</source>
+          <target state="new">Preview</target>
         </trans-unit>
       </group>
     </body>

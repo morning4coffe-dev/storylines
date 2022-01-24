@@ -39,6 +39,9 @@
   <data name="addText.Text" xml:space="preserve">
     <value>添加</value>
   </data>
+  <data name="italian.Content" xml:space="preserve">
+    <value>意大利语</value>
+  </data>
   <data name="app.Content" xml:space="preserve">
     <value>应用</value>
   </data>

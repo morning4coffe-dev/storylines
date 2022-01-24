@@ -42,6 +42,10 @@
           <source>Add</source>
           <target state="needs-review-translation">添加</target>
         </trans-unit>
+        <trans-unit id="italian.Content" translate="yes" xml:space="preserve">
+          <source>Italian</source>
+          <target state="needs-review-translation">意大利语</target>
+        </trans-unit>
         <trans-unit id="all" translate="yes" xml:space="preserve">
           <source>All</source>
           <target state="new">All</target>
@@ -933,13 +937,13 @@ the "Add new character" button.</source>
           <source>Characters Page</source>
           <target state="new">Characters Page</target>
         </trans-unit>
-        <trans-unit id="General" translate="yes" xml:space="preserve">
-          <source>General</source>
-          <target state="new">General</target>
-        </trans-unit>
         <trans-unit id="MainPage" translate="yes" xml:space="preserve">
           <source>Main Page</source>
           <target state="new">Main Page</target>
+        </trans-unit>
+        <trans-unit id="Global" translate="yes" xml:space="preserve">
+          <source>Global</source>
+          <target state="new">Global</target>
         </trans-unit>
       </group>
     </body>
@@ -1030,6 +1034,60 @@ the "Add new character" button.</source>
         <trans-unit id="SaveTitle" translate="yes" xml:space="preserve">
           <source>Save</source>
           <target state="needs-review-translation">保存</target>
+        </trans-unit>
+      </group>
+    </body>
+  </file>
+  <file datatype="xml" source-language="en" target-language="zh-CN" original="STORYLINES/RESOURCES/EN/GENERAL.RESW" tool-id="MultilingualAppToolkit" product-name="n/a" product-version="n/a" build-num="n/a">
+    <header>
+      <tool tool-id="MultilingualAppToolkit" tool-name="Multilingual App Toolkit" tool-version="4.0.6921.0" tool-company="Microsoft" />
+    </header>
+    <body>
+      <group id="STORYLINES/RESOURCES/EN/GENERAL.RESW" datatype="resx">
+        <trans-unit id="AppDescription" translate="yes" xml:space="preserve">
+          <source>Storylines is a modern text editor for writing stories divided into chapters. 
+
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you could ever think of. There are many options from just a plain text document to a quick draft of your story to an extensive multichapter story with dialogues between characters.
+
+Please note this app is currently in preview, and you may experience some issues when using it.</source>
+          <target state="new">Storylines is a modern text editor for writing stories divided into chapters. 
+
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you could ever think of. There are many options from just a plain text document to a quick draft of your story to an extensive multichapter story with dialogues between characters.
+
+Please note this app is currently in preview, and you may experience some issues when using it.</target>
+        </trans-unit>
+        <trans-unit id="AppFeatures" translate="yes" xml:space="preserve">
+          <source>Write stories divided into chapters
+-
+Write dialogues and export them into popular formats like TXT or JSON
+-
+Add characters to your stories
+-
+Create and edit text documents
+-
+Focus on what matters with Focus Mode, and don’t let any other things distract you while you write
+-
+Write your stories with either your keyboard, touch, voice, or a pen</source>
+          <target state="new">Write stories divided into chapters
+-
+Write dialogues and export them into popular formats like TXT or JSON
+-
+Add characters to your stories
+-
+Create and edit text documents
+-
+Focus on what matters with Focus Mode, and don’t let any other things distract you while you write
+-
+Write your stories with either your keyboard, touch, voice, or a pen</target>
+        </trans-unit>
+        <trans-unit id="AppName" translate="yes" xml:space="preserve">
+          <source>Storylines</source>
+          <target state="new">Storylines</target>
+          <note from="MultilingualBuild" annotates="source" priority="2">NOT FOR TRANSLATION</note>
+        </trans-unit>
+        <trans-unit id="Preview" translate="yes" xml:space="preserve">
+          <source>Preview</source>
+          <target state="new">Preview</target>
         </trans-unit>
       </group>
     </body>

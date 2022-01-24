@@ -1,0 +1,550 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="about.Content" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
+  <data name="aboutText.Text" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
+  <data name="accessibility.Content" xml:space="preserve">
+    <value>Accessibilità</value>
+  </data>
+  <data name="accessibilityText.Text" xml:space="preserve">
+    <value>Accessibilità</value>
+  </data>
+  <data name="add.Label" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="italian.Content" xml:space="preserve">
+    <value>Italiano</value>
+  </data>
+  <data name="addChapter.Label" xml:space="preserve">
+    <value>Aggiungi capitolo</value>
+  </data>
+  <data name="addDialogue.Label" xml:space="preserve">
+    <value>Aggiungi dialogo</value>
+  </data>
+  <data name="addSimpleDialogue.Label" xml:space="preserve">
+    <value>Aggiungi dialogo semplice</value>
+  </data>
+  <data name="addText.Text" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>Tutto</value>
+  </data>
+  <data name="app.Content" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="appHeaderEdited" xml:space="preserve">
+    <value>Modificato</value>
+  </data>
+  <data name="applyChanges" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="aToZ.Text" xml:space="preserve">
+    <value>A-Z</value>
+  </data>
+  <data name="autosave.Label" xml:space="preserve">
+    <value>Salvataggio automatico</value>
+  </data>
+  <data name="autosaveContent.Content" xml:space="preserve">
+    <value>Salvataggio automatico</value>
+  </data>
+  <data name="autosaveEnable.Text" xml:space="preserve">
+    <value>Attiva</value>
+  </data>
+  <data name="autosaveInterval.Text" xml:space="preserve">
+    <value>Intervallo</value>
+  </data>
+  <data name="autosaveInterval1.Content" xml:space="preserve">
+    <value>Instantaneamente</value>
+  </data>
+  <data name="autosaveInterval10.Content" xml:space="preserve">
+    <value>10 minuti</value>
+  </data>
+  <data name="autosaveInterval12.Content" xml:space="preserve">
+    <value>12 minuti</value>
+  </data>
+  <data name="autosaveInterval15.Content" xml:space="preserve">
+    <value>15 minuti</value>
+  </data>
+  <data name="autosaveInterval2.Content" xml:space="preserve">
+    <value>2 minuti</value>
+  </data>
+  <data name="autosaveInterval30.Content" xml:space="preserve">
+    <value>30 minuti</value>
+  </data>
+  <data name="autosaveInterval5.Content" xml:space="preserve">
+    <value>5 minuti</value>
+  </data>
+  <data name="autosaveInterval60.Content" xml:space="preserve">
+    <value>1 ora</value>
+  </data>
+  <data name="autosaveText.Text" xml:space="preserve">
+    <value>Salvataggio automatico</value>
+  </data>
+  <data name="cancel.Content" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="cancelText" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="cancelTxt.Text" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="changesCharactersPageDialogueApplyChanges" xml:space="preserve">
+    <value>Applica</value>
+  </data>
+  <data name="changesCharactersPageDialogueDescription" xml:space="preserve">
+    <value>Uscire senza salvare le modifiche?</value>
+  </data>
+  <data name="changesCharactersPageDialogueDontApplyChanges" xml:space="preserve">
+    <value>Non applicare</value>
+  </data>
+  <data name="changesCharactersPageDialogueTitle" xml:space="preserve">
+    <value>Modifiche non applicate</value>
+  </data>
+  <data name="chapterDialogueCreate" xml:space="preserve">
+    <value>Nuovo capitolo</value>
+  </data>
+  <data name="chapterDialogueName.Text" xml:space="preserve">
+    <value>Nome capitolo:</value>
+  </data>
+  <data name="chapterDialogueRename" xml:space="preserve">
+    <value>Rinomina capitolo</value>
+  </data>
+  <data name="chapterName" xml:space="preserve">
+    <value>Capitolo {number}</value>
+  </data>
+  <data name="chapterNameSetting.Text" xml:space="preserve">
+    <value>Nome capitolo</value>
+  </data>
+  <data name="chapterNameSettingDesc.Text" xml:space="preserve">
+    <value>Set a custom name. To set the place of numbering use {number}</value>
+  </data>
+  <data name="chapters" xml:space="preserve">
+    <value>Capitoli</value>
+  </data>
+  <data name="chaptersExport.Text" xml:space="preserve">
+    <value>Capitoli</value>
+  </data>
+  <data name="chaptersText" xml:space="preserve">
+    <value>Capitoli</value>
+  </data>
+  <data name="chaptersText1.Text" xml:space="preserve">
+    <value>Capitoli</value>
+  </data>
+  <data name="chaptersToExport.Text" xml:space="preserve">
+    <value>Capitoli da esportare:</value>
+  </data>
+  <data name="chapterWithoutName" xml:space="preserve">
+    <value>Fai clic destro qui o sulla freccia accanto per rinominare</value>
+  </data>
+  <data name="characterNotSelected.Text" xml:space="preserve">
+    <value>Nessun carattere selezionato.</value>
+  </data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
+    <value>"Alex White"</value>
+  </data>
+  <data name="characters" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersContent.Content" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersExport.Text" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersLabel.Label" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersPageCharactersCount.Text" xml:space="preserve">
+    <value>Caratteri: </value>
+  </data>
+  <data name="charactersSText" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersStory" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersText" xml:space="preserve">
+    <value>Caratteri</value>
+  </data>
+  <data name="charactersText1.Text" xml:space="preserve">
+    <value>Caratteri:</value>
+  </data>
+  <data name="chinese.Content" xml:space="preserve">
+    <value>Cinese</value>
+  </data>
+  <data name="chooseAccentColorSetting.Text" xml:space="preserve">
+    <value>Colore dell'app</value>
+  </data>
+  <data name="chooseThemeSetting.Text" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="clickHere" xml:space="preserve">
+    <value>Clicca qui</value>
+  </data>
+  <data name="clickHereText.Text" xml:space="preserve">
+    <value>Clicca qui</value>
+  </data>
+  <data name="createNew.Text" xml:space="preserve">
+    <value>Nuovo</value>
+  </data>
+  <data name="custom.Content" xml:space="preserve">
+    <value>Personalizzato</value>
+  </data>
+  <data name="czech.Content" xml:space="preserve">
+    <value>Czech</value>
+  </data>
+  <data name="dark.Content" xml:space="preserve">
+    <value>Scuro</value>
+  </data>
+  <data name="dialogueMode.Label" xml:space="preserve">
+    <value>Modalità dialogo</value>
+  </data>
+  <data name="dialoguesExport.Text" xml:space="preserve">
+    <value>Dialoghi</value>
+  </data>
+  <data name="dialoguesText" xml:space="preserve">
+    <value>Dialoghi</value>
+  </data>
+  <data name="dictation.Label" xml:space="preserve">
+    <value>Dettatura</value>
+  </data>
+  <data name="done" xml:space="preserve">
+    <value>Fatto</value>
+  </data>
+  <data name="downBarText.Text" xml:space="preserve">
+    <value>Aggiungi un nuovo capitolo e inizia a scrivere.</value>
+  </data>
+  <data name="downBarTextS" xml:space="preserve">
+    <value>Aggiungi un nuovo capitolo e inizia a scrivere.</value>
+  </data>
+  <data name="edit.Label" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="editFlyout.Text" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="editText" xml:space="preserve">
+    <value>Modifica</value>
+  </data>
+  <data name="english.Content" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="estimatedPageCount" xml:space="preserve">
+    <value>Conteggio pagina stimato</value>
+  </data>
+  <data name="exitWithoutSaveDialogCancel" xml:space="preserve">
+    <value>Cancella</value>
+  </data>
+  <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
+    <value>Hey! Slow down a little bit!
+Did you want to exit without saving your progress?</value>
+  </data>
+  <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
+    <value>Non salvare</value>
+  </data>
+  <data name="exitWithoutSaveDialogSave" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
+    <value>Progressi non salvati</value>
+  </data>
+  <data name="experience.Title" xml:space="preserve">
+    <value>Dicci cosa ne pensi</value>
+  </data>
+  <data name="export.Label" xml:space="preserve">
+    <value>Esporta</value>
+  </data>
+  <data name="exportContent.Content" xml:space="preserve">
+    <value>Esporta</value>
+  </data>
+  <data name="exportText" xml:space="preserve">
+    <value>Esporta</value>
+  </data>
+  <data name="feedbackLabel.Label" xml:space="preserve">
+    <value>Feedback</value>
+  </data>
+  <data name="file.Content" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="fileDoesNotExist.Text" xml:space="preserve">
+    <value>Il file non esiste. Change the name or location otherwise, the file is gonna be replaced.</value>
+  </data>
+  <data name="fileLocation.Text" xml:space="preserve">
+    <value>"C:\Utenti\Documenti"</value>
+  </data>
+  <data name="fileName.Text" xml:space="preserve">
+    <value>Nome file:</value>
+  </data>
+  <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
+    <value>"the-queen-of-donuts-export"</value>
+  </data>
+  <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
+    <value>"the-queen-of-donuts-script"</value>
+  </data>
+  <data name="findOne.Text" xml:space="preserve">
+    <value>Trova</value>
+  </data>
+  <data name="focusMode.Label" xml:space="preserve">
+    <value>Modalità concentrazione</value>
+  </data>
+  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+    <value>Non hai completato l'obiettivo preimpostato. Sei sicuro di voler uscire?</value>
+  </data>
+  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+    <value>Lascia</value>
+  </data>
+  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+    <value>Stay and finish</value>
+  </data>
+  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+    <value>Uscire così presto?</value>
+  </data>
+  <data name="general.Content" xml:space="preserve">
+    <value>Generali</value>
+  </data>
+  <data name="generalText.Text" xml:space="preserve">
+    <value>Generali</value>
+  </data>
+  <data name="githubRepository.Text" xml:space="preserve">
+    <value>Repository GitHub </value>
+  </data>
+  <data name="help.Content" xml:space="preserve">
+    <value>Aiuto</value>
+  </data>
+  <data name="highlighterFlyout.Text" xml:space="preserve">
+    <value>Evidenziatore</value>
+  </data>
+  <data name="includeChapterName.Content" xml:space="preserve">
+    <value>Include chapter name</value>
+  </data>
+  <data name="information.Text" xml:space="preserve">
+    <value>Informazioni</value>
+  </data>
+  <data name="insert.Content" xml:space="preserve">
+    <value>Inserisci</value>
+  </data>
+  <data name="janeDoe" xml:space="preserve">
+    <value>Jane Doe</value>
+  </data>
+  <data name="johnDoe" xml:space="preserve">
+    <value>John Doe</value>
+  </data>
+  <data name="keyboardShortcutsLabel.Label" xml:space="preserve">
+    <value>Scorciatoie da tastiera</value>
+  </data>
+  <data name="languageSetting.Text" xml:space="preserve">
+    <value>Lingua</value>
+  </data>
+  <data name="languageSettingDesc.Text" xml:space="preserve">
+    <value>Riavvio dell'app necessario per rendere effettive le modifiche.</value>
+  </data>
+  <data name="light.Content" xml:space="preserve">
+    <value>Chiaro</value>
+  </data>
+  <data name="links.Text" xml:space="preserve">
+    <value>Collegamenti</value>
+  </data>
+  <data name="load.Label" xml:space="preserve">
+    <value>Importa</value>
+  </data>
+  <data name="loadSaveSystemErrorText" xml:space="preserve">
+    <value>Si è verificato un errore. File non caricato.</value>
+  </data>
+  <data name="location.Text" xml:space="preserve">
+    <value>Percorso:</value>
+  </data>
+  <data name="modeDialogueFocus.Text" xml:space="preserve">
+    <value>Concentrazione</value>
+  </data>
+  <data name="modeDialogueFullScreen.Content" xml:space="preserve">
+    <value>Schermo intero</value>
+  </data>
+  <data name="modeDialogueRead.Text" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="modeDialogueTimer.Content" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="newChapterShortcut.Text" xml:space="preserve">
+    <value>Crea capitolo tramite scorciatoia</value>
+  </data>
+  <data name="newChapterShortcutDesc.Text" xml:space="preserve">
+    <value>Consente di aggiungere un nuovo capitolo premendo Ctrl+Pag Giù.</value>
+  </data>
+  <data name="newUpdateAvailable.Text" xml:space="preserve">
+    <value>Sembra ci sia un nuovo aggiornamento sullo store!</value>
+  </data>
+  <data name="newUpdateAvailable2.Text" xml:space="preserve">
+    <value>per scaricarlo.</value>
+  </data>
+  <data name="noChapters.Text" xml:space="preserve">
+    <value>Non sono presenti capitoli.</value>
+  </data>
+  <data name="noCharacters.Text" xml:space="preserve">
+    <value>Non sono presenti caratteri.</value>
+  </data>
+  <data name="noCharactersDialogueAddNew" xml:space="preserve">
+    <value>Nuovo carattere</value>
+  </data>
+  <data name="none" xml:space="preserve">
+    <value>Nessuno</value>
+  </data>
+  <data name="noneText.Text" xml:space="preserve">
+    <value>Nessuno</value>
+  </data>
+  <data name="or.Text" xml:space="preserve">
+    <value>o</value>
+  </data>
+  <data name="paragraphs" xml:space="preserve">
+    <value>Paragrafi</value>
+  </data>
+  <data name="paragraphsContent.Content" xml:space="preserve">
+    <value>Paragrafi</value>
+  </data>
+  <data name="personalGithub.Text" xml:space="preserve">
+    <value>Morning4coffe su GitHub</value>
+  </data>
+  <data name="personalization.Content" xml:space="preserve">
+    <value>Aspetto</value>
+  </data>
+  <data name="personalizationText.Text" xml:space="preserve">
+    <value>Aspetto</value>
+  </data>
+  <data name="personalTwitter.Text" xml:space="preserve">
+    <value>Morning4coffe su Twitter</value>
+  </data>
+  <data name="projectName.Text" xml:space="preserve">
+    <value>Nome progetto:</value>
+  </data>
+  <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
+    <value>"About The Queen of Donuts"</value>
+  </data>
+  <data name="projectOnStartSetting.Text" xml:space="preserve">
+    <value>Apri ultimo progetto all'avvio</value>
+  </data>
+  <data name="projectOnStartSettingDesc.Text" xml:space="preserve">
+    <value>L'app si ricorderà l'ultimo progetto salvato e tenterà di riaprirlo all'appertura.</value>
+  </data>
+  <data name="projects.Text" xml:space="preserve">
+    <value>Progetti</value>
+  </data>
+  <data name="projectSetting.Text" xml:space="preserve">
+    <value>Progetto</value>
+  </data>
+  <data name="rateAndReview.Text" xml:space="preserve">
+    <value>Valuta e recensisci sul Microsoft Store</value>
+  </data>
+  <data name="readAloudVolumeSetting.Text" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="readMode.Label" xml:space="preserve">
+    <value>Modalità lettura</value>
+  </data>
+  <data name="remove.Label" xml:space="preserve">
+    <value>Rimuovi</value>
+  </data>
+  <data name="removeFlyout.Text" xml:space="preserve">
+    <value>Rimuovi</value>
+  </data>
+  <data name="renameFlyout.Text" xml:space="preserve">
+    <value>Rinomina</value>
+  </data>
+  <data name="reviewDialogOption1.Content" xml:space="preserve">
+    <value>Valuta adesso</value>
+  </data>
+  <data name="reviewDialogOption2.Content" xml:space="preserve">
+    <value>Non ora</value>
+  </data>
+  <data name="reviewDialogOption3.Content" xml:space="preserve">
+    <value>Non mostrare più</value>
+  </data>
+  <data name="reviewRequestThankYou.Title" xml:space="preserve">
+    <value>Grazie!</value>
+  </data>
+  <data name="russian.Content" xml:space="preserve">
+    <value>Russo</value>
+  </data>
+  <data name="save.Label" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="saveContent.Content" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="saveCopy.Label" xml:space="preserve">
+    <value>Salva copia</value>
+  </data>
+  <data name="saveCopyText" xml:space="preserve">
+    <value>Salva copia</value>
+  </data>
+  <data name="saveSaveSystemErrorText" xml:space="preserve">
+    <value>Si è verificato un errore. Il file non può essere salvato.</value>
+  </data>
+  <data name="saveText" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="searchBox.PlaceholderText" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="sort.Label" xml:space="preserve">
+    <value>Ordina</value>
+  </data>
+  <data name="storyText.Text" xml:space="preserve">
+    <value>Storia</value>
+  </data>
+  <data name="submit.Content" xml:space="preserve">
+    <value>Conferma</value>
+  </data>
+  <data name="system.Content" xml:space="preserve">
+    <value>Predefinito di Sistema</value>
+  </data>
+  <data name="toAddNew.Text" xml:space="preserve">
+    <value>to add new.</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Versione</value>
+  </data>
+  <data name="view.Content" xml:space="preserve">
+    <value>Visualizza</value>
+  </data>
+  <data name="website.Content" xml:space="preserve">
+    <value>Sito Web</value>
+  </data>
+  <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="withoutSpaces" xml:space="preserve">
+    <value>senza spazi</value>
+  </data>
+  <data name="withSpaces" xml:space="preserve">
+    <value>con spazi</value>
+  </data>
+  <data name="words" xml:space="preserve">
+    <value>Parole</value>
+  </data>
+  <data name="wordsContent.Content" xml:space="preserve">
+    <value>Parole</value>
+  </data>
+  <data name="zoom.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="zToA.Text" xml:space="preserve">
+    <value>Z-A</value>
+  </data>
+</root>

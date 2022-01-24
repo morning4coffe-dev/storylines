@@ -81,7 +81,7 @@ namespace Storylines.Components.CustomControls
             }
         }
 
-        private Style Style { set; get; }
+        private new Style Style { set; get; }
 
         public event RoutedEventHandler Click;
 

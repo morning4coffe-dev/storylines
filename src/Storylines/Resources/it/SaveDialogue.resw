@@ -13,15 +13,15 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="ProjectName" xml:space="preserve">
-    <value>Název projektu:</value>
+    <value>Nome progetto:</value>
   </data>
   <data name="ProjectNamePlaceholder" xml:space="preserve">
-    <value>"O královně koblih"</value>
+    <value>"About The Queen of Donuts"</value>
   </data>
   <data name="SaveCopyTitle" xml:space="preserve">
-    <value>Uložit kopii</value>
+    <value>Salva Copia</value>
   </data>
   <data name="SaveTitle" xml:space="preserve">
-    <value>Uložit</value>
+    <value>Salva</value>
   </data>
 </root>

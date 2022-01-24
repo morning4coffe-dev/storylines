@@ -11,9 +11,9 @@
 
   <Identity
     Publisher="CN=A4324CBF-D4DD-41DE-9042-BB3AA1508016"
-    Version="0.6.4.0"  Name="3597CaffeStudios.Storylines"/>
+    Version="0.6.9.0"  Name="3597CaffeStudios.Storylines"/>
 
-  <mp:PhoneIdentity PhoneProductId="0c524b73-0638-4093-8fcf-acd4c29fd978" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
+  <mp:PhoneIdentity PhoneProductId="5276419e-616b-4903-af55-b25842980bdd" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>Storylines</DisplayName>

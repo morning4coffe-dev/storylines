@@ -12,67 +12,67 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="Title" xml:space="preserve">
-    <value>Zkratky</value>
-  </data>
-  <data name="Bold" xml:space="preserve">
-    <value>Tučně</value>
-  </data>
-  <data name="Export" xml:space="preserve">
-    <value>Exportovat</value>
-  </data>
-  <data name="Italic" xml:space="preserve">
-    <value>Kurzíva</value>
-  </data>
-  <data name="ReadAloud" xml:space="preserve">
-    <value>Přečíst nahlas</value>
-  </data>
-  <data name="Redo" xml:space="preserve">
-    <value>Znovu</value>
-  </data>
-  <data name="RemoveChapter" xml:space="preserve">
-    <value>Odstranit kapitolu</value>
-  </data>
-  <data name="RemoveCharacter" xml:space="preserve">
-    <value>Odstranit postavu</value>
-  </data>
-  <data name="Save" xml:space="preserve">
-    <value>Uložit</value>
-  </data>
-  <data name="SaveCopy" xml:space="preserve">
-    <value>Uložit kopii</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Vyhledat v textu</value>
-  </data>
-  <data name="Strikethrough" xml:space="preserve">
-    <value>Přeškrtnutí</value>
-  </data>
-  <data name="Underline" xml:space="preserve">
-    <value>Podtržení textu</value>
-  </data>
-  <data name="Undo" xml:space="preserve">
-    <value>Zpět</value>
-  </data>
   <data name="AddChapter" xml:space="preserve">
-    <value>Přidat kapitolu</value>
+    <value>Aggiungi capitolo</value>
   </data>
   <data name="AddCharacter" xml:space="preserve">
-    <value>Přidat postavu</value>
+    <value>Aggiungi carattere</value>
+  </data>
+  <data name="Bold" xml:space="preserve">
+    <value>Grassetto</value>
   </data>
   <data name="ChapterAbove" xml:space="preserve">
-    <value>O kapitolu nad aktivní</value>
+    <value>Capitolo superiore</value>
   </data>
   <data name="ChapterBelow" xml:space="preserve">
-    <value>O kapitolu pod aktivní</value>
+    <value>Capitolo inferiore</value>
   </data>
   <data name="CharactersPage" xml:space="preserve">
-    <value>Stránka Postavy</value>
+    <value>Pagina caratteri</value>
   </data>
-  <data name="MainPage" xml:space="preserve">
-    <value>Hlavní stránka</value>
+  <data name="Export" xml:space="preserve">
+    <value>Esporta</value>
   </data>
   <data name="Global" xml:space="preserve">
-    <value>Globální</value>
+    <value>Globale</value>
+  </data>
+  <data name="Italic" xml:space="preserve">
+    <value>Corsivo</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Pagina principale</value>
+  </data>
+  <data name="ReadAloud" xml:space="preserve">
+    <value>Read aloud</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Ripristina ultima modifica</value>
+  </data>
+  <data name="RemoveChapter" xml:space="preserve">
+    <value>Rimuovi capitolo</value>
+  </data>
+  <data name="RemoveCharacter" xml:space="preserve">
+    <value>Rimuovi carattere</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>Salva copia</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="Strikethrough" xml:space="preserve">
+    <value>Barrato</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Scorciatoie da tastiera</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>Sottolinea</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Annulla ultima modifica</value>
   </data>
 </root>
