@@ -1,0 +1,77 @@
+﻿<ContentDialog x:ConnectionId='1'
+    x:Class="Storylines.Components.DialogueWindows.ShortcutsDialogue"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:customcontrols="using:Storylines.Components.CustomControls" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:resources="using:Storylines.Resources"
+    mc:Ignorable="d"                               CornerRadius="8" Background="{ThemeResource DialogueAcrylicBackground}"                            >
+    <ContentDialog.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/CustomExpanderStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </ContentDialog.Resources>
+
+    <Grid Width="350" MaxHeight="500" MinHeight="320" Margin="4">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="38"/>
+            <RowDefinition Height="8"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="42"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock x:ConnectionId='22'                                                   Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25"/>
+
+            <Button x:ConnectionId='23' x:Name="closeButton" Width="42" Height="38" Grid.Column="2"                            >
+                <FontIcon Glyph="" Width="23" RenderTransformOrigin="-.25,.5">
+                    <FontIcon.RenderTransform>
+                        <CompositeTransform ScaleX=".9" ScaleY=".9"/>
+                    </FontIcon.RenderTransform>
+                </FontIcon>
+            </Button>
+        </Grid>
+
+        <ScrollViewer Grid.Row="2">
+            <StackPanel Spacing="8">
+                <!--Global-->
+                <muxc:Expander x:ConnectionId='2' Style="{StaticResource CustomExpanderStyle}"                                                      HorizontalAlignment="Stretch" IsExpanded="True">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl x:ConnectionId='17'                                                         UseControl="True" Shortcut="S"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='18'                                                             UseControl="True" UseShift="True" Shortcut="S"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='19'                                                           UseControl="True" Shortcut="E"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='20'                                                         UseControl="True" Shortcut="Z"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='21'                                                         UseControl="True" Shortcut="Y"/>
+                    </StackPanel>
+                </muxc:Expander>
+                <!--MainPage-->
+                <muxc:Expander x:ConnectionId='3' Style="{StaticResource CustomExpanderStyle}"                                                        HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl x:ConnectionId='7'                                                               UseControl="True" Shortcut="Q"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='8'                                                                  UseControl="True" Shortcut="Del"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='9'                                                                 UseControl="True" Shortcut="PageUp"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='10'                                                                 UseControl="True" Shortcut="PageDown"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='11'                                                              UseControl="True" Shortcut="R"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='12'                                                           UseControl="True" Shortcut="F"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='13'                                                         UseControl="True" UseShift="True" Shortcut="B"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='14'                                                           UseControl="True" UseShift="True" Shortcut="I"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='15'                                                              UseControl="True" UseShift="True" Shortcut="U"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='16'                                                                  UseControl="True" UseShift="True" Shortcut="T"/>
+                        <!--<customcontrols:ShortcutLineControl Description="{x:Bind RemoveChapter}" Shortcut="Enter"/>????-->
+                    </StackPanel>
+                </muxc:Expander>
+                <!--CharactersPage-->
+                <muxc:Expander x:ConnectionId='4' Style="{StaticResource CustomExpanderStyle}"                                                              HorizontalAlignment="Stretch">
+                    <StackPanel HorizontalAlignment="Stretch" Spacing="8">
+                        <customcontrols:ShortcutLineControl x:ConnectionId='5'                                                                 UseControl="True" Shortcut="Q"/>
+                        <customcontrols:ShortcutLineControl x:ConnectionId='6'                                                                    UseControl="True" Shortcut="Del"/>
+                    </StackPanel>
+                </muxc:Expander>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
+</ContentDialog>
+

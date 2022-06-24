@@ -1,0 +1,78 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="Storylines.Pages.SettingsPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    d:DesignHeight="800"
+    d:DesignWidth="1000"
+                                                       
+                          
+                                         
+    mc:Ignorable="d">
+
+    <Grid>
+        <muxc:NavigationView x:ConnectionId='2'
+            x:Name="settingsNavigationView"
+            HorizontalAlignment="Stretch"
+            x:FieldModifier="public"
+            IsBackButtonVisible="Collapsed"
+            IsSettingsVisible="False"
+            OpenPaneLength="280"
+            PaneDisplayMode="Left"
+                                                                        >
+            <muxc:NavigationView.MenuItems>
+                <muxc:NavigationViewItem
+                    x:Uid="general"
+                    CornerRadius="4"
+                    IsSelected="True"
+                    Tag="General">
+                    <muxc:NavigationViewItem.Icon>
+                        <muxc:AnimatedIcon>
+                            <muxc:AnimatedIcon.Source>
+                                <animatedvisuals:AnimatedSettingsVisualSource />
+                            </muxc:AnimatedIcon.Source>
+                            <muxc:AnimatedIcon.FallbackIconSource>
+                                <muxc:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;" />
+                            </muxc:AnimatedIcon.FallbackIconSource>
+                        </muxc:AnimatedIcon>
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+                <muxc:NavigationViewItem
+                    x:Uid="personalization"
+                    CornerRadius="4"
+                    Tag="Personalize">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+
+                <muxc:NavigationViewItem
+                    x:Uid="accessibility"
+                    Tag="Accessibility"
+                    Visibility="Visible">
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.MenuItems>
+            <muxc:NavigationView.PaneFooter>
+                <muxc:NavigationViewItem x:ConnectionId='3'
+                    x:Name="aboutPageItem"
+                    x:Uid="about"
+                                                       
+                    Tag="About"
+                                                   >
+                    <muxc:NavigationViewItem.Icon>
+                        <FontIcon Glyph="" />
+                    </muxc:NavigationViewItem.Icon>
+                </muxc:NavigationViewItem>
+            </muxc:NavigationView.PaneFooter>
+            <Frame x:ConnectionId='4' x:Name="contentFrame" />
+        </muxc:NavigationView>
+    </Grid>
+</Page>
+

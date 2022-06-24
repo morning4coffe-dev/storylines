@@ -1,0 +1,122 @@
+﻿<Page x:ConnectionId='1'
+    x:Class="Storylines.Pages.SettingsPages.GeneralPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    mc:Ignorable="d"                                                                  >
+
+    <Page.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/Resources/ResourceDictionaries/RightAlignedToggleSwitchStyle.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Page.Resources>
+
+    <ScrollViewer VerticalScrollBarVisibility="Auto">
+        <StackPanel x:ConnectionId='2' x:Name="generalPage" Margin="35" Spacing="6" HorizontalAlignment="Left" Width="1000">
+            <TextBlock x:Uid="generalText" FontSize="25" Margin="0,-5,0,5" FontWeight="SemiBold"/>
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="" HorizontalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center" Spacing="1" Grid.Column="1">
+                    <TextBlock x:Uid="chapterNameSetting" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <TextBlock x:Uid="chapterNameSettingDesc" FontWeight="Light" Opacity="0.8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+                </StackPanel>
+
+                <StackPanel x:ConnectionId='7' x:Name="chapterNameStack" Grid.Column="2" Spacing="6" Orientation="Horizontal" VerticalAlignment="Center">
+                    <TextBox x:ConnectionId='8' x:Name="chapterNameBox" Width="150" Height="32"                                               />
+                    <Button x:ConnectionId='9' HorizontalAlignment="Right"                                     >
+                        <FontIcon Glyph="" RenderTransformOrigin="0.5,0.5">
+                            <FontIcon.RenderTransform>
+                                <CompositeTransform ScaleX="0.7" ScaleY="0.7"/>
+                            </FontIcon.RenderTransform>
+                        </FontIcon>
+                    </Button>
+                </StackPanel>
+            </Grid>
+            <StackPanel>
+                <TextBlock x:Uid="projectSetting" FontWeight="SemiBold" Margin="0,10,0,5"/>
+            </StackPanel>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="" HorizontalAlignment="Center" />
+                <TextBlock x:Uid="unsavedProgressAlert" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Column="1"/>
+                <ToggleSwitch x:ConnectionId='6' x:Name="exitDialogueToggleSwitch" Style="{StaticResource RightAlignedToggleSwitchStyle}" HorizontalAlignment="Right" Grid.Column="2"                                             />
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="" HorizontalAlignment="Center"/>
+                <StackPanel VerticalAlignment="Center" Spacing="1" Grid.Column="1">
+                    <TextBlock x:Uid="projectOnStartSetting" TextWrapping="Wrap" VerticalAlignment="Center"/>
+                    <TextBlock x:Uid="projectOnStartSettingDesc" FontWeight="Light" Opacity="0.8" VerticalAlignment="Center" TextWrapping="Wrap" Margin="0,0,10,0"/>
+                </StackPanel>
+                <ToggleSwitch x:ConnectionId='5' x:Name="projectOnStartToggleSwitch" Style="{StaticResource RightAlignedToggleSwitchStyle}" HorizontalAlignment="Right" Grid.Column="2"                                                 />
+            </Grid>
+
+            <StackPanel>
+                <TextBlock x:Uid="autosaveText" FontWeight="SemiBold" Margin="0,10,0,5"/>
+            </StackPanel>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="" HorizontalAlignment="Center" />
+                <TextBlock x:Uid="autosaveEnable" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Column="1"/>
+                <ToggleSwitch x:ConnectionId='4' x:Name="autosaveToggleSwitch" Style="{StaticResource RightAlignedToggleSwitchStyle}" HorizontalAlignment="Right" Grid.Column="2"                                         />
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" CornerRadius="4" Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="auto"/>
+                    <ColumnDefinition Width="20"/>
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="" HorizontalAlignment="Center" />
+                <TextBlock x:Uid="autosaveInterval" VerticalAlignment="Center" TextWrapping="Wrap" Grid.Column="1"/>
+                <ComboBox x:ConnectionId='3' x:Name="autosaveIntervalComboBox" HorizontalAlignment="Right" HorizontalContentAlignment="Left" VerticalAlignment="Center" Height="30" Width="120" SelectedIndex="2" Grid.Column="2"                                                               >
+                    <ComboBox.Items>
+                        <ComboBoxItem x:Uid="autosaveInterval1" Tag="0,1"/>
+                        <ComboBoxItem x:Uid="autosaveInterval2" Tag="2"/>
+                        <ComboBoxItem x:Uid="autosaveInterval5" Tag="5"/>
+                        <ComboBoxItem x:Uid="autosaveInterval10" Tag="10"/>
+                        <ComboBoxItem x:Uid="autosaveInterval12" Tag="12"/>
+                        <ComboBoxItem x:Uid="autosaveInterval15" Tag="15"/>
+                        <ComboBoxItem x:Uid="autosaveInterval30" Tag="30"/>
+                        <ComboBoxItem x:Uid="autosaveInterval60" Tag="60"/>
+                    </ComboBox.Items>
+                </ComboBox>
+            </Grid>
+
+            <StackPanel.ChildrenTransitions>
+                <TransitionCollection>
+                    <EntranceThemeTransition IsStaggeringEnabled="True" FromVerticalOffset="50"/>
+                </TransitionCollection>
+            </StackPanel.ChildrenTransitions>
+        </StackPanel>
+    </ScrollViewer>
+</Page>
+

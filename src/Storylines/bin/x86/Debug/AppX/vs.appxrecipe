@@ -1,0 +1,813 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Machine>HP-DESKTOP</Machine>
+    <WindowsUser>domin</WindowsUser>
+    <TargetPlatformIdentifier>UAP</TargetPlatformIdentifier>
+    <TargetOsVersion>10.0</TargetOsVersion>
+    <TargetOsDescription>Windows 10.0</TargetOsDescription>
+    <SolutionConfiguration>Debug|x86</SolutionConfiguration>
+    <PackageArchitecture>x86</PackageArchitecture>
+    <PackageIdentityName>5276419e-616b-4903-af55-b25842980bdd</PackageIdentityName>
+    <PackageIdentityPublisher>CN=Morning4coffe</PackageIdentityPublisher>
+    <IntermediateOutputPath>D:\Documents\Projects\Storylines\src\Storylines\obj\x86\Debug\</IntermediateOutputPath>
+    <RemoteDeploymentType>
+    </RemoteDeploymentType>
+    <PackageRegistrationPath>
+    </PackageRegistrationPath>
+    <RemoveNonLayoutFiles>true</RemoveNonLayoutFiles>
+    <DeployOptionalPackages>false</DeployOptionalPackages>
+    <WindowsSdkPath>C:\Program Files %28x86%29\Windows Kits\10\</WindowsSdkPath>
+    <LayoutDir>D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\AppX</LayoutDir>
+    <RegisteredManifestChecksum>7D332F36B2F1046CD6DD9049C30AE39B063082A941E8E8B5943645BD2ACB1F09</RegisteredManifestChecksum>
+    <RegisteredPackageMoniker>3597CaffeStudios.Storylines_0.6.9.0_x86__ek7d138bt4s2y</RegisteredPackageMoniker>
+    <RegisteredUserModeAppID>3597CaffeStudios.Storylines_ek7d138bt4s2y!App</RegisteredUserModeAppID>
+    <RegisteredPackageID>3597CaffeStudios.Storylines</RegisteredPackageID>
+    <RegisteredPackagePublisher>CN=Morning4coffe</RegisteredPackagePublisher>
+    <RegisteredVersion>0.6.9.0</RegisteredVersion>
+  </PropertyGroup>
+  <ItemGroup>
+    <AppXManifest Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Core\AppxManifest.xml">
+      <PackagePath>AppxManifest.xml</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2022-06-24T19:27:11.384</Modified>
+    </AppXManifest>
+  </ItemGroup>
+  <ItemGroup>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Storylines.exe">
+      <PackagePath>entrypoint\Storylines.exe</PackagePath>
+      <Modified>2022-06-24T19:27:09.128</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\colorcode.core\2.0.6\lib\netstandard1.4\ColorCode.Core.dll">
+      <PackagePath>ColorCode.Core.dll</PackagePath>
+      <Modified>2018-10-05T23:30:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\colorcode.uwp\2.0.6\lib\uap10.0\ColorCode.UWP.dll">
+      <PackagePath>ColorCode.UWP.dll</PackagePath>
+      <Modified>2018-10-05T23:30:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.appcenter\4.5.1\lib\uap10.0\Microsoft.AppCenter.dll">
+      <PackagePath>Microsoft.AppCenter.dll</PackagePath>
+      <Modified>2022-04-19T10:02:22.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.appcenter.analytics\4.5.1\lib\uap10.0\Microsoft.AppCenter.Analytics.dll">
+      <PackagePath>Microsoft.AppCenter.Analytics.dll</PackagePath>
+      <Modified>2022-04-19T10:02:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.appcenter.crashes\4.5.1\lib\uap10.0\Microsoft.AppCenter.Crashes.dll">
+      <PackagePath>Microsoft.AppCenter.Crashes.dll</PackagePath>
+      <Modified>2022-04-19T10:01:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.bcl.asyncinterfaces\5.0.0\lib\netstandard2.0\Microsoft.Bcl.AsyncInterfaces.dll">
+      <PackagePath>Microsoft.Bcl.AsyncInterfaces.dll</PackagePath>
+      <Modified>2020-10-19T18:40:26.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit\7.1.2\lib\netstandard2.0\Microsoft.Toolkit.dll">
+      <PackagePath>Microsoft.Toolkit.dll</PackagePath>
+      <Modified>2021-11-18T22:28:50.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.dll</PackagePath>
+      <Modified>2021-11-18T22:29:02.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.notifications\7.1.2\lib\uap10.0.16299\Microsoft.Toolkit.Uwp.Notifications.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.Notifications.dll</PackagePath>
+      <Modified>2021-11-18T22:29:14.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.dll</PackagePath>
+      <Modified>2021-11-18T22:29:18.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.animations\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Animations.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Animations.dll</PackagePath>
+      <Modified>2021-11-18T22:29:20.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core.dll</PackagePath>
+      <Modified>2021-11-18T22:29:28.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.dll</PackagePath>
+      <Modified>2021-11-18T22:29:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input.dll</PackagePath>
+      <Modified>2021-11-18T22:29:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout.dll</PackagePath>
+      <Modified>2021-11-18T22:29:38.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown.dll</PackagePath>
+      <Modified>2021-11-18T22:29:40.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media.dll</PackagePath>
+      <Modified>2021-11-18T22:29:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.primitives\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Primitives.dll</PackagePath>
+      <Modified>2021-11-18T22:29:46.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\newtonsoft.json\13.0.1\lib\netstandard2.0\Newtonsoft.Json.dll">
+      <PackagePath>Newtonsoft.Json.dll</PackagePath>
+      <Modified>2021-03-17T20:03:36.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\runtime.win10-x86.microsoft.netcore.universalwindowsplatform\6.2.14\runtimes\win10-x86\lib\uap10.0.15138\System.Runtime.dll">
+      <PackagePath>System.Runtime.dll</PackagePath>
+      <Modified>2022-06-10T22:24:12.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\sqlitepclraw.bundle_green\2.0.2\lib\netstandard2.0\SQLitePCLRaw.batteries_v2.dll">
+      <PackagePath>SQLitePCLRaw.batteries_v2.dll</PackagePath>
+      <Modified>2019-11-01T17:24:08.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\sqlitepclraw.core\2.0.2\lib\netstandard2.0\SQLitePCLRaw.core.dll">
+      <PackagePath>SQLitePCLRaw.core.dll</PackagePath>
+      <Modified>2019-11-01T17:23:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\sqlitepclraw.lib.e_sqlite3\2.0.2\runtimes\win10-x86\nativeassets\uap10.0\e_sqlite3.dll">
+      <PackagePath>e_sqlite3.dll</PackagePath>
+      <Modified>2019-08-15T18:14:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\sqlitepclraw.provider.e_sqlite3\2.0.2\lib\uap10.0\SQLitePCLRaw.provider.e_sqlite3.dll">
+      <PackagePath>SQLitePCLRaw.provider.e_sqlite3.dll</PackagePath>
+      <Modified>2019-11-01T17:23:38.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\system.collections.immutable\1.6.0\lib\netstandard2.0\System.Collections.Immutable.dll">
+      <PackagePath>System.Collections.Immutable.dll</PackagePath>
+      <Modified>2019-09-13T02:27:58.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\system.reflection.metadata\1.7.0\lib\netstandard2.0\System.Reflection.Metadata.dll">
+      <PackagePath>System.Reflection.Metadata.dll</PackagePath>
+      <Modified>2019-09-13T02:28:24.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\system.runtime.compilerservices.unsafe\5.0.0\lib\netstandard2.0\System.Runtime.CompilerServices.Unsafe.dll">
+      <PackagePath>System.Runtime.CompilerServices.Unsafe.dll</PackagePath>
+      <Modified>2020-10-19T18:46:44.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\system.text.encodings.web\5.0.1\lib\netstandard2.0\System.Text.Encodings.Web.dll">
+      <PackagePath>System.Text.Encodings.Web.dll</PackagePath>
+      <Modified>2021-02-16T21:53:32.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\system.text.json\5.0.2\lib\netstandard2.0\System.Text.Json.dll">
+      <PackagePath>System.Text.Json.dll</PackagePath>
+      <Modified>2021-03-16T22:34:16.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\win2d.uwp\1.25.0\runtimes\win10-x86\native\Microsoft.Graphics.Canvas.dll">
+      <PackagePath>Microsoft.Graphics.Canvas.dll</PackagePath>
+      <Modified>2020-04-02T19:44:36.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\win2d.uwp\1.25.0\lib\uap10.0\Microsoft.Graphics.Canvas.winmd">
+      <PackagePath>Microsoft.Graphics.Canvas.winmd</PackagePath>
+      <Modified>2020-04-02T19:44:36.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\bin\10.0.19041.0\XamlCompiler\Microsoft.UI.Xaml.Markup.winmd">
+      <PackagePath>Microsoft.UI.Xaml.Markup.winmd</PackagePath>
+      <Modified>2020-12-02T03:52:00.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.core\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Core\Microsoft.Toolkit.Uwp.UI.Controls.Core.xr.xml</PackagePath>
+      <Modified>2021-11-18T22:01:26.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.datagrid\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.DataGrid\Microsoft.Toolkit.Uwp.UI.Controls.DataGrid.xr.xml</PackagePath>
+      <Modified>2021-11-18T21:54:12.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.input\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Input\Microsoft.Toolkit.Uwp.UI.Controls.Input.xr.xml</PackagePath>
+      <Modified>2021-11-18T22:01:06.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.layout\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Layout\Microsoft.Toolkit.Uwp.UI.Controls.Layout.xr.xml</PackagePath>
+      <Modified>2021-11-18T22:00:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.markdown\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Markdown\Microsoft.Toolkit.Uwp.UI.Controls.Markdown.xr.xml</PackagePath>
+      <Modified>2021-11-18T22:01:42.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.toolkit.uwp.ui.controls.media\7.1.2\lib\uap10.0.17763\Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml">
+      <PackagePath>Microsoft.Toolkit.Uwp.UI.Controls.Media\Microsoft.Toolkit.Uwp.UI.Controls.Media.xr.xml</PackagePath>
+      <Modified>2021-11-18T21:55:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\BadgeLogo.scale-100.png">
+      <PackagePath>Assets\BadgeLogo.scale-100.png</PackagePath>
+      <Modified>2021-02-28T13:21:03.821</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\BadgeLogo.scale-125.png">
+      <PackagePath>Assets\BadgeLogo.scale-125.png</PackagePath>
+      <Modified>2021-02-28T13:21:03.829</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\BadgeLogo.scale-150.png">
+      <PackagePath>Assets\BadgeLogo.scale-150.png</PackagePath>
+      <Modified>2021-02-28T13:21:03.838</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\BadgeLogo.scale-200.png">
+      <PackagePath>Assets\BadgeLogo.scale-200.png</PackagePath>
+      <Modified>2021-02-28T13:21:03.847</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\BadgeLogo.scale-400.png">
+      <PackagePath>Assets\BadgeLogo.scale-400.png</PackagePath>
+      <Modified>2021-02-28T13:21:03.862</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-document-icon.png">
+      <PackagePath>Assets\Icons\Storylines-document-icon.png</PackagePath>
+      <Modified>2021-08-16T08:48:38.200</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-document-icon.targetsize-16.png">
+      <PackagePath>Assets\Icons\Storylines-document-icon.targetsize-16.png</PackagePath>
+      <Modified>2021-08-16T08:48:36.878</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-document-icon.targetsize-256.png">
+      <PackagePath>Assets\Icons\Storylines-document-icon.targetsize-256.png</PackagePath>
+      <Modified>2021-08-16T08:48:36.881</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-document-icon.targetsize-32.png">
+      <PackagePath>Assets\Icons\Storylines-document-icon.targetsize-32.png</PackagePath>
+      <Modified>2021-08-16T08:48:36.879</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-document-icon.targetsize-48.png">
+      <PackagePath>Assets\Icons\Storylines-document-icon.targetsize-48.png</PackagePath>
+      <Modified>2021-08-16T08:48:36.880</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Storylines-icon.png">
+      <PackagePath>Assets\Icons\Storylines-icon.png</PackagePath>
+      <Modified>2021-08-16T07:55:27.404</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Text-document-icon.png">
+      <PackagePath>Assets\Icons\Text-document-icon.png</PackagePath>
+      <Modified>2021-08-16T08:57:09.304</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Text-document-icon.targetsize-16.png">
+      <PackagePath>Assets\Icons\Text-document-icon.targetsize-16.png</PackagePath>
+      <Modified>2021-08-16T08:57:09.306</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Text-document-icon.targetsize-256.png">
+      <PackagePath>Assets\Icons\Text-document-icon.targetsize-256.png</PackagePath>
+      <Modified>2021-08-16T08:57:09.311</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Text-document-icon.targetsize-32.png">
+      <PackagePath>Assets\Icons\Text-document-icon.targetsize-32.png</PackagePath>
+      <Modified>2021-08-16T08:57:09.308</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Icons\Text-document-icon.targetsize-48.png">
+      <PackagePath>Assets\Icons\Text-document-icon.targetsize-48.png</PackagePath>
+      <Modified>2021-08-16T08:57:09.309</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LargeTile.scale-100.png">
+      <PackagePath>Assets\LargeTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.020</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LargeTile.scale-125.png">
+      <PackagePath>Assets\LargeTile.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.044</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LargeTile.scale-150.png">
+      <PackagePath>Assets\LargeTile.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.071</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LargeTile.scale-200.png">
+      <PackagePath>Assets\LargeTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.117</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LargeTile.scale-400.png">
+      <PackagePath>Assets\LargeTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.252</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SmallTile.scale-100.png">
+      <PackagePath>Assets\SmallTile.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.725</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SmallTile.scale-125.png">
+      <PackagePath>Assets\SmallTile.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.735</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SmallTile.scale-150.png">
+      <PackagePath>Assets\SmallTile.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.744</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SmallTile.scale-200.png">
+      <PackagePath>Assets\SmallTile.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.755</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SmallTile.scale-400.png">
+      <PackagePath>Assets\SmallTile.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.773</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SplashScreen.scale-100.png">
+      <PackagePath>Assets\SplashScreen.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.501</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SplashScreen.scale-125.png">
+      <PackagePath>Assets\SplashScreen.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.531</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SplashScreen.scale-150.png">
+      <PackagePath>Assets\SplashScreen.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.572</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SplashScreen.scale-400.png">
+      <PackagePath>Assets\SplashScreen.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.893</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square150x150Logo.scale-100.png">
+      <PackagePath>Assets\Square150x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.786</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square150x150Logo.scale-125.png">
+      <PackagePath>Assets\Square150x150Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.797</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square150x150Logo.scale-150.png">
+      <PackagePath>Assets\Square150x150Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.810</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square150x150Logo.scale-400.png">
+      <PackagePath>Assets\Square150x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.871</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.altform-lightunplated_targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.421</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.altform-lightunplated_targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.428</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.altform-lightunplated_targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.479</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.altform-lightunplated_targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.436</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.altform-lightunplated_targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.444</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-unplated_targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.359</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-unplated_targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.413</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-unplated_targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.374</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.altform-unplated_targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.altform-unplated_targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.382</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.scale-100.png">
+      <PackagePath>Assets\Square44x44Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.260</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.scale-125.png">
+      <PackagePath>Assets\Square44x44Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.268</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.scale-150.png">
+      <PackagePath>Assets\Square44x44Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.277</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.scale-400.png">
+      <PackagePath>Assets\Square44x44Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.299</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-16.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-16.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.307</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-24.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.314</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-256.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-256.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.351</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-32.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-32.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.322</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-48.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-48.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.329</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\StoreLogo.scale-100.png">
+      <PackagePath>Assets\StoreLogo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.902</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\StoreLogo.scale-125.png">
+      <PackagePath>Assets\StoreLogo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.911</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\StoreLogo.scale-150.png">
+      <PackagePath>Assets\StoreLogo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.920</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\StoreLogo.scale-200.png">
+      <PackagePath>Assets\StoreLogo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.932</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\StoreLogo.scale-400.png">
+      <PackagePath>Assets\StoreLogo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.955</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Wide310x150Logo.scale-100.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-100.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.883</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Wide310x150Logo.scale-125.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-125.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.896</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Wide310x150Logo.scale-150.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-150.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.912</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Wide310x150Logo.scale-400.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-400.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.003</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\LockScreenLogo.scale-200.png">
+      <PackagePath>Assets\LockScreenLogo.scale-200.png</PackagePath>
+      <Modified>2021-01-27T21:07:35.119</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\SplashScreen.scale-200.png">
+      <PackagePath>Assets\SplashScreen.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.639</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square150x150Logo.scale-200.png">
+      <PackagePath>Assets\Square150x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.826</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.scale-200.png">
+      <PackagePath>Assets\Square44x44Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.286</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Square44x44Logo.targetsize-24_altform-unplated.png">
+      <PackagePath>Assets\Square44x44Logo.targetsize-24_altform-unplated.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:58.366</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Wide310x150Logo.scale-200.png">
+      <PackagePath>Assets\Wide310x150Logo.scale-200.png</PackagePath>
+      <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
+      <Modified>2021-08-16T07:55:57.935</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Assets\Other\character-profile-picture.jpg">
+      <PackagePath>Assets\Other\character-profile-picture.jpg</PackagePath>
+      <Modified>2021-06-06T13:01:58.093</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\Properties\Default.rd.xml">
+      <PackagePath>Properties\Default.rd.xml</PackagePath>
+      <Modified>2021-01-29T08:11:21.243</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Storylines.xr.xml">
+      <PackagePath>Storylines.xr.xml</PackagePath>
+      <Modified>2022-06-24T19:27:08.364</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\App.xbf">
+      <PackagePath>App.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.781</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\AppView.xbf">
+      <PackagePath>AppView.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.698</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\CustomControls\SymbolButton.xbf">
+      <PackagePath>Components\CustomControls\SymbolButton.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.781</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\CustomControls\ShortcutLineControl.xbf">
+      <PackagePath>Components\CustomControls\ShortcutLineControl.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.781</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ProjectRenamerDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\ProjectRenamerDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.781</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ModesDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\ModesDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.701</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\FeedbackDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\FeedbackDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ShortcutsDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\ShortcutsDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\CharactersPage.xbf">
+      <PackagePath>Pages\CharactersPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.720</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\ChaptersList.xbf">
+      <PackagePath>Components\ChaptersList.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\ChapterTextBox.xbf">
+      <PackagePath>Components\ChapterTextBox.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.728</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ChapterCreatorOrRenamer.xbf">
+      <PackagePath>Components\DialogueWindows\ChapterCreatorOrRenamer.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ExportDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\ExportDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.732</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\LoadProjectDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\LoadProjectDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\SaveDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\SaveDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ProjectStatsDialogue.xbf">
+      <PackagePath>Components\DialogueWindows\ProjectStatsDialogue.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.782</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\MainCommandBar.xbf">
+      <PackagePath>Components\MainCommandBar.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.764</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\MainPage.xbf">
+      <PackagePath>Pages\MainPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.768</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\CustomExpanderStyle.xbf">
+      <PackagePath>Resources\ResourceDictionaries\CustomExpanderStyle.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.628</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\MainStyleDictionary.xbf">
+      <PackagePath>Resources\ResourceDictionaries\MainStyleDictionary.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.662</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPage.xbf">
+      <PackagePath>Pages\SettingsPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.783</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\AboutPage.xbf">
+      <PackagePath>Pages\SettingsPages\AboutPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.771</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\GeneralPage.xbf">
+      <PackagePath>Pages\SettingsPages\GeneralPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.774</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\AccessibilityPage.xbf">
+      <PackagePath>Pages\SettingsPages\AccessibilityPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.777</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\PersonalizationPage.xbf">
+      <PackagePath>Pages\SettingsPages\PersonalizationPage.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.780</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\RightAlignedToggleSwitchStyle.xbf">
+      <PackagePath>Resources\ResourceDictionaries\RightAlignedToggleSwitchStyle.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.680</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\MainRichTextBoxStyle.xbf">
+      <PackagePath>Resources\ResourceDictionaries\MainRichTextBoxStyle.xbf</PackagePath>
+      <Modified>2022-06-24T19:27:08.781</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
+      <PackagePath>ucrtbased.dll</PackagePath>
+      <Modified>2020-12-02T03:59:30.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Program Files %28x86%29\Windows Kits\10\UnionMetadata\10.0.19041.0\Windows.winmd">
+      <PackagePath>WinMetadata\Windows.winmd</PackagePath>
+      <Modified>2020-12-02T01:52:06.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\lib\uap10.0\Microsoft.UI.Xaml.winmd">
+      <PackagePath>Microsoft.UI.Xaml.winmd</PackagePath>
+      <Modified>2022-03-17T16:43:34.000</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\resources.pri">
+      <PackagePath>resources.pri</PackagePath>
+      <Modified>2022-06-24T14:52:28.125</Modified>
+    </AppxPackagedFile>
+    <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Core\Storylines.exe">
+      <PackagePath>Storylines.exe</PackagePath>
+      <Modified>2022-06-24T19:27:11.377</Modified>
+    </AppxPackagedFile>
+  </ItemGroup>
+  <ItemGroup>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2203.17001.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2203.17001.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2203.17001.0</Version>
+      <Architecture>Win32</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2203.17001.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x86\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2203.17001.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2203.17001.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\x64\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\arm\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2203.17001.0</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2203.17001.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\arm\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\arm64\Release\Microsoft.UI.Xaml.2.7.appx">
+      <Name>Microsoft.UI.Xaml.2.7</Name>
+      <Version>7.2203.17001.0</Version>
+      <Architecture>arm64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.UI.Xaml.2.7, MinVersion = 7.2203.17001.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.ui.xaml\2.7.1\buildTransitive\..\tools\AppX\arm64\Release\Microsoft.UI.Xaml.2.7.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.2</Name>
+      <Version>2.2.31331.1</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.31331.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.2</Name>
+      <Version>2.2.31331.1</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.31331.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx">
+      <Name>Microsoft.NET.CoreRuntime.2.2</Name>
+      <Version>2.2.31331.1</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreRuntime.2.2, MinVersion = 2.2.31331.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreRuntime.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+      <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
+      <Version>2.2.31327.1</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.31327.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-x86.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+      <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
+      <Version>2.2.31327.1</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.31327.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-x64.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx">
+      <Name>Microsoft.NET.CoreFramework.Debug.2.2</Name>
+      <Version>2.2.31327.1</Version>
+      <Architecture>arm</Architecture>
+      <FrameworkIdentity>Name = Microsoft.NET.CoreFramework.Debug.2.2, MinVersion = 2.2.31327.1, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\runtime.win10-arm.microsoft.net.uwpcoreruntimesdk\2.2.14\build\..\tools\Appx\Microsoft.NET.CoreFramework.Debug.2.2.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.30704.0</Version>
+      <Architecture>ARM</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.30704.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM\Microsoft.VCLibs.ARM.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.30704.0</Version>
+      <Architecture>ARM64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.30704.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\ARM64\Microsoft.VCLibs.ARM64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.30704.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.30704.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x64\Microsoft.VCLibs.x64.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\">
+      <Name>Microsoft.VCLibs.140.00.Debug</Name>
+      <Version>14.0.30704.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name = Microsoft.VCLibs.140.00.Debug, MinVersion = 14.0.30704.0, Publisher = %27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.VCLibs\14.0\.\AppX\Debug\x86\Microsoft.VCLibs.x86.Debug.14.00.appx</AppxLocation>
+      <MoreInfo>
+      </MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\">
+      <Name>Microsoft.Services.Store.Engagement</Name>
+      <Version>10.0.19011.0</Version>
+      <Architecture>ARM</Architecture>
+      <FrameworkIdentity>Name=Microsoft.Services.Store.Engagement, MinVersion=10.0.19011.0, Publisher=%27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\.\AppX\ARM\Microsoft.Services.Store.Engagement.ARM.10.0.appx</AppxLocation>
+      <MoreInfo>http://aka.ms/store-em-docs</MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\">
+      <Name>Microsoft.Services.Store.Engagement</Name>
+      <Version>10.0.19011.0</Version>
+      <Architecture>x64</Architecture>
+      <FrameworkIdentity>Name=Microsoft.Services.Store.Engagement, MinVersion=10.0.19011.0, Publisher=%27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\.\AppX\x64\Microsoft.Services.Store.Engagement.x64.10.0.appx</AppxLocation>
+      <MoreInfo>http://aka.ms/store-em-docs</MoreInfo>
+    </ResolvedSDKReference>
+    <ResolvedSDKReference Include="C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\">
+      <Name>Microsoft.Services.Store.Engagement</Name>
+      <Version>10.0.19011.0</Version>
+      <Architecture>x86</Architecture>
+      <FrameworkIdentity>Name=Microsoft.Services.Store.Engagement, MinVersion=10.0.19011.0, Publisher=%27CN=Microsoft Corporation, O=Microsoft Corporation, L=Redmond, S=Washington, C=US%27</FrameworkIdentity>
+      <AppxLocation>C:\Users\domin\.nuget\packages\microsoft.services.store.engagement\10.1901.28001\SDK\Windows Kits\10\ExtensionSDKs\Microsoft.Services.Store.Engagement\10.0\.\AppX\x86\Microsoft.Services.Store.Engagement.x86.10.0.appx</AppxLocation>
+      <MoreInfo>http://aka.ms/store-em-docs</MoreInfo>
+    </ResolvedSDKReference>
+  </ItemGroup>
+</Project>

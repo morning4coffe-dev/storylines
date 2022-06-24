@@ -1,0 +1,111 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Documents\\Projects\\Storylines\\src\\Storylines\\Storylines.csproj": {}
+  },
+  "projects": {
+    "D:\\Documents\\Projects\\Storylines\\src\\Storylines\\Storylines.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Documents\\Projects\\Storylines\\src\\Storylines\\Storylines.csproj",
+        "projectName": "Storylines",
+        "projectPath": "D:\\Documents\\Projects\\Storylines\\src\\Storylines\\Storylines.csproj",
+        "packagesPath": "C:\\Users\\domin\\.nuget\\packages\\",
+        "outputPath": "D:\\Documents\\Projects\\Storylines\\src\\Storylines\\obj\\",
+        "projectStyle": "PackageReference",
+        "skipContentFileWrite": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft SDKs\\UWPNuGetPackages\\"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\domin\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "uap10.0.18362"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "uap10.0.18362": {
+            "projectReferences": {}
+          }
+        }
+      },
+      "frameworks": {
+        "uap10.0.18362": {
+          "dependencies": {
+            "Microsoft.AppCenter.Analytics": {
+              "target": "Package",
+              "version": "[4.5.1, )"
+            },
+            "Microsoft.AppCenter.Crashes": {
+              "target": "Package",
+              "version": "[4.5.1, )"
+            },
+            "Microsoft.NETCore.UniversalWindowsPlatform": {
+              "target": "Package",
+              "version": "[6.2.14, )"
+            },
+            "Microsoft.Services.Store.Engagement": {
+              "target": "Package",
+              "version": "[10.1901.28001, )"
+            },
+            "Microsoft.Toolkit.Uwp": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "Microsoft.Toolkit.Uwp.Notifications": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "Microsoft.Toolkit.Uwp.UI.Animations": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "Microsoft.Toolkit.Uwp.UI.Controls": {
+              "target": "Package",
+              "version": "[7.1.2, )"
+            },
+            "Microsoft.UI.Xaml": {
+              "target": "Package",
+              "version": "[2.7.1, )"
+            }
+          },
+          "imports": [
+            "net461"
+          ],
+          "assetTargetFallback": true,
+          "warn": true
+        }
+      },
+      "runtimes": {
+        "win10-arm": {
+          "#import": []
+        },
+        "win10-arm-aot": {
+          "#import": []
+        },
+        "win10-arm64-aot": {
+          "#import": []
+        },
+        "win10-x64": {
+          "#import": []
+        },
+        "win10-x64-aot": {
+          "#import": []
+        },
+        "win10-x86": {
+          "#import": []
+        },
+        "win10-x86-aot": {
+          "#import": []
+        }
+      }
+    }
+  }
+}
