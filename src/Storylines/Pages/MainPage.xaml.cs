@@ -120,8 +120,10 @@ namespace Storylines.Pages
 
             if (!open)
             {
-                chapterListComponentMainPage.Visibility = Visibility.Collapsed;
+                //chapterListComponentMainPage.Visibility = Visibility.Collapsed;
                 chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 2);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Pixel);
+                mainGrid.ColumnDefinitions[1].MinWidth = 0;
                 closeOpenChapterListComponentIcon.Symbol = Symbol.ClosePane;
                 addOrSubtract = chapterListComponentMainPage.ActualWidth;
 
@@ -132,8 +134,10 @@ namespace Storylines.Pages
             {
                 if (!chapterList.closedManually || manually)
                 {
-                    chapterListComponentMainPage.Visibility = Visibility.Visible;
+                   // chapterListComponentMainPage.Visibility = Visibility.Visible;
                     chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
+                    mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                    mainGrid.ColumnDefinitions[1].MinWidth = 220;
                     closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
                     addOrSubtract = -chapterListComponentMainPage.ActualWidth;
 
@@ -145,20 +149,12 @@ namespace Storylines.Pages
         }
 
         #region DownBar
-        public void UpdateDownBar()
-        {
-            ProjectStatsDialogue.UpdateDownBar();
-        }
+        public void UpdateDownBar() => ProjectStatsDialogue.UpdateDownBar();
 
-        private void OnDownBarText_Click(object sender, RoutedEventArgs e)
-        {
-            ProjectStatsDialogue.Open();
-        }
+        private void OnDownBarText_Click(object sender, RoutedEventArgs e) => ProjectStatsDialogue.Open();
 
-        private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e)
-        {
-            OpenOrCloseChapterList(chapterListComponentMainPage.Visibility != Visibility.Visible, true);
-        }
+        private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e) =>
+            OpenOrCloseChapterList(closeOpenChapterListComponentIcon.Symbol == Symbol.ClosePane, true);
         #endregion
 
         #region Zoom

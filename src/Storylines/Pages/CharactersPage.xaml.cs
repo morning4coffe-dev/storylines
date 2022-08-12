@@ -209,11 +209,6 @@ namespace Storylines.Pages
         #endregion
         #endregion
 
-        private void OnCloseButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainPage.current.OpenOrCloseChapterList(false, true);
-        }
-
         public void Add()
         {
             Random rn = new Random();

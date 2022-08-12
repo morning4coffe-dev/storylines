@@ -1,62 +1,80 @@
 ﻿<Page
     x:Class="Storylines.Pages.CharactersPage"
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:variables="using:Storylines.Scripts.Variables" xmlns:muxc="using:Microsoft.UI.Xaml.Controls" xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    mc:Ignorable="d" Loaded="Page_Loaded" SizeChanged="Page_SizeChanged">
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+    xmlns:variables="using:Storylines.Scripts.Variables"
+    Loaded="Page_Loaded"
+    SizeChanged="Page_SizeChanged"
+    mc:Ignorable="d">
     <Page.Resources>
         <Style x:Key="ProfilePictureButton" TargetType="Button">
-            <Setter Property="Background" Value="Transparent"/>
-            <Setter Property="BackgroundSizing" Value="OuterBorderEdge"/>
-            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}"/>
-            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}"/>
-            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}"/>
-            <Setter Property="Padding" Value="{StaticResource ButtonPadding}"/>
-            <Setter Property="HorizontalAlignment" Value="Left"/>
-            <Setter Property="VerticalAlignment" Value="Center"/>
-            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
-            <Setter Property="FontWeight" Value="Normal"/>
-            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}"/>
-            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}"/>
-            <Setter Property="FocusVisualMargin" Value="-3"/>
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BackgroundSizing" Value="OuterBorderEdge" />
+            <Setter Property="Foreground" Value="{ThemeResource ButtonForeground}" />
+            <Setter Property="BorderBrush" Value="{ThemeResource ButtonBorderBrush}" />
+            <Setter Property="BorderThickness" Value="{ThemeResource ButtonBorderThemeThickness}" />
+            <Setter Property="Padding" Value="{StaticResource ButtonPadding}" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="VerticalAlignment" Value="Center" />
+            <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}" />
+            <Setter Property="FontWeight" Value="Normal" />
+            <Setter Property="FontSize" Value="{ThemeResource ControlContentThemeFontSize}" />
+            <Setter Property="UseSystemFocusVisuals" Value="{StaticResource UseSystemFocusVisuals}" />
+            <Setter Property="FocusVisualMargin" Value="-3" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate TargetType="Button">
-                        <ContentPresenter x:Name="ContentPresenter" AutomationProperties.AccessibilityView="Raw" Background="{TemplateBinding Background}" BackgroundSizing="{TemplateBinding BackgroundSizing}" BorderBrush="{TemplateBinding BorderBrush}" BorderThickness="{TemplateBinding BorderThickness}" ContentTemplate="{TemplateBinding ContentTemplate}" CornerRadius="{TemplateBinding CornerRadius}" Content="{TemplateBinding Content}" ContentTransitions="{TemplateBinding ContentTransitions}" HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}" Padding="{TemplateBinding Padding}" VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}">
+                        <ContentPresenter
+                            x:Name="ContentPresenter"
+                            Padding="{TemplateBinding Padding}"
+                            HorizontalContentAlignment="{TemplateBinding HorizontalContentAlignment}"
+                            VerticalContentAlignment="{TemplateBinding VerticalContentAlignment}"
+                            AutomationProperties.AccessibilityView="Raw"
+                            Background="{TemplateBinding Background}"
+                            BackgroundSizing="{TemplateBinding BackgroundSizing}"
+                            BorderBrush="{TemplateBinding BorderBrush}"
+                            BorderThickness="{TemplateBinding BorderThickness}"
+                            Content="{TemplateBinding Content}"
+                            ContentTemplate="{TemplateBinding ContentTemplate}"
+                            ContentTransitions="{TemplateBinding ContentTransitions}"
+                            CornerRadius="{TemplateBinding CornerRadius}">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="CommonStates">
                                     <VisualState x:Name="Normal">
                                         <Storyboard>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="PointerOver">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPointerOver}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            <PointerUpThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
                                     </VisualState>
                                     <VisualState x:Name="Pressed">
                                         <Storyboard>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Background">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBackgroundPressed}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="BorderBrush">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonBorderBrushPressed}" />
                                             </ObjectAnimationUsingKeyFrames>
                                             <ObjectAnimationUsingKeyFrames Storyboard.TargetName="ContentPresenter" Storyboard.TargetProperty="Foreground">
-                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}"/>
+                                                <DiscreteObjectKeyFrame KeyTime="0" Value="{ThemeResource ButtonForegroundPressed}" />
                                             </ObjectAnimationUsingKeyFrames>
-                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter"/>
+                                            <PointerDownThemeAnimation Storyboard.TargetName="ContentPresenter" />
                                         </Storyboard>
                                     </VisualState>
                                 </VisualStateGroup>
@@ -70,52 +88,88 @@
 
     <Grid Grid.Row="1">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition x:Name="listViewColumn" Width="*"/>
-            <ColumnDefinition Width="8"/>
-            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition x:Name="listViewColumn" Width="*" />
+            <ColumnDefinition Width="8" />
+            <ColumnDefinition Width="3*" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="8"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="30"/>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="8" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="30" />
         </Grid.RowDefinitions>
 
-        <Grid Grid.Row="2" Margin="12,0,2,0" RightTapped="OnChaptersListView_RightTapped">
+        <Grid
+            Grid.Row="2"
+            Margin="12,0,2,0"
+            RightTapped="OnChaptersListView_RightTapped">
             <Grid.RowDefinitions>
-                <RowDefinition Height="28"/>
-                <RowDefinition Height="10"/>
-                <RowDefinition Height="*"/>
+                <RowDefinition Height="28" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="*" />
             </Grid.RowDefinitions>
             <Grid>
-                <TextBlock x:Uid="charactersText1" FontWeight="Medium" VerticalAlignment="Center"/>
-                <StackPanel HorizontalAlignment="Right" Spacing="4" Orientation="Horizontal">
-                    <Button x:Name="flyoutDisplayButton" Width="32" Height="28" Background="Transparent" BorderThickness="0" IsEnabled="{x:Bind listView.IsEnabled, Mode=OneWay}" Click="OnFlyoutDisplayButton_Click">
-                        <FontIcon Glyph="" Width="20" RenderTransformOrigin=".5,.5" Margin="-8">
+                <TextBlock
+                    x:Uid="charactersText1"
+                    VerticalAlignment="Center"
+                    FontWeight="Medium" />
+                <StackPanel
+                    HorizontalAlignment="Right"
+                    Orientation="Horizontal"
+                    Spacing="4">
+                    <Button
+                        x:Name="flyoutDisplayButton"
+                        Width="32"
+                        Height="28"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="OnFlyoutDisplayButton_Click"
+                        IsEnabled="{x:Bind listView.IsEnabled, Mode=OneWay}">
+                        <FontIcon
+                            Width="20"
+                            Margin="-8"
+                            Glyph=""
+                            RenderTransformOrigin=".5,.5">
                             <FontIcon.RenderTransform>
-                                <CompositeTransform ScaleX=".6" ScaleY=".6"/>
+                                <CompositeTransform ScaleX=".6" ScaleY=".6" />
                             </FontIcon.RenderTransform>
                         </FontIcon>
-                    </Button>
-
-                    <Button Width="32" Height="28" Background="Transparent" BorderThickness="0" Click="OnCloseButton_Click">
-                        <SymbolIcon Symbol="Cancel" Width="20" RenderTransformOrigin=".5,.5" Margin="-8">
-                            <SymbolIcon.RenderTransform>
-                                <CompositeTransform ScaleX=".6" ScaleY=".6"/>
-                            </SymbolIcon.RenderTransform>
-                        </SymbolIcon>
                     </Button>
                 </StackPanel>
             </Grid>
 
-            <Rectangle Fill="{ThemeResource SeparatorFill}" Height="0.5" Grid.Row="1" Opacity=".1" VerticalAlignment="Center"/>
+            <Rectangle
+                Grid.Row="1"
+                Height="0.5"
+                VerticalAlignment="Center"
+                Fill="{ThemeResource SeparatorFill}"
+                Opacity=".1" />
 
-            <ListView x:Name="listView" x:FieldModifier="public" Grid.Row="2" ItemsSource="{x:Bind variables:Character.characters, Mode=OneWay}" Margin="-5,0" SelectionChanged="OnListDetailsView_SelectionChanged">
+            <ListView
+                x:Name="listView"
+                Grid.Row="2"
+                Margin="-5,0"
+                x:FieldModifier="public"
+                ItemsSource="{x:Bind variables:Character.characters, Mode=OneWay}"
+                SelectionChanged="OnListDetailsView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="variables:Character">
-                        <Grid Tag="{Binding token}" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" RightTapped="OnCharactersListViewItem_RightTapped" DoubleTapped="OnCharactersListViewItem_DoubleTapped" Holding="OnCharactersListViewItem_Holding">
-                            <StackPanel Orientation="Horizontal" Spacing="8" ToolTipService.ToolTip="{Binding name}">
-                                <PersonPicture x:Name="profilePicture" Height="40" DisplayName="{Binding name}" ProfilePicture="{Binding picture.image}"/>
+                        <Grid
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Stretch"
+                            DoubleTapped="OnCharactersListViewItem_DoubleTapped"
+                            Holding="OnCharactersListViewItem_Holding"
+                            RightTapped="OnCharactersListViewItem_RightTapped"
+                            Tag="{Binding token}">
+                            <StackPanel
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                ToolTipService.ToolTip="{Binding name}">
+                                <PersonPicture
+                                    x:Name="profilePicture"
+                                    Height="40"
+                                    DisplayName="{Binding name}"
+                                    ProfilePicture="{Binding picture.image}" />
                                 <StackPanel Margin="0,8">
                                     <TextBlock FontWeight="Bold" Text="{Binding name}" />
                                     <TextBlock Text="{Binding description}" />
@@ -126,132 +180,247 @@
                 </ListView.ItemTemplate>
             </ListView>
 
-            <StackPanel x:Name="charactersNullText" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Row="2" Spacing="18">
+            <StackPanel
+                x:Name="charactersNullText"
+                Grid.Row="2"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Spacing="18">
                 <FontIcon Glyph="" RenderTransformOrigin=".5,.5">
                     <FontIcon.RenderTransform>
-                        <CompositeTransform ScaleX="1.9" ScaleY="1.8"/>
+                        <CompositeTransform ScaleX="1.9" ScaleY="1.8" />
                     </FontIcon.RenderTransform>
                 </FontIcon>
-                <RichTextBlock FontSize="16" Margin="20,0" TextAlignment="Center">
+                <RichTextBlock
+                    Margin="20,0"
+                    FontSize="16"
+                    TextAlignment="Center">
                     <Paragraph>
-                        <Run x:Uid="noCharacters"/>
-                        <LineBreak/>
+                        <Run x:Uid="noCharacters" />
+                        <LineBreak />
                         <Hyperlink Click="OnHyperlinkButton_Click">
-                            <Run x:Uid="clickHereText"/>
+                            <Run x:Uid="clickHereText" />
                         </Hyperlink>
-                        <Run x:Uid="toAddNew"/>
+                        <Run x:Uid="toAddNew" />
                     </Paragraph>
                 </RichTextBlock>
                 <animations:Implicit.ShowAnimations>
-                    <animations:ScaleAnimation Duration="0:0:0.32" From="1, 0.8, 0.1" To="1,1,1" />
+                    <animations:ScaleAnimation
+                        From="1, 0.8, 0.1"
+                        To="1,1,1"
+                        Duration="0:0:0.32" />
                 </animations:Implicit.ShowAnimations>
             </StackPanel>
 
             <Grid.Resources>
                 <MenuFlyout x:Name="chaptersListViewFlyout" Closed="ChaptersListViewItemFlyout_Closed">
                     <MenuFlyout.Items>
-                        <MenuFlyoutItem x:Name="addFlyout" x:Uid="addText" Click="OnAddButton_Click">
+                        <MenuFlyoutItem
+                            x:Name="addFlyout"
+                            x:Uid="addText"
+                            Click="OnAddButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph=""/>
+                                <FontIcon Glyph="" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutSeparator/>
-                        <MenuFlyoutItem x:Name="editFlyout" x:Uid="editFlyout" Click="OnEditFlyout_Click">
+                        <MenuFlyoutSeparator />
+                        <MenuFlyoutItem
+                            x:Name="editFlyout"
+                            x:Uid="editFlyout"
+                            Click="OnEditFlyout_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph=""/>
+                                <FontIcon Glyph="" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
-                        <MenuFlyoutItem x:Name="removeFlyout" x:Uid="removeFlyout" Click="OnRemoveButton_Click">
+                        <MenuFlyoutItem
+                            x:Name="removeFlyout"
+                            x:Uid="removeFlyout"
+                            Click="OnRemoveButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph=""/>
+                                <FontIcon Glyph="" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout.Items>
                 </MenuFlyout>
             </Grid.Resources>
         </Grid>
-   
-        <StackPanel Grid.Row="3" CornerRadius="0, 8, 0, 0" Orientation="Horizontal" Padding="5" Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}">
-            <TextBlock x:Name="charactersCountText" x:Uid="charactersPageCharactersCount" Margin="5,0"/>
-            <TextBlock Text="{x:Bind variables:Character.characters.Count, Mode=OneWay}"/>
+
+        <StackPanel
+            Grid.Row="3"
+            Padding="5"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ElementBorderColor}"
+            BorderThickness="{ThemeResource ElementBorderThickness}"
+            CornerRadius="0, 8, 0, 0"
+            Orientation="Horizontal">
+            <TextBlock
+                x:Name="charactersCountText"
+                x:Uid="charactersPageCharactersCount"
+                Margin="5,0" />
+            <TextBlock Text="{x:Bind variables:Character.characters.Count, Mode=OneWay}" />
         </StackPanel>
 
-        <Frame Grid.ColumnSpan="3" CornerRadius="8" Margin="8,0" Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}"/>
-        <CommandBar Margin="8,0" Grid.ColumnSpan="3" HorizontalAlignment="Left" IsOpen="False" DefaultLabelPosition="Right" CompositeMode="Inherit" OverflowButtonVisibility="Auto" Background="Transparent">
-            <AppBarButton x:Name="undoButton" x:FieldModifier="public" IsEnabled="False" Click="OnUndoButton_Click">
+        <Frame
+            Grid.ColumnSpan="3"
+            Margin="8,0"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ElementBorderColor}"
+            BorderThickness="{ThemeResource ElementBorderThickness}"
+            CornerRadius="8" />
+        <CommandBar
+            Grid.ColumnSpan="3"
+            Margin="8,0"
+            HorizontalAlignment="Left"
+            Background="Transparent"
+            CompositeMode="Inherit"
+            DefaultLabelPosition="Right"
+            IsOpen="False"
+            OverflowButtonVisibility="Auto">
+            <AppBarButton
+                x:Name="undoButton"
+                x:FieldModifier="public"
+                Click="OnUndoButton_Click"
+                IsEnabled="False">
                 <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Undo"/>
+                    <SymbolIcon Symbol="Undo" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarButton x:Name="redoButton" x:FieldModifier="public" IsEnabled="False" Click="OnRedoButton_Click">
+            <AppBarButton
+                x:Name="redoButton"
+                x:FieldModifier="public"
+                Click="OnRedoButton_Click"
+                IsEnabled="False">
                 <AppBarButton.Icon>
-                    <SymbolIcon Symbol="Redo"/>
+                    <SymbolIcon Symbol="Redo" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            <AppBarSeparator/>
-            <AppBarButton x:Name="addButton" x:Uid="add" x:FieldModifier="public" IsEnabled="{x:Bind listView.IsEnabled}" IsCompact="True" Click="OnAddButton_Click">
+            <AppBarSeparator />
+            <AppBarButton
+                x:Name="addButton"
+                x:Uid="add"
+                x:FieldModifier="public"
+                Click="OnAddButton_Click"
+                IsCompact="True"
+                IsEnabled="{x:Bind listView.IsEnabled}">
                 <AppBarButton.Icon>
-                    <FontIcon Glyph=""/>
+                    <FontIcon Glyph="" />
                 </AppBarButton.Icon>
             </AppBarButton>
-            
-            <AppBarToggleButton x:Name="editButton" x:FieldModifier="public" IsChecked="{Binding isEditModeEnabled}" IsEnabled="False" Click="OnEditButton_Click">
+
+            <AppBarToggleButton
+                x:Name="editButton"
+                x:FieldModifier="public"
+                Click="OnEditButton_Click"
+                IsChecked="{Binding isEditModeEnabled}"
+                IsEnabled="False">
                 <AppBarToggleButton.Icon>
-                    <FontIcon x:Name="editButtonIcon"/>
+                    <FontIcon x:Name="editButtonIcon" />
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
-            <AppBarElementContainer x:Name="cancelButton" VerticalAlignment="Center" Margin="2,0" Visibility="Collapsed">
-                <Button x:Uid="cancel" VerticalAlignment="Center" Height="36" Click="OnCancelEditButton_Click"/>
+            <AppBarElementContainer
+                x:Name="cancelButton"
+                Margin="2,0"
+                VerticalAlignment="Center"
+                Visibility="Collapsed">
+                <Button
+                    x:Uid="cancel"
+                    Height="36"
+                    VerticalAlignment="Center"
+                    Click="OnCancelEditButton_Click" />
             </AppBarElementContainer>
-            <AppBarButton x:Name="exportButton" x:FieldModifier="public" x:Uid="export" Click="OnExportButton_Click">
+            <AppBarButton
+                x:Name="exportButton"
+                x:Uid="export"
+                x:FieldModifier="public"
+                Click="OnExportButton_Click">
                 <AppBarButton.Icon>
-                    <FontIcon Glyph=""/>
+                    <FontIcon Glyph="" />
                 </AppBarButton.Icon>
             </AppBarButton>
         </CommandBar>
 
-        <Frame Grid.Column="2" Grid.RowSpan="2" Grid.Row="2" CornerRadius="8, 0, 0, 0"  Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}"/>
-        <StackPanel x:Name="characterValuesPanel" Spacing="20" Margin="35,30" Grid.Column="2" Grid.Row="2" Visibility="Collapsed">
+        <Frame
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            Grid.Column="2"
+            Background="{ThemeResource LayerFillColorDefaultBrush}"
+            BorderBrush="{ThemeResource ElementBorderColor}"
+            BorderThickness="{ThemeResource ElementBorderThickness}"
+            CornerRadius="8, 0, 0, 0" />
+        <StackPanel
+            x:Name="characterValuesPanel"
+            Grid.Row="2"
+            Grid.Column="2"
+            Margin="35,30"
+            Spacing="20"
+            Visibility="Collapsed">
             <Grid>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60"/>
-                    <ColumnDefinition Width="20"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="60" />
+                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
-                <PersonPicture x:Name="profilePicture" Height="60" DisplayName="{Binding ElementName=nameBox, Path=Text}" IsTapEnabled="False" Tapped="OnProfilePicture_Tapped" PointerEntered="OnProfilePicture_PointerEntered" PointerExited="OnProfilePicture_PointerExited"/>
-                <Button Height="60" Width="60" Style="{StaticResource ProfilePictureButton}" CornerRadius="800" IsEnabled="{x:Bind profilePicture.IsTapEnabled, Mode=OneWay}" Click="OnProfilePictureButton_Click"/>
-                <!--<FontIcon x:Name="profilePictureHoverIcon" Glyph="" Visibility="Collapsed"/>-->
-
-                <muxc:TeachingTip x:Name="profilePictureFlyout" Target="{x:Bind profilePicture}" Background="{ThemeResource AppAcrylicBackground}">
+                <PersonPicture
+                    x:Name="profilePicture"
+                    Height="60"
+                    DisplayName="{Binding ElementName=nameBox, Path=Text}"
+                    IsTapEnabled="False"
+                    PointerEntered="OnProfilePicture_PointerEntered"
+                    PointerExited="OnProfilePicture_PointerExited"
+                    Tapped="OnProfilePicture_Tapped" />
+                <Button
+                    Width="60"
+                    Height="60"
+                    Click="OnProfilePictureButton_Click"
+                    CornerRadius="800"
+                    IsEnabled="{x:Bind profilePicture.IsTapEnabled, Mode=OneWay}"
+                    Style="{StaticResource ProfilePictureButton}" />
+                <muxc:TeachingTip
+                    x:Name="profilePictureFlyout"
+                    Background="{ThemeResource AppAcrylicBackground}"
+                    Target="{x:Bind profilePicture}">
                     <muxc:TeachingTip.Content>
-                        <StackPanel HorizontalAlignment="Stretch" Padding="2,0,2,-12">
-                            <TextBlock x:Uid="profilePicturesFlyout" FontWeight="Bold" Padding="0,0,0,4"/>
-                            <!--<Frame x:Name="imageCropperHolder" CornerRadius="4" Height="220" Width="280" Padding="-60" Visibility="Collapsed">-->
-                            <!--ZoomMode="Enabled" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto"-->
-                            <!-- 
-                                    <controls:ImageCropper x:Name="imageCropper" AspectRatio="1" CropShape="Rectangular" Background="Transparent" ThumbPlacement="Corners" />
-                                </Frame>
-                                <StackPanel Margin="0,8,0,15" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-                                    <Button Content="Plch"  Height="38" Background="{ThemeResource SystemAccentColorDark1}" Click="OnConfirmProfilePictureButton_Click"/>
-                                    <Button Content="Plch"  Height="38"/>
-                                </StackPanel>-->
-
-                            <ScrollViewer x:Name="profilePictureHolderScroll" HorizontalScrollMode="Enabled" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Hidden" VerticalScrollMode="Disabled" Visibility="Visible">
-                                <StackPanel x:Name="profilePictureHolder" Orientation="Horizontal" Spacing="8" Margin="0,8,0,15">
-                                    <Button x:Name="newImageButton" Width="90" Height="80" Click="OnAddNewImageButton_Click">
-                                        <SymbolIcon Symbol="OpenFile"/>
+                        <StackPanel Padding="2,0,2,-12" HorizontalAlignment="Stretch">
+                            <TextBlock
+                                x:Uid="profilePicturesFlyout"
+                                Padding="0,0,0,4"
+                                FontWeight="Bold" />
+                            <ScrollViewer
+                                x:Name="profilePictureHolderScroll"
+                                HorizontalScrollBarVisibility="Auto"
+                                HorizontalScrollMode="Enabled"
+                                VerticalScrollBarVisibility="Hidden"
+                                VerticalScrollMode="Disabled"
+                                Visibility="Visible">
+                                <StackPanel
+                                    x:Name="profilePictureHolder"
+                                    Margin="0,8,0,15"
+                                    Orientation="Horizontal"
+                                    Spacing="8">
+                                    <Button
+                                        x:Name="newImageButton"
+                                        Width="90"
+                                        Height="80"
+                                        Click="OnAddNewImageButton_Click">
+                                        <SymbolIcon Symbol="OpenFile" />
                                     </Button>
                                     <StackPanel.ChildrenTransitions>
                                         <TransitionCollection>
-                                            <EntranceThemeTransition x:Name="chooseWhatToExportAnimation" IsStaggeringEnabled="True" FromVerticalOffset="30"/>
+                                            <EntranceThemeTransition
+                                                x:Name="chooseWhatToExportAnimation"
+                                                FromVerticalOffset="30"
+                                                IsStaggeringEnabled="True" />
                                         </TransitionCollection>
                                     </StackPanel.ChildrenTransitions>
 
                                     <StackPanel.ContextFlyout>
                                         <MenuFlyout x:Name="picturesHolderFlyout">
-                                            <MenuFlyoutItem x:Uid="removeFlyout" CornerRadius="4" Click="OnPictureRemove_Click">
+                                            <MenuFlyoutItem
+                                                x:Uid="removeFlyout"
+                                                Click="OnPictureRemove_Click"
+                                                CornerRadius="4">
                                                 <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE107;"/>
+                                                    <FontIcon Glyph="&#xE107;" />
                                                 </MenuFlyoutItem.Icon>
                                             </MenuFlyoutItem>
                                         </MenuFlyout>
@@ -261,29 +430,48 @@
                         </StackPanel>
                     </muxc:TeachingTip.Content>
                 </muxc:TeachingTip>
-                <TextBox x:Name="nameBox" x:Uid="characterPlaceholderName" Style="{StaticResource CharactersTextBoxesStyle}" CornerRadius="4" PlaceholderText="Name" Padding="12, 7" Grid.Column="2" Height="38" HorizontalAlignment="Stretch" IsEnabled="False" TextChanged="Box_TextChanged"/>
+                <TextBox
+                    x:Name="nameBox"
+                    x:Uid="characterPlaceholderName"
+                    Grid.Column="2"
+                    Height="38"
+                    Padding="12,7"
+                    HorizontalAlignment="Stretch"
+                    CornerRadius="4"
+                    IsEnabled="False"
+                    PlaceholderText="Name"
+                    Style="{StaticResource CharactersTextBoxesStyle}"
+                    TextChanged="Box_TextChanged" />
             </Grid>
-            <!--<Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="300"/>
-                        <ColumnDefinition Width="20"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <DatePicker YearVisible="False" Height="38" />
-                    <TextBox Style="{StaticResource CharactersTextBoxesStyle}" CornerRadius="4" PlaceholderText="Year" Padding="12, 7" Grid.Column="2" Height="38" HorizontalAlignment="Stretch" IsEnabled="False" TextChanged="Box_TextChanged"/>
-                </Grid>-->
-            <TextBox x:Name="descriptionBox" x:Uid="ownDescription" Style="{StaticResource CharactersTextBoxesStyle}" CornerRadius="4" TextWrapping="Wrap" Height="250" IsEnabled="False" TextChanged="Box_TextChanged"/>
+            <TextBox
+                x:Name="descriptionBox"
+                x:Uid="ownDescription"
+                Height="250"
+                CornerRadius="4"
+                IsEnabled="False"
+                Style="{StaticResource CharactersTextBoxesStyle}"
+                TextChanged="Box_TextChanged"
+                TextWrapping="Wrap" />
         </StackPanel>
 
-        <StackPanel x:Name="selectedCharactersNullText" VerticalAlignment="Center" HorizontalAlignment="Center" Grid.Column="2" Grid.Row="2" Spacing="18">
+        <StackPanel
+            x:Name="selectedCharactersNullText"
+            Grid.Row="2"
+            Grid.Column="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center"
+            Spacing="18">
             <FontIcon Glyph="" RenderTransformOrigin=".5,.5">
                 <FontIcon.RenderTransform>
-                    <CompositeTransform ScaleX="1.9" ScaleY="1.8"/>
+                    <CompositeTransform ScaleX="1.9" ScaleY="1.8" />
                 </FontIcon.RenderTransform>
             </FontIcon>
-            <TextBlock x:Uid="characterNotSelected" FontSize="16"/>
+            <TextBlock x:Uid="characterNotSelected" FontSize="16" />
             <animations:Implicit.ShowAnimations>
-                <animations:ScaleAnimation Duration="0:0:0.32" From="1, 0.8, 0.1" To="1,1,1" />
+                <animations:ScaleAnimation
+                    From="1, 0.8, 0.1"
+                    To="1,1,1"
+                    Duration="0:0:0.32" />
             </animations:Implicit.ShowAnimations>
         </StackPanel>
     </Grid>

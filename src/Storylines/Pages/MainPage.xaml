@@ -13,11 +13,11 @@
 
     <Grid x:Name="mainGrid" x:FieldModifier="public">
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="3.57*" />
             <ColumnDefinition
-                Width="0.28*"
+                Width="*"
                 MinWidth="220"
-                MaxWidth="440" />
+                MaxWidth="440"/>
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
@@ -44,8 +44,7 @@
             Grid.Row="1"
             Grid.Column="1"
             Margin="0,8,8,8" />
-
-
+        
         <Grid
             x:Name="downBarMainPage"
             Grid.Row="3"

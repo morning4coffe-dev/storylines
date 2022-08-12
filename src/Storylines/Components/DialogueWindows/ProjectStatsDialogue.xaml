@@ -28,7 +28,8 @@
             </Button>
         </Grid>
 
-        <RichTextBlock x:Name="statsText" x:FieldModifier="public" Grid.Row="2" LineHeight="26" SelectionHighlightColor="{ThemeResource SystemAccentColor}">
+        <ScrollViewer Grid.Row="2" MinHeight="20">
+            <RichTextBlock x:Name="statsText" x:FieldModifier="public" LineHeight="26" SelectionHighlightColor="{ThemeResource SystemAccentColor}">
             <Paragraph Margin="0,8,0,0">
                 <Run x:Uid="storyText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
             </Paragraph>
@@ -57,5 +58,6 @@
                 <Run x:Name="textRun" FontWeight="Normal">N/A</Run>
             </Paragraph>
         </RichTextBlock>
+        </ScrollViewer>
     </Grid>
 </ContentDialog>
