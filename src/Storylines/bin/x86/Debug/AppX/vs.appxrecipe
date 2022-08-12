@@ -30,13 +30,13 @@
     <AppXManifest Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Core\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2022-06-24T19:27:11.384</Modified>
+      <Modified>2022-06-25T05:49:47.736</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Storylines.exe">
       <PackagePath>entrypoint\Storylines.exe</PackagePath>
-      <Modified>2022-06-24T19:27:09.128</Modified>
+      <Modified>2022-06-25T05:48:37.374</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\domin\.nuget\packages\colorcode.core\2.0.6\lib\netstandard1.4\ColorCode.Core.dll">
       <PackagePath>ColorCode.Core.dll</PackagePath>
@@ -518,115 +518,115 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Storylines.xr.xml">
       <PackagePath>Storylines.xr.xml</PackagePath>
-      <Modified>2022-06-24T19:27:08.364</Modified>
+      <Modified>2022-06-25T05:45:48.994</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\App.xbf">
       <PackagePath>App.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.781</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\AppView.xbf">
       <PackagePath>AppView.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.698</Modified>
+      <Modified>2022-06-25T05:48:37.083</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\CustomControls\SymbolButton.xbf">
       <PackagePath>Components\CustomControls\SymbolButton.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.781</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\CustomControls\ShortcutLineControl.xbf">
       <PackagePath>Components\CustomControls\ShortcutLineControl.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.781</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ProjectRenamerDialogue.xbf">
       <PackagePath>Components\DialogueWindows\ProjectRenamerDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.781</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ModesDialogue.xbf">
       <PackagePath>Components\DialogueWindows\ModesDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.701</Modified>
+      <Modified>2022-06-25T05:48:37.088</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\FeedbackDialogue.xbf">
       <PackagePath>Components\DialogueWindows\FeedbackDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ShortcutsDialogue.xbf">
       <PackagePath>Components\DialogueWindows\ShortcutsDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\CharactersPage.xbf">
       <PackagePath>Pages\CharactersPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.720</Modified>
+      <Modified>2022-06-25T05:48:37.102</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\ChaptersList.xbf">
       <PackagePath>Components\ChaptersList.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\ChapterTextBox.xbf">
       <PackagePath>Components\ChapterTextBox.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.728</Modified>
+      <Modified>2022-06-25T05:48:37.110</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ChapterCreatorOrRenamer.xbf">
       <PackagePath>Components\DialogueWindows\ChapterCreatorOrRenamer.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ExportDialogue.xbf">
       <PackagePath>Components\DialogueWindows\ExportDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.732</Modified>
+      <Modified>2022-06-25T05:48:37.117</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\LoadProjectDialogue.xbf">
       <PackagePath>Components\DialogueWindows\LoadProjectDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\SaveDialogue.xbf">
       <PackagePath>Components\DialogueWindows\SaveDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\DialogueWindows\ProjectStatsDialogue.xbf">
       <PackagePath>Components\DialogueWindows\ProjectStatsDialogue.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.782</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Components\MainCommandBar.xbf">
       <PackagePath>Components\MainCommandBar.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.764</Modified>
+      <Modified>2022-06-25T05:48:37.149</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\MainPage.xbf">
       <PackagePath>Pages\MainPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.768</Modified>
+      <Modified>2022-06-25T05:48:37.152</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\CustomExpanderStyle.xbf">
       <PackagePath>Resources\ResourceDictionaries\CustomExpanderStyle.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.628</Modified>
+      <Modified>2022-06-25T05:48:37.010</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\MainStyleDictionary.xbf">
       <PackagePath>Resources\ResourceDictionaries\MainStyleDictionary.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.662</Modified>
+      <Modified>2022-06-25T05:48:37.046</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPage.xbf">
       <PackagePath>Pages\SettingsPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.783</Modified>
+      <Modified>2022-06-25T05:48:37.167</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\AboutPage.xbf">
       <PackagePath>Pages\SettingsPages\AboutPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.771</Modified>
+      <Modified>2022-06-25T05:48:37.156</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\GeneralPage.xbf">
       <PackagePath>Pages\SettingsPages\GeneralPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.774</Modified>
+      <Modified>2022-06-25T05:48:37.159</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\AccessibilityPage.xbf">
       <PackagePath>Pages\SettingsPages\AccessibilityPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.777</Modified>
+      <Modified>2022-06-25T05:48:37.162</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Pages\SettingsPages\PersonalizationPage.xbf">
       <PackagePath>Pages\SettingsPages\PersonalizationPage.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.780</Modified>
+      <Modified>2022-06-25T05:48:37.165</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\RightAlignedToggleSwitchStyle.xbf">
       <PackagePath>Resources\ResourceDictionaries\RightAlignedToggleSwitchStyle.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.680</Modified>
+      <Modified>2022-06-25T05:48:37.066</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Resources\ResourceDictionaries\MainRichTextBoxStyle.xbf">
       <PackagePath>Resources\ResourceDictionaries\MainRichTextBoxStyle.xbf</PackagePath>
-      <Modified>2022-06-24T19:27:08.781</Modified>
+      <Modified>2022-06-25T05:48:37.166</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files %28x86%29\Microsoft SDKs\Windows Kits\10\ExtensionSDKs\Microsoft.UniversalCRT.Debug\10.0.19041.0\\redist\Debug\x86\ucrtbased.dll">
       <PackagePath>ucrtbased.dll</PackagePath>
@@ -642,11 +642,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2022-06-24T14:52:28.125</Modified>
+      <Modified>2022-06-25T05:49:46.878</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\Documents\Projects\Storylines\src\Storylines\bin\x86\Debug\Core\Storylines.exe">
       <PackagePath>Storylines.exe</PackagePath>
-      <Modified>2022-06-24T19:27:11.377</Modified>
+      <Modified>2022-06-25T05:49:47.733</Modified>
     </AppxPackagedFile>
   </ItemGroup>
   <ItemGroup>
