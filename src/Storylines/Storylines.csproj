@@ -155,14 +155,14 @@
     <Compile Include="Components\CustomControls\ShortcutLineControl.xaml.cs">
       <DependentUpon>ShortcutLineControl.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Components\CustomControls\WhatsNextBanner.xaml.cs">
+      <DependentUpon>WhatsNextBanner.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml.cs">
       <DependentUpon>ProjectRenamerDialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\DialogueWindows\ModesDialogue.xaml.cs">
       <DependentUpon>ModesDialogue.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="Components\DialogueWindows\FeedbackDialogue.xaml.cs">
-      <DependentUpon>FeedbackDialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Components\DialogueWindows\ShortcutsDialogue.xaml.cs">
       <DependentUpon>ShortcutsDialogue.xaml</DependentUpon>
@@ -258,6 +258,7 @@
     <Content Include="Assets\LargeTile.scale-150.png" />
     <Content Include="Assets\LargeTile.scale-200.png" />
     <Content Include="Assets\LargeTile.scale-400.png" />
+    <Content Include="Assets\Other\banner-export.png" />
     <Content Include="Assets\Other\character-profile-picture.jpg" />
     <Content Include="Assets\SmallTile.scale-100.png" />
     <Content Include="Assets\SmallTile.scale-125.png" />
@@ -325,15 +326,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\CustomControls\WhatsNextBanner.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Components\DialogueWindows\ModesDialogue.xaml">
-      <Generator>MSBuild:Compile</Generator>
-      <SubType>Designer</SubType>
-    </Page>
-    <Page Include="Components\DialogueWindows\FeedbackDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -420,10 +421,10 @@
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
-      <Version>4.5.1</Version>
+      <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.AppCenter.Crashes">
-      <Version>4.5.1</Version>
+      <Version>4.5.3</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.NETCore.UniversalWindowsPlatform">
       <Version>6.2.14</Version>
@@ -444,7 +445,7 @@
       <Version>7.1.2</Version>
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
-      <Version>2.7.1</Version>
+      <Version>2.8.0</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

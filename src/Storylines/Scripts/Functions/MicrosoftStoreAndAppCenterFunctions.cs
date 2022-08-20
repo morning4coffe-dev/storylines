@@ -35,14 +35,14 @@ namespace Storylines.Scripts.Functions
             SettingsValues.ReviewPrompt reviewState = (SettingsValues.ReviewPrompt)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] ?? 2);
             switch (reviewState)
             {
-                 case SettingsValues.ReviewPrompt.NotYet:
-                 timer = new DispatcherTimer
-                 {
-                     Interval = TimeSpan.FromMinutes(35)
-                 };
-                 timer.Tick += ReviewTimer_Tick;
-                 timer.Start();
-                 break;
+                case SettingsValues.ReviewPrompt.NotYet:
+                    timer = new DispatcherTimer
+                    {
+                        Interval = TimeSpan.FromMinutes(35)
+                    };
+                    timer.Tick += ReviewTimer_Tick;
+                    timer.Start();
+                    break;
             }
         }
 
@@ -158,18 +158,15 @@ namespace Storylines.Scripts.Functions
             Analytics.TrackEvent("Focus Mode", toSend);
         }
 
-        //public static void SendAnalyticData_Feedback(string type, string text, string longText, bool analyticsData)//?
-        //{
-        //    string id = Guid.NewGuid().ToString();
+        public static void SendAnalyticData(string name, string value)
+        {
+            Dictionary<string, string> toSend = new Dictionary<string, string>()
+            {
+                { name, value },
+            };
 
-        //    string toSendString = $"Type: {type}\nShort text: {text}\nLong text: {longText}";
-        //    Dictionary<string, string> toSend = new Dictionary<string, string>()
-        //    {
-        //        { id, toSendString },
-        //    };
-
-        //    Analytics.TrackEvent("Feedback dialogue", toSend);
-        //}
+            Analytics.TrackEvent("Other", toSend);
+        }
 
         public static void SendCrashData_OnUnhandledException(Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {

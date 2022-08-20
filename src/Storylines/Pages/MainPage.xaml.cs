@@ -151,7 +151,7 @@ namespace Storylines.Pages
         #region DownBar
         public void UpdateDownBar() => ProjectStatsDialogue.UpdateDownBar();
 
-        private void OnDownBarText_Click(object sender, RoutedEventArgs e) => ProjectStatsDialogue.Open();
+        private void OnDownBarText_Click(object sender, RoutedEventArgs e) => ProjectStatsDialogue.Open(true);
 
         private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e) =>
             OpenOrCloseChapterList(closeOpenChapterListComponentIcon.Symbol == Symbol.ClosePane, true);

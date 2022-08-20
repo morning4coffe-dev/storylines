@@ -1,11 +1,17 @@
-﻿using Storylines.Pages;
+﻿using Newtonsoft.Json.Linq;
+using Storylines.Pages;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Variables;
 using System;
+using System.Linq;
+using System.Text;
 using System.Text.RegularExpressions;
+using System.Xml.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace Storylines.Components.DialogueWindows
 {
@@ -24,10 +30,11 @@ namespace Storylines.Components.DialogueWindows
             textBoxStats.RequestedTheme = AppView.current.RequestedTheme;
         }
 
-        public static void Open()
+        public static void Open(bool fromDownBar)
         {
             _ = new ProjectStatsDialogue().ShowAsync();
 
+            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData("TextStatsOpenedFromDownBar", fromDownBar.ToString());
             textBoxStats.DisplayStats();
         }
 
@@ -43,7 +50,7 @@ namespace Storylines.Components.DialogueWindows
 
             int wordCount = txt.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
 
-            int paragraphCount = Regex.Matches(txt, "[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*").Count;
+            int paragraphCount = Regex.Matches(txt, @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;
 
             string storyCharacterCount = GetTextFromAllChapters();
 
@@ -51,6 +58,24 @@ namespace Storylines.Components.DialogueWindows
             charactersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("characters")}: {charactersCount}";
             chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {Chapter.chapters.Count}";
             textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";/*\n{ResourceLoader.GetForCurrentView().GetString("selectedCharacters")}: {selectedLetters}*/
+
+            var stringBuilder = new StringBuilder();
+            IOrderedEnumerable<IGrouping<string, Match>> wordFrequency
+                = Regex.Matches(txt, @"\b[\w]*\b")
+                .Where(m => m.Length > 0)
+                .GroupBy(m => m.Value)
+                .OrderByDescending(m => m.Count())
+                .ThenBy(m => m.Key);
+            foreach (IGrouping<string, Match> item in wordFrequency)
+            {
+                if (item != null)
+                {
+                    stringBuilder.AppendLine($"{item.Key}: {item.Count()}");
+                }
+            }
+
+            if(stringBuilder.Length > 0)
+                wordDistributionTextBox.Text = stringBuilder.ToString();
         }
 
         public static string GetTextFromAllChapters()
@@ -75,7 +100,7 @@ namespace Storylines.Components.DialogueWindows
 
             int wordCount = txt.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
 
-            int paragraphCount = Regex.Matches(txt, "[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*").Count;
+            int paragraphCount = Regex.Matches(txt, @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;
 
             string selectedLetters = textBox.Document.Selection.Text.Length != 0 ? $"{textBox.Document.Selection.Text.Length} / " : "";
 

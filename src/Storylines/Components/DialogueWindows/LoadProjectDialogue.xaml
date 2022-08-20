@@ -5,13 +5,13 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:variables="using:Storylines.Components"
+    xmlns:variables="using:Storylines.Components" xmlns:customcontrols="using:Storylines.Components.CustomControls"
     mc:Ignorable="d" CornerRadius="8" Opened="ContentDialog_Opened" Closing="ContentDialog_Closing">
     
-    <Grid MaxHeight="420" MinHeight="300" Width="400" Margin="4">
+    <Grid MaxHeight="500" MinHeight="350" Width="400" Margin="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height="0.13*"/>
-            <RowDefinition Height="8"/>
+            <RowDefinition Height="40"/>
+            <RowDefinition Height="130"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
 
@@ -42,7 +42,9 @@
             </Button>
         </Grid>
 
-        <ListView x:Name="projectsHolder" ItemsSource="{x:Bind variables:ProjectFile.projectFiles, Mode=OneWay}" IsTabStop="False" SelectionMode="None" Grid.Row="3" Padding="0,-3" VerticalAlignment="Top" ItemClick="OnProjectsHolder_ItemClick">
+        <customcontrols:WhatsNextBanner Grid.Row="1"/>
+
+        <ListView x:Name="projectsHolder" ItemsSource="{x:Bind variables:ProjectFile.projectFiles, Mode=OneWay}" IsTabStop="False" SelectionMode="None" Grid.Row="2" Padding="0,-3" VerticalAlignment="Top" ItemClick="OnProjectsHolder_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <Button Tag="{Binding token}" Margin="{Binding osMargin}" HorizontalAlignment="Left" RightTapped="OnOpenRecentProject_RightTapped" Holding="OnOpenRecentProject_Holding" Click="OnOpenRecentProject_Click">

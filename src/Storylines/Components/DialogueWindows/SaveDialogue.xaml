@@ -18,7 +18,9 @@
                     <TextBox x:Name="nameText" PlaceholderText="{x:Bind resources:SaveDialogue.ProjectNamePlaceholder}" Width="300" Height="38" MaxLength="400" Style="{StaticResource SmallTextBoxStyle}"/>
                 </StackPanel>
 
-                <StackPanel Spacing="8">
+                <ScrollViewer>
+                    <StackPanel Spacing="14">
+                    <StackPanel Spacing="8">
                     <TextBlock x:Uid="fileName"/>
                     <StackPanel Spacing="8" Orientation="Horizontal">
                         <TextBox x:Name="fileNameText" x:Uid="fileNamePlaceh" Width="212" Height="38" Style="{StaticResource SmallTextBoxStyle}" MaxLength="255" TextChanged="OnTextBox_TextChanged"/>
@@ -43,8 +45,10 @@
                                 </FontIcon>
                             </Button.Content>
                         </Button>
-                    </StackPanel>
-                </StackPanel>
+                            </StackPanel>
+                        </StackPanel>
+                    
+                
                 <Grid Margin="0, 8, 0, 0">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition/>
@@ -54,6 +58,7 @@
                     <customcontrols:SymbolButton x:Name="submitButton" Text="{x:Bind resources:SaveDialogue.Submit}" Glyph="" IsPrimary="True" IsEnabled="False" HorizontalAlignment="Stretch" Click="OnSubmitButton_Click"/>
                     <customcontrols:SymbolButton IsCancel="True" Grid.Column="2" HorizontalAlignment="Stretch" Click="OnCancelButton_Click"/>
                 </Grid>
+                </StackPanel></ScrollViewer>
             </StackPanel>
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.65" From="0, -10, 0" To="0"/>

@@ -503,9 +503,7 @@ namespace Storylines.Components
             }
 
             if (MainPage.chapterList.listView.SelectedItem != null)
-            {
                 textBox.Document.Selection.SetRange(TextConstants.MaxUnitCount, TextConstants.MaxUnitCount);
-            }
         }
     }
 
@@ -516,7 +514,7 @@ namespace Storylines.Components
             var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
 
             if (ctrl.HasFlag(CoreVirtualKeyStates.Down))
-                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)
+                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)// || e.Key == VirtualKey.V
                     return;
             base.OnKeyDown(e);
         }
