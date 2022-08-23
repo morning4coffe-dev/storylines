@@ -44,6 +44,8 @@ namespace Storylines.Components.DialogueWindows
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
 
+            txt = txt.ToLower();
+
             int charactersCount = Character.characters.Count;
 
             string txtWithoutSpace = txt.Replace(" ", "");
@@ -54,10 +56,10 @@ namespace Storylines.Components.DialogueWindows
 
             string storyCharacterCount = GetTextFromAllChapters();
 
-            storyRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {(storyCharacterCount.Length > 1 ? storyCharacterCount.Length - 2 : storyCharacterCount.Length)}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {storyCharacterCount.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length}\n{ResourceLoader.GetForCurrentView().GetString("estimatedPageCount")}: {storyCharacterCount.Length / 3838}";
+            storyRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {(storyCharacterCount.Length > 1 ? storyCharacterCount.Length - 2 : storyCharacterCount.Length)}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {storyCharacterCount.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length}\n{ResourceLoader.GetForCurrentView().GetString("estimatedReadTime")}: {storyCharacterCount.Length / 275} {ResourceLoader.GetForCurrentView().GetString("min")}\n{ResourceLoader.GetForCurrentView().GetString("estimatedPageCount")}: {storyCharacterCount.Length / 3838}";
             charactersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("characters")}: {charactersCount}";
             chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {Chapter.chapters.Count}";
-            textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";/*\n{ResourceLoader.GetForCurrentView().GetString("selectedCharacters")}: {selectedLetters}*/
+            textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";/*\n{ResourceLoader.GetForCurrentView().GetString("selectedCharacters")}: {selectedLetters}*/
 
             var stringBuilder = new StringBuilder();
             IOrderedEnumerable<IGrouping<string, Match>> wordFrequency

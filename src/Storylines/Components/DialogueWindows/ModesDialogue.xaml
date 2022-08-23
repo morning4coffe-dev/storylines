@@ -4,50 +4,25 @@
     xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations" xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+    xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+    xmlns:customcontrols="using:Storylines.Components.CustomControls"
     mc:Ignorable="d" CornerRadius="8" Closed="ContentDialog_Closed">
 
     <StackPanel Spacing="8" VerticalAlignment="Stretch" HorizontalAlignment="Left" Width="300" Margin="4" Orientation="Vertical">
         <TextBlock x:Uid="modeDialogueTitle" Style="{StaticResource DialogueWindowHeaderStyle}"/>
 
-        <StackPanel Spacing="8" Orientation="Horizontal" HorizontalAlignment="Center" Visibility="Visible" Margin="0, 8, 0, 0">
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition x:Name="chooseWhatToExportAnimation" IsStaggeringEnabled="True" FromVerticalOffset="30"/>
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
-
-            <ToggleButton x:Name="readModeButton" Background="Transparent" Width="146" Height="78" CornerRadius="4" Visibility="Collapsed" Click="OnReadButton_Click">
-                <ToggleButton.Content>
-                    <StackPanel Spacing="10">
-                        <FontIcon Glyph=""/>
-                        <TextBlock x:Uid="modeDialogueRead"/>
-                    </StackPanel>
-                </ToggleButton.Content>
-            </ToggleButton>
-
-            <ToggleButton x:Name="focusModeButton" Background="Transparent" Width="146" Height="78" CornerRadius="4" Visibility="Collapsed" Click="OnFocusButton_Click">
-                <ToggleButton.Content>
-                    <StackPanel Spacing="10">
-                        <FontIcon Glyph=""/>
-                        <TextBlock x:Uid="modeDialogueFocus"/>
-                    </StackPanel>
-                </ToggleButton.Content>
-            </ToggleButton>
-        </StackPanel>
-
-        <Grid x:Name="chooseExportChaptersPanel" Visibility="Visible">
             <StackPanel Spacing="8">
                 <CheckBox x:Name="fullScreenCheckBox" x:Uid="modeDialogueFullScreen" IsChecked="False"/>
                 <CheckBox x:Name="autosaveCheckBox" x:Uid="autosaveContent" IsChecked="True"/>
                 <CheckBox x:Name="timeCheckBox" x:Uid="modeDialogueTimer"  IsChecked="True" Click="OnTimeCheckBox_Click"/>
                 <TimePicker x:Name="timePicker" Width="300" ClockIdentifier="24HourClock" HorizontalAlignment="Stretch" VerticalAlignment="Stretch"/>
-                <CheckBox x:Name="measureCheckBox" x:Uid="includeChapterName" IsChecked="True" Click="OnMinimumCheckBox_Click"/>
+                <CheckBox x:Name="measureCheckBox" x:Uid="enableMeasureLabel" IsChecked="True" Click="OnMinimumCheckBox_Click"/>
 
                 <StackPanel x:Name="measureStack" Spacing="8">
-                    <TextBlock x:Uid="fileName"/>
+                    <TextBlock x:Uid="whatToMeasure"/>
                     <StackPanel Spacing="8" Orientation="Horizontal">
-                        <controls:NumberBox x:Name="measureValueNumBox" Padding="10,8" Value="0" Minimum="0" SpinButtonPlacementMode="Compact" SmallChange="5" LargeChange="100" Width="120" Height="38"/>
+                        <controls:NumberBox x:Name="measureValueNumBox" Padding="10,8" Value="50" Minimum="0" SpinButtonPlacementMode="Compact" SmallChange="5" LargeChange="100" Width="120" Height="38"/>
                         <ComboBox x:Name="toMeasureComboBox" SelectedIndex="0" Height="38" CornerRadius="4" Width="172" VerticalAlignment="Bottom" HorizontalAlignment="Right" DropDownOpened="OnToMeasureComboBox_DropDownOpened" DropDownClosed="OnToMeasureComboBox_DropDownClosed">
                             <ComboBoxItem x:Uid="charactersContent"/>
                             <ComboBoxItem x:Uid="wordsContent"/>
@@ -58,15 +33,19 @@
                     <controls:InfoBar x:Name="noCharacters" x:Uid="noCharactersModes" IsOpen="False" IsClosable="False" Severity="Warning"/>
                 </StackPanel>
 
-                <StackPanel Margin="0, 8, 0, 0" Orientation="Horizontal" Spacing="8" HorizontalAlignment="Right">
-                    <Button x:Name="submitButton" x:Uid="switchContent" Style="{StaticResource AccentButtonStyle}" IsEnabled="True" Width="100" Height="38" Background="{ThemeResource SystemAccentColorDark1}" CornerRadius="4" Click="OnSwitchButton_Click"/>
-                    <Button x:Uid="cancel" Width="100" Height="38" Click="OnCancelButton_Click"/>
-                </StackPanel>
-            </StackPanel>
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.65" From="0, -10, 0" To="0"/>
-                <animations:OpacityAnimation Duration="0:0:0.65" From="0" To="1.0"/>
-            </animations:Implicit.ShowAnimations>
-        </Grid>
+            <Grid Margin="0, 8, 0, 0">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition Width="8"/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+                <customcontrols:SymbolButton x:Name="submitButton" x:Uid="focus" Glyph="" IsPrimary="True" HorizontalAlignment="Stretch" Click="OnSwitchButton_Click"/>
+                <customcontrols:SymbolButton IsCancel="True" Grid.Column="2" HorizontalAlignment="Stretch" Click="OnCancelButton_Click"/>
+            </Grid>
+        <animations:Implicit.ShowAnimations>
+            <animations:TranslationAnimation Duration="0:0:0.65" From="0, -10, 0" To="0"/>
+            <animations:OpacityAnimation Duration="0:0:0.65" From="0" To="1.0"/>
+        </animations:Implicit.ShowAnimations>
+        </StackPanel>
     </StackPanel>
 </ContentDialog>

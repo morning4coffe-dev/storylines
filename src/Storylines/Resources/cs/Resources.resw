@@ -16,7 +16,7 @@
     <value>Přiblížení</value>
   </data>
   <data name="downBarText.Text" xml:space="preserve">
-    <value>Nejdříve přidej novou kapitolu a poté začni psát.</value>
+    <value>Nejdříve přidete novou kapitolu a následně začněte psát.</value>
   </data>
   <data name="clickHere" xml:space="preserve">
     <value>Klikněte zde</value>
@@ -28,7 +28,7 @@
     <value>pro stažení.</value>
   </data>
   <data name="reviewDialog.Text" xml:space="preserve">
-    <value>Líbí se ti tato aplikace? Pokud ano, byli bychom rádi, kdybys zvážil/a ji ohodnotit na Microsoft Store.</value>
+    <value>Líbí se vám tato aplikace? Pokud ano, byli bychom rádi, kdybyste ji zvážil/a ohodnotit na Microsoft Store.</value>
   </data>
   <data name="reviewDialogOption1.Content" xml:space="preserve">
     <value>Ohodnotit</value>
@@ -139,7 +139,7 @@
     <value>Oznámení o neuloženém projektu</value>
   </data>
   <data name="yourStory.PlaceholderText" xml:space="preserve">
-    <value>Sem začni psát příběh.</value>
+    <value>Sem začněte psát příběh.</value>
   </data>
   <data name="about.Content" xml:space="preserve">
     <value>O aplikaci</value>
@@ -184,7 +184,7 @@
     <value>Repliky</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
-    <value>Tento soubor se již v této složce nachází! Pokud nechceš o původní přijít, změň název nebo umísti soubor jinam.</value>
+    <value>Tento soubor se již v této složce nachází! Pokud nechcete o původní přijít, změňte název, či umístěte soubor jinam.</value>
   </data>
   <data name="noneText.Text" xml:space="preserve">
     <value>Žádná</value>
@@ -265,7 +265,7 @@
     <value>Názvy kapitol</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Zvol vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidej k textu {cislo}.</value>
+    <value>Zvolte vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidete k textu {cislo}.</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
     <value>Barva motivu</value>
@@ -301,8 +301,8 @@
     <value>Zrušit</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Zpomal trochu!
-Opravdu chceš odejít bez uložení své práce?</value>
+    <value>Zpomate trochu!
+Opravdu chcete odejít bez uložení své práce?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
     <value>Neukládat</value>
@@ -338,7 +338,7 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Zvýrazňovač</value>
   </data>
   <data name="chapterWithoutName" xml:space="preserve">
-    <value>Klikni pravým na tento text nebo na šipku výše pro přejmenování této kapitoly</value>
+    <value>Klikněte pravým na tento text nebo na šipku výše pro přejmenování této kapitoly</value>
   </data>
   <data name="feedbackLabel.Label" xml:space="preserve">
     <value>Zpětná vazba</value>
@@ -356,7 +356,7 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Časovač</value>
   </data>
   <data name="modeDialogueTitle.Text" xml:space="preserve">
-    <value>Přepnout režim</value>
+    <value>Režim soustředění</value>
   </data>
   <data name="switchContent.Content" xml:space="preserve">
     <value>Přepnout</value>
@@ -464,7 +464,7 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Hotovo</value>
   </data>
   <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
-    <value>Nastavený cíl zatím nebyl splněn, vážně chceš už odejít?</value>
+    <value>Nastavený cíl zatím nebyl splněn, vážně již chcete odejít?</value>
   </data>
   <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
     <value>Odejít</value>
@@ -497,13 +497,13 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Použít změny</value>
   </data>
   <data name="changesCharactersPageDialogueDescription" xml:space="preserve">
-    <value>Opravdu chceš odejít bez použití změn?</value>
+    <value>Opravdu chcete odejít bez použití změn?</value>
   </data>
   <data name="changesCharactersPageDialogueDontApplyChanges" xml:space="preserve">
     <value>Nepoužít změny</value>
   </data>
   <data name="changesCharactersPageDialogueTitle" xml:space="preserve">
-    <value>Změny nebyly uplatněny!</value>
+    <value>Změny nebyly použity!</value>
   </data>
   <data name="autosaveInterval10.Content" xml:space="preserve">
     <value>10 minut</value>
@@ -569,7 +569,7 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Zrušit</value>
   </data>
   <data name="noCharactersModes.Message" xml:space="preserve">
-    <value>Nejdříve budeš muset opustit Režim soustředění pro přidání nové.</value>
+    <value>Nejdříve budete muset opustit Režim soustředění pro přidání nové.</value>
   </data>
   <data name="noCharactersModes.Title" xml:space="preserve">
     <value>V aktuálním projektu zatím nejsou žádné postavy.</value>
@@ -578,7 +578,7 @@ Opravdu chceš odejít bez uložení své práce?</value>
     <value>Přidat novou postavu</value>
   </data>
   <data name="noCharactersDialogueDescription" xml:space="preserve">
-    <value>Jednoduše můžeš přidat novou postavu kliknutím
+    <value>Jednoduše můžete přidat novou postavu kliknutím
 na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
@@ -591,40 +591,34 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="russian.Content" xml:space="preserve">
     <value>Ruština</value>
   </data>
+  <data name="charactersSText" xml:space="preserve">
+    <value>Znaky</value>
+  </data>
+  <data name="charactersText" xml:space="preserve">
+    <value>Znaky</value>
+  </data>
   <data name="dialoguesText" xml:space="preserve">
     <value>Repliky</value>
   </data>
   <data name="exportText" xml:space="preserve">
     <value>Exportovat</value>
   </data>
-  <data name="Bold" xml:space="preserve">
-    <value>Tučně</value>
-  </data>
-  <data name="ChapterAbove" xml:space="preserve">
-    <value>O kapitolu nad aktivní</value>
-  </data>
-  <data name="ChapterBelow" xml:space="preserve">
-    <value>O kapitolu pod aktivní</value>
-  </data>
-  <data name="Italic" xml:space="preserve">
-    <value>Kurzíva</value>
-  </data>
-  <data name="Redo" xml:space="preserve">
-    <value>Znovu</value>
-  </data>
-  <data name="Search" xml:space="preserve">
-    <value>Vyhledat</value>
-  </data>
-  <data name="Strikethrough" xml:space="preserve">
-    <value>Přeškrtnutí</value>
-  </data>
-  <data name="Underline" xml:space="preserve">
-    <value>Podtržení</value>
-  </data>
-  <data name="Undo" xml:space="preserve">
-    <value>Zpět</value>
-  </data>
   <data name="chaptersText1.Text" xml:space="preserve">
     <value>Kapitoly</value>
+  </data>
+  <data name="estimatedReadTime" xml:space="preserve">
+    <value>Přibližná doba čtení</value>
+  </data>
+  <data name="textAnalytics.Label" xml:space="preserve">
+    <value>Statistiky příběhu</value>
+  </data>
+  <data name="analytics.Text" xml:space="preserve">
+    <value>Statistiky</value>
+  </data>
+  <data name="whatsNextDescription.Text" xml:space="preserve">
+    <value>Přečtěte si, co plánujeme se Storylines do budoucna</value>
+  </data>
+  <data name="whatsNextTitle.Text" xml:space="preserve">
+    <value>Cesta vpřed</value>
   </data>
 </root>

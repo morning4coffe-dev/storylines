@@ -598,7 +598,4 @@
   <data name="exportText" xml:space="preserve">
     <value>Экспортировать</value>
   </data>
-  <data name="Search" xml:space="preserve">
-    <value>Поиск</value>
-  </data>
 </root>

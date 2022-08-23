@@ -90,7 +90,7 @@
                 </StackPanel>
 
                 <StackPanel x:Name="characterDialoguesToExportHolder" Spacing="8">
-                    <TextBlock x:Name="characterDialoguesToExportText"/> <!--Text="{x:Bind Characters}"-->
+                    <TextBlock x:Name="characterDialoguesToExportText" Text="{x:Bind resources:ExportDialogue.CharactersToExport}"/> <!--Text="{x:Bind Characters}"-->
                     <DropDownButton x:Name="characterDialoguesToExport" Height="38" Content="{x:Bind resources:ExportDialogue.All}" HorizontalContentAlignment="Left" CornerRadius="4" HorizontalAlignment="Stretch">
                         <DropDownButton.Flyout>
                             <Flyout Opened="Flyout_Opened" Closed="Flyout_Closed">

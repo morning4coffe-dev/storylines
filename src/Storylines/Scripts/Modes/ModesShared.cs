@@ -23,7 +23,6 @@ namespace Storylines.Scripts.Modes
             Grid g = new Grid()
             {
                 RequestedTheme = AppView.current.RequestedTheme,
-                //Background = (Windows.UI.Xaml.Media.SolidColorBrush)App.Current.Resources["LayerFillColorDefaultBrush"],
                 Background = MainPage.commandBar.navigationGrid.Background,
                 BorderBrush = MainPage.commandBar.navigationGrid.BorderBrush,
                 BorderThickness = MainPage.commandBar.navigationGrid.BorderThickness,
@@ -40,7 +39,6 @@ namespace Storylines.Scripts.Modes
             MainPage.chapterText.gridHolder.RowDefinitions.RemoveAt(0);
             MainPage.chapterText.gridHolder.RowDefinitions.RemoveAt(0);
             MainPage.chapterText.gridCommandBarHolder.Visibility = Visibility.Collapsed;
-            //MainPage.chapterText.line.Visibility = Visibility.Collapsed;
         }
     }
 }

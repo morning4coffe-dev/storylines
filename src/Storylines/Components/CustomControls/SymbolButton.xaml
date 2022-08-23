@@ -10,12 +10,7 @@
     <Button Style="{x:Bind Style}" Height="38" CornerRadius="4" Click="Button_Click" HorizontalAlignment="Stretch">
         <StackPanel Orientation="Horizontal" Spacing="4">
             <Grid>
-                <!--<SymbolIcon Symbol="{x:Bind Symbol}" RenderTransformOrigin=".5,.5">
-                <SymbolIcon.RenderTransform>
-                    <CompositeTransform ScaleX=".8" ScaleY=".8"/>
-                </SymbolIcon.RenderTransform>
-            </SymbolIcon>-->
-            <FontIcon Glyph="{x:Bind Glyph}" RenderTransformOrigin=".5,.5">
+                <FontIcon Glyph="{x:Bind Glyph}" RenderTransformOrigin=".5,.5">
                 <FontIcon.RenderTransform>
                     <CompositeTransform ScaleX=".85" ScaleY=".85"/>
                 </FontIcon.RenderTransform>

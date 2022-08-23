@@ -12,7 +12,7 @@
         </trans-unit>
         <trans-unit id="downBarText.Text" translate="yes" xml:space="preserve">
           <source>Add a new chapter and then start typing.</source>
-          <target state="translated">Nejdříve přidej novou kapitolu a poté začni psát.</target>
+          <target state="translated">Nejdříve přidete novou kapitolu a následně začněte psát.</target>
         </trans-unit>
         <trans-unit id="clickHere" translate="yes" xml:space="preserve">
           <source>Click here</source>
@@ -28,7 +28,7 @@
         </trans-unit>
         <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
-          <target state="translated">Líbí se ti tato aplikace? Pokud ano, byli bychom rádi, kdybys zvážil/a ji ohodnotit na Microsoft Store.</target>
+          <target state="translated">Líbí se vám tato aplikace? Pokud ano, byli bychom rádi, kdybyste ji zvážil/a ohodnotit na Microsoft Store.</target>
         </trans-unit>
         <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
           <source>Rate now</source>
@@ -184,7 +184,7 @@
         </trans-unit>
         <trans-unit id="yourStory.PlaceholderText" translate="yes" xml:space="preserve">
           <source>Type your story here.</source>
-          <target state="translated">Sem začni psát příběh.</target>
+          <target state="translated">Sem začněte psát příběh.</target>
         </trans-unit>
         <trans-unit id="about.Content" translate="yes" xml:space="preserve">
           <source>About</source>
@@ -244,7 +244,7 @@
         </trans-unit>
         <trans-unit id="fileDoesNotExist.Text" translate="yes" xml:space="preserve">
           <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
-          <target state="translated">Tento soubor se již v této složce nachází! Pokud nechceš o původní přijít, změň název nebo umísti soubor jinam.</target>
+          <target state="translated">Tento soubor se již v této složce nachází! Pokud nechcete o původní přijít, změňte název, či umístěte soubor jinam.</target>
         </trans-unit>
         <trans-unit id="noneText.Text" translate="yes" xml:space="preserve">
           <source>None</source>
@@ -352,7 +352,7 @@
         </trans-unit>
         <trans-unit id="chapterNameSettingDesc.Text" translate="yes" xml:space="preserve">
           <source>Set a custom name. To set the place of numbering use {number}</source>
-          <target state="translated">Zvol vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidej k textu {cislo}.</target>
+          <target state="translated">Zvolte vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidete k textu {cislo}.</target>
         </trans-unit>
         <trans-unit id="chooseAccentColorSetting.Text" translate="yes" xml:space="preserve">
           <source>Accent color</source>
@@ -401,8 +401,8 @@
         <trans-unit id="exitWithoutSaveDialogDescription" translate="yes" xml:space="preserve">
           <source>Hey! Slow down a little bit!
 Did you want to exit without saving your progress?</source>
-          <target state="translated">Zpomal trochu!
-Opravdu chceš odejít bez uložení své práce?</target>
+          <target state="translated">Zpomate trochu!
+Opravdu chcete odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="exitWithoutSaveDialogDontSave" translate="yes" xml:space="preserve">
           <source>Don't save</source>
@@ -454,7 +454,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="chapterWithoutName" translate="yes" xml:space="preserve">
           <source>Right click on this text or on the arrow above to rename</source>
-          <target state="translated">Klikni pravým na tento text nebo na šipku výše pro přejmenování této kapitoly</target>
+          <target state="translated">Klikněte pravým na tento text nebo na šipku výše pro přejmenování této kapitoly</target>
         </trans-unit>
         <trans-unit id="feedbackLabel.Label" translate="yes" xml:space="preserve">
           <source>Feedback</source>
@@ -477,8 +477,8 @@ Opravdu chceš odejít bez uložení své práce?</target>
           <target state="final">Časovač</target>
         </trans-unit>
         <trans-unit id="modeDialogueTitle.Text" translate="yes" xml:space="preserve">
-          <source>Switch mode</source>
-          <target state="needs-review-translation">Přepnout režim</target>
+          <source>Focus Mode</source>
+          <target state="translated">Režim soustředění</target>
         </trans-unit>
         <trans-unit id="switchContent.Content" translate="yes" xml:space="preserve">
           <source>Switch</source>
@@ -622,7 +622,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
-          <target state="needs-review-translation">Nastavený cíl zatím nebyl splněn, vážně chceš už odejít?</target>
+          <target state="translated">Nastavený cíl zatím nebyl splněn, vážně již chcete odejít?</target>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
           <source>Leave</source>
@@ -674,7 +674,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="changesCharactersPageDialogueDescription" translate="yes" xml:space="preserve">
           <source>Did you want to leave without applying changes?</source>
-          <target state="translated">Opravdu chceš odejít bez použití změn?</target>
+          <target state="translated">Opravdu chcete odejít bez použití změn?</target>
         </trans-unit>
         <trans-unit id="changesCharactersPageDialogueDontApplyChanges" translate="yes" xml:space="preserve">
           <source>Don't apply</source>
@@ -682,7 +682,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="changesCharactersPageDialogueTitle" translate="yes" xml:space="preserve">
           <source>Changes weren't applied!</source>
-          <target state="translated">Změny nebyly uplatněny!</target>
+          <target state="translated">Změny nebyly použity!</target>
         </trans-unit>
         <trans-unit id="autosaveInterval10.Content" translate="yes" xml:space="preserve">
           <source>10 minutes</source>
@@ -770,7 +770,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="noCharactersModes.Message" translate="yes" xml:space="preserve">
           <source>You will have to leave Focus Mode before you can add a new one.</source>
-          <target state="translated">Nejdříve budeš muset opustit Režim soustředění pro přidání nové.</target>
+          <target state="translated">Nejdříve budete muset opustit Režim soustředění pro přidání nové.</target>
         </trans-unit>
         <trans-unit id="noCharactersModes.Title" translate="yes" xml:space="preserve">
           <source>There are no characters in this project.</source>
@@ -783,7 +783,7 @@ Opravdu chceš odejít bez uložení své práce?</target>
         <trans-unit id="noCharactersDialogueDescription" translate="yes" xml:space="preserve">
           <source>You can easily add a new character by tapping on
 the "Add new character" button.</source>
-          <target state="translated">Jednoduše můžeš přidat novou postavu kliknutím
+          <target state="translated">Jednoduše můžete přidat novou postavu kliknutím
 na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="noCharactersDialogueTitle" translate="yes" xml:space="preserve">
@@ -801,11 +801,11 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="charactersSText" translate="yes" xml:space="preserve">
           <source>Characters</source>
-          <target state="new">Characters</target>
+          <target state="translated">Znaky</target>
         </trans-unit>
         <trans-unit id="charactersText" translate="yes" xml:space="preserve">
           <source>Characters</source>
-          <target state="new">Characters</target>
+          <target state="translated">Znaky</target>
         </trans-unit>
         <trans-unit id="dialoguesText" translate="yes" xml:space="preserve">
           <source>Dialogues</source>
@@ -815,45 +815,45 @@ na tlačítko "Přidat novou postavu".</target>
           <source>Export</source>
           <target state="final">Exportovat</target>
         </trans-unit>
-        <trans-unit id="Bold" translate="yes" xml:space="preserve">
-          <source>Bold</source>
-          <target state="translated">Tučně</target>
-        </trans-unit>
-        <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
-          <source>Chapter above</source>
-          <target state="translated">O kapitolu nad aktivní</target>
-        </trans-unit>
-        <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
-          <source>Chapter below</source>
-          <target state="translated">O kapitolu pod aktivní</target>
-        </trans-unit>
-        <trans-unit id="Italic" translate="yes" xml:space="preserve">
-          <source>Italic</source>
-          <target state="final">Kurzíva</target>
-        </trans-unit>
-        <trans-unit id="Redo" translate="yes" xml:space="preserve">
-          <source>Redo</source>
-          <target state="translated">Znovu</target>
-        </trans-unit>
-        <trans-unit id="Search" translate="yes" xml:space="preserve">
-          <source>Search</source>
-          <target state="translated">Vyhledat</target>
-        </trans-unit>
-        <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
-          <source>Strikethrough</source>
-          <target state="translated">Přeškrtnutí</target>
-        </trans-unit>
-        <trans-unit id="Underline" translate="yes" xml:space="preserve">
-          <source>Underline</source>
-          <target state="translated">Podtržení</target>
-        </trans-unit>
-        <trans-unit id="Undo" translate="yes" xml:space="preserve">
-          <source>Undo</source>
-          <target state="translated">Zpět</target>
-        </trans-unit>
         <trans-unit id="chaptersText1.Text" translate="yes" xml:space="preserve">
           <source>Chapters</source>
           <target state="translated">Kapitoly</target>
+        </trans-unit>
+        <trans-unit id="estimatedReadTime" translate="yes" xml:space="preserve">
+          <source>Estimated read time</source>
+          <target state="translated">Přibližná doba čtení</target>
+        </trans-unit>
+        <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
+          <source>Text Analytics</source>
+          <target state="translated">Statistiky příběhu</target>
+        </trans-unit>
+        <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
+          <source>Analytics</source>
+          <target state="translated">Statistiky</target>
+        </trans-unit>
+        <trans-unit id="min" translate="yes" xml:space="preserve">
+          <source>min</source>
+          <target state="new">min</target>
+        </trans-unit>
+        <trans-unit id="whatsNextDescription.Text" translate="yes" xml:space="preserve">
+          <source>Read about what's next for Storylines</source>
+          <target state="translated">Přečtěte si, co plánujeme se Storylines do budoucna</target>
+        </trans-unit>
+        <trans-unit id="whatsNextTitle.Text" translate="yes" xml:space="preserve">
+          <source>The way forward</source>
+          <target state="translated">Cesta vpřed</target>
+        </trans-unit>
+        <trans-unit id="whatToMeasure.Text" translate="yes" xml:space="preserve">
+          <source>Measure value:</source>
+          <target state="new">Measure value:</target>
+        </trans-unit>
+        <trans-unit id="enableMeasureLabel.Content" translate="yes" xml:space="preserve">
+          <source>Enable measure</source>
+          <target state="new">Enable measure</target>
+        </trans-unit>
+        <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
+          <source>Focus</source>
+          <target state="new">Focus</target>
         </trans-unit>
       </group>
     </body>
@@ -1011,7 +1011,11 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="ChaptersToExport" translate="yes" xml:space="preserve">
           <source>Chapters to export:</source>
-          <target state="final">Kapitoly pro export:</target>
+          <target state="translated">Kapitoly k exportování:</target>
+        </trans-unit>
+        <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
+          <source>Characters to export:</source>
+          <target state="translated">Postavy k exportování:</target>
         </trans-unit>
       </group>
     </body>
@@ -1090,7 +1094,7 @@ Write your stories with either your keyboard, touch, voice, or a pen</target>
         </trans-unit>
         <trans-unit id="Preview" translate="yes" xml:space="preserve">
           <source>Preview</source>
-          <target state="new">Preview</target>
+          <target state="translated">Předběžný přístup</target>
         </trans-unit>
       </group>
     </body>

@@ -501,8 +501,8 @@ Did you want to exit without saving your progress?</target>
           <target state="translated">Timer</target>
         </trans-unit>
         <trans-unit id="modeDialogueTitle.Text" translate="yes" xml:space="preserve">
-          <source>Switch mode</source>
-          <target state="new">Switch mode</target>
+          <source>Focus Mode</source>
+          <target state="new">Focus Mode</target>
         </trans-unit>
         <trans-unit id="newChapter.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"Uten navn"</source>
@@ -818,6 +818,42 @@ the "Add new character" button.</target>
           <source>Z-A</source>
           <target state="translated">Z-A</target>
         </trans-unit>
+        <trans-unit id="estimatedReadTime" translate="yes" xml:space="preserve">
+          <source>Estimated read time</source>
+          <target state="new">Estimated read time</target>
+        </trans-unit>
+        <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
+          <source>Text Analytics</source>
+          <target state="new">Text Analytics</target>
+        </trans-unit>
+        <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
+          <source>Analytics</source>
+          <target state="new">Analytics</target>
+        </trans-unit>
+        <trans-unit id="min" translate="yes" xml:space="preserve">
+          <source>min</source>
+          <target state="new">min</target>
+        </trans-unit>
+        <trans-unit id="whatsNextDescription.Text" translate="yes" xml:space="preserve">
+          <source>Read about what's next for Storylines</source>
+          <target state="new">Read about what's next for Storylines</target>
+        </trans-unit>
+        <trans-unit id="whatsNextTitle.Text" translate="yes" xml:space="preserve">
+          <source>The way forward</source>
+          <target state="new">The way forward</target>
+        </trans-unit>
+        <trans-unit id="whatToMeasure.Text" translate="yes" xml:space="preserve">
+          <source>Measure value:</source>
+          <target state="new">Measure value:</target>
+        </trans-unit>
+        <trans-unit id="enableMeasureLabel.Content" translate="yes" xml:space="preserve">
+          <source>Enable measure</source>
+          <target state="new">Enable measure</target>
+        </trans-unit>
+        <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
+          <source>Focus</source>
+          <target state="new">Focus</target>
+        </trans-unit>
       </group>
     </body>
   </file>
@@ -882,6 +918,10 @@ the "Add new character" button.</target>
         <trans-unit id="Title" translate="yes" xml:space="preserve">
           <source>Export</source>
           <target state="translated">Esporta</target>
+        </trans-unit>
+        <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
+          <source>Characters to export:</source>
+          <target state="new">Characters to export:</target>
         </trans-unit>
       </group>
     </body>

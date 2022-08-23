@@ -147,6 +147,9 @@
   <data name="all" xml:space="preserve">
     <value>All</value>
   </data>
+  <data name="analytics.Text" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
   <data name="app.Content" xml:space="preserve">
     <value>App</value>
   </data>
@@ -345,11 +348,17 @@
   <data name="editText" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="enableMeasureLabel.Content" xml:space="preserve">
+    <value>Enable measure</value>
+  </data>
   <data name="english.Content" xml:space="preserve">
     <value>English</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
     <value>Estimated page count</value>
+  </data>
+  <data name="estimatedReadTime" xml:space="preserve">
+    <value>Estimated read time</value>
   </data>
   <data name="exitWithoutSaveDialogCancel" xml:space="preserve">
     <value>Cancel</value>
@@ -402,6 +411,9 @@ Did you want to exit without saving your progress?</value>
   </data>
   <data name="findOne.Text" xml:space="preserve">
     <value>Find one</value>
+  </data>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Focus</value>
   </data>
   <data name="focusMode.Label" xml:space="preserve">
     <value>Focus mode</value>
@@ -475,6 +487,9 @@ Did you want to exit without saving your progress?</value>
   <data name="location.Text" xml:space="preserve">
     <value>Location:</value>
   </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
   <data name="modeDialogueFocus.Text" xml:space="preserve">
     <value>Focus</value>
   </data>
@@ -488,7 +503,7 @@ Did you want to exit without saving your progress?</value>
     <value>Timer</value>
   </data>
   <data name="modeDialogueTitle.Text" xml:space="preserve">
-    <value>Switch mode</value>
+    <value>Focus Mode</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
     <value>"Uten navn"</value>
@@ -677,6 +692,9 @@ the "Add new character" button.</value>
   <data name="system.Content" xml:space="preserve">
     <value>System</value>
   </data>
+  <data name="textAnalytics.Label" xml:space="preserve">
+    <value>Text Analytics</value>
+  </data>
   <data name="toAddNew.Text" xml:space="preserve">
     <value>to add new.</value>
   </data>
@@ -694,6 +712,15 @@ the "Add new character" button.</value>
   </data>
   <data name="website.Content" xml:space="preserve">
     <value>Website</value>
+  </data>
+  <data name="whatsNextDescription.Text" xml:space="preserve">
+    <value>Read about what's next for Storylines</value>
+  </data>
+  <data name="whatsNextTitle.Text" xml:space="preserve">
+    <value>The way forward</value>
+  </data>
+  <data name="whatToMeasure.Text" xml:space="preserve">
+    <value>Measure value:</value>
   </data>
   <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
     <value>White text background</value>

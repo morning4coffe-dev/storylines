@@ -179,12 +179,6 @@ namespace Storylines.Components.DialogueWindows
 
             ExportSystem.Export(saveFolder, fileNameText.Text, extensionComboBox.SelectedItem as string, selectedIndexes, selectedIndexes2, (bool)withChapterNameCheckBox.IsChecked);
             Hide();
-            //}
-            //else
-            //{
-            //    fileNameText.PlaceholderForeground = new SolidColorBrush(new Color() { A = 255, R = 252, B = 3, G = 40 });
-            //    fileNameText.Foreground = new SolidColorBrush(new Color() { A = 255, R = 252, B = 3, G = 40 });
-            //}
         }
 
         private void OnChooseExportChaptersButton_Click(object sender, RoutedEventArgs e)
@@ -249,40 +243,19 @@ namespace Storylines.Components.DialogueWindows
             chooseExportDialoguesButton.IsChecked = false;
         }
 
-        private void OnChaptersToExportList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            chaptersToExport.Content = DropdownContent(chaptersToExportList);
-        }
+        private void OnChaptersToExportList_SelectionChanged(object sender, SelectionChangedEventArgs e) => chaptersToExport.Content = DropdownContent(chaptersToExportList);
 
-        private void OnCharacterDialoguesToList_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            characterDialoguesToExport.Content = DropdownContent(characterDialoguesToExportList);
-        }
+        private void OnCharacterDialoguesToList_SelectionChanged(object sender, SelectionChangedEventArgs e) => characterDialoguesToExport.Content = DropdownContent(characterDialoguesToExportList);
 
-        private void OnExportToLocationButton_Click(object sender, RoutedEventArgs e)
-        {
-            _ = ChooseFileToExportAsync();
-        }
+        private void OnExportToLocationButton_Click(object sender, RoutedEventArgs e) => _ = ChooseFileToExportAsync();
 
-        private void OnExportLocationFrame_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
-        {
-            _ = ChooseFileToExportAsync();
-        }
+        private void OnExportLocationFrame_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) => _ = ChooseFileToExportAsync();
 
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            Hide();
-        }
+        private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            AppView.currentlyOpenedDialogue = null;
-        }
+        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args) => AppView.currentlyOpenedDialogue = null;
 
-        private void OnNameTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            SomethingChanged(true);
-        }
+        private void OnNameTextBox_TextChanged(object sender, TextChangedEventArgs e) => SomethingChanged(true);
 
         private void ContentDialog_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
@@ -291,15 +264,9 @@ namespace Storylines.Components.DialogueWindows
         }
 
         bool isFlyoutOpen = false;
-        private void Flyout_Opened(object sender, object e)
-        {
-            isFlyoutOpen = true;
-        }
+        private void Flyout_Opened(object sender, object e) => isFlyoutOpen = true;
 
-        private void Flyout_Closed(object sender, object e)
-        {
-            isFlyoutOpen = false;
-        }
+        private void Flyout_Closed(object sender, object e) => isFlyoutOpen = false;
 
         bool isHide = true;
         private void InitializeClickOutToClose()

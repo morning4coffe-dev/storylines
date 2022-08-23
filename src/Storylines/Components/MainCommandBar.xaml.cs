@@ -17,7 +17,6 @@ namespace Storylines.Components
     public sealed partial class MainCommandBar : UserControl
     {
         private readonly string feedbackLink = "https://github.com/morning4coffe-dev/Storylines/issues/new";
-        //private readonly string shortcutsLink = "https://github.com/morning4coffe-dev/storylines/blob/main/shortcuts.md";
 
         public MainCommandBar()
         {
@@ -157,20 +156,14 @@ namespace Storylines.Components
         #endregion
 
         #region VIEW
-        private void OnReadModeButton_Click(object sender, RoutedEventArgs e)
-        {
-            ModesDialogue.Open(ModesDialogue.ModeType.Read);
-        }
-
         private void OnFocusModeButton_Click(object sender, RoutedEventArgs e)
-        {
-            ModesDialogue.Open(ModesDialogue.ModeType.Focus);
-        }
+            => ModesDialogue.Open();
+
+        private void OnTextAnalyticsButton_Click(object sender, RoutedEventArgs e)
+            => ProjectStatsDialogue.Open(false);
 
         private void OnCharactersButton_Click(object sender, RoutedEventArgs e)
-        {
-            AppView.current.ChangePage(AppView.Pages.Characters);
-        }
+            => AppView.current.ChangePage(AppView.Pages.Characters);
         #endregion
 
         #region HELP

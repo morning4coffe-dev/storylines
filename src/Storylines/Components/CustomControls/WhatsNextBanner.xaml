@@ -19,9 +19,8 @@
                         <RowDefinition Height="2"/>
                         <RowDefinition/>
                     </Grid.RowDefinitions>
-                    <TextBlock Text="The way forward" FontSize="22" FontWeight="Bold" Grid.Row="1" Foreground="White"/>
-                    <TextBlock Text="Read about what's next for Storylines" Grid.Row="3" Foreground="#ececec"/>
-                    <!--Translate to different languages-->
+                    <TextBlock x:Uid="whatsNextTitle" FontSize="22" FontWeight="Bold" Grid.Row="1" Foreground="White"/>
+                    <TextBlock x:Uid="whatsNextDescription" Grid.Row="3" Foreground="#ececec"/>
                 </Grid>
             </Grid>
         </Button>

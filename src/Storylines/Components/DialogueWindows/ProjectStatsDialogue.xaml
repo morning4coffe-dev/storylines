@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Closed="ContentDialog_Closed" CornerRadius="8">
     
-    <Grid Width="400" MaxHeight="500" Margin="4">
+    <Grid Width="410" MaxHeight="500" Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="38"/>
             <RowDefinition Height="8"/>
@@ -17,7 +17,7 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="42"/>
             </Grid.ColumnDefinitions>
-            <TextBlock x:Uid="information" Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25"/>
+            <TextBlock x:Uid="analytics" Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25" FontStretch="ExtraExpanded"/>
 
             <Button x:Name="closeButton" Width="42" Height="38" Grid.Column="2" Click="OnCloseButton_Click">
                 <FontIcon Glyph="" Width="23" RenderTransformOrigin="-.25,.5">
@@ -30,16 +30,25 @@
 
         <ScrollViewer Grid.Row="2" MinHeight="20">
             <StackPanel Orientation="Horizontal" Spacing="24">
-                <TextBox
+                <StackPanel>
+                    <RichTextBlock x:FieldModifier="public" LineHeight="26" SelectionHighlightColor="{ThemeResource SystemAccentColor}">
+                        <Paragraph Margin="0,8,0,0">
+                            <Run x:Uid="selectedChapterText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+                        </Paragraph>
+                        <Paragraph>
+                            <Run x:Name="textRun" FontWeight="Normal">N/A</Run>
+                        </Paragraph>
+                    </RichTextBlock>
+                    <TextBox
                 x:Name="wordDistributionTextBox"
-                    MaxHeight="400"
+                    MaxHeight="220"
                     Width="190"
                     IsReadOnly="True"
                     AcceptsReturn="True"
                     ScrollViewer.VerticalScrollBarVisibility="Auto"
                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
                     Text="N/A"/>
-                
+                </StackPanel>
                 <RichTextBlock x:Name="statsText" x:FieldModifier="public" LineHeight="26" SelectionHighlightColor="{ThemeResource SystemAccentColor}">
                     <Paragraph Margin="0,8,0,0">
                         <Run x:Uid="storyText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
@@ -49,7 +58,7 @@
                     </Paragraph>
 
                     <Paragraph Margin="0,8,0,0">
-                        <Run x:Uid="charactersText1" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
+                        <Run x:Uid="charactersExport" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
                     </Paragraph>
                     <Paragraph>
                         <Run x:Name="charactersRun" FontWeight="Normal">N/A</Run>
@@ -60,13 +69,6 @@
                     </Paragraph>
                     <Paragraph>
                         <Run x:Name="chaptersRun" FontWeight="Normal">N/A</Run>
-                    </Paragraph>
-
-                    <Paragraph Margin="0,8,0,0">
-                        <Run x:Uid="selectedChapterText" Foreground="{ThemeResource SystemAccentColor}" FontWeight="SemiBold" FontSize="17"/>
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Name="textRun" FontWeight="Normal">N/A</Run>
                     </Paragraph>
                 </RichTextBlock>
             </StackPanel>

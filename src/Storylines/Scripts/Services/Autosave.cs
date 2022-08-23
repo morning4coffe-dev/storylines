@@ -20,9 +20,10 @@ namespace Storylines.Scripts.Services
         public static void Enable()
         {
             if (!SettingsValues.autosaveEnabled || autosaveTimer == null)
-            {
-                Do();
+            {  
+                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = true;
 
+                Do();
                 autosaveTimer = new DispatcherTimer();
                 autosaveTimer.Tick += OnAutosaveTimer_Tick;
                 var interval = SettingsValues.autosaveInterval;
@@ -31,14 +32,11 @@ namespace Storylines.Scripts.Services
                 else
                     autosaveTimer.Interval = new TimeSpan(0, 0, (int)(SettingsValues.autosaveInterval * 10));
                 autosaveTimer.Start();
-
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = true;
             }
         }
 
         public static void Disable()
         {
-            Do();
             autosaveTimer.Stop();
 
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = false;

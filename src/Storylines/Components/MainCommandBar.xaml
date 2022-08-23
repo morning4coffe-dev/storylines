@@ -557,7 +557,15 @@
                 <CommandBar x:Name="commandBarView" Height="48" HorizontalAlignment="Left" DefaultLabelPosition="Right" Background="Transparent" Visibility="Collapsed">
                     <AppBarButton x:Name="focusModeButton" x:Uid="focusMode" CornerRadius="4" Click="OnFocusModeButton_Click">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
+                            <FontIcon Glyph=""/>
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <AppBarSeparator/>
+
+                    <AppBarButton x:Name="textAnalyticsButton" x:Uid="textAnalytics" x:FieldModifier="public" CornerRadius="4" Click="OnTextAnalyticsButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph=""/>
                         </AppBarButton.Icon>
                     </AppBarButton>
 
@@ -643,156 +651,6 @@
                 </CommandBar>
             </Grid>
         </muxc:NavigationView>
-        
-        <!--<controls:TabbedCommandBar Background="Transparent"> Will be probably used again when CommunityToolkit is updated to WinUI 2.6+
-            <controls:TabbedCommandBar.PaneFooter>
-                <AppBarButton x:Name="settingsButton" CornerRadius="4" Grid.Column="1" LabelPosition="Collapsed" Margin="2" Width="50" Height="50" VerticalAlignment="Center" Click="OnSettingsButton_Click">
-                    <muxc:AnimatedIcon>
-                        <muxc:AnimatedIcon.Source>
-                            <animatedvisuals:AnimatedSettingsVisualSource/>
-                        </muxc:AnimatedIcon.Source>
-                        <muxc:AnimatedIcon.FallbackIconSource>
-                            <muxc:FontIconSource FontFamily="Segoe MDL2 Assets" Glyph="&#xE713;"/>
-                        </muxc:AnimatedIcon.FallbackIconSource>
-                    </muxc:AnimatedIcon>
-                </AppBarButton>
-            </controls:TabbedCommandBar.PaneFooter>
-
-            <controls:TabbedCommandBar.MenuItems>
-                <controls:TabbedCommandBarItem x:Name="commandBarFile" x:FieldModifier="public" x:Uid="file" Height="45" Background="{ThemeResource LayerFillColorDefaultBrush}" Canvas.ZIndex="1" CornerRadius="8">
-                    <AppBarButton x:Name="undoButton" x:FieldModifier="public" Icon="Undo" CornerRadius="4" Height="40" IsEnabled="False" Click="OnUndoButton_Click"/>
-                    <AppBarButton x:Name="redoButton" x:FieldModifier="public" Icon="Redo" CornerRadius="4" Height="40" IsEnabled="False" Click="OnRedoButton_Click"/>
-                    <AppBarSeparator/>
-                    <AppBarButton x:Name="saveButton" x:Uid="save" x:FieldModifier="public" Style="{StaticResource AppBarButtonStyle}" Icon="Save" IsEnabled="False" CornerRadius="4" LabelPosition="Default" Height="40" Click="OnSaveButton_Click"/>
-
-                    <AppBarButton x:Name="saveCopyButton" x:FieldModifier="public" x:Uid="saveCopy" CornerRadius="4" IsEnabled="False" Click="OnSaveCopyButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xEA35;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton x:Name="loadButton" x:Uid="load" CornerRadius="4" Click="OnLoadButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE1A5;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarToggleButton x:Name="autosaveToggleButton" x:Uid="autosave" x:FieldModifier="public" CornerRadius="4" Click="OnAutosaveToggleButton_Click">
-                        <AppBarToggleButton.Icon>
-                            <SymbolIcon x:Name="autosaveToggleButtonIcon" RenderTransformOrigin="0.5, 0.5" Symbol="Sync"/>
-                        </AppBarToggleButton.Icon>
-                    </AppBarToggleButton>
-                    <AppBarSeparator/>
-
-                    <AppBarButton x:Name="exportButton" x:Uid="export" x:FieldModifier="public" CornerRadius="4" IsEnabled="False" Click="OnExportButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE792;"/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </controls:TabbedCommandBarItem>
-
-                <controls:TabbedCommandBarItem x:Name="commandBarInsert" x:Uid="insert" x:FieldModifier="public" Canvas.ZIndex="1" Background="Transparent" Height="45">
-                    <AppBarToggleButton x:Name="dialoguesEnableButton" x:FieldModifier="public" x:Uid="dialogueMode" CornerRadius="4" Click="OnDialoguesEnableButton_Click">
-                        <AppBarToggleButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarToggleButton.Icon>
-                    </AppBarToggleButton>
-
-                    <AppBarButton x:Name="dialoguesAddButton" x:Uid="addDialogue" x:FieldModifier="public" CornerRadius="4" IsEnabled="{Binding ElementName=dialoguesEnableButton, Path=IsChecked}" Click="OnDialoguesAddButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarSeparator/>
-                    <AppBarButton x:Name="dictationButton" x:FieldModifier="public" x:Uid="dictation" CornerRadius="4" Click="OnDictationButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </controls:TabbedCommandBarItem>
-
-                <controls:TabbedCommandBarItem x:Uid="view" Canvas.ZIndex="1" Background="Transparent" Height="45">
-                    <AppBarButton x:Name="readModeButton" x:Uid="readMode" CornerRadius="4" Click="OnReadModeButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                    
-                    <AppBarButton x:Name="focusModeButton" x:Uid="focusMode" CornerRadius="4" Click="OnFocusModeButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarSeparator/>
-
-                    <AppBarButton x:Name="charactersButton" x:Uid="charactersLabel" x:FieldModifier="public" CornerRadius="4" Click="OnCharactersButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-                </controls:TabbedCommandBarItem>
-
-                <controls:TabbedCommandBarItem x:Name="commandBarHelp" x:Uid="help" x:FieldModifier="public" Canvas.ZIndex="1" Background="Transparent" Height="45">
-                    <AppBarButton x:Name="feedbackButton" x:Uid="feedbackLabel" x:FieldModifier="public" CornerRadius="4" Click="OnFeedbackButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarButton x:Name="readAloudButton" x:Uid="readAloud" x:FieldModifier="public" CornerRadius="4" Click="OnReadAloudButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph=""/>
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarElementContainer x:Name="readAloudControllHolder" x:FieldModifier="public" Visibility="Collapsed" Margin="1, 0,0,5">
-                        <Grid CornerRadius="4" VerticalAlignment="Top" Width="145" Height="45">
-                            <Rectangle Fill="LightGray" Opacity="0.1"/>
-                            <StackPanel Margin="5" Spacing="2">
-                                <StackPanel Orientation="Horizontal" Spacing="5">
-                                    <AppBarButton x:Name="stopReadAloud" CornerRadius="4" Height="28" Width="42" Style="{StaticResource AppBarButtonStyle}" Click="OnStopButton_Click">
-                                        <AppBarButton.Icon>
-                                            <FontIcon Glyph="" RenderTransformOrigin="0.5,2.5">
-                                                <FontIcon.RenderTransform>
-                                                    <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
-                                                </FontIcon.RenderTransform>
-                                            </FontIcon>
-                                        </AppBarButton.Icon>
-                                    </AppBarButton>
-                                    <AppBarButton x:Name="playReadAloud" CornerRadius="4" Height="28" Width="42" Style="{StaticResource AppBarButtonStyle}" IsEnabled="False" Click="OnPlayButton_Click">
-                                        <AppBarButton.Icon>
-                                            <FontIcon Glyph="" RenderTransformOrigin="0.5,2.5">
-                                                <FontIcon.RenderTransform>
-                                                    <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
-                                                </FontIcon.RenderTransform>
-                                            </FontIcon>
-                                        </AppBarButton.Icon>
-                                    </AppBarButton>
-                                    <AppBarButton x:Name="pauseReadAloud" CornerRadius="4" Height="28" Width="42" Style="{StaticResource AppBarButtonStyle}" Click="OnPauseButton_Click">
-                                        <AppBarButton.Icon>
-                                            <FontIcon Glyph="" RenderTransformOrigin="0.5,2.5">
-                                                <FontIcon.RenderTransform>
-                                                    <CompositeTransform ScaleX="0.8" ScaleY="0.8"/>
-                                                </FontIcon.RenderTransform>
-                                            </FontIcon>
-                                        </AppBarButton.Icon>
-                                    </AppBarButton>
-                                </StackPanel>
-                                <muxc:ProgressBar x:Name="readAloudProgressBar" Width="136" HorizontalAlignment="Left" Value="0"/>
-                            </StackPanel>
-                            <animations:Implicit.ShowAnimations>
-                                <animations:SizeAnimation Duration="0:0:0.4" From="0, 45" To="145, 45"/>
-                            </animations:Implicit.ShowAnimations>
-                            <animations:Implicit.HideAnimations>
-                                <animations:SizeAnimation Duration="0:0:0.4" From="145, 45" To="0, 45"/>
-                            </animations:Implicit.HideAnimations>
-                        </Grid>
-                    </AppBarElementContainer>
-                </controls:TabbedCommandBarItem>
-            </controls:TabbedCommandBar.MenuItems>
-        </controls:TabbedCommandBar>-->
 
         <MediaElement x:Name="readAloudMediaElement" AudioCategory="Speech" MediaEnded="OnReadAloudMediaElement_MediaEnded"/>
     </Grid>

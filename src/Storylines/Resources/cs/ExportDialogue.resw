@@ -52,6 +52,9 @@
     <value>Exportovat</value>
   </data>
   <data name="ChaptersToExport" xml:space="preserve">
-    <value>Kapitoly pro export:</value>
+    <value>Kapitoly k exportování:</value>
+  </data>
+  <data name="CharactersToExport" xml:space="preserve">
+    <value>Postavy k exportování:</value>
   </data>
 </root>

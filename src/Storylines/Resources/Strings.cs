@@ -53,6 +53,7 @@ namespace Storylines.Resources
 
         public static string IncludeChapterName { get => _resources.GetString("IncludeChapterName"); }
         public static string ChaptersToExport { get => _resources.GetString("ChaptersToExport"); }
+        public static string CharactersToExport { get => _resources.GetString("CharactersToExport"); }
 
         public static string None { get => _resources.GetString("None"); }
         public static string All { get => _resources.GetString("All"); }

@@ -123,6 +123,9 @@
   <data name="ChaptersToExport" xml:space="preserve">
     <value>Chapters to export:</value>
   </data>
+  <data name="CharactersToExport" xml:space="preserve">
+    <value>Characters to export:</value>
+  </data>
   <data name="FileLocation" xml:space="preserve">
     <value>File location:</value>
   </data>

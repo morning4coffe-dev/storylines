@@ -87,17 +87,13 @@ namespace Storylines.Scripts.Services
         private static void UiSettings_ColorValuesChanged(UISettings sender, object args)
         {
             if (selectedAccent == SelectedAccent.System)
-            {
                 UpdateAccentColor(sender.GetColorValue(UIColorType.Accent));
-            }
         }
 
         private static void ThemeListener_ThemeChanged(ThemeListener sender)
         {
             if (selectedTheme == SelectedTheme.System)
-            {
                 ChangeTheme(2, sender.CurrentTheme.ToElementTheme());
-            }
         }
 
         public static void ChangeTheme(int id, ElementTheme currentSystemTheme)
