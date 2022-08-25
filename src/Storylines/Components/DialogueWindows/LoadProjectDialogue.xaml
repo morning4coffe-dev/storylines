@@ -6,7 +6,7 @@
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     xmlns:variables="using:Storylines.Components" xmlns:customcontrols="using:Storylines.Components.CustomControls"
-    mc:Ignorable="d" CornerRadius="8" Opened="ContentDialog_Opened" Closing="ContentDialog_Closing">
+    mc:Ignorable="d" CornerRadius="8" Opened="ContentDialog_Opened" Closing="ContentDialog_Closing" Background="{ThemeResource DialogueAcrylicBackground}">
     
     <Grid MaxHeight="500" MinHeight="350" Width="400" Margin="4">
         <Grid.RowDefinitions>
@@ -94,11 +94,8 @@
                 <Run x:Uid="or"/>
                 <Hyperlink Click="OnCreateNewProject_Click">
                     <Run x:Uid="createNew"/>
-                </Hyperlink>.
+                </Hyperlink> .
             </Paragraph>
-            <!--<animations:Implicit.ShowAnimations>
-                <animations:ScaleAnimation Duration="0:0:0.3" From="1, 0.75, 0.1" To="1,1,1" />
-            </animations:Implicit.ShowAnimations>-->
         </RichTextBlock>
     </Grid>
 </ContentDialog>

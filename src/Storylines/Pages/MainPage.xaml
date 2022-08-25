@@ -71,10 +71,10 @@
 
                 <HyperlinkButton
                     x:Name="storyInfoDetailed"
+                    x:Uid="clickToSeeStoryAnalytics"
                     VerticalAlignment="Center"
                     x:FieldModifier="public"
-                    Click="OnDownBarText_Click"
-                    ToolTipService.ToolTip="Click here to see more.">
+                    Click="OnDownBarText_Click">
                     <TextBlock
                         x:Name="downBarText"
                         x:Uid="downBarText"

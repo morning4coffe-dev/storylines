@@ -4,6 +4,7 @@ using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using System;
+using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
@@ -514,8 +515,9 @@ namespace Storylines.Components
             var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
 
             if (ctrl.HasFlag(CoreVirtualKeyStates.Down))
-                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)// || e.Key == VirtualKey.V
+                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)// || e.Key == VirtualKey.V)// 
                     return;
+
             base.OnKeyDown(e);
         }
     }

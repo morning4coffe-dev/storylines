@@ -15,6 +15,12 @@
   <data name="All" xml:space="preserve">
     <value>Все</value>
   </data>
+  <data name="FileLocation" xml:space="preserve">
+    <value>Расположение файла:</value>
+  </data>
+  <data name="FileLocationPlaceholder" xml:space="preserve">
+    <value>"C:\Users\Documents"</value>
+  </data>
   <data name="FileName" xml:space="preserve">
     <value>Имя файла:</value>
   </data>
@@ -30,6 +36,9 @@
   <data name="None" xml:space="preserve">
     <value>Отсутствует</value>
   </data>
+  <data name="OptionChapters" xml:space="preserve">
+    <value>Главы</value>
+  </data>
   <data name="OptionCharacters" xml:space="preserve">
     <value>Символы</value>
   </data>
@@ -44,5 +53,8 @@
   </data>
   <data name="ChaptersToExport" xml:space="preserve">
     <value>Главы для экспорта:</value>
+  </data>
+  <data name="CharactersToExport" xml:space="preserve">
+    <value>Символы для экспорта:</value>
   </data>
 </root>

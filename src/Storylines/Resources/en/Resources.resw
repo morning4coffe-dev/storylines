@@ -306,6 +306,9 @@
   <data name="clickHereText.Text" xml:space="preserve">
     <value>Click here</value>
   </data>
+  <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Click here to see Story Analytics</value>
+  </data>
   <data name="createNew.Text" xml:space="preserve">
     <value>Create new</value>
   </data>
@@ -416,7 +419,7 @@ Did you want to exit without saving your progress?</value>
     <value>Focus</value>
   </data>
   <data name="focusMode.Label" xml:space="preserve">
-    <value>Focus mode</value>
+    <value>Focus Mode</value>
   </data>
   <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
     <value>You did not finish the goal you set. Do you really want to quit?</value>
@@ -686,6 +689,9 @@ the "Add new character" button.</value>
   <data name="submit.Content" xml:space="preserve">
     <value>Submit</value>
   </data>
+  <data name="submitText.Text" xml:space="preserve">
+    <value>Submit</value>
+  </data>
   <data name="switchContent.Content" xml:space="preserve">
     <value>Switch</value>
   </data>
@@ -693,7 +699,7 @@ the "Add new character" button.</value>
     <value>System</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Text Analytics</value>
+    <value>Story Analytics</value>
   </data>
   <data name="toAddNew.Text" xml:space="preserve">
     <value>to add new.</value>

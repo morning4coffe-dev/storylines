@@ -1,3 +1,20 @@
+## Update 0.7:
+* The Information Dialog is now Story Analysis with an design overhaul and new features (View > Story Analysis)
+* Focus Mode got a much appreciated update with new features and fixes (View > Focus Mode)
+* Characters page got a new update too (View > Characters)
+* Updated localization
+* Design unification across the whole app
+* Improved stability
+* And a plethora of other bugs got fixed
+
+## Update 0.6.9:
+* All keyboard shortcuts are now visible in the new dialog - You can currently access it by Help > Keyboard shortcuts.
+* Chinese, Russian, Italian translations by the community (please note - there may be some untranslated strings in this build).
+* Continuing on the dialogs updates.
+* Fixed a bug that occurred when changing the translation and then restarting the app would not display in the selected translation.
+* Underlying code improvements.
+* And minor bug fixes.
+
 ## Update 0.6.8:
 * All keyboard shortcuts are now visible in the new dialog - You can currently access it by Help > Keyboard shortcuts
 * Chinese and Russian translation by the community

@@ -137,6 +137,8 @@ namespace Storylines.Scripts.Modes
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.saveButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.saveButton);
 
+            mainCommandBarInstance.saveButton.IsEnabled = true;
+
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.autosaveToggleButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.autosaveToggleButton);
 
@@ -239,15 +241,14 @@ namespace Storylines.Scripts.Modes
             var multiplier = 50;
             if (timerStartTime < 1 || measureValue < 1)
                 multiplier = 100;
+
             if (measureValue > 0)
                 if (currentMeasure < measureValue)
                     percentage += (int)Math.Round((double)(multiplier * currentMeasure) / measureValue);
                 else
                     percentage += multiplier;
             if (timerStartTime > currentTime)
-                percentage += (int)((timerStartTime - currentTime) * multiplier / timerStartTime);//nefunguje
-            //else
-            //    percentage += (int)Math.Round((double)(multiplier * Math.Abs(currentTime)) / timerStartTime);
+                percentage += (int)((timerStartTime - currentTime) * multiplier / timerStartTime);
 
             NotificationManager.UpdateMainProgressBar(percentage, NotificationManager.ProgressState.Normal);
         }

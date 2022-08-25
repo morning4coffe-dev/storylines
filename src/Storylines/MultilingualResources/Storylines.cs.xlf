@@ -40,7 +40,7 @@
         </trans-unit>
         <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
           <source>Never show again</source>
-          <target state="needs-review-translation">Znovu nezobrazovat</target>
+          <target state="translated">Znovu nezobrazovat</target>
         </trans-unit>
         <trans-unit id="reviewRequestThankYou.Title" translate="yes" xml:space="preserve">
           <source>Thank you!</source>
@@ -60,7 +60,7 @@
         </trans-unit>
         <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
           <source>Read aloud</source>
-          <target state="needs-review-translation">Předčítat</target>
+          <target state="translated">Předčítat</target>
         </trans-unit>
         <trans-unit id="save.Label" translate="yes" xml:space="preserve">
           <source>Save</source>
@@ -91,8 +91,9 @@
           <target state="final">Upravit</target>
         </trans-unit>
         <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
-          <source>Focus mode</source>
-          <target state="translated">Režim soustředění</target>
+          <source>Focus Mode</source>
+          <target state="needs-review-translation">Režim soustředění</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="loadSaveSystemErrorText" translate="yes" xml:space="preserve">
           <source>An error occurred your file couldn't be load.</source>
@@ -450,7 +451,7 @@ Opravdu chcete odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="profilePicturesFlyout.Text" translate="no" xml:space="preserve">
           <source>Character pictures</source>
-          <target state="final">Character pictures</target>
+          <target state="final">Profilový obrázek postavy</target>
         </trans-unit>
         <trans-unit id="chapterWithoutName" translate="yes" xml:space="preserve">
           <source>Right click on this text or on the arrow above to rename</source>
@@ -570,7 +571,7 @@ Opravdu chcete odejít bez uložení své práce?</target>
         </trans-unit>
         <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
           <source>Tell us about your experience</source>
-          <target state="translated">Poděl se o svojí zkušenost</target>
+          <target state="translated">Podělte se o svojí zkušenosti</target>
         </trans-unit>
         <trans-unit id="updateAvailableTitle.Title" translate="yes" xml:space="preserve">
           <source>Update available</source>
@@ -824,7 +825,7 @@ na tlačítko "Přidat novou postavu".</target>
           <target state="translated">Přibližná doba čtení</target>
         </trans-unit>
         <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
-          <source>Text Analytics</source>
+          <source>Story Analytics</source>
           <target state="translated">Statistiky příběhu</target>
         </trans-unit>
         <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
@@ -845,15 +846,23 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="whatToMeasure.Text" translate="yes" xml:space="preserve">
           <source>Measure value:</source>
-          <target state="new">Measure value:</target>
+          <target state="translated">Hodnota měření:</target>
         </trans-unit>
         <trans-unit id="enableMeasureLabel.Content" translate="yes" xml:space="preserve">
           <source>Enable measure</source>
-          <target state="new">Enable measure</target>
+          <target state="translated">Zapnout měření</target>
         </trans-unit>
         <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
           <source>Focus</source>
-          <target state="new">Focus</target>
+          <target state="translated">Soustředit se</target>
+        </trans-unit>
+        <trans-unit id="clickToSeeStoryAnalytics.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click here to see Story Analytics</source>
+          <target state="translated">Klikněte pro zobrazení Statistik příběhu</target>
+        </trans-unit>
+        <trans-unit id="submitText.Text" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="translated">Potvrdit</target>
         </trans-unit>
       </group>
     </body>
@@ -967,7 +976,7 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
-          <target state="needs-review-translation">"C:\Uživatelé\Dokumenty"</target>
+          <target state="translated">"C:\Uživatelé\Dokumenty"</target>
         </trans-unit>
         <trans-unit id="FileName" translate="yes" xml:space="preserve">
           <source>File name:</source>
@@ -979,7 +988,7 @@ na tlačítko "Přidat novou postavu".</target>
         </trans-unit>
         <trans-unit id="FileNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-export"</source>
-          <target state="needs-review-translation">"kralovna-koblih-export"</target>
+          <target state="translated">"kralovna-koblih-export"</target>
         </trans-unit>
         <trans-unit id="IncludeChapterName" translate="yes" xml:space="preserve">
           <source>Include chapter name</source>

@@ -95,8 +95,9 @@
           <target state="translated">Изменить</target>
         </trans-unit>
         <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
-          <source>Focus mode</source>
-          <target state="translated">Режим концентрации</target>
+          <source>Focus Mode</source>
+          <target state="needs-review-translation">Режим концентрации</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="loadSaveSystemErrorText" translate="yes" xml:space="preserve">
           <source>An error occurred your file couldn't be load.</source>
@@ -658,7 +659,7 @@ Did you want to exit without saving your progress?</source>
         </trans-unit>
         <trans-unit id="characterPlaceholderName.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"Alex White"</source>
-          <target state="new">"Alex White"</target>
+          <target state="needs-review-translation">"Алекс Уайт"</target>
         </trans-unit>
         <trans-unit id="noCharacters.Text" translate="yes" xml:space="preserve">
           <source>There are no characters yet.</source>
@@ -804,7 +805,7 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="chinese.Content" translate="yes" xml:space="preserve">
           <source>Chinese</source>
-          <target state="new">Chinese</target>
+          <target state="needs-review-translation">Китайский</target>
         </trans-unit>
         <trans-unit id="dialoguesText" translate="yes" xml:space="preserve">
           <source>Dialogues</source>
@@ -816,19 +817,19 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="chaptersText1.Text" translate="yes" xml:space="preserve">
           <source>Chapters</source>
-          <target state="new">Chapters</target>
+          <target state="needs-review-translation">Главы</target>
         </trans-unit>
         <trans-unit id="estimatedReadTime" translate="yes" xml:space="preserve">
           <source>Estimated read time</source>
-          <target state="new">Estimated read time</target>
+          <target state="needs-review-translation">Расчетное время чтения</target>
         </trans-unit>
         <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
-          <source>Text Analytics</source>
-          <target state="new">Text Analytics</target>
+          <source>Story Analytics</source>
+          <target state="needs-review-translation">Аналитика историй</target>
         </trans-unit>
         <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
           <source>Analytics</source>
-          <target state="new">Analytics</target>
+          <target state="needs-review-translation">Аналитика</target>
         </trans-unit>
         <trans-unit id="min" translate="yes" xml:space="preserve">
           <source>min</source>
@@ -836,23 +837,31 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="whatsNextDescription.Text" translate="yes" xml:space="preserve">
           <source>Read about what's next for Storylines</source>
-          <target state="new">Read about what's next for Storylines</target>
+          <target state="needs-review-translation">Читайте о том, что будет дальше в Storylines</target>
         </trans-unit>
         <trans-unit id="whatsNextTitle.Text" translate="yes" xml:space="preserve">
           <source>The way forward</source>
-          <target state="new">The way forward</target>
+          <target state="needs-review-translation">Дальнейшие действия</target>
         </trans-unit>
         <trans-unit id="whatToMeasure.Text" translate="yes" xml:space="preserve">
           <source>Measure value:</source>
-          <target state="new">Measure value:</target>
+          <target state="needs-review-translation">Значение измерения:</target>
         </trans-unit>
         <trans-unit id="enableMeasureLabel.Content" translate="yes" xml:space="preserve">
           <source>Enable measure</source>
-          <target state="new">Enable measure</target>
+          <target state="needs-review-translation">Разрешить измерение</target>
         </trans-unit>
         <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
           <source>Focus</source>
-          <target state="new">Focus</target>
+          <target state="needs-review-translation">Фокус</target>
+        </trans-unit>
+        <trans-unit id="clickToSeeStoryAnalytics.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click here to see Story Analytics</source>
+          <target state="needs-review-translation">Нажмите здесь, чтобы посмотреть аналитику истории</target>
+        </trans-unit>
+        <trans-unit id="submitText.Text" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="needs-review-translation">Отправить</target>
         </trans-unit>
       </group>
     </body>
@@ -865,11 +874,11 @@ the "Add new character" button.</source>
       <group id="STORYLINES/RESOURCES/EN/SHORTCUTSDIALOGUE.RESW" datatype="resx">
         <trans-unit id="Title" translate="yes" xml:space="preserve">
           <source>Shortcuts</source>
-          <target state="new">Shortcuts</target>
+          <target state="needs-review-translation">Ярлыки</target>
         </trans-unit>
         <trans-unit id="Bold" translate="yes" xml:space="preserve">
           <source>Bold</source>
-          <target state="new">Bold</target>
+          <target state="needs-review-translation">Смелый</target>
         </trans-unit>
         <trans-unit id="Export" translate="yes" xml:space="preserve">
           <source>Export</source>
@@ -877,7 +886,7 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="Italic" translate="yes" xml:space="preserve">
           <source>Italic</source>
-          <target state="new">Italic</target>
+          <target state="needs-review-translation">Курсив</target>
         </trans-unit>
         <trans-unit id="ReadAloud" translate="yes" xml:space="preserve">
           <source>Read aloud</source>
@@ -885,15 +894,15 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="Redo" translate="yes" xml:space="preserve">
           <source>Redo</source>
-          <target state="new">Redo</target>
+          <target state="needs-review-translation">Повторно</target>
         </trans-unit>
         <trans-unit id="RemoveChapter" translate="yes" xml:space="preserve">
           <source>Remove chapter</source>
-          <target state="new">Remove chapter</target>
+          <target state="needs-review-translation">Удалить главу</target>
         </trans-unit>
         <trans-unit id="RemoveCharacter" translate="yes" xml:space="preserve">
           <source>Remove character</source>
-          <target state="new">Remove character</target>
+          <target state="needs-review-translation">Удалить символ</target>
         </trans-unit>
         <trans-unit id="Save" translate="yes" xml:space="preserve">
           <source>Save</source>
@@ -909,15 +918,15 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="Strikethrough" translate="yes" xml:space="preserve">
           <source>Strikethrough</source>
-          <target state="new">Strikethrough</target>
+          <target state="needs-review-translation">Зачеркивание</target>
         </trans-unit>
         <trans-unit id="Underline" translate="yes" xml:space="preserve">
           <source>Underline</source>
-          <target state="new">Underline</target>
+          <target state="needs-review-translation">Подчеркните</target>
         </trans-unit>
         <trans-unit id="Undo" translate="yes" xml:space="preserve">
           <source>Undo</source>
-          <target state="new">Undo</target>
+          <target state="needs-review-translation">Отменить</target>
         </trans-unit>
         <trans-unit id="AddChapter" translate="yes" xml:space="preserve">
           <source>Add chapter</source>
@@ -925,27 +934,27 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="AddCharacter" translate="yes" xml:space="preserve">
           <source>Add character</source>
-          <target state="new">Add character</target>
+          <target state="needs-review-translation">Добавить характер</target>
         </trans-unit>
         <trans-unit id="ChapterAbove" translate="yes" xml:space="preserve">
           <source>Chapter above</source>
-          <target state="new">Chapter above</target>
+          <target state="needs-review-translation">Глава выше</target>
         </trans-unit>
         <trans-unit id="ChapterBelow" translate="yes" xml:space="preserve">
           <source>Chapter below</source>
-          <target state="new">Chapter below</target>
+          <target state="needs-review-translation">Глава ниже</target>
         </trans-unit>
         <trans-unit id="CharactersPage" translate="yes" xml:space="preserve">
           <source>Characters Page</source>
-          <target state="new">Characters Page</target>
+          <target state="needs-review-translation">Страница персонажей</target>
         </trans-unit>
         <trans-unit id="MainPage" translate="yes" xml:space="preserve">
           <source>Main Page</source>
-          <target state="new">Main Page</target>
+          <target state="needs-review-translation">Главная страница</target>
         </trans-unit>
         <trans-unit id="Global" translate="yes" xml:space="preserve">
           <source>Global</source>
-          <target state="new">Global</target>
+          <target state="needs-review-translation">Глобальный</target>
         </trans-unit>
       </group>
     </body>
@@ -962,11 +971,11 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="FileLocation" translate="yes" xml:space="preserve">
           <source>File location:</source>
-          <target state="new">File location:</target>
+          <target state="needs-review-translation">Расположение файла:</target>
         </trans-unit>
         <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
-          <target state="new">"C:\Users\Documents"</target>
+          <target state="needs-review-translation">"C:\Users\Documents"</target>
         </trans-unit>
         <trans-unit id="FileName" translate="yes" xml:space="preserve">
           <source>File name:</source>
@@ -990,7 +999,7 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="OptionChapters" translate="yes" xml:space="preserve">
           <source>Chapters</source>
-          <target state="new">Chapters</target>
+          <target state="needs-review-translation">Главы</target>
         </trans-unit>
         <trans-unit id="OptionCharacters" translate="yes" xml:space="preserve">
           <source>Characters</source>
@@ -1014,7 +1023,7 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
-          <target state="new">Characters to export:</target>
+          <target state="needs-review-translation">Символы для экспорта:</target>
         </trans-unit>
       </group>
     </body>
@@ -1088,7 +1097,7 @@ Write your stories with either your keyboard, touch, voice, or a pen</target>
         </trans-unit>
         <trans-unit id="AppName" translate="yes" xml:space="preserve">
           <source>Storylines</source>
-          <target state="new">Storylines</target>
+          <target state="needs-review-translation">Storylines</target>
           <note from="MultilingualBuild" annotates="source" priority="2">NOT FOR TRANSLATION</note>
         </trans-unit>
         <trans-unit id="Preview" translate="yes" xml:space="preserve">

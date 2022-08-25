@@ -425,7 +425,7 @@ Opravdu chcete odejít bez uložení své práce?</value>
     <value>Najít</value>
   </data>
   <data name="experience.Title" xml:space="preserve">
-    <value>Poděl se o svojí zkušenost</value>
+    <value>Podělte se o svojí zkušenosti</value>
   </data>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Nová aktualizace je dostupná</value>
@@ -620,5 +620,20 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="whatsNextTitle.Text" xml:space="preserve">
     <value>Cesta vpřed</value>
+  </data>
+  <data name="whatToMeasure.Text" xml:space="preserve">
+    <value>Hodnota měření:</value>
+  </data>
+  <data name="enableMeasureLabel.Content" xml:space="preserve">
+    <value>Zapnout měření</value>
+  </data>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Soustředit se</value>
+  </data>
+  <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Klikněte pro zobrazení Statistik příběhu</value>
+  </data>
+  <data name="submitText.Text" xml:space="preserve">
+    <value>Potvrdit</value>
   </data>
 </root>

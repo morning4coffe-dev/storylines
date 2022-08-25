@@ -12,11 +12,29 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Title" xml:space="preserve">
+    <value>Ярлыки</value>
+  </data>
+  <data name="Bold" xml:space="preserve">
+    <value>Смелый</value>
+  </data>
   <data name="Export" xml:space="preserve">
     <value>Экспортировать</value>
   </data>
+  <data name="Italic" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
   <data name="ReadAloud" xml:space="preserve">
     <value>Чтение вслух</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Повторно</value>
+  </data>
+  <data name="RemoveChapter" xml:space="preserve">
+    <value>Удалить главу</value>
+  </data>
+  <data name="RemoveCharacter" xml:space="preserve">
+    <value>Удалить символ</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Сохранить</value>
@@ -27,7 +45,34 @@
   <data name="Search" xml:space="preserve">
     <value>Поиск</value>
   </data>
+  <data name="Strikethrough" xml:space="preserve">
+    <value>Зачеркивание</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>Подчеркните</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Отменить</value>
+  </data>
   <data name="AddChapter" xml:space="preserve">
     <value>Добавить главу</value>
+  </data>
+  <data name="AddCharacter" xml:space="preserve">
+    <value>Добавить характер</value>
+  </data>
+  <data name="ChapterAbove" xml:space="preserve">
+    <value>Глава выше</value>
+  </data>
+  <data name="ChapterBelow" xml:space="preserve">
+    <value>Глава ниже</value>
+  </data>
+  <data name="CharactersPage" xml:space="preserve">
+    <value>Страница персонажей</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Главная страница</value>
+  </data>
+  <data name="Global" xml:space="preserve">
+    <value>Глобальный</value>
   </data>
 </root>

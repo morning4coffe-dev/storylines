@@ -5,8 +5,8 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     mc:Ignorable="d" Closed="ContentDialog_Closed" CornerRadius="8">
-    
-    <Grid Width="410" MaxHeight="500" Margin="4">
+
+    <Grid MinWidth="410" MaxWidth="600" MaxHeight="500" Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="38"/>
             <RowDefinition Height="8"/>
@@ -41,6 +41,7 @@
                     </RichTextBlock>
                     <TextBox
                 x:Name="wordDistributionTextBox"
+                    HorizontalAlignment="Left"
                     MaxHeight="220"
                     Width="190"
                     IsReadOnly="True"

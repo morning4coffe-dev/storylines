@@ -486,6 +486,9 @@
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
     <value>"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</value>
   </data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
+    <value>"Алекс Уайт"</value>
+  </data>
   <data name="noCharacters.Text" xml:space="preserve">
     <value>Персонажей пока нет.</value>
   </data>
@@ -592,10 +595,46 @@
   <data name="charactersSText" xml:space="preserve">
     <value>Символы</value>
   </data>
+  <data name="chinese.Content" xml:space="preserve">
+    <value>Китайский</value>
+  </data>
   <data name="dialoguesText" xml:space="preserve">
     <value>Диалоги</value>
   </data>
   <data name="exportText" xml:space="preserve">
     <value>Экспортировать</value>
+  </data>
+  <data name="chaptersText1.Text" xml:space="preserve">
+    <value>Главы</value>
+  </data>
+  <data name="estimatedReadTime" xml:space="preserve">
+    <value>Расчетное время чтения</value>
+  </data>
+  <data name="textAnalytics.Label" xml:space="preserve">
+    <value>Аналитика историй</value>
+  </data>
+  <data name="analytics.Text" xml:space="preserve">
+    <value>Аналитика</value>
+  </data>
+  <data name="whatsNextDescription.Text" xml:space="preserve">
+    <value>Читайте о том, что будет дальше в Storylines</value>
+  </data>
+  <data name="whatsNextTitle.Text" xml:space="preserve">
+    <value>Дальнейшие действия</value>
+  </data>
+  <data name="whatToMeasure.Text" xml:space="preserve">
+    <value>Значение измерения:</value>
+  </data>
+  <data name="enableMeasureLabel.Content" xml:space="preserve">
+    <value>Разрешить измерение</value>
+  </data>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Фокус</value>
+  </data>
+  <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Нажмите здесь, чтобы посмотреть аналитику истории</value>
+  </data>
+  <data name="submitText.Text" xml:space="preserve">
+    <value>Отправить</value>
   </data>
 </root>

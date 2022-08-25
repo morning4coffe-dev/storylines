@@ -168,7 +168,7 @@
         </trans-unit>
         <trans-unit id="chapterNameSettingDesc.Text" translate="yes" xml:space="preserve">
           <source>Set a custom name. To set the place of numbering use {number}</source>
-          <target state="needs-review-translation">Set a custom name. To set the place of numbering use {number}</target>
+          <target state="needs-review-translation">Impostare un nome personalizzato. Per impostare la posizione della numerazione, utilizzare {numero}.</target>
         </trans-unit>
         <trans-unit id="chapters" translate="yes" xml:space="preserve">
           <source>Chapters</source>
@@ -200,7 +200,7 @@
         </trans-unit>
         <trans-unit id="characterPlaceholderName.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"Alex White"</source>
-          <target state="needs-review-translation">"Alex White"</target>
+          <target state="translated">"Alex Bianco"</target>
         </trans-unit>
         <trans-unit id="characters" translate="yes" xml:space="preserve">
           <source>Characters</source>
@@ -268,7 +268,7 @@
         </trans-unit>
         <trans-unit id="czech.Content" translate="yes" xml:space="preserve">
           <source>Czech</source>
-          <target state="needs-review-translation">Czech</target>
+          <target state="translated">Ceca</target>
         </trans-unit>
         <trans-unit id="dark.Content" translate="yes" xml:space="preserve">
           <source>Dark</source>
@@ -316,7 +316,7 @@
         </trans-unit>
         <trans-unit id="english.Content" translate="yes" xml:space="preserve">
           <source>English</source>
-          <target state="needs-review-translation">English</target>
+          <target state="translated">Inglese</target>
         </trans-unit>
         <trans-unit id="estimatedPageCount" translate="yes" xml:space="preserve">
           <source>Estimated page count</source>
@@ -329,8 +329,8 @@
         <trans-unit id="exitWithoutSaveDialogDescription" translate="yes" xml:space="preserve">
           <source>Hey! Slow down a little bit!
 Did you want to exit without saving your progress?</source>
-          <target state="needs-review-translation">Hey! Slow down a little bit!
-Did you want to exit without saving your progress?</target>
+          <target state="needs-review-translation">Ehi! Rallenta un po'!
+Volevi uscire senza salvare i tuoi progressi?</target>
         </trans-unit>
         <trans-unit id="exitWithoutSaveDialogDontSave" translate="yes" xml:space="preserve">
           <source>Don't save</source>
@@ -370,7 +370,7 @@ Did you want to exit without saving your progress?</target>
         </trans-unit>
         <trans-unit id="fileDoesNotExist.Text" translate="yes" xml:space="preserve">
           <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
-          <target state="needs-review-translation">Il file non esiste. Change the name or location otherwise, the file is gonna be replaced.</target>
+          <target state="translated">Questo file esiste già! Cambiare il nome o la posizione, altrimenti il file verrà sostituito.</target>
         </trans-unit>
         <trans-unit id="fileLocation.Text" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
@@ -382,19 +382,20 @@ Did you want to exit without saving your progress?</target>
         </trans-unit>
         <trans-unit id="fileNameExportPlaceh.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-export"</source>
-          <target state="needs-review-translation">"the-queen-of-donuts-export"</target>
+          <target state="needs-review-translation">"la-regina-delle-ciambelle-export"</target>
         </trans-unit>
         <trans-unit id="fileNamePlaceh.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-script"</source>
-          <target state="needs-review-translation">"the-queen-of-donuts-script"</target>
+          <target state="needs-review-translation">"la-regina-delle-ciambelle-script"</target>
         </trans-unit>
         <trans-unit id="findOne.Text" translate="yes" xml:space="preserve">
           <source>Find one</source>
           <target state="needs-review-translation">Trova</target>
         </trans-unit>
         <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
-          <source>Focus mode</source>
-          <target state="translated">Modalità concentrazione</target>
+          <source>Focus Mode</source>
+          <target state="needs-review-translation">Modalità concentrazione</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
@@ -406,7 +407,7 @@ Did you want to exit without saving your progress?</target>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
           <source>Stay and finish</source>
-          <target state="needs-review-translation">Stay and finish</target>
+          <target state="needs-review-translation">Rimanere e finire</target>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
           <source>Leaving so soon?</source>
@@ -434,7 +435,7 @@ Did you want to exit without saving your progress?</target>
         </trans-unit>
         <trans-unit id="includeChapterName.Content" translate="yes" xml:space="preserve">
           <source>Include chapter name</source>
-          <target state="needs-review-translation">Include chapter name</target>
+          <target state="needs-review-translation">Includere il nome del capitolo</target>
         </trans-unit>
         <trans-unit id="information.Text" translate="yes" xml:space="preserve">
           <source>Information</source>
@@ -502,7 +503,7 @@ Did you want to exit without saving your progress?</target>
         </trans-unit>
         <trans-unit id="modeDialogueTitle.Text" translate="yes" xml:space="preserve">
           <source>Focus Mode</source>
-          <target state="new">Focus Mode</target>
+          <target state="needs-review-translation">Modalità Focus</target>
         </trans-unit>
         <trans-unit id="newChapter.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"Uten navn"</source>
@@ -539,20 +540,20 @@ Did you want to exit without saving your progress?</target>
         <trans-unit id="noCharactersDialogueDescription" translate="yes" xml:space="preserve">
           <source>You can easily add a new character by tapping on
 the "Add new character" button.</source>
-          <target state="new">You can easily add a new character by tapping on
-the "Add new character" button.</target>
+          <target state="needs-review-translation">È possibile aggiungere facilmente un nuovo personaggio toccando il pulsante
+il pulsante "Aggiungi nuovo personaggio".</target>
         </trans-unit>
         <trans-unit id="noCharactersDialogueTitle" translate="yes" xml:space="preserve">
           <source>There are no characters in this project.</source>
-          <target state="new">There are no characters in this project.</target>
+          <target state="needs-review-translation">Non ci sono personaggi in questo progetto.</target>
         </trans-unit>
         <trans-unit id="noCharactersModes.Message" translate="yes" xml:space="preserve">
           <source>You will have to leave Focus Mode before you can add a new one.</source>
-          <target state="new">You will have to leave Focus Mode before you can add a new one.</target>
+          <target state="needs-review-translation">È necessario uscire dalla modalità Focus prima di poterne aggiungere una nuova.</target>
         </trans-unit>
         <trans-unit id="noCharactersModes.Title" translate="yes" xml:space="preserve">
           <source>There are no characters in this project.</source>
-          <target state="new">There are no characters in this project.</target>
+          <target state="needs-review-translation">Non ci sono personaggi in questo progetto.</target>
         </trans-unit>
         <trans-unit id="none" translate="yes" xml:space="preserve">
           <source>None</source>
@@ -564,7 +565,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="nothingHere.Text" translate="yes" xml:space="preserve">
           <source>There are no projects yet.</source>
-          <target state="new">There are no projects yet.</target>
+          <target state="needs-review-translation">Non ci sono ancora progetti.</target>
         </trans-unit>
         <trans-unit id="or.Text" translate="yes" xml:space="preserve">
           <source>or</source>
@@ -572,7 +573,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="ownDescription.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"This character has short brown hair. Is smart and kind..."</source>
-          <target state="new">"This character has short brown hair. Is smart and kind..."</target>
+          <target state="needs-review-translation">"Questo personaggio ha i capelli corti e castani. È intelligente e gentile..."</target>
         </trans-unit>
         <trans-unit id="paragraphs" translate="yes" xml:space="preserve">
           <source>Paragraphs</source>
@@ -600,15 +601,15 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="picturesNotFound" translate="yes" xml:space="preserve">
           <source>Some images failed to load.</source>
-          <target state="new">Some images failed to load.</target>
+          <target state="needs-review-translation">Alcune immagini non sono state caricate.</target>
         </trans-unit>
         <trans-unit id="privacyPolicy.Text" translate="yes" xml:space="preserve">
           <source>Privacy policy</source>
-          <target state="new">Privacy policy</target>
+          <target state="needs-review-translation">Informativa sulla privacy</target>
         </trans-unit>
         <trans-unit id="profilePicturesFlyout.Text" translate="yes" xml:space="preserve">
           <source>Character pictures</source>
-          <target state="new">Character pictures</target>
+          <target state="needs-review-translation">Immagini dei personaggi</target>
         </trans-unit>
         <trans-unit id="projectName.Text" translate="yes" xml:space="preserve">
           <source>Project name:</source>
@@ -616,7 +617,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="projectNamePlaceh.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"About The Queen of Donuts"</source>
-          <target state="needs-review-translation">"About The Queen of Donuts"</target>
+          <target state="needs-review-translation">"La regina delle ciambelle"</target>
         </trans-unit>
         <trans-unit id="projectOnStartSetting.Text" translate="yes" xml:space="preserve">
           <source>Last project on startup</source>
@@ -640,15 +641,15 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
           <source>Read aloud</source>
-          <target state="new">Read aloud</target>
+          <target state="needs-review-translation">Lettura ad alta voce</target>
         </trans-unit>
         <trans-unit id="readAloudText.Text" translate="yes" xml:space="preserve">
           <source>Read aloud</source>
-          <target state="new">Read aloud</target>
+          <target state="needs-review-translation">Lettura ad alta voce</target>
         </trans-unit>
         <trans-unit id="readAloudVoiceSetting.Text" translate="yes" xml:space="preserve">
           <source>Voice</source>
-          <target state="new">Voice</target>
+          <target state="needs-review-translation">Voce</target>
         </trans-unit>
         <trans-unit id="readAloudVolumeSetting.Text" translate="yes" xml:space="preserve">
           <source>Volume</source>
@@ -672,11 +673,11 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="reportABug.Text" translate="yes" xml:space="preserve">
           <source>Report a bug</source>
-          <target state="new">Report a bug</target>
+          <target state="needs-review-translation">Segnala un bug</target>
         </trans-unit>
         <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
-          <target state="new">Are you enjoying this app? Please consider leaving a review on Microsoft Store.</target>
+          <target state="needs-review-translation">Vi piace questa applicazione? Lasciate una recensione su Microsoft Store.</target>
         </trans-unit>
         <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
           <source>Rate now</source>
@@ -728,11 +729,11 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="selectedChapterText.Text" translate="yes" xml:space="preserve">
           <source>Selected chapter</source>
-          <target state="new">Selected chapter</target>
+          <target state="needs-review-translation">Capitolo selezionato</target>
         </trans-unit>
         <trans-unit id="selectedCharacters" translate="yes" xml:space="preserve">
           <source>Selected characters</source>
-          <target state="new">Selected characters</target>
+          <target state="needs-review-translation">Personaggi selezionati</target>
         </trans-unit>
         <trans-unit id="sort.Label" translate="yes" xml:space="preserve">
           <source>Sort</source>
@@ -748,7 +749,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="switchContent.Content" translate="yes" xml:space="preserve">
           <source>Switch</source>
-          <target state="new">Switch</target>
+          <target state="needs-review-translation">Interruttore</target>
         </trans-unit>
         <trans-unit id="system.Content" translate="yes" xml:space="preserve">
           <source>System</source>
@@ -756,15 +757,15 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="toAddNew.Text" translate="yes" xml:space="preserve">
           <source>to add new.</source>
-          <target state="needs-review-translation">to add new.</target>
+          <target state="translated">per aggiungerne di nuovi.</target>
         </trans-unit>
         <trans-unit id="unsavedProgressAlert.Text" translate="yes" xml:space="preserve">
           <source>Unsaved progress alert</source>
-          <target state="new">Unsaved progress alert</target>
+          <target state="needs-review-translation">Avviso di progresso non salvato</target>
         </trans-unit>
         <trans-unit id="updateAvailableTitle.Title" translate="yes" xml:space="preserve">
           <source>Update available</source>
-          <target state="new">Update available</target>
+          <target state="needs-review-translation">Aggiornamento disponibile</target>
         </trans-unit>
         <trans-unit id="version" translate="yes" xml:space="preserve">
           <source>Version</source>
@@ -780,7 +781,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="whiteTextBackgroundSetting.Text" translate="yes" xml:space="preserve">
           <source>White text background</source>
-          <target state="new">White text background</target>
+          <target state="needs-review-translation">Sfondo del testo bianco</target>
         </trans-unit>
         <trans-unit id="whiteTextBackgroundToggle.OffContent" translate="yes" xml:space="preserve">
           <source>Theme</source>
@@ -788,7 +789,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="whiteTextBackgroundToggle.OnContent" translate="yes" xml:space="preserve">
           <source>White</source>
-          <target state="new">White</target>
+          <target state="needs-review-translation">Bianco</target>
         </trans-unit>
         <trans-unit id="withoutSpaces" translate="yes" xml:space="preserve">
           <source>without spaces</source>
@@ -808,7 +809,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="yourStory.PlaceholderText" translate="yes" xml:space="preserve">
           <source>Type your story here.</source>
-          <target state="new">Type your story here.</target>
+          <target state="needs-review-translation">Scrivete qui la vostra storia.</target>
         </trans-unit>
         <trans-unit id="zoom.Text" translate="yes" xml:space="preserve">
           <source>Zoom</source>
@@ -820,15 +821,15 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="estimatedReadTime" translate="yes" xml:space="preserve">
           <source>Estimated read time</source>
-          <target state="new">Estimated read time</target>
+          <target state="translated">Tempo di lettura stimato</target>
         </trans-unit>
         <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
-          <source>Text Analytics</source>
-          <target state="new">Text Analytics</target>
+          <source>Story Analytics</source>
+          <target state="needs-review-translation">Storia analitica</target>
         </trans-unit>
         <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
           <source>Analytics</source>
-          <target state="new">Analytics</target>
+          <target state="needs-review-translation">Analisi</target>
         </trans-unit>
         <trans-unit id="min" translate="yes" xml:space="preserve">
           <source>min</source>
@@ -836,23 +837,31 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="whatsNextDescription.Text" translate="yes" xml:space="preserve">
           <source>Read about what's next for Storylines</source>
-          <target state="new">Read about what's next for Storylines</target>
+          <target state="needs-review-translation">Leggi le prossime novità di Storylines</target>
         </trans-unit>
         <trans-unit id="whatsNextTitle.Text" translate="yes" xml:space="preserve">
           <source>The way forward</source>
-          <target state="new">The way forward</target>
+          <target state="needs-review-translation">La strada da percorrere</target>
         </trans-unit>
         <trans-unit id="whatToMeasure.Text" translate="yes" xml:space="preserve">
           <source>Measure value:</source>
-          <target state="new">Measure value:</target>
+          <target state="needs-review-translation">Valore di misura:</target>
         </trans-unit>
         <trans-unit id="enableMeasureLabel.Content" translate="yes" xml:space="preserve">
           <source>Enable measure</source>
-          <target state="new">Enable measure</target>
+          <target state="needs-review-translation">Abilitazione della misura</target>
         </trans-unit>
         <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
           <source>Focus</source>
-          <target state="new">Focus</target>
+          <target state="needs-review-translation">Focus</target>
+        </trans-unit>
+        <trans-unit id="clickToSeeStoryAnalytics.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click here to see Story Analytics</source>
+          <target state="needs-review-translation">Fare clic qui per vedere Story Analytics</target>
+        </trans-unit>
+        <trans-unit id="submitText.Text" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="needs-review-translation">Invia</target>
         </trans-unit>
       </group>
     </body>
@@ -865,19 +874,19 @@ the "Add new character" button.</target>
       <group id="STORYLINES/RESOURCES/EN/EXPORTDIALOGUE.RESW" datatype="resx">
         <trans-unit id="All" translate="yes" xml:space="preserve">
           <source>All</source>
-          <target state="new">All</target>
+          <target state="needs-review-translation">Tutti</target>
         </trans-unit>
         <trans-unit id="ChaptersToExport" translate="yes" xml:space="preserve">
           <source>Chapters to export:</source>
-          <target state="new">Chapters to export:</target>
+          <target state="needs-review-translation">Capitoli da esportare:</target>
         </trans-unit>
         <trans-unit id="FileLocation" translate="yes" xml:space="preserve">
           <source>File location:</source>
-          <target state="new">File location:</target>
+          <target state="needs-review-translation">Posizione del file:</target>
         </trans-unit>
         <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
-          <target state="new">"C:\Users\Documents"</target>
+          <target state="needs-review-translation">"C:\Utenti\Documenti"</target>
         </trans-unit>
         <trans-unit id="FileName" translate="yes" xml:space="preserve">
           <source>File name:</source>
@@ -885,11 +894,11 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="FileNameCollisionError" translate="yes" xml:space="preserve">
           <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
-          <target state="new">This file already exists! Change the name or location otherwise, the file is gonna be replaced.</target>
+          <target state="needs-review-translation">Questo file esiste già! Cambiare il nome o la posizione, altrimenti il file verrà sostituito.</target>
         </trans-unit>
         <trans-unit id="FileNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-export"</source>
-          <target state="new">"the-queen-of-donuts-export"</target>
+          <target state="needs-review-translation">"la-regina-delle-ciambelle-export"</target>
         </trans-unit>
         <trans-unit id="IncludeChapterName" translate="yes" xml:space="preserve">
           <source>Include chapter name</source>
@@ -921,7 +930,7 @@ the "Add new character" button.</target>
         </trans-unit>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
-          <target state="new">Characters to export:</target>
+          <target state="needs-review-translation">Caratteri da esportare:</target>
         </trans-unit>
       </group>
     </body>
@@ -1093,7 +1102,7 @@ Write your stories with either your keyboard, touch, voice, or a pen</target>
         </trans-unit>
         <trans-unit id="Preview" translate="yes" xml:space="preserve">
           <source>Preview</source>
-          <target state="new">Preview</target>
+          <target state="translated">Anteprima</target>
         </trans-unit>
       </group>
     </body>

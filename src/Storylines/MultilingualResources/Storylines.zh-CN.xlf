@@ -372,8 +372,9 @@ Did you want to exit without saving your progress?</source>
           <target state="new">Find one</target>
         </trans-unit>
         <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
-          <source>Focus mode</source>
-          <target state="translated">聚焦模式</target>
+          <source>Focus Mode</source>
+          <target state="needs-review-translation">聚焦模式</target>
+          <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
         <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
@@ -822,8 +823,8 @@ the "Add new character" button.</source>
           <target state="new">Estimated read time</target>
         </trans-unit>
         <trans-unit id="textAnalytics.Label" translate="yes" xml:space="preserve">
-          <source>Text Analytics</source>
-          <target state="new">Text Analytics</target>
+          <source>Story Analytics</source>
+          <target state="new">Story Analytics</target>
         </trans-unit>
         <trans-unit id="analytics.Text" translate="yes" xml:space="preserve">
           <source>Analytics</source>
@@ -852,6 +853,14 @@ the "Add new character" button.</source>
         <trans-unit id="focus.Text" translate="yes" xml:space="preserve">
           <source>Focus</source>
           <target state="new">Focus</target>
+        </trans-unit>
+        <trans-unit id="clickToSeeStoryAnalytics.ToolTipService.ToolTip" translate="yes" xml:space="preserve">
+          <source>Click here to see Story Analytics</source>
+          <target state="new">Click here to see Story Analytics</target>
+        </trans-unit>
+        <trans-unit id="submitText.Text" translate="yes" xml:space="preserve">
+          <source>Submit</source>
+          <target state="new">Submit</target>
         </trans-unit>
       </group>
     </body>

@@ -48,7 +48,8 @@ namespace Storylines.Components.DialogueWindows
                 AppView.currentlyOpenedDialogue.Hide();
 
             SaveDialogue.type = type;
-            _ = new SaveDialogue().ShowAsync();
+            if (AppView.currentlyOpenedDialogue == null)
+                _ = new SaveDialogue().ShowAsync();
         }
 
         public async Task ChooseFileToSaveAsync()

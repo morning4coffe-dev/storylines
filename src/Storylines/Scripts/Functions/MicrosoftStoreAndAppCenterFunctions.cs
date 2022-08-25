@@ -25,7 +25,6 @@ namespace Storylines.Scripts.Functions
             if (updates.Count > 0)
                 NotificationManager.DisplayNewUpdateAvailable();
         }
-        //https://docs.microsoft.com/en-us/windows/uwp/packaging/self-install-package-updates
 
         #region Review
         private static DispatcherTimer timer;
@@ -178,7 +177,6 @@ namespace Storylines.Scripts.Functions
                 { "Exception", e.Exception?.ToString() },
                 { "Culture", SystemInformation.Instance.Culture.EnglishName },
                 { "Available memory", SystemInformation.Instance.AvailableMemory.ToString() },
-                //{ "First Use Time UTC", SystemInformation.Instance.FirstUseTime.ToUniversalTime().ToString("dd/MM/yyyy HH:mm:ss") },
                 { "App version", SystemInformation.Instance.ApplicationVersion.ToFormattedString() },
             };
 

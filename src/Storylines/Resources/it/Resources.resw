@@ -133,7 +133,7 @@
     <value>Nome capitolo</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Set a custom name. To set the place of numbering use {number}</value>
+    <value>Impostare un nome personalizzato. Per impostare la posizione della numerazione, utilizzare {numero}.</value>
   </data>
   <data name="chapters" xml:space="preserve">
     <value>Capitoli</value>
@@ -157,7 +157,7 @@
     <value>Nessun carattere selezionato.</value>
   </data>
   <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
-    <value>"Alex White"</value>
+    <value>"Alex Bianco"</value>
   </data>
   <data name="characters" xml:space="preserve">
     <value>Caratteri</value>
@@ -208,7 +208,7 @@
     <value>Personalizzato</value>
   </data>
   <data name="czech.Content" xml:space="preserve">
-    <value>Czech</value>
+    <value>Ceca</value>
   </data>
   <data name="dark.Content" xml:space="preserve">
     <value>Scuro</value>
@@ -244,7 +244,7 @@
     <value>Modifica</value>
   </data>
   <data name="english.Content" xml:space="preserve">
-    <value>English</value>
+    <value>Inglese</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
     <value>Conteggio pagina stimato</value>
@@ -253,8 +253,8 @@
     <value>Cancella</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Hey! Slow down a little bit!
-Did you want to exit without saving your progress?</value>
+    <value>Ehi! Rallenta un po'!
+Volevi uscire senza salvare i tuoi progressi?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
     <value>Non salvare</value>
@@ -284,7 +284,7 @@ Did you want to exit without saving your progress?</value>
     <value>File</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
-    <value>Il file non esiste. Change the name or location otherwise, the file is gonna be replaced.</value>
+    <value>Questo file esiste già! Cambiare il nome o la posizione, altrimenti il file verrà sostituito.</value>
   </data>
   <data name="fileLocation.Text" xml:space="preserve">
     <value>"C:\Utenti\Documenti"</value>
@@ -293,10 +293,10 @@ Did you want to exit without saving your progress?</value>
     <value>Nome file:</value>
   </data>
   <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
-    <value>"the-queen-of-donuts-export"</value>
+    <value>"la-regina-delle-ciambelle-export"</value>
   </data>
   <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"the-queen-of-donuts-script"</value>
+    <value>"la-regina-delle-ciambelle-script"</value>
   </data>
   <data name="findOne.Text" xml:space="preserve">
     <value>Trova</value>
@@ -311,7 +311,7 @@ Did you want to exit without saving your progress?</value>
     <value>Lascia</value>
   </data>
   <data name="focusModeLeaveDialogueStay" xml:space="preserve">
-    <value>Stay and finish</value>
+    <value>Rimanere e finire</value>
   </data>
   <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
     <value>Uscire così presto?</value>
@@ -332,7 +332,7 @@ Did you want to exit without saving your progress?</value>
     <value>Evidenziatore</value>
   </data>
   <data name="includeChapterName.Content" xml:space="preserve">
-    <value>Include chapter name</value>
+    <value>Includere il nome del capitolo</value>
   </data>
   <data name="information.Text" xml:space="preserve">
     <value>Informazioni</value>
@@ -382,6 +382,9 @@ Did you want to exit without saving your progress?</value>
   <data name="modeDialogueTimer.Content" xml:space="preserve">
     <value>Timer</value>
   </data>
+  <data name="modeDialogueTitle.Text" xml:space="preserve">
+    <value>Modalità Focus</value>
+  </data>
   <data name="newChapterShortcut.Text" xml:space="preserve">
     <value>Crea capitolo tramite scorciatoia</value>
   </data>
@@ -403,14 +406,33 @@ Did you want to exit without saving your progress?</value>
   <data name="noCharactersDialogueAddNew" xml:space="preserve">
     <value>Nuovo carattere</value>
   </data>
+  <data name="noCharactersDialogueDescription" xml:space="preserve">
+    <value>È possibile aggiungere facilmente un nuovo personaggio toccando il pulsante
+il pulsante "Aggiungi nuovo personaggio".</value>
+  </data>
+  <data name="noCharactersDialogueTitle" xml:space="preserve">
+    <value>Non ci sono personaggi in questo progetto.</value>
+  </data>
+  <data name="noCharactersModes.Message" xml:space="preserve">
+    <value>È necessario uscire dalla modalità Focus prima di poterne aggiungere una nuova.</value>
+  </data>
+  <data name="noCharactersModes.Title" xml:space="preserve">
+    <value>Non ci sono personaggi in questo progetto.</value>
+  </data>
   <data name="none" xml:space="preserve">
     <value>Nessuno</value>
   </data>
   <data name="noneText.Text" xml:space="preserve">
     <value>Nessuno</value>
   </data>
+  <data name="nothingHere.Text" xml:space="preserve">
+    <value>Non ci sono ancora progetti.</value>
+  </data>
   <data name="or.Text" xml:space="preserve">
     <value>o</value>
+  </data>
+  <data name="ownDescription.PlaceholderText" xml:space="preserve">
+    <value>"Questo personaggio ha i capelli corti e castani. È intelligente e gentile..."</value>
   </data>
   <data name="paragraphs" xml:space="preserve">
     <value>Paragrafi</value>
@@ -430,11 +452,20 @@ Did you want to exit without saving your progress?</value>
   <data name="personalTwitter.Text" xml:space="preserve">
     <value>Morning4coffe su Twitter</value>
   </data>
+  <data name="picturesNotFound" xml:space="preserve">
+    <value>Alcune immagini non sono state caricate.</value>
+  </data>
+  <data name="privacyPolicy.Text" xml:space="preserve">
+    <value>Informativa sulla privacy</value>
+  </data>
+  <data name="profilePicturesFlyout.Text" xml:space="preserve">
+    <value>Immagini dei personaggi</value>
+  </data>
   <data name="projectName.Text" xml:space="preserve">
     <value>Nome progetto:</value>
   </data>
   <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"About The Queen of Donuts"</value>
+    <value>"La regina delle ciambelle"</value>
   </data>
   <data name="projectOnStartSetting.Text" xml:space="preserve">
     <value>Apri ultimo progetto all'avvio</value>
@@ -451,6 +482,15 @@ Did you want to exit without saving your progress?</value>
   <data name="rateAndReview.Text" xml:space="preserve">
     <value>Valuta e recensisci sul Microsoft Store</value>
   </data>
+  <data name="readAloud.Label" xml:space="preserve">
+    <value>Lettura ad alta voce</value>
+  </data>
+  <data name="readAloudText.Text" xml:space="preserve">
+    <value>Lettura ad alta voce</value>
+  </data>
+  <data name="readAloudVoiceSetting.Text" xml:space="preserve">
+    <value>Voce</value>
+  </data>
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Volume</value>
   </data>
@@ -465,6 +505,12 @@ Did you want to exit without saving your progress?</value>
   </data>
   <data name="renameFlyout.Text" xml:space="preserve">
     <value>Rinomina</value>
+  </data>
+  <data name="reportABug.Text" xml:space="preserve">
+    <value>Segnala un bug</value>
+  </data>
+  <data name="reviewDialog.Text" xml:space="preserve">
+    <value>Vi piace questa applicazione? Lasciate una recensione su Microsoft Store.</value>
   </data>
   <data name="reviewDialogOption1.Content" xml:space="preserve">
     <value>Valuta adesso</value>
@@ -502,6 +548,12 @@ Did you want to exit without saving your progress?</value>
   <data name="searchBox.PlaceholderText" xml:space="preserve">
     <value>Cerca</value>
   </data>
+  <data name="selectedChapterText.Text" xml:space="preserve">
+    <value>Capitolo selezionato</value>
+  </data>
+  <data name="selectedCharacters" xml:space="preserve">
+    <value>Personaggi selezionati</value>
+  </data>
   <data name="sort.Label" xml:space="preserve">
     <value>Ordina</value>
   </data>
@@ -511,11 +563,20 @@ Did you want to exit without saving your progress?</value>
   <data name="submit.Content" xml:space="preserve">
     <value>Conferma</value>
   </data>
+  <data name="switchContent.Content" xml:space="preserve">
+    <value>Interruttore</value>
+  </data>
   <data name="system.Content" xml:space="preserve">
     <value>Predefinito di Sistema</value>
   </data>
   <data name="toAddNew.Text" xml:space="preserve">
-    <value>to add new.</value>
+    <value>per aggiungerne di nuovi.</value>
+  </data>
+  <data name="unsavedProgressAlert.Text" xml:space="preserve">
+    <value>Avviso di progresso non salvato</value>
+  </data>
+  <data name="updateAvailableTitle.Title" xml:space="preserve">
+    <value>Aggiornamento disponibile</value>
   </data>
   <data name="version" xml:space="preserve">
     <value>Versione</value>
@@ -526,8 +587,14 @@ Did you want to exit without saving your progress?</value>
   <data name="website.Content" xml:space="preserve">
     <value>Sito Web</value>
   </data>
+  <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
+    <value>Sfondo del testo bianco</value>
+  </data>
   <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve">
     <value>Tema</value>
+  </data>
+  <data name="whiteTextBackgroundToggle.OnContent" xml:space="preserve">
+    <value>Bianco</value>
   </data>
   <data name="withoutSpaces" xml:space="preserve">
     <value>senza spazi</value>
@@ -541,10 +608,43 @@ Did you want to exit without saving your progress?</value>
   <data name="wordsContent.Content" xml:space="preserve">
     <value>Parole</value>
   </data>
+  <data name="yourStory.PlaceholderText" xml:space="preserve">
+    <value>Scrivete qui la vostra storia.</value>
+  </data>
   <data name="zoom.Text" xml:space="preserve">
     <value>Zoom</value>
   </data>
   <data name="zToA.Text" xml:space="preserve">
     <value>Z-A</value>
+  </data>
+  <data name="estimatedReadTime" xml:space="preserve">
+    <value>Tempo di lettura stimato</value>
+  </data>
+  <data name="textAnalytics.Label" xml:space="preserve">
+    <value>Storia analitica</value>
+  </data>
+  <data name="analytics.Text" xml:space="preserve">
+    <value>Analisi</value>
+  </data>
+  <data name="whatsNextDescription.Text" xml:space="preserve">
+    <value>Leggi le prossime novità di Storylines</value>
+  </data>
+  <data name="whatsNextTitle.Text" xml:space="preserve">
+    <value>La strada da percorrere</value>
+  </data>
+  <data name="whatToMeasure.Text" xml:space="preserve">
+    <value>Valore di misura:</value>
+  </data>
+  <data name="enableMeasureLabel.Content" xml:space="preserve">
+    <value>Abilitazione della misura</value>
+  </data>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Fare clic qui per vedere Story Analytics</value>
+  </data>
+  <data name="submitText.Text" xml:space="preserve">
+    <value>Invia</value>
   </data>
 </root>
