@@ -34,7 +34,7 @@ namespace Storylines.Components
         {
             InitializeComponent();
 
-            MainPage.chapterText = this;
+            MainPage.ChapterText = this;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -46,28 +46,28 @@ namespace Storylines.Components
         #region TextBox
         private void OnTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (MainPage.chapterList.listView.SelectedItem != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
 
-                if (Chapter.chapters[MainPage.chapterList.listView.SelectedIndex].text != txt && !searchingInTextBox)
+                if (Chapter.chapters[MainPage.ChapterList.listView.SelectedIndex].text != txt && !searchingInTextBox)
                 {
-                    Chapter.chapters[MainPage.chapterList.listView.SelectedIndex].text = txt;
+                    Chapter.chapters[MainPage.ChapterList.listView.SelectedIndex].text = txt;
 
-                    MainPage.current.UpdateDownBar();
-                    Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, MainPage.chapterList.listView.SelectedItem as Chapter, 0);
+                    MainPage.Current.UpdateDownBar();
+                    Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, MainPage.ChapterList.listView.SelectedItem as Chapter, 0);
 
-                    if (MainPage.focusMode != null)
-                        MainPage.focusMode.TextChanged();
+                    if (MainPage.FocusMode != null)
+                        MainPage.FocusMode.TextChanged();
                 }
             }
         }
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
         {
-            if (MainPage.chapterList.listView.SelectedItem != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null)
             {
-                MainPage.current.UpdateDownBar();
+                MainPage.Current.UpdateDownBar();
 
                 CheckForFormatting();
             }
@@ -75,13 +75,13 @@ namespace Storylines.Components
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (MainPage.chapterList.listView.SelectedItem != null && dialoguesOn)
+            if (MainPage.ChapterList.listView.SelectedItem != null && dialoguesOn)
                 if (e.Key == VirtualKey.Enter)
                 {
                     PopulateFlyout();
 
                     Point position = CoreWindow.GetForCurrentThread().PointerPosition;
-                    textBoxDialogueNamesFlyout.ShowAt(MainPage.current, new Point(position.X, position.Y));
+                    textBoxDialogueNamesFlyout.ShowAt(MainPage.Current, new Point(position.X, position.Y));
                 }
         }
 
@@ -100,16 +100,16 @@ namespace Storylines.Components
         {
             if (whiteBackground)
             {
-                MainPage.chapterText.textBox.RequestedTheme = ElementTheme.Light;
-                MainPage.chapterText.textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
+                MainPage.ChapterText.textBox.RequestedTheme = ElementTheme.Light;
+                MainPage.ChapterText.textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
                 //(App.Current.Resources["MainTextBoxAcrylicBackground"] as AcrylicBrush).AlwaysUseFallback = true;
                 //(App.Current.Resources["MainTextBoxAcrylicBackgroundPointerOverAndFocused"] as AcrylicBrush).AlwaysUseFallback = true;
                 //(App.Current.Resources["MainTextBoxAcrylicBackgroundDisabled"] as AcrylicBrush).AlwaysUseFallback = true;
             }
             else
             {
-                MainPage.chapterText.textBox.RequestedTheme = MainPage.current.RequestedTheme;
-                MainPage.chapterText.textBoxScrollViewer.RequestedTheme = MainPage.current.RequestedTheme;
+                MainPage.ChapterText.textBox.RequestedTheme = MainPage.Current.RequestedTheme;
+                MainPage.ChapterText.textBoxScrollViewer.RequestedTheme = MainPage.Current.RequestedTheme;
                 //(App.Current.Resources["MainTextBoxAcrylicBackground"] as AcrylicBrush).AlwaysUseFallback = false;
                 //(App.Current.Resources["MainTextBoxAcrylicBackgroundPointerOverAndFocused"] as AcrylicBrush).AlwaysUseFallback = false;
                 //(App.Current.Resources["MainTextBoxAcrylicBackgroundDisabled"] as AcrylicBrush).AlwaysUseFallback = false;
@@ -298,7 +298,7 @@ namespace Storylines.Components
 
         public void DialoguesOnOff(bool enabled)
         {
-            MainPage.commandBar.dialoguesEnableButton.IsChecked = enabled;
+            MainPage.CommandBar.dialoguesEnableButton.IsChecked = enabled;
             dialoguesOn = enabled;
         }
 
@@ -337,7 +337,7 @@ namespace Storylines.Components
         #region Format
         public void CheckForFormatting()
         {
-            var format = MainPage.chapterText.textBox.Document.Selection.CharacterFormat;
+            var format = MainPage.ChapterText.textBox.Document.Selection.CharacterFormat;
 
             selectedTextIsBold = format.Bold != FormatEffect.Off;
             selectedTextIsItalic = format.Italic != FormatEffect.Off;
@@ -352,7 +352,7 @@ namespace Storylines.Components
 
         public void BoldChapterTextBox()
         {
-            if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterText.textBox.Document.Selection != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterText.textBox.Document.Selection != null)
             {
                 textBox.Document.Selection.CharacterFormat.Bold = selectedTextIsBold ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsBold = !selectedTextIsBold; 
@@ -363,9 +363,9 @@ namespace Storylines.Components
 
         public void ItalicChapterTextBox()
         {
-            if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterText.textBox.Document.Selection != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterText.textBox.Document.Selection != null)
             {
-                MainPage.chapterText.textBox.Document.Selection.CharacterFormat.Italic = selectedTextIsItalic ? FormatEffect.Off : FormatEffect.On;
+                MainPage.ChapterText.textBox.Document.Selection.CharacterFormat.Italic = selectedTextIsItalic ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsItalic = !selectedTextIsItalic;
                 
                 italicTextButton.IsChecked = selectedTextIsItalic;
@@ -374,9 +374,9 @@ namespace Storylines.Components
 
         public void UnderlineChapterTextBox()
         {
-            if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterText.textBox.Document.Selection != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterText.textBox.Document.Selection != null)
             {
-                MainPage.chapterText.textBox.Document.Selection.CharacterFormat.Underline = selectedTextIsUnderlined ? UnderlineType.None : UnderlineType.Thin;
+                MainPage.ChapterText.textBox.Document.Selection.CharacterFormat.Underline = selectedTextIsUnderlined ? UnderlineType.None : UnderlineType.Thin;
                 selectedTextIsUnderlined = !selectedTextIsUnderlined;
 
                 underlineTextButton.IsChecked = selectedTextIsUnderlined;
@@ -385,9 +385,9 @@ namespace Storylines.Components
 
         public void StrikethroughChapterTextBox()
         {
-            if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterText.textBox.Document.Selection != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterText.textBox.Document.Selection != null)
             {
-                MainPage.chapterText.textBox.Document.Selection.CharacterFormat.Strikethrough = selectedTextIsStriked ? FormatEffect.Off : FormatEffect.On;
+                MainPage.ChapterText.textBox.Document.Selection.CharacterFormat.Strikethrough = selectedTextIsStriked ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsStriked = !selectedTextIsStriked;
 
                 strikethroughButton.IsChecked = selectedTextIsStriked;
@@ -400,8 +400,8 @@ namespace Storylines.Components
             {
                 highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.selectedTool));
 
-                if (MainPage.chapterText.textBox.Document.Selection != null && MainPage.chapterList.listView.SelectedItem != null)
-                    MainPage.chapterText.textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.selectedTool);
+                if (MainPage.ChapterText.textBox.Document.Selection != null && MainPage.ChapterList.listView.SelectedItem != null)
+                    MainPage.ChapterText.textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.selectedTool);
             }
         }
 
@@ -485,12 +485,12 @@ namespace Storylines.Components
             {
                 int localScrollValue = e.GetCurrentPoint((UIElement)sender).Properties.MouseWheelDelta / 24;
 
-                int scrollValue = (int)(double)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? MainPage.current.textBoxZoomSlider.Value);
+                int scrollValue = (int)(double)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? MainPage.Current.textBoxZoomSlider.Value);
 
                 if (scrollValue + localScrollValue >= 5 && scrollValue + localScrollValue <= 100)
                 {
                     scrollValue += localScrollValue;
-                    MainPage.current.textBoxZoomSlider.Value = scrollValue;
+                    MainPage.Current.textBoxZoomSlider.Value = scrollValue;
                 }
             }
         }
@@ -500,10 +500,10 @@ namespace Storylines.Components
             if (Chapter.chapters.Count == 0)
             {
                 Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                MainPage.chapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
+                MainPage.ChapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
             }
 
-            if (MainPage.chapterList.listView.SelectedItem != null)
+            if (MainPage.ChapterList.listView.SelectedItem != null)
                 textBox.Document.Selection.SetRange(TextConstants.MaxUnitCount, TextConstants.MaxUnitCount);
         }
     }

@@ -36,8 +36,8 @@ namespace Storylines.Scripts.Functions
 
         public static void DisplayMainProgressBar(bool isIndeterminate)
         { 
-            MainPage.current.mainProgressBar.Visibility = Visibility.Visible;
-            MainPage.current.mainProgressBar.IsIndeterminate = isIndeterminate;
+            MainPage.Current.mainProgressBar.Visibility = Visibility.Visible;
+            MainPage.Current.mainProgressBar.IsIndeterminate = isIndeterminate;
 
             UpdateMainProgressBar(0, ProgressState.Normal);
         }
@@ -45,28 +45,28 @@ namespace Storylines.Scripts.Functions
         public enum ProgressState { Normal, Paused, Error };
         public static void UpdateMainProgressBar(int value, ProgressState state)
         {
-            MainPage.current.mainProgressBar.Value = value;
+            MainPage.Current.mainProgressBar.Value = value;
 
             switch (state)
             {
                 case ProgressState.Paused:
-                    MainPage.current.mainProgressBar.ShowPaused = true;
-                    MainPage.current.mainProgressBar.ShowError = false;
+                    MainPage.Current.mainProgressBar.ShowPaused = true;
+                    MainPage.Current.mainProgressBar.ShowError = false;
                     break;
                 case ProgressState.Error:
-                    MainPage.current.mainProgressBar.ShowPaused = false;
-                    MainPage.current.mainProgressBar.ShowError = true;
+                    MainPage.Current.mainProgressBar.ShowPaused = false;
+                    MainPage.Current.mainProgressBar.ShowError = true;
                     break;
                 default:
-                    MainPage.current.mainProgressBar.ShowPaused = false;
-                    MainPage.current.mainProgressBar.ShowError = false;
+                    MainPage.Current.mainProgressBar.ShowPaused = false;
+                    MainPage.Current.mainProgressBar.ShowError = false;
                     break;
             }
         }
 
         public static void HideMainProgressBar()
         {
-            MainPage.current.mainProgressBar.Visibility = Visibility.Collapsed;
+            MainPage.Current.mainProgressBar.Visibility = Visibility.Collapsed;
         }
 
         public static void DisplayNewUpdateAvailable()
@@ -178,7 +178,7 @@ namespace Storylines.Scripts.Functions
                 SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogDontSave"),
                 CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.current.RequestedTheme,
+                RequestedTheme = MainPage.Current.RequestedTheme,
                 //PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"]
             };
             AppView.currentlyOpenedDialogue = exitDialog;
@@ -215,12 +215,12 @@ namespace Storylines.Scripts.Functions
 
             ContentDialog leaveDialog = new ContentDialog
             {
-                Title = ResourceLoader.GetForCurrentView().GetString("focusModeLeaveDialogueTitle"),
-                Content = ResourceLoader.GetForCurrentView().GetString("focusModeLeaveDialogueDescription"),
-                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("focusModeLeaveDialogueStay"),
-                SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("focusModeLeaveDialogueLeave"),
+                Title = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueTitle"),
+                Content = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueDescription"),
+                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueStay"),
+                SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.current.RequestedTheme,
+                RequestedTheme = MainPage.Current.RequestedTheme,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
             leaveDialog.RequestedTheme = AppView.current.ActualTheme;
@@ -233,7 +233,7 @@ namespace Storylines.Scripts.Functions
                     leaveDialog.Hide();
                     break;
                 case ContentDialogResult.Secondary:
-                    MainPage.focusMode.Leave();
+                    MainPage.FocusMode.Leave();
                     break;
             }
             AppView.currentlyOpenedDialogue = null;
@@ -251,7 +251,7 @@ namespace Storylines.Scripts.Functions
                 SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("changesCharactersPageDialogueDontApplyChanges"),
                 CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.current.RequestedTheme,
+                RequestedTheme = MainPage.Current.RequestedTheme,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
             leaveDialog.RequestedTheme = AppView.current.ActualTheme;
@@ -285,7 +285,7 @@ namespace Storylines.Scripts.Functions
                 PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueAddNew"),
                 CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.current.RequestedTheme,
+                RequestedTheme = MainPage.Current.RequestedTheme,
             };
             AppView.currentlyOpenedDialogue = noCharactersDialog;
             noCharactersDialog.RequestedTheme = AppView.current.ActualTheme;

@@ -44,7 +44,7 @@ namespace Storylines.Components.DialogueWindows
             AppView.current.UpdateTitleBar();
 
             projectRenamer.Hide();
-            //_ = MainPage.chapterText.textBox.Focus(FocusState.Keyboard);
+            //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)

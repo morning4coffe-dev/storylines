@@ -40,7 +40,7 @@ namespace Storylines.Components.DialogueWindows
 
         public void DisplayStats()
         {
-            RichEditBox textBox = MainPage.chapterText.textBox;
+            RichEditBox textBox = MainPage.ChapterText.textBox;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
 
@@ -95,7 +95,7 @@ namespace Storylines.Components.DialogueWindows
 
         public static void UpdateDownBar()
         {
-            RichEditBox textBox = MainPage.chapterText.textBox;
+            RichEditBox textBox = MainPage.ChapterText.textBox;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
             _ = txt.Replace(" ", "");
@@ -106,7 +106,7 @@ namespace Storylines.Components.DialogueWindows
 
             string selectedLetters = textBox.Document.Selection.Text.Length != 0 ? $"{textBox.Document.Selection.Text.Length} / " : "";
 
-            MainPage.current.downBarText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedLetters}{txt.Length - 1}   {ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}   {ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";
+            MainPage.Current.downBarText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedLetters}{txt.Length - 1}   {ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}   {ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";
         }
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)

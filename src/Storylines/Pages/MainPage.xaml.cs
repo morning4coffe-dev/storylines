@@ -1,5 +1,5 @@
-﻿using Storylines.Components;
-using Storylines.Components.DialogueWindows;
+﻿using Storylines.Components.DialogueWindows;
+using Storylines.Components;
 using Storylines.Scripts.Modes;
 using Storylines.Scripts.Services;
 using System;
@@ -14,19 +14,19 @@ namespace Storylines.Pages
 {
     public sealed partial class MainPage : Page
     {
-        public static MainPage current { get; private set; }
+        public static MainPage Current { get; private set; }
 
-        public static ChaptersList chapterList;
-        public static MainCommandBar commandBar;
-        public static ChapterTextBox chapterText;
+        public static ChaptersList ChapterList;
+        public static MainCommandBar CommandBar;
+        public static ChapterTextBox ChapterText;
 
-        public static FocusMode focusMode;
-        public static ReadMode readMode;
+        public static FocusMode FocusMode;
+        public static ReadMode ReadMode;
 
         public MainPage()
         {
             InitializeComponent();
-            current = this;
+            Current = this;
 
             AppView.current.page = AppView.Pages.MainPage;
 
@@ -41,9 +41,9 @@ namespace Storylines.Pages
                 App.item = null;
             }
 
-            if (chapterList.listView.Items.Count > 0 && ChaptersList.selectedIndex <= chapterList.listView.Items.Count)
-                chapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
-            chapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+            if (ChapterList.listView.Items.Count > 0 && ChaptersList.selectedIndex <= ChapterList.listView.Items.Count)
+                ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
+            ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
 
             LoadTextBoxZoom();
 
@@ -53,34 +53,34 @@ namespace Storylines.Pages
 
         public void EnableOrDisableChapterTools(bool enable)
         {
-            chapterText.textBox.IsTabStop = enable;
-            chapterText.textBoxRectangle.IsHitTestVisible = !enable;
-            chapterText.textBox.IsHitTestVisible = enable;
+            ChapterText.textBox.IsTabStop = enable;
+            ChapterText.textBoxRectangle.IsHitTestVisible = !enable;
+            ChapterText.textBox.IsHitTestVisible = enable;
             textBoxZoomSlider.IsEnabled = enable;
             textBoxZoomTextHyperlink.IsEnabled = enable;
 
             if (enable)
             {
-                chapterText.textBoxRectangle.Visibility = Visibility.Collapsed;
+                ChapterText.textBoxRectangle.Visibility = Visibility.Collapsed;
                 UpdateDownBar();
             }
             else
             {
                 AppView.current.Focus(FocusState.Keyboard);
-                chapterText.textBoxRectangle.Visibility = Visibility.Visible;
+                ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
                 downBarText.Text = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
             }
         }
 
         public void EnableOrDisableToolsForStorylinesDocuments(bool enable)
         {
-            chapterList.canAdd = enable;
-            chapterList.listView.IsEnabled = enable;
+            ChapterList.canAdd = enable;
+            ChapterList.listView.IsEnabled = enable;
 
-            commandBar.exportButton.IsEnabled = enable;
-            commandBar.charactersButton.IsEnabled = enable;
+            CommandBar.exportButton.IsEnabled = enable;
+            CommandBar.charactersButton.IsEnabled = enable;
 
-            chapterText.chapterTextCommandBar.IsEnabled = enable;
+            ChapterText.chapterTextCommandBar.IsEnabled = enable;
         }
 
         private void OnPage_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -105,7 +105,7 @@ namespace Storylines.Pages
                 textBoxZoomSlider.Visibility = Visibility.Visible;
             }
 
-            if (focusMode == null)
+            if (FocusMode == null)
             {
                 storyInfoDetailed.Visibility = ActualWidth < 700 ? Visibility.Collapsed : Visibility.Visible;
                 storyInfo.Visibility = ActualWidth >= 700 ? Visibility.Collapsed : Visibility.Visible;
@@ -127,25 +127,25 @@ namespace Storylines.Pages
                 closeOpenChapterListComponentIcon.Symbol = Symbol.ClosePane;
                 addOrSubtract = chapterListComponentMainPage.ActualWidth;
 
-                if (!chapterList.closedManually)
-                    chapterList.closedManually = manually;
+                if (!ChapterList.closedManually)
+                    ChapterList.closedManually = manually;
             }
             else
             {
-                if (!chapterList.closedManually || manually)
+                if (!ChapterList.closedManually || manually)
                 {
-                   // chapterListComponentMainPage.Visibility = Visibility.Visible;
+                    // chapterListComponentMainPage.Visibility = Visibility.Visible;
                     chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
                     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                     mainGrid.ColumnDefinitions[1].MinWidth = 220;
                     closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
                     addOrSubtract = -chapterListComponentMainPage.ActualWidth;
 
-                    chapterList.closedManually = false;
+                    ChapterList.closedManually = false;
                 }
             }
 
-            chapterText.textBox.Width = (chapterText.textBoxScrollViewer.ActualWidth + addOrSubtract) * (1 / (textBoxZoomSlider.Value / 25));
+            ChapterText.textBox.Width = (ChapterText.textBoxScrollViewer.ActualWidth + addOrSubtract) * (1 / (textBoxZoomSlider.Value / 25));
         }
 
         #region DownBar
@@ -160,7 +160,7 @@ namespace Storylines.Pages
         #region Zoom
         private void OnTextBoxZoomSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (chapterList.listView.SelectedItem != null)
+            if (ChapterList.listView.SelectedItem != null)
             {
                 UpdateTextBoxZoom(textBoxZoomSlider.Value);
                 ApplicationData.Current.LocalSettings.Values["TextBoxZoomValue"] = textBoxZoomSlider.Value;
@@ -170,16 +170,16 @@ namespace Storylines.Pages
         public void UpdateTextBoxZoom(double sliderValue)
         {
             double sliderOne = sliderValue / 25;
-            _ = chapterText.textBoxScrollViewer.ChangeView(null, null, (float)sliderOne);
+            _ = ChapterText.textBoxScrollViewer.ChangeView(null, null, (float)sliderOne);
 
-            chapterText.textBox.Width = chapterText.textBoxScrollViewer.ActualWidth * (1 / sliderOne);
+            ChapterText.textBox.Width = ChapterText.textBoxScrollViewer.ActualWidth * (1 / sliderOne);
             textBoxZoomText.Text = $"{Math.Round(sliderOne * 100)}%";
         }
 
         public void LoadTextBoxZoom()
         {
             textBoxZoomSlider.Value = Convert.ToInt32(ApplicationData.Current.LocalSettings.Values["TextBoxZoomValue"] ?? 25);
-            current.UpdateTextBoxZoom(textBoxZoomSlider.Value);
+            Current.UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
         private void OnTextBoxZoomText_Click(object sender, RoutedEventArgs e)

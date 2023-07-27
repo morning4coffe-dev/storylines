@@ -371,24 +371,24 @@ Did you want to exit without saving your progress?</source>
           <source>Find one</source>
           <target state="new">Find one</target>
         </trans-unit>
-        <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusMode.Label" translate="yes" xml:space="preserve">
           <source>Focus Mode</source>
           <target state="needs-review-translation">聚焦模式</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
           <target state="needs-review-translation">在最后一章时，按下 Ctrl+Page down 是否添加新一章？</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
           <source>Leave</source>
           <target state="needs-review-translation">离开</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
           <source>Stay and finish</source>
           <target state="needs-review-translation">停下来完成</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
           <source>Leaving so soon?</source>
           <target state="needs-review-translation">这么快就走了？</target>
         </trans-unit>
@@ -634,7 +634,7 @@ the "Add new character" button.</source>
           <source>Volume</source>
           <target state="translated">音量</target>
         </trans-unit>
-        <trans-unit id="readMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="ReadMode.Label" translate="yes" xml:space="preserve">
           <source>Read mode</source>
           <target state="new">Read mode</target>
         </trans-unit>

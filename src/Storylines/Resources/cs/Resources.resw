@@ -72,13 +72,13 @@
   <data name="edit.Label" xml:space="preserve">
     <value>Upravit</value>
   </data>
-  <data name="focusMode.Label" xml:space="preserve">
+  <data name="FocusMode.Label" xml:space="preserve">
     <value>Režim soustředění</value>
   </data>
   <data name="loadSaveSystemErrorText" xml:space="preserve">
     <value>Narazili jsme na problém, projekt nemohl být načten.</value>
   </data>
-  <data name="readMode.Label" xml:space="preserve">
+  <data name="ReadMode.Label" xml:space="preserve">
     <value>Režim čtení</value>
   </data>
   <data name="saveSaveSystemErrorText" xml:space="preserve">
@@ -463,16 +463,16 @@ Opravdu chcete odejít bez uložení své práce?</value>
   <data name="done" xml:space="preserve">
     <value>Hotovo</value>
   </data>
-  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
     <value>Nastavený cíl zatím nebyl splněn, vážně již chcete odejít?</value>
   </data>
-  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>Odejít</value>
   </data>
-  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
     <value>Zůstat a dokončit</value>
   </data>
-  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
     <value>Nějak brzy, ne?</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">

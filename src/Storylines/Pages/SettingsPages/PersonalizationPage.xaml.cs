@@ -38,7 +38,7 @@ namespace Storylines.Pages.SettingsPages
         {
             if (!loading)
             {
-                MainPage.chapterList.switchedChapters = Scripts.Functions.TimeTravelSystem.unSavedProgress != true;
+                MainPage.ChapterList.switchedChapters = Scripts.Functions.TimeTravelSystem.unSavedProgress != true;
                 ThemeSettings.ChangeTheme(themeComboBox.SelectedIndex, ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
                 //SettingsPage.settings.SwitchPage("Personalize");
             }
@@ -49,7 +49,7 @@ namespace Storylines.Pages.SettingsPages
             if (!loading)
             {
                 var csa = (SettingsValues.SelectedAccent)accentComboBox.SelectedIndex;
-                _ = MainPage.current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+                _ = MainPage.Current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
                 {
                     customAccentPicker.IsEnabled = csa == SettingsValues.SelectedAccent.Custom;
                 });

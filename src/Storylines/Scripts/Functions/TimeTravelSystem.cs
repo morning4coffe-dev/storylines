@@ -34,7 +34,7 @@ namespace Storylines.Scripts.Functions
 
         public static void SomethingChanged(Changed whatChanged, Chapter chapter, int lastPosition)
         {
-            if (!TimeTravelSystem.timeTravelling && !MainPage.chapterList.switchedChapters)
+            if (!TimeTravelSystem.timeTravelling && !MainPage.ChapterList.switchedChapters)
             {
                 TimeTravelSystem.SomethingChanged();
                 TimeTravelChapter tt = new TimeTravelChapter();
@@ -56,7 +56,7 @@ namespace Storylines.Scripts.Functions
                 tt.chapter.SetToken(chapter.token);
 
                 tt.changed = whatChanged;
-                tt.id = MainPage.chapterList.listView.Items.IndexOf(chapter);
+                tt.id = MainPage.ChapterList.listView.Items.IndexOf(chapter);
                 tt.lastPosition = lastPosition;
 
                 if(whatChanged == Changed.Text)
@@ -68,7 +68,7 @@ namespace Storylines.Scripts.Functions
             }
 
             TimeTravelSystem.timeTravelling = false;
-            MainPage.chapterList.switchedChapters = false;
+            MainPage.ChapterList.switchedChapters = false;
         }
 
         public static void Undo()
@@ -116,11 +116,11 @@ namespace Storylines.Scripts.Functions
                     break;
 
                     case Changed.Text:
-                        MainPage.chapterList.listView.SelectedIndex = ttId;
+                        MainPage.ChapterList.listView.SelectedIndex = ttId;
                     if (!isRedo)
-                        MainPage.chapterText.textBox.Document.Undo();
+                        MainPage.ChapterText.textBox.Document.Undo();
                     else
-                        MainPage.chapterText.textBox.Document.Redo();
+                        MainPage.ChapterText.textBox.Document.Redo();
                     break;
 
                 case Changed.Reordered:
@@ -143,9 +143,9 @@ namespace Storylines.Scripts.Functions
 
         private static void CheckForUndoOrRedoEmpty()
         {
-            MainPage.commandBar.undoButton.IsEnabled = undoQueue.items.Count > 0;
+            MainPage.CommandBar.undoButton.IsEnabled = undoQueue.items.Count > 0;
 
-            MainPage.commandBar.redoButton.IsEnabled = redoQueue.items.Count > 0;
+            MainPage.CommandBar.redoButton.IsEnabled = redoQueue.items.Count > 0;
         }
 
         private static void TryGroupingUndoQueue()

@@ -14,7 +14,7 @@ namespace Storylines.Scripts.Modes
     public class FocusMode
     {
         private Visibility chaptersViewEnabled;
-        private CommandBar commandBar;
+        private CommandBar CommandBar;
         private Grid commandBarGrid;
 
         private ApplicationView view = ApplicationView.GetForCurrentView();
@@ -41,24 +41,24 @@ namespace Storylines.Scripts.Modes
         #region Switch
         public static void Switch(bool fullScreen, TimeSpan time, int measureValue, ToMeasure toMeasure)
         {
-            MainPage.focusMode = new FocusMode();
+            MainPage.FocusMode = new FocusMode();
 
-            MainPage.focusMode.PrivateSwitch(fullScreen, time, measureValue, toMeasure);
+            MainPage.FocusMode.PrivateSwitch(fullScreen, time, measureValue, toMeasure);
         }
 
         private void PrivateSwitch(bool fullScreen, TimeSpan time, int measureValue, ToMeasure toMeasure)
         {
-            MainPage.current.OpenOrCloseChapterList(false, true);
+            MainPage.Current.OpenOrCloseChapterList(false, true);
 
             NewCommandBar();
 
-            chaptersViewEnabled = MainPage.chapterList.Visibility;
+            chaptersViewEnabled = MainPage.ChapterList.Visibility;
 
-            MainPage.current.storyInfo.Visibility = Visibility.Visible;
-            MainPage.current.storyInfoDetailed.Visibility = Visibility.Collapsed;
-            MainPage.current.downBarFocusText.Visibility = Visibility.Visible;
+            MainPage.Current.storyInfo.Visibility = Visibility.Visible;
+            MainPage.Current.storyInfoDetailed.Visibility = Visibility.Collapsed;
+            MainPage.Current.downBarFocusText.Visibility = Visibility.Visible;
 
-            MainPage.current.line.Visibility = Visibility.Collapsed;
+            MainPage.Current.line.Visibility = Visibility.Collapsed;
 
             AppView.current.BackButtonCheck();
 
@@ -92,8 +92,8 @@ namespace Storylines.Scripts.Modes
                 ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
             }
 
-            MainPage.focusMode.measureValue = measureValue;
-            MainPage.focusMode.toMeasure = toMeasure;
+            MainPage.FocusMode.measureValue = measureValue;
+            MainPage.FocusMode.toMeasure = toMeasure;
 
             if (measureValue > 0)
                 switch (toMeasure)
@@ -121,53 +121,53 @@ namespace Storylines.Scripts.Modes
         {
             commandBarGrid = ModesShared.NewCommandBarBackground();
 
-            MainPage.current.mainGrid.Children.Add(commandBarGrid);
+            MainPage.Current.mainGrid.Children.Add(commandBarGrid);
             Grid.SetColumnSpan(commandBarGrid, 2);
 
             MainCommandBar mainCommandBarInstance = new MainCommandBar();
-            commandBar = ModesShared.NewCommandBar();
+            CommandBar = ModesShared.NewCommandBar();
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.undoButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.undoButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.undoButton);
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.redoButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.redoButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.redoButton);
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.saveButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.saveButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.saveButton);
 
             mainCommandBarInstance.saveButton.IsEnabled = true;
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.autosaveToggleButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.autosaveToggleButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.autosaveToggleButton);
 
-            commandBar.PrimaryCommands.Add(new AppBarSeparator());
+            CommandBar.PrimaryCommands.Add(new AppBarSeparator());
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesEnableButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
 
             mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Character.characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesAddButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
 
             mainCommandBarInstance.dialoguesAddButton.IsEnabled = Character.characters.Count > 0;
 
-            _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(MainPage.commandBar.dictationButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.dictationButton);
+            _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(MainPage.CommandBar.dictationButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dictationButton);
 
-            commandBar.PrimaryCommands.Add(new AppBarSeparator());
+            CommandBar.PrimaryCommands.Add(new AppBarSeparator());
 
             _ = mainCommandBarInstance.commandBarHelp.PrimaryCommands.Remove(mainCommandBarInstance.readAloudButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudButton);
 
             _ = mainCommandBarInstance.commandBarHelp.PrimaryCommands.Remove(mainCommandBarInstance.readAloudControllHolder);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudControllHolder);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudControllHolder);
 
-            MainPage.current.mainGrid.Children.Remove(MainPage.commandBar);
+            MainPage.Current.mainGrid.Children.Remove(MainPage.CommandBar);
 
-            MainPage.current.mainGrid.Children.Add(commandBar);
-            Grid.SetColumnSpan(commandBar, 2);
+            MainPage.Current.mainGrid.Children.Add(CommandBar);
+            Grid.SetColumnSpan(CommandBar, 2);
         }
         #endregion
 
@@ -187,13 +187,13 @@ namespace Storylines.Scripts.Modes
                 downBarTime = ResourceLoader.GetForCurrentView().GetString("done");
             }
 
-            MainPage.current.downBarFocusText.Text = $"{downBarMeasure}   {downBarTime}";
+            MainPage.Current.downBarFocusText.Text = $"{downBarMeasure}   {downBarTime}";
         }
 
         private int dbm;
         public void TextChanged()
         {
-            if (MainPage.focusMode.measureValue > 0)
+            if (MainPage.FocusMode.measureValue > 0)
             {
                 switch (toMeasure)
                 {
@@ -219,7 +219,7 @@ namespace Storylines.Scripts.Modes
                     Finalized(timeFinal, false);
 
                 MeasureValuesChanged(timerTime.Ticks, dbm);
-                MainPage.current.downBarFocusText.Text = $"{downBarMeasure}   {downBarTime}";
+                MainPage.Current.downBarFocusText.Text = $"{downBarMeasure}   {downBarTime}";
             }
         }
 
@@ -255,26 +255,26 @@ namespace Storylines.Scripts.Modes
         #region Leave
         public void Leave()
         {
-            if (MainPage.focusMode.timer != null)
-                MainPage.focusMode.timer.Stop();
+            if (MainPage.FocusMode.timer != null)
+                MainPage.FocusMode.timer.Stop();
 
-            MainPage.chapterList.listView.Visibility = chaptersViewEnabled;
+            MainPage.ChapterList.listView.Visibility = chaptersViewEnabled;
 
-            MainPage.current.mainGrid.Children.Remove(commandBarGrid);
+            MainPage.Current.mainGrid.Children.Remove(commandBarGrid);
 
-            MainPage.current.mainGrid.Children.Remove(MainPage.focusMode.commandBar);
-            MainPage.current.mainGrid.Children.Add(MainPage.commandBar);
-            Grid.SetColumnSpan(MainPage.commandBar, 2);
+            MainPage.Current.mainGrid.Children.Remove(MainPage.FocusMode.CommandBar);
+            MainPage.Current.mainGrid.Children.Add(MainPage.CommandBar);
+            Grid.SetColumnSpan(MainPage.CommandBar, 2);
 
-            MainPage.current.line.Visibility = Visibility.Visible;
+            MainPage.Current.line.Visibility = Visibility.Visible;
 
-            MainPage.chapterText.gridHolder.RowDefinitions.Insert(0, new RowDefinition() { Height = new GridLength(48, GridUnitType.Pixel) });
-            MainPage.chapterText.gridHolder.RowDefinitions.Insert(1, new RowDefinition() { Height = new GridLength(4.5, GridUnitType.Pixel) });
-            MainPage.chapterText.gridCommandBarHolder.Visibility = Visibility.Visible;
+            MainPage.ChapterText.gridHolder.RowDefinitions.Insert(0, new RowDefinition() { Height = new GridLength(48, GridUnitType.Pixel) });
+            MainPage.ChapterText.gridHolder.RowDefinitions.Insert(1, new RowDefinition() { Height = new GridLength(4.5, GridUnitType.Pixel) });
+            MainPage.ChapterText.gridCommandBarHolder.Visibility = Visibility.Visible;
 
-            MainPage.current.storyInfo.Visibility = Visibility.Collapsed;
-            MainPage.current.storyInfoDetailed.Visibility = Visibility.Visible;
-            MainPage.current.downBarFocusText.Visibility = Visibility.Collapsed;
+            MainPage.Current.storyInfo.Visibility = Visibility.Collapsed;
+            MainPage.Current.storyInfoDetailed.Visibility = Visibility.Visible;
+            MainPage.Current.downBarFocusText.Visibility = Visibility.Collapsed;
 
             if (fullScreen)
             {
@@ -284,7 +284,7 @@ namespace Storylines.Scripts.Modes
 
             NotificationManager.HideMainProgressBar();
 
-            MainPage.focusMode = null;
+            MainPage.FocusMode = null;
 
             AppView.current.BackButtonCheck();
         }

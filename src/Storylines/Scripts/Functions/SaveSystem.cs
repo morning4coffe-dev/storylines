@@ -41,13 +41,13 @@ namespace Storylines.Components
                 if (currentProject.file.FileType == ".srl")
                 {
                      WriteToFile(GetSaveValues());
-                    MainPage.current.EnableOrDisableToolsForStorylinesDocuments(true);
+                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
                 }
                 else
                 if (currentProject.file.FileType == ".txt")
                 {
-                    MainPage.chapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
-                    MainPage.current.EnableOrDisableToolsForStorylinesDocuments(false);
+                    MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
+                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
                     WriteToFile(txt);
                 }
 
@@ -83,7 +83,7 @@ namespace Storylines.Components
         {
             savedValues.Clear();
             savedValues.Add("version", $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}");
-            savedValues.Add("lastOpenedChapter", $"{MainPage.chapterList.listView.SelectedIndex}");
+            savedValues.Add("lastOpenedChapter", $"{MainPage.ChapterList.listView.SelectedIndex}");
             savedValues.Add("name", currentProject.projectName);
 
             for (int i = 0; i < Character.characters.Count; i++)
@@ -267,7 +267,7 @@ namespace Storylines.Components
                 LoadVariables();
 
                 Loaded();
-                MainPage.current.EnableOrDisableToolsForStorylinesDocuments(true);
+                MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
                 //Windows.Security.Cryptography.CryptographicBuffer.ConvertBinaryToString
             }
             catch
@@ -288,13 +288,13 @@ namespace Storylines.Components
                 string txt = await FileIO.ReadTextAsync(file);
 
                 Chapter.AddExisting(file.DisplayName, Guid.NewGuid().ToString(), txt);
-                MainPage.chapterList.listView.SelectedIndex = 0;
+                MainPage.ChapterList.listView.SelectedIndex = 0;
 
                 //saveFile = file;
 
                 //loadedProjectName = file.Name;
                 Loaded();
-                MainPage.current.EnableOrDisableToolsForStorylinesDocuments(false);
+                MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
             }
             catch
             {
@@ -306,7 +306,7 @@ namespace Storylines.Components
         private static void LoadVariables()
         {
             ChaptersList.selectedIndex = Convert.ToInt32(savedValues["lastOpenedChapter"] ?? "0");
-            MainPage.chapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
+            MainPage.ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
         }
 
         private static void Loaded()

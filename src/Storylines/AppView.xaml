@@ -1,139 +1,295 @@
-﻿<Page
-    x:Class="Storylines.AppView"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    mc:Ignorable="d"
-    muxc:BackdropMaterial.ApplyToRootOrPageBackground="True" Background="{ThemeResource AppAcrylicBackground}" KeyDown="OnShortCut_Pressed">
+﻿<Page x:Class="Storylines.AppView"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      mc:Ignorable="d"
+      muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
+      Background="{ThemeResource AppAcrylicBackground}"
+      KeyDown="OnShortCut_Pressed">
 
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="48"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="48" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="4,0" VerticalAlignment="Center" Background="Transparent">
+        <Grid Margin="4,0"
+              VerticalAlignment="Center"
+              Background="Transparent">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto"/>
-                <ColumnDefinition/>
+                <ColumnDefinition Width="auto" />
+                <ColumnDefinition />
             </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="backButton" x:FieldModifier="public" Icon="Back" Width="48" Height="48" Foreground="{ThemeResource AppTitleColor}" Margin="0,0,-6,0" Click="OnBackButton_Click"/>
+            <AppBarButton x:Name="backButton"
+                          x:FieldModifier="public"
+                          Icon="Back"
+                          Width="48"
+                          Height="48"
+                          Foreground="{ThemeResource AppTitleColor}"
+                          Margin="0,0,-6,0"
+                          Click="OnBackButton_Click" />
 
-            <StackPanel VerticalAlignment="Center" Grid.Column="1" Orientation="Horizontal" Margin="8,0,0,0" Spacing="10">
-                 <Image HorizontalAlignment="Left" VerticalAlignment="Center" Source="Assets/Square44x44Logo.png" Width="24" Height="24" Visibility="Visible"/>
-                <TextBlock x:Name="appHeader" FontSize="12.5" Foreground="{ThemeResource AppTitleColor}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}" />
-                <TextBlock x:Name="appHeaderSave" Visibility="Collapsed" FontSize="12.5" Opacity=".75" Margin="-5,0,0,0" Foreground="{ThemeResource AppTitleColor}" VerticalAlignment="Center" Style="{StaticResource CaptionTextBlockStyle}">
+            <StackPanel VerticalAlignment="Center"
+                        Grid.Column="1"
+                        Orientation="Horizontal"
+                        Margin="8,0,0,0"
+                        Spacing="10">
+                <Image HorizontalAlignment="Left"
+                       VerticalAlignment="Center"
+                       Source="Assets/Square44x44Logo.png"
+                       Width="24"
+                       Height="24"
+                       Visibility="Visible" />
+                <TextBlock x:Name="appHeader"
+                           FontSize="12.5"
+                           Foreground="{ThemeResource AppTitleColor}"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource CaptionTextBlockStyle}" />
+                <TextBlock x:Name="appHeaderSave"
+                           Visibility="Collapsed"
+                           FontSize="12.5"
+                           Opacity=".75"
+                           Margin="-5,0,0,0"
+                           Foreground="{ThemeResource AppTitleColor}"
+                           VerticalAlignment="Center"
+                           Style="{StaticResource CaptionTextBlockStyle}">
                      <animations:Implicit.ShowAnimations>
-                        <animations:TranslationAnimation Duration="0:0:0.2" From="0, 8, 0" To="0" EasingMode="EaseOut" EasingType="Back"/>
-                        <animations:OpacityAnimation Duration="0:0:0.121" From="0" To="1.0"/>
+                        <animations:TranslationAnimation Duration="0:0:0.2"
+                                                         From="0, 8, 0"
+                                                         To="0"
+                                                         EasingMode="EaseOut"
+                                                         EasingType="Back" />
+                        <animations:OpacityAnimation Duration="0:0:0.121"
+                                                     From="0"
+                                                     To="1.0" />
                     </animations:Implicit.ShowAnimations>
                 </TextBlock>
-            </StackPanel> 
-            <Grid x:Name="appTitleBar" x:FieldModifier="public" IsHitTestVisible="True" Height="48" HorizontalAlignment="Stretch" Background="Transparent" Grid.Column="1"/>
+            </StackPanel>
+            <Grid x:Name="appTitleBar"
+                  x:FieldModifier="public"
+                  IsHitTestVisible="True"
+                  Height="48"
+                  HorizontalAlignment="Stretch"
+                  Background="Transparent"
+                  Grid.Column="1" />
         </Grid>
 
-        <Grid x:Name="mainGrid" Grid.Row="1" x:FieldModifier="public">
-            <Frame x:Name="pagesView" x:FieldModifier="public"/>
+        <Grid x:Name="mainGrid"
+              Grid.Row="1"
+              x:FieldModifier="public">
+            <Frame x:Name="pagesView"
+                   x:FieldModifier="public" />
         </Grid>
 
         <!--<controls:DropShadowPanel Visibility="{x:Bind updateAvailableInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="600" Margin="0, 80">-->
-        <muxc:InfoBar x:Name="updateAvailableInfoBar" x:FieldModifier="public" x:Uid="updateAvailableTitle" IsOpen="False" Visibility="Collapsed" Severity="Informational" Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="400" Margin="0, 80" Closed="OnUpdateAvailableInfoBar_Closed">
+        <muxc:InfoBar x:Name="updateAvailableInfoBar"
+                      x:FieldModifier="public"
+                      x:Uid="updateAvailableTitle"
+                      IsOpen="False"
+                      Visibility="Collapsed"
+                      Severity="Informational"
+                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
+                      BorderBrush="{ThemeResource ElementBorderColor}"
+                      BorderThickness="{ThemeResource ElementBorderThickness}"
+                      Grid.Row="1"
+                      VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center"
+                      Width="400"
+                      Margin="0, 80"
+                      Closed="OnUpdateAvailableInfoBar_Closed">
             <muxc:InfoBar.Content>
-                <RichTextBlock IsTextSelectionEnabled="False" Margin="0,-6,0,0">
+                <RichTextBlock IsTextSelectionEnabled="False"
+                               Margin="0,-6,0,0">
                     <Paragraph>
-                        <Run x:Uid="newUpdateAvailable"/>
+                        <Run x:Uid="newUpdateAvailable" />
                         <Hyperlink NavigateUri="ms-windows-store://pdp/?productid=9PN77P9WJ3CX">
-                            <Run x:Uid="clickHereText"/>
+                            <Run x:Uid="clickHereText" />
                         </Hyperlink>
-                        <Run x:Uid="newUpdateAvailable2"/>
-                        <LineBreak/>
+                        <Run x:Uid="newUpdateAvailable2" />
+                        <LineBreak />
                     </Paragraph>
                 </RichTextBlock>
             </muxc:InfoBar.Content>
             <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph=""/>
+                <muxc:FontIconSource Glyph="" />
             </muxc:InfoBar.IconSource>
-            
+
             <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0, 35, 0" To="0" EasingMode="EaseOut" EasingType="Back"/>
-                <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="0"
+                                             To="1.0" />
             </animations:Implicit.ShowAnimations>
             <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0" To="0, 35, 0"  EasingMode="EaseIn" EasingType="Back"/>
-                <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
             </animations:Implicit.HideAnimations>
         </muxc:InfoBar>
         <!--</controls:DropShadowPanel>-->
 
         <!--<controls:DropShadowPanel Visibility="{x:Bind reviewRequestInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80">-->
-        <muxc:InfoBar x:Name="reviewRequestInfoBar" x:FieldModifier="public" x:Uid="experience" IsOpen="False" Visibility="Collapsed" Severity="Informational" Width="420" Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80" CloseButtonClick="OnRateNotNow_CloseButtonClick">
-                <muxc:InfoBar.Content>
-                    <StackPanel Margin="0,-4,0,0">
+        <muxc:InfoBar x:Name="reviewRequestInfoBar"
+                      x:FieldModifier="public"
+                      x:Uid="experience"
+                      IsOpen="False"
+                      Visibility="Collapsed"
+                      Severity="Informational"
+                      Width="420"
+                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
+                      BorderBrush="{ThemeResource ElementBorderColor}"
+                      BorderThickness="{ThemeResource ElementBorderThickness}"
+                      Grid.Row="1"
+                      VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center"
+                      Margin="0, 80"
+                      CloseButtonClick="OnRateNotNow_CloseButtonClick">
+            <muxc:InfoBar.Content>
+                <StackPanel Margin="0,-4,0,0">
                     <RichTextBlock IsTextSelectionEnabled="False">
-                            <Paragraph>
-                                <Run x:Uid="reviewDialog"/>
-                                <LineBreak/>
-                            </Paragraph>
-                        </RichTextBlock>
+                        <Paragraph>
+                            <Run x:Uid="reviewDialog" />
+                            <LineBreak />
+                        </Paragraph>
+                    </RichTextBlock>
 
-                        <StackPanel Spacing="8" Margin="0,-4,0,20" Orientation="Horizontal">
-                            <Button  x:Uid="reviewDialogOption1" Click="OnRateNowButton_Click"/>
-                            <Button  x:Uid="reviewDialogOption2" Click="OnRateNotNow_Click"/>
-                            <Button  x:Uid="reviewDialogOption3" Click="OnRateNeverShowAgain_Click"/>
-                        </StackPanel>
+                    <StackPanel Spacing="8"
+                                Margin="0,-4,0,20"
+                                Orientation="Horizontal">
+                        <Button  x:Uid="reviewDialogOption1"
+                                 Click="OnRateNowButton_Click" />
+                        <Button  x:Uid="reviewDialogOption2"
+                                 Click="OnRateNotNow_Click" />
+                        <Button  x:Uid="reviewDialogOption3"
+                                 Click="OnRateNeverShowAgain_Click" />
                     </StackPanel>
-                </muxc:InfoBar.Content>
-                <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0, 35, 0" To="0" EasingMode="EaseOut" EasingType="Back"/>
-                    <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
-                </animations:Implicit.ShowAnimations>
-                <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0" To="0, 35, 0"  EasingMode="EaseIn" EasingType="Back"/>
-                    <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
-                </animations:Implicit.HideAnimations>
-                <muxc:InfoBar.IconSource>
-                    <muxc:FontIconSource Glyph=""/>
-                </muxc:InfoBar.IconSource>
-            </muxc:InfoBar>
+                </StackPanel>
+            </muxc:InfoBar.Content>
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="0"
+                                             To="1.0" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
+            </animations:Implicit.HideAnimations>
+            <muxc:InfoBar.IconSource>
+                <muxc:FontIconSource Glyph="" />
+            </muxc:InfoBar.IconSource>
+        </muxc:InfoBar>
         <!--</controls:DropShadowPanel>-->
 
-        <muxc:InfoBar x:Name="reviewRequestThankYouInfoBar" x:Uid="reviewRequestThankYou" x:FieldModifier="public" IsOpen="False" Visibility="Collapsed" Severity="Success" Grid.Row="1" VerticalAlignment="Bottom" Width="300" Margin="0, 80" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}">
+        <muxc:InfoBar x:Name="reviewRequestThankYouInfoBar"
+                      x:Uid="reviewRequestThankYou"
+                      x:FieldModifier="public"
+                      IsOpen="False"
+                      Visibility="Collapsed"
+                      Severity="Success"
+                      Grid.Row="1"
+                      VerticalAlignment="Bottom"
+                      Width="300"
+                      Margin="0, 80"
+                      BorderBrush="{ThemeResource ElementBorderColor}"
+                      BorderThickness="{ThemeResource ElementBorderThickness}"
+                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}">
             <muxc:InfoBar.IconSource>
                 <muxc:FontIconSource Glyph="" />
             </muxc:InfoBar.IconSource>
             <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0, 35, 0" To="0"  EasingMode="EaseOut" EasingType="Back"/>
-                <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="0"
+                                             To="1.0" />
             </animations:Implicit.ShowAnimations>
             <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0" To="0, 35, 0"  EasingMode="EaseIn" EasingType="Back"/>
-                <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
             </animations:Implicit.HideAnimations>
         </muxc:InfoBar>
 
         <!--<controls:DropShadowPanel Visibility="{x:Bind alertNotificationInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80">-->
-        <muxc:InfoBar x:Name="alertNotificationInfoBar" x:FieldModifier="public" IsOpen="False" Visibility="Collapsed" Severity="Error" Title="N/A" Width="400" Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80" CloseButtonClick="OnAlertNotificationInfoBar_CloseButtonClick">
-                <muxc:InfoBar.Content>
-                    <StackPanel Margin="0,-4,0,0" x:Name="alertNotificationInfoBarTextStack" x:FieldModifier="public">
-                        <RichTextBlock IsTextSelectionEnabled="False">
-                            <Paragraph>
-                                <Run x:Name="alertNotificationInfoBarText" x:FieldModifier="public">N/A</Run>
-                                <LineBreak/>
-                            </Paragraph>
-                        </RichTextBlock>
-                    </StackPanel>
-                </muxc:InfoBar.Content>
-                <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0, 35, 0" To="0"  EasingMode="EaseOut" EasingType="Back"/>
-                    <animations:OpacityAnimation Duration="0:0:0.5" From="0" To="1.0"/>
-                </animations:Implicit.ShowAnimations>
-                <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5" From="0" To="0, 35, 0"  EasingMode="EaseIn" EasingType="Back"/>
-                    <animations:OpacityAnimation Duration="0:0:0.5" From="1.0" To="0"/>
-                </animations:Implicit.HideAnimations>
-            </muxc:InfoBar>
+        <muxc:InfoBar x:Name="alertNotificationInfoBar"
+                      x:FieldModifier="public"
+                      IsOpen="False"
+                      Visibility="Collapsed"
+                      Severity="Error"
+                      Title="N/A"
+                      Width="400"
+                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
+                      BorderBrush="{ThemeResource ElementBorderColor}"
+                      BorderThickness="{ThemeResource ElementBorderThickness}"
+                      Grid.Row="1"
+                      VerticalAlignment="Bottom"
+                      HorizontalAlignment="Center"
+                      Margin="0, 80"
+                      CloseButtonClick="OnAlertNotificationInfoBar_CloseButtonClick">
+            <muxc:InfoBar.Content>
+                <StackPanel Margin="0,-4,0,0"
+                            x:Name="alertNotificationInfoBarTextStack"
+                            x:FieldModifier="public">
+                    <RichTextBlock IsTextSelectionEnabled="False">
+                        <Paragraph>
+                            <Run x:Name="alertNotificationInfoBarText"
+                                 x:FieldModifier="public">N/A</Run>
+                            <LineBreak />
+                        </Paragraph>
+                    </RichTextBlock>
+                </StackPanel>
+            </muxc:InfoBar.Content>
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="0"
+                                             To="1.0" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
+            </animations:Implicit.HideAnimations>
+        </muxc:InfoBar>
         <!--</controls:DropShadowPanel>-->
     </Grid>
 </Page>

@@ -23,9 +23,9 @@ namespace Storylines.Scripts.Modes
             Grid g = new Grid()
             {
                 RequestedTheme = AppView.current.RequestedTheme,
-                Background = MainPage.commandBar.navigationGrid.Background,
-                BorderBrush = MainPage.commandBar.navigationGrid.BorderBrush,
-                BorderThickness = MainPage.commandBar.navigationGrid.BorderThickness,
+                Background = MainPage.CommandBar.navigationGrid.Background,
+                BorderBrush = MainPage.CommandBar.navigationGrid.BorderBrush,
+                BorderThickness = MainPage.CommandBar.navigationGrid.BorderThickness,
                 HorizontalAlignment = HorizontalAlignment.Stretch,
                 CornerRadius = new CornerRadius(8),
                 Margin = new Thickness(8, 0, 8, 0),
@@ -36,9 +36,9 @@ namespace Storylines.Scripts.Modes
 
         public static void RemoveChapterTextCommandBar()
         {
-            MainPage.chapterText.gridHolder.RowDefinitions.RemoveAt(0);
-            MainPage.chapterText.gridHolder.RowDefinitions.RemoveAt(0);
-            MainPage.chapterText.gridCommandBarHolder.Visibility = Visibility.Collapsed;
+            MainPage.ChapterText.gridHolder.RowDefinitions.RemoveAt(0);
+            MainPage.ChapterText.gridHolder.RowDefinitions.RemoveAt(0);
+            MainPage.ChapterText.gridCommandBarHolder.Visibility = Visibility.Collapsed;
         }
     }
 }

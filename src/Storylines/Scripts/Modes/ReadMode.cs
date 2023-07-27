@@ -8,24 +8,24 @@ namespace Storylines.Scripts.Modes
 {
     public class ReadMode
     {
-        private CommandBar commandBar;
+        private CommandBar CommandBar;
 
         public RichTextBlock txtBox;
 
         public static void Switch()
         {
-            MainPage.readMode = new ReadMode();
+            MainPage.ReadMode = new ReadMode();
 
-            MainPage.readMode.PrivateSwitch();
+            MainPage.ReadMode.PrivateSwitch();
         }
 
         private void PrivateSwitch()
         {
-            MainPage.chapterText.Visibility = Visibility.Collapsed;
+            MainPage.ChapterText.Visibility = Visibility.Collapsed;
 
-            MainPage.current.OpenOrCloseChapterList(false, true);
+            MainPage.Current.OpenOrCloseChapterList(false, true);
             //if edit is disabled
-            MainPage.chapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out var txt);
+            MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out var txt);
             txtBox = new RichTextBlock()
             {
                 Margin = new Thickness(40),
@@ -37,28 +37,28 @@ namespace Storylines.Scripts.Modes
             paragraph.Inlines.Add(run);
             txtBox.Blocks.Add(paragraph);
 
-            MainPage.current.mainGrid.Children.Add(txtBox);
+            MainPage.Current.mainGrid.Children.Add(txtBox);
             Grid.SetRow(txtBox, 1);
 
             MainCommandBar mainCommandBarInstance = new MainCommandBar();
-            commandBar = ModesShared.NewCommandBar();
+            CommandBar = ModesShared.NewCommandBar();
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.undoButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.undoButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.undoButton);
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.redoButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.redoButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.redoButton);
 
             _ = mainCommandBarInstance.commandBarFile.PrimaryCommands.Remove(mainCommandBarInstance.saveButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.saveButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.saveButton);
 
-            commandBar.PrimaryCommands.Add(new AppBarSeparator());
+            CommandBar.PrimaryCommands.Add(new AppBarSeparator());
 
             _ = mainCommandBarInstance.commandBarHelp.PrimaryCommands.Remove(mainCommandBarInstance.readAloudButton);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudButton);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudButton);
 
             _ = mainCommandBarInstance.commandBarHelp.PrimaryCommands.Remove(mainCommandBarInstance.readAloudControllHolder);
-            commandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudControllHolder);
+            CommandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudControllHolder);
 
             ModesShared.RemoveChapterTextCommandBar();
 
@@ -67,10 +67,10 @@ namespace Storylines.Scripts.Modes
 
         public void Leave()
         {
-            MainPage.readMode = new ReadMode();
+            MainPage.ReadMode = new ReadMode();
 
-            MainPage.chapterText.Visibility = Visibility.Visible;
-            MainPage.current.mainGrid.Children.Remove(txtBox);
+            MainPage.ChapterText.Visibility = Visibility.Visible;
+            MainPage.Current.mainGrid.Children.Remove(txtBox);
         }
     }
 }

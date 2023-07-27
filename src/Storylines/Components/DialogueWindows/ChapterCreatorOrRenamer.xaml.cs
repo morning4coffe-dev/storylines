@@ -63,17 +63,17 @@ namespace Storylines.Components.DialogueWindows
             switch (currentTask)
             {
                 case Task.Create:
-                    var itemID = MainPage.chapterList.listView.Items.Count;
+                    var itemID = MainPage.ChapterList.listView.Items.Count;
                     Chapter.AddFromCreator(Chapter.chapters.Count + 1, chapterNameBox.Text);
-                    MainPage.chapterList.CheckForEmptyList();
-                    MainPage.chapterList.listView.SelectedIndex = itemID;
+                    MainPage.ChapterList.CheckForEmptyList();
+                    MainPage.ChapterList.listView.SelectedIndex = itemID;
                     break;
                 case Task.Rename:
                     Chapter.Rename(chapterToRename.token, chapterNameBox.Text);
                     break;
             }
             chapterCreator.Hide();
-            //_ = MainPage.chapterText.textBox.Focus(FocusState.Keyboard);
+            //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)

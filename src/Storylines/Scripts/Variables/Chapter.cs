@@ -34,17 +34,17 @@ namespace Storylines.Scripts.Variables
         //{
         //    get 
         //    {              
-        //        MainPage.chapterList.CheckForEmptyList();
+        //        MainPage.ChapterList.CheckForEmptyList();
         //        return _chapters;
         //    }
         //    set 
         //    {
         //        _chapters = value;
-        //        MainPage.chapterList.CheckForEmptyList();
+        //        MainPage.ChapterList.CheckForEmptyList();
         //    }
         //}
 
-        private static readonly Components.ChaptersList chapterList = MainPage.chapterList;
+        private static readonly Components.ChaptersList ChapterList = MainPage.ChapterList;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -89,7 +89,7 @@ namespace Storylines.Scripts.Variables
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Name, chapters[i], 0);
 
                     chapters[i].name = newName;
-                    (chapterList.listView.Items[i] as Chapter).name = newName;
+                    (ChapterList.listView.Items[i] as Chapter).name = newName;
                 }
             }
         }

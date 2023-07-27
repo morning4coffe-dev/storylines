@@ -392,24 +392,24 @@ Volevi uscire senza salvare i tuoi progressi?</target>
           <source>Find one</source>
           <target state="needs-review-translation">Trova</target>
         </trans-unit>
-        <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusMode.Label" translate="yes" xml:space="preserve">
           <source>Focus Mode</source>
           <target state="needs-review-translation">Modalità concentrazione</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
           <target state="needs-review-translation">Non hai completato l'obiettivo preimpostato. Sei sicuro di voler uscire?</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
           <source>Leave</source>
           <target state="needs-review-translation">Lascia</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
           <source>Stay and finish</source>
           <target state="needs-review-translation">Rimanere e finire</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
           <source>Leaving so soon?</source>
           <target state="needs-review-translation">Uscire così presto?</target>
         </trans-unit>
@@ -655,7 +655,7 @@ il pulsante "Aggiungi nuovo personaggio".</target>
           <source>Volume</source>
           <target state="translated">Volume</target>
         </trans-unit>
-        <trans-unit id="readMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="ReadMode.Label" translate="yes" xml:space="preserve">
           <source>Read mode</source>
           <target state="translated">Modalità lettura</target>
         </trans-unit>

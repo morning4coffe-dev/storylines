@@ -128,7 +128,7 @@ namespace Storylines.Scripts.Services
             }
             try
             {
-                MainPage.chapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+                MainPage.ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
             }
             catch { }
 

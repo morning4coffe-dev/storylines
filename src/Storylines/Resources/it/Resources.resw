@@ -301,19 +301,19 @@ Volevi uscire senza salvare i tuoi progressi?</value>
   <data name="findOne.Text" xml:space="preserve">
     <value>Trova</value>
   </data>
-  <data name="focusMode.Label" xml:space="preserve">
+  <data name="FocusMode.Label" xml:space="preserve">
     <value>Modalità concentrazione</value>
   </data>
-  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
     <value>Non hai completato l'obiettivo preimpostato. Sei sicuro di voler uscire?</value>
   </data>
-  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>Lascia</value>
   </data>
-  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
     <value>Rimanere e finire</value>
   </data>
-  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
     <value>Uscire così presto?</value>
   </data>
   <data name="general.Content" xml:space="preserve">
@@ -494,7 +494,7 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Volume</value>
   </data>
-  <data name="readMode.Label" xml:space="preserve">
+  <data name="ReadMode.Label" xml:space="preserve">
     <value>Modalità lettura</value>
   </data>
   <data name="remove.Label" xml:space="preserve">
