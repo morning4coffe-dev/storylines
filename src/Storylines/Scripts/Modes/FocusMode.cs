@@ -8,7 +8,6 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
-using static Storylines.Scripts.Modes.FocusMode;
 
 namespace Storylines.Scripts.Modes
 {
@@ -76,7 +75,7 @@ namespace Storylines.Scripts.Modes
                 timer.Tick += Timer_Tick;
                 timer.Start();
 
-                 timerTime = timerTime.Add(new TimeSpan(0, 1, 0));
+                timerTime = timerTime.Add(new TimeSpan(0, 1, 0));
                 Timer_Tick(timerTime, new object());
 
                 timerStartTime = time.Ticks;
@@ -147,7 +146,7 @@ namespace Storylines.Scripts.Modes
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesEnableButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
 
-                mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Character.characters.Count > 0;
+            mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Character.characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesAddButton);
             commandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
@@ -256,7 +255,7 @@ namespace Storylines.Scripts.Modes
         #region Leave
         public void Leave()
         {
-            if(MainPage.focusMode.timer != null)
+            if (MainPage.focusMode.timer != null)
                 MainPage.focusMode.timer.Stop();
 
             MainPage.chapterList.listView.Visibility = chaptersViewEnabled;
