@@ -75,13 +75,13 @@
   <data name="edit.Label" xml:space="preserve">
     <value>Изменить</value>
   </data>
-  <data name="focusMode.Label" xml:space="preserve">
+  <data name="FocusMode.Label" xml:space="preserve">
     <value>Режим концентрации</value>
   </data>
   <data name="loadSaveSystemErrorText" xml:space="preserve">
     <value>Произошла ошибка, файл не может быть загружен.</value>
   </data>
-  <data name="readMode.Label" xml:space="preserve">
+  <data name="ReadMode.Label" xml:space="preserve">
     <value>Режим чтения</value>
   </data>
   <data name="saveSaveSystemErrorText" xml:space="preserve">
@@ -471,16 +471,16 @@
   <data name="done" xml:space="preserve">
     <value>Готово</value>
   </data>
-  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
     <value>Установленная цель еще не выполнена, вы действительно хотите уйти?</value>
   </data>
-  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>Уйти</value>
   </data>
-  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
     <value>Остаться</value>
   </data>
-  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
     <value>Уже уходите?</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">

@@ -90,7 +90,7 @@
           <source>Edit</source>
           <target state="final">Upravit</target>
         </trans-unit>
-        <trans-unit id="focusMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusMode.Label" translate="yes" xml:space="preserve">
           <source>Focus Mode</source>
           <target state="needs-review-translation">Režim soustředění</target>
           <note from="MultilingualUpdate" annotates="source" priority="2">Please verify the translation’s accuracy as the source string was updated after it was translated.</note>
@@ -99,7 +99,7 @@
           <source>An error occurred your file couldn't be load.</source>
           <target state="translated">Narazili jsme na problém, projekt nemohl být načten.</target>
         </trans-unit>
-        <trans-unit id="readMode.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="ReadMode.Label" translate="yes" xml:space="preserve">
           <source>Read mode</source>
           <target state="translated">Režim čtení</target>
         </trans-unit>
@@ -621,19 +621,19 @@ Opravdu chcete odejít bez uložení své práce?</target>
           <source>Done</source>
           <target state="translated">Hotovo</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueDescription" translate="yes" xml:space="preserve">
           <source>You did not finish the goal you set. Do you really want to quit?</source>
           <target state="translated">Nastavený cíl zatím nebyl splněn, vážně již chcete odejít?</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueLeave" translate="yes" xml:space="preserve">
           <source>Leave</source>
           <target state="translated">Odejít</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueStay" translate="yes" xml:space="preserve">
           <source>Stay and finish</source>
           <target state="translated">Zůstat a dokončit</target>
         </trans-unit>
-        <trans-unit id="focusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
+        <trans-unit id="FocusModeLeaveDialogueTitle" translate="yes" xml:space="preserve">
           <source>Leaving so soon?</source>
           <target state="translated">Nějak brzy, ne?</target>
         </trans-unit>

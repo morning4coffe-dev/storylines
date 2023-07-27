@@ -80,10 +80,10 @@ namespace Storylines
 
         public void ClearEverything()
         {
-            MainPage.chapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
+            MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
             Chapter.chapters.Clear();
             Character.characters.Clear();
-            MainPage.current.EnableOrDisableChapterTools(false);
+            MainPage.Current.EnableOrDisableChapterTools(false);
         }
 
         public void UsingWindows10()
@@ -182,7 +182,7 @@ namespace Storylines
 
         public void BackButtonCheck()
         {
-            if (pagesView.CanGoBack || MainPage.readMode != null || MainPage.focusMode != null)
+            if (pagesView.CanGoBack || MainPage.ReadMode != null || MainPage.FocusMode != null)
                 backButton.Visibility = Visibility.Visible;
             else
                 backButton.Visibility = Visibility.Collapsed;
@@ -201,17 +201,17 @@ namespace Storylines
                 pagesView.GoBack(new DrillInNavigationTransitionInfo());
             }
             else
-            if (MainPage.focusMode != null)
+            if (MainPage.FocusMode != null)
             {
-                if (MainPage.focusMode.final)
-                    MainPage.focusMode.Leave();
+                if (MainPage.FocusMode.final)
+                    MainPage.FocusMode.Leave();
                 else
                     _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
-                MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(MainPage.focusMode.final);
+                MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(MainPage.FocusMode.final);
             }
             else
-            if (MainPage.readMode != null)
-                MainPage.readMode.Leave();
+            if (MainPage.ReadMode != null)
+                MainPage.ReadMode.Leave();
 
             UpdateTitleBar();
             BackButtonCheck();

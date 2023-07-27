@@ -1,99 +1,168 @@
-﻿<ContentDialog
-    x:Class="Storylines.Components.DialogueWindows.LoadProjectDialogue"
-    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-    xmlns:variables="using:Storylines.Components" xmlns:customcontrols="using:Storylines.Components.CustomControls"
-    mc:Ignorable="d" CornerRadius="8" Opened="ContentDialog_Opened" Closing="ContentDialog_Closing" Background="{ThemeResource DialogueAcrylicBackground}">
-    
-    <Grid MaxHeight="500" MinHeight="350" Width="400" Margin="4">
+﻿<ContentDialog x:Class="Storylines.Components.DialogueWindows.LoadProjectDialogue"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+               xmlns:variables="using:Storylines.Components"
+               xmlns:customcontrols="using:Storylines.Components.CustomControls"
+               mc:Ignorable="d"
+               CornerRadius="8"
+               Opened="ContentDialog_Opened"
+               Closing="ContentDialog_Closing"
+               Background="{ThemeResource DialogueAcrylicBackground}">
+
+    <Grid MaxHeight="500"
+          MinHeight="350"
+          Width="400"
+          Margin="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height="40"/>
-            <RowDefinition Height="130"/>
-            <RowDefinition Height="*"/>
+            <RowDefinition Height="40" />
+            <RowDefinition Height="130" />
+            <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
         <Grid>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-                <ColumnDefinition Width="43"/>
-                <ColumnDefinition Width="8"/>
-                <ColumnDefinition Width="43"/>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="43" />
+                <ColumnDefinition Width="8" />
+                <ColumnDefinition Width="43" />
             </Grid.ColumnDefinitions>
 
-            <TextBlock x:Uid="projects" Style="{StaticResource DialogueWindowHeaderStyle}" FontSize="25" Margin="0,0,0,5"/>
+            <TextBlock x:Uid="projects"
+                       Style="{StaticResource DialogueWindowHeaderStyle}"
+                       FontSize="25"
+                       Margin="0,0,0,5" />
 
-            <Button x:Name="openFileButton" Height="38" Grid.Column="1" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTipService.ToolTip="Find project" TabIndex="0" Click="OnFindProject_Click">
-                <SymbolIcon Symbol="OpenFile" RenderTransformOrigin=".5,.5">
+            <Button x:Name="openFileButton"
+                    Height="38"
+                    Grid.Column="1"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ToolTipService.ToolTip="Find project"
+                    TabIndex="0"
+                    Click="OnFindProject_Click">
+                <SymbolIcon Symbol="OpenFile"
+                            RenderTransformOrigin=".5,.5">
                     <SymbolIcon.RenderTransform>
-                        <CompositeTransform ScaleX=".78" ScaleY=".78"/>
+                        <CompositeTransform ScaleX=".78"
+                                            ScaleY=".78" />
                     </SymbolIcon.RenderTransform>
                 </SymbolIcon>
             </Button>
 
-            <Button Grid.Column="3" Height="38" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" ToolTipService.ToolTip="New project" TabIndex="1" Click="OnCreateNewProject_Click">
-                <SymbolIcon Symbol="Add" RenderTransformOrigin=".5,.5">
+            <Button Grid.Column="3"
+                    Height="38"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Stretch"
+                    ToolTipService.ToolTip="New project"
+                    TabIndex="1"
+                    Click="OnCreateNewProject_Click">
+                <SymbolIcon Symbol="Add"
+                            RenderTransformOrigin=".5,.5">
                     <SymbolIcon.RenderTransform>
-                        <CompositeTransform ScaleX=".9" ScaleY=".9"/>
+                        <CompositeTransform ScaleX=".9"
+                                            ScaleY=".9" />
                     </SymbolIcon.RenderTransform>
                 </SymbolIcon>
             </Button>
         </Grid>
 
-        <customcontrols:WhatsNextBanner Grid.Row="1"/>
+        <customcontrols:WhatsNextBanner Grid.Row="1" />
 
-        <ListView x:Name="projectsHolder" ItemsSource="{x:Bind variables:ProjectFile.projectFiles, Mode=OneWay}" IsTabStop="False" SelectionMode="None" Grid.Row="2" Padding="0,-3" VerticalAlignment="Top" ItemClick="OnProjectsHolder_ItemClick">
+        <ListView x:Name="projectsHolder"
+                  ItemsSource="{x:Bind variables:ProjectFile.projectFiles, Mode=OneWay}"
+                  IsTabStop="False"
+                  SelectionMode="None"
+                  Grid.Row="2"
+                  Padding="0,-3"
+                  VerticalAlignment="Top"
+                  ItemClick="OnProjectsHolder_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Tag="{Binding token}" Margin="{Binding osMargin}" HorizontalAlignment="Left" RightTapped="OnOpenRecentProject_RightTapped" Holding="OnOpenRecentProject_Holding" Click="OnOpenRecentProject_Click">
-                        <Grid Height="50" Width="{Binding osWidth}">
+                    <Button Tag="{Binding token}"
+                            Margin="{Binding osMargin}"
+                            HorizontalAlignment="Left"
+                            RightTapped="OnOpenRecentProject_RightTapped"
+                            Holding="OnOpenRecentProject_Holding"
+                            Click="OnOpenRecentProject_Click">
+                        <Grid Height="50"
+                              Width="{Binding osWidth}">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="auto"/>
-                                <ColumnDefinition Width="8"/>
-                                <ColumnDefinition Width="10*"/>
+                                <ColumnDefinition Width="auto" />
+                                <ColumnDefinition Width="8" />
+                                <ColumnDefinition Width="10*" />
                             </Grid.ColumnDefinitions>
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="3"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="3" />
+                                <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Image Source="{Binding icon}" Height="36" Margin="0,0,3,0" Grid.RowSpan="3"/>
-                            <TextBlock Text="{Binding name}" FontWeight="Medium" Grid.Column="2" MaxWidth="240" HorizontalAlignment="Left" VerticalAlignment="Bottom"/>
-                            <TextBlock Text="{Binding shortPath}" FontSize="12" Opacity=".7" Grid.Column="2" Grid.Row="2"/>
-                            <TextBlock Text="{Binding lastEditedFormatted}" FontSize="12" HorizontalAlignment="Right" Opacity=".8" Grid.Column="2" VerticalAlignment="Center"/>
+                            <Image Source="{Binding icon}"
+                                   Height="36"
+                                   Margin="0,0,3,0"
+                                   Grid.RowSpan="3" />
+                            <TextBlock Text="{Binding name}"
+                                       FontWeight="Medium"
+                                       Grid.Column="2"
+                                       MaxWidth="240"
+                                       HorizontalAlignment="Left"
+                                       VerticalAlignment="Bottom" />
+                            <TextBlock Text="{Binding shortPath}"
+                                       FontSize="12"
+                                       Opacity=".7"
+                                       Grid.Column="2"
+                                       Grid.Row="2" />
+                            <TextBlock Text="{Binding lastEditedFormatted}"
+                                       FontSize="12"
+                                       HorizontalAlignment="Right"
+                                       Opacity=".8"
+                                       Grid.Column="2"
+                                       VerticalAlignment="Center" />
                         </Grid>
                     </Button>
                 </DataTemplate>
             </ListView.ItemTemplate>
             <ListView.Resources>
                 <Style TargetType="ListViewItem">
-                    <Setter Property="IsTabStop" Value="False"/>
+                    <Setter Property="IsTabStop"
+                            Value="False" />
                 </Style>
             </ListView.Resources>
-            
+
             <MenuFlyout x:Name="projectsHolderFlyout">
-                <MenuFlyoutItem x:Name="Remove" x:Uid="removeFlyout" CornerRadius="4" Click="OnProjectRemove_Click">
+                <MenuFlyoutItem x:Name="Remove"
+                                x:Uid="removeFlyout"
+                                CornerRadius="4"
+                                Click="OnProjectRemove_Click">
                     <MenuFlyoutItem.Icon>
-                        <FontIcon Glyph="&#xE107;"/>
+                        <FontIcon Glyph="&#xE107;" />
                     </MenuFlyoutItem.Icon>
                 </MenuFlyoutItem>
             </MenuFlyout>
         </ListView>
 
-        <muxc:ProgressRing x:Name="progressRing" IsIndeterminate="True" Grid.Row="2" IsActive="True"/>
+        <muxc:ProgressRing x:Name="progressRing"
+                           IsIndeterminate="True"
+                           Grid.Row="2"
+                           IsActive="True" />
 
-        <RichTextBlock x:Name="noFilesText" Grid.Row="3" FontSize="16" HorizontalAlignment="Center" VerticalAlignment="Center" IsTextSelectionEnabled="False">
+        <RichTextBlock x:Name="noFilesText"
+                       Grid.Row="3"
+                       FontSize="16"
+                       HorizontalAlignment="Center"
+                       VerticalAlignment="Center"
+                       IsTextSelectionEnabled="False">
             <Paragraph TextAlignment="Center">
-                <Run x:Uid="nothingHere"/>
-                <LineBreak/>
+                <Run x:Uid="nothingHere" />
+                <LineBreak />
                 <Hyperlink Click="OnFindProject_Click">
-                    <Run x:Uid="findOne"/>
+                    <Run x:Uid="findOne" />
                 </Hyperlink>
-                <Run x:Uid="or"/>
+                <Run x:Uid="or" />
                 <Hyperlink Click="OnCreateNewProject_Click">
-                    <Run x:Uid="createNew"/>
+                    <Run x:Uid="createNew" />
                 </Hyperlink> .
             </Paragraph>
         </RichTextBlock>

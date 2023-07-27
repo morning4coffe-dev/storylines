@@ -183,19 +183,19 @@
   <data name="file.Content" xml:space="preserve">
     <value>文件</value>
   </data>
-  <data name="focusMode.Label" xml:space="preserve">
+  <data name="FocusMode.Label" xml:space="preserve">
     <value>聚焦模式</value>
   </data>
-  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
     <value>在最后一章时，按下 Ctrl+Page down 是否添加新一章？</value>
   </data>
-  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>离开</value>
   </data>
-  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
     <value>停下来完成</value>
   </data>
-  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
     <value>这么快就走了？</value>
   </data>
   <data name="general.Content" xml:space="preserve">

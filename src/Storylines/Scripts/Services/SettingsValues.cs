@@ -78,7 +78,7 @@ namespace Storylines.Scripts.Services
             selectedAccent = (SelectedAccent)(localSettings.Values[SettingsValueStrings.AppAccent] ?? 1);
             customAccentColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor((ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppCustomAccent] ?? appAccentColor.ToHex()).ToString());
             
-            MainPage.chapterText.TextBoxWhiteBackground(Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+            MainPage.ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
         }
 
         public static bool IsUserLanguageSupported()

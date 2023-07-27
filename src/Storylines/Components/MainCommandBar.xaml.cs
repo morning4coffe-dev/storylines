@@ -21,8 +21,8 @@ namespace Storylines.Components
         public MainCommandBar()
         {
             this.InitializeComponent();
-            if(MainPage.focusMode == null && MainPage.readMode == null)
-                MainPage.commandBar = this;
+            if(MainPage.FocusMode == null && MainPage.ReadMode == null)
+                MainPage.CommandBar = this;
 
             autosaveToggleButton.IsChecked = SettingsValues.autosaveEnabled;
         }
@@ -102,25 +102,25 @@ namespace Storylines.Components
         #region INSERT
         private void OnChapterAddButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MainPage.chapterList.canAdd)
+            if(MainPage.ChapterList.canAdd)
                 ChapterCreatorOrRenamer.Open(null, false);
         }
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.chapterText.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
+            MainPage.ChapterText.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
 
             //dialoguesAddButton.IsEnabled = (bool)dialoguesEnableButton.IsChecked;
         }
 
         private void OnDialoguesAddButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.chapterText.AddDialogue();
+            MainPage.ChapterText.AddDialogue();
         }
 
         private void OnDialoguesAddSimpleButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.chapterText.AddSimpleDialogue();
+            MainPage.ChapterText.AddSimpleDialogue();
         }
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
@@ -130,10 +130,10 @@ namespace Storylines.Components
             if (Chapter.chapters.Count == 0)
             {
                 Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                MainPage.chapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
+                MainPage.ChapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
             }
 
-            _ = MainPage.chapterText.textBox.Focus(FocusState.Pointer);
+            _ = MainPage.ChapterText.textBox.Focus(FocusState.Pointer);
 
             InputInjector inputInjector = InputInjector.TryCreate();
 
@@ -200,7 +200,7 @@ namespace Storylines.Components
 
         public void ReadAloud()
         {
-            MainPage.chapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string speechText);
+            MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string speechText);
             if (speechText.Length > 0)
             {
                 _ = ToReadAsync(speechText);

@@ -67,7 +67,7 @@ namespace Storylines.Components.DialogueWindows
             SaveSystem.currentProject = new ProjectFile();
             SaveSystem.currentProject.projectName = "Project with no name";
 
-            Pages.MainPage.current.EnableOrDisableToolsForStorylinesDocuments(true);
+            Pages.MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
             AppView.current.ClearEverything();
             TimeTravelSystem.unSavedProgress = false;
         }

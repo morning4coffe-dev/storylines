@@ -33,22 +33,22 @@ namespace Storylines.Scripts.Functions
                         case AppView.Pages.MainPage:
                             switch (e.VirtualKey)
                             {
-                                case Windows.System.VirtualKey.D: MainPage.chapterText.DialoguesOnOff(!(bool)MainPage.commandBar.dialoguesEnableButton.IsChecked); break;
+                                case Windows.System.VirtualKey.D: MainPage.ChapterText.DialoguesOnOff(!(bool)MainPage.CommandBar.dialoguesEnableButton.IsChecked); break;
                                 case Windows.System.VirtualKey.B:
-                                    if (MainPage.chapterText.chapterTextCommandBar.IsEnabled)
-                                        MainPage.chapterText.BoldChapterTextBox();
+                                    if (MainPage.ChapterText.chapterTextCommandBar.IsEnabled)
+                                        MainPage.ChapterText.BoldChapterTextBox();
                                     break;
                                 case Windows.System.VirtualKey.I:
-                                    if (MainPage.chapterText.chapterTextCommandBar.IsEnabled)
-                                        MainPage.chapterText.ItalicChapterTextBox();
+                                    if (MainPage.ChapterText.chapterTextCommandBar.IsEnabled)
+                                        MainPage.ChapterText.ItalicChapterTextBox();
                                     break;
                                 case Windows.System.VirtualKey.U:
-                                    if (MainPage.chapterText.chapterTextCommandBar.IsEnabled)
-                                        MainPage.chapterText.UnderlineChapterTextBox();
+                                    if (MainPage.ChapterText.chapterTextCommandBar.IsEnabled)
+                                        MainPage.ChapterText.UnderlineChapterTextBox();
                                     break;
                                 case Windows.System.VirtualKey.T:
-                                    if (MainPage.chapterText.chapterTextCommandBar.IsEnabled)
-                                        MainPage.chapterText.StrikethroughChapterTextBox();
+                                    if (MainPage.ChapterText.chapterTextCommandBar.IsEnabled)
+                                        MainPage.ChapterText.StrikethroughChapterTextBox();
                                     break;
                             }
                             break;
@@ -71,38 +71,38 @@ namespace Storylines.Scripts.Functions
                             switch (e.VirtualKey)
                             {
                                 case Windows.System.VirtualKey.Q:
-                                    if (MainPage.chapterList.canAdd && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.ChapterList.canAdd && AppView.currentlyOpenedDialogue == null)
                                         ChapterCreatorOrRenamer.Open(null, false); break;
                                 case Windows.System.VirtualKey.Delete:
-                                    if (MainPage.chapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
-                                        Chapter.Remove((MainPage.chapterList.listView.SelectedItem as Chapter).token); break;
+                                    if (MainPage.ChapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
+                                        Chapter.Remove((MainPage.ChapterList.listView.SelectedItem as Chapter).token); break;
 
                                 case Windows.System.VirtualKey.E:
-                                    if (MainPage.commandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
                                         ExportDialogue.Open(default); break;
-                                case Windows.System.VirtualKey.R: MainPage.commandBar.ReadAloud(); break;
-                                case Windows.System.VirtualKey.F: MainPage.chapterText.EnableSeach(); break;
+                                case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
+                                case Windows.System.VirtualKey.F: MainPage.ChapterText.EnableSeach(); break;
                                 case Windows.System.VirtualKey.PageUp:
-                                    if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterList.listView.IsEnabled && MainPage.chapterList.listView.SelectedIndex > 0)
-                                        MainPage.chapterList.listView.SelectedIndex -= 1;
+                                    if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterList.listView.IsEnabled && MainPage.ChapterList.listView.SelectedIndex > 0)
+                                        MainPage.ChapterList.listView.SelectedIndex -= 1;
                                     break;
                                 case Windows.System.VirtualKey.PageDown:
-                                    if (MainPage.chapterList.listView.SelectedItem != null && MainPage.chapterList.listView.IsEnabled)
-                                        if (MainPage.chapterList.listView.SelectedIndex >= 0 && MainPage.chapterList.listView.SelectedIndex < (MainPage.chapterList.listView.Items.Count - 1))
-                                            MainPage.chapterList.listView.SelectedIndex += 1;
+                                    if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterList.listView.IsEnabled)
+                                        if (MainPage.ChapterList.listView.SelectedIndex >= 0 && MainPage.ChapterList.listView.SelectedIndex < (MainPage.ChapterList.listView.Items.Count - 1))
+                                            MainPage.ChapterList.listView.SelectedIndex += 1;
                                         else
-                                        if (MainPage.chapterList.listView.Items.Count == MainPage.chapterList.listView.SelectedIndex + 1 &&
+                                        if (MainPage.ChapterList.listView.Items.Count == MainPage.ChapterList.listView.SelectedIndex + 1 &&
                                             System.Convert.ToBoolean(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled]))
                                         {
                                             Chapter.AddFromCreator(Chapter.chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                                            MainPage.chapterList.listView.SelectedIndex += 1;
+                                            MainPage.ChapterList.listView.SelectedIndex += 1;
                                         }
                                     break;
                                 case Windows.System.VirtualKey.Z:
-                                    if (MainPage.commandBar.undoButton.IsEnabled)
+                                    if (MainPage.CommandBar.undoButton.IsEnabled)
                                         TimeTravelChapter.Undo(); break;
                                 case Windows.System.VirtualKey.Y:
-                                    if (MainPage.commandBar.redoButton.IsEnabled)
+                                    if (MainPage.CommandBar.redoButton.IsEnabled)
                                         TimeTravelChapter.Redo(); break;
                             }
                             break;
@@ -138,7 +138,7 @@ namespace Storylines.Scripts.Functions
                     {
                         case Windows.System.VirtualKey.S: SaveSystem.Save(); break;
                         case Windows.System.VirtualKey.I:
-                            if (AppView.current.page != AppView.Pages.Settings && MainPage.focusMode == null)
+                            if (AppView.current.page != AppView.Pages.Settings && MainPage.FocusMode == null)
                                 AppView.current.ChangePage(AppView.Pages.Settings); break;
                     }
                     //case Windows.System.VirtualKey.F: MainPage.ChangePage(MainPage.Pages.Settings); break;   /// search

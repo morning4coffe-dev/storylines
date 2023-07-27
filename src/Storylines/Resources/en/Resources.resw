@@ -418,19 +418,19 @@ Did you want to exit without saving your progress?</value>
   <data name="focus.Text" xml:space="preserve">
     <value>Focus</value>
   </data>
-  <data name="focusMode.Label" xml:space="preserve">
+  <data name="FocusMode.Label" xml:space="preserve">
     <value>Focus Mode</value>
   </data>
-  <data name="focusModeLeaveDialogueDescription" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
     <value>You did not finish the goal you set. Do you really want to quit?</value>
   </data>
-  <data name="focusModeLeaveDialogueLeave" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>Leave</value>
   </data>
-  <data name="focusModeLeaveDialogueStay" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
     <value>Stay and finish</value>
   </data>
-  <data name="focusModeLeaveDialogueTitle" xml:space="preserve">
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
     <value>Leaving so soon?</value>
   </data>
   <data name="general.Content" xml:space="preserve">
@@ -620,7 +620,7 @@ the "Add new character" button.</value>
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Volume</value>
   </data>
-  <data name="readMode.Label" xml:space="preserve">
+  <data name="ReadMode.Label" xml:space="preserve">
     <value>Read mode</value>
   </data>
   <data name="remove.Label" xml:space="preserve">

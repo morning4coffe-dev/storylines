@@ -106,7 +106,7 @@ namespace Storylines.Pages.SettingsPages
         {
             if (!loading)
             {
-                MainPage.chapterList.switchedChapters = Scripts.Functions.TimeTravelSystem.unSavedProgress != true;
+                MainPage.ChapterList.switchedChapters = Scripts.Functions.TimeTravelSystem.unSavedProgress != true;
                 localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] = textBoxBackgroundToggleSwitch.IsOn;
             }
         }

@@ -34,7 +34,7 @@ namespace Storylines.Components
         {
             InitializeComponent();
 
-            MainPage.chapterList = this;
+            MainPage.ChapterList = this;
         }
 
         #region Flyout
@@ -130,16 +130,16 @@ namespace Storylines.Components
                     switchedChapters = true;
                 selectedIndex = listView.SelectedIndex;
 
-                MainPage.chapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, Chapter.Find((listView.SelectedItem as Chapter).token).text ?? string.Empty);
+                MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, Chapter.Find((listView.SelectedItem as Chapter).token).text ?? string.Empty);
 
-                MainPage.chapterText.ChangeTextColor();
-                MainPage.current.EnableOrDisableChapterTools(true);
-                MainPage.chapterText.CheckForFormatting();
+                MainPage.ChapterText.ChangeTextColor();
+                MainPage.Current.EnableOrDisableChapterTools(true);
+                MainPage.ChapterText.CheckForFormatting();
 
-                _ = MainPage.chapterText.textBox.Focus(FocusState.Keyboard);
+                _ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
             }
             else
-                MainPage.current.EnableOrDisableChapterTools(false);
+                MainPage.Current.EnableOrDisableChapterTools(false);
 
             CheckForEmptyList();
         }
@@ -147,10 +147,10 @@ namespace Storylines.Components
         public void CheckForEmptyList()
         { 
             noChaptersPlaceholder.Visibility = listView.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
-            MainPage.commandBar.exportButton.IsEnabled = Chapter.chapters.Count > 0 || Character.characters.Count > 0;
-            MainPage.commandBar.saveButton.IsEnabled = Chapter.chapters.Count > 0;
-            MainPage.commandBar.saveCopyButton.IsEnabled = Chapter.chapters.Count > 0;
-            MainPage.commandBar.chapterAddButton.IsEnabled = _canAdd;
+            MainPage.CommandBar.exportButton.IsEnabled = Chapter.chapters.Count > 0 || Character.characters.Count > 0;
+            MainPage.CommandBar.saveButton.IsEnabled = Chapter.chapters.Count > 0;
+            MainPage.CommandBar.saveCopyButton.IsEnabled = Chapter.chapters.Count > 0;
+            MainPage.CommandBar.chapterAddButton.IsEnabled = _canAdd;
         }
 
         #region Reorder Items
@@ -160,20 +160,20 @@ namespace Storylines.Components
         private void OnChaptersListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             reordering = true;
-            position = MainPage.chapterList.listView.Items.IndexOf(e.Items[0]);
+            position = MainPage.ChapterList.listView.Items.IndexOf(e.Items[0]);
         }
 
         private void OnChaptersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             reordering = false;
 
-            Chapter.Reorder((args.Items[0] as Chapter).token, MainPage.chapterList.listView.Items.IndexOf(args.Items[0]), position);
+            Chapter.Reorder((args.Items[0] as Chapter).token, MainPage.ChapterList.listView.Items.IndexOf(args.Items[0]), position);
         }
         #endregion
 
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.current.OpenOrCloseChapterList(false, true);
+            MainPage.Current.OpenOrCloseChapterList(false, true);
         }
     }
 }
