@@ -1,0 +1,78 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AddChapter" xml:space="preserve">
+    <value>Aggiungi capitolo</value>
+  </data>
+  <data name="AddCharacter" xml:space="preserve">
+    <value>Aggiungi carattere</value>
+  </data>
+  <data name="Bold" xml:space="preserve">
+    <value>Grassetto</value>
+  </data>
+  <data name="ChapterAbove" xml:space="preserve">
+    <value>Capitolo superiore</value>
+  </data>
+  <data name="ChapterBelow" xml:space="preserve">
+    <value>Capitolo inferiore</value>
+  </data>
+  <data name="CharactersPage" xml:space="preserve">
+    <value>Pagina caratteri</value>
+  </data>
+  <data name="Export" xml:space="preserve">
+    <value>Esporta</value>
+  </data>
+  <data name="Global" xml:space="preserve">
+    <value>Globale</value>
+  </data>
+  <data name="Italic" xml:space="preserve">
+    <value>Corsivo</value>
+  </data>
+  <data name="MainPage" xml:space="preserve">
+    <value>Pagina principale</value>
+  </data>
+  <data name="ReadAloud" xml:space="preserve">
+    <value>Read aloud</value>
+  </data>
+  <data name="Redo" xml:space="preserve">
+    <value>Ripristina ultima modifica</value>
+  </data>
+  <data name="RemoveChapter" xml:space="preserve">
+    <value>Rimuovi capitolo</value>
+  </data>
+  <data name="RemoveCharacter" xml:space="preserve">
+    <value>Rimuovi carattere</value>
+  </data>
+  <data name="Save" xml:space="preserve">
+    <value>Salva</value>
+  </data>
+  <data name="SaveCopy" xml:space="preserve">
+    <value>Salva copia</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Cerca</value>
+  </data>
+  <data name="Strikethrough" xml:space="preserve">
+    <value>Barrato</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Scorciatoie da tastiera</value>
+  </data>
+  <data name="Underline" xml:space="preserve">
+    <value>Sottolinea</value>
+  </data>
+  <data name="Undo" xml:space="preserve">
+    <value>Annulla ultima modifica</value>
+  </data>
+</root>

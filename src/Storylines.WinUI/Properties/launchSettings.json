@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "Storylines.WinUI (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "Storylines.WinUI (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
