@@ -82,6 +82,7 @@ namespace Storylines.Scripts.Functions
                                         ExportDialogue.Open(default); break;
                                 case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
                                 case Windows.System.VirtualKey.F: MainPage.ChapterText.EnableSeach(); break;
+                                case Windows.System.VirtualKey.H: MainPage.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.PageUp:
                                     if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterList.listView.IsEnabled && MainPage.ChapterList.listView.SelectedIndex > 0)
                                         MainPage.ChapterList.listView.SelectedIndex -= 1;

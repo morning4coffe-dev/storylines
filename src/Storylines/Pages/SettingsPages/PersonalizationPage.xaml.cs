@@ -1,5 +1,6 @@
 ﻿using Storylines.Scripts.Services;
 using Windows.Storage;
+using Windows.UI;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -69,6 +70,19 @@ namespace Storylines.Pages.SettingsPages
         {
             if (!loading)
                 localSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] = addChapterOnPageDownToggleSwitch.IsOn;
+        }
+
+        private void OnAccentPresetButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (sender is Button btn && btn.Tag is string hex)
+            {
+                var color = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor(hex);
+                accentComboBox.SelectedIndex = 2; // Custom
+                customAccentPicker.Color = color;
+                SettingsValues.customAccentColor = color;
+                SettingsValues.selectedAccent = SettingsValues.SelectedAccent.Custom;
+                ThemeSettings.InitializeAppAccentColor();
+            }
         }
 
         private void OnPersonalizationPage_SizeChanged(object sender, SizeChangedEventArgs e)

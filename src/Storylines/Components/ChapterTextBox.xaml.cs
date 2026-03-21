@@ -244,6 +244,122 @@ namespace Storylines.Components
         {
             EnableSeach();
         }
+
+        // --- Search & Replace ---
+        public void OpenSearchAndReplace()
+        {
+            HideSearch();
+            searchButton.Visibility = Visibility.Collapsed;
+            chapterTextCommandBar.Visibility = Visibility.Collapsed;
+            searchReplacePanel.Visibility = Visibility.Visible;
+            searchingInTextBox = true;
+
+            if (textBox.Document.Selection.Length > 0)
+                searchReplaceFindBox.Text = textBox.Document.Selection.Text;
+
+            searchReplaceFindBox.Focus(FocusState.Keyboard);
+            SearchReplaceHighlight();
+        }
+
+        private void OnSearchReplaceFindBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            SearchReplaceHighlight();
+        }
+
+        private void OnMatchCaseToggle_Click(object sender, RoutedEventArgs e)
+        {
+            SearchReplaceHighlight();
+        }
+
+        private void OnWholeWordToggle_Click(object sender, RoutedEventArgs e)
+        {
+            SearchReplaceHighlight();
+        }
+
+        private void SearchReplaceHighlight()
+        {
+            SearchBoxRemoveHighlights();
+
+            var textToFind = searchReplaceFindBox.Text;
+            if (string.IsNullOrEmpty(textToFind))
+            {
+                searchMatchCount.Text = string.Empty;
+                return;
+            }
+
+            var findOptions = FindOptions.None;
+            if (matchCaseToggle.IsChecked == true)
+                findOptions |= FindOptions.Case;
+            if (wholeWordToggle.IsChecked == true)
+                findOptions |= FindOptions.Word;
+
+            Color highlightColor = ThemeSettings.GetCurrentAccentColor();
+            int matchCount = 0;
+
+            ITextRange searchRange = textBox.Document.GetRange(0, 0);
+            while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+            {
+                searchRange.CharacterFormat.ForegroundColor = highlightColor;
+                matchCount++;
+            }
+
+            searchMatchCount.Text = matchCount > 0 ? $"{matchCount} match{(matchCount == 1 ? "" : "es")}" : "No matches";
+        }
+
+        private void OnReplaceButton_Click(object sender, RoutedEventArgs e)
+        {
+            var textToFind = searchReplaceFindBox.Text;
+            var replaceWith = searchReplaceBox.Text;
+            if (string.IsNullOrEmpty(textToFind)) return;
+
+            var findOptions = FindOptions.None;
+            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
+            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
+
+            // Find from current selection position
+            var selection = textBox.Document.Selection;
+            if (selection.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+            {
+                selection.SetText(TextSetOptions.None, replaceWith);
+            }
+
+            SearchReplaceHighlight();
+        }
+
+        private void OnReplaceAllButton_Click(object sender, RoutedEventArgs e)
+        {
+            var textToFind = searchReplaceFindBox.Text;
+            var replaceWith = searchReplaceBox.Text;
+            if (string.IsNullOrEmpty(textToFind)) return;
+
+            var findOptions = FindOptions.None;
+            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
+            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
+
+            int replacements = 0;
+            ITextRange searchRange = textBox.Document.GetRange(0, 0);
+            while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+            {
+                searchRange.SetText(TextSetOptions.None, replaceWith);
+                replacements++;
+            }
+
+            searchMatchCount.Text = $"{replacements} replacement{(replacements == 1 ? "" : "s")} made";
+        }
+
+        private void OnSearchReplaceClose_Click(object sender, RoutedEventArgs e)
+        {
+            HideSearchAndReplace();
+        }
+
+        private void HideSearchAndReplace()
+        {
+            searchingInTextBox = false;
+            SearchBoxRemoveHighlights();
+            searchReplacePanel.Visibility = Visibility.Collapsed;
+            searchButton.Visibility = Visibility.Visible;
+            chapterTextCommandBar.Visibility = Visibility.Visible;
+        }
         #endregion
         #endregion
 

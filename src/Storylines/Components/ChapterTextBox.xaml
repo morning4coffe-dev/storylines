@@ -214,10 +214,97 @@
                                               From="0, 50"
                                               To="320, 50" />
                 </animations:Implicit.ShowAnimations>
-                <!--<animations:Implicit.HideAnimations>
-                        <animations:SizeAnimation Duration="0:0:0.22" From="320, 50" To="0, 50"/>
-                    </animations:Implicit.HideAnimations>-->
             </TextBox>
+
+            <!-- Search & Replace Panel -->
+            <StackPanel x:Name="searchReplacePanel"
+                        Visibility="Collapsed"
+                        Grid.ColumnSpan="2"
+                        Margin="7"
+                        Spacing="4"
+                        HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="searchReplaceFindBox"
+                             x:FieldModifier="public"
+                             PlaceholderText="Find..."
+                             CornerRadius="4"
+                             Style="{StaticResource SmallTextBoxStyle}"
+                             TextChanged="OnSearchReplaceFindBox_TextChanged" />
+                    <ToggleButton x:Name="matchCaseToggle"
+                                  Grid.Column="1"
+                                  Content="Aa"
+                                  Width="36" Height="32"
+                                  Margin="4,0,0,0"
+                                  CornerRadius="4"
+                                  ToolTipService.ToolTip="Match Case"
+                                  Click="OnMatchCaseToggle_Click" />
+                    <ToggleButton x:Name="wholeWordToggle"
+                                  Grid.Column="2"
+                                  Width="36" Height="32"
+                                  Margin="2,0,0,0"
+                                  CornerRadius="4"
+                                  ToolTipService.ToolTip="Whole Word"
+                                  Click="OnWholeWordToggle_Click">
+                        <FontIcon Glyph="&#xF78B;" FontSize="14" />
+                    </ToggleButton>
+                    <Button Grid.Column="3"
+                            Width="32" Height="32"
+                            Margin="4,0,0,0"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="4"
+                            ToolTipService.ToolTip="Close"
+                            Click="OnSearchReplaceClose_Click">
+                        <SymbolIcon Symbol="Cancel" RenderTransformOrigin=".5,.5">
+                            <SymbolIcon.RenderTransform>
+                                <CompositeTransform ScaleX=".65" ScaleY=".65" />
+                            </SymbolIcon.RenderTransform>
+                        </SymbolIcon>
+                    </Button>
+                </Grid>
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="searchReplaceBox"
+                             x:FieldModifier="public"
+                             PlaceholderText="Replace..."
+                             CornerRadius="4"
+                             Style="{StaticResource SmallTextBoxStyle}" />
+                    <Button x:Name="replaceButton"
+                            Grid.Column="1"
+                            Content="Replace"
+                            Margin="4,0,0,0"
+                            Height="32"
+                            CornerRadius="4"
+                            Click="OnReplaceButton_Click" />
+                    <Button x:Name="replaceAllButton"
+                            Grid.Column="2"
+                            Content="All"
+                            Margin="2,0,0,0"
+                            Height="32"
+                            CornerRadius="4"
+                            Click="OnReplaceAllButton_Click" />
+                </Grid>
+                <TextBlock x:Name="searchMatchCount"
+                           FontSize="11"
+                           Opacity="0.6"
+                           Margin="4,0,0,0" />
+                <animations:Implicit.ShowAnimations>
+                    <animations:OpacityAnimation Duration="0:0:0.2"
+                                                 From="0"
+                                                 To="1.0" />
+                </animations:Implicit.ShowAnimations>
+            </StackPanel>
         </Grid>
 
         <ScrollViewer x:Name="textBoxScrollViewer"

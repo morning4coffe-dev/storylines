@@ -80,7 +80,17 @@
               Grid.Row="1"
               x:FieldModifier="public">
             <Frame x:Name="pagesView"
-                   x:FieldModifier="public" />
+                   x:FieldModifier="public">
+                <Frame.ContentTransitions>
+                    <TransitionCollection>
+                        <NavigationThemeTransition>
+                            <NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                                <DrillInNavigationTransitionInfo />
+                            </NavigationThemeTransition.DefaultNavigationTransitionInfo>
+                        </NavigationThemeTransition>
+                    </TransitionCollection>
+                </Frame.ContentTransitions>
+            </Frame>
         </Grid>
 
         <!--<controls:DropShadowPanel Visibility="{x:Bind updateAvailableInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="600" Margin="0, 80">-->

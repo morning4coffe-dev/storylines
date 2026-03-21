@@ -232,6 +232,22 @@
     <Compile Include="Scripts\Variables\Chapter.cs" />
     <Compile Include="Scripts\Services\SettingsValues.cs" />
     <Compile Include="Scripts\Services\ThemeSettings.cs" />
+    <Compile Include="Scripts\Services\ServiceLocator.cs" />
+    <Compile Include="Scripts\Services\DebugLogger.cs" />
+    <Compile Include="Scripts\Services\FileService.cs" />
+    <Compile Include="Scripts\Services\Interfaces\ILogger.cs" />
+    <Compile Include="Scripts\Services\Interfaces\INotificationService.cs" />
+    <Compile Include="Scripts\Services\Interfaces\ISaveSerializer.cs" />
+    <Compile Include="Scripts\Services\Interfaces\IFileService.cs" />
+    <Compile Include="Scripts\Services\Serializers\JsonSaveSerializer.cs" />
+    <Compile Include="Scripts\Services\Serializers\LegacySrlSerializer.cs" />
+    <Compile Include="Scripts\Variables\ProjectData.cs" />
+    <Compile Include="Components\ChapterNotesPane.xaml.cs">
+      <DependentUpon>ChapterNotesPane.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\WelcomePanel.xaml.cs">
+      <DependentUpon>WelcomePanel.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -421,6 +437,14 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Components\ChapterNotesPane.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\WelcomePanel.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="Microsoft.AppCenter.Analytics">
@@ -449,6 +473,9 @@
     </PackageReference>
     <PackageReference Include="Microsoft.UI.Xaml">
       <Version>2.8.6</Version>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json">
+      <Version>13.0.3</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

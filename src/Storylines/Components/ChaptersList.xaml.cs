@@ -137,6 +137,8 @@ namespace Storylines.Components
                 MainPage.ChapterText.CheckForFormatting();
 
                 _ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
+
+                MainPage.Current.RefreshNotesPane();
             }
             else
                 MainPage.Current.EnableOrDisableChapterTools(false);

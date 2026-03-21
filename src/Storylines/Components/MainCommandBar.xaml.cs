@@ -164,6 +164,12 @@ namespace Storylines.Components
 
         private void OnCharactersButton_Click(object sender, RoutedEventArgs e)
             => AppView.current.ChangePage(AppView.Pages.Characters);
+
+        private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
+            => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);
+
+        private void OnSearchReplaceButton_Click(object sender, RoutedEventArgs e)
+            => MainPage.ChapterText.OpenSearchAndReplace();
         #endregion
 
         #region HELP

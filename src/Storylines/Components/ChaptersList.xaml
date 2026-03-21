@@ -10,6 +10,17 @@
              d:DesignWidth="400">
 
     <Grid RightTapped="OnChaptersListView_RightTapped">
+        <animations:Implicit.ShowAnimations>
+            <animations:OpacityAnimation Duration="0:0:0.3"
+                                         From="0"
+                                         To="1"
+                                         EasingMode="EaseOut" />
+            <animations:TranslationAnimation Duration="0:0:0.3"
+                                             From="20, 0, 0"
+                                             To="0"
+                                             EasingMode="EaseOut" />
+        </animations:Implicit.ShowAnimations>
+
         <Grid.RowDefinitions>
             <RowDefinition Height="28" />
             <RowDefinition Height="10" />

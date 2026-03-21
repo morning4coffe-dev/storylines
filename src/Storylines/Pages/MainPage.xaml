@@ -22,8 +22,41 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="auto" />
             <RowDefinition Height="*" />
-            <RowDefinition Height="32" />
+            <RowDefinition x:Name="notesRow" Height="0" />
+            <RowDefinition Height="36" />
         </Grid.RowDefinitions>
+
+        <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="WideState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="800" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="textBoxZoomSliderZoomText.Visibility" Value="Visible" />
+                        <Setter Target="textBoxZoomSlider.Visibility" Value="Visible" />
+                        <Setter Target="storyInfoDetailedButton.Visibility" Value="Visible" />
+                        <Setter Target="storyInfo.Visibility" Value="Collapsed" />
+                        <Setter Target="downBarChapterName.Visibility" Value="Visible" />
+                        <Setter Target="chapterTextBoxMainPage.Margin" Value="20" />
+                    </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="NarrowState">
+                    <VisualState.StateTriggers>
+                        <AdaptiveTrigger MinWindowWidth="0" />
+                    </VisualState.StateTriggers>
+                    <VisualState.Setters>
+                        <Setter Target="textBoxZoomSliderZoomText.Visibility" Value="Collapsed" />
+                        <Setter Target="textBoxZoomSlider.Visibility" Value="Collapsed" />
+                        <Setter Target="storyInfoDetailedButton.Visibility" Value="Collapsed" />
+                        <Setter Target="storyInfo.Visibility" Value="Visible" />
+                        <Setter Target="downBarChapterName.Visibility" Value="Collapsed" />
+                        <Setter Target="chapterTextBoxMainPage.Margin" Value="8" />
+                    </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+        </VisualStateManager.VisualStateGroups>
+
         <Rectangle x:Name="line"
                    Grid.ColumnSpan="2"
                    Height="1"
@@ -39,10 +72,22 @@
         <components:ChapterTextBox x:Name="chapterTextBoxMainPage"
                                    Grid.Row="1" />
 
+        <components:WelcomePanel x:Name="welcomePanel"
+                                 x:FieldModifier="public"
+                                 Grid.Row="1"
+                                 Grid.ColumnSpan="2"
+                                 Visibility="Collapsed" />
+
         <components:ChaptersList x:Name="chapterListComponentMainPage"
                                  Grid.Row="1"
                                  Grid.Column="1"
                                  Margin="0,8,8,8" />
+
+        <components:ChapterNotesPane x:Name="chapterNotesPane"
+                                     x:FieldModifier="public"
+                                     Grid.Row="2"
+                                     Margin="20,0,8,4"
+                                     Visibility="Collapsed" />
 
         <Grid x:Name="downBarMainPage"
               Grid.Row="3"
@@ -52,8 +97,8 @@
               BorderThickness="{ThemeResource ElementBorderThickness}"
               Canvas.ZIndex="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1.4*" />
-                <ColumnDefinition Width="0.06*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="285" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
@@ -65,18 +110,62 @@
                               Visibility="Collapsed" />
 
             <StackPanel Orientation="Horizontal"
-                        Spacing="4">
+                        Spacing="2"
+                        VerticalAlignment="Center"
+                        Margin="8,0,0,0">
+
+                <Button x:Name="storyInfoDetailedButton"
+                        Padding="6,2"
+                        MinHeight="0"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        Click="OnDownBarText_Click"
+                        ToolTipService.ToolTip="Click for detailed stats">
+                    <StackPanel Orientation="Horizontal" Spacing="12">
+                        <TextBlock x:Name="downBarWordsText"
+                                   x:FieldModifier="public"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.8" />
+                        <TextBlock Text="|"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.3" />
+                        <TextBlock x:Name="downBarCharsText"
+                                   x:FieldModifier="public"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.8" />
+                        <TextBlock Text="|"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.3" />
+                        <TextBlock x:Name="downBarReadTimeText"
+                                   x:FieldModifier="public"
+                                   VerticalAlignment="Center"
+                                   FontSize="12"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.6" />
+                    </StackPanel>
+                </Button>
+
+                <TextBlock x:Name="downBarText"
+                           x:FieldModifier="public"
+                           Visibility="Collapsed"
+                           Foreground="{ThemeResource TextForeground}" />
 
                 <HyperlinkButton x:Name="storyInfoDetailed"
                                  x:Uid="clickToSeeStoryAnalytics"
                                  VerticalAlignment="Center"
                                  x:FieldModifier="public"
-                                 Click="OnDownBarText_Click">
-                    <TextBlock x:Name="downBarText"
-                               x:Uid="downBarText"
-                               x:FieldModifier="public"
-                               Foreground="{ThemeResource TextForeground}" />
-                </HyperlinkButton>
+                                 Click="OnDownBarText_Click"
+                                 Visibility="Collapsed" />
 
                 <Button x:Name="storyInfo"
                         Width="40"
@@ -94,6 +183,15 @@
                         </FontIcon.RenderTransform>
                     </FontIcon>
                 </Button>
+
+                <TextBlock x:Name="downBarChapterName"
+                           x:FieldModifier="public"
+                           VerticalAlignment="Center"
+                           FontSize="12"
+                           Foreground="{ThemeResource TextForeground}"
+                           Opacity="0.5"
+                           Margin="12,0,0,0" />
+
                 <TextBlock x:Name="downBarFocusText"
                            VerticalAlignment="Center"
                            x:FieldModifier="public"

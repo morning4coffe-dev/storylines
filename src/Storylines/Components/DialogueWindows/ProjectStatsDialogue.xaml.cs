@@ -1,4 +1,5 @@
 ﻿using Newtonsoft.Json.Linq;
+using Storylines.Components;
 using Storylines.Pages;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Variables;
@@ -98,15 +99,26 @@ namespace Storylines.Components.DialogueWindows
             RichEditBox textBox = MainPage.ChapterText.textBox;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
-            _ = txt.Replace(" ", "");
 
+            int charCount = txt.Length > 0 ? txt.Length - 1 : 0;
             int wordCount = txt.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
 
+            string selectedPrefix = textBox.Document.Selection.Text.Length != 0 ? $"{textBox.Document.Selection.Text.Length} / " : "";
+
+            int readMinutes = Math.Max(1, (int)Math.Ceiling(wordCount / 200.0));
+
+            MainPage.Current.downBarWordsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";
+            MainPage.Current.downBarCharsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedPrefix}{charCount}";
+            MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} min read";
+
+            // Update chapter name if available
+            var currentChapter = Chapter.chapters?.Count > 0 && ChaptersList.selectedIndex < Chapter.chapters.Count ? Chapter.chapters[ChaptersList.selectedIndex] : null;
+            if (currentChapter != null)
+                MainPage.Current.downBarChapterName.Text = currentChapter.name;
+
+            // Keep legacy text for compatibility
             int paragraphCount = Regex.Matches(txt, @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;
-
-            string selectedLetters = textBox.Document.Selection.Text.Length != 0 ? $"{textBox.Document.Selection.Text.Length} / " : "";
-
-            MainPage.Current.downBarText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedLetters}{txt.Length - 1}   {ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}   {ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";
+            MainPage.Current.downBarText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedPrefix}{charCount}   {ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}   {ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";
         }
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)

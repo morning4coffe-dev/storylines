@@ -2,6 +2,7 @@
 using Storylines.Pages;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
+using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
 using System;
 using System.Collections.Generic;
@@ -25,6 +26,11 @@ namespace Storylines.Components
 
         public static ProjectFile currentProject;
 
+        private static ILogger Logger => ServiceLocator.Logger;
+        private static IFileService FileService => ServiceLocator.FileService;
+        private static ISaveSerializer JsonSerializer => ServiceLocator.JsonSerializer;
+        private static ISaveSerializer LegacySerializer => ServiceLocator.LegacySerializer;
+
         #region Save
         private enum AfterSave { DoNothing, ClearEverything, Exit };
         private static AfterSave afterSave;
@@ -33,18 +39,15 @@ namespace Storylines.Components
         {
             afterSave = AfterSave.DoNothing;
 
-            //System.Runtime.Serialization.Formatters.Binary.BinaryFormatter form = new System.Runtime.Serialization.Formatters.Binary.BinaryFormatter();
-            //form.Serialize(afterSave);
-
             if (currentProject.file != null)
             {
                 if (currentProject.file.FileType == ".srl")
                 {
-                     WriteToFile(GetSaveValues());
+                    var projectData = CollectProjectData();
+                    WriteToFile(JsonSerializer.Serialize(projectData));
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
                 }
-                else
-                if (currentProject.file.FileType == ".txt")
+                else if (currentProject.file.FileType == ".txt")
                 {
                     MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
@@ -65,54 +68,55 @@ namespace Storylines.Components
 
         public static void SaveAndExitOrClearAll(bool exit)
         {
-            if (exit)
-                afterSave = AfterSave.Exit;
-            else
-                afterSave = AfterSave.ClearEverything;
+            afterSave = exit ? AfterSave.Exit : AfterSave.ClearEverything;
 
             if (currentProject.file != null)
             {
-                WriteToFile(GetSaveValues());
+                var projectData = CollectProjectData();
+                WriteToFile(JsonSerializer.Serialize(projectData));
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
                 SaveDialogue.Open(SaveDialogue.Type.Save);
         }
 
+        private static ProjectData CollectProjectData()
+        {
+            var data = new ProjectData
+            {
+                Version = $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}",
+                LastOpenedChapter = MainPage.ChapterList.listView.SelectedIndex,
+                Name = currentProject.projectName
+            };
+
+            foreach (var character in Character.characters)
+            {
+                data.Characters.Add(new CharacterData
+                {
+                    Name = character.name,
+                    Description = character.description,
+                    PictureFileName = character.picture?.fileName ?? string.Empty
+                });
+            }
+
+            foreach (var chapter in Chapter.chapters)
+            {
+                data.Chapters.Add(new ChapterData
+                {
+                    Name = chapter.name,
+                    Text = chapter.text,
+                    Notes = chapter.notes ?? string.Empty
+                });
+            }
+
+            return data;
+        }
+
+        // Legacy format support — kept for SaveCopy / backward compat
         private static string GetSaveValues()
         {
-            savedValues.Clear();
-            savedValues.Add("version", $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}");
-            savedValues.Add("lastOpenedChapter", $"{MainPage.ChapterList.listView.SelectedIndex}");
-            savedValues.Add("name", currentProject.projectName);
-
-            for (int i = 0; i < Character.characters.Count; i++)
-            {
-                savedValues.Add($"character{i}", $"{Character.characters[i].name}<Y&⨝m>{Character.characters[i].description}<Y&⨝m>{Character.characters[i].picture.fileName}");
-            }
-
-            for (int i = 0; i < Chapter.chapters.Count; i++)
-            {
-                if (Chapter.chapters[i].text.Contains("<Y&⨝m>") || Chapter.chapters[i].text.Contains(">[Y≇g&<") || Chapter.chapters[i].text.Contains("@N*∛$\n"))
-                {
-                    Chapter.chapters[i].text.Replace("<Y&⨝m>", "");
-                    Chapter.chapters[i].text.Replace(">[Y≇g&<", "");
-                    Chapter.chapters[i].text.Replace("@N*∛$\n", "");
-                }
-
-                savedValues.Add($"chapter{i}", $"{Chapter.chapters[i].name}<Y&⨝m>{Chapter.chapters[i].text}");
-            }
-
-            string[] valuesToSave = savedValues.Values.ToArray();
-            string[] keysToSave = savedValues.Keys.ToArray();
-            string toSave = "";
-
-            for (int i = 0; i < savedValues.Count; i++)
-            {
-                toSave += $"{keysToSave[i]}>[Y≇g&<{valuesToSave[i]}@N*∛$\n";
-            }
-
-            return toSave;
+            var projectData = CollectProjectData();
+            return JsonSerializer.Serialize(projectData);
         }
 
         private static async void NewFile(StorageFolder folder, string fileContent, string fileName)
@@ -139,12 +143,14 @@ namespace Storylines.Components
         {
             try
             {
-                IBuffer buffUTF8 = CryptographicBuffer.ConvertStringToBinary(fileContent, BinaryStringEncoding.Utf8);
-                await FileIO.WriteBufferAsync(currentProject.file, buffUTF8);
+                await FileService.WriteAsync(currentProject.file, fileContent);
             }
-            catch
+            catch (Exception ex)
             {
-                NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("saveSaveSystemErrorText"), "");
+                Logger.Error("Failed to write project file", ex);
+                NotificationManager.DisplayInAppNotification(
+                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                    ResourceLoader.GetForCurrentView().GetString("saveSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
 
                 afterSave = AfterSave.DoNothing;
@@ -177,18 +183,12 @@ namespace Storylines.Components
 
         public static async void OpenFileExplorer_SaveAsync(string fileName)
         {
-            Windows.Storage.Pickers.FolderPicker picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
-            };
-            picker.FileTypeFilter.Add("*");
-
-            StorageFolder folder = await picker.PickSingleFolderAsync();
+            StorageFolder folder = await FileService.PickFolderForSaveAsync();
 
             if (folder != null)
             {
-                NewFile(folder, GetSaveValues(), fileName);
+                var projectData = CollectProjectData();
+                NewFile(folder, JsonSerializer.Serialize(projectData), fileName);
             }
         }
         #endregion
@@ -219,8 +219,7 @@ namespace Storylines.Components
 
                 if (project.file.FileType == ".srl")
                     _ = LoadStorylinesDocument(project.file);
-                else
-                if (project.file.FileType == ".txt")
+                else if (project.file.FileType == ".txt")
                     _ = LoadPlainDocument(project.file);
             }
         }
@@ -232,47 +231,56 @@ namespace Storylines.Components
             LoadProjectDialogue.loadFile.Hide();
             try
             {
-                string txt = await FileIO.ReadTextAsync(file);
-                string[] loadedStrings = txt.Split(txt.Contains("@N*∛$\n") ? "@N*∛$\n" : "@N*∛$\r\n", StringSplitOptions.RemoveEmptyEntries);
+                string content = await FileService.ReadAsync(file);
 
-                savedValues.Clear();
-                foreach (string s in loadedStrings) 
+                ProjectData projectData;
+
+                // Try JSON first, then fall back to legacy .srl format
+                if (JsonSerializer.CanDeserialize(content))
                 {
-                    string[] values = s.Split(">[Y≇g&<", StringSplitOptions.RemoveEmptyEntries);
-                    savedValues.Add(values[0], values[1]);
+                    projectData = JsonSerializer.Deserialize(content);
+                    Logger.Info("Loaded project in JSON format");
+                }
+                else if (LegacySerializer.CanDeserialize(content))
+                {
+                    projectData = LegacySerializer.Deserialize(content);
+                    Logger.Info("Loaded project in legacy SRL format — will save as JSON on next save");
+                }
+                else
+                {
+                    Logger.Error("Unable to detect file format for: " + file.Name);
+                    NotificationManager.DisplayInAppNotification(
+                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                        ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                    return;
                 }
 
-                    currentProject.projectVersion = savedValues["version"];
-                if (SettingsValues.IsCurrentVersionGreater(currentProject.projectVersion, "0.5.53.0"))
-                    currentProject.projectName = savedValues["name"];
+                currentProject.projectVersion = projectData.Version;
+                currentProject.projectName = projectData.Name;
 
-                for (int i = 0; i < savedValues.Count; i++)
+                foreach (var charData in projectData.Characters)
                 {
-                    if (savedValues.Keys.ToList()[i].Contains("character"))
-                    {
-                        string[] str = savedValues.Values.ToList()[i].Split("<Y&⨝m>", StringSplitOptions.None);
-                        if (SettingsValues.IsCurrentVersionGreater(currentProject.projectVersion, "0.5.4.0") && str[2] != null)
-                            Character.AddExisting(str[0], Guid.NewGuid().ToString(), str[1], new CharacterPicture() { fileName = str[2] });
-                        else
-                            Character.AddExisting(str[0], Guid.NewGuid().ToString(), str[1], null);
-                    }
-                    else
-                    if (savedValues.Keys.ToList()[i].Contains("chapter"))
-                    {
-                        string[] str = savedValues.Values.ToList()[i].Split("<Y&⨝m>", StringSplitOptions.None);
-                        Chapter.AddExisting(str[0], Guid.NewGuid().ToString(), str[1]);
-                    }
+                    var picture = !string.IsNullOrEmpty(charData.PictureFileName)
+                        ? new CharacterPicture { fileName = charData.PictureFileName }
+                        : null;
+                    Character.AddExisting(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture);
                 }
 
-                LoadVariables();
+                foreach (var chapterData in projectData.Chapters)
+                {
+                    Chapter.AddExisting(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes);
+                }
 
+                LoadVariables(projectData);
                 Loaded();
                 MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
-                //Windows.Security.Cryptography.CryptographicBuffer.ConvertBinaryToString
             }
-            catch
+            catch (Exception ex)
             {
-                NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                Logger.Error("Failed to load Storylines document", ex);
+                NotificationManager.DisplayInAppNotification(
+                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                    ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
         }
@@ -285,27 +293,27 @@ namespace Storylines.Components
                 LoadProjectDialogue.loadFile.isEscape = false;
                 LoadProjectDialogue.loadFile.Hide();
 
-                string txt = await FileIO.ReadTextAsync(file);
+                string txt = await FileService.ReadAsync(file);
 
                 Chapter.AddExisting(file.DisplayName, Guid.NewGuid().ToString(), txt);
                 MainPage.ChapterList.listView.SelectedIndex = 0;
 
-                //saveFile = file;
-
-                //loadedProjectName = file.Name;
                 Loaded();
                 MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
             }
-            catch
+            catch (Exception ex)
             {
-                NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                Logger.Error("Failed to load plain text document", ex);
+                NotificationManager.DisplayInAppNotification(
+                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                    ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
         }
 
-        private static void LoadVariables()
+        private static void LoadVariables(ProjectData projectData)
         {
-            ChaptersList.selectedIndex = Convert.ToInt32(savedValues["lastOpenedChapter"] ?? "0");
+            ChaptersList.selectedIndex = projectData.LastOpenedChapter;
             MainPage.ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
         }
 
@@ -320,15 +328,7 @@ namespace Storylines.Components
 
         private static async Task<StorageFile> OpenFileEplorerLoadAsync()
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add(".srl");
-            picker.FileTypeFilter.Add(".txt");
-
-            StorageFile file = await picker.PickSingleFileAsync();
+            StorageFile file = await FileService.PickFileForOpenAsync();
 
             if (file != null)
             {
@@ -339,7 +339,6 @@ namespace Storylines.Components
             }
             else
             {
-                //NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, "An error occurred your file couldn't be load.", "");
                 return null;
             }
         }

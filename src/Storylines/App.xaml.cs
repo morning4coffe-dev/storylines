@@ -33,6 +33,8 @@ namespace Storylines
         {
             InitializeComponent();
             Suspending += OnSuspending;
+
+            Scripts.Services.ServiceLocator.Initialize();
         }
 
         /// <param name="e">Podrobnosti o žádosti o spuštění a procesu</param>
@@ -135,7 +137,10 @@ namespace Storylines
                     if(file != null)
                         SaveSystem.Load(ProjectFile.LoadExisting(file, fileToken));
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Scripts.Services.ServiceLocator.Logger?.Warning($"Failed to load last project: {ex.Message}");
+                }
             }
         }
 

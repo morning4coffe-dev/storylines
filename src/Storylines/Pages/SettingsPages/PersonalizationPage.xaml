@@ -99,17 +99,66 @@
                     </Grid>
                 </muxc:Expander.Header>
                 <muxc:Expander.Content>
-                    <ColorPicker x:Name="customAccentPicker"
-                                 Margin="30,10"
-                                 HorizontalAlignment="Left"
-                                 ColorSpectrumShape="Ring"
-                                 IsMoreButtonVisible="False"
-                                 IsColorSliderVisible="True"
-                                 IsColorChannelTextInputVisible="True"
-                                 IsHexInputVisible="True"
-                                 IsAlphaEnabled="False"
-                                 IsEnabled="False"
-                                 ColorChanged="ColorPicker_ColorChanged" />
+                    <StackPanel Spacing="12" Margin="30,10">
+                        <TextBlock Text="Quick Presets"
+                                   FontWeight="Medium"
+                                   FontSize="13"
+                                   Opacity="0.8" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <Button Tag="#BE5A00" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Storylines Orange">
+                                <Button.Content>
+                                    <Ellipse Fill="#BE5A00" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                            <Button Tag="#0078D4" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Blue">
+                                <Button.Content>
+                                    <Ellipse Fill="#0078D4" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                            <Button Tag="#107C10" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Green">
+                                <Button.Content>
+                                    <Ellipse Fill="#107C10" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                            <Button Tag="#E81123" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Red">
+                                <Button.Content>
+                                    <Ellipse Fill="#E81123" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                            <Button Tag="#881798" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Purple">
+                                <Button.Content>
+                                    <Ellipse Fill="#881798" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                            <Button Tag="#CA5010" Width="38" Height="38" CornerRadius="19"
+                                    Click="OnAccentPresetButton_Click"
+                                    ToolTipService.ToolTip="Rust">
+                                <Button.Content>
+                                    <Ellipse Fill="#CA5010" Width="24" Height="24" />
+                                </Button.Content>
+                            </Button>
+                        </StackPanel>
+                        <ColorPicker x:Name="customAccentPicker"
+                                     HorizontalAlignment="Left"
+                                     ColorSpectrumShape="Ring"
+                                     IsMoreButtonVisible="False"
+                                     IsColorSliderVisible="True"
+                                     IsColorChannelTextInputVisible="True"
+                                     IsHexInputVisible="True"
+                                     IsAlphaEnabled="False"
+                                     IsEnabled="False"
+                                     ColorChanged="ColorPicker_ColorChanged" />
+                    </StackPanel>
                 </muxc:Expander.Content>
             </muxc:Expander>
 

@@ -1,0 +1,93 @@
+<UserControl x:Class="Storylines.Components.WelcomePanel"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+             mc:Ignorable="d">
+
+    <Grid x:Name="welcomeRoot"
+          HorizontalAlignment="Center"
+          VerticalAlignment="Center"
+          MaxWidth="460"
+          Padding="40">
+
+        <animations:Implicit.ShowAnimations>
+            <animations:OpacityAnimation Duration="0:0:0.5"
+                                         From="0"
+                                         To="1"
+                                         EasingMode="EaseOut" />
+            <animations:TranslationAnimation Duration="0:0:0.5"
+                                             From="0, 24, 0"
+                                             To="0"
+                                             EasingMode="EaseOut" />
+        </animations:Implicit.ShowAnimations>
+
+        <StackPanel Spacing="24"
+                    HorizontalAlignment="Center">
+
+            <FontIcon Glyph="&#xE736;"
+                      FontSize="48"
+                      Foreground="{ThemeResource SystemAccentColor}"
+                      HorizontalAlignment="Center"
+                      Opacity="0.8" />
+
+            <TextBlock Text="Welcome to Storylines"
+                       FontSize="28"
+                       FontWeight="SemiBold"
+                       HorizontalAlignment="Center"
+                       Foreground="{ThemeResource TextForeground}" />
+
+            <TextBlock Text="Create a new project or open an existing one to start writing."
+                       FontSize="14"
+                       HorizontalAlignment="Center"
+                       TextAlignment="Center"
+                       Foreground="{ThemeResource TextForeground}"
+                       Opacity="0.6"
+                       TextWrapping="WrapWholeWords" />
+
+            <StackPanel Orientation="Horizontal"
+                        HorizontalAlignment="Center"
+                        Spacing="12"
+                        Margin="0,8,0,0">
+
+                <Button x:Name="newProjectButton"
+                        Style="{ThemeResource AccentButtonStyle}"
+                        Padding="20,10"
+                        CornerRadius="4"
+                        Click="OnNewProjectButton_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE710;" FontSize="14" />
+                        <TextBlock Text="New Project" />
+                    </StackPanel>
+                </Button>
+
+                <Button x:Name="openProjectButton"
+                        Padding="20,10"
+                        CornerRadius="4"
+                        Click="OnOpenProjectButton_Click">
+                    <StackPanel Orientation="Horizontal" Spacing="8">
+                        <FontIcon Glyph="&#xE8E5;" FontSize="14" />
+                        <TextBlock Text="Open Project" />
+                    </StackPanel>
+                </Button>
+
+            </StackPanel>
+
+            <StackPanel Spacing="6"
+                        Margin="0,12,0,0"
+                        Opacity="0.5">
+                <TextBlock Text="Keyboard Shortcuts"
+                           FontSize="12"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center" />
+                <TextBlock Text="Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save"
+                           FontSize="11"
+                           HorizontalAlignment="Center"
+                           Foreground="{ThemeResource TextForeground}"
+                           Opacity="0.7" />
+            </StackPanel>
+
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,5 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
-using Storylines.Pages;
+﻿using Storylines.Pages;
+using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using System.Collections.Generic;
 using System.Linq;
@@ -151,17 +151,13 @@ namespace Storylines.Scripts.Functions
         private static void TryGroupingUndoQueue()
         {
             var undoQueueArray = undoQueue.items.ToArray();
-            for (int i = 0; i < undoQueueArray.Length; i++)
+            for (int i = 1; i < undoQueueArray.Length; i++)
             {
-                try
+                if (undoQueueArray[i - 1] != null && undoQueueArray[i - 1].changed == undoQueueArray[i].changed && undoQueueArray[i - 1].chapter.text != null && undoQueueArray[i].chapter.text != null)
                 {
-                    if (undoQueueArray[i - 1] != null && undoQueueArray[i - 1].changed == undoQueueArray[i].changed && undoQueueArray[i - 1].chapter.text != null && undoQueueArray[i].chapter.text != null)
-                    {
-                        undoQueue.items[i - 1] = undoQueueArray[i];
-                        undoQueue.items.RemoveAt(i);
-                    }
+                    undoQueue.items[i - 1] = undoQueueArray[i];
+                    undoQueue.items.RemoveAt(i);
                 }
-                catch { }
             }
         }
     }
@@ -200,13 +196,6 @@ namespace Storylines.Scripts.Functions
                     case Changed.Changed:
                         tt = new TimeTravelCharacter();
                         tt.character = Character.Copy(character.token);
-                        //tt.character = new Character()
-                        //{
-                        //    name = character.name,
-                        //    description = character.description,
-                        //    picture = character.picture,
-                        //};
-                        //tt.character.SetToken(character.token);
                         break;
                 }
 

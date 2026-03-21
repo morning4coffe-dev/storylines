@@ -978,6 +978,30 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+
+                    <AppBarSeparator />
+
+                    <AppBarToggleButton x:Name="notesToggleButton"
+                                        x:FieldModifier="public"
+                                        CornerRadius="4"
+                                        Label="Notes"
+                                        ToolTipService.ToolTip="Toggle Chapter Notes"
+                                        Click="OnNotesToggleButton_Click">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon Glyph="" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+
+                    <AppBarButton x:Name="searchReplaceButton"
+                                  x:FieldModifier="public"
+                                  CornerRadius="4"
+                                  Label="Find &amp; Replace"
+                                  ToolTipService.ToolTip="Find &amp; Replace (Ctrl+H)"
+                                  Click="OnSearchReplaceButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
                                                          From="8, 0, 0"

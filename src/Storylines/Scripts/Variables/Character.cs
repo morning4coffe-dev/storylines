@@ -1,4 +1,5 @@
 ﻿using Storylines.Scripts.Functions;
+using Storylines.Scripts.Services;
 using System;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
@@ -118,14 +119,21 @@ namespace Storylines.Scripts.Variables
 
         public static BitmapImage ProfilePictureFromCharacterPictureAsync(CharacterPicture cp)
         {
-            var folder = ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists).AsTask().GetAwaiter().GetResult();
-            var file = folder.TryGetItemAsync(cp.fileName).AsTask().GetAwaiter().GetResult();
+            try
+            {
+                var folder = ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists).AsTask().GetAwaiter().GetResult();
+                var file = folder.TryGetItemAsync(cp.fileName).AsTask().GetAwaiter().GetResult();
 
-            if (file != null)
-                return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = 60, DecodePixelWidth = 60 };
-            else
-                NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("picturesNotFound"), "");
-                return null;
+                if (file != null)
+                    return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = 60, DecodePixelWidth = 60 };
+            }
+            catch (Exception ex)
+            {
+                ServiceLocator.Logger.Error($"Failed to load profile picture: {cp.fileName}", ex);
+            }
+
+            NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("picturesNotFound"), "");
+            return null;
         }
 
         public void NotifyPropertyChanged(string propertyName = "")

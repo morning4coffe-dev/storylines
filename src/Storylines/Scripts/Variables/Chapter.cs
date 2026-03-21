@@ -28,21 +28,18 @@ namespace Storylines.Scripts.Variables
                 NotifyPropertyChanged();
             }
         }
+        private string _notes;
+        public string notes
+        {
+            get { return _notes; }
+            set
+            {
+                _notes = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public static ObservableCollection<Chapter> chapters = new ObservableCollection<Chapter>();
-        //public static ObservableCollection<Chapter> chapters 
-        //{
-        //    get 
-        //    {              
-        //        MainPage.ChapterList.CheckForEmptyList();
-        //        return _chapters;
-        //    }
-        //    set 
-        //    {
-        //        _chapters = value;
-        //        MainPage.ChapterList.CheckForEmptyList();
-        //    }
-        //}
 
         private static readonly Components.ChaptersList ChapterList = MainPage.ChapterList;
 
@@ -66,16 +63,16 @@ namespace Storylines.Scripts.Variables
             Add($"{chapterName}: {txt}");
         }
 
-        public static Chapter AddExisting(string name, string token, string text)
+        public static Chapter AddExisting(string name, string token, string text, string notes = "")
         {
-            var ch = new Chapter() { name = name, token = token, text = text };
+            var ch = new Chapter() { name = name, token = token, text = text, notes = notes ?? string.Empty };
             chapters.Add(ch);
             return ch;
         }
 
-        public static Chapter InsertExisting(string name, string token, string text, int position)
+        public static Chapter InsertExisting(string name, string token, string text, int position, string notes = "")
         {
-            var ch = new Chapter() { name = name, token = token, text = text };
+            var ch = new Chapter() { name = name, token = token, text = text, notes = notes ?? string.Empty };
             chapters.Insert(position, ch);
             return ch;
         }

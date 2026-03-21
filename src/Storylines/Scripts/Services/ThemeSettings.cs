@@ -1,5 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.UI.Helpers;
 using Storylines.Pages;
+using Storylines.Scripts.Services.Interfaces;
 using System;
 using Windows.Storage;
 using Windows.UI;
@@ -130,7 +131,10 @@ namespace Storylines.Scripts.Services
             {
                 MainPage.ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
             }
-            catch { }
+            catch (Exception ex)
+            {
+                ServiceLocator.Logger?.Warning($"TextBoxWhiteBackground failed during theme change: {ex.Message}");
+            }
 
             UpdateAccentColor((Color)Application.Current.Resources["SystemAccentColor"]);
 

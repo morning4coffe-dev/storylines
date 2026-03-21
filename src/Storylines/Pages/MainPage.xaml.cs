@@ -62,6 +62,7 @@ namespace Storylines.Pages
             if (enable)
             {
                 ChapterText.textBoxRectangle.Visibility = Visibility.Collapsed;
+                ShowWelcomePanel(false);
                 UpdateDownBar();
             }
             else
@@ -69,6 +70,7 @@ namespace Storylines.Pages
                 AppView.current.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
                 downBarText.Text = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
+                ShowWelcomePanel(Chapter.chapters == null || Chapter.chapters.Count == 0);
             }
         }
 
@@ -93,22 +95,10 @@ namespace Storylines.Pages
             if (ActualWidth < 800)
             {
                 OpenOrCloseChapterList(false, false);
-                chapterTextBoxMainPage.Margin = new Thickness(8);
-                textBoxZoomSliderZoomText.Visibility = Visibility.Collapsed;
-                textBoxZoomSlider.Visibility = Visibility.Collapsed;
             }
             else
             {
                 OpenOrCloseChapterList(true, false);
-                chapterTextBoxMainPage.Margin = new Thickness(20);
-                textBoxZoomSliderZoomText.Visibility = Visibility.Visible;
-                textBoxZoomSlider.Visibility = Visibility.Visible;
-            }
-
-            if (FocusMode == null)
-            {
-                storyInfoDetailed.Visibility = ActualWidth < 700 ? Visibility.Collapsed : Visibility.Visible;
-                storyInfo.Visibility = ActualWidth >= 700 ? Visibility.Collapsed : Visibility.Visible;
             }
 
             UpdateTextBoxZoom(textBoxZoomSlider.Value);
@@ -155,6 +145,35 @@ namespace Storylines.Pages
 
         private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e) =>
             OpenOrCloseChapterList(closeOpenChapterListComponentIcon.Symbol == Symbol.ClosePane, true);
+        #endregion
+
+        #region Notes
+        public void ToggleNotesPane(bool show)
+        {
+            if (show)
+            {
+                notesRow.Height = new GridLength(140);
+                chapterNotesPane.Visibility = Visibility.Visible;
+                chapterNotesPane.LoadNotes();
+            }
+            else
+            {
+                notesRow.Height = new GridLength(0);
+                chapterNotesPane.Visibility = Visibility.Collapsed;
+            }
+        }
+
+        public void RefreshNotesPane()
+        {
+            if (chapterNotesPane.Visibility == Visibility.Visible)
+                chapterNotesPane.LoadNotes();
+        }
+
+        public void ShowWelcomePanel(bool show)
+        {
+            welcomePanel.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            chapterTextBoxMainPage.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+        }
         #endregion
 
         #region Zoom
