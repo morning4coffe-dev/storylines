@@ -136,7 +136,7 @@
     <value>File name:</value>
   </data>
   <data name="FileNameCollisionError" xml:space="preserve">
-    <value>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</value>
+    <value>This file already exists. Change the name or location, or the file will be replaced.</value>
   </data>
   <data name="FileNamePlaceholder" xml:space="preserve">
     <value>"the-queen-of-donuts-export"</value>

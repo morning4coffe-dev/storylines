@@ -12,14 +12,44 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="All" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="ChaptersToExport" xml:space="preserve">
+    <value>要导出的章节：</value>
+  </data>
+  <data name="CharactersToExport" xml:space="preserve">
+    <value>要导出的人物：</value>
+  </data>
+  <data name="FileLocation" xml:space="preserve">
+    <value>文件位置：</value>
+  </data>
+  <data name="FileLocationPlaceholder" xml:space="preserve">
+    <value>"C:\Users\Documents"</value>
+  </data>
+  <data name="FileName" xml:space="preserve">
+    <value>文件名：</value>
+  </data>
+  <data name="FileNameCollisionError" xml:space="preserve">
+    <value>该文件已存在。请更改名称或位置，否则该文件将被替换。</value>
+  </data>
+  <data name="FileNamePlaceholder" xml:space="preserve">
+    <value>"甜甜圈女王-导出"</value>
+  </data>
   <data name="IncludeChapterName" xml:space="preserve">
     <value>包括章名</value>
+  </data>
+  <data name="None" xml:space="preserve">
+    <value>无</value>
   </data>
   <data name="OptionChapters" xml:space="preserve">
     <value>章节</value>
   </data>
   <data name="OptionCharacters" xml:space="preserve">
-    <value>字符</value>
+    <value>人物</value>
+  </data>
+  <data name="OptionDialogues" xml:space="preserve">
+    <value>对话</value>
   </data>
   <data name="Submit" xml:space="preserve">
     <value>导出</value>

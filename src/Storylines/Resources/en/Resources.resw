@@ -256,13 +256,13 @@
     <value>Chapters to export:</value>
   </data>
   <data name="chapterWithoutName" xml:space="preserve">
-    <value>Right click on this text or on the arrow above to rename</value>
+    <value>Right-click this text or the arrow above to rename this chapter.</value>
   </data>
   <data name="characterNotSelected.Text" xml:space="preserve">
     <value>No character selected.</value>
   </data>
   <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
-    <value>"Alex White"</value>
+    <value>Name</value>
   </data>
   <data name="characters" xml:space="preserve">
     <value>Characters</value>
@@ -307,7 +307,7 @@
     <value>Click here</value>
   </data>
   <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Click here to see Story Analytics</value>
+    <value>Click to view Story Analytics</value>
   </data>
   <data name="createNew.Text" xml:space="preserve">
     <value>Create new</value>
@@ -367,8 +367,7 @@
     <value>Cancel</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Hey! Slow down a little bit!
-Did you want to exit without saving your progress?</value>
+    <value>Unsaved changes will be lost. Are you sure you want to exit without saving?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
     <value>Don't save</value>
@@ -398,7 +397,7 @@ Did you want to exit without saving your progress?</value>
     <value>File</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
-    <value>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</value>
+    <value>This file already exists. Change the name or location, or the file will be replaced.</value>
   </data>
   <data name="fileLocation.Text" xml:space="preserve">
     <value>"C:\Users\Documents"</value>
@@ -479,7 +478,7 @@ Did you want to exit without saving your progress?</value>
     <value>Language</value>
   </data>
   <data name="languageSettingDesc.Text" xml:space="preserve">
-    <value>After changing this setting, a restart is required for changes to fully apply.</value>
+    <value>Some language changes require a restart to apply everywhere in the app.</value>
   </data>
   <data name="light.Content" xml:space="preserve">
     <value>Light</value>
@@ -491,7 +490,7 @@ Did you want to exit without saving your progress?</value>
     <value>Load</value>
   </data>
   <data name="loadSaveSystemErrorText" xml:space="preserve">
-    <value>An error occurred your file couldn't be load.</value>
+    <value>An error occurred while loading your file.</value>
   </data>
   <data name="location.Text" xml:space="preserve">
     <value>Location:</value>
@@ -515,7 +514,7 @@ Did you want to exit without saving your progress?</value>
     <value>Focus Mode</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>"Uten navn"</value>
+    <value>"Untitled"</value>
   </data>
   <data name="newChapterShortcut.Text" xml:space="preserve">
     <value>New chapter with shortcut</value>
@@ -539,8 +538,7 @@ Did you want to exit without saving your progress?</value>
     <value>Add new character</value>
   </data>
   <data name="noCharactersDialogueDescription" xml:space="preserve">
-    <value>You can easily add a new character by tapping on
-the "Add new character" button.</value>
+    <value>You can easily add a new character by clicking the "Add new character" button.</value>
   </data>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
     <value>There are no characters in this project.</value>
@@ -603,7 +601,7 @@ the "Add new character" button.</value>
     <value>Last project on startup</value>
   </data>
   <data name="projectOnStartSettingDesc.Text" xml:space="preserve">
-    <value>The application remembers what project was last open and tries to load it on the next startup.</value>
+    <value>The app remembers the last project you opened and tries to load it the next time it starts.</value>
   </data>
   <data name="projects.Text" xml:space="preserve">
     <value>Projects</value>
@@ -678,7 +676,7 @@ the "Add new character" button.</value>
     <value>Save copy</value>
   </data>
   <data name="saveSaveSystemErrorText" xml:space="preserve">
-    <value>An error occurred your file couldn't be saved.</value>
+    <value>An error occurred while saving your file.</value>
   </data>
   <data name="saveText" xml:space="preserve">
     <value>Save</value>
@@ -769,5 +767,149 @@ the "Add new character" button.</value>
   </data>
   <data name="zToA.Text" xml:space="preserve">
     <value>Z-A</value>
+  </data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve">
+    <value>Welcome to Storylines</value>
+  </data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve">
+    <value>Create a new project or open an existing one to start writing.</value>
+  </data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve">
+    <value>New Project</value>
+  </data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve">
+    <value>Open Project</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve">
+    <value>Keyboard Shortcuts</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
+    <value>Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save</value>
+  </data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
+    <value>Chapter Notes</value>
+  </data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Hide Notes</value>
+  </data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve">
+    <value>Add notes for this chapter...</value>
+  </data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve">
+    <value>Role (e.g. Protagonist)</value>
+  </data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve">
+    <value>Age</value>
+  </data>
+  <data name="notesToggleButton.Label" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle Chapter Notes</value>
+  </data>
+  <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>Find &amp; Replace</value>
+  </data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Find &amp; Replace (Ctrl+H)</value>
+  </data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
+    <value>Find...</value>
+  </data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Match Case</value>
+  </data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Whole Word</value>
+  </data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>Replace...</value>
+  </data>
+  <data name="replaceButton.Content" xml:space="preserve">
+    <value>Replace</value>
+  </data>
+  <data name="replaceAllButton.Content" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Click for detailed stats</value>
+  </data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Reset</value>
+  </data>
+  <data name="quickPresets.Text" xml:space="preserve">
+    <value>Quick Presets</value>
+  </data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Storylines Orange</value>
+  </data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Purple</value>
+  </data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rust</value>
+  </data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Find project</value>
+  </data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>New project</value>
+  </data>
+  <data name="hindi.Content" xml:space="preserve">
+    <value>Hindi</value>
+  </data>
+  <data name="polish.Content" xml:space="preserve">
+    <value>Polish</value>
+  </data>
+  <data name="languageRestartText.Text" xml:space="preserve">
+    <value>Restart Storylines to apply the selected language across the entire app.</value>
+  </data>
+  <data name="restartNowButton.Content" xml:space="preserve">
+    <value>Restart now</value>
+  </data>
+  <data name="restartLaterButton.Content" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve">
+    <value>Couldn't restart automatically</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve">
+    <value>Close and reopen Storylines to finish applying the new language.</value>
+  </data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve">
+    <value>More</value>
+  </data>
+  <data name="highlighterButton.Label" xml:space="preserve">
+    <value>Highlight</value>
+  </data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Highlight (Ctrl+Shift+H, right-click or hold to access more colors)</value>
+  </data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Yellow</value>
+  </data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Red</value>
+  </data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Green</value>
+  </data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="highlightNone.Content" xml:space="preserve">
+    <value>None</value>
   </data>
 </root>

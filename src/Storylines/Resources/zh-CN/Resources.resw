@@ -46,7 +46,7 @@
     <value>应用</value>
   </data>
   <data name="appHeaderEdited" xml:space="preserve">
-    <value>编辑中</value>
+    <value>已修改</value>
   </data>
   <data name="autosave.Label" xml:space="preserve">
     <value>自动保存</value>
@@ -55,28 +55,28 @@
     <value>自动保存</value>
   </data>
   <data name="autosaveEnable.Text" xml:space="preserve">
-    <value>打开</value>
+    <value>启用</value>
   </data>
   <data name="autosaveInterval.Text" xml:space="preserve">
     <value>间隔</value>
   </data>
   <data name="autosaveInterval10.Content" xml:space="preserve">
-    <value>10 取消</value>
+    <value>10 分钟</value>
   </data>
   <data name="autosaveInterval12.Content" xml:space="preserve">
-    <value>12 取消</value>
+    <value>12 分钟</value>
   </data>
   <data name="autosaveInterval15.Content" xml:space="preserve">
-    <value>15 取消</value>
+    <value>15 分钟</value>
   </data>
   <data name="autosaveInterval2.Content" xml:space="preserve">
-    <value>2 取消</value>
+    <value>2 分钟</value>
   </data>
   <data name="autosaveInterval30.Content" xml:space="preserve">
-    <value>30 取消</value>
+    <value>30 分钟</value>
   </data>
   <data name="autosaveInterval5.Content" xml:space="preserve">
-    <value>5 取消</value>
+    <value>5 分钟</value>
   </data>
   <data name="autosaveText.Text" xml:space="preserve">
     <value>自动保存</value>
@@ -91,52 +91,52 @@
     <value>取消</value>
   </data>
   <data name="changesCharactersPageDialogueDescription" xml:space="preserve">
-    <value>你想在不保存进度的情况下退出吗？</value>
+    <value>你确定要在不应用更改的情况下离开吗？</value>
   </data>
   <data name="chapterNameSetting.Text" xml:space="preserve">
-    <value>章名</value>
+    <value>章节名称</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>设置自定义名称。使用{number}标记编号</value>
+    <value>设置自定义名称。使用 {number} 指定编号的位置。</value>
   </data>
   <data name="chapters" xml:space="preserve">
     <value>章节</value>
   </data>
   <data name="chaptersExport.Text" xml:space="preserve">
-    <value>取消</value>
+    <value>章节</value>
   </data>
   <data name="chaptersText" xml:space="preserve">
-    <value>章节数</value>
+    <value>章节</value>
   </data>
   <data name="chapterWithoutName" xml:space="preserve">
-    <value>右键或点击上方箭头重命名</value>
+    <value>右键点击此文本或上方箭头以重命名此章节</value>
   </data>
   <data name="characterNotSelected.Text" xml:space="preserve">
-    <value>没有角色被选中</value>
+    <value>未选择人物。</value>
   </data>
   <data name="characters" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersContent.Content" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersExport.Text" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersLabel.Label" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersPageCharactersCount.Text" xml:space="preserve">
-    <value>人物数：</value>
+    <value>人物：</value>
   </data>
   <data name="charactersStory" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersText" xml:space="preserve">
-    <value>人物数</value>
+    <value>人物</value>
   </data>
   <data name="charactersText1.Text" xml:space="preserve">
-    <value>人物数：</value>
+    <value>人物：</value>
   </data>
   <data name="chooseThemeSetting.Text" xml:space="preserve">
     <value>主题</value>
@@ -151,19 +151,19 @@
     <value>自定义</value>
   </data>
   <data name="dark.Content" xml:space="preserve">
-    <value> 暗色</value>
+    <value>深色</value>
   </data>
   <data name="dictation.Label" xml:space="preserve">
     <value>语音输入</value>
   </data>
   <data name="downBarText.Text" xml:space="preserve">
-    <value>您可以轻松地添加一个新的人物通过“添加新人物”按钮。</value>
+    <value>添加一个新章节，然后开始输入。</value>
   </data>
   <data name="exitWithoutSaveDialogCancel" xml:space="preserve">
     <value>取消</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>There are no characters in this project.</value>
+    <value>未保存的更改将会丢失。你确定要在不保存的情况下退出吗？</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
     <value>不保存</value>
@@ -187,7 +187,7 @@
     <value>聚焦模式</value>
   </data>
   <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
-    <value>在最后一章时，按下 Ctrl+Page down 是否添加新一章？</value>
+    <value>你尚未完成设定的目标。你真的要退出吗？</value>
   </data>
   <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
     <value>离开</value>
@@ -199,10 +199,10 @@
     <value>这么快就走了？</value>
   </data>
   <data name="general.Content" xml:space="preserve">
-    <value>首选项</value>
+    <value>常规</value>
   </data>
   <data name="generalText.Text" xml:space="preserve">
-    <value>首选项</value>
+    <value>常规</value>
   </data>
   <data name="githubRepository.Text" xml:space="preserve">
     <value>GitHub 储存库</value>
@@ -229,7 +229,7 @@
     <value>语言</value>
   </data>
   <data name="languageSettingDesc.Text" xml:space="preserve">
-    <value>更改此设置后，将重新启动使其生效</value>
+    <value>某些语言更改需要重启应用后才能完全生效。</value>
   </data>
   <data name="light.Content" xml:space="preserve">
     <value>亮色</value>
@@ -238,10 +238,10 @@
     <value>链接</value>
   </data>
   <data name="load.Label" xml:space="preserve">
-    <value>读取</value>
+    <value>加载</value>
   </data>
   <data name="location.Text" xml:space="preserve">
-    <value>地点：</value>
+    <value>位置：</value>
   </data>
   <data name="modeDialogueFullScreen.Content" xml:space="preserve">
     <value>全屏</value>
@@ -262,25 +262,25 @@
     <value>在最后一章时，按下 Ctrl+Page down 是否添加新一章？</value>
   </data>
   <data name="noCharacters.Text" xml:space="preserve">
-    <value>还没有角色</value>
+    <value>还没有人物。</value>
   </data>
   <data name="noCharactersDialogueAddNew" xml:space="preserve">
     <value>添加新人物</value>
   </data>
   <data name="noCharactersDialogueDescription" xml:space="preserve">
-    <value>您可以轻松地添加一个新的人物通过“添加新人物”按钮。</value>
+    <value>点击“添加新人物”按钮即可轻松添加人物。</value>
   </data>
   <data name="noCharactersDialogueTitle" xml:space="preserve">
-    <value>这个项目还没有人物</value>
+    <value>这个项目还没有人物。</value>
   </data>
   <data name="noCharactersModes.Title" xml:space="preserve">
-    <value>这个项目还没有人物</value>
+    <value>这个项目还没有人物。</value>
   </data>
   <data name="nothingHere.Text" xml:space="preserve">
-    <value>还没有角色</value>
+    <value>还没有项目。</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
-    <value>“这个角色有一头黑色的短发，他聪明又善良。</value>
+    <value>“这个人物留着黑色短发，聪明又善良……”</value>
   </data>
   <data name="paragraphs" xml:space="preserve">
     <value>段落</value>
@@ -331,7 +331,7 @@
     <value>大声朗读</value>
   </data>
   <data name="readAloudVoiceSetting.Text" xml:space="preserve">
-    <value>声音</value>
+    <value>语音</value>
   </data>
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>音量</value>
@@ -364,7 +364,7 @@
     <value>保存</value>
   </data>
   <data name="selectedChapterText.Text" xml:space="preserve">
-    <value>选中章</value>
+    <value>所选章节</value>
   </data>
   <data name="storyText.Text" xml:space="preserve">
     <value>故事</value>
@@ -391,7 +391,7 @@
     <value>视图</value>
   </data>
   <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
-    <value>亮色背景</value>
+    <value>白色文本背景</value>
   </data>
   <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve">
     <value>主题</value>
@@ -411,10 +411,160 @@
   <data name="yourStory.PlaceholderText" xml:space="preserve">
     <value>在此输入你的故事。</value>
   </data>
+  <data name="autosaveInterval60.Content" xml:space="preserve">
+    <value>1 小时</value>
+  </data>
   <data name="zoom.Text" xml:space="preserve">
     <value>缩放</value>
   </data>
   <data name="exportText" xml:space="preserve">
     <value>导出</value>
+  </data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve">
+    <value>欢迎使用 Storylines</value>
+  </data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve">
+    <value>创建一个新项目，或打开一个现有项目开始写作。</value>
+  </data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve">
+    <value>新建项目</value>
+  </data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve">
+    <value>打开项目</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve">
+    <value>键盘快捷键</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
+    <value>Ctrl+N  新建  |  Ctrl+O  打开  |  Ctrl+S  保存</value>
+  </data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
+    <value>章节备注</value>
+  </data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>隐藏备注</value>
+  </data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve">
+    <value>为这一章添加备注...</value>
+  </data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
+    <value>姓名</value>
+  </data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve">
+    <value>角色（例如：主角）</value>
+  </data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve">
+    <value>年龄</value>
+  </data>
+  <data name="notesToggleButton.Label" xml:space="preserve">
+    <value>备注</value>
+  </data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>切换章节备注</value>
+  </data>
+  <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>查找和替换</value>
+  </data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>查找和替换 (Ctrl+H)</value>
+  </data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
+    <value>查找...</value>
+  </data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>区分大小写</value>
+  </data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>全字匹配</value>
+  </data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>关闭</value>
+  </data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>替换...</value>
+  </data>
+  <data name="replaceButton.Content" xml:space="preserve">
+    <value>替换</value>
+  </data>
+  <data name="replaceAllButton.Content" xml:space="preserve">
+    <value>全部</value>
+  </data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>点击查看详细统计</value>
+  </data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>重置</value>
+  </data>
+  <data name="quickPresets.Text" xml:space="preserve">
+    <value>快捷预设</value>
+  </data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Storylines 橙</value>
+  </data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>蓝色</value>
+  </data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>绿色</value>
+  </data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>红色</value>
+  </data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve">
+    <value>紫色</value>
+  </data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve">
+    <value>铁锈色</value>
+  </data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>查找项目</value>
+  </data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>新建项目</value>
+  </data>
+  <data name="hindi.Content" xml:space="preserve">
+    <value>印地语</value>
+  </data>
+  <data name="polish.Content" xml:space="preserve">
+    <value>波兰语</value>
+  </data>
+  <data name="languageRestartText.Text" xml:space="preserve">
+    <value>重新启动 Storylines 以在整个应用中应用所选语言。</value>
+  </data>
+  <data name="restartNowButton.Content" xml:space="preserve">
+    <value>立即重启</value>
+  </data>
+  <data name="restartLaterButton.Content" xml:space="preserve">
+    <value>稍后</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve">
+    <value>无法自动重启</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve">
+    <value>请关闭并重新打开 Storylines，以完成新语言的应用。</value>
+  </data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve">
+    <value>更多</value>
+  </data>
+  <data name="highlighterButton.Label" xml:space="preserve">
+    <value>高亮</value>
+  </data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>高亮 (Ctrl+Shift+H，右键单击或长按可查看更多颜色)</value>
+  </data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve">
+    <value>黄色</value>
+  </data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>红色</value>
+  </data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>绿色</value>
+  </data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>蓝色</value>
+  </data>
+  <data name="highlightNone.Content" xml:space="preserve">
+    <value>无</value>
   </data>
 </root>

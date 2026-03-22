@@ -1,4 +1,7 @@
 ﻿using Storylines.Scripts.Services;
+using System;
+using Windows.ApplicationModel;
+using Windows.ApplicationModel.Core;
 using Windows.Globalization;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
@@ -13,6 +16,7 @@ namespace Storylines.Pages.SettingsPages
         readonly ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
 
         private bool loading;
+        private string loadedLanguageTag;
 
         public AccessibilityPage()
         { 
@@ -34,8 +38,11 @@ namespace Storylines.Pages.SettingsPages
                 currentLang = "en";
 
             for (int i = 0; i < langComboBox.Items.Count; i++)
-                if (currentLang == (langComboBox.Items[i] as ComboBoxItem).Tag.ToString())
+                if (SettingsValues.LanguageTagsMatch(currentLang, (langComboBox.Items[i] as ComboBoxItem).Tag?.ToString()))
                     langComboBox.SelectedItem = langComboBox.Items[i];
+
+            loadedLanguageTag = GetSelectedLanguageTag();
+            UpdateLanguageRestartBanner(false);
 
             var voices = SpeechSynthesizer.AllVoices;
             string lastVoice = (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice] ?? SpeechSynthesizer.DefaultVoice.Id).ToString();
@@ -53,11 +60,38 @@ namespace Storylines.Pages.SettingsPages
         {
             if (!loading)
             {
-                var lang = (langComboBox.SelectedItem as ComboBoxItem).Tag.ToString();
+                var lang = GetSelectedLanguageTag();
                 ApplicationLanguages.PrimaryLanguageOverride = lang;
                 ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage] = lang;
+                UpdateLanguageRestartBanner(!SettingsValues.LanguageTagsMatch(loadedLanguageTag, lang));
             }
         }
+
+        private string GetSelectedLanguageTag()
+            => (langComboBox.SelectedItem as ComboBoxItem)?.Tag?.ToString() ?? "en";
+
+        private void UpdateLanguageRestartBanner(bool show)
+        {
+            languageRestartBanner.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
+            languageRestartFailedInfoBar.IsOpen = false;
+        }
+
+        private async void OnRestartNowButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                var result = await CoreApplication.RequestRestartAsync(string.Empty);
+                if (result != AppRestartFailureReason.RestartPending)
+                    languageRestartFailedInfoBar.IsOpen = true;
+            }
+            catch (Exception)
+            {
+                languageRestartFailedInfoBar.IsOpen = true;
+            }
+        }
+
+        private void OnRestartLaterButton_Click(object sender, RoutedEventArgs e)
+            => UpdateLanguageRestartBanner(false);
 
         private void OnReadAloudVolumeSlider_ValueChanged(object sender, Windows.UI.Xaml.Controls.Primitives.RangeBaseValueChangedEventArgs e)
         {

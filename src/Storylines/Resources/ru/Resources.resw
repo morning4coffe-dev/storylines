@@ -265,13 +265,13 @@
     <value>Некоторые изображения не были загружены.</value>
   </data>
   <data name="chapterName" xml:space="preserve">
-    <value>Глава {номер}</value>
+    <value>Глава {number}</value>
   </data>
   <data name="chapterNameSetting.Text" xml:space="preserve">
     <value>Название главы</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Задайте название главы. Для выбора места нумерации используйте {номер}.</value>
+    <value>Задайте название главы. Чтобы указать место для нумерации, используйте {number}.</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
     <value>Контрастный цвет</value>
@@ -487,7 +487,7 @@
     <value>"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</value>
   </data>
   <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
-    <value>"Алекс Уайт"</value>
+    <value>Имя</value>
   </data>
   <data name="noCharacters.Text" xml:space="preserve">
     <value>Персонажей пока нет.</value>
@@ -636,5 +636,149 @@
   </data>
   <data name="submitText.Text" xml:space="preserve">
     <value>Отправить</value>
+  </data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve">
+    <value>Добро пожаловать в Storylines</value>
+  </data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve">
+    <value>Создайте новый проект или откройте существующий, чтобы начать писать.</value>
+  </data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve">
+    <value>Новый проект</value>
+  </data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve">
+    <value>Открыть проект</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve">
+    <value>Сочетания клавиш</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
+    <value>Ctrl+N  Новый  |  Ctrl+O  Открыть  |  Ctrl+S  Сохранить</value>
+  </data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
+    <value>Заметки к главе</value>
+  </data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Скрыть заметки</value>
+  </data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve">
+    <value>Добавьте заметки к этой главе...</value>
+  </data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve">
+    <value>Роль (например, главный герой)</value>
+  </data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve">
+    <value>Возраст</value>
+  </data>
+  <data name="notesToggleButton.Label" xml:space="preserve">
+    <value>Заметки</value>
+  </data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Показать или скрыть заметки к главе</value>
+  </data>
+  <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>Найти и заменить</value>
+  </data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Найти и заменить (Ctrl+H)</value>
+  </data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
+    <value>Найти...</value>
+  </data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Учитывать регистр</value>
+  </data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Слово целиком</value>
+  </data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>Заменить...</value>
+  </data>
+  <data name="replaceButton.Content" xml:space="preserve">
+    <value>Заменить</value>
+  </data>
+  <data name="replaceAllButton.Content" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Нажмите, чтобы открыть подробную статистику</value>
+  </data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="quickPresets.Text" xml:space="preserve">
+    <value>Быстрые пресеты</value>
+  </data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Оранжевый Storylines</value>
+  </data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Фиолетовый</value>
+  </data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ржавый</value>
+  </data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Найти проект</value>
+  </data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Новый проект</value>
+  </data>
+  <data name="hindi.Content" xml:space="preserve">
+    <value>Хинди</value>
+  </data>
+  <data name="polish.Content" xml:space="preserve">
+    <value>Польский</value>
+  </data>
+  <data name="languageRestartText.Text" xml:space="preserve">
+    <value>Перезапустите Storylines, чтобы применить выбранный язык во всём приложении.</value>
+  </data>
+  <data name="restartNowButton.Content" xml:space="preserve">
+    <value>Перезапустить сейчас</value>
+  </data>
+  <data name="restartLaterButton.Content" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve">
+    <value>Не удалось перезапустить автоматически</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve">
+    <value>Закройте и снова откройте Storylines, чтобы полностью применить новый язык.</value>
+  </data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve">
+    <value>Ещё</value>
+  </data>
+  <data name="highlighterButton.Label" xml:space="preserve">
+    <value>Выделение</value>
+  </data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выделение (Ctrl+Shift+H, щёлкните правой кнопкой или удерживайте, чтобы открыть другие цвета)</value>
+  </data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Жёлтый</value>
+  </data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="highlightNone.Content" xml:space="preserve">
+    <value>Нет</value>
   </data>
 </root>

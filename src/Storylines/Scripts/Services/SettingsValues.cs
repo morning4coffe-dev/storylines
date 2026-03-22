@@ -1,6 +1,6 @@
 ﻿using Microsoft.Toolkit.Uwp.Helpers;
-using Storylines.Pages;
 using System;
+using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
 using Windows.Storage;
@@ -77,8 +77,11 @@ namespace Storylines.Scripts.Services
             ThemeSettings.ChangeTheme(Convert.ToInt32(localSettings.Values[SettingsValueStrings.AppTheme] ?? 2), ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
             selectedAccent = (SelectedAccent)(localSettings.Values[SettingsValueStrings.AppAccent] ?? 1);
             customAccentColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor((ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppCustomAccent] ?? appAccentColor.ToHex()).ToString());
-            
-            MainPage.ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+            ServiceLocator.Events.Publish(new SettingChangedEvent
+            {
+                SettingKey = SettingsValueStrings.TextBoxSolidBackground,
+                Value = Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false)
+            });
         }
 
         public static bool IsUserLanguageSupported()
@@ -86,11 +89,28 @@ namespace Storylines.Scripts.Services
             var supportedLanguages = ApplicationLanguages.ManifestLanguages;
             string currentLang = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
             for (int i = 0; i < supportedLanguages.Count; i++)
-                if (currentLang == supportedLanguages[i])
+                if (LanguageTagsMatch(currentLang, supportedLanguages[i]))
                     return true;
 
             return false;
         }
+
+        public static bool LanguageTagsMatch(string left, string right)
+        {
+            if (string.IsNullOrWhiteSpace(left) || string.IsNullOrWhiteSpace(right))
+                return false;
+
+            if (string.Equals(left, right, StringComparison.OrdinalIgnoreCase))
+                return true;
+
+            string leftPrimary = GetPrimaryLanguageTag(left);
+            string rightPrimary = GetPrimaryLanguageTag(right);
+
+            return string.Equals(leftPrimary, rightPrimary, StringComparison.OrdinalIgnoreCase);
+        }
+
+        private static string GetPrimaryLanguageTag(string languageTag)
+            => languageTag?.Split('-').FirstOrDefault() ?? string.Empty;
 
         public static bool IsCurrentVersionGreater(string currentVersion, string supportedVersion)
         {

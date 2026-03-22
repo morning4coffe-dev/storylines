@@ -79,10 +79,11 @@ namespace Storylines
                 Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = SettingsValues.language;
             else
             {
+                string preferredLanguage = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
                 if (!SettingsValues.IsUserLanguageSupported())
                     Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = "en";
                 else
-                    Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = Windows.System.UserProfile.GlobalizationPreferences.Languages[0];
+                    Windows.Globalization.ApplicationLanguages.PrimaryLanguageOverride = preferredLanguage;
             }
         }
 

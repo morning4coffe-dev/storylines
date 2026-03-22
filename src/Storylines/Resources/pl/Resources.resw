@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="about.Content" xml:space="preserve"><value>Informacje</value></data>
+  <data name="aboutText.Text" xml:space="preserve"><value>Informacje</value></data>
+  <data name="accessibility.Content" xml:space="preserve"><value>Ułatwienia dostępu</value></data>
+  <data name="accessibilityText.Text" xml:space="preserve"><value>Ułatwienia dostępu</value></data>
+  <data name="general.Content" xml:space="preserve"><value>Ogólne</value></data>
+  <data name="generalText.Text" xml:space="preserve"><value>Ogólne</value></data>
+  <data name="personalization.Content" xml:space="preserve"><value>Personalizacja</value></data>
+  <data name="personalizationText.Text" xml:space="preserve"><value>Personalizacja</value></data>
+  <data name="add.Label" xml:space="preserve"><value>Dodaj</value></data>
+  <data name="remove.Label" xml:space="preserve"><value>Usuń</value></data>
+  <data name="save.Label" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="saveCopy.Label" xml:space="preserve"><value>Zapisz kopię</value></data>
+  <data name="load.Label" xml:space="preserve"><value>Otwórz</value></data>
+  <data name="export.Label" xml:space="preserve"><value>Eksport</value></data>
+  <data name="readAloud.Label" xml:space="preserve"><value>Czytaj na głos</value></data>
+  <data name="FocusMode.Label" xml:space="preserve"><value>Tryb skupienia</value></data>
+  <data name="feedbackLabel.Label" xml:space="preserve"><value>Opinie</value></data>
+  <data name="keyboardShortcutsLabel.Label" xml:space="preserve"><value>Skróty klawiaturowe</value></data>
+  <data name="charactersLabel.Label" xml:space="preserve"><value>Postacie</value></data>
+  <data name="textAnalytics.Label" xml:space="preserve"><value>Analityka historii</value></data>
+  <data name="english.Content" xml:space="preserve"><value>Angielski</value></data>
+  <data name="chinese.Content" xml:space="preserve"><value>Chiński</value></data>
+  <data name="russian.Content" xml:space="preserve"><value>Rosyjski</value></data>
+  <data name="italian.Content" xml:space="preserve"><value>Włoski</value></data>
+  <data name="czech.Content" xml:space="preserve"><value>Czeski</value></data>
+  <data name="hindi.Content" xml:space="preserve"><value>Hindi</value></data>
+  <data name="polish.Content" xml:space="preserve"><value>Polski</value></data>
+  <data name="languageSetting.Text" xml:space="preserve"><value>Język</value></data>
+  <data name="languageSettingDesc.Text" xml:space="preserve"><value>Niektóre zmiany języka wymagają ponownego uruchomienia aplikacji, aby zostały w pełni zastosowane.</value></data>
+  <data name="languageRestartText.Text" xml:space="preserve"><value>Uruchom ponownie Storylines, aby zastosować wybrany język w całej aplikacji.</value></data>
+  <data name="restartNowButton.Content" xml:space="preserve"><value>Uruchom ponownie teraz</value></data>
+  <data name="restartLaterButton.Content" xml:space="preserve"><value>Później</value></data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve"><value>Nie udało się uruchomić ponownie automatycznie</value></data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve"><value>Zamknij i ponownie otwórz Storylines, aby dokończyć stosowanie nowego języka.</value></data>
+  <data name="whiteTextBackgroundSetting.Text" xml:space="preserve"><value>Białe tło tekstu</value></data>
+  <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve"><value>Motyw</value></data>
+  <data name="whiteTextBackgroundToggle.OnContent" xml:space="preserve"><value>Białe</value></data>
+  <data name="readAloudText.Text" xml:space="preserve"><value>Czytaj na głos</value></data>
+  <data name="readAloudVoiceSetting.Text" xml:space="preserve"><value>Głos</value></data>
+  <data name="readAloudVolumeSetting.Text" xml:space="preserve"><value>Głośność</value></data>
+  <data name="chooseThemeSetting.Text" xml:space="preserve"><value>Motyw</value></data>
+  <data name="chooseAccentColorSetting.Text" xml:space="preserve"><value>Kolor akcentu</value></data>
+  <data name="newChapterShortcut.Text" xml:space="preserve"><value>Nowy rozdział skrótem</value></data>
+  <data name="newChapterShortcutDesc.Text" xml:space="preserve"><value>Jeśli jesteś w ostatnim rozdziale, naciśnięcie Ctrl+Page Down może automatycznie dodać nowy rozdział.</value></data>
+  <data name="chapterName" xml:space="preserve"><value>Rozdział {number}</value></data>
+  <data name="chapterNameSetting.Text" xml:space="preserve"><value>Nazwa rozdziału</value></data>
+  <data name="chapterNameSettingDesc.Text" xml:space="preserve"><value>Ustaw własną nazwę. Użyj {number}, aby określić miejsce numeracji.</value></data>
+  <data name="charactersText1.Text" xml:space="preserve"><value>Postacie:</value></data>
+  <data name="charactersPageCharactersCount.Text" xml:space="preserve"><value>Postacie: </value></data>
+  <data name="storyText.Text" xml:space="preserve"><value>Historia</value></data>
+  <data name="selectedChapterText.Text" xml:space="preserve"><value>Wybrany rozdział</value></data>
+  <data name="chaptersText1.Text" xml:space="preserve"><value>Rozdziały</value></data>
+  <data name="charactersExport.Text" xml:space="preserve"><value>Postacie</value></data>
+  <data name="chapterWithoutName" xml:space="preserve"><value>Kliknij prawym przyciskiem ten tekst lub strzałkę powyżej, aby zmienić nazwę rozdziału.</value></data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve"><value>Imię</value></data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve"><value>Rola (np. protagonista)</value></data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve"><value>Wiek</value></data>
+  <data name="ownDescription.PlaceholderText" xml:space="preserve"><value>"Ta postać ma krótkie brązowe włosy. Jest inteligentna i życzliwa..."</value></data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve"><value>Witamy w Storylines</value></data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve"><value>Utwórz nowy projekt lub otwórz istniejący, aby zacząć pisać.</value></data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve"><value>Nowy projekt</value></data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve"><value>Otwórz projekt</value></data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve"><value>Skróty klawiaturowe</value></data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve"><value>Ctrl+N Nowy | Ctrl+O Otwórz | Ctrl+S Zapisz</value></data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve"><value>Notatki do rozdziału</value></data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve"><value>Ukryj notatki</value></data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve"><value>Dodaj notatki do tego rozdziału...</value></data>
+  <data name="notesToggleButton.Label" xml:space="preserve"><value>Notatki</value></data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve"><value>Pokaż lub ukryj notatki do rozdziału</value></data>
+  <data name="searchReplaceButton.Label" xml:space="preserve"><value>Znajdź i zamień</value></data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve"><value>Znajdź i zamień (Ctrl+H)</value></data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve"><value>Znajdź...</value></data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve"><value>Uwzględniaj wielkość liter</value></data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve"><value>Całe słowo</value></data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve"><value>Zamień...</value></data>
+  <data name="replaceButton.Content" xml:space="preserve"><value>Zamień</value></data>
+  <data name="replaceAllButton.Content" xml:space="preserve"><value>Wszystko</value></data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve"><value>Kliknij, aby zobaczyć szczegółowe statystyki</value></data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve"><value>Resetuj</value></data>
+  <data name="quickPresets.Text" xml:space="preserve"><value>Szybkie ustawienia</value></data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve"><value>Pomarańczowy Storylines</value></data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve"><value>Niebieski</value></data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve"><value>Zielony</value></data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve"><value>Czerwony</value></data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve"><value>Fioletowy</value></data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve"><value>Rdzawy</value></data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve"><value>Znajdź projekt</value></data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve"><value>Nowy projekt</value></data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve"><value>Więcej</value></data>
+  <data name="highlighterButton.Label" xml:space="preserve"><value>Zakreśl</value></data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve"><value>Zakreśl (Ctrl+Shift+H, kliknij prawym przyciskiem lub przytrzymaj, aby zobaczyć więcej kolorów)</value></data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve"><value>Żółty</value></data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve"><value>Czerwony</value></data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve"><value>Zielony</value></data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve"><value>Niebieski</value></data>
+  <data name="highlightNone.Content" xml:space="preserve"><value>Brak</value></data>
+</root>

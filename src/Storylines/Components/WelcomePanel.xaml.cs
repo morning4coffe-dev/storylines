@@ -1,4 +1,4 @@
-using Storylines.Components.DialogueWindows;
+using Storylines.Scripts.Services;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -13,12 +13,12 @@ namespace Storylines.Components
 
         private void OnNewProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveDialogue.Open(SaveDialogue.Type.Save);
+            ServiceLocator.Dialogs.OpenSaveDialogue();
         }
 
         private void OnOpenProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            LoadProjectDialogue.Open();
+            ServiceLocator.Dialogs.OpenLoadDialogue();
         }
     }
 }

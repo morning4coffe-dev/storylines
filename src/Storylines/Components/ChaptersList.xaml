@@ -22,49 +22,46 @@
         </animations:Implicit.ShowAnimations>
 
         <Grid.RowDefinitions>
-            <RowDefinition Height="28" />
-            <RowDefinition Height="10" />
+            <RowDefinition Height="36" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid VerticalAlignment="Center"
+              Padding="4,0">
             <TextBlock x:Uid="chaptersText1"
-                       FontWeight="Medium"
-                       VerticalAlignment="Center" />
+                       FontWeight="SemiBold"
+                       FontSize="13"
+                       VerticalAlignment="Center"
+                       Opacity="0.85" />
             <StackPanel HorizontalAlignment="Right"
                         Spacing="4"
                         Orientation="Horizontal">
                 <Button x:Name="flyoutDisplayButton"
-                        Width="32"
+                        Width="28"
                         Height="28"
                         Background="Transparent"
                         BorderThickness="0"
-                        Click="OnFlyoutDisplayButton_Click">
-                    <FontIcon Glyph=""
-                              Width="20"
-                              RenderTransformOrigin=".5,.5"
-                              Margin="-8">
-                        <FontIcon.RenderTransform>
-                            <CompositeTransform ScaleX=".6"
-                                                ScaleY=".6" />
-                        </FontIcon.RenderTransform>
-                    </FontIcon>
+                        CornerRadius="4"
+                        Padding="0"
+                        Click="OnFlyoutDisplayButton_Click"
+                        ToolTipService.ToolTip="Options">
+                    <FontIcon Glyph="&#xE712;"
+                              FontSize="12"
+                              Opacity="0.6" />
                 </Button>
 
-                <Button Width="32"
+                <Button Width="28"
                         Height="28"
                         Background="Transparent"
                         BorderThickness="0"
-                        Click="OnCloseButton_Click">
-                    <SymbolIcon Symbol="Cancel"
-                                Width="20"
-                                RenderTransformOrigin=".5,.5"
-                                Margin="-8">
-                        <SymbolIcon.RenderTransform>
-                            <CompositeTransform ScaleX=".6"
-                                                ScaleY=".6" />
-                        </SymbolIcon.RenderTransform>
-                    </SymbolIcon>
+                        CornerRadius="4"
+                        Padding="0"
+                        Click="OnCloseButton_Click"
+                        ToolTipService.ToolTip="Close">
+                    <FontIcon Glyph="&#xE711;"
+                              FontSize="10"
+                              Opacity="0.6" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -81,14 +78,15 @@
         <Rectangle Fill="{ThemeResource SeparatorFill}"
                    Height="0.5"
                    Grid.Row="1"
-                   Opacity=".1"
-                   VerticalAlignment="Center" />
+                   Opacity=".08"
+                   VerticalAlignment="Center"
+                   Margin="0,2" />
 
         <ListView x:Name="listView"
                   x:FieldModifier="public"
                   ItemsSource="{x:Bind Chapters}"
                   CanReorderItems="True"
-                  Grid.Row="3"
+                  Grid.Row="2"
                   CanDragItems="True"
                   AllowDrop="True"
                   SelectionMode="Single"
@@ -101,20 +99,25 @@
                     <Grid Tag="{Binding token}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
-                          Padding="6"
+                          Padding="4,8"
                           RightTapped="OnChaptersListViewItem_RightTapped"
                           DoubleTapped="OnChaptersListViewItem_DoubleTapped"
                           Holding="OnChaptersListViewItem_Holding">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
-                        <FontIcon Glyph=""
-                                  Margin="-3,0,12,0" />
+                        <FontIcon Glyph="&#xE160;"
+                                  FontSize="14"
+                                  Opacity="0.55"
+                                  Margin="0,1,12,0"
+                                  VerticalAlignment="Center" />
                         <TextBlock Text="{Binding name}"
-                                   TextWrapping="Wrap"
+                                   TextWrapping="NoWrap"
                                    TextTrimming="CharacterEllipsis"
-                                   Grid.Column="1" />
+                                   FontSize="13"
+                                   Grid.Column="1"
+                                   VerticalAlignment="Center" />
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -124,18 +127,17 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Grid.Row="2"
-                    Spacing="18"
+                    Spacing="14"
+                    Padding="12"
                     RenderTransformOrigin=".5,.5">
-            <FontIcon Glyph=""
-                      RenderTransformOrigin=".5,.5">
-                <FontIcon.RenderTransform>
-                    <CompositeTransform ScaleX="1.7"
-                                        ScaleY="1.7" />
-                </FontIcon.RenderTransform>
-            </FontIcon>
-            <RichTextBlock FontSize="14"
-                           Margin="20,0"
+            <FontIcon Glyph="&#xE1A5;"
+                      FontSize="28"
+                      HorizontalAlignment="Center"
+                      Opacity="0.35" />
+            <RichTextBlock FontSize="13"
+                           Margin="12,0"
                            TextAlignment="Center"
+                           Opacity="0.7"
                            IsTextSelectionEnabled="False">
                 <Paragraph>
                     <Run x:Uid="noChapters" />

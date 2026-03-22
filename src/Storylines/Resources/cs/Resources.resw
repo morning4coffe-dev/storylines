@@ -259,13 +259,13 @@
     <value>Některé obrázky se nepodařilo načíst.</value>
   </data>
   <data name="chapterName" xml:space="preserve">
-    <value>Kapitola {cislo}</value>
+    <value>Kapitola {number}</value>
   </data>
   <data name="chapterNameSetting.Text" xml:space="preserve">
     <value>Názvy kapitol</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Zvolte vlastní jméno pro kapitolu. Pro výběr, kde bude zobrazeno číslování přidete k textu {cislo}.</value>
+    <value>Zvolte vlastní název kapitoly. Pro určení místa číslování použijte {number}.</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
     <value>Barva motivu</value>
@@ -635,5 +635,152 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="submitText.Text" xml:space="preserve">
     <value>Potvrdit</value>
+  </data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve">
+    <value>Vítejte v aplikaci Storylines</value>
+  </data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve">
+    <value>Vytvořte nový projekt nebo otevřete existující a začněte psát.</value>
+  </data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve">
+    <value>Nový projekt</value>
+  </data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve">
+    <value>Otevřít projekt</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve">
+    <value>Klávesové zkratky</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
+    <value>Ctrl+N  Nový  |  Ctrl+O  Otevřít  |  Ctrl+S  Uložit</value>
+  </data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
+    <value>Poznámky ke kapitole</value>
+  </data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Skrýt poznámky</value>
+  </data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve">
+    <value>Přidejte poznámky k této kapitole...</value>
+  </data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
+    <value>Jméno</value>
+  </data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve">
+    <value>Role (např. protagonista)</value>
+  </data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve">
+    <value>Věk</value>
+  </data>
+  <data name="notesToggleButton.Label" xml:space="preserve">
+    <value>Poznámky</value>
+  </data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Přepnout poznámky ke kapitole</value>
+  </data>
+  <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>Najít a nahradit</value>
+  </data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Najít a nahradit (Ctrl+H)</value>
+  </data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
+    <value>Najít...</value>
+  </data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rozlišovat velikost písmen</value>
+  </data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Celé slovo</value>
+  </data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>Nahradit...</value>
+  </data>
+  <data name="replaceButton.Content" xml:space="preserve">
+    <value>Nahradit</value>
+  </data>
+  <data name="replaceAllButton.Content" xml:space="preserve">
+    <value>Vše</value>
+  </data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Klikněte pro podrobné statistiky</value>
+  </data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Obnovit</value>
+  </data>
+  <data name="quickPresets.Text" xml:space="preserve">
+    <value>Rychlé předvolby</value>
+  </data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Oranžová Storylines</value>
+  </data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Modrá</value>
+  </data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zelená</value>
+  </data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Červená</value>
+  </data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Fialová</value>
+  </data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Rezavá</value>
+  </data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Najít projekt</value>
+  </data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Nový projekt</value>
+  </data>
+  <data name="hindi.Content" xml:space="preserve">
+    <value>Hindština</value>
+  </data>
+  <data name="polish.Content" xml:space="preserve">
+    <value>Polština</value>
+  </data>
+  <data name="languageRestartText.Text" xml:space="preserve">
+    <value>Restartujte Storylines, aby se zvolený jazyk použil v celé aplikaci.</value>
+  </data>
+  <data name="restartNowButton.Content" xml:space="preserve">
+    <value>Restartovat nyní</value>
+  </data>
+  <data name="restartLaterButton.Content" xml:space="preserve">
+    <value>Později</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve">
+    <value>Nepodařilo se automaticky restartovat</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve">
+    <value>Zavřete a znovu otevřete Storylines, aby se nový jazyk plně použil.</value>
+  </data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve">
+    <value>Další</value>
+  </data>
+  <data name="highlighterButton.Label" xml:space="preserve">
+    <value>Zvýraznit</value>
+  </data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zvýraznit (Ctrl+Shift+H, klikněte pravým tlačítkem nebo podržte pro další barvy)</value>
+  </data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Žlutá</value>
+  </data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Červená</value>
+  </data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zelená</value>
+  </data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Modrá</value>
+  </data>
+  <data name="highlightNone.Content" xml:space="preserve">
+    <value>Žádné</value>
   </data>
 </root>

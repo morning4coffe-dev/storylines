@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="about.Content" xml:space="preserve"><value>जानकारी</value></data>
+  <data name="aboutText.Text" xml:space="preserve"><value>जानकारी</value></data>
+  <data name="accessibility.Content" xml:space="preserve"><value>सुगम्यता</value></data>
+  <data name="accessibilityText.Text" xml:space="preserve"><value>सुगम्यता</value></data>
+  <data name="general.Content" xml:space="preserve"><value>सामान्य</value></data>
+  <data name="generalText.Text" xml:space="preserve"><value>सामान्य</value></data>
+  <data name="personalization.Content" xml:space="preserve"><value>अनुकूलन</value></data>
+  <data name="personalizationText.Text" xml:space="preserve"><value>अनुकूलन</value></data>
+  <data name="add.Label" xml:space="preserve"><value>जोड़ें</value></data>
+  <data name="remove.Label" xml:space="preserve"><value>हटाएँ</value></data>
+  <data name="save.Label" xml:space="preserve"><value>सहेजें</value></data>
+  <data name="saveCopy.Label" xml:space="preserve"><value>प्रतिलिपि सहेजें</value></data>
+  <data name="load.Label" xml:space="preserve"><value>खोलें</value></data>
+  <data name="export.Label" xml:space="preserve"><value>निर्यात</value></data>
+  <data name="readAloud.Label" xml:space="preserve"><value>जोर से पढ़ें</value></data>
+  <data name="FocusMode.Label" xml:space="preserve"><value>फोकस मोड</value></data>
+  <data name="feedbackLabel.Label" xml:space="preserve"><value>फ़ीडबैक</value></data>
+  <data name="keyboardShortcutsLabel.Label" xml:space="preserve"><value>कीबोर्ड शॉर्टकट</value></data>
+  <data name="charactersLabel.Label" xml:space="preserve"><value>पात्र</value></data>
+  <data name="textAnalytics.Label" xml:space="preserve"><value>कहानी विश्लेषण</value></data>
+  <data name="english.Content" xml:space="preserve"><value>अंग्रेज़ी</value></data>
+  <data name="chinese.Content" xml:space="preserve"><value>चीनी</value></data>
+  <data name="russian.Content" xml:space="preserve"><value>रूसी</value></data>
+  <data name="italian.Content" xml:space="preserve"><value>इतालवी</value></data>
+  <data name="czech.Content" xml:space="preserve"><value>चेक</value></data>
+  <data name="hindi.Content" xml:space="preserve"><value>हिंदी</value></data>
+  <data name="polish.Content" xml:space="preserve"><value>पोलिश</value></data>
+  <data name="languageSetting.Text" xml:space="preserve"><value>भाषा</value></data>
+  <data name="languageSettingDesc.Text" xml:space="preserve"><value>ऐप में हर जगह भाषा परिवर्तन लागू करने के लिए कुछ बदलावों के बाद पुनः प्रारंभ करना आवश्यक है।</value></data>
+  <data name="languageRestartText.Text" xml:space="preserve"><value>चुनी गई भाषा को पूरे ऐप में लागू करने के लिए Storylines को पुनः प्रारंभ करें।</value></data>
+  <data name="restartNowButton.Content" xml:space="preserve"><value>अभी पुनः प्रारंभ करें</value></data>
+  <data name="restartLaterButton.Content" xml:space="preserve"><value>बाद में</value></data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve"><value>अपने-आप पुनः प्रारंभ नहीं हो सका</value></data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve"><value>नई भाषा लागू करने के लिए Storylines को बंद करके फिर से खोलें।</value></data>
+  <data name="whiteTextBackgroundSetting.Text" xml:space="preserve"><value>सफेद पाठ पृष्ठभूमि</value></data>
+  <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve"><value>थीम</value></data>
+  <data name="whiteTextBackgroundToggle.OnContent" xml:space="preserve"><value>सफेद</value></data>
+  <data name="readAloudText.Text" xml:space="preserve"><value>जोर से पढ़ें</value></data>
+  <data name="readAloudVoiceSetting.Text" xml:space="preserve"><value>आवाज़</value></data>
+  <data name="readAloudVolumeSetting.Text" xml:space="preserve"><value>आवाज़ की तीव्रता</value></data>
+  <data name="chooseThemeSetting.Text" xml:space="preserve"><value>थीम</value></data>
+  <data name="chooseAccentColorSetting.Text" xml:space="preserve"><value>एक्सेंट रंग</value></data>
+  <data name="newChapterShortcut.Text" xml:space="preserve"><value>शॉर्टकट से नया अध्याय</value></data>
+  <data name="newChapterShortcutDesc.Text" xml:space="preserve"><value>यदि आप अंतिम अध्याय में हैं, तो Ctrl+Page Down दबाने पर नया अध्याय अपने-आप जोड़ा जा सकता है।</value></data>
+  <data name="chapterName" xml:space="preserve"><value>अध्याय {number}</value></data>
+  <data name="chapterNameSetting.Text" xml:space="preserve"><value>अध्याय का नाम</value></data>
+  <data name="chapterNameSettingDesc.Text" xml:space="preserve"><value>अपना नाम निर्धारित करें। क्रमांक की जगह बताने के लिए {number} का उपयोग करें।</value></data>
+  <data name="charactersText1.Text" xml:space="preserve"><value>पात्र:</value></data>
+  <data name="charactersPageCharactersCount.Text" xml:space="preserve"><value>पात्र: </value></data>
+  <data name="storyText.Text" xml:space="preserve"><value>कहानी</value></data>
+  <data name="selectedChapterText.Text" xml:space="preserve"><value>चयनित अध्याय</value></data>
+  <data name="chaptersText1.Text" xml:space="preserve"><value>अध्याय</value></data>
+  <data name="charactersExport.Text" xml:space="preserve"><value>पात्र</value></data>
+  <data name="chapterWithoutName" xml:space="preserve"><value>इस अध्याय का नाम बदलने के लिए इस पाठ या ऊपर वाले तीर पर राइट-क्लिक करें।</value></data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve"><value>नाम</value></data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve"><value>भूमिका (जैसे, मुख्य पात्र)</value></data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve"><value>आयु</value></data>
+  <data name="ownDescription.PlaceholderText" xml:space="preserve"><value>"इस पात्र के छोटे भूरे बाल हैं। यह बुद्धिमान और दयालु है..."</value></data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve"><value>Storylines में आपका स्वागत है</value></data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve"><value>लिखना शुरू करने के लिए नया प्रोजेक्ट बनाएँ या कोई मौजूदा प्रोजेक्ट खोलें।</value></data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve"><value>नया प्रोजेक्ट</value></data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve"><value>प्रोजेक्ट खोलें</value></data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve"><value>कीबोर्ड शॉर्टकट</value></data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve"><value>Ctrl+N नया | Ctrl+O खोलें | Ctrl+S सहेजें</value></data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve"><value>अध्याय नोट्स</value></data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve"><value>नोट्स छिपाएँ</value></data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve"><value>इस अध्याय के लिए नोट्स जोड़ें...</value></data>
+  <data name="notesToggleButton.Label" xml:space="preserve"><value>नोट्स</value></data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve"><value>अध्याय नोट्स दिखाएँ या छिपाएँ</value></data>
+  <data name="searchReplaceButton.Label" xml:space="preserve"><value>ढूँढें और बदलें</value></data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve"><value>ढूँढें और बदलें (Ctrl+H)</value></data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve"><value>ढूँढें...</value></data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve"><value>अक्षर आकार मिलाएँ</value></data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve"><value>पूरा शब्द</value></data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve"><value>बंद करें</value></data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve"><value>बदलें...</value></data>
+  <data name="replaceButton.Content" xml:space="preserve"><value>बदलें</value></data>
+  <data name="replaceAllButton.Content" xml:space="preserve"><value>सभी</value></data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve"><value>विस्तृत आँकड़े देखने के लिए क्लिक करें</value></data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve"><value>रीसेट करें</value></data>
+  <data name="quickPresets.Text" xml:space="preserve"><value>त्वरित प्रीसेट</value></data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve"><value>Storylines नारंगी</value></data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve"><value>नीला</value></data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve"><value>हरा</value></data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve"><value>लाल</value></data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve"><value>बैंगनी</value></data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve"><value>जंग रंग</value></data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve"><value>प्रोजेक्ट खोजें</value></data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve"><value>नया प्रोजेक्ट</value></data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve"><value>और</value></data>
+  <data name="highlighterButton.Label" xml:space="preserve"><value>हाइलाइट करें</value></data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve"><value>हाइलाइट करें (Ctrl+Shift+H, अधिक रंग देखने के लिए राइट-क्लिक करें या दबाकर रखें)</value></data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve"><value>पीला</value></data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve"><value>लाल</value></data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve"><value>हरा</value></data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve"><value>नीला</value></data>
+  <data name="highlightNone.Content" xml:space="preserve"><value>कोई नहीं</value></data>
+</root>

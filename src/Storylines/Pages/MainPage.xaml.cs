@@ -2,6 +2,7 @@
 using Storylines.Components;
 using Storylines.Scripts.Modes;
 using Storylines.Scripts.Services;
+using Storylines.ViewModels;
 using System;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
@@ -23,12 +24,18 @@ namespace Storylines.Pages
         public static FocusMode FocusMode;
         public static ReadMode ReadMode;
 
+        public MainPageViewModel ViewModel => ServiceLocator.MainPageViewModel;
+
         public MainPage()
         {
             InitializeComponent();
             Current = this;
 
             AppView.current.page = AppView.Pages.MainPage;
+
+            ServiceLocator.Events.Subscribe<ChapterToolsStateEvent>(e => EnableOrDisableChapterTools(e.Enabled));
+            ServiceLocator.Events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
+            ServiceLocator.Events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
 
             SizeChanged();
         }
@@ -53,6 +60,8 @@ namespace Storylines.Pages
 
         public void EnableOrDisableChapterTools(bool enable)
         {
+            ViewModel.IsChapterSelected = enable;
+
             ChapterText.textBox.IsTabStop = enable;
             ChapterText.textBoxRectangle.IsHitTestVisible = !enable;
             ChapterText.textBox.IsHitTestVisible = enable;
@@ -62,15 +71,13 @@ namespace Storylines.Pages
             if (enable)
             {
                 ChapterText.textBoxRectangle.Visibility = Visibility.Collapsed;
-                ShowWelcomePanel(false);
                 UpdateDownBar();
             }
             else
             {
                 AppView.current.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
-                downBarText.Text = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
-                ShowWelcomePanel(Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0);
+                ViewModel.DownBarText = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
             }
         }
 
@@ -171,8 +178,7 @@ namespace Storylines.Pages
 
         public void ShowWelcomePanel(bool show)
         {
-            welcomePanel.Visibility = show ? Visibility.Visible : Visibility.Collapsed;
-            chapterTextBoxMainPage.Visibility = show ? Visibility.Collapsed : Visibility.Visible;
+            ViewModel.ShowWelcomePanel(show);
         }
         #endregion
 

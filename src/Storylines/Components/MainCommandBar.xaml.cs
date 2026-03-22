@@ -1,8 +1,7 @@
-﻿using Storylines.Components.DialogueWindows;
-using Storylines.Pages;
-using Storylines.Scripts.Functions;
+﻿using Storylines.Pages;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
+using Storylines.ViewModels;
 using System;
 using System.Threading.Tasks;
 using Windows.Media.SpeechSynthesis;
@@ -16,26 +15,13 @@ namespace Storylines.Components
 {
     public sealed partial class MainCommandBar : UserControl
     {
-        private readonly string feedbackLink = "https://github.com/morning4coffe-dev/Storylines/issues/new";
+        public CommandBarViewModel ViewModel => ServiceLocator.CommandBarViewModel;
 
         public MainCommandBar()
         {
             this.InitializeComponent();
             if(MainPage.FocusMode == null && MainPage.ReadMode == null)
                 MainPage.CommandBar = this;
-
-            autosaveToggleButton.IsChecked = SettingsValues.autosaveEnabled;
-
-            ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
-        }
-
-        private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
-        {
-            if (e.Context == "chapters")
-            {
-                undoButton.IsEnabled = e.CanUndo;
-                redoButton.IsEnabled = e.CanRedo;
-            }
         }
 
         #region TEMP - NavigationView
@@ -70,58 +56,22 @@ namespace Storylines.Components
         #endregion
 
         #region FILE
-        private void OnUndoButton_Click(object sender, RoutedEventArgs e)
-        {
-            TimeTravelChapter.Undo();
-        }
-
-        private void OnRedoButton_Click(object sender, RoutedEventArgs e)
-        {
-            TimeTravelChapter.Redo();
-        }
-
-        private void OnSaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            SaveSystem.Save();
-        }
-
-        private void OnSaveCopyButton_Click(object sender, RoutedEventArgs e)
-        {
-            SaveSystem.SaveCopy();
-        }
-
-        private void OnLoadButton_Click(object sender, RoutedEventArgs e)
-        {
-            LoadProjectDialogue.loadFile.isEscape = false;
-            LoadProjectDialogue.Open();
-        }
-
-        private void OnExportButton_Click(object sender, RoutedEventArgs e)
-        {
-            ExportDialogue.Open(default);
-        }
-
         private void OnAutosaveToggleButton_Click(object sender, RoutedEventArgs e)
         {
-            if ((bool)autosaveToggleButton.IsChecked)
-                Autosave.Enable();
-            else
-                Autosave.Disable();
+            ViewModel.ToggleAutosaveCommand.Execute(null);
         }
         #endregion
 
         #region INSERT
         private void OnChapterAddButton_Click(object sender, RoutedEventArgs e)
         {
-            if(MainPage.ChapterList.canAdd)
-                ChapterCreatorOrRenamer.Open(null, false);
+            if(ServiceLocator.ChaptersListViewModel.CanAdd)
+                ServiceLocator.Dialogs.OpenChapterCreator();
         }
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
         {
             MainPage.ChapterText.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
-
-            //dialoguesAddButton.IsEnabled = (bool)dialoguesEnableButton.IsChecked;
         }
 
         private void OnDialoguesAddButton_Click(object sender, RoutedEventArgs e)
@@ -139,10 +89,10 @@ namespace Storylines.Components
             if (Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0)
             {
                 Scripts.Services.ServiceLocator.ProjectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                MainPage.ChapterList.listView.SelectedIndex = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count - 1;
+                ServiceLocator.TextEditor.SelectedChapterIndex = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count - 1;
             }
 
-            _ = MainPage.ChapterText.textBox.Focus(FocusState.Pointer);
+            ServiceLocator.TextEditor.Focus();
 
             InputInjector inputInjector = InputInjector.TryCreate();
 
@@ -165,15 +115,6 @@ namespace Storylines.Components
         #endregion
 
         #region VIEW
-        private void OnFocusModeButton_Click(object sender, RoutedEventArgs e)
-            => ModesDialogue.Open();
-
-        private void OnTextAnalyticsButton_Click(object sender, RoutedEventArgs e)
-            => ProjectStatsDialogue.Open(false);
-
-        private void OnCharactersButton_Click(object sender, RoutedEventArgs e)
-            => AppView.current.ChangePage(AppView.Pages.Characters);
-
         private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
             => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);
 
@@ -182,22 +123,6 @@ namespace Storylines.Components
         #endregion
 
         #region HELP
-        private void OnFeedbackButton_Click(object sender, RoutedEventArgs e)
-        {
-            //FeedbackDialogue.Open();
-            //if (Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.IsSupported())
-            //{
-            //    _ = Microsoft.Services.Store.Engagement.StoreServicesFeedbackLauncher.GetDefault().LaunchAsync();
-            //}
-            _ = Launcher.LaunchUriAsync(new Uri(feedbackLink));
-        }
-
-        private void OnShortcutsButton_Click(object sender, RoutedEventArgs e)
-        {
-            //_ = Launcher.LaunchUriAsync(new Uri(shortcutsLink));
-            ShortcutsDialogue.Open();
-        }
-
         #region ReadAloud
         private DispatcherTimer timer;
 
@@ -215,7 +140,7 @@ namespace Storylines.Components
 
         public void ReadAloud()
         {
-            MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string speechText);
+            var speechText = ServiceLocator.TextEditor.GetText(Scripts.Services.Interfaces.TextFormat.PlainText);
             if (speechText.Length > 0)
             {
                 _ = ToReadAsync(speechText);

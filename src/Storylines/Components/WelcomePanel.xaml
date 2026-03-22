@@ -9,7 +9,7 @@
     <Grid x:Name="welcomeRoot"
           HorizontalAlignment="Center"
           VerticalAlignment="Center"
-          MaxWidth="460"
+          MaxWidth="520"
           Padding="40">
 
         <animations:Implicit.ShowAnimations>
@@ -23,70 +23,94 @@
                                              EasingMode="EaseOut" />
         </animations:Implicit.ShowAnimations>
 
-        <StackPanel Spacing="24"
+        <StackPanel Spacing="28"
                     HorizontalAlignment="Center">
 
-            <FontIcon Glyph="&#xE736;"
-                      FontSize="48"
-                      Foreground="{ThemeResource SystemAccentColor}"
-                      HorizontalAlignment="Center"
-                      Opacity="0.8" />
+            <Grid HorizontalAlignment="Center"
+                  Width="72" Height="72"
+                  CornerRadius="20"
+                  Background="{ThemeResource SystemAccentColor}"
+                  Opacity="0.9">
+                <FontIcon Glyph="&#xE736;"
+                          FontSize="32"
+                          Foreground="White"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center" />
+            </Grid>
 
-            <TextBlock Text="Welcome to Storylines"
-                       FontSize="28"
-                       FontWeight="SemiBold"
-                       HorizontalAlignment="Center"
-                       Foreground="{ThemeResource TextForeground}" />
+            <StackPanel Spacing="8"
+                        HorizontalAlignment="Center">
+                <TextBlock x:Uid="welcomePanelTitle"
+                           Text="Welcome to Storylines"
+                           FontSize="28"
+                           FontWeight="SemiBold"
+                           HorizontalAlignment="Center"
+                           Foreground="{ThemeResource TextForeground}" />
 
-            <TextBlock Text="Create a new project or open an existing one to start writing."
-                       FontSize="14"
-                       HorizontalAlignment="Center"
-                       TextAlignment="Center"
-                       Foreground="{ThemeResource TextForeground}"
-                       Opacity="0.6"
-                       TextWrapping="WrapWholeWords" />
+                <TextBlock x:Uid="welcomePanelDescription"
+                           Text="Create a new project or open an existing one to start writing."
+                           FontSize="14"
+                           HorizontalAlignment="Center"
+                           TextAlignment="Center"
+                           Foreground="{ThemeResource TextForeground}"
+                           Opacity="0.55"
+                           TextWrapping="WrapWholeWords"
+                           MaxWidth="360" />
+            </StackPanel>
 
             <StackPanel Orientation="Horizontal"
                         HorizontalAlignment="Center"
-                        Spacing="12"
-                        Margin="0,8,0,0">
+                        Spacing="12">
 
                 <Button x:Name="newProjectButton"
                         Style="{ThemeResource AccentButtonStyle}"
-                        Padding="20,10"
-                        CornerRadius="4"
+                        Padding="24,12"
+                        CornerRadius="6"
                         Click="OnNewProjectButton_Click">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <FontIcon Glyph="&#xE710;" FontSize="14" />
-                        <TextBlock Text="New Project" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE710;" FontSize="15" />
+                        <TextBlock x:Uid="welcomePanelNewProject"
+                                   Text="New Project"
+                                   FontWeight="SemiBold" />
                     </StackPanel>
                 </Button>
 
                 <Button x:Name="openProjectButton"
-                        Padding="20,10"
-                        CornerRadius="4"
+                        Padding="24,12"
+                        CornerRadius="6"
                         Click="OnOpenProjectButton_Click">
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <FontIcon Glyph="&#xE8E5;" FontSize="14" />
-                        <TextBlock Text="Open Project" />
+                    <StackPanel Orientation="Horizontal" Spacing="10">
+                        <FontIcon Glyph="&#xE8E5;" FontSize="15" />
+                        <TextBlock x:Uid="welcomePanelOpenProject"
+                                   Text="Open Project"
+                                   FontWeight="SemiBold" />
                     </StackPanel>
                 </Button>
 
             </StackPanel>
 
-            <StackPanel Spacing="6"
-                        Margin="0,12,0,0"
-                        Opacity="0.5">
-                <TextBlock Text="Keyboard Shortcuts"
-                           FontSize="12"
-                           FontWeight="SemiBold"
-                           HorizontalAlignment="Center" />
-                <TextBlock Text="Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save"
-                           FontSize="11"
-                           HorizontalAlignment="Center"
-                           Foreground="{ThemeResource TextForeground}"
-                           Opacity="0.7" />
-            </StackPanel>
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    CornerRadius="8"
+                    Padding="16,12"
+                    HorizontalAlignment="Center"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}">
+                <StackPanel Spacing="4"
+                            Opacity="0.6">
+                    <TextBlock x:Uid="welcomePanelKeyboardShortcuts"
+                               Text="Keyboard Shortcuts"
+                               FontSize="11"
+                               FontWeight="SemiBold"
+                               HorizontalAlignment="Center" />
+                    <TextBlock x:Uid="welcomePanelKeyboardShortcutHint"
+                               Text="Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save"
+                               FontSize="11"
+                               HorizontalAlignment="Center"
+                               Foreground="{ThemeResource TextForeground}"
+                               Opacity="0.8"
+                               FontFamily="Consolas" />
+                </StackPanel>
+            </Border>
 
         </StackPanel>
     </Grid>

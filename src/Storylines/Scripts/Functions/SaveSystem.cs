@@ -1,5 +1,4 @@
 ﻿using Storylines.Components.DialogueWindows;
-using Storylines.Pages;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
@@ -21,6 +20,7 @@ namespace Storylines.Components
         private static IFileService FileService => ServiceLocator.FileService;
         private static ISaveSerializer JsonSerializer => ServiceLocator.JsonSerializer;
         private static ISaveSerializer LegacySerializer => ServiceLocator.LegacySerializer;
+        private static ITextEditorService TextEditor => ServiceLocator.TextEditor;
 
         #region Save
         private enum AfterSave { DoNothing, ClearEverything, Exit };
@@ -36,12 +36,12 @@ namespace Storylines.Components
                 {
                     var projectData = CollectProjectData();
                     _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
-                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
+                    ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
                 }
                 else if (currentProject.file.FileType == ".txt")
                 {
-                    MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
-                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
+                    string txt = TextEditor.GetText(TextFormat.PlainText);
+                    ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
                     _ = WriteToFileAsync(txt);
                 }
 
@@ -76,7 +76,7 @@ namespace Storylines.Components
             var data = new ProjectData
             {
                 Version = $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}",
-                LastOpenedChapter = MainPage.ChapterList.listView.SelectedIndex,
+                LastOpenedChapter = TextEditor.SelectedChapterIndex,
                 Name = currentProject.projectName
             };
 
@@ -267,7 +267,7 @@ namespace Storylines.Components
 
                 LoadVariables(projectData);
                 Loaded();
-                MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
+                ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
             }
             catch (Exception ex)
             {
@@ -290,10 +290,10 @@ namespace Storylines.Components
                 string txt = await FileService.ReadAsync(file);
 
                 ServiceLocator.ProjectState.AddExistingChapter(file.DisplayName, Guid.NewGuid().ToString(), txt);
-                MainPage.ChapterList.listView.SelectedIndex = 0;
+                TextEditor.SelectedChapterIndex = 0;
 
                 Loaded();
-                MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
+                ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
             }
             catch (Exception ex)
             {
@@ -307,8 +307,8 @@ namespace Storylines.Components
 
         private static void LoadVariables(ProjectData projectData)
         {
-            ChaptersList.selectedIndex = projectData.LastOpenedChapter;
-            MainPage.ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
+            Components.ChaptersList.selectedIndex = projectData.LastOpenedChapter;
+            TextEditor.SelectedChapterIndex = Components.ChaptersList.selectedIndex;
         }
 
         private static void Loaded()

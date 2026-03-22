@@ -1,5 +1,5 @@
-using Storylines.Pages;
 using Storylines.Scripts.Services;
+using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
 using System.Collections.Generic;
 using System.Linq;
@@ -31,12 +31,13 @@ namespace Storylines.Scripts.Functions
         private static readonly PartialStack<TimeTravelChapter> redoQueue = new PartialStack<TimeTravelChapter>();
 
         private static ProjectState State => ServiceLocator.ProjectState;
+        private static ITextEditorService TextEditor => ServiceLocator.TextEditor;
 
         public enum Changed { Added, Name, Text, Reordered, Removed };
 
         public static void SomethingChanged(Changed whatChanged, Chapter chapter, int lastPosition)
         {
-            if (!TimeTravelSystem.timeTravelling && !MainPage.ChapterList.switchedChapters)
+            if (!TimeTravelSystem.timeTravelling && !ServiceLocator.ChaptersListViewModel.SwitchedChapters)
             {
                 TimeTravelSystem.SomethingChanged();
                 TimeTravelChapter tt = new TimeTravelChapter();
@@ -58,7 +59,7 @@ namespace Storylines.Scripts.Functions
                 tt.chapter.SetToken(chapter.token);
 
                 tt.changed = whatChanged;
-                tt.id = MainPage.ChapterList.listView.Items.IndexOf(chapter);
+                tt.id = TextEditor.SelectedChapterIndex;
                 tt.lastPosition = lastPosition;
 
                 if(whatChanged == Changed.Text)
@@ -70,7 +71,7 @@ namespace Storylines.Scripts.Functions
             }
 
             TimeTravelSystem.timeTravelling = false;
-            MainPage.ChapterList.switchedChapters = false;
+            ServiceLocator.ChaptersListViewModel.SwitchedChapters = false;
         }
 
         public static void Undo()
@@ -118,11 +119,11 @@ namespace Storylines.Scripts.Functions
                     break;
 
                     case Changed.Text:
-                        MainPage.ChapterList.listView.SelectedIndex = ttId;
+                        TextEditor.SelectedChapterIndex = ttId;
                     if (!isRedo)
-                        MainPage.ChapterText.textBox.Document.Undo();
+                        TextEditor.Undo();
                     else
-                        MainPage.ChapterText.textBox.Document.Redo();
+                        TextEditor.Redo();
                     break;
 
                 case Changed.Reordered:
@@ -261,7 +262,7 @@ namespace Storylines.Scripts.Functions
                 case Changed.Changed:
                     var chID = State.FindCharacterID(timeTravel.character.token);
                     State.Characters[chID] = timeTravel.character;
-                    CharactersPage.current.listView.SelectedIndex = chID;
+                    ServiceLocator.Events.Publish(new ChapterSelectedEvent { SelectedIndex = chID, HasSelection = true });
                     break;
                 case Changed.Removed:
                     if (!isRedo)
@@ -271,7 +272,7 @@ namespace Storylines.Scripts.Functions
                     break;
             }
             TimeTravelSystem.timeTravelling = false;
-            CharactersPage.current.Sort();
+            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
             CheckForUndoOrRedoEmpty();
         }
 

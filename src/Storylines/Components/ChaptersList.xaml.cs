@@ -1,7 +1,7 @@
-﻿using Storylines.Components.DialogueWindows;
-using Storylines.Pages;
+﻿using Storylines.Pages;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
+using Storylines.ViewModels;
 using System;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
@@ -14,18 +14,30 @@ namespace Storylines.Components
     {
         public static int selectedIndex;
 
+        public ChaptersListViewModel ViewModel => ServiceLocator.ChaptersListViewModel;
+        private CommandBarViewModel CommandBarVM => ServiceLocator.CommandBarViewModel;
+
         public ObservableCollection<Chapter> Chapters => ServiceLocator.ProjectState.Chapters;
 
-        public bool switchedChapters = false;
+        public bool switchedChapters
+        {
+            get => ViewModel.SwitchedChapters;
+            set => ViewModel.SwitchedChapters = value;
+        }
 
-        public bool closedManually;
+        public bool closedManually
+        {
+            get => ViewModel.ClosedManually;
+            set => ViewModel.ClosedManually = value;
+        }
 
         private bool _canAdd = true;
         public bool canAdd 
         {
             set
-            { 
+            {
                 _canAdd = value;
+                ViewModel.CanAdd = value;
                 CheckForEmptyList();
             } 
             get 
@@ -78,7 +90,7 @@ namespace Storylines.Components
         private void OnChaptersListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var ch = (sender as Grid).Tag.ToString();
-            ChapterCreatorOrRenamer.Open(Scripts.Services.ServiceLocator.ProjectState.FindChapter(ch), true);
+            ServiceLocator.Dialogs.OpenChapterRenamer(Scripts.Services.ServiceLocator.ProjectState.FindChapter(ch), true);
         }
 
         private void OnChaptersListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -97,13 +109,13 @@ namespace Storylines.Components
 
         private void OnChapterAdd_Click(object sender, RoutedEventArgs e)
         {
-            ChapterCreatorOrRenamer.Open(null, false);
+            ServiceLocator.Dialogs.OpenChapterCreator();
         }
 
         private void OnChapterRename_Click(object sender, RoutedEventArgs e)
         {
             if (chapterItemFlyoutedToken != null)
-               ChapterCreatorOrRenamer.Open(Scripts.Services.ServiceLocator.ProjectState.FindChapter(chapterItemFlyoutedToken), false);
+               ServiceLocator.Dialogs.OpenChapterRenamer(Scripts.Services.ServiceLocator.ProjectState.FindChapter(chapterItemFlyoutedToken));
         }
 
         private void OnChapterDeleteFlyout_Click(object sender, RoutedEventArgs e)
@@ -117,7 +129,7 @@ namespace Storylines.Components
 
         private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
-            ChapterCreatorOrRenamer.Open(null, false);
+            ServiceLocator.Dialogs.OpenChapterCreator();
         }
 
         private void OnChaptersList_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -138,29 +150,31 @@ namespace Storylines.Components
                     switchedChapters = true;
                 selectedIndex = listView.SelectedIndex;
 
-                MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, Scripts.Services.ServiceLocator.ProjectState.FindChapter((listView.SelectedItem as Chapter).token).text ?? string.Empty);
+                ServiceLocator.TextEditor.SetText(
+                    Scripts.Services.ServiceLocator.ProjectState.FindChapter((listView.SelectedItem as Chapter).token).text ?? string.Empty);
 
                 MainPage.ChapterText.ChangeTextColor();
-                MainPage.Current.EnableOrDisableChapterTools(true);
+                ServiceLocator.Events.Publish(new ChapterToolsStateEvent { Enabled = true });
                 MainPage.ChapterText.CheckForFormatting();
 
-                _ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
+                ServiceLocator.TextEditor.Focus();
 
-                MainPage.Current.RefreshNotesPane();
+                ServiceLocator.Events.Publish(new RefreshNotesPaneEvent());
             }
             else
-                MainPage.Current.EnableOrDisableChapterTools(false);
+                ServiceLocator.Events.Publish(new ChapterToolsStateEvent { Enabled = false });
 
             CheckForEmptyList();
         }
 
         public void CheckForEmptyList()
-        { 
+        {
+            ViewModel.UpdateListState();
             noChaptersPlaceholder.Visibility = listView.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
-            MainPage.CommandBar.exportButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0 || Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0;
-            MainPage.CommandBar.saveButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0;
-            MainPage.CommandBar.saveCopyButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0;
-            MainPage.CommandBar.chapterAddButton.IsEnabled = _canAdd;
+            CommandBarVM.IsExportEnabled = ViewModel.IsExportEnabled;
+            CommandBarVM.IsSaveEnabled = ViewModel.IsSaveEnabled;
+            CommandBarVM.IsSaveCopyEnabled = ViewModel.IsSaveCopyEnabled;
+            CommandBarVM.IsChapterAddEnabled = ViewModel.IsAddButtonEnabled;
         }
 
         #region Reorder Items
@@ -170,20 +184,20 @@ namespace Storylines.Components
         private void OnChaptersListView_DragItemsStarting(object sender, DragItemsStartingEventArgs e)
         {
             reordering = true;
-            position = MainPage.ChapterList.listView.Items.IndexOf(e.Items[0]);
+            position = listView.Items.IndexOf(e.Items[0]);
         }
 
         private void OnChaptersListView_DragItemsCompleted(ListViewBase sender, DragItemsCompletedEventArgs args)
         {
             reordering = false;
 
-            Scripts.Services.ServiceLocator.ProjectState.ReorderChapter((args.Items[0] as Chapter).token, MainPage.ChapterList.listView.Items.IndexOf(args.Items[0]), position);
+            Scripts.Services.ServiceLocator.ProjectState.ReorderChapter((args.Items[0] as Chapter).token, listView.Items.IndexOf(args.Items[0]), position);
         }
         #endregion
 
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Current.OpenOrCloseChapterList(false, true);
+            ServiceLocator.Events.Publish(new ToggleChapterListEvent { Open = false, Manually = true });
         }
     }
 }

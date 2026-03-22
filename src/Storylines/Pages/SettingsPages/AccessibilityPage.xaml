@@ -1,8 +1,9 @@
 ﻿<Page x:Class="Storylines.Pages.SettingsPages.AccessibilityPage"
-      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d"
       Loaded="OnAccessibilityPage_Loaded"
       SizeChanged="OnAccessibilityPage_SizeChanged">
@@ -57,23 +58,55 @@
                           HorizontalContentAlignment="Left"
                           VerticalAlignment="Center"
                           Height="30"
-                          Width="120"
+                          Width="150"
                           Grid.Column="2"
                           SelectionChanged="OnLanguageComboBox_SelectionChanged">
                     <ComboBox.Items>
                         <ComboBoxItem x:Uid="english"
                                       Tag="en" />
                         <ComboBoxItem x:Uid="chinese"
-                                      Tag="zh-Hans-CN" />
+                                      Tag="zh-CN" />
                         <ComboBoxItem x:Uid="russian"
                                       Tag="ru" />
                         <ComboBoxItem x:Uid="italian"
                                       Tag="it" />
                         <ComboBoxItem x:Uid="czech"
                                       Tag="cs" />
+                        <ComboBoxItem x:Uid="hindi"
+                                      Tag="hi-IN" />
+                        <ComboBoxItem x:Uid="polish"
+                                      Tag="pl" />
                     </ComboBox.Items>
                 </ComboBox>
             </Grid>
+
+            <Border x:Name="languageRestartBanner"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,12"
+                    Visibility="Collapsed">
+                <StackPanel Spacing="10">
+                    <TextBlock x:Uid="languageRestartText"
+                               TextWrapping="WrapWholeWords" />
+                    <StackPanel Orientation="Horizontal"
+                                Spacing="8">
+                        <Button x:Name="restartNowButton"
+                                x:Uid="restartNowButton"
+                                Style="{ThemeResource AccentButtonStyle}"
+                                Click="OnRestartNowButton_Click" />
+                        <Button x:Name="restartLaterButton"
+                                x:Uid="restartLaterButton"
+                                Click="OnRestartLaterButton_Click" />
+                    </StackPanel>
+                    <muxc:InfoBar x:Name="languageRestartFailedInfoBar"
+                                  x:Uid="languageRestartFailedInfoBar"
+                                  IsClosable="False"
+                                  IsOpen="False"
+                                  Severity="Warning" />
+                </StackPanel>
+            </Border>
 
             <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"

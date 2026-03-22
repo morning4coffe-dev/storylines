@@ -36,7 +36,8 @@
                        FontSize="25"
                        Margin="0,0,0,5" />
 
-            <Button x:Name="openFileButton"
+                <Button x:Name="openFileButton"
+                    x:Uid="openFileButton"
                     Height="38"
                     Grid.Column="1"
                     HorizontalAlignment="Stretch"
@@ -53,7 +54,8 @@
                 </SymbolIcon>
             </Button>
 
-            <Button Grid.Column="3"
+                <Button x:Uid="createNewProjectButton"
+                    Grid.Column="3"
                     Height="38"
                     HorizontalAlignment="Stretch"
                     VerticalAlignment="Stretch"

@@ -13,30 +13,32 @@
           BorderBrush="{ThemeResource ElementBorderColor}"
           BorderThickness="{ThemeResource ElementBorderThickness}"
           CornerRadius="8"
-          Padding="12,8">
+          Padding="14,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid>
+        <Grid Margin="0,0,0,6">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
             <FontIcon Glyph="&#xE70B;"
-                      FontSize="14"
+                      FontSize="13"
                       Margin="0,0,8,0"
                       VerticalAlignment="Center"
-                      Opacity="0.7" />
-            <TextBlock Text="Chapter Notes"
+                      Opacity="0.6" />
+                <TextBlock x:Uid="chapterNotesPaneTitle"
+                       Text="Chapter Notes"
                        Grid.Column="1"
-                       FontWeight="Medium"
+                       FontWeight="SemiBold"
                        FontSize="12"
                        VerticalAlignment="Center"
-                       Opacity="0.8" />
+                       Opacity="0.75" />
             <Button Grid.Column="2"
+                    x:Uid="chapterNotesPaneCollapseButton"
                     Width="28" Height="28"
                     Background="Transparent"
                     BorderThickness="0"
@@ -53,6 +55,7 @@
         </Grid>
 
         <TextBox x:Name="notesTextBox"
+             x:Uid="chapterNotesPaneTextBox"
                  x:FieldModifier="public"
                  Grid.Row="1"
                  PlaceholderText="Add notes for this chapter..."

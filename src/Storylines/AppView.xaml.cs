@@ -6,6 +6,7 @@ using Storylines.Pages;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
+using Storylines.ViewModels;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
@@ -25,18 +26,28 @@ namespace Storylines
 
         public static ContentDialog currentlyOpenedDialogue;
 
+        public AppViewModel ViewModel => ServiceLocator.AppViewModel;
+
         public AppView()
         {
             InitializeComponent();
             current = this;
 
-            UpdateTitleBar();
+            // Wire NavigationService to the Frame
+            ServiceLocator.InitializeNavigation(pagesView);
+
+            ViewModel.UpdateTitleBar();
 
             ChangePage(Pages.MainPage);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
-            ServiceLocator.Events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
+            // Subscribe to tools state changes (published by SaveSystem)
+            ServiceLocator.Events.Subscribe<ToolsStateChangedEvent>(e =>
+            {
+                if (MainPage.Current != null)
+                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
+            });
 
             if (SettingsValues.autosaveEnabled)
                 Autosave.Enable();
@@ -47,42 +58,18 @@ namespace Storylines
 
         public void UpdateTitleBar()
         {
-            if (page == Pages.Settings)
-            {
-                var version = Package.Current.Id.Version;
-                appHeader.Text =
-                $"{Package.Current.DisplayName}" +
-                $" {version.Major}.{version.Minor}{(version.Build.ToString().Equals("0") ? string.Empty : $".{version.Build}")}{(version.Revision.ToString().Equals("0") ? string.Empty : $".{version.Revision}")}" +
-                $"{(Package.Current.IsDevelopmentMode ? " Dev" : " Preview")}";
-            }
-            else
-            {
-                var name = GetName();
-                if (name == null)
-                    appHeader.Text = Package.Current.DisplayName;
-                else
-                    appHeader.Text = name;
-            }
-
-            appHeaderSave.Text = $" {ResourceLoader.GetForCurrentView().GetString("appHeaderEdited")}";
-            appHeaderSave.Visibility = TimeTravelSystem.unSavedProgress ? Visibility.Visible : Visibility.Collapsed;
-            //$"{_ = (TimeTravelSystem.unSavedProgress ? "*" : string.Empty)} -";
+            ViewModel.CurrentPage = (AppViewModel.AppPages)(int)page;
+            ViewModel.UpdateTitleBar();
         }
 
         public string GetName()
         {
-            if (SaveSystem.currentProject != null)
-                if (!string.IsNullOrEmpty(SaveSystem.currentProject.projectName))
-                    return SaveSystem.currentProject.projectName;
-                else
-                    return SaveSystem.currentProject.name;
-            else
-                return null;
+            return ViewModel.GetProjectName();
         }
 
         public void ClearEverything()
         {
-            MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
+            ServiceLocator.TextEditor.Clear();
             ServiceLocator.ProjectState.Clear();
             MainPage.Current.EnableOrDisableChapterTools(false);
         }
@@ -160,18 +147,17 @@ namespace Storylines
         {
             current.backButton.Visibility = Visibility.Visible;
 
+            // Use NavigationService for consistent navigation
             switch (currentPage)
             {
                 case Pages.Settings:
-                    pagesView.Navigate(typeof(SettingsPage));
+                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Settings);
                     break;
-
                 case Pages.Characters:
-                    pagesView.Navigate(typeof(CharactersPage), null, new DrillInNavigationTransitionInfo());
+                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Characters);
                     break;
-
                 case Pages.MainPage:
-                    pagesView.Navigate(typeof(MainPage), null, new DrillInNavigationTransitionInfo());
+                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.MainPage);
                     break;
             }
 
@@ -183,10 +169,8 @@ namespace Storylines
 
         public void BackButtonCheck()
         {
-            if (pagesView.CanGoBack || MainPage.ReadMode != null || MainPage.FocusMode != null)
-                backButton.Visibility = Visibility.Visible;
-            else
-                backButton.Visibility = Visibility.Collapsed;
+            bool hasModeActive = MainPage.ReadMode != null || MainPage.FocusMode != null;
+            ViewModel.UpdateBackButtonVisibility(pagesView.CanGoBack, hasModeActive);
         }
 
         public void GoBack()

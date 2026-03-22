@@ -239,6 +239,12 @@
     <Compile Include="Scripts\Services\Interfaces\INotificationService.cs" />
     <Compile Include="Scripts\Services\Interfaces\ISaveSerializer.cs" />
     <Compile Include="Scripts\Services\Interfaces\IFileService.cs" />
+    <Compile Include="Scripts\Services\Interfaces\INavigationService.cs" />
+    <Compile Include="Scripts\Services\Interfaces\ITextEditorService.cs" />
+    <Compile Include="Scripts\Services\Interfaces\IDialogService.cs" />
+    <Compile Include="Scripts\Services\NavigationService.cs" />
+    <Compile Include="Scripts\Services\TextEditorService.cs" />
+    <Compile Include="Scripts\Services\DialogService.cs" />
     <Compile Include="Scripts\Services\Serializers\JsonSaveSerializer.cs" />
     <Compile Include="Scripts\Services\Serializers\LegacySrlSerializer.cs" />
     <Compile Include="Scripts\Variables\ProjectData.cs" />
@@ -248,6 +254,11 @@
     <Compile Include="Components\WelcomePanel.xaml.cs">
       <DependentUpon>WelcomePanel.xaml</DependentUpon>
     </Compile>
+    <Compile Include="ViewModels\AppViewModel.cs" />
+    <Compile Include="ViewModels\MainPageViewModel.cs" />
+    <Compile Include="ViewModels\ChaptersListViewModel.cs" />
+    <Compile Include="ViewModels\CharactersPageViewModel.cs" />
+    <Compile Include="ViewModels\CommandBarViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <AppxManifest Include="Package.appxmanifest">
@@ -477,6 +488,9 @@
     <PackageReference Include="Newtonsoft.Json">
       <Version>13.0.3</Version>
     </PackageReference>
+    <PackageReference Include="CommunityToolkit.Mvvm">
+      <Version>8.2.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <PRIResource Include="Resources\en\Resources.resw">
@@ -512,6 +526,14 @@
     <PRIResource Include="Resources\it\SaveDialogue.resw" />
     <PRIResource Include="Resources\it\Resources.resw" />
     <PRIResource Include="Resources\it\ExportDialogue.resw" />
+    <PRIResource Include="Resources\hi-IN\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\hi-IN\SaveDialogue.resw" />
+    <PRIResource Include="Resources\hi-IN\Resources.resw" />
+    <PRIResource Include="Resources\hi-IN\ExportDialogue.resw" />
+    <PRIResource Include="Resources\pl\ShortcutsDialogue.resw" />
+    <PRIResource Include="Resources\pl\SaveDialogue.resw" />
+    <PRIResource Include="Resources\pl\Resources.resw" />
+    <PRIResource Include="Resources\pl\ExportDialogue.resw" />
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\Storylines.cs.xlf" />
@@ -544,7 +566,23 @@
     </PRIResource>
   </ItemGroup>
   <ItemGroup>
+    <PRIResource Include="Resources\hi-IN\General.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\pl\General.resw">
+      <SubType>Designer</SubType>
+    </PRIResource>
+  </ItemGroup>
+  <ItemGroup>
     <PRIResource Include="Resources\cs\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\hi-IN\Resources.resw" />
+  </ItemGroup>
+  <ItemGroup>
+    <PRIResource Include="Resources\pl\Resources.resw" />
   </ItemGroup>
   <PropertyGroup Condition=" '$(VisualStudioVersion)' == '' or '$(VisualStudioVersion)' &lt; '14.0' ">
     <VisualStudioVersion>14.0</VisualStudioVersion>

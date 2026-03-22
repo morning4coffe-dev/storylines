@@ -35,6 +35,14 @@ namespace Storylines.Components
             InitializeComponent();
 
             MainPage.ChapterText = this;
+
+            ServiceLocator.Events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+        }
+
+        private void OnSettingChanged(SettingChangedEvent e)
+        {
+            if (e.SettingKey == SettingsValueStrings.TextBoxSolidBackground)
+                TextBoxWhiteBackground((bool)e.Value);
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
@@ -46,16 +54,17 @@ namespace Storylines.Components
         #region TextBox
         private void OnTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            if (MainPage.ChapterList.listView.SelectedItem != null)
+            var selectedIndex = Scripts.Services.ServiceLocator.TextEditor.SelectedChapterIndex;
+            if (selectedIndex >= 0 && selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
 
-                if (Scripts.Services.ServiceLocator.ProjectState.Chapters[MainPage.ChapterList.listView.SelectedIndex].text != txt && !searchingInTextBox)
+                if (Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text != txt && !searchingInTextBox)
                 {
-                    Scripts.Services.ServiceLocator.ProjectState.Chapters[MainPage.ChapterList.listView.SelectedIndex].text = txt;
+                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text = txt;
 
                     MainPage.Current.UpdateDownBar();
-                    Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, MainPage.ChapterList.listView.SelectedItem as Chapter, 0);
+                    Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex], 0);
 
                     if (MainPage.FocusMode != null)
                         MainPage.FocusMode.TextChanged();
@@ -65,7 +74,7 @@ namespace Storylines.Components
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
         {
-            if (MainPage.ChapterList.listView.SelectedItem != null)
+            if (Scripts.Services.ServiceLocator.TextEditor.SelectedChapterIndex >= 0)
             {
                 MainPage.Current.UpdateDownBar();
 
@@ -75,7 +84,7 @@ namespace Storylines.Components
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (MainPage.ChapterList.listView.SelectedItem != null && dialoguesOn)
+            if (Scripts.Services.ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && dialoguesOn)
                 if (e.Key == VirtualKey.Enter)
                 {
                     PopulateFlyout();
@@ -100,19 +109,13 @@ namespace Storylines.Components
         {
             if (whiteBackground)
             {
-                MainPage.ChapterText.textBox.RequestedTheme = ElementTheme.Light;
-                MainPage.ChapterText.textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
-                //(App.Current.Resources["MainTextBoxAcrylicBackground"] as AcrylicBrush).AlwaysUseFallback = true;
-                //(App.Current.Resources["MainTextBoxAcrylicBackgroundPointerOverAndFocused"] as AcrylicBrush).AlwaysUseFallback = true;
-                //(App.Current.Resources["MainTextBoxAcrylicBackgroundDisabled"] as AcrylicBrush).AlwaysUseFallback = true;
+                textBox.RequestedTheme = ElementTheme.Light;
+                textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
             }
             else
             {
-                MainPage.ChapterText.textBox.RequestedTheme = MainPage.Current.RequestedTheme;
-                MainPage.ChapterText.textBoxScrollViewer.RequestedTheme = MainPage.Current.RequestedTheme;
-                //(App.Current.Resources["MainTextBoxAcrylicBackground"] as AcrylicBrush).AlwaysUseFallback = false;
-                //(App.Current.Resources["MainTextBoxAcrylicBackgroundPointerOverAndFocused"] as AcrylicBrush).AlwaysUseFallback = false;
-                //(App.Current.Resources["MainTextBoxAcrylicBackgroundDisabled"] as AcrylicBrush).AlwaysUseFallback = false;
+                textBox.RequestedTheme = MainPage.Current.RequestedTheme;
+                textBoxScrollViewer.RequestedTheme = MainPage.Current.RequestedTheme;
             }
         }
 

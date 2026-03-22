@@ -1,6 +1,7 @@
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Services.Serializers;
 using Storylines.Scripts.Variables;
+using Storylines.ViewModels;
 
 namespace Storylines.Scripts.Services
 {
@@ -13,6 +14,15 @@ namespace Storylines.Scripts.Services
         public static ISaveSerializer LegacySerializer { get; private set; }
         public static ProjectState ProjectState { get; private set; }
         public static EventAggregator Events { get; private set; }
+        public static ITextEditorService TextEditor { get; private set; }
+        public static INavigationService Navigation { get; private set; }
+        public static IDialogService Dialogs { get; private set; }
+
+        // ViewModels
+        public static AppViewModel AppViewModel { get; private set; }
+        public static MainPageViewModel MainPageViewModel { get; private set; }
+        public static ChaptersListViewModel ChaptersListViewModel { get; private set; }
+        public static CommandBarViewModel CommandBarViewModel { get; private set; }
 
         public static void Initialize()
         {
@@ -22,6 +32,23 @@ namespace Storylines.Scripts.Services
             LegacySerializer = new LegacySrlSerializer();
             ProjectState = new ProjectState();
             Events = new EventAggregator();
+            TextEditor = new TextEditorService();
+            Navigation = new NavigationService();
+            Dialogs = new DialogService();
+
+            // Initialize ViewModels after services are ready
+            AppViewModel = new AppViewModel();
+            MainPageViewModel = new MainPageViewModel();
+            ChaptersListViewModel = new ChaptersListViewModel();
+            CommandBarViewModel = new CommandBarViewModel();
+        }
+
+        /// <summary>
+        /// Called after the UI Frame is available to wire up NavigationService.
+        /// </summary>
+        public static void InitializeNavigation(Windows.UI.Xaml.Controls.Frame frame)
+        {
+            (Navigation as NavigationService)?.Initialize(frame);
         }
     }
 }

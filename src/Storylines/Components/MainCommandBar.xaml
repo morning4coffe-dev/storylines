@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
              xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:vm="using:Storylines.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="100"
              d:DesignWidth="1500"
@@ -451,6 +452,7 @@
                                             </ScrollViewer>
                                         </muxc:ItemsRepeaterScrollHost>
                                         <Button x:Name="TopNavOverflowButton"
+                                            x:Uid="topNavOverflowButton"
                                                 Grid.Column="4"
                                                 Content="More"
                                                 Margin="{ThemeResource TopNavigationViewOverflowButtonMargin}"
@@ -802,30 +804,30 @@
                                   x:FieldModifier="public"
                                   Icon="Undo"
                                   CornerRadius="4"
-                                  IsEnabled="False"
-                                  Click="OnUndoButton_Click" />
+                                  IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}"
+                                  Command="{x:Bind ViewModel.UndoCommand}" />
                     <AppBarButton x:Name="redoButton"
                                   x:FieldModifier="public"
                                   Icon="Redo"
                                   CornerRadius="4"
-                                  IsEnabled="False"
-                                  Click="OnRedoButton_Click" />
+                                  IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}"
+                                  Command="{x:Bind ViewModel.RedoCommand}" />
                     <AppBarSeparator />
                     <AppBarButton x:Name="saveButton"
                                   x:Uid="save"
                                   x:FieldModifier="public"
                                   Icon="Save"
-                                  IsEnabled="False"
+                                  IsEnabled="{x:Bind ViewModel.IsSaveEnabled, Mode=OneWay}"
                                   CornerRadius="4"
                                   LabelPosition="Default"
-                                  Click="OnSaveButton_Click" />
+                                  Command="{x:Bind ViewModel.SaveCommand}" />
 
                     <AppBarButton x:Name="saveCopyButton"
                                   x:FieldModifier="public"
                                   x:Uid="saveCopy"
                                   CornerRadius="4"
-                                  IsEnabled="False"
-                                  Click="OnSaveCopyButton_Click">
+                                  IsEnabled="{x:Bind ViewModel.IsSaveCopyEnabled, Mode=OneWay}"
+                                  Command="{x:Bind ViewModel.SaveCopyCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xEA35;" />
                         </AppBarButton.Icon>
@@ -834,7 +836,7 @@
                     <AppBarButton x:Name="loadButton"
                                   x:Uid="load"
                                   CornerRadius="4"
-                                  Click="OnLoadButton_Click">
+                                  Command="{x:Bind ViewModel.LoadCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE1A5;" />
                         </AppBarButton.Icon>
@@ -844,6 +846,7 @@
                                         x:Uid="autosave"
                                         x:FieldModifier="public"
                                         CornerRadius="4"
+                                        IsChecked="{x:Bind ViewModel.IsAutosaveChecked, Mode=TwoWay}"
                                         Click="OnAutosaveToggleButton_Click">
                         <AppBarToggleButton.Icon>
                             <SymbolIcon x:Name="autosaveToggleButtonIcon"
@@ -857,8 +860,8 @@
                                   x:Uid="export"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  IsEnabled="False"
-                                  Click="OnExportButton_Click">
+                                  IsEnabled="{x:Bind ViewModel.IsExportEnabled, Mode=OneWay}"
+                                  Command="{x:Bind ViewModel.ExportCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE792;" />
                         </AppBarButton.Icon>
@@ -883,6 +886,7 @@
                                   x:Uid="addChapter"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
+                                  IsEnabled="{x:Bind ViewModel.IsChapterAddEnabled, Mode=OneWay}"
                                   Click="OnChapterAddButton_Click">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
@@ -948,7 +952,7 @@
                     <AppBarButton x:Name="FocusModeButton"
                                   x:Uid="FocusMode"
                                   CornerRadius="4"
-                                  Click="OnFocusModeButton_Click">
+                                  Command="{x:Bind ViewModel.OpenFocusModeCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -960,7 +964,7 @@
                                   x:Uid="textAnalytics"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnTextAnalyticsButton_Click">
+                                  Command="{x:Bind ViewModel.ShowProjectStatsCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -972,7 +976,7 @@
                                   x:Uid="charactersLabel"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnCharactersButton_Click">
+                                  Command="{x:Bind ViewModel.NavigateToCharactersCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -982,6 +986,7 @@
                     <AppBarSeparator />
 
                     <AppBarToggleButton x:Name="notesToggleButton"
+                                        x:Uid="notesToggleButton"
                                         x:FieldModifier="public"
                                         CornerRadius="4"
                                         Label="Notes"
@@ -993,6 +998,7 @@
                     </AppBarToggleButton>
 
                     <AppBarButton x:Name="searchReplaceButton"
+                                  x:Uid="searchReplaceButton"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
                                   Label="Find &amp; Replace"
@@ -1021,7 +1027,7 @@
                                   x:Uid="feedbackLabel"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnFeedbackButton_Click">
+                                  Command="{x:Bind ViewModel.OpenFeedbackCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -1031,7 +1037,7 @@
                                   x:Uid="keyboardShortcutsLabel"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnShortcutsButton_Click">
+                                  Command="{x:Bind ViewModel.ShowShortcutsCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>

@@ -69,5 +69,69 @@ namespace Storylines.Scripts.Services
         public bool IsStorylinesDocument { get; set; }
     }
 
+    /// <summary>
+    /// Published when a chapter is selected or deselected,
+    /// so that business logic can react without referencing UI.
+    /// </summary>
+    public class ChapterSelectedEvent
+    {
+        public int SelectedIndex { get; set; }
+        public bool HasSelection { get; set; }
+    }
+
+    /// <summary>
+    /// Published when the selected chapter's text should be saved to state.
+    /// </summary>
+    public class ChapterTextChangedEvent
+    {
+        public int ChapterIndex { get; set; }
+        public string Text { get; set; }
+    }
+
+    /// <summary>
+    /// Published when a setting changes that requires UI to update.
+    /// </summary>
+    public class SettingChangedEvent
+    {
+        public string SettingKey { get; set; }
+        public object Value { get; set; }
+    }
+
+    /// <summary>
+    /// Published when chapter tools should be enabled or disabled.
+    /// </summary>
+    public class ChapterToolsStateEvent
+    {
+        public bool Enabled { get; set; }
+    }
+
+    /// <summary>
+    /// Published to request opening/closing the chapter list panel.
+    /// </summary>
+    public class ToggleChapterListEvent
+    {
+        public bool Open { get; set; }
+        public bool Manually { get; set; }
+    }
+
+    /// <summary>
+    /// Published when the notes pane should be refreshed.
+    /// </summary>
+    public class RefreshNotesPaneEvent { }
+
+    /// <summary>
+    /// Published after a project load completes, enabling tools state updates.
+    /// </summary>
+    public class ProjectLoadedEvent
+    {
+        public bool IsStorylinesDocument { get; set; }
+        public int LastOpenedChapter { get; set; }
+    }
+
+    /// <summary>
+    /// Published to request the UI to clear the editor and project state.
+    /// </summary>
+    public class ClearProjectEvent { }
+
     #endregion
 }

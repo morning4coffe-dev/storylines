@@ -1,6 +1,7 @@
 ﻿using Storylines.Components.DialogueWindows;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Variables;
+using Storylines.ViewModels;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -23,8 +24,14 @@ namespace Storylines.Pages
 
         public ObservableCollection<Character> Characters => Scripts.Services.ServiceLocator.ProjectState.Characters;
 
+        public CharactersPageViewModel ViewModel { get; } = new CharactersPageViewModel();
+
         private bool selectionChanged = false;
-        public bool unappliedChanges = false;
+        public bool unappliedChanges
+        {
+            get => ViewModel.UnappliedChanges;
+            set => ViewModel.UnappliedChanges = value;
+        }
 
         public static CharactersPage current { get; private set; }
 
@@ -41,14 +48,24 @@ namespace Storylines.Pages
             TimeTravelCharacter.ClearUndoAndRedo();
 
             Scripts.Services.ServiceLocator.Events.Subscribe<Scripts.Services.UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+
+            // Listen for character selection events from TimeTravelCharacter
+            Scripts.Services.ServiceLocator.Events.Subscribe<Scripts.Services.ChapterSelectedEvent>(e =>
+            {
+                if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < listView.Items.Count)
+                {
+                    listView.SelectedIndex = e.SelectedIndex;
+                    Sort();
+                }
+            });
         }
 
         private void OnUndoRedoStateChanged(Scripts.Services.UndoRedoStateChangedEvent e)
         {
             if (e.Context == "characters")
             {
-                undoButton.IsEnabled = e.CanUndo;
-                redoButton.IsEnabled = e.CanRedo;
+                ViewModel.CanUndo = e.CanUndo;
+                ViewModel.CanRedo = e.CanRedo;
             }
         }
 
