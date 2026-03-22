@@ -137,6 +137,7 @@
   </PropertyGroup>
   <PropertyGroup>
     <RestoreProjectStyle>PackageReference</RestoreProjectStyle>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup Label="MultilingualAppToolkit">
     <MultilingualAppToolkitVersion>4.0</MultilingualAppToolkitVersion>
@@ -234,6 +235,7 @@
     <Compile Include="Scripts\Services\ThemeSettings.cs" />
     <Compile Include="Scripts\Services\ServiceLocator.cs" />
     <Compile Include="Scripts\Services\DebugLogger.cs" />
+    <Compile Include="Scripts\Services\EventAggregator.cs" />
     <Compile Include="Scripts\Services\FileService.cs" />
     <Compile Include="Scripts\Services\Interfaces\ILogger.cs" />
     <Compile Include="Scripts\Services\Interfaces\INotificationService.cs" />
@@ -248,6 +250,7 @@
     <Compile Include="Scripts\Services\Serializers\JsonSaveSerializer.cs" />
     <Compile Include="Scripts\Services\Serializers\LegacySrlSerializer.cs" />
     <Compile Include="Scripts\Variables\ProjectData.cs" />
+    <Compile Include="Scripts\Variables\ProjectFile.cs" />
     <Compile Include="Components\ChapterNotesPane.xaml.cs">
       <DependentUpon>ChapterNotesPane.xaml</DependentUpon>
     </Compile>

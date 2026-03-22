@@ -3,6 +3,7 @@ using Storylines.Scripts.Services;
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;

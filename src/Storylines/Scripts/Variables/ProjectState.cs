@@ -112,13 +112,14 @@ namespace Storylines.Scripts.Variables
             Character ch = new Character()
             {
                 name = name,
-                token = token,
                 description = description,
                 role = role,
                 age = age,
                 appearance = appearance,
                 traits = traits?.ToList() ?? new List<string>(),
             };
+
+            ch.SetToken(token);
 
             if (picture != null)
                 if (picture.fileName != null && picture.fileName.Length > 0)
@@ -131,7 +132,8 @@ namespace Storylines.Scripts.Variables
 
         public Character CreateNewCharacter(string name, string description)
         {
-            Character ch = new Character() { name = name, token = Guid.NewGuid().ToString(), description = description, picture = new CharacterPicture(), traits = new List<string>() };
+            Character ch = new Character() { name = name, description = description, picture = new CharacterPicture(), traits = new List<string>() };
+            ch.SetToken(Guid.NewGuid().ToString());
             Characters.Add(ch);
             TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Added, ch);
             return ch;
