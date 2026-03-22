@@ -79,11 +79,6 @@ namespace Storylines.Components
             MainPage.ChapterText.AddDialogue();
         }
 
-        private void OnDialoguesAddSimpleButton_Click(object sender, RoutedEventArgs e)
-        {
-            MainPage.ChapterText.AddSimpleDialogue();
-        }
-
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
         {
             if (Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0)

@@ -257,7 +257,7 @@ namespace Storylines.Scripts.Functions
                     if (!isRedo)
                         State.RemoveCharacter(timeTravel.character.token);
                     else
-                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture);
+                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture, timeTravel.character.role, timeTravel.character.age, timeTravel.character.appearance, timeTravel.character.traits);
                     break;
                 case Changed.Changed:
                     var chID = State.FindCharacterID(timeTravel.character.token);
@@ -266,7 +266,7 @@ namespace Storylines.Scripts.Functions
                     break;
                 case Changed.Removed:
                     if (!isRedo)
-                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture);
+                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture, timeTravel.character.role, timeTravel.character.age, timeTravel.character.appearance, timeTravel.character.traits);
                     else
                         State.RemoveCharacter(timeTravel.character.token);
                     break;

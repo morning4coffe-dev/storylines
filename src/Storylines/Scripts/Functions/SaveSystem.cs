@@ -3,6 +3,7 @@ using Storylines.Scripts.Services;
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
 using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
@@ -88,7 +89,9 @@ namespace Storylines.Components
                     Description = character.description,
                     PictureFileName = character.picture?.fileName ?? string.Empty,
                     Role = character.role,
-                    Age = character.age
+                    Age = character.age,
+                    Appearance = character.appearance,
+                    Traits = character.traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
                 });
             }
 
@@ -257,7 +260,7 @@ namespace Storylines.Components
                     var picture = !string.IsNullOrEmpty(charData.PictureFileName)
                         ? new CharacterPicture { fileName = charData.PictureFileName }
                         : null;
-                    await ServiceLocator.ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age);
+                    await ServiceLocator.ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age, charData.Appearance, charData.Traits);
                 }
 
                 foreach (var chapterData in projectData.Chapters)

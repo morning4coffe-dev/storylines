@@ -914,16 +914,6 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton x:Name="dialoguesAddSimpleButton"
-                                  x:Uid="addSimpleDialogue"
-                                  x:FieldModifier="public"
-                                  CornerRadius="4"
-                                  Click="OnDialoguesAddSimpleButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
                     <AppBarSeparator />
                     <AppBarButton x:Name="dictationButton"
                                   x:FieldModifier="public"

@@ -59,6 +59,9 @@ namespace Storylines.Scripts.Variables
         [JsonProperty("age", NullValueHandling = NullValueHandling.Ignore)]
         public string Age { get; set; }
 
+        [JsonProperty("appearance", NullValueHandling = NullValueHandling.Ignore)]
+        public string Appearance { get; set; }
+
         [JsonProperty("traits", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Traits { get; set; }
     }

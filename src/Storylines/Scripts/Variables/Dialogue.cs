@@ -1,98 +1,254 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text.RegularExpressions;
 
 namespace Storylines.Scripts.Variables
 {
+    /// <summary>
+    /// Represents a single dialogue entry that can be parsed from chapter text.
+    /// </summary>
     public class Dialogue
     {
-        public string name { get; set; }
-        public string text { get; set; }
-        //public string token;
+        private static readonly Regex LegacyStructuredDialogueRegex = new Regex(@"\{name=(?<name>[^;{}]+);\s*text=\"(?<text>.*?)\"\}", RegexOptions.Compiled | RegexOptions.Singleline);
 
+        /// <summary>
+        /// Gets or sets the speaking character name.
+        /// </summary>
+        public string name { get; set; }
+
+        /// <summary>
+        /// Gets or sets the spoken dialogue text.
+        /// </summary>
+        public string text { get; set; }
+
+        /// <summary>
+        /// Creates a new dialogue placeholder using the unified writer-friendly format.
+        /// </summary>
+        /// <param name="character">The character that will speak the inserted line.</param>
+        /// <param name="newParagraph">Whether the dialogue should start on a new paragraph.</param>
+        /// <returns>A dialogue placeholder ready to be inserted into the chapter editor.</returns>
         public static string Create(Character character, bool newParagraph)
         {
-            var addNP = newParagraph ? "\n" : "";
-            return addNP + "{" + $"name={character.name}; text=\u0022\u0022" + "}";
+            var addNewLine = newParagraph ? Environment.NewLine : string.Empty;
+            return $"{addNewLine}{character.name}: ";
         }
 
-        public static string CreateSimple(Character character, bool newParagraph)
-        {
-            var addNP = newParagraph ? "\n" : "";
-            return $"{addNP}{character.name.ToUpper()}\n";
-        }
-
+        /// <summary>
+        /// Returns legacy structured dialogue tokens found in the supplied text.
+        /// </summary>
+        /// <param name="txt">The text to inspect.</param>
+        /// <returns>A list of legacy structured dialogue snippets.</returns>
         public static List<string> GetInText(string txt)
         {
-            var matches = new List<string>();
-
-            foreach (Match match in Regex.Matches(txt, @"\{"))
-            {
-                matches.Add(txt.Substring(match.Index, txt.IndexOf("}", match.Index) - match.Index + 1));
-            }
-
-            return matches;
+            return LegacyStructuredDialogueRegex
+                .Matches(txt ?? string.Empty)
+                .Cast<Match>()
+                .Select(match => match.Value)
+                .ToList();
         }
 
+        /// <summary>
+        /// Returns all dialogues parsed from the supplied text.
+        /// </summary>
+        /// <param name="txt">The text to inspect.</param>
+        /// <returns>A list of parsed dialogue entries.</returns>
         public static List<Dialogue> GetValuesFromString(string txt)
         {
-            var matches = GetInText(txt);
-            List<Dialogue> dialogues = new List<Dialogue>();
-
-            if (matches.Count > 0)
-            {
-                foreach (string match in matches)//spadne, pokud match = 0
-                {
-                    var dialogueStrings = match.Split("; ", StringSplitOptions.RemoveEmptyEntries);
-                    matches.Remove("}");
-                    matches.Remove("\u0022");
-
-                    Dictionary<string, string> dict = new Dictionary<string, string>();
-                    foreach (string dictMatch in dialogueStrings)
-                    {
-                        var spitDict = dictMatch.Split("=", StringSplitOptions.None);
-                        spitDict[0] = spitDict[0].Replace("{", string.Empty);
-                        spitDict[0] = spitDict[0].Replace("}", string.Empty);
-
-                        dict.Add(spitDict[0], spitDict[1]);
-                    }
-
-                    dialogues.Add(new Dialogue() { name = dict["name"], text = dict["text"] });
-                }
-
-                return dialogues;
-            }
-
-            return null;
+            return GetLegacyStructuredDialogues(txt);
         }
 
-        public static List<Dialogue> GetFromCharactersFromString(string txt, List<string> characters)//přepracovat
+        /// <summary>
+        /// Returns dialogues spoken by the provided character names, supporting both the current unified format and older legacy formats.
+        /// </summary>
+        /// <param name="txt">The text to inspect.</param>
+        /// <param name="characters">The character names to match.</param>
+        /// <returns>A filtered list of matching dialogues.</returns>
+        public static List<Dialogue> GetFromCharactersFromString(string txt, List<string> characters)
         {
-            var dialogues = GetValuesFromString(txt);
-            var dialogues2 = new List<Dialogue>();
-            var characterNames = new List<string>();
+            var characterNames = characters?
+                .Where(character => !string.IsNullOrWhiteSpace(character))
+                .Distinct(StringComparer.CurrentCultureIgnoreCase)
+                .ToList() ?? new List<string>();
 
-            foreach (var x in dialogues)
-            {
-                characterNames.Add(x.name);
-            }
+            var dialogues = GetLegacyStructuredDialogues(txt);
+            dialogues.AddRange(GetUnifiedDialogues(txt, characterNames));
+            dialogues.AddRange(GetLegacySimpleDialogues(txt, characterNames));
 
-            for (int i = 0; i < characterNames.Count; i++)
-            {
-                if (characters.Contains(characterNames[i]))
-                    dialogues2.Add(dialogues[i]);
-            }
-            return dialogues2;
+            return dialogues
+                .Where(dialogue => characterNames.Count == 0 || characterNames.Contains(dialogue.name, StringComparer.CurrentCultureIgnoreCase))
+                .ToList();
         }
 
+        /// <summary>
+        /// Formats dialogues into plain text for export.
+        /// </summary>
+        /// <param name="dialogues">The dialogues to format.</param>
+        /// <returns>A formatted plain text string.</returns>
         public static string FormatDialoguesToString(List<Dialogue> dialogues)
         {
-            string txt  = "";
-            foreach (var dialogue in dialogues)
+            string txt = string.Empty;
+
+            foreach (var dialogue in dialogues ?? new List<Dialogue>())
             {
-                txt += $"{dialogue.name.ToUpper()}: {dialogue.text}\n";
+                txt += $"{dialogue.name.ToUpperInvariant()}: {dialogue.text}{Environment.NewLine}";
             }
+
             return txt;
+        }
+
+        private static List<Dialogue> GetLegacyStructuredDialogues(string txt)
+        {
+            return LegacyStructuredDialogueRegex
+                .Matches(txt ?? string.Empty)
+                .Cast<Match>()
+                .Select(match => new Dialogue
+                {
+                    name = match.Groups["name"].Value.Trim(),
+                    text = match.Groups["text"].Value.Trim(),
+                })
+                .Where(dialogue => !string.IsNullOrWhiteSpace(dialogue.name))
+                .ToList();
+        }
+
+        private static List<Dialogue> GetUnifiedDialogues(string txt, IReadOnlyCollection<string> characterNames)
+        {
+            var dialogues = new List<Dialogue>();
+
+            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+                return dialogues;
+
+            var normalizedText = (txt ?? string.Empty).Replace("\r\n", "\n");
+            var lines = normalizedText.Split('\n');
+            var orderedNames = characterNames
+                .OrderByDescending(name => name.Length)
+                .ToList();
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var currentLine = lines[i].Trim();
+
+                if (!TryGetUnifiedDialogueHeader(currentLine, orderedNames, out var characterName, out var inlineDialogue))
+                    continue;
+
+                var buffer = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(inlineDialogue))
+                    buffer.Add(inlineDialogue);
+
+                var j = i + 1;
+                while (j < lines.Length)
+                {
+                    var nextLine = lines[j].Trim();
+
+                    if (string.IsNullOrWhiteSpace(nextLine))
+                    {
+                        if (buffer.Count > 0)
+                            break;
+
+                        j++;
+                        continue;
+                    }
+
+                    if (TryGetUnifiedDialogueHeader(nextLine, orderedNames, out _, out _))
+                        break;
+
+                    buffer.Add(nextLine);
+                    j++;
+                }
+
+                if (buffer.Count > 0)
+                {
+                    dialogues.Add(new Dialogue
+                    {
+                        name = characterName,
+                        text = string.Join(" ", buffer).Trim(),
+                    });
+
+                    i = j - 1;
+                }
+            }
+
+            return dialogues;
+        }
+
+        private static List<Dialogue> GetLegacySimpleDialogues(string txt, IReadOnlyCollection<string> characterNames)
+        {
+            var dialogues = new List<Dialogue>();
+
+            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+                return dialogues;
+
+            var nameLookup = characterNames.ToDictionary(name => name.ToUpperInvariant(), name => name, StringComparer.OrdinalIgnoreCase);
+            var lines = (txt ?? string.Empty).Replace("\r\n", "\n").Split('\n');
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                var currentLine = lines[i].Trim();
+
+                if (string.IsNullOrWhiteSpace(currentLine) || currentLine.StartsWith("{name=", StringComparison.OrdinalIgnoreCase))
+                    continue;
+
+                if (!nameLookup.TryGetValue(currentLine.ToUpperInvariant(), out var characterName))
+                    continue;
+
+                var buffer = new List<string>();
+                var j = i + 1;
+
+                while (j < lines.Length)
+                {
+                    var dialogueLine = lines[j].Trim();
+
+                    if (string.IsNullOrWhiteSpace(dialogueLine))
+                    {
+                        if (buffer.Count > 0)
+                            break;
+
+                        j++;
+                        continue;
+                    }
+
+                    if (dialogueLine.StartsWith("{name=", StringComparison.OrdinalIgnoreCase) || nameLookup.ContainsKey(dialogueLine.ToUpperInvariant()))
+                        break;
+
+                    buffer.Add(dialogueLine);
+                    j++;
+                }
+
+                if (buffer.Count > 0)
+                {
+                    dialogues.Add(new Dialogue
+                    {
+                        name = characterName,
+                        text = string.Join(" ", buffer),
+                    });
+
+                    i = j - 1;
+                }
+            }
+
+            return dialogues;
+        }
+
+        private static bool TryGetUnifiedDialogueHeader(string line, IReadOnlyList<string> characterNames, out string characterName, out string inlineDialogue)
+        {
+            characterName = null;
+            inlineDialogue = null;
+
+            if (string.IsNullOrWhiteSpace(line))
+                return false;
+
+            foreach (var knownCharacterName in characterNames)
+            {
+                if (!line.StartsWith($"{knownCharacterName}:", StringComparison.CurrentCultureIgnoreCase))
+                    continue;
+
+                characterName = knownCharacterName;
+                inlineDialogue = line.Substring(knownCharacterName.Length + 1).Trim();
+                return true;
+            }
+
+            return false;
         }
     }
 }

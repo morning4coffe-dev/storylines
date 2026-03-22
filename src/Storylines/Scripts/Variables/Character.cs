@@ -1,7 +1,9 @@
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
@@ -20,6 +22,7 @@ namespace Storylines.Scripts.Variables
             {
                 _name = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(detailsLine));
             }
         }
         public string token { get; private set; }
@@ -31,6 +34,7 @@ namespace Storylines.Scripts.Variables
             {
                 _description = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(detailsLine));
             }
         }
         private CharacterPicture _picture;
@@ -52,6 +56,7 @@ namespace Storylines.Scripts.Variables
             {
                 _role = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(detailsLine));
             }
         }
 
@@ -63,6 +68,69 @@ namespace Storylines.Scripts.Variables
             {
                 _age = value;
                 NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(detailsLine));
+            }
+        }
+
+        private string _appearance;
+        public string appearance
+        {
+            get { return _appearance; }
+            set
+            {
+                _appearance = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private List<string> _traits = new List<string>();
+        public List<string> traits
+        {
+            get { return _traits; }
+            set
+            {
+                _traits = value ?? new List<string>();
+                NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(traitsText));
+                NotifyPropertyChanged(nameof(detailsLine));
+            }
+        }
+
+        public string traitsText
+        {
+            get { return traits == null || traits.Count == 0 ? string.Empty : string.Join(", ", traits); }
+            set
+            {
+                traits = (value ?? string.Empty)
+                    .Split(',', StringSplitOptions.RemoveEmptyEntries)
+                    .Select(item => item.Trim())
+                    .Where(item => !string.IsNullOrWhiteSpace(item))
+                    .Distinct(StringComparer.CurrentCultureIgnoreCase)
+                    .ToList();
+
+                NotifyPropertyChanged();
+            }
+        }
+
+        public string detailsLine
+        {
+            get
+            {
+                var details = new List<string>();
+
+                if (!string.IsNullOrWhiteSpace(role))
+                    details.Add(role);
+
+                if (!string.IsNullOrWhiteSpace(age))
+                    details.Add(age);
+
+                if (traits != null && traits.Count > 0)
+                    details.Add(string.Join(", ", traits.Take(2)) + (traits.Count > 2 ? "…" : string.Empty));
+
+                if (details.Count > 0)
+                    return string.Join(" · ", details);
+
+                return description;
             }
         }
 

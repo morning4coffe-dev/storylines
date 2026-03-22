@@ -1,6 +1,7 @@
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -106,7 +107,7 @@ namespace Storylines.Scripts.Variables
 
         #region Character Operations
 
-        public async Task AddExistingCharacterAsync(string name, string token, string description, CharacterPicture picture, string role = null, string age = null)
+        public async Task AddExistingCharacterAsync(string name, string token, string description, CharacterPicture picture, string role = null, string age = null, string appearance = null, List<string> traits = null)
         {
             Character ch = new Character()
             {
@@ -115,6 +116,8 @@ namespace Storylines.Scripts.Variables
                 description = description,
                 role = role,
                 age = age,
+                appearance = appearance,
+                traits = traits?.ToList() ?? new List<string>(),
             };
 
             if (picture != null)
@@ -128,7 +131,7 @@ namespace Storylines.Scripts.Variables
 
         public Character CreateNewCharacter(string name, string description)
         {
-            Character ch = new Character() { name = name, token = Guid.NewGuid().ToString(), description = description, picture = new CharacterPicture() };
+            Character ch = new Character() { name = name, token = Guid.NewGuid().ToString(), description = description, picture = new CharacterPicture(), traits = new List<string>() };
             Characters.Add(ch);
             TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Added, ch);
             return ch;
@@ -168,7 +171,27 @@ namespace Storylines.Scripts.Variables
 
         public Character CopyCharacter(string token)
         {
-            return (Character)FindCharacter(token).MemberwiseClone();
+            var character = FindCharacter(token);
+            if (character == null)
+                return null;
+
+            return new Character()
+            {
+                name = character.name,
+                description = character.description,
+                role = character.role,
+                age = character.age,
+                appearance = character.appearance,
+                picture = character.picture == null
+                    ? null
+                    : new CharacterPicture()
+                    {
+                        fileName = character.picture.fileName,
+                        image = character.picture.image,
+                        localFilePath = character.picture.localFilePath,
+                    },
+                traits = character.traits?.ToList() ?? new List<string>(),
+            }.WithToken(character.token);
         }
 
         public void SortCharacters()
@@ -182,6 +205,16 @@ namespace Storylines.Scripts.Variables
         {
             Chapters.Clear();
             Characters.Clear();
+        }
+
+    }
+
+    internal static class CharacterExtensions
+    {
+        public static Character WithToken(this Character character, string token)
+        {
+            character.SetToken(token);
+            return character;
         }
     }
 }

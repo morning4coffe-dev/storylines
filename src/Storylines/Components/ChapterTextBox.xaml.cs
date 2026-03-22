@@ -4,6 +4,8 @@ using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using System;
+using System.Collections.ObjectModel;
+using System.Linq;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.System;
@@ -20,6 +22,10 @@ namespace Storylines.Components
 {
     public sealed partial class ChapterTextBox : UserControl
     {
+        private readonly ObservableCollection<Character> dialoguePickerCharacters = new ObservableCollection<Character>();
+        private readonly ObservableCollection<Character> recentDialoguePickerCharacters = new ObservableCollection<Character>();
+        private readonly ObservableCollection<string> recentDialogueCharacterTokens = new ObservableCollection<string>();
+
         public bool dialoguesOn = false;
 
         private bool selectedTextIsBold = false;
@@ -33,6 +39,9 @@ namespace Storylines.Components
         public ChapterTextBox()
         {
             InitializeComponent();
+
+            dialoguePickerList.ItemsSource = dialoguePickerCharacters;
+            dialoguePickerRecentList.ItemsSource = recentDialoguePickerCharacters;
 
             MainPage.ChapterText = this;
 
@@ -91,6 +100,7 @@ namespace Storylines.Components
 
                     Point position = CoreWindow.GetForCurrentThread().PointerPosition;
                     textBoxDialogueNamesFlyout.ShowAt(MainPage.Current, new Point(position.X, position.Y));
+                    e.Handled = true;
                 }
         }
 
@@ -371,16 +381,8 @@ namespace Storylines.Components
         private void PopulateFlyout()
         {
             isFlyoutOpen = true;
-            textBoxDialogueNamesFlyout.Items.Clear();
-
-            for (int i = 0; i < Scripts.Services.ServiceLocator.ProjectState.Characters.Count; i++)
-            {
-                var item = new MenuFlyoutItem() { Tag = Scripts.Services.ServiceLocator.ProjectState.Characters[i], Text = Scripts.Services.ServiceLocator.ProjectState.Characters[i].name };
-                item.Click += OnTextBoxDialogueNamesFlyoutItem_Click; ;
-                textBoxDialogueNamesFlyout.Items.Add(item);
-            }
-
-            textBoxDialogueNamesFlyout.Closed += TextBoxDialogueNamesFlyout_Closed;
+            dialoguePickerSearchBox.Text = string.Empty;
+            RefreshDialoguePickerCharacters();
         }
 
         private void TextBoxDialogueNamesFlyout_Closed(object sender, object e)
@@ -388,26 +390,89 @@ namespace Storylines.Components
             isFlyoutOpen = false;
         }
 
-        private void OnTextBoxDialogueNamesFlyoutItem_Click(object sender, RoutedEventArgs e)
+        private void OnDialoguePickerCharacter_ItemClick(object sender, ItemClickEventArgs e)
         {
-            textBox.Document.GetText(TextGetOptions.None, out string txt);
+            InsertDialogue((Character)e.ClickedItem);
+        }
+
+        private void InsertDialogue(Character character)
+        {
             _ = textBox.Focus(FocusState.Keyboard);
 
-            var newParagraph = txt.Length > 2;
-            if (currentDialogueMode == DialogueMode.Complex)
-            {
-                string dialogueFullText = Dialogue.Create((sender as MenuFlyoutItem).Tag as Character, newParagraph);
-                textBox.Document.Selection.TypeText(dialogueFullText);
+            var hasTextBeforeCursor = textBox.Document.Selection.StartPosition > 0;
+            string dialogueFullText = Dialogue.Create(character, hasTextBeforeCursor);
+            textBox.Document.Selection.TypeText(dialogueFullText);
 
-                int selectionStartInt = textBox.Document.Selection.StartPosition;
-                int textLength = selectionStartInt + dialogueFullText.Length - 17;
-                textBox.Document.Selection.SetRange(textLength, textLength);
-            }
-            else
+            RememberRecentCharacter(character);
+            textBoxDialogueNamesFlyout.Hide();
+        }
+
+        private void OnDialoguePickerSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RefreshDialoguePickerCharacters();
+        }
+
+        private void OnTextBoxDialogueNamesFlyout_Opened(object sender, object e)
+        {
+            dialoguePickerSearchBox.Focus(FocusState.Programmatic);
+        }
+
+        private void RefreshDialoguePickerCharacters()
+        {
+            var query = dialoguePickerSearchBox?.Text?.Trim() ?? string.Empty;
+            var characters = Scripts.Services.ServiceLocator.ProjectState.Characters
+                .Where(character => DialogueCharacterMatches(character, query))
+                .OrderBy(character => character.name)
+                .ToList();
+
+            dialoguePickerCharacters.Clear();
+            foreach (var character in characters)
+                dialoguePickerCharacters.Add(character);
+
+            var recentCharacters = recentDialogueCharacterTokens
+                .Select(token => Scripts.Services.ServiceLocator.ProjectState.Characters.FirstOrDefault(character => character.token == token))
+                .Where(character => character != null && DialogueCharacterMatches(character, query))
+                .ToList();
+
+            recentDialoguePickerCharacters.Clear();
+            foreach (var recentCharacter in recentCharacters)
+                recentDialoguePickerCharacters.Add(recentCharacter);
+
+            dialoguePickerRecentSection.Visibility = string.IsNullOrWhiteSpace(query) && recentDialoguePickerCharacters.Count > 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
+
+            dialoguePickerEmptyText.Visibility = dialoguePickerCharacters.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private static bool DialogueCharacterMatches(Character character, string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return true;
+
+            var searchTarget = string.Join(" ", new[]
             {
-                string dialogueFullText = Dialogue.CreateSimple((sender as MenuFlyoutItem).Tag as Character, newParagraph);
-                textBox.Document.Selection.TypeText(dialogueFullText);
-            }
+                character?.name,
+                character?.role,
+                character?.traitsText,
+                character?.description,
+            });
+
+            return searchTarget.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        private void RememberRecentCharacter(Character character)
+        {
+            if (character == null)
+                return;
+
+            if (recentDialogueCharacterTokens.Contains(character.token))
+                recentDialogueCharacterTokens.Remove(character.token);
+
+            recentDialogueCharacterTokens.Insert(0, character.token);
+
+            while (recentDialogueCharacterTokens.Count > 4)
+                recentDialogueCharacterTokens.RemoveAt(recentDialogueCharacterTokens.Count - 1);
         }
 
         private void OnTextBoxDialogueNamesFlyout_Closing(Windows.UI.Xaml.Controls.Primitives.FlyoutBase sender, Windows.UI.Xaml.Controls.Primitives.FlyoutBaseClosingEventArgs args)
@@ -421,25 +486,10 @@ namespace Storylines.Components
             dialoguesOn = enabled;
         }
 
-        public enum DialogueMode { Complex, Simple }
-        public DialogueMode currentDialogueMode;
         public void AddDialogue()
         {
             if (Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0)
             {
-                currentDialogueMode = DialogueMode.Complex;
-                PopulateFlyout();
-                textBoxDialogueNamesFlyout.ShowAt(textBox);
-            }
-            else
-                NoCharactersYet();
-        }
-
-        public void AddSimpleDialogue()
-        {
-            if (Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0)
-            {
-                currentDialogueMode = DialogueMode.Simple;
                 PopulateFlyout();
                 textBoxDialogueNamesFlyout.ShowAt(textBox);
             }

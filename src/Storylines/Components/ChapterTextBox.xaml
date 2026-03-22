@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
              xmlns:components="using:Storylines.Components"
+             xmlns:variables="using:Storylines.Scripts.Variables"
              mc:Ignorable="d"
              d:DesignHeight="700"
              d:DesignWidth="1000"
@@ -362,8 +363,74 @@
                                       PointerWheelChanged="OnTextBox_PointerWheelChanged"
                                       Tapped="OnTextBoxRectangle_Tapped">
                 <RichEditBox.Resources>
-                    <MenuFlyout x:Name="textBoxDialogueNamesFlyout"
-                                Closing="OnTextBoxDialogueNamesFlyout_Closing" />
+                    <Flyout x:Name="textBoxDialogueNamesFlyout"
+                            Opened="OnTextBoxDialogueNamesFlyout_Opened"
+                            Closing="OnTextBoxDialogueNamesFlyout_Closing"
+                            Closed="TextBoxDialogueNamesFlyout_Closed"
+                            Placement="BottomEdgeAlignedLeft">
+                        <Border MinWidth="280"
+                                MaxWidth="360"
+                                Padding="2">
+                            <StackPanel Spacing="8">
+                                <TextBox x:Name="dialoguePickerSearchBox"
+                                         x:Uid="dialoguePickerSearchBox"
+                                         CornerRadius="4"
+                                         PlaceholderText="Find character"
+                                         Style="{StaticResource SmallTextBoxStyle}"
+                                         TextChanged="OnDialoguePickerSearchBox_TextChanged" />
+
+                                <StackPanel x:Name="dialoguePickerRecentSection"
+                                            Spacing="6"
+                                            Visibility="Collapsed">
+                                    <TextBlock x:Uid="dialoguePickerRecent"
+                                               FontWeight="SemiBold" />
+                                    <ListView x:Name="dialoguePickerRecentList"
+                                              IsItemClickEnabled="True"
+                                              MaxHeight="160"
+                                              SelectionMode="None"
+                                              ItemClick="OnDialoguePickerCharacter_ItemClick">
+                                        <ListView.ItemTemplate>
+                                            <DataTemplate x:DataType="variables:Character">
+                                                <StackPanel Margin="0,2">
+                                                    <TextBlock FontWeight="SemiBold"
+                                                               Text="{x:Bind name}" />
+                                                    <TextBlock Opacity="0.75"
+                                                               Text="{x:Bind detailsLine}"
+                                                               TextTrimming="CharacterEllipsis" />
+                                                </StackPanel>
+                                            </DataTemplate>
+                                        </ListView.ItemTemplate>
+                                    </ListView>
+                                </StackPanel>
+
+                                <TextBlock x:Uid="dialoguePickerAll"
+                                           FontWeight="SemiBold" />
+                                <ListView x:Name="dialoguePickerList"
+                                          IsItemClickEnabled="True"
+                                          MaxHeight="240"
+                                          SelectionMode="None"
+                                          ItemClick="OnDialoguePickerCharacter_ItemClick">
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate x:DataType="variables:Character">
+                                            <StackPanel Margin="0,2">
+                                                <TextBlock FontWeight="SemiBold"
+                                                           Text="{x:Bind name}" />
+                                                <TextBlock Opacity="0.75"
+                                                           Text="{x:Bind detailsLine}"
+                                                           TextTrimming="CharacterEllipsis" />
+                                            </StackPanel>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+
+                                <TextBlock x:Name="dialoguePickerEmptyText"
+                                           x:Uid="dialoguePickerNoResults"
+                                           Opacity="0.75"
+                                           TextWrapping="WrapWholeWords"
+                                           Visibility="Collapsed" />
+                            </StackPanel>
+                        </Border>
+                    </Flyout>
                 </RichEditBox.Resources>
 
                 <RichEditBox.HandwritingView>

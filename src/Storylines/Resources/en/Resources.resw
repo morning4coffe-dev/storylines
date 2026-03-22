@@ -136,10 +136,7 @@
     <value>Add chapter</value>
   </data>
   <data name="addDialogue.Label" xml:space="preserve">
-    <value>Add dialogue</value>
-  </data>
-  <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Add simple dialogue</value>
+    <value>Insert dialogue</value>
   </data>
   <data name="addText.Text" xml:space="preserve">
     <value>Add</value>
@@ -322,7 +319,7 @@
     <value>Dark</value>
   </data>
   <data name="dialogueMode.Label" xml:space="preserve">
-    <value>Dialogue mode</value>
+    <value>Dialogue helper</value>
   </data>
   <data name="dialoguesExport.Text" xml:space="preserve">
     <value>Dialogues</value>
@@ -800,6 +797,45 @@
   </data>
   <data name="characterAge.PlaceholderText" xml:space="preserve">
     <value>Age</value>
+  </data>
+  <data name="characterAppearance.PlaceholderText" xml:space="preserve">
+    <value>Appearance and visual notes</value>
+  </data>
+  <data name="characterTraits.PlaceholderText" xml:space="preserve">
+    <value>Traits (comma separated)</value>
+  </data>
+  <data name="characterDialogueUsage.Text" xml:space="preserve">
+    <value>Dialogue usage</value>
+  </data>
+  <data name="characterDialoguePreview.Text" xml:space="preserve">
+    <value>Sample lines</value>
+  </data>
+  <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
+    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+  </data>
+  <data name="characterDialogueStatsEmpty" xml:space="preserve">
+    <value>No dialogue lines found yet.</value>
+  </data>
+  <data name="characterDialogueStatsFormat" xml:space="preserve">
+    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+  </data>
+  <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search characters</value>
+  </data>
+  <data name="charactersSearchEmpty.Text" xml:space="preserve">
+    <value>No characters match your search.</value>
+  </data>
+  <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Find character</value>
+  </data>
+  <data name="dialoguePickerRecent.Text" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="dialoguePickerAll.Text" xml:space="preserve">
+    <value>All characters</value>
+  </data>
+  <data name="dialoguePickerNoResults.Text" xml:space="preserve">
+    <value>No characters match this search.</value>
   </data>
   <data name="notesToggleButton.Label" xml:space="preserve">
     <value>Notes</value>

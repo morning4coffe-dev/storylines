@@ -6,9 +6,11 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -23,8 +25,11 @@ namespace Storylines.Pages
         public bool isRemoveEnabled { set; get; } = true;
 
         public ObservableCollection<Character> Characters => Scripts.Services.ServiceLocator.ProjectState.Characters;
+        public ObservableCollection<Character> FilteredCharacters { get; } = new ObservableCollection<Character>();
+        public ObservableCollection<CharacterDialoguePreview> DialoguePreviews { get; } = new ObservableCollection<CharacterDialoguePreview>();
 
         public CharactersPageViewModel ViewModel { get; } = new CharactersPageViewModel();
+        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
         private bool selectionChanged = false;
         public bool unappliedChanges
@@ -47,15 +52,20 @@ namespace Storylines.Pages
 
             TimeTravelCharacter.ClearUndoAndRedo();
 
+            RefreshCharacterList();
+
             Scripts.Services.ServiceLocator.Events.Subscribe<Scripts.Services.UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
 
             // Listen for character selection events from TimeTravelCharacter
             Scripts.Services.ServiceLocator.Events.Subscribe<Scripts.Services.ChapterSelectedEvent>(e =>
             {
-                if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < listView.Items.Count)
+                if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < Scripts.Services.ServiceLocator.ProjectState.Characters.Count)
                 {
-                    listView.SelectedIndex = e.SelectedIndex;
-                    Sort();
+                    var selectedToken = Scripts.Services.ServiceLocator.ProjectState.Characters[e.SelectedIndex].token;
+                    if (FilteredCharacters.All(character => character.token != selectedToken) && !string.IsNullOrWhiteSpace(characterSearchBox.Text))
+                        characterSearchBox.Text = string.Empty;
+
+                    RefreshCharacterList(selectedToken);
                 }
             });
         }
@@ -79,6 +89,8 @@ namespace Storylines.Pages
             descriptionBox.IsEnabled = enable;
             roleBox.IsEnabled = enable;
             ageBox.IsEnabled = enable;
+            traitsBox.IsEnabled = enable;
+            appearanceBox.IsEnabled = enable;
             profilePicture.IsTapEnabled = enable;
 
             editButton.IsChecked = enable;
@@ -86,8 +98,7 @@ namespace Storylines.Pages
             if (enable && listView.SelectedItem != null)//makes DisplayNoCharactersInProjectDialogue to add a character without editing (change if possible)
             {
                 var ch = listView.SelectedItem as Character;
-                characterBeforeChange = new Character() { name = ch.name, description = ch.description, picture = ch.picture };
-                characterBeforeChange.SetToken(ch.token);
+                characterBeforeChange = Scripts.Services.ServiceLocator.ProjectState.CopyCharacter(ch.token);
 
                 listView.IsEnabled = false;
 
@@ -120,8 +131,13 @@ namespace Storylines.Pages
                 (listView.SelectedItem as Character).description = descriptionBox.Text;
                 (listView.SelectedItem as Character).role = roleBox.Text;
                 (listView.SelectedItem as Character).age = ageBox.Text;
+                (listView.SelectedItem as Character).traitsText = traitsBox.Text;
+                (listView.SelectedItem as Character).appearance = appearanceBox.Text;
                 if(_picture != null)
                     (listView.SelectedItem as Character).picture = _picture;
+
+                RefreshCharacterList((listView.SelectedItem as Character).token);
+                UpdateDialogueInsights(listView.SelectedItem as Character);
             }
         }
 
@@ -133,7 +149,9 @@ namespace Storylines.Pages
             descriptionBox.Text = characterBeforeChange.description;
             roleBox.Text = characterBeforeChange.role ?? "";
             ageBox.Text = characterBeforeChange.age ?? "";
-            profilePicture.ProfilePicture = characterBeforeChange.picture.image;
+            traitsBox.Text = characterBeforeChange.traitsText;
+            appearanceBox.Text = characterBeforeChange.appearance ?? "";
+            profilePicture.ProfilePicture = characterBeforeChange.picture?.image;
             _picture = characterBeforeChange.picture;
 
             EnableEditMode(false);
@@ -170,7 +188,7 @@ namespace Storylines.Pages
 
         public bool DidSomethingChange()
         {
-            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).role == (string.IsNullOrEmpty(roleBox.Text) ? null : roleBox.Text) && (listView.SelectedItem as Character).age == (string.IsNullOrEmpty(ageBox.Text) ? null : ageBox.Text) && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
+            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).role == (string.IsNullOrEmpty(roleBox.Text) ? null : roleBox.Text) && (listView.SelectedItem as Character).age == (string.IsNullOrEmpty(ageBox.Text) ? null : ageBox.Text) && (listView.SelectedItem as Character).traitsText == traitsBox.Text && (listView.SelectedItem as Character).appearance == appearanceBox.Text && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
                 return false;
             else
                 return true;
@@ -251,6 +269,7 @@ namespace Storylines.Pages
             int value = rn.Next(0, 2);
 
             listView.SelectedItem = Scripts.Services.ServiceLocator.ProjectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
+            RefreshCharacterList((listView.SelectedItem as Character)?.token);
             EnableEditMode(true);
 
             CheckForNullCharacter();
@@ -261,15 +280,15 @@ namespace Storylines.Pages
             if (listView.SelectedItem != null)
                 Scripts.Services.ServiceLocator.ProjectState.RemoveCharacter((listView.SelectedItem as Character).token);
 
+            RefreshCharacterList();
             CheckForNullCharacter();
         }
 
         public void Sort()
         {
-            var s = listView.SelectedItem;
+            var selectedToken = (listView.SelectedItem as Character)?.token;
             Scripts.Services.ServiceLocator.ProjectState.SortCharacters();
-            listView.ItemsSource = Scripts.Services.ServiceLocator.ProjectState.Characters;
-            listView.SelectedItem = s;
+            RefreshCharacterList(selectedToken);
         }
 
         #region Characters ListView
@@ -287,7 +306,10 @@ namespace Storylines.Pages
                 descriptionBox.Text = (listView.SelectedItem as Character).description;
                 roleBox.Text = (listView.SelectedItem as Character).role ?? "";
                 ageBox.Text = (listView.SelectedItem as Character).age ?? "";
+                traitsBox.Text = (listView.SelectedItem as Character).traitsText;
+                appearanceBox.Text = (listView.SelectedItem as Character).appearance ?? "";
                 profilePicture.ProfilePicture = (listView.SelectedItem as Character).picture.image != null ? (listView.SelectedItem as Character).picture.image : null;
+                UpdateDialogueInsights(listView.SelectedItem as Character);
 
                 editButton.IsEnabled = true;
             }
@@ -295,6 +317,9 @@ namespace Storylines.Pages
             {
                 selectedCharactersNullText.Visibility = Visibility.Visible;
                 characterValuesPanel.Visibility = Visibility.Collapsed;
+                DialoguePreviews.Clear();
+                dialogueStatsText.Text = string.Empty;
+                dialoguePreviewEmptyText.Visibility = Visibility.Collapsed;
 
                 editButton.IsEnabled = false;
             }
@@ -311,6 +336,7 @@ namespace Storylines.Pages
         {
             TimeTravelCharacter.Undo();
 
+            RefreshCharacterList((listView.SelectedItem as Character)?.token);
             CheckForNullCharacter();
         }
 
@@ -318,6 +344,7 @@ namespace Storylines.Pages
         {
             TimeTravelCharacter.Redo();
 
+            RefreshCharacterList((listView.SelectedItem as Character)?.token);
             CheckForNullCharacter();
         }
 
@@ -561,6 +588,11 @@ namespace Storylines.Pages
             OnAddButton_Click(sender, new RoutedEventArgs());
         }
 
+        private void OnCharacterSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            RefreshCharacterList((listView.SelectedItem as Character)?.token);
+        }
+
         private void OnProfilePicture_PointerEntered(object sender, PointerRoutedEventArgs e)
         {
             //if(isEditModeEnabled)
@@ -579,14 +611,26 @@ namespace Storylines.Pages
 
         public void CheckForNullCharacter()
         { 
-            if(listView.Items.Count > 0)
-                charactersNullText.Visibility = Visibility.Collapsed;
-            else
+            if (Characters.Count == 0)
+            {
                 charactersNullText.Visibility = Visibility.Visible;
+                charactersSearchNullText.Visibility = Visibility.Collapsed;
+            }
+            else if (FilteredCharacters.Count == 0)
+            {
+                charactersNullText.Visibility = Visibility.Collapsed;
+                charactersSearchNullText.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                charactersNullText.Visibility = Visibility.Collapsed;
+                charactersSearchNullText.Visibility = Visibility.Collapsed;
+            }
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
+            RefreshCharacterList();
             CheckForNullCharacter();
 
             IsEditEnabled(EditButton.Edit);
@@ -616,5 +660,120 @@ namespace Storylines.Pages
             //else
             //    charactersCommandBar.DefaultLabelPosition = CommandBarDefaultLabelPosition.Right;
         }
+
+        private void RefreshCharacterList(string selectedToken = null)
+        {
+            selectedToken ??= (listView.SelectedItem as Character)?.token;
+
+            var query = (characterSearchBox?.Text ?? string.Empty).Trim();
+            var matchingCharacters = Characters
+                .Where(character => MatchesCharacterSearch(character, query))
+                .ToList();
+
+            FilteredCharacters.Clear();
+
+            foreach (var character in matchingCharacters)
+                FilteredCharacters.Add(character);
+
+            if (!string.IsNullOrWhiteSpace(selectedToken))
+                listView.SelectedItem = FilteredCharacters.FirstOrDefault(character => character.token == selectedToken);
+
+            CheckForNullCharacter();
+        }
+
+        private static bool MatchesCharacterSearch(Character character, string query)
+        {
+            if (string.IsNullOrWhiteSpace(query))
+                return true;
+
+            var searchTarget = string.Join(" ", new[]
+            {
+                character?.name,
+                character?.role,
+                character?.age,
+                character?.traitsText,
+                character?.appearance,
+                character?.description,
+            });
+
+            return searchTarget?.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0;
+        }
+
+        private void UpdateDialogueInsights(Character character)
+        {
+            DialoguePreviews.Clear();
+
+            if (character == null)
+            {
+                dialogueStatsText.Text = string.Empty;
+                dialoguePreviewEmptyText.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            var chaptersWithDialogue = 0;
+            var dialogueLines = 0;
+
+            foreach (var chapter in Scripts.Services.ServiceLocator.ProjectState.Chapters)
+            {
+                var chapterText = ConvertToPlainText(chapter.text);
+                var dialogues = Dialogue.GetFromCharactersFromString(chapterText, new List<string>() { character.name });
+
+                if (dialogues.Count == 0)
+                    continue;
+
+                chaptersWithDialogue++;
+                dialogueLines += dialogues.Count;
+
+                if (DialoguePreviews.Count >= 4)
+                    continue;
+
+                foreach (var dialogue in dialogues)
+                {
+                    DialoguePreviews.Add(new CharacterDialoguePreview()
+                    {
+                        ChapterName = chapter.name,
+                        Preview = BuildDialoguePreview(dialogue.text),
+                    });
+
+                    if (DialoguePreviews.Count >= 4)
+                        break;
+                }
+            }
+
+            if (dialogueLines == 0)
+                dialogueStatsText.Text = resourceLoader.GetString("characterDialogueStatsEmpty") ?? "No dialogue lines found yet.";
+            else
+                dialogueStatsText.Text = string.Format(resourceLoader.GetString("characterDialogueStatsFormat") ?? "Appears in {0} chapter(s) and has {1} dialogue line(s).", chaptersWithDialogue, dialogueLines);
+
+            dialoguePreviewEmptyText.Visibility = DialoguePreviews.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+        }
+
+        private static string ConvertToPlainText(string chapterText)
+        {
+            if (string.IsNullOrWhiteSpace(chapterText))
+                return string.Empty;
+
+            var box = new RichEditBox();
+            box.Document.SetText(TextSetOptions.FormatRtf, chapterText);
+            box.Document.GetText(TextGetOptions.None, out string plainText);
+            return plainText ?? string.Empty;
+        }
+
+        private static string BuildDialoguePreview(string text)
+        {
+            var preview = Regex.Replace(text ?? string.Empty, "\\s+", " ").Trim();
+
+            if (preview.Length > 140)
+                return preview.Substring(0, 137) + "...";
+
+            return preview;
+        }
+    }
+
+    public class CharacterDialoguePreview
+    {
+        public string ChapterName { get; set; }
+
+        public string Preview { get; set; }
     }
 }
