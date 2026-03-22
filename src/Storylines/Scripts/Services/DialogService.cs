@@ -12,7 +12,6 @@ namespace Storylines.Scripts.Services
 
         public void OpenLoadDialogue()
         {
-            LoadProjectDialogue.loadFile.isEscape = false;
             LoadProjectDialogue.Open();
         }
 

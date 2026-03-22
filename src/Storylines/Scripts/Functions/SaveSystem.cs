@@ -1,4 +1,5 @@
 ﻿using Storylines.Components.DialogueWindows;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;

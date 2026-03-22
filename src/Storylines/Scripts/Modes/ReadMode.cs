@@ -67,10 +67,12 @@ namespace Storylines.Scripts.Modes
 
         public void Leave()
         {
-            MainPage.ReadMode = new ReadMode();
-
             MainPage.ChapterText.Visibility = Visibility.Visible;
             MainPage.Current.mainGrid.Children.Remove(txtBox);
+
+            MainPage.ReadMode = null;
+
+            AppView.current.BackButtonCheck();
         }
     }
 }

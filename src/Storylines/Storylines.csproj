@@ -251,6 +251,7 @@
     <Compile Include="Scripts\Services\Serializers\LegacySrlSerializer.cs" />
     <Compile Include="Scripts\Variables\ProjectData.cs" />
     <Compile Include="Scripts\Variables\ProjectFile.cs" />
+    <Compile Include="Scripts\Variables\ProjectState.cs" />
     <Compile Include="Components\ChapterNotesPane.xaml.cs">
       <DependentUpon>ChapterNotesPane.xaml</DependentUpon>
     </Compile>

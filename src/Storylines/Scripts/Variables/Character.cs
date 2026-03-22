@@ -1,5 +1,6 @@
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
+using Storylines.Scripts.Constants;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -149,7 +150,7 @@ namespace Storylines.Scripts.Variables
                 var file = await folder.TryGetItemAsync(cp.fileName);
 
                 if (file != null)
-                    return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = Constants.LayoutConstants.ProfilePictureDecodeSize, DecodePixelWidth = Constants.LayoutConstants.ProfilePictureDecodeSize };
+                    return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = LayoutConstants.ProfilePictureDecodeSize, DecodePixelWidth = LayoutConstants.ProfilePictureDecodeSize };
             }
             catch (Exception ex)
             {

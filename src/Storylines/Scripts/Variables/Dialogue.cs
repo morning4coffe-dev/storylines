@@ -10,7 +10,7 @@ namespace Storylines.Scripts.Variables
     /// </summary>
     public class Dialogue
     {
-        private static readonly Regex LegacyStructuredDialogueRegex = new Regex(@"\{name=(?<name>[^;{}]+);\s*text=\"(?<text>.*?)\"\}", RegexOptions.Compiled | RegexOptions.Singleline);
+        private static readonly Regex LegacyStructuredDialogueRegex = new Regex(@"\{name=(?<name>[^;{}]+);\s*text=""(?<text>.*?)""\}", RegexOptions.Compiled | RegexOptions.Singleline);
 
         /// <summary>
         /// Gets or sets the speaking character name.

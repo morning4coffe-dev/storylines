@@ -33,14 +33,16 @@ namespace Storylines.Scripts.Variables
 
         public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null)
         {
-            var ch = new Chapter() { name = name, token = token, text = text, notes = notes ?? string.Empty, synopsis = synopsis, wordCountGoal = wordCountGoal };
+            var ch = new Chapter() { name = name, text = text, notes = notes ?? string.Empty, synopsis = synopsis, wordCountGoal = wordCountGoal };
+            ch.SetToken(token);
             Chapters.Add(ch);
             return ch;
         }
 
         public Chapter InsertExistingChapter(string name, string token, string text, int position, string notes = "")
         {
-            var ch = new Chapter() { name = name, token = token, text = text, notes = notes ?? string.Empty };
+            var ch = new Chapter() { name = name, text = text, notes = notes ?? string.Empty };
+            ch.SetToken(token);
             Chapters.Insert(position, ch);
             return ch;
         }
@@ -71,7 +73,20 @@ namespace Storylines.Scripts.Variables
 
         public Chapter CopyChapter(string token)
         {
-            return (Chapter)FindChapter(token).MemberwiseClone();
+            var original = FindChapter(token);
+            if (original == null)
+                return null;
+
+            var copy = new Chapter()
+            {
+                name = original.name,
+                text = original.text,
+                notes = original.notes,
+                synopsis = original.synopsis,
+                wordCountGoal = original.wordCountGoal
+            };
+            copy.SetToken(original.token);
+            return copy;
         }
 
         public Chapter FindChapter(string token)

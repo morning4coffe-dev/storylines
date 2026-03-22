@@ -5,14 +5,18 @@ VisualStudioVersion = 16.0.30907.101
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Storylines", "Storylines\Storylines.csproj", "{3631ECDC-FF49-463B-9A23-2CBA0FB2D3BD}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Storylines.Tests", "Storylines.Tests\Storylines.Tests.csproj", "{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM = Debug|ARM
 		Debug|ARM64 = Debug|ARM64
+		Debug|AnyCPU = Debug|AnyCPU
 		Debug|x64 = Debug|x64
 		Debug|x86 = Debug|x86
 		Release|ARM = Release|ARM
 		Release|ARM64 = Release|ARM64
+		Release|AnyCPU = Release|AnyCPU
 		Release|x64 = Release|x64
 		Release|x86 = Release|x86
 	EndGlobalSection
@@ -41,6 +45,22 @@ Global
 		{3631ECDC-FF49-463B-9A23-2CBA0FB2D3BD}.Release|x86.ActiveCfg = Release|x86
 		{3631ECDC-FF49-463B-9A23-2CBA0FB2D3BD}.Release|x86.Build.0 = Release|x86
 		{3631ECDC-FF49-463B-9A23-2CBA0FB2D3BD}.Release|x86.Deploy.0 = Release|x86
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|ARM.ActiveCfg = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|ARM64.ActiveCfg = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|AnyCPU.ActiveCfg = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|AnyCPU.Build.0 = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|x64.ActiveCfg = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|x64.Build.0 = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|x86.ActiveCfg = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Debug|x86.Build.0 = Debug|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|ARM.ActiveCfg = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|ARM64.ActiveCfg = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|AnyCPU.ActiveCfg = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|AnyCPU.Build.0 = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|x64.ActiveCfg = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|x64.Build.0 = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|x86.ActiveCfg = Release|AnyCPU
+		{C1D2E3F4-A5B6-7890-CDEF-AB0123456789}.Release|x86.Build.0 = Release|AnyCPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

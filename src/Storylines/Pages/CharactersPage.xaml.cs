@@ -469,12 +469,13 @@ namespace Storylines.Pages
         }
 
         private CharacterPicture _picture;
-        private void ImageButton_Click(object sender, RoutedEventArgs e)
+        private async void ImageButton_Click(object sender, RoutedEventArgs e)
         {
             if (!selectionChanged)
             {
                 var p = (sender as Button).Tag as CharacterPicture;
-                profilePicture.ProfilePicture = Character.ProfilePictureFromCharacterPictureAsync(p);
+                var bmp = await Character.LoadProfilePictureAsync(p);
+                profilePicture.ProfilePicture = bmp;
                 profilePictureFlyout.IsOpen = false;
 
                 PictureChanged(p);
