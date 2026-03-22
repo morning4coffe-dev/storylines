@@ -684,10 +684,29 @@ namespace Storylines.Components
             var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
 
             if (ctrl.HasFlag(CoreVirtualKeyStates.Down))
-                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)// || e.Key == VirtualKey.V)// 
+            {
+                if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)
                     return;
 
+                if (e.Key == VirtualKey.V)
+                {
+                    HandlePaste();
+                    e.Handled = true;
+                    return;
+                }
+            }
+
             base.OnKeyDown(e);
+        }
+
+        private async void HandlePaste()
+        {
+            var content = Clipboard.GetContent();
+            if (content.Contains(StandardDataFormats.Text))
+            {
+                var text = await content.GetTextAsync();
+                Document.Selection.TypeText(text);
+            }
         }
     }
 }
