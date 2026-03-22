@@ -32,7 +32,7 @@ namespace Storylines.Components.DialogueWindows
 
             extensions.Add(".srl");
 
-            if (Chapter.chapters.Count <= 1 && Character.characters.Count == 0)
+            if (Scripts.Services.ServiceLocator.ProjectState.Chapters.Count <= 1 && Scripts.Services.ServiceLocator.ProjectState.Characters.Count == 0)
                 extensions.Add(".txt");
             else 
                 extensionComboBox.IsEnabled = false;
@@ -74,7 +74,7 @@ namespace Storylines.Components.DialogueWindows
             }
         }
 
-        public void SomethingChanged(bool nameOrLocation)
+        public async void SomethingChanged(bool nameOrLocation)
         {
             if (saveFolder != null && SettingsValues.IsStringSaveable(fileNameText.Text))
                 submitButton.IsEnabled = true;
@@ -84,16 +84,19 @@ namespace Storylines.Components.DialogueWindows
             if (nameOrLocation && saveFolder != null && !string.IsNullOrEmpty(fileNameText.Text))
                 try
                 {
-                    var file = saveFolder.TryGetItemAsync($"{fileNameText.Text + extensionComboBox.SelectedItem}").AsTask().GetAwaiter().GetResult();
+                    var file = await saveFolder.TryGetItemAsync($"{fileNameText.Text + extensionComboBox.SelectedItem}");
 
                     nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    ServiceLocator.Logger?.Warning($"Failed to check for file collision: {ex.Message}");
+                }
         }
 
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveSystem.NewFile(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
+            _ = SaveSystem.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
             SaveSystem.currentProject.projectName = nameText.Text;
             saveDialogue.Hide();
         }

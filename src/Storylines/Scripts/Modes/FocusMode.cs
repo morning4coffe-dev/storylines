@@ -146,12 +146,12 @@ namespace Storylines.Scripts.Modes
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesEnableButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
 
-            mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Character.characters.Count > 0;
+            mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Services.ServiceLocator.ProjectState.Characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesAddButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
 
-            mainCommandBarInstance.dialoguesAddButton.IsEnabled = Character.characters.Count > 0;
+            mainCommandBarInstance.dialoguesAddButton.IsEnabled = Services.ServiceLocator.ProjectState.Characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(MainPage.CommandBar.dictationButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dictationButton);
@@ -256,7 +256,10 @@ namespace Storylines.Scripts.Modes
         public void Leave()
         {
             if (MainPage.FocusMode.timer != null)
+            {
+                MainPage.FocusMode.timer.Tick -= Timer_Tick;
                 MainPage.FocusMode.timer.Stop();
+            }
 
             MainPage.ChapterList.listView.Visibility = chaptersViewEnabled;
 

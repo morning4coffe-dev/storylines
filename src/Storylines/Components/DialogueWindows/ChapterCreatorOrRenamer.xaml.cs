@@ -64,12 +64,12 @@ namespace Storylines.Components.DialogueWindows
             {
                 case Task.Create:
                     var itemID = MainPage.ChapterList.listView.Items.Count;
-                    Chapter.AddFromCreator(Chapter.chapters.Count + 1, chapterNameBox.Text);
+                    Scripts.Services.ServiceLocator.ProjectState.AddChapterFromCreator(Scripts.Services.ServiceLocator.ProjectState.Chapters.Count + 1, chapterNameBox.Text);
                     MainPage.ChapterList.CheckForEmptyList();
                     MainPage.ChapterList.listView.SelectedIndex = itemID;
                     break;
                 case Task.Rename:
-                    Chapter.Rename(chapterToRename.token, chapterNameBox.Text);
+                    Scripts.Services.ServiceLocator.ProjectState.RenameChapter(chapterToRename.token, chapterNameBox.Text);
                     break;
             }
             chapterCreator.Hide();

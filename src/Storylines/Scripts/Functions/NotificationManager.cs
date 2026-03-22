@@ -123,12 +123,14 @@ namespace Storylines.Scripts.Functions
 
             if (InAppNotificationTimer != null)
             {
+                InAppNotificationTimer.Tick -= InAppNotificationTimer_Tick;
+                InAppNotificationTimer.Stop();
                 InAppNotificationTimer = null;
             }
 
             InAppNotificationTimer = new DispatcherTimer();
             InAppNotificationTimer.Tick += InAppNotificationTimer_Tick;
-            InAppNotificationTimer.Interval = TimeSpan.FromSeconds(12);
+            InAppNotificationTimer.Interval = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds);
             InAppNotificationTimer.Start();
 
             DisplayBadgeNotification("attention");

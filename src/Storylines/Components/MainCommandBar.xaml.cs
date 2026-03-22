@@ -25,6 +25,17 @@ namespace Storylines.Components
                 MainPage.CommandBar = this;
 
             autosaveToggleButton.IsChecked = SettingsValues.autosaveEnabled;
+
+            ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+        }
+
+        private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
+        {
+            if (e.Context == "chapters")
+            {
+                undoButton.IsEnabled = e.CanUndo;
+                redoButton.IsEnabled = e.CanRedo;
+            }
         }
 
         #region TEMP - NavigationView
@@ -125,12 +136,10 @@ namespace Storylines.Components
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            //NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Informational, "This feature has been temporarily disabled.", "Sorry, this feature has been disabled, but it will be brought back with the next update. Currently, you can add a chapter and press Win+H to type with your voice.");
-
-            if (Chapter.chapters.Count == 0)
+            if (Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0)
             {
-                Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                MainPage.ChapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
+                Scripts.Services.ServiceLocator.ProjectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                MainPage.ChapterList.listView.SelectedIndex = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count - 1;
             }
 
             _ = MainPage.ChapterText.textBox.Focus(FocusState.Pointer);

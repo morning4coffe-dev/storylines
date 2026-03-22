@@ -67,22 +67,22 @@ namespace Storylines.Components.DialogueWindows
 
         public void AddToExport(bool characters)
         {
-            int num = characters ? Character.characters.Count : Chapter.chapters.Count;
+            int num = characters ? Scripts.Services.ServiceLocator.ProjectState.Characters.Count : Scripts.Services.ServiceLocator.ProjectState.Chapters.Count;
 
             chaptersToExportList.Items.Clear();
 
             for (int i = 0; i < num; i++)
             {
-                string itemName = characters ? Character.characters[i].name : Chapter.chapters[i].name;
+                string itemName = characters ? Scripts.Services.ServiceLocator.ProjectState.Characters[i].name : Scripts.Services.ServiceLocator.ProjectState.Chapters[i].name;
 
                 chaptersToExportList.Items.Add(new ListViewItem() { Content = itemName, IsSelected = true });
             }
 
             characterDialoguesToExportList.Items.Clear();
 
-            for (int i = 0; i < Character.characters.Count; i++)
+            for (int i = 0; i < Scripts.Services.ServiceLocator.ProjectState.Characters.Count; i++)
             {
-                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = Character.characters[i].name, IsSelected = true });
+                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = Scripts.Services.ServiceLocator.ProjectState.Characters[i].name, IsSelected = true });
             }
         }
 
@@ -174,7 +174,7 @@ namespace Storylines.Components.DialogueWindows
 
             for (int i = 0; i < characterDialoguesToExportList.SelectedItems.Count; i++)
             {
-                selectedIndexes2.Add(Character.characters[i]);
+                selectedIndexes2.Add(Scripts.Services.ServiceLocator.ProjectState.Characters[i]);
             }
 
             ExportSystem.Export(saveFolder, fileNameText.Text, extensionComboBox.SelectedItem as string, selectedIndexes, selectedIndexes2, (bool)withChapterNameCheckBox.IsChecked);

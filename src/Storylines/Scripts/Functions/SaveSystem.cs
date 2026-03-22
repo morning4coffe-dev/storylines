@@ -1,22 +1,13 @@
 ﻿using Storylines.Components.DialogueWindows;
 using Storylines.Pages;
-using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Variables;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
-using Windows.Security.Cryptography;
 using Windows.Storage;
-using Windows.Storage.AccessCache;
-using Windows.Storage.FileProperties;
-using Windows.Storage.Streams;
 
 namespace Storylines.Components
 {
@@ -44,14 +35,14 @@ namespace Storylines.Components
                 if (currentProject.file.FileType == ".srl")
                 {
                     var projectData = CollectProjectData();
-                    WriteToFile(JsonSerializer.Serialize(projectData));
+                    _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
                 }
                 else if (currentProject.file.FileType == ".txt")
                 {
                     MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(false);
-                    WriteToFile(txt);
+                    _ = WriteToFileAsync(txt);
                 }
 
                 NotificationManager.DisplayMainProgressBar(true);
@@ -73,7 +64,7 @@ namespace Storylines.Components
             if (currentProject.file != null)
             {
                 var projectData = CollectProjectData();
-                WriteToFile(JsonSerializer.Serialize(projectData));
+                _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
@@ -89,23 +80,27 @@ namespace Storylines.Components
                 Name = currentProject.projectName
             };
 
-            foreach (var character in Character.characters)
+            foreach (var character in ServiceLocator.ProjectState.Characters)
             {
                 data.Characters.Add(new CharacterData
                 {
                     Name = character.name,
                     Description = character.description,
-                    PictureFileName = character.picture?.fileName ?? string.Empty
+                    PictureFileName = character.picture?.fileName ?? string.Empty,
+                    Role = character.role,
+                    Age = character.age
                 });
             }
 
-            foreach (var chapter in Chapter.chapters)
+            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
             {
                 data.Chapters.Add(new ChapterData
                 {
                     Name = chapter.name,
                     Text = chapter.text,
-                    Notes = chapter.notes ?? string.Empty
+                    Notes = chapter.notes ?? string.Empty,
+                    Synopsis = chapter.synopsis,
+                    WordCountGoal = chapter.wordCountGoal
                 });
             }
 
@@ -119,17 +114,17 @@ namespace Storylines.Components
             return JsonSerializer.Serialize(projectData);
         }
 
-        private static async void NewFile(StorageFolder folder, string fileContent, string fileName)
+        private static async Task NewFileAsync(StorageFolder folder, string fileContent, string fileName)
         {
             StorageFile file = await folder.CreateFileAsync($@"{fileName}.srl", CreationCollisionOption.OpenIfExists);
 
             currentProject.file = file;
             ProjectFile.New(file);
 
-            WriteToFile(fileContent);
+            await WriteToFileAsync(fileContent);
         }
 
-        public static async void NewFile(StorageFolder folder, string fullFileName)
+        public static async Task NewFileAsync(StorageFolder folder, string fullFileName)
         {
             var file = await folder.CreateFileAsync(fullFileName, CreationCollisionOption.OpenIfExists);
 
@@ -139,11 +134,12 @@ namespace Storylines.Components
             Save();
         }
 
-        private static async void WriteToFile(string fileContent)
+        private static async Task WriteToFileAsync(string fileContent)
         {
             try
             {
                 await FileService.WriteAsync(currentProject.file, fileContent);
+                ToDoAfterSave();
             }
             catch (Exception ex)
             {
@@ -155,8 +151,6 @@ namespace Storylines.Components
 
                 afterSave = AfterSave.DoNothing;
             }
-            
-            ToDoAfterSave();
         }
 
         private static void ToDoAfterSave()
@@ -165,7 +159,7 @@ namespace Storylines.Components
             {
                 case AfterSave.DoNothing:
                     TimeTravelSystem.unSavedProgress = false;
-                    AppView.current.UpdateTitleBar();
+                    ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
                     break;
                 case AfterSave.ClearEverything:
                     currentProject = null;
@@ -181,14 +175,14 @@ namespace Storylines.Components
             NotificationManager.HideMainProgressBar();
         }
 
-        public static async void OpenFileExplorer_SaveAsync(string fileName)
+        public static async Task OpenFileExplorer_SaveAsync(string fileName)
         {
             StorageFolder folder = await FileService.PickFolderForSaveAsync();
 
             if (folder != null)
             {
                 var projectData = CollectProjectData();
-                NewFile(folder, JsonSerializer.Serialize(projectData), fileName);
+                await NewFileAsync(folder, JsonSerializer.Serialize(projectData), fileName);
             }
         }
         #endregion
@@ -203,7 +197,7 @@ namespace Storylines.Components
         {
             if (project.file == null)
             {
-                project.file = await OpenFileEplorerLoadAsync();
+                project.file = await OpenFileExplorerLoadAsync();
 
                 if(project.file != null)
                     _ = LoadAsync(project);
@@ -263,12 +257,12 @@ namespace Storylines.Components
                     var picture = !string.IsNullOrEmpty(charData.PictureFileName)
                         ? new CharacterPicture { fileName = charData.PictureFileName }
                         : null;
-                    Character.AddExisting(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture);
+                    await ServiceLocator.ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age);
                 }
 
                 foreach (var chapterData in projectData.Chapters)
                 {
-                    Chapter.AddExisting(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes);
+                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal);
                 }
 
                 LoadVariables(projectData);
@@ -295,7 +289,7 @@ namespace Storylines.Components
 
                 string txt = await FileService.ReadAsync(file);
 
-                Chapter.AddExisting(file.DisplayName, Guid.NewGuid().ToString(), txt);
+                ServiceLocator.ProjectState.AddExistingChapter(file.DisplayName, Guid.NewGuid().ToString(), txt);
                 MainPage.ChapterList.listView.SelectedIndex = 0;
 
                 Loaded();
@@ -321,18 +315,18 @@ namespace Storylines.Components
         {
             TimeTravelSystem.unSavedProgress = false;
             savedValues.Clear();
-            AppView.current.UpdateTitleBar();
+            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
 
             NotificationManager.HideMainProgressBar();
         }
 
-        private static async Task<StorageFile> OpenFileEplorerLoadAsync()
+        private static async Task<StorageFile> OpenFileExplorerLoadAsync()
         {
             StorageFile file = await FileService.PickFileForOpenAsync();
 
             if (file != null)
             {
-                if (!ProjectFile.ChectIfProjectExists(file))
+                if (!ProjectFile.CheckIfProjectExists(file))
                     ProjectFile.New(file);
 
                 return file;
@@ -349,7 +343,7 @@ namespace Storylines.Components
 
             Load(new ProjectFile() { file = file });
 
-            if (!ProjectFile.ChectIfProjectExists(file))
+            if (!ProjectFile.CheckIfProjectExists(file))
                 ProjectFile.New(file);
         }
 
@@ -357,115 +351,10 @@ namespace Storylines.Components
         //{
         //    await ProjectFile.LoadAllAsync();
 
-        //    if (!ProjectFile.ChectIfProjectExists(file))
+        //    if (!ProjectFile.CheckIfProjectExists(file))
         //        ProjectFile.New(file);
         //}
         #endregion
     }
 
-    public class ProjectFile : INotifyPropertyChanged
-    {
-        public string name { get; set; }
-        public string token { get; private set; }
-        public string path { get; set; }
-        public StorageFile file { get; set; }
-
-        public string projectName { get; set; }
-        public string projectVersion { get; set; }
-
-        public Uri icon { get; set; }
-        public string shortPath { get; set; }
-        public string lastEditedFormatted { get; private set; }
-        public DateTimeOffset lastEdited { get; private set; }
-
-        public Windows.UI.Xaml.Thickness osMargin { get; private set; } = LoadProjectDialogue.osMargin;
-        public double osWidth { get; private set; } = LoadProjectDialogue.osWidth;
-
-        public static ObservableCollection<ProjectFile> projectFiles = new ObservableCollection<ProjectFile>();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        public static void New(StorageFile file)
-        {
-            _ = Remember(file);
-        }
-
-        public static ProjectFile LoadExisting(StorageFile file, string token)
-        {
-            BasicProperties basicProperties = file.GetBasicPropertiesAsync().AsTask().GetAwaiter().GetResult();
-            return new ProjectFile()
-            {
-                name = file.Name,
-                path = file.Path,
-                token = token,
-                file = file,
-                icon = new Uri(file.FileType == ".txt" ? "ms-appx:/Assets/Icons/Text-document-icon.png" : "ms-appx:/Assets/Icons/Storylines-document-icon.png"),
-                shortPath = file.Path.Replace(@"\" + file.Name, string.Empty).Replace(@"\", "/"),
-                lastEditedFormatted = basicProperties.DateModified.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture),
-                lastEdited = basicProperties.DateModified
-            };
-        }
-
-        private static string Remember(StorageFile file)
-        {
-            string token = Guid.NewGuid().ToString();
-            if (StorageApplicationPermissions.FutureAccessList.Entries.Count >= StorageApplicationPermissions.FutureAccessList.MaximumItemsAllowed)
-                StorageApplicationPermissions.FutureAccessList.Remove(StorageApplicationPermissions.FutureAccessList.Entries[0].Token);
-
-            StorageApplicationPermissions.FutureAccessList.AddOrReplace(token, file);
-            return token;
-        }
-
-        public static void Remove(string token)
-        {
-            for (int i = 0; i < projectFiles.Count; i++)
-            {
-                if (projectFiles[i].token == token)
-                {
-                    projectFiles.RemoveAt(i);
-                    StorageApplicationPermissions.FutureAccessList.Remove(token);
-                }
-            }
-        }
-
-        public static async Task LoadAllAsync()
-        {
-            foreach (AccessListEntry token in StorageApplicationPermissions.FutureAccessList.Entries)
-            {
-                Task<StorageFile> task = GetProjectFromTokenAsync(token.Token);
-
-                if (await Task.WhenAny(task, Task.Delay(1000)) == task)
-                {
-                    StorageFile file = task.Result;
-                    projectFiles.Add(LoadExisting(file, token.Token));
-                }
-                else
-                    StorageApplicationPermissions.FutureAccessList.Remove(token.Token);
-            }           
-        }
-
-        public static async Task<StorageFile> GetProjectFromTokenAsync(string token)
-        {
-            if (!StorageApplicationPermissions.FutureAccessList.ContainsItem(token))
-                return null;
-            return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
-        }
-
-        public static bool ChectIfProjectExists(StorageFile file)
-        {
-            for (int i = 0; i < projectFiles.Count; i++)
-            {
-                if (projectFiles[i].path == file.Path)
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-
-        public void NotifyPropertyChanged(string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-    }
 }

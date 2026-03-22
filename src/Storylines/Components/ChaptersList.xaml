@@ -86,7 +86,7 @@
 
         <ListView x:Name="listView"
                   x:FieldModifier="public"
-                  ItemsSource="{x:Bind variables:Chapter.chapters}"
+                  ItemsSource="{x:Bind Chapters}"
                   CanReorderItems="True"
                   Grid.Row="3"
                   CanDragItems="True"

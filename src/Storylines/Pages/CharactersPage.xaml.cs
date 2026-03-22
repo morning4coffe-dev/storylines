@@ -21,6 +21,8 @@ namespace Storylines.Pages
         public bool isAddEnabled { set; get; } = true;
         public bool isRemoveEnabled { set; get; } = true;
 
+        public ObservableCollection<Character> Characters => Scripts.Services.ServiceLocator.ProjectState.Characters;
+
         private bool selectionChanged = false;
         public bool unappliedChanges = false;
 
@@ -37,6 +39,17 @@ namespace Storylines.Pages
             AppView.current.page = AppView.Pages.Characters;
 
             TimeTravelCharacter.ClearUndoAndRedo();
+
+            Scripts.Services.ServiceLocator.Events.Subscribe<Scripts.Services.UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+        }
+
+        private void OnUndoRedoStateChanged(Scripts.Services.UndoRedoStateChangedEvent e)
+        {
+            if (e.Context == "characters")
+            {
+                undoButton.IsEnabled = e.CanUndo;
+                redoButton.IsEnabled = e.CanRedo;
+            }
         }
 
         Character characterBeforeChange;
@@ -47,6 +60,8 @@ namespace Storylines.Pages
 
             nameBox.IsEnabled = enable;
             descriptionBox.IsEnabled = enable;
+            roleBox.IsEnabled = enable;
+            ageBox.IsEnabled = enable;
             profilePicture.IsTapEnabled = enable;
 
             editButton.IsChecked = enable;
@@ -86,6 +101,8 @@ namespace Storylines.Pages
 
                 (listView.SelectedItem as Character).name = nameBox.Text;
                 (listView.SelectedItem as Character).description = descriptionBox.Text;
+                (listView.SelectedItem as Character).role = roleBox.Text;
+                (listView.SelectedItem as Character).age = ageBox.Text;
                 if(_picture != null)
                     (listView.SelectedItem as Character).picture = _picture;
             }
@@ -97,6 +114,8 @@ namespace Storylines.Pages
 
             nameBox.Text = characterBeforeChange.name;
             descriptionBox.Text = characterBeforeChange.description;
+            roleBox.Text = characterBeforeChange.role ?? "";
+            ageBox.Text = characterBeforeChange.age ?? "";
             profilePicture.ProfilePicture = characterBeforeChange.picture.image;
             _picture = characterBeforeChange.picture;
 
@@ -134,7 +153,7 @@ namespace Storylines.Pages
 
         public bool DidSomethingChange()
         {
-            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
+            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).role == (string.IsNullOrEmpty(roleBox.Text) ? null : roleBox.Text) && (listView.SelectedItem as Character).age == (string.IsNullOrEmpty(ageBox.Text) ? null : ageBox.Text) && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
                 return false;
             else
                 return true;
@@ -197,7 +216,7 @@ namespace Storylines.Pages
         {
             if (!string.IsNullOrWhiteSpace(characterItemFlyoutedToken))
             {
-                listView.SelectedIndex = Character.FindID(characterItemFlyoutedToken);
+                listView.SelectedIndex = Scripts.Services.ServiceLocator.ProjectState.FindCharacterID(characterItemFlyoutedToken);
                 EnableEditMode(true);
             }
         }
@@ -214,7 +233,7 @@ namespace Storylines.Pages
             Random rn = new Random();
             int value = rn.Next(0, 2);
 
-            listView.SelectedItem = Character.CreateNew(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
+            listView.SelectedItem = Scripts.Services.ServiceLocator.ProjectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
             EnableEditMode(true);
 
             CheckForNullCharacter();
@@ -223,7 +242,7 @@ namespace Storylines.Pages
         public void Remove()
         {
             if (listView.SelectedItem != null)
-                Character.Remove((listView.SelectedItem as Character).token);
+                Scripts.Services.ServiceLocator.ProjectState.RemoveCharacter((listView.SelectedItem as Character).token);
 
             CheckForNullCharacter();
         }
@@ -231,8 +250,8 @@ namespace Storylines.Pages
         public void Sort()
         {
             var s = listView.SelectedItem;
-            Character.characters = new ObservableCollection<Character>(Character.characters.OrderBy(o => o.name).ToList());
-            listView.ItemsSource = Character.characters;
+            Scripts.Services.ServiceLocator.ProjectState.SortCharacters();
+            listView.ItemsSource = Scripts.Services.ServiceLocator.ProjectState.Characters;
             listView.SelectedItem = s;
         }
 
@@ -249,6 +268,8 @@ namespace Storylines.Pages
 
                 nameBox.Text = (listView.SelectedItem as Character).name;
                 descriptionBox.Text = (listView.SelectedItem as Character).description;
+                roleBox.Text = (listView.SelectedItem as Character).role ?? "";
+                ageBox.Text = (listView.SelectedItem as Character).age ?? "";
                 profilePicture.ProfilePicture = (listView.SelectedItem as Character).picture.image != null ? (listView.SelectedItem as Character).picture.image : null;
 
                 editButton.IsEnabled = true;

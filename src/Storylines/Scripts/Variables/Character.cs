@@ -1,8 +1,9 @@
-﻿using Storylines.Scripts.Functions;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using System;
-using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml.Media.Imaging;
@@ -42,90 +43,45 @@ namespace Storylines.Scripts.Variables
                 NotifyPropertyChanged();
             }
         }
-        //age?, relatives?, abilities?, gender?
+
+        private string _role;
+        public string role
+        {
+            get { return _role; }
+            set
+            {
+                _role = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private string _age;
+        public string age
+        {
+            get { return _age; }
+            set
+            {
+                _age = value;
+                NotifyPropertyChanged();
+            }
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
-
-        public static ObservableCollection<Character> characters = new ObservableCollection<Character>();
-
-        public static void AddExisting(string name, string token, string description, CharacterPicture picture)
-        {
-            Character ch = new Character()
-            {
-                name = name,
-                token = token,
-                description = description,
-            };
-
-            if (picture != null)
-                if (picture.fileName != null && picture.fileName.Length > 0)
-                    ch.picture = new CharacterPicture() { fileName = picture.fileName, image = ProfilePictureFromCharacterPictureAsync(picture) };
-                else
-                    ch.picture = new CharacterPicture();
-
-            characters.Add(ch);
-        }
-
-        public static Character CreateNew(string name, string description)
-        {
-            Character ch = new Character() { name = name, token = Guid.NewGuid().ToString(), description = description, picture = new CharacterPicture() };
-            characters.Add(ch);
-            TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Added, ch);
-            return ch;
-        }
-
-        public static void Remove(string token)
-        {
-            for (int i = 0; i < characters.Count; i++)
-            {
-                if (characters[i].token == token)
-                {
-                    TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Removed, characters[i]);
-
-                    _ = characters.Remove(characters[i]);
-                }
-            }
-        }
-
-        public static Character Find(string token)
-        {
-            for (int i = 0; i < characters.Count; i++)
-            {
-                if (characters[i].token == token)
-                    return characters[i];
-            }
-            return null;
-        }
-
-        public static int FindID(string token)
-        {
-            for (int i = 0; i < characters.Count; i++)
-            {
-                if (characters[i].token == token)
-                    return i;
-            }
-            return 0;
-        }
-
-        public static Character Copy(string token)
-        {
-            return (Character)Find(token).MemberwiseClone();
-        }
 
         public void SetToken(string token)
         {
             this.token = token;
         }
 
-        public static BitmapImage ProfilePictureFromCharacterPictureAsync(CharacterPicture cp)
+        public static async Task<BitmapImage> LoadProfilePictureAsync(CharacterPicture cp)
         {
             try
             {
-                var folder = ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists).AsTask().GetAwaiter().GetResult();
-                var file = folder.TryGetItemAsync(cp.fileName).AsTask().GetAwaiter().GetResult();
+                var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
+                var file = await folder.TryGetItemAsync(cp.fileName);
 
                 if (file != null)
-                    return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = 60, DecodePixelWidth = 60 };
+                    return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = Constants.LayoutConstants.ProfilePictureDecodeSize, DecodePixelWidth = Constants.LayoutConstants.ProfilePictureDecodeSize };
             }
             catch (Exception ex)
             {
@@ -136,7 +92,7 @@ namespace Storylines.Scripts.Variables
             return null;
         }
 
-        public void NotifyPropertyChanged(string propertyName = "")
+        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }

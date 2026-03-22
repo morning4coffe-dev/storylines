@@ -37,7 +37,7 @@ namespace Storylines
             Scripts.Services.ServiceLocator.Initialize();
         }
 
-        /// <param name="e">Podrobnosti o žádosti o spuštění a procesu</param>
+        /// <param name="e">Details about the launch request and process</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
             UnhandledException += App_UnhandledException;
@@ -52,7 +52,7 @@ namespace Storylines
 
                 if (e.PreviousExecutionState == ApplicationExecutionState.Terminated)
                 {
-                    //TODO: Načíst stav z dříve pozastavené aplikace
+                    //TODO: Load state from previously suspended application
                 }
 
                 Window.Current.Content = rootFrame;
@@ -135,7 +135,7 @@ namespace Storylines
                     var fileToken = Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart].ToString();
                     var file = await ProjectFile.GetProjectFromTokenAsync(fileToken);
                     if(file != null)
-                        SaveSystem.Load(ProjectFile.LoadExisting(file, fileToken));
+                        SaveSystem.Load(await ProjectFile.LoadExistingAsync(file, fileToken));
                 }
                 catch (Exception ex)
                 {
@@ -178,19 +178,19 @@ namespace Storylines
             e.Handled = true;
         }
 
-        /// <param name="sender">Objekt Frame, u kterého selhala navigace</param>
-        /// <param name="e">Podrobnosti o chybě navigace</param>
+        /// <param name="sender">The Frame which failed navigation</param>
+        /// <param name="e">Details about the navigation failure</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
         }
 
-        /// <param name="sender">Zdroj žádosti o pozastavení</param>
-        /// <param name="e">Podrobnosti žádosti o pozastavení</param>
+        /// <param name="sender">The source of the suspend request</param>
+        /// <param name="e">Details about the suspend request</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Uložit stav aplikace a zastavit jakoukoliv aktivitu na pozadí
+            //TODO: Save application state and stop any background activity
             deferral.Complete();
         }
 

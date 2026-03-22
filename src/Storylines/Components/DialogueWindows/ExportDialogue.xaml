@@ -16,7 +16,7 @@
     <StackPanel Spacing="8"
                 VerticalAlignment="Stretch"
                 HorizontalAlignment="Left"
-                Width="300"
+                Width="380"
                 Margin="4">
         <TextBlock Text="{x:Bind resources:ExportDialogue.Title}"
                    Style="{StaticResource DialogueWindowHeaderStyle}" />

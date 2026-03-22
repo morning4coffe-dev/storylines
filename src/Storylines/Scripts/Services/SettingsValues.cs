@@ -67,7 +67,7 @@ namespace Storylines.Scripts.Services
         public static double autosaveInterval => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveInterval] ?? 2);
 
         public static bool whiteTextBackground => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false);
-        public static bool newChapterShortcut => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveInterval] ?? true);
+        public static bool newChapterShortcut => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] ?? true);
         public static string language => string.IsNullOrEmpty((string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage]) ? "" : (string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage];
 
         public static void LoadSettings()

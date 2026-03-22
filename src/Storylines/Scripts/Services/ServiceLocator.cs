@@ -1,5 +1,6 @@
 using Storylines.Scripts.Services.Interfaces;
 using Storylines.Scripts.Services.Serializers;
+using Storylines.Scripts.Variables;
 
 namespace Storylines.Scripts.Services
 {
@@ -10,6 +11,8 @@ namespace Storylines.Scripts.Services
         public static INotificationService NotificationService { get; private set; }
         public static ISaveSerializer JsonSerializer { get; private set; }
         public static ISaveSerializer LegacySerializer { get; private set; }
+        public static ProjectState ProjectState { get; private set; }
+        public static EventAggregator Events { get; private set; }
 
         public static void Initialize()
         {
@@ -17,6 +20,8 @@ namespace Storylines.Scripts.Services
             FileService = new Services.FileService();
             JsonSerializer = new JsonSaveSerializer();
             LegacySerializer = new LegacySrlSerializer();
+            ProjectState = new ProjectState();
+            Events = new EventAggregator();
         }
     }
 }

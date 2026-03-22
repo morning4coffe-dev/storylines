@@ -50,9 +50,9 @@ namespace Storylines.Components
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
 
-                if (Chapter.chapters[MainPage.ChapterList.listView.SelectedIndex].text != txt && !searchingInTextBox)
+                if (Scripts.Services.ServiceLocator.ProjectState.Chapters[MainPage.ChapterList.listView.SelectedIndex].text != txt && !searchingInTextBox)
                 {
-                    Chapter.chapters[MainPage.ChapterList.listView.SelectedIndex].text = txt;
+                    Scripts.Services.ServiceLocator.ProjectState.Chapters[MainPage.ChapterList.listView.SelectedIndex].text = txt;
 
                     MainPage.Current.UpdateDownBar();
                     Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, MainPage.ChapterList.listView.SelectedItem as Chapter, 0);
@@ -370,9 +370,9 @@ namespace Storylines.Components
             isFlyoutOpen = true;
             textBoxDialogueNamesFlyout.Items.Clear();
 
-            for (int i = 0; i < Character.characters.Count; i++)
+            for (int i = 0; i < Scripts.Services.ServiceLocator.ProjectState.Characters.Count; i++)
             {
-                var item = new MenuFlyoutItem() { Tag = Character.characters[i], Text = Character.characters[i].name };
+                var item = new MenuFlyoutItem() { Tag = Scripts.Services.ServiceLocator.ProjectState.Characters[i], Text = Scripts.Services.ServiceLocator.ProjectState.Characters[i].name };
                 item.Click += OnTextBoxDialogueNamesFlyoutItem_Click; ;
                 textBoxDialogueNamesFlyout.Items.Add(item);
             }
@@ -422,7 +422,7 @@ namespace Storylines.Components
         public DialogueMode currentDialogueMode;
         public void AddDialogue()
         {
-            if (Character.characters.Count > 0)
+            if (Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0)
             {
                 currentDialogueMode = DialogueMode.Complex;
                 PopulateFlyout();
@@ -434,7 +434,7 @@ namespace Storylines.Components
 
         public void AddSimpleDialogue()
         {
-            if (Character.characters.Count > 0)
+            if (Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0)
             {
                 currentDialogueMode = DialogueMode.Simple;
                 PopulateFlyout();
@@ -613,10 +613,10 @@ namespace Storylines.Components
 
         private void OnTextBoxRectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (Chapter.chapters.Count == 0)
+            if (Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0)
             {
-                Chapter.Add(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                MainPage.ChapterList.listView.SelectedIndex = Chapter.chapters.Count - 1;
+                Scripts.Services.ServiceLocator.ProjectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                MainPage.ChapterList.listView.SelectedIndex = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count - 1;
             }
 
             if (MainPage.ChapterList.listView.SelectedItem != null)

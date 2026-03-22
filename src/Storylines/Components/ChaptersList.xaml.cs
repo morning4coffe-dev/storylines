@@ -1,7 +1,9 @@
 ﻿using Storylines.Components.DialogueWindows;
 using Storylines.Pages;
+using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using System;
+using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
@@ -11,6 +13,8 @@ namespace Storylines.Components
     public sealed partial class ChaptersList : UserControl
     {
         public static int selectedIndex;
+
+        public ObservableCollection<Chapter> Chapters => ServiceLocator.ProjectState.Chapters;
 
         public bool switchedChapters = false;
 
@@ -74,7 +78,7 @@ namespace Storylines.Components
         private void OnChaptersListViewItem_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
         {
             var ch = (sender as Grid).Tag.ToString();
-            ChapterCreatorOrRenamer.Open(Chapter.Find(ch), true);
+            ChapterCreatorOrRenamer.Open(Scripts.Services.ServiceLocator.ProjectState.FindChapter(ch), true);
         }
 
         private void OnChaptersListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
@@ -99,13 +103,13 @@ namespace Storylines.Components
         private void OnChapterRename_Click(object sender, RoutedEventArgs e)
         {
             if (chapterItemFlyoutedToken != null)
-               ChapterCreatorOrRenamer.Open(Chapter.Find(chapterItemFlyoutedToken), false);
+               ChapterCreatorOrRenamer.Open(Scripts.Services.ServiceLocator.ProjectState.FindChapter(chapterItemFlyoutedToken), false);
         }
 
         private void OnChapterDeleteFlyout_Click(object sender, RoutedEventArgs e)
         {
             if (chapterItemFlyoutedToken != null)
-                Chapter.Remove(chapterItemFlyoutedToken);
+                Scripts.Services.ServiceLocator.ProjectState.RemoveChapter(chapterItemFlyoutedToken);
 
             CheckForEmptyList();
         }
@@ -122,15 +126,19 @@ namespace Storylines.Components
             {
                 try
                 {
-                    var lastNewLine = Chapter.chapters[listView.SelectedIndex].text.LastIndexOf("\\par", StringComparison.Ordinal);
-                    Chapter.chapters[listView.SelectedIndex].text = Chapter.chapters[listView.SelectedIndex].text.Remove(lastNewLine, "\\par".Length);
+                    var lastNewLine = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text.LastIndexOf("\\par", StringComparison.Ordinal);
+                    if (lastNewLine >= 0)
+                        Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text.Remove(lastNewLine, "\\par".Length);
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    Scripts.Services.ServiceLocator.Logger?.Warning($"Failed to trim trailing paragraph mark: {ex.Message}");
+                }
                 if (!reordering)
                     switchedChapters = true;
                 selectedIndex = listView.SelectedIndex;
 
-                MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, Chapter.Find((listView.SelectedItem as Chapter).token).text ?? string.Empty);
+                MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, Scripts.Services.ServiceLocator.ProjectState.FindChapter((listView.SelectedItem as Chapter).token).text ?? string.Empty);
 
                 MainPage.ChapterText.ChangeTextColor();
                 MainPage.Current.EnableOrDisableChapterTools(true);
@@ -149,9 +157,9 @@ namespace Storylines.Components
         public void CheckForEmptyList()
         { 
             noChaptersPlaceholder.Visibility = listView.Items.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
-            MainPage.CommandBar.exportButton.IsEnabled = Chapter.chapters.Count > 0 || Character.characters.Count > 0;
-            MainPage.CommandBar.saveButton.IsEnabled = Chapter.chapters.Count > 0;
-            MainPage.CommandBar.saveCopyButton.IsEnabled = Chapter.chapters.Count > 0;
+            MainPage.CommandBar.exportButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0 || Scripts.Services.ServiceLocator.ProjectState.Characters.Count > 0;
+            MainPage.CommandBar.saveButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0;
+            MainPage.CommandBar.saveCopyButton.IsEnabled = Scripts.Services.ServiceLocator.ProjectState.Chapters.Count > 0;
             MainPage.CommandBar.chapterAddButton.IsEnabled = _canAdd;
         }
 
@@ -169,7 +177,7 @@ namespace Storylines.Components
         {
             reordering = false;
 
-            Chapter.Reorder((args.Items[0] as Chapter).token, MainPage.ChapterList.listView.Items.IndexOf(args.Items[0]), position);
+            Scripts.Services.ServiceLocator.ProjectState.ReorderChapter((args.Items[0] as Chapter).token, MainPage.ChapterList.listView.Items.IndexOf(args.Items[0]), position);
         }
         #endregion
 

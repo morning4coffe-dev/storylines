@@ -16,7 +16,7 @@ namespace Storylines.Scripts.Functions
             return (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
         }
 
-        private static bool IsShiftlKeyPressed()
+        private static bool IsShiftKeyPressed()
         {
             var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.Shift);
             return (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
@@ -26,7 +26,7 @@ namespace Storylines.Scripts.Functions
         {
             if (IsCtrlKeyPressed())
             {
-                if (IsShiftlKeyPressed())
+                if (IsShiftKeyPressed())
                 {
                     switch (AppView.current.page)
                     {
@@ -75,7 +75,7 @@ namespace Storylines.Scripts.Functions
                                         ChapterCreatorOrRenamer.Open(null, false); break;
                                 case Windows.System.VirtualKey.Delete:
                                     if (MainPage.ChapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
-                                        Chapter.Remove((MainPage.ChapterList.listView.SelectedItem as Chapter).token); break;
+                                        ServiceLocator.ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).token); break;
 
                                 case Windows.System.VirtualKey.E:
                                     if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
@@ -95,7 +95,7 @@ namespace Storylines.Scripts.Functions
                                         if (MainPage.ChapterList.listView.Items.Count == MainPage.ChapterList.listView.SelectedIndex + 1 &&
                                             System.Convert.ToBoolean(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled]))
                                         {
-                                            Chapter.AddFromCreator(Chapter.chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                                            ServiceLocator.ProjectState.AddChapterFromCreator(ServiceLocator.ProjectState.Chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
                                             MainPage.ChapterList.listView.SelectedIndex += 1;
                                         }
                                     break;

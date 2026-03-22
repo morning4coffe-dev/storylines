@@ -34,6 +34,12 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("notes")]
         public string Notes { get; set; }
+
+        [JsonProperty("synopsis", NullValueHandling = NullValueHandling.Ignore)]
+        public string Synopsis { get; set; }
+
+        [JsonProperty("wordCountGoal", NullValueHandling = NullValueHandling.Ignore)]
+        public int? WordCountGoal { get; set; }
     }
 
     public class CharacterData
@@ -46,5 +52,14 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("pictureFileName")]
         public string PictureFileName { get; set; }
+
+        [JsonProperty("role", NullValueHandling = NullValueHandling.Ignore)]
+        public string Role { get; set; }
+
+        [JsonProperty("age", NullValueHandling = NullValueHandling.Ignore)]
+        public string Age { get; set; }
+
+        [JsonProperty("traits", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Traits { get; set; }
     }
 }

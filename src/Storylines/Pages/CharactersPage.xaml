@@ -169,7 +169,7 @@
                       Grid.Row="2"
                       Margin="-5,0"
                       x:FieldModifier="public"
-                      ItemsSource="{x:Bind variables:Character.characters, Mode=OneWay}"
+                      ItemsSource="{x:Bind Characters, Mode=OneWay}"
                       SelectionChanged="OnListDetailsView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="variables:Character">
@@ -269,7 +269,7 @@
             <TextBlock x:Name="charactersCountText"
                        x:Uid="charactersPageCharactersCount"
                        Margin="5,0" />
-            <TextBlock Text="{x:Bind variables:Character.characters.Count, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind Characters.Count, Mode=OneWay}" />
         </StackPanel>
 
         <Frame Grid.ColumnSpan="3"
@@ -432,6 +432,30 @@
                          CornerRadius="4"
                          IsEnabled="False"
                          PlaceholderText="Name"
+                         Style="{StaticResource CharactersTextBoxesStyle}"
+                         TextChanged="Box_TextChanged" />
+            </Grid>
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="roleBox"
+                         Grid.Column="0"
+                         Height="38"
+                         Padding="12,7"
+                         CornerRadius="4"
+                         IsEnabled="False"
+                         PlaceholderText="Role (e.g. Protagonist)"
+                         Style="{StaticResource CharactersTextBoxesStyle}"
+                         TextChanged="Box_TextChanged" />
+                <TextBox x:Name="ageBox"
+                         Grid.Column="1"
+                         Height="38"
+                         Padding="12,7"
+                         CornerRadius="4"
+                         IsEnabled="False"
+                         PlaceholderText="Age"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged" />
             </Grid>

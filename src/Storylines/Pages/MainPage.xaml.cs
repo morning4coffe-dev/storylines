@@ -70,7 +70,7 @@ namespace Storylines.Pages
                 AppView.current.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
                 downBarText.Text = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
-                ShowWelcomePanel(Chapter.chapters == null || Chapter.chapters.Count == 0);
+                ShowWelcomePanel(Scripts.Services.ServiceLocator.ProjectState.Chapters.Count == 0);
             }
         }
 

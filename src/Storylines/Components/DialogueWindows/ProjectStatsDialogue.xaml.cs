@@ -47,7 +47,7 @@ namespace Storylines.Components.DialogueWindows
 
             txt = txt.ToLower();
 
-            int charactersCount = Character.characters.Count;
+            int charactersCount = Scripts.Services.ServiceLocator.ProjectState.Characters.Count;
 
             string txtWithoutSpace = txt.Replace(" ", "");
 
@@ -59,7 +59,7 @@ namespace Storylines.Components.DialogueWindows
 
             storyRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {(storyCharacterCount.Length > 1 ? storyCharacterCount.Length - 2 : storyCharacterCount.Length)}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {storyCharacterCount.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length}\n{ResourceLoader.GetForCurrentView().GetString("estimatedReadTime")}: {storyCharacterCount.Length / 275} {ResourceLoader.GetForCurrentView().GetString("min")}\n{ResourceLoader.GetForCurrentView().GetString("estimatedPageCount")}: {storyCharacterCount.Length / 3838}";
             charactersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("characters")}: {charactersCount}";
-            chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {Chapter.chapters.Count}";
+            chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {Scripts.Services.ServiceLocator.ProjectState.Chapters.Count}";
             textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";/*\n{ResourceLoader.GetForCurrentView().GetString("selectedCharacters")}: {selectedLetters}*/
 
             var stringBuilder = new StringBuilder();
@@ -84,7 +84,7 @@ namespace Storylines.Components.DialogueWindows
         public static string GetTextFromAllChapters()
         { 
             string storyCharacterCount = "";
-            foreach (Chapter chapter in Chapter.chapters)
+            foreach (Chapter chapter in Scripts.Services.ServiceLocator.ProjectState.Chapters)
             {
                 RichEditBox richTxt = new RichEditBox();
                 richTxt.Document.SetText(TextSetOptions.FormatRtf, chapter.text);
@@ -112,7 +112,7 @@ namespace Storylines.Components.DialogueWindows
             MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} min read";
 
             // Update chapter name if available
-            var currentChapter = Chapter.chapters?.Count > 0 && ChaptersList.selectedIndex < Chapter.chapters.Count ? Chapter.chapters[ChaptersList.selectedIndex] : null;
+            var currentChapter = Scripts.Services.ServiceLocator.ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count ? Scripts.Services.ServiceLocator.ProjectState.Chapters[ChaptersList.selectedIndex] : null;
             if (currentChapter != null)
                 MainPage.Current.downBarChapterName.Text = currentChapter.name;
 

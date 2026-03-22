@@ -134,7 +134,7 @@
                                    VerticalAlignment="Center"
                                    FontSize="12"
                                    Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.3" />
+                                   Opacity="0.5" />
                         <TextBlock x:Name="downBarCharsText"
                                    x:FieldModifier="public"
                                    VerticalAlignment="Center"
@@ -145,13 +145,13 @@
                                    VerticalAlignment="Center"
                                    FontSize="12"
                                    Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.3" />
+                                   Opacity="0.5" />
                         <TextBlock x:Name="downBarReadTimeText"
                                    x:FieldModifier="public"
                                    VerticalAlignment="Center"
                                    FontSize="12"
                                    Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.6" />
+                                   Opacity="0.8" />
                     </StackPanel>
                 </Button>
 

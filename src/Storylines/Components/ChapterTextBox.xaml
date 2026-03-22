@@ -125,6 +125,8 @@
                                         <Button Tag="Yellow"
                                                 Height="38"
                                                 Width="42"
+                                                ToolTipService.ToolTip="Yellow"
+                                                AutomationProperties.Name="Yellow highlight"
                                                 Click="OnHighlighterColorButton_Click">
                                             <Rectangle Fill="#E5C126"
                                                        Margin="-25" />
@@ -132,6 +134,8 @@
                                         <Button Tag="Red"
                                                 Height="38"
                                                 Width="42"
+                                                ToolTipService.ToolTip="Red"
+                                                AutomationProperties.Name="Red highlight"
                                                 Click="OnHighlighterColorButton_Click">
                                             <Rectangle Fill="#D61515"
                                                        Margin="-25" />
@@ -139,6 +143,8 @@
                                         <Button Tag="Green"
                                                 Height="38"
                                                 Width="42"
+                                                ToolTipService.ToolTip="Green"
+                                                AutomationProperties.Name="Green highlight"
                                                 Click="OnHighlighterColorButton_Click">
                                             <Rectangle Fill="#47CD3D"
                                                        Margin="-25" />
@@ -146,6 +152,8 @@
                                         <Button Tag="Blue"
                                                 Height="38"
                                                 Width="42"
+                                                ToolTipService.ToolTip="Blue"
+                                                AutomationProperties.Name="Blue highlight"
                                                 Click="OnHighlighterColorButton_Click">
                                             <Rectangle Fill="#1A41F6"
                                                        Margin="-25" />

@@ -14,7 +14,7 @@ namespace Storylines.Scripts.Services
         {
             if (SettingsValues.autosaveEnabled && TimeTravelSystem.unSavedProgress)
                 SaveSystem.Save();
-                //prehraj animaci
+                //TODO: Play save animation
         }
 
         public static void Enable()
@@ -37,7 +37,12 @@ namespace Storylines.Scripts.Services
 
         public static void Disable()
         {
-            autosaveTimer.Stop();
+            if (autosaveTimer != null)
+            {
+                autosaveTimer.Tick -= OnAutosaveTimer_Tick;
+                autosaveTimer.Stop();
+                autosaveTimer = null;
+            }
 
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = false;
         }

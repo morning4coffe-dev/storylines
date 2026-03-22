@@ -36,6 +36,8 @@ namespace Storylines
 
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
+            ServiceLocator.Events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
+
             if (SettingsValues.autosaveEnabled)
                 Autosave.Enable();
 
@@ -81,8 +83,7 @@ namespace Storylines
         public void ClearEverything()
         {
             MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
-            Chapter.chapters.Clear();
-            Character.characters.Clear();
+            ServiceLocator.ProjectState.Clear();
             MainPage.Current.EnableOrDisableChapterTools(false);
         }
 
