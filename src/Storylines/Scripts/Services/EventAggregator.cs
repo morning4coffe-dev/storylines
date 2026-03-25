@@ -133,5 +133,14 @@ namespace Storylines.Scripts.Services
     /// </summary>
     public class ClearProjectEvent { }
 
+    /// <summary>
+    /// Published when a character undo/redo selects a character.
+    /// </summary>
+    public class CharacterSelectedEvent
+    {
+        public int SelectedIndex { get; set; }
+        public bool HasSelection { get; set; }
+    }
+
     #endregion
 }

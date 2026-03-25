@@ -71,6 +71,7 @@ namespace Storylines.Components
                 {
                     projectFiles.RemoveAt(i);
                     StorageApplicationPermissions.FutureAccessList.Remove(token);
+                    return;
                 }
             }
         }

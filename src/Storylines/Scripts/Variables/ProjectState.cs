@@ -67,6 +67,7 @@ namespace Storylines.Scripts.Variables
                 {
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Removed, Chapters[i], Chapters.IndexOf(Chapters[i]));
                     Chapters.RemoveAt(i);
+                    break;
                 }
             }
         }
@@ -162,6 +163,7 @@ namespace Storylines.Scripts.Variables
                 {
                     TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Removed, Characters[i]);
                     _ = Characters.Remove(Characters[i]);
+                    break;
                 }
             }
         }
@@ -213,7 +215,10 @@ namespace Storylines.Scripts.Variables
 
         public void SortCharacters()
         {
-            Characters = new ObservableCollection<Character>(Characters.OrderBy(o => o.name).ToList());
+            var sorted = Characters.OrderBy(o => o.name).ToList();
+            Characters.Clear();
+            foreach (var character in sorted)
+                Characters.Add(character);
         }
 
         #endregion

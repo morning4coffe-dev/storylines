@@ -262,7 +262,7 @@ namespace Storylines.Scripts.Functions
                 case Changed.Changed:
                     var chID = State.FindCharacterID(timeTravel.character.token);
                     State.Characters[chID] = timeTravel.character;
-                    ServiceLocator.Events.Publish(new ChapterSelectedEvent { SelectedIndex = chID, HasSelection = true });
+                    ServiceLocator.Events.Publish(new CharacterSelectedEvent { SelectedIndex = chID, HasSelection = true });
                     break;
                 case Changed.Removed:
                     if (!isRedo)

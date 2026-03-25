@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Storylines.Components.ChapterTextBox"
+<UserControl x:Class="Storylines.Components.ChapterTextBox"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -25,6 +25,7 @@
         <!--Background="{ThemeResource LayerFillColorDefaultBrush}" Canvas.ZIndex="1" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}"-->
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="4.5" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -231,103 +232,108 @@
                 </animations:Implicit.ShowAnimations>
             </TextBox>
 
-            <!-- Search & Replace Panel -->
-            <StackPanel x:Name="searchReplacePanel"
-                        Visibility="Collapsed"
-                        Grid.ColumnSpan="2"
-                        Margin="7"
-                        Spacing="4"
-                        HorizontalAlignment="Stretch"
-                        VerticalAlignment="Center">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                    <TextBox x:Name="searchReplaceFindBox"
-                             x:Uid="searchReplaceFindBox"
-                             x:FieldModifier="public"
-                             PlaceholderText="Find..."
-                             CornerRadius="4"
-                             Style="{StaticResource SmallTextBoxStyle}"
-                             TextChanged="OnSearchReplaceFindBox_TextChanged" />
-                    <ToggleButton x:Name="matchCaseToggle"
-                                  x:Uid="matchCaseToggle"
-                                  Grid.Column="1"
-                                  Content="Aa"
-                                  Width="36" Height="32"
-                                  Margin="4,0,0,0"
-                                  CornerRadius="4"
-                                  ToolTipService.ToolTip="Match Case"
-                                  Click="OnMatchCaseToggle_Click" />
-                    <ToggleButton x:Name="wholeWordToggle"
-                                  x:Uid="wholeWordToggle"
-                                  Grid.Column="2"
-                                  Width="36" Height="32"
-                                  Margin="2,0,0,0"
-                                  CornerRadius="4"
-                                  ToolTipService.ToolTip="Whole Word"
-                                  Click="OnWholeWordToggle_Click">
-                        <FontIcon Glyph="&#xF78B;" FontSize="14" />
-                    </ToggleButton>
-                        <Button Grid.Column="3"
-                            x:Uid="searchReplaceCloseButton"
-                            Width="32" Height="32"
-                            Margin="4,0,0,0"
-                            Background="Transparent"
-                            BorderThickness="0"
-                            CornerRadius="4"
-                            ToolTipService.ToolTip="Close"
-                            Click="OnSearchReplaceClose_Click">
-                        <SymbolIcon Symbol="Cancel" RenderTransformOrigin=".5,.5">
-                            <SymbolIcon.RenderTransform>
-                                <CompositeTransform ScaleX=".65" ScaleY=".65" />
-                            </SymbolIcon.RenderTransform>
-                        </SymbolIcon>
-                    </Button>
-                </Grid>
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="Auto" />
-                        <ColumnDefinition Width="Auto" />
-                    </Grid.ColumnDefinitions>
-                        <TextBox x:Name="searchReplaceBox"
-                             x:Uid="searchReplaceBox"
-                             x:FieldModifier="public"
-                             PlaceholderText="Replace..."
-                             CornerRadius="4"
-                             Style="{StaticResource SmallTextBoxStyle}" />
-                        <Button x:Name="replaceButton"
-                            x:Uid="replaceButton"
-                            Grid.Column="1"
-                            Content="Replace"
-                            Margin="4,0,0,0"
-                            Height="32"
-                            CornerRadius="4"
-                            Click="OnReplaceButton_Click" />
-                        <Button x:Name="replaceAllButton"
-                            x:Uid="replaceAllButton"
-                            Grid.Column="2"
-                            Content="All"
-                            Margin="2,0,0,0"
-                            Height="32"
-                            CornerRadius="4"
-                            Click="OnReplaceAllButton_Click" />
-                </Grid>
-                <TextBlock x:Name="searchMatchCount"
-                           FontSize="11"
-                           Opacity="0.6"
-                           Margin="4,0,0,0" />
-                <animations:Implicit.ShowAnimations>
-                    <animations:OpacityAnimation Duration="0:0:0.2"
-                                                 From="0"
-                                                 To="1.0" />
-                </animations:Implicit.ShowAnimations>
-            </StackPanel>
         </Grid>
+
+        <!-- Search & Replace Panel — own row so it has room to display -->
+        <StackPanel x:Name="searchReplacePanel"
+                    Visibility="Collapsed"
+                    Grid.Row="1"
+                    Margin="7,4,7,4"
+                    Padding="8"
+                    Spacing="4"
+                    CornerRadius="8"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    HorizontalAlignment="Stretch">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="searchReplaceFindBox"
+                         x:Uid="searchReplaceFindBox"
+                         x:FieldModifier="public"
+                         PlaceholderText="Find..."
+                         CornerRadius="4"
+                         Style="{StaticResource SmallTextBoxStyle}"
+                         TextChanged="OnSearchReplaceFindBox_TextChanged" />
+                <ToggleButton x:Name="matchCaseToggle"
+                              x:Uid="matchCaseToggle"
+                              Grid.Column="1"
+                              Content="Aa"
+                              Width="36" Height="32"
+                              Margin="4,0,0,0"
+                              CornerRadius="4"
+                              ToolTipService.ToolTip="Match Case"
+                              Click="OnMatchCaseToggle_Click" />
+                <ToggleButton x:Name="wholeWordToggle"
+                              x:Uid="wholeWordToggle"
+                              Grid.Column="2"
+                              Width="36" Height="32"
+                              Margin="2,0,0,0"
+                              CornerRadius="4"
+                              ToolTipService.ToolTip="Whole Word"
+                              Click="OnWholeWordToggle_Click">
+                    <FontIcon Glyph="&#xF78B;" FontSize="14" />
+                </ToggleButton>
+                <Button Grid.Column="3"
+                        x:Uid="searchReplaceCloseButton"
+                        Width="32" Height="32"
+                        Margin="4,0,0,0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        ToolTipService.ToolTip="Close"
+                        Click="OnSearchReplaceClose_Click">
+                    <SymbolIcon Symbol="Cancel" RenderTransformOrigin=".5,.5">
+                        <SymbolIcon.RenderTransform>
+                            <CompositeTransform ScaleX=".65" ScaleY=".65" />
+                        </SymbolIcon.RenderTransform>
+                    </SymbolIcon>
+                </Button>
+            </Grid>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <TextBox x:Name="searchReplaceBox"
+                         x:Uid="searchReplaceBox"
+                         x:FieldModifier="public"
+                         PlaceholderText="Replace..."
+                         CornerRadius="4"
+                         Style="{StaticResource SmallTextBoxStyle}" />
+                <Button x:Name="replaceButton"
+                        x:Uid="replaceButton"
+                        Grid.Column="1"
+                        Content="Replace"
+                        Margin="4,0,0,0"
+                        Height="32"
+                        CornerRadius="4"
+                        Click="OnReplaceButton_Click" />
+                <Button x:Name="replaceAllButton"
+                        x:Uid="replaceAllButton"
+                        Grid.Column="2"
+                        Content="All"
+                        Margin="2,0,0,0"
+                        Height="32"
+                        CornerRadius="4"
+                        Click="OnReplaceAllButton_Click" />
+            </Grid>
+            <TextBlock x:Name="searchMatchCount"
+                       FontSize="11"
+                       Opacity="0.6"
+                       Margin="4,0,0,0" />
+            <animations:Implicit.ShowAnimations>
+                <animations:OpacityAnimation Duration="0:0:0.2"
+                                             From="0"
+                                             To="1.0" />
+            </animations:Implicit.ShowAnimations>
+        </StackPanel>
 
         <ScrollViewer x:Name="textBoxScrollViewer"
                       x:FieldModifier="public"
@@ -442,7 +448,7 @@
         <Rectangle x:Name="textBoxRectangle"
                    x:FieldModifier="public"
                    IsHitTestVisible="True"
-                   Grid.Row="2"
+                   Grid.Row="3"
                    Opacity="0.5"
                    Canvas.ZIndex="5"
                    Tapped="OnTextBoxRectangle_Tapped" />

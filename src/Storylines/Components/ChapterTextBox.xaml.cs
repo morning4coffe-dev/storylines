@@ -1,4 +1,4 @@
-﻿using Storylines.DialogueWindows;
+using Storylines.DialogueWindows;
 using Storylines.Pages;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
@@ -701,11 +701,18 @@ namespace Storylines.Components
 
         private async void HandlePaste()
         {
-            var content = Clipboard.GetContent();
-            if (content.Contains(StandardDataFormats.Text))
+            try
             {
-                var text = await content.GetTextAsync();
-                Document.Selection.TypeText(text);
+                var content = Clipboard.GetContent();
+                if (content.Contains(StandardDataFormats.Text))
+                {
+                    var text = await content.GetTextAsync();
+                    Document.Selection.TypeText(text);
+                }
+            }
+            catch (Exception)
+            {
+                // Clipboard access can fail (e.g., remote desktop, locked clipboard)
             }
         }
     }
