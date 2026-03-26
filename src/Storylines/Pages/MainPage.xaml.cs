@@ -1,4 +1,4 @@
-﻿using Storylines.Components.DialogueWindows;
+using Storylines.Components.DialogueWindows;
 using Storylines.Components;
 using Storylines.Scripts.Modes;
 using Storylines.Scripts.Services;
@@ -226,10 +226,5 @@ namespace Storylines.Pages
                 textBoxZoomSlider.Value = sender.Value / 4;
         }
         #endregion
-
-        private void OnShortCut_Pressed(object sender, KeyRoutedEventArgs e)
-        {
-            //ShortcutManager.Check(e);
-        }
     }
 }

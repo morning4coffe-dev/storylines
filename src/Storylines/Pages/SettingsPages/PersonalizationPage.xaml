@@ -101,7 +101,6 @@
                 <muxc:Expander.Content>
                     <StackPanel Spacing="12" Margin="30,10">
                         <TextBlock x:Uid="quickPresets"
-                                   Text="Quick Presets"
                                    FontWeight="Medium"
                                    FontSize="13"
                                    Opacity="0.8" />

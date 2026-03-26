@@ -256,7 +256,6 @@
                 <TextBox x:Name="searchReplaceFindBox"
                          x:Uid="searchReplaceFindBox"
                          x:FieldModifier="public"
-                         PlaceholderText="Find..."
                          CornerRadius="4"
                          Style="{StaticResource SmallTextBoxStyle}"
                          TextChanged="OnSearchReplaceFindBox_TextChanged" />
@@ -267,7 +266,6 @@
                               Width="36" Height="32"
                               Margin="4,0,0,0"
                               CornerRadius="4"
-                              ToolTipService.ToolTip="Match Case"
                               Click="OnMatchCaseToggle_Click" />
                 <ToggleButton x:Name="wholeWordToggle"
                               x:Uid="wholeWordToggle"
@@ -275,7 +273,6 @@
                               Width="36" Height="32"
                               Margin="2,0,0,0"
                               CornerRadius="4"
-                              ToolTipService.ToolTip="Whole Word"
                               Click="OnWholeWordToggle_Click">
                     <FontIcon Glyph="&#xF78B;" FontSize="14" />
                 </ToggleButton>
@@ -286,7 +283,6 @@
                         Background="Transparent"
                         BorderThickness="0"
                         CornerRadius="4"
-                        ToolTipService.ToolTip="Close"
                         Click="OnSearchReplaceClose_Click">
                     <SymbolIcon Symbol="Cancel" RenderTransformOrigin=".5,.5">
                         <SymbolIcon.RenderTransform>
@@ -304,13 +300,11 @@
                 <TextBox x:Name="searchReplaceBox"
                          x:Uid="searchReplaceBox"
                          x:FieldModifier="public"
-                         PlaceholderText="Replace..."
                          CornerRadius="4"
                          Style="{StaticResource SmallTextBoxStyle}" />
                 <Button x:Name="replaceButton"
                         x:Uid="replaceButton"
                         Grid.Column="1"
-                        Content="Replace"
                         Margin="4,0,0,0"
                         Height="32"
                         CornerRadius="4"
@@ -318,7 +312,6 @@
                 <Button x:Name="replaceAllButton"
                         x:Uid="replaceAllButton"
                         Grid.Column="2"
-                        Content="All"
                         Margin="2,0,0,0"
                         Height="32"
                         CornerRadius="4"
@@ -381,7 +374,6 @@
                                 <TextBox x:Name="dialoguePickerSearchBox"
                                          x:Uid="dialoguePickerSearchBox"
                                          CornerRadius="4"
-                                         PlaceholderText="Find character"
                                          Style="{StaticResource SmallTextBoxStyle}"
                                          TextChanged="OnDialoguePickerSearchBox_TextChanged" />
 

@@ -1,4 +1,4 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Components;
 using Storylines.Components.DialogueWindows;
@@ -52,7 +52,7 @@ namespace Storylines
             if (SettingsValues.autosaveEnabled)
                 Autosave.Enable();
 
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown; ;
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
         }
 
@@ -212,11 +212,6 @@ namespace Storylines
             OnBackButton_Click(sender, new RoutedEventArgs());
         }
         #endregion
-
-        private void OnShortCut_Pressed(object sender, KeyRoutedEventArgs e)
-        {
-            //ShortcutManager.Check(e);
-        }
 
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs e)
         {

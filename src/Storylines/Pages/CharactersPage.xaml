@@ -166,7 +166,6 @@
                      Grid.Row="1"
                      Margin="0,8,0,0"
                      CornerRadius="4"
-                     PlaceholderText="Search characters"
                      Style="{StaticResource SmallTextBoxStyle}"
                      TextChanged="OnCharacterSearchBox_TextChanged" />
 
@@ -309,7 +308,7 @@
                Background="{ThemeResource LayerFillColorDefaultBrush}"
                BorderBrush="{ThemeResource ElementBorderColor}"
                BorderThickness="{ThemeResource ElementBorderThickness}"
-               CornerRadius="8" />
+               CornerRadius="4" />
         <CommandBar Grid.ColumnSpan="3"
                     Margin="8,0"
                     HorizontalAlignment="Left"
@@ -380,7 +379,7 @@
                Background="{ThemeResource LayerFillColorDefaultBrush}"
                BorderBrush="{ThemeResource ElementBorderColor}"
                BorderThickness="{ThemeResource ElementBorderThickness}"
-               CornerRadius="8, 0, 0, 0" />
+               CornerRadius="4, 0, 0, 0" />
         <ScrollViewer x:Name="characterValuesPanel"
                       Grid.Row="2"
                       Grid.Column="2"
@@ -465,7 +464,6 @@
                              HorizontalAlignment="Stretch"
                              CornerRadius="4"
                              IsEnabled="False"
-                             PlaceholderText="Name"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -481,7 +479,6 @@
                              Padding="12,7"
                              CornerRadius="4"
                              IsEnabled="False"
-                             PlaceholderText="Role (e.g. Protagonist)"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                     <TextBox x:Name="ageBox"
@@ -491,7 +488,6 @@
                              Padding="12,7"
                              CornerRadius="4"
                              IsEnabled="False"
-                             PlaceholderText="Age"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -501,7 +497,6 @@
                          Padding="12,7"
                          CornerRadius="4"
                          IsEnabled="False"
-                         PlaceholderText="Traits (comma separated)"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged" />
                 <TextBox x:Name="appearanceBox"
@@ -532,7 +527,7 @@
                             Background="{ThemeResource LayerFillColorDefaultBrush}"
                             BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                             BorderThickness="1"
-                            CornerRadius="8">
+                            CornerRadius="4">
                         <StackPanel Spacing="8">
                             <TextBlock x:Uid="characterDialoguePreview"
                                        FontWeight="SemiBold" />

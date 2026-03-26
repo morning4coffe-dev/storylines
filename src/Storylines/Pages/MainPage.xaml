@@ -6,7 +6,6 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:Storylines.ViewModels"
-      KeyDown="OnShortCut_Pressed"
       Loaded="Page_Loaded"
       SizeChanged="OnPage_SizeChanged"
       mc:Ignorable="d">

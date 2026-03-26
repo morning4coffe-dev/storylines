@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="Storylines.Components.MainCommandBar"
+<UserControl x:Class="Storylines.Components.MainCommandBar"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -979,8 +979,6 @@
                                         x:Uid="notesToggleButton"
                                         x:FieldModifier="public"
                                         CornerRadius="4"
-                                        Label="Notes"
-                                        ToolTipService.ToolTip="Toggle Chapter Notes"
                                         Click="OnNotesToggleButton_Click">
                         <AppBarToggleButton.Icon>
                             <FontIcon Glyph="" />
@@ -991,8 +989,6 @@
                                   x:Uid="searchReplaceButton"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Label="Find &amp; Replace"
-                                  ToolTipService.ToolTip="Find &amp; Replace (Ctrl+H)"
                                   Click="OnSearchReplaceButton_Click">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />

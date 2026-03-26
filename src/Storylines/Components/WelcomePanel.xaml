@@ -41,14 +41,12 @@
             <StackPanel Spacing="8"
                         HorizontalAlignment="Center">
                 <TextBlock x:Uid="welcomePanelTitle"
-                           Text="Welcome to Storylines"
                            FontSize="28"
                            FontWeight="SemiBold"
                            HorizontalAlignment="Center"
                            Foreground="{ThemeResource TextForeground}" />
 
                 <TextBlock x:Uid="welcomePanelDescription"
-                           Text="Create a new project or open an existing one to start writing."
                            FontSize="14"
                            HorizontalAlignment="Center"
                            TextAlignment="Center"
@@ -70,7 +68,6 @@
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <FontIcon Glyph="&#xE710;" FontSize="15" />
                         <TextBlock x:Uid="welcomePanelNewProject"
-                                   Text="New Project"
                                    FontWeight="SemiBold" />
                     </StackPanel>
                 </Button>
@@ -82,7 +79,6 @@
                     <StackPanel Orientation="Horizontal" Spacing="10">
                         <FontIcon Glyph="&#xE8E5;" FontSize="15" />
                         <TextBlock x:Uid="welcomePanelOpenProject"
-                                   Text="Open Project"
                                    FontWeight="SemiBold" />
                     </StackPanel>
                 </Button>
@@ -98,12 +94,10 @@
                 <StackPanel Spacing="4"
                             Opacity="0.6">
                     <TextBlock x:Uid="welcomePanelKeyboardShortcuts"
-                               Text="Keyboard Shortcuts"
                                FontSize="11"
                                FontWeight="SemiBold"
                                HorizontalAlignment="Center" />
                     <TextBlock x:Uid="welcomePanelKeyboardShortcutHint"
-                               Text="Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save"
                                FontSize="11"
                                HorizontalAlignment="Center"
                                Foreground="{ThemeResource TextForeground}"

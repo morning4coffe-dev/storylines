@@ -12,7 +12,7 @@
           Background="{ThemeResource LayerFillColorDefaultBrush}"
           BorderBrush="{ThemeResource ElementBorderColor}"
           BorderThickness="{ThemeResource ElementBorderThickness}"
-          CornerRadius="8"
+          CornerRadius="4"
           Padding="14,10">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
@@ -31,7 +31,6 @@
                       VerticalAlignment="Center"
                       Opacity="0.6" />
                 <TextBlock x:Uid="chapterNotesPaneTitle"
-                       Text="Chapter Notes"
                        Grid.Column="1"
                        FontWeight="SemiBold"
                        FontSize="12"
@@ -43,8 +42,7 @@
                     Background="Transparent"
                     BorderThickness="0"
                     Padding="0"
-                    Click="OnCollapseButton_Click"
-                    ToolTipService.ToolTip="Hide Notes">
+                    Click="OnCollapseButton_Click">
                 <SymbolIcon Symbol="Cancel"
                             RenderTransformOrigin=".5,.5">
                     <SymbolIcon.RenderTransform>
@@ -58,7 +56,6 @@
              x:Uid="chapterNotesPaneTextBox"
                  x:FieldModifier="public"
                  Grid.Row="1"
-                 PlaceholderText="Add notes for this chapter..."
                  TextWrapping="Wrap"
                  AcceptsReturn="True"
                  Background="Transparent"

@@ -38,27 +38,27 @@
                         Spacing="4"
                         Orientation="Horizontal">
                 <Button x:Name="flyoutDisplayButton"
+                        x:Uid="chapterListOptionsButton"
                         Width="28"
                         Height="28"
                         Background="Transparent"
                         BorderThickness="0"
                         CornerRadius="4"
                         Padding="0"
-                        Click="OnFlyoutDisplayButton_Click"
-                        ToolTipService.ToolTip="Options">
+                        Click="OnFlyoutDisplayButton_Click">
                     <FontIcon Glyph="&#xE712;"
                               FontSize="12"
                               Opacity="0.6" />
                 </Button>
 
-                <Button Width="28"
+                <Button x:Uid="chapterListCloseButton"
+                        Width="28"
                         Height="28"
                         Background="Transparent"
                         BorderThickness="0"
                         CornerRadius="4"
                         Padding="0"
-                        Click="OnCloseButton_Click"
-                        ToolTipService.ToolTip="Close">
+                        Click="OnCloseButton_Click">
                     <FontIcon Glyph="&#xE711;"
                               FontSize="10"
                               Opacity="0.6" />
@@ -66,14 +66,6 @@
             </StackPanel>
         </Grid>
 
-        <!--<Grid x:Name="navigationGrid" x:FieldModifier="public" Visibility="Collapsed" Grid.Row="1" Height="44" Background="{ThemeResource LayerFillColorDefaultBrush}" BorderBrush="{ThemeResource ElementBorderColor}" BorderThickness="{ThemeResource ElementBorderThickness}" Canvas.ZIndex="0" Grid.ColumnSpan="2" CornerRadius="8" Margin="2,0">
-        <CommandBar x:Name="chapterListCommandBar" x:FieldModifier="public" VerticalAlignment="Center" Margin="-8,0" Grid.Row="1" HorizontalAlignment="Left" IsOpen="False" DefaultLabelPosition="Right" CompositeMode="Inherit" OverflowButtonVisibility="Collapsed" Background="Transparent">
-                <AppBarButton Icon="Add" x:Uid="add" CornerRadius="4" HorizontalAlignment="Left" Click="OnChapterAdd_Click"/>
-                <AppBarButton x:Name="chapterDeleteButton" x:FieldModifier="public" Icon="Delete" x:Uid="remove" CornerRadius="4" IsEnabled="False" />-->
-        <!--Click="OnChapterDelete_Click"-->
-        <!--
-            </CommandBar>
-        </Grid>-->
 
         <Rectangle Fill="{ThemeResource SeparatorFill}"
                    Height="0.5"

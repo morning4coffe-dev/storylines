@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -16,7 +16,7 @@
     <value>Přiblížení</value>
   </data>
   <data name="downBarText.Text" xml:space="preserve">
-    <value>Nejdříve přidete novou kapitolu a následně začněte psát.</value>
+    <value>Přidejte kapitolu a začněte psát svůj příběh.</value>
   </data>
   <data name="clickHere" xml:space="preserve">
     <value>Klikněte zde</value>
@@ -49,7 +49,7 @@
     <value>Exportovat</value>
   </data>
   <data name="load.Label" xml:space="preserve">
-    <value>Načíst</value>
+    <value>Otevřít</value>
   </data>
   <data name="readAloud.Label" xml:space="preserve">
     <value>Předčítat</value>
@@ -223,7 +223,7 @@
     <value>Postavy</value>
   </data>
   <data name="charactersStory" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Postavy</value>
   </data>
   <data name="estimatedPageCount" xml:space="preserve">
     <value>Odhadovaný počet stran</value>
@@ -235,7 +235,7 @@
     <value>Vybraná kapitola</value>
   </data>
   <data name="selectedCharacters" xml:space="preserve">
-    <value>Vybrané znaky</value>
+    <value>Vybrané postavy</value>
   </data>
   <data name="storyText.Text" xml:space="preserve">
     <value>Příběh</value>
@@ -301,8 +301,7 @@
     <value>Zrušit</value>
   </data>
   <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
-    <value>Zpomate trochu!
-Opravdu chcete odejít bez uložení své práce?</value>
+    <value>Neuložené změny budou ztraceny. Opravdu chcete odejít bez uložení?</value>
   </data>
   <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
     <value>Neukládat</value>
@@ -362,7 +361,7 @@ Opravdu chcete odejít bez uložení své práce?</value>
     <value>Přepnout</value>
   </data>
   <data name="charactersContent.Content" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Postavy</value>
   </data>
   <data name="paragraphsContent.Content" xml:space="preserve">
     <value>Odstavce</value>
@@ -371,7 +370,7 @@ Opravdu chcete odejít bez uložení své práce?</value>
     <value>Slova</value>
   </data>
   <data name="downBarTextS" xml:space="preserve">
-    <value>Nejdříve přidej novou kapitolu a poté začni psát.</value>
+    <value>Přidejte kapitolu a začněte psát svůj příběh.</value>
   </data>
   <data name="languageSettingDesc.Text" xml:space="preserve">
     <value>Po změně tohoto nastavení bude nutný restart, aby se plně projevily změny.</value>
@@ -395,16 +394,16 @@ Opravdu chcete odejít bez uložení své práce?</value>
     <value>Uložit</value>
   </data>
   <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"o-kralovne-koblih-scenar"</value>
+    <value>o-kralovne-koblih-scenar</value>
   </data>
   <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"O královně koblih"</value>
+    <value>O královně koblih</value>
   </data>
   <data name="fileLocation.Text" xml:space="preserve">
-    <value>"C:\Uživatelé\Dokumenty"</value>
+    <value>C:\Uživatelé\Dokumenty</value>
   </data>
   <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
-    <value>"o-kralovne-koblih-export"</value>
+    <value>o-kralovne-koblih-export</value>
   </data>
   <data name="file.Content" xml:space="preserve">
     <value>Soubor</value>
@@ -554,7 +553,7 @@ Opravdu chcete odejít bez uložení své práce?</value>
     <value>Morning4coffe GitHub</value>
   </data>
   <data name="personalTwitter.Text" xml:space="preserve">
-    <value>Morning4coffe Twitter</value>
+    <value>Morning4coffe na X</value>
   </data>
   <data name="privacyPolicy.Text" xml:space="preserve">
     <value>Zásady ochrany osobních údajů</value>
@@ -592,10 +591,10 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Ruština</value>
   </data>
   <data name="charactersSText" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Postavy</value>
   </data>
   <data name="charactersText" xml:space="preserve">
-    <value>Znaky</value>
+    <value>Postavy</value>
   </data>
   <data name="dialoguesText" xml:space="preserve">
     <value>Repliky</value>
@@ -605,6 +604,12 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="chaptersText1.Text" xml:space="preserve">
     <value>Kapitoly</value>
+  </data>
+  <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Možnosti</value>
+  </data>
+  <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zavřít</value>
   </data>
   <data name="estimatedReadTime" xml:space="preserve">
     <value>Přibližná doba čtení</value>
@@ -703,7 +708,7 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Nahradit</value>
   </data>
   <data name="replaceAllButton.Content" xml:space="preserve">
-    <value>Vše</value>
+    <value>Nahradit vše</value>
   </data>
   <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Klikněte pro podrobné statistiky</value>
@@ -782,5 +787,8 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="highlightNone.Content" xml:space="preserve">
     <value>Žádné</value>
+  </data>
+  <data name="newCharacterName" xml:space="preserve">
+    <value>Nová postava</value>
   </data>
 </root>

@@ -1,4 +1,4 @@
-﻿<Page x:Class="Storylines.AppView"
+<Page x:Class="Storylines.AppView"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,8 +8,7 @@
       xmlns:vm="using:Storylines.ViewModels"
       mc:Ignorable="d"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
-      Background="{ThemeResource AppAcrylicBackground}"
-      KeyDown="OnShortCut_Pressed">
+      Background="{ThemeResource AppAcrylicBackground}">
 
     <Grid>
         <Grid.RowDefinitions>
@@ -98,7 +97,6 @@
             </Frame>
         </Grid>
 
-        <!--<controls:DropShadowPanel Visibility="{x:Bind updateAvailableInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Width="600" Margin="0, 80">-->
         <muxc:InfoBar x:Name="updateAvailableInfoBar"
                       x:FieldModifier="public"
                       x:Uid="updateAvailableTitle"
@@ -152,9 +150,7 @@
                                              To="0" />
             </animations:Implicit.HideAnimations>
         </muxc:InfoBar>
-        <!--</controls:DropShadowPanel>-->
 
-        <!--<controls:DropShadowPanel Visibility="{x:Bind reviewRequestInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="3" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80">-->
         <muxc:InfoBar x:Name="reviewRequestInfoBar"
                       x:FieldModifier="public"
                       x:Uid="experience"
@@ -215,7 +211,6 @@
                 <muxc:FontIconSource Glyph="" />
             </muxc:InfoBar.IconSource>
         </muxc:InfoBar>
-        <!--</controls:DropShadowPanel>-->
 
         <muxc:InfoBar x:Name="reviewRequestThankYouInfoBar"
                       x:Uid="reviewRequestThankYou"
@@ -255,7 +250,6 @@
             </animations:Implicit.HideAnimations>
         </muxc:InfoBar>
 
-        <!--<controls:DropShadowPanel Visibility="{x:Bind alertNotificationInfoBar.Visibility, Mode=OneWay}" BlurRadius="60" ShadowOpacity="0.2" Grid.Row="1" VerticalAlignment="Bottom" HorizontalAlignment="Center" Margin="0, 80">-->
         <muxc:InfoBar x:Name="alertNotificationInfoBar"
                       x:FieldModifier="public"
                       IsOpen="False"
@@ -305,6 +299,5 @@
                                              To="0" />
             </animations:Implicit.HideAnimations>
         </muxc:InfoBar>
-        <!--</controls:DropShadowPanel>-->
     </Grid>
 </Page>

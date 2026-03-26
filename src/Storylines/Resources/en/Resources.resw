@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -249,6 +249,12 @@
   <data name="chaptersText1.Text" xml:space="preserve">
     <value>Chapters</value>
   </data>
+  <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Close</value>
+  </data>
   <data name="chaptersToExport.Text" xml:space="preserve">
     <value>Chapters to export:</value>
   </data>
@@ -334,10 +340,10 @@
     <value>Done</value>
   </data>
   <data name="downBarText.Text" xml:space="preserve">
-    <value>Add a new chapter and then start typing.</value>
+    <value>Add a chapter to start writing your story.</value>
   </data>
   <data name="downBarTextS" xml:space="preserve">
-    <value>Add a new chapter and then start typing.</value>
+    <value>Add a chapter to start writing your story.</value>
   </data>
   <data name="edit.Label" xml:space="preserve">
     <value>Edit</value>
@@ -394,19 +400,19 @@
     <value>File</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
-    <value>This file already exists. Change the name or location, or the file will be replaced.</value>
+    <value>A file with this name already exists at the chosen location. If you continue, the existing file will be overwritten.</value>
   </data>
   <data name="fileLocation.Text" xml:space="preserve">
-    <value>"C:\Users\Documents"</value>
+    <value>C:\Users\Documents</value>
   </data>
   <data name="fileName.Text" xml:space="preserve">
     <value>File name:</value>
   </data>
   <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
-    <value>"the-queen-of-donuts-export"</value>
+    <value>the-queen-of-donuts-export</value>
   </data>
   <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"the-queen-of-donuts-script"</value>
+    <value>the-queen-of-donuts-script</value>
   </data>
   <data name="findOne.Text" xml:space="preserve">
     <value>Find one</value>
@@ -484,7 +490,7 @@
     <value>Links</value>
   </data>
   <data name="load.Label" xml:space="preserve">
-    <value>Load</value>
+    <value>Open</value>
   </data>
   <data name="loadSaveSystemErrorText" xml:space="preserve">
     <value>An error occurred while loading your file.</value>
@@ -511,7 +517,7 @@
     <value>Focus Mode</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>"Untitled"</value>
+    <value>Untitled</value>
   </data>
   <data name="newChapterShortcut.Text" xml:space="preserve">
     <value>New chapter with shortcut</value>
@@ -559,7 +565,7 @@
     <value>or</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
-    <value>"This character has short brown hair. Is smart and kind..."</value>
+    <value>This character has short brown hair. Is smart and kind...</value>
   </data>
   <data name="paragraphs" xml:space="preserve">
     <value>Paragraphs</value>
@@ -577,7 +583,7 @@
     <value>Personalization</value>
   </data>
   <data name="personalTwitter.Text" xml:space="preserve">
-    <value>Morning4coffe's Twitter</value>
+    <value>Morning4coffe on X</value>
   </data>
   <data name="picturesNotFound" xml:space="preserve">
     <value>Some images failed to load.</value>
@@ -592,7 +598,7 @@
     <value>Project name:</value>
   </data>
   <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
-    <value>"About The Queen of Donuts"</value>
+    <value>About The Queen of Donuts</value>
   </data>
   <data name="projectOnStartSetting.Text" xml:space="preserve">
     <value>Last project on startup</value>
@@ -868,7 +874,7 @@
     <value>Replace</value>
   </data>
   <data name="replaceAllButton.Content" xml:space="preserve">
-    <value>All</value>
+    <value>Replace All</value>
   </data>
   <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Click for detailed stats</value>
@@ -947,5 +953,8 @@
   </data>
   <data name="highlightNone.Content" xml:space="preserve">
     <value>None</value>
+  </data>
+  <data name="newCharacterName" xml:space="preserve">
+    <value>New Character</value>
   </data>
 </root>
