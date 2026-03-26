@@ -972,6 +972,14 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarButton x:Name="pinboardButton"
+                                  Label="Pinboard"
+                                  CornerRadius="4"
+                                  Click="OnPinboardButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8A1;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
                     <AppBarSeparator />
 

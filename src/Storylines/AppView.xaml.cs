@@ -217,5 +217,46 @@ namespace Storylines
         {
             ShortcutManager.Check(e);
         }
+
+        #region Drag and Drop
+        private async void OnGrid_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
+                return;
+
+            var deferral = e.GetDeferral();
+            try
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                if (items.Count == 1 && items[0] is StorageFile file &&
+                    (file.FileType == ".srl" || file.FileType == ".txt"))
+                {
+                    e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+                    e.DragUIOverride.Caption = "Open in Storylines";
+                    e.DragUIOverride.IsGlyphVisible = true;
+                }
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
+
+        private async void OnGrid_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
+                return;
+
+            var items = await e.DataView.GetStorageItemsAsync();
+            if (items.Count != 1 || !(items[0] is StorageFile file) ||
+                (file.FileType != ".srl" && file.FileType != ".txt"))
+                return;
+
+            if (Scripts.Functions.TimeTravelSystem.unSavedProgress)
+                _ = Scripts.Functions.NotificationManager.DisplayUnsavedProgressDialogue(false);
+            else
+                SaveSystem.DefaultLaunch(file);
+        }
+        #endregion
     }
 }

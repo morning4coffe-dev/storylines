@@ -1,4 +1,6 @@
+using System.Collections.Generic;
 using System.ComponentModel;
+using System.Linq;
 using System.Runtime.CompilerServices;
 
 namespace Storylines.Scripts.Variables
@@ -53,6 +55,33 @@ namespace Storylines.Scripts.Variables
             set
             {
                 _wordCountGoal = value;
+                NotifyPropertyChanged();
+            }
+        }
+
+        private List<string> _tags = new List<string>();
+        public List<string> tags
+        {
+            get { return _tags; }
+            set
+            {
+                _tags = value ?? new List<string>();
+                NotifyPropertyChanged();
+                NotifyPropertyChanged(nameof(tagsText));
+            }
+        }
+
+        public string tagsText
+        {
+            get { return _tags == null || _tags.Count == 0 ? string.Empty : string.Join(", ", _tags); }
+            set
+            {
+                tags = (value ?? string.Empty)
+                    .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                    .Select(t => t.Trim())
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Distinct(System.StringComparer.CurrentCultureIgnoreCase)
+                    .ToList();
                 NotifyPropertyChanged();
             }
         }

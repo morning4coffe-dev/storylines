@@ -22,11 +22,17 @@ namespace Storylines.Components
             {
                 notesTextBox.Text = chapter.notes ?? string.Empty;
                 notesTextBox.IsEnabled = true;
+
+                synopsisTextBox.Text = chapter.synopsis ?? string.Empty;
+                synopsisTextBox.IsEnabled = true;
             }
             else
             {
                 notesTextBox.Text = string.Empty;
                 notesTextBox.IsEnabled = false;
+
+                synopsisTextBox.Text = string.Empty;
+                synopsisTextBox.IsEnabled = false;
             }
 
             _isUpdating = false;
@@ -39,6 +45,17 @@ namespace Storylines.Components
             if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.notes = notesTextBox.Text;
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
+            }
+        }
+
+        private void OnSynopsisTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_isUpdating) return;
+
+            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            {
+                chapter.synopsis = synopsisTextBox.Text;
                 Scripts.Functions.TimeTravelSystem.SomethingChanged();
             }
         }

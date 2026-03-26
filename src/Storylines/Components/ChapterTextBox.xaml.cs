@@ -52,12 +52,20 @@ namespace Storylines.Components
         {
             if (e.SettingKey == SettingsValueStrings.TextBoxSolidBackground)
                 TextBoxWhiteBackground((bool)e.Value);
+            else if (e.SettingKey == SettingsValueStrings.EditorFontFamily)
+                textBox.FontFamily = new Windows.UI.Xaml.Media.FontFamily((string)e.Value);
+            else if (e.SettingKey == SettingsValueStrings.EditorFontSize)
+                textBox.FontSize = (double)e.Value;
         }
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             TextHighlighter.selectedTool = TextHighlighter.Tool.Yellow;
             MarkTextBackground();
+
+            // Apply saved font preferences
+            textBox.FontFamily = new Windows.UI.Xaml.Media.FontFamily(SettingsValues.editorFontFamily);
+            textBox.FontSize = SettingsValues.editorFontSize;
         }
 
         #region TextBox
@@ -77,6 +85,15 @@ namespace Storylines.Components
 
                     if (MainPage.FocusMode != null)
                         MainPage.FocusMode.TextChanged();
+
+                    // Start session timer on first edit; update word count goal bar
+                    MainPage.Current.StartSessionTimer();
+                    MainPage.Current.UpdateWordGoalBar();
+
+                    // Record words for streak tracking
+                    textBox.Document.GetText(TextGetOptions.None, out var plain);
+                    int words = plain.Split(new char[] { ' ', '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries).Length;
+                    Scripts.Services.WritingSessionService.RecordWords(words);
                 }
             }
         }
@@ -358,6 +375,62 @@ namespace Storylines.Components
             }
 
             searchMatchCount.Text = $"{replacements} replacement{(replacements == 1 ? "" : "s")} made";
+        }
+
+        private void OnReplaceAllChaptersButton_Click(object sender, RoutedEventArgs e)
+        {
+            var textToFind = searchReplaceFindBox.Text;
+            var replaceWith = searchReplaceBox.Text;
+            if (string.IsNullOrEmpty(textToFind)) return;
+
+            var findOptions = FindOptions.None;
+            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
+            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
+
+            int replacements = 0;
+            int selectedIndex = Scripts.Services.ServiceLocator.TextEditor.SelectedChapterIndex;
+
+            foreach (var chapter in Scripts.Services.ServiceLocator.ProjectState.Chapters)
+            {
+                if (string.IsNullOrEmpty(chapter.text)) continue;
+
+                var box = new RichEditBox();
+                box.Document.SetText(TextSetOptions.FormatRtf, chapter.text);
+
+                ITextRange range = box.Document.GetRange(0, 0);
+                while (range.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+                {
+                    range.SetText(TextSetOptions.None, replaceWith);
+                    replacements++;
+                }
+
+                box.Document.GetText(TextGetOptions.FormatRtf, out string newRtf);
+                chapter.text = newRtf;
+            }
+
+            // Reload the current chapter in the editor
+            if (selectedIndex >= 0 && selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count)
+            {
+                textBox.Document.SetText(TextSetOptions.FormatRtf,
+                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text ?? string.Empty);
+            }
+
+            if (replacements > 0)
+            {
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
+                searchMatchCount.Text = $"{replacements} replacement{(replacements == 1 ? "" : "s")} made across all chapters";
+            }
+            else
+            {
+                searchMatchCount.Text = "No matches found";
+            }
+        }
+
+        private void OnAllChaptersScopeToggle_Toggled(object sender, RoutedEventArgs e)
+        {
+            replaceAllChaptersButton.Visibility = allChaptersScopeToggle.IsOn
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         private void OnSearchReplaceClose_Click(object sender, RoutedEventArgs e)

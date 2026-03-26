@@ -1,4 +1,5 @@
 ﻿using Storylines.Scripts.Services;
+using System.Linq;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.Xaml;
@@ -30,8 +31,16 @@ namespace Storylines.Pages.SettingsPages
             customAccentPicker.Color = SettingsValues.customAccentColor;
             customAccentPicker.IsEnabled = SettingsValues.selectedAccent == SettingsValues.SelectedAccent.Custom;
 
-            //textBoxBackgroundToggleSwitch.IsOn = SettingsValues.textBoxSolidBackground;
             addChapterOnPageDownToggleSwitch.IsOn = System.Convert.ToBoolean(localSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] ?? true);
+
+            // Font settings
+            var savedFont = SettingsValues.editorFontFamily;
+            fontFamilyComboBox.SelectedItem = fontFamilyComboBox.Items
+                .OfType<ComboBoxItem>()
+                .FirstOrDefault(i => i.Tag?.ToString() == savedFont)
+                ?? fontFamilyComboBox.Items.OfType<ComboBoxItem>().FirstOrDefault();
+            fontSizeNumBox.Value = SettingsValues.editorFontSize;
+
             loading = false;
         }
 
@@ -82,6 +91,34 @@ namespace Storylines.Pages.SettingsPages
                 SettingsValues.customAccentColor = color;
                 SettingsValues.selectedAccent = SettingsValues.SelectedAccent.Custom;
                 ThemeSettings.InitializeAppAccentColor();
+            }
+        }
+
+        private void OnFontFamilyComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (!loading && fontFamilyComboBox.SelectedItem is ComboBoxItem item)
+            {
+                string fontFamily = item.Tag?.ToString() ?? "Calibri";
+                localSettings.Values[SettingsValueStrings.EditorFontFamily] = fontFamily;
+                ServiceLocator.Events.Publish(new SettingChangedEvent
+                {
+                    SettingKey = SettingsValueStrings.EditorFontFamily,
+                    Value = fontFamily
+                });
+            }
+        }
+
+        private void OnFontSizeNumBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
+        {
+            if (!loading && !double.IsNaN(fontSizeNumBox.Value))
+            {
+                double size = fontSizeNumBox.Value;
+                localSettings.Values[SettingsValueStrings.EditorFontSize] = size;
+                ServiceLocator.Events.Publish(new SettingChangedEvent
+                {
+                    SettingKey = SettingsValueStrings.EditorFontSize,
+                    Value = size
+                });
             }
         }
 

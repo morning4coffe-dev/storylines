@@ -10,7 +10,9 @@
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Background="{ThemeResource AppAcrylicBackground}">
 
-    <Grid>
+    <Grid AllowDrop="True"
+          DragOver="OnGrid_DragOver"
+          Drop="OnGrid_Drop">
         <Grid.RowDefinitions>
             <RowDefinition Height="48" />
             <RowDefinition Height="*" />

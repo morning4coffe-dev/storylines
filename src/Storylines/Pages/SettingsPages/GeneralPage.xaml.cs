@@ -33,6 +33,7 @@ namespace Storylines.Pages.SettingsPages
                 if (Convert.ToDouble((item as ComboBoxItem).Tag) == SettingsValues.autosaveInterval)
                     autosaveIntervalComboBox.SelectedItem = item;
             }
+            dailyWordGoalNumBox.Value = SettingsValues.dailyWordGoal;
             loading = false;
         }
 
@@ -64,6 +65,12 @@ namespace Storylines.Pages.SettingsPages
         {
             if (!loading)
                 localSettings.Values[SettingsValueStrings.AutosaveInterval] = Convert.ToDouble((autosaveIntervalComboBox.SelectedItem as ComboBoxItem).Tag);
+        }
+
+        private void OnDailyWordGoalNumBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)
+        {
+            if (!loading && !double.IsNaN(dailyWordGoalNumBox.Value))
+                localSettings.Values[SettingsValueStrings.DailyWordGoal] = (int)dailyWordGoalNumBox.Value;
         }
 
         private void GeneralPage_SizeChanged(object sender, SizeChangedEventArgs e)

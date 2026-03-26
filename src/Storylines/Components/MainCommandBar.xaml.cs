@@ -115,6 +115,9 @@ namespace Storylines.Components
 
         private void OnSearchReplaceButton_Click(object sender, RoutedEventArgs e)
             => MainPage.ChapterText.OpenSearchAndReplace();
+
+        private void OnPinboardButton_Click(object sender, RoutedEventArgs e)
+            => ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Pinboard);
         #endregion
 
         #region HELP

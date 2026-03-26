@@ -108,6 +108,17 @@
                              FontWeight="Normal">N/A</Run>
                     </Paragraph>
                 </RichTextBlock>
+
+                <StackPanel MinWidth="160"
+                            Spacing="4">
+                    <TextBlock x:Uid="byChapterText"
+                               Foreground="{ThemeResource SystemAccentColor}"
+                               FontWeight="SemiBold"
+                               FontSize="17"
+                               Margin="0,8,0,0" />
+                    <StackPanel x:Name="chapterBarsPanel"
+                                Spacing="6" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>

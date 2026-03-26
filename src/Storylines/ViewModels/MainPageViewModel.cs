@@ -41,6 +41,9 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isStorylinesDocument = true;
 
+        /// <summary>Tracks whether we already showed the "goal reached" notification for the current chapter session.</summary>
+        public bool WordGoalCelebrated { get; set; }
+
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
         public MainPageViewModel()

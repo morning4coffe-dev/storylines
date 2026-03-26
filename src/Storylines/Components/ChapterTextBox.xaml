@@ -317,6 +317,23 @@
                         CornerRadius="4"
                         Click="OnReplaceAllButton_Click" />
             </Grid>
+            <!-- Scope: current chapter vs. all chapters -->
+            <StackPanel Orientation="Horizontal"
+                        Spacing="8">
+                <ToggleSwitch x:Name="allChaptersScopeToggle"
+                              x:Uid="allChaptersScopeToggle"
+                              Header="All chapters"
+                              IsOn="False"
+                              Margin="0,-4,0,0"
+                              MinWidth="0"
+                              Toggled="OnAllChaptersScopeToggle_Toggled" />
+                <Button x:Name="replaceAllChaptersButton"
+                        x:Uid="replaceAllChaptersButton"
+                        Height="32"
+                        CornerRadius="4"
+                        Visibility="Collapsed"
+                        Click="OnReplaceAllChaptersButton_Click" />
+            </StackPanel>
             <TextBlock x:Name="searchMatchCount"
                        FontSize="11"
                        Opacity="0.6"

@@ -73,6 +73,19 @@
                                    Grid.Row="1"
                                    Visibility="{x:Bind ViewModel.ChapterTextVisibility, Mode=OneWay}" />
 
+        <!-- Word-count goal progress bar — overlaid at the top of the writing area -->
+        <ProgressBar x:Name="wordGoalProgressBar"
+                     x:FieldModifier="public"
+                     Grid.Row="1"
+                     Height="3"
+                     VerticalAlignment="Top"
+                     Margin="0"
+                     Minimum="0"
+                     Maximum="100"
+                     Value="0"
+                     Visibility="Collapsed"
+                     IsHitTestVisible="False" />
+
         <components:WelcomePanel x:Name="welcomePanel"
                                  x:FieldModifier="public"
                                  Grid.Row="1"
@@ -206,6 +219,37 @@
                         HorizontalAlignment="Right"
                         Orientation="Horizontal"
                         Spacing="5">
+
+                <!-- Session timer and streak badges -->
+                <Button x:Name="sessionStreakButton"
+                        Padding="6,2"
+                        MinHeight="28"
+                        VerticalAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        Visibility="Collapsed"
+                        Click="OnSessionStreak_Click"
+                        ToolTipService.ToolTip="Writing streak — tap for session stats">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <TextBlock x:Name="sessionTimerText"
+                                   VerticalAlignment="Center"
+                                   FontSize="11"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.7" />
+                        <TextBlock Text="|"
+                                   VerticalAlignment="Center"
+                                   FontSize="11"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.4" />
+                        <TextBlock x:Name="streakText"
+                                   VerticalAlignment="Center"
+                                   FontSize="11"
+                                   Foreground="{ThemeResource TextForeground}"
+                                   Opacity="0.7" />
+                    </StackPanel>
+                </Button>
+
                 <TextBlock x:Name="textBoxZoomSliderZoomText"
                            x:Uid="zoom"
                            Margin="5,0"

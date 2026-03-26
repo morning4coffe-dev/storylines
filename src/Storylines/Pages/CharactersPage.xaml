@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
       xmlns:variables="using:Storylines.Scripts.Variables"
       xmlns:vm="using:Storylines.ViewModels"
       Loaded="Page_Loaded"
@@ -491,14 +492,17 @@
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
-                <TextBox x:Name="traitsBox"
+                <controls:TokenizingTextBox x:Name="traitsBox"
                          x:Uid="characterTraits"
-                         Height="38"
-                         Padding="12,7"
+                         MinHeight="38"
+                         Padding="4,4"
                          CornerRadius="4"
                          IsEnabled="False"
-                         Style="{StaticResource CharactersTextBoxesStyle}"
-                         TextChanged="Box_TextChanged" />
+                         TokenDelimiter=","
+                         PlaceholderText="Add traits, separated by comma…"
+                         TokenItemAdded="OnTraitsTokenItem_Added"
+                         TokenItemRemoving="OnTraitsTokenItem_Removing"
+                         TextChanged="OnTraitsBox_TextChanged" />
                 <TextBox x:Name="appearanceBox"
                          x:Uid="characterAppearance"
                          MinHeight="90"

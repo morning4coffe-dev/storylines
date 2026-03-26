@@ -131,7 +131,7 @@ namespace Storylines.Pages
                 (listView.SelectedItem as Character).description = descriptionBox.Text;
                 (listView.SelectedItem as Character).role = roleBox.Text;
                 (listView.SelectedItem as Character).age = ageBox.Text;
-                (listView.SelectedItem as Character).traitsText = traitsBox.Text;
+                (listView.SelectedItem as Character).traitsText = GetTraitsFromTokenBox();
                 (listView.SelectedItem as Character).appearance = appearanceBox.Text;
                 if(_picture != null)
                     (listView.SelectedItem as Character).picture = _picture;
@@ -149,7 +149,7 @@ namespace Storylines.Pages
             descriptionBox.Text = characterBeforeChange.description;
             roleBox.Text = characterBeforeChange.role ?? "";
             ageBox.Text = characterBeforeChange.age ?? "";
-            traitsBox.Text = characterBeforeChange.traitsText;
+            LoadTraitsIntoTokenBox(characterBeforeChange.traitsText);
             appearanceBox.Text = characterBeforeChange.appearance ?? "";
             profilePicture.ProfilePicture = characterBeforeChange.picture?.image;
             _picture = characterBeforeChange.picture;
@@ -188,7 +188,7 @@ namespace Storylines.Pages
 
         public bool DidSomethingChange()
         {
-            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).role == (string.IsNullOrEmpty(roleBox.Text) ? null : roleBox.Text) && (listView.SelectedItem as Character).age == (string.IsNullOrEmpty(ageBox.Text) ? null : ageBox.Text) && (listView.SelectedItem as Character).traitsText == traitsBox.Text && (listView.SelectedItem as Character).appearance == appearanceBox.Text && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
+            if ((listView.SelectedItem as Character).name == nameBox.Text && (listView.SelectedItem as Character).description == descriptionBox.Text && (listView.SelectedItem as Character).role == (string.IsNullOrEmpty(roleBox.Text) ? null : roleBox.Text) && (listView.SelectedItem as Character).age == (string.IsNullOrEmpty(ageBox.Text) ? null : ageBox.Text) && (listView.SelectedItem as Character).traitsText == GetTraitsFromTokenBox() && (listView.SelectedItem as Character).appearance == appearanceBox.Text && (listView.SelectedItem as Character).picture.image == (BitmapImage)profilePicture.ProfilePicture)
                 return false;
             else
                 return true;
@@ -306,7 +306,7 @@ namespace Storylines.Pages
                 descriptionBox.Text = (listView.SelectedItem as Character).description;
                 roleBox.Text = (listView.SelectedItem as Character).role ?? "";
                 ageBox.Text = (listView.SelectedItem as Character).age ?? "";
-                traitsBox.Text = (listView.SelectedItem as Character).traitsText;
+                LoadTraitsIntoTokenBox((listView.SelectedItem as Character).traitsText);
                 appearanceBox.Text = (listView.SelectedItem as Character).appearance ?? "";
                 profilePicture.ProfilePicture = (listView.SelectedItem as Character).picture.image != null ? (listView.SelectedItem as Character).picture.image : null;
                 UpdateDialogueInsights(listView.SelectedItem as Character);
@@ -378,6 +378,58 @@ namespace Storylines.Pages
             ExportDialogue.Open(Components.ExportSystem.WhatToExport.Characters);
         }
         #endregion
+
+        // ─── TokenizingTextBox helpers for traits ─────────────────────
+
+        private void LoadTraitsIntoTokenBox(string traitsText)
+        {
+            traitsBox.Items.Clear();
+            if (!string.IsNullOrWhiteSpace(traitsText))
+                foreach (var t in traitsText.Split(',', StringSplitOptions.RemoveEmptyEntries))
+                {
+                    var trimmed = t.Trim();
+                    if (!string.IsNullOrWhiteSpace(trimmed))
+                        traitsBox.Items.Add(trimmed);
+                }
+        }
+
+        private string GetTraitsFromTokenBox()
+        {
+            var parts = new System.Collections.Generic.List<string>();
+            foreach (var item in traitsBox.Items)
+                if (!string.IsNullOrWhiteSpace(item?.ToString()))
+                    parts.Add(item.ToString().Trim());
+            return string.Join(", ", parts);
+        }
+
+        private void OnTraitsTokenItem_Added(Microsoft.Toolkit.Uwp.UI.Controls.TokenizingTextBox sender, object args)
+        {
+            if (!selectionChanged && DidSomethingChange())
+                IsEditEnabled(EditButton.ApplyChanges);
+        }
+
+        private void OnTraitsTokenItem_Removing(Microsoft.Toolkit.Uwp.UI.Controls.TokenizingTextBox sender, Microsoft.Toolkit.Uwp.UI.Controls.TokenItemRemovingEventArgs args)
+        {
+            if (!selectionChanged && DidSomethingChange())
+                IsEditEnabled(EditButton.ApplyChanges);
+        }
+
+        private void OnTraitsBox_TextChanged(Microsoft.Toolkit.Uwp.UI.Controls.AutoSuggestBox sender, Windows.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
+        {
+            if (args.Reason == Windows.UI.Xaml.Controls.AutoSuggestionBoxTextChangeReason.UserInput)
+            {
+                // Provide all unique traits from existing characters as suggestions
+                var allTraits = new System.Collections.Generic.HashSet<string>(System.StringComparer.CurrentCultureIgnoreCase);
+                foreach (var ch in Scripts.Services.ServiceLocator.ProjectState.Characters)
+                    foreach (var trait in ch.traits ?? new System.Collections.Generic.List<string>())
+                        allTraits.Add(trait);
+
+                var query = sender.Text?.Trim() ?? string.Empty;
+                sender.ItemsSource = string.IsNullOrWhiteSpace(query)
+                    ? new System.Collections.Generic.List<string>(allTraits)
+                    : new System.Collections.Generic.List<string>(allTraits.Where(t => t.StartsWith(query, System.StringComparison.CurrentCultureIgnoreCase)));
+            }
+        }
 
         private void Box_TextChanged(object sender, TextChangedEventArgs e)
         {

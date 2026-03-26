@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d"
       Loaded="GeneralPage_Loaded"
       SizeChanged="GeneralPage_SizeChanged">
@@ -212,6 +213,52 @@
                                       Tag="60" />
                     </ComboBox.Items>
                 </ComboBox>
+            </Grid>
+
+            <StackPanel>
+                <TextBlock x:Uid="writingGoalSetting"
+                           FontWeight="SemiBold"
+                           Margin="0,10,0,5" />
+            </StackPanel>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="&#xE8EF;"
+                          HorizontalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center"
+                            Spacing="1"
+                            Grid.Column="1">
+                    <TextBlock x:Uid="dailyWordGoalSetting"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                    <TextBlock x:Uid="dailyWordGoalSettingDesc"
+                               FontWeight="Light"
+                               Opacity="0.8"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,10,0" />
+                </StackPanel>
+                <muxc:NumberBox x:Name="dailyWordGoalNumBox"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Minimum="0"
+                                Maximum="10000"
+                                SmallChange="50"
+                                LargeChange="500"
+                                SpinButtonPlacementMode="Compact"
+                                Width="120"
+                                Height="30"
+                                Grid.Column="2"
+                                ValueChanged="OnDailyWordGoalNumBox_ValueChanged" />
             </Grid>
 
             <StackPanel.ChildrenTransitions>

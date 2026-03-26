@@ -198,6 +198,30 @@
   <data name="autosaveText.Text" xml:space="preserve">
     <value>Autosave</value>
   </data>
+  <data name="byChapterText.Text" xml:space="preserve">
+    <value>By chapter</value>
+  </data>
+  <data name="dailyWordGoalSetting.Text" xml:space="preserve">
+    <value>Daily word goal</value>
+  </data>
+  <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
+    <value>Track your daily writing progress. Set to 0 to disable.</value>
+  </data>
+  <data name="editorFontFamilySetting.Text" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
+    <value>Default font used for new text in the editor.</value>
+  </data>
+  <data name="editorFontSizeSetting.Text" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="textEditorSetting.Text" xml:space="preserve">
+    <value>Text Editor</value>
+  </data>
+  <data name="writingGoalSetting.Text" xml:space="preserve">
+    <value>Writing Goal</value>
+  </data>
   <data name="cancel.Content" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -788,6 +812,9 @@
   </data>
   <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
     <value>Ctrl+N  New  |  Ctrl+O  Open  |  Ctrl+S  Save</value>
+  </data>
+  <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
+    <value>Recent projects</value>
   </data>
   <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
     <value>Chapter Notes</value>

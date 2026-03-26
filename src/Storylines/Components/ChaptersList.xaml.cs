@@ -125,6 +125,16 @@ namespace Storylines.Components
 
             CheckForEmptyList();
         }
+
+        private void OnChapterEditTags_Click(object sender, RoutedEventArgs e)
+        {
+            if (chapterItemFlyoutedToken != null)
+            {
+                var chapter = Scripts.Services.ServiceLocator.ProjectState.FindChapter(chapterItemFlyoutedToken);
+                if (chapter != null)
+                    Components.DialogueWindows.ChapterTagsDialogue.Open(chapter);
+            }
+        }
         #endregion
 
         private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)

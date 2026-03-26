@@ -40,6 +40,9 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("wordCountGoal", NullValueHandling = NullValueHandling.Ignore)]
         public int? WordCountGoal { get; set; }
+
+        [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> Tags { get; set; }
     }
 
     public class CharacterData

@@ -105,7 +105,8 @@ namespace Storylines.Components
                     Text = chapter.text,
                     Notes = chapter.notes ?? string.Empty,
                     Synopsis = chapter.synopsis,
-                    WordCountGoal = chapter.wordCountGoal
+                    WordCountGoal = chapter.wordCountGoal,
+                    Tags = chapter.tags?.Where(t => !string.IsNullOrWhiteSpace(t)).ToList()
                 });
             }
 
@@ -267,7 +268,7 @@ namespace Storylines.Components
 
                 foreach (var chapterData in projectData.Chapters)
                 {
-                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal);
+                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal, chapterData.Tags);
                 }
 
                 LoadVariables(projectData);

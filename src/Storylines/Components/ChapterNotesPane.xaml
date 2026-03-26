@@ -52,18 +52,44 @@
             </Button>
         </Grid>
 
-        <TextBox x:Name="notesTextBox"
-             x:Uid="chapterNotesPaneTextBox"
-                 x:FieldModifier="public"
-                 Grid.Row="1"
-                 TextWrapping="Wrap"
-                 AcceptsReturn="True"
-                 Background="Transparent"
-                 BorderThickness="0"
-                 Padding="0,4"
-                 FontSize="13"
-                 ScrollViewer.VerticalScrollBarVisibility="Auto"
-                 TextChanged="OnNotesTextBox_TextChanged" />
+        <Pivot Grid.Row="1"
+               Margin="-12,0,-14,0">
+            <!-- Notes tab -->
+            <PivotItem Header="Notes">
+                <TextBox x:Name="notesTextBox"
+                         x:Uid="chapterNotesPaneTextBox"
+                         x:FieldModifier="public"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="0,4"
+                         FontSize="13"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         TextChanged="OnNotesTextBox_TextChanged" />
+            </PivotItem>
+
+            <!-- Synopsis tab -->
+            <PivotItem Header="Synopsis">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Chapter synopsis — a brief summary for your own reference."
+                               FontSize="11"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="synopsisTextBox"
+                             x:FieldModifier="public"
+                             PlaceholderText="Summarise what happens in this chapter…"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             TextChanged="OnSynopsisTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
 
         <animations:Implicit.ShowAnimations>
             <animations:TranslationAnimation Duration="0:0:0.25"

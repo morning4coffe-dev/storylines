@@ -32,6 +32,9 @@ namespace Storylines.Scripts.Services
                 case NavigationTarget.Settings:
                     _frame.Navigate(typeof(SettingsPage));
                     break;
+                case NavigationTarget.Pinboard:
+                    _frame.Navigate(typeof(StoryPinboardPage), null, new DrillInNavigationTransitionInfo());
+                    break;
             }
 
             Navigated?.Invoke(target);

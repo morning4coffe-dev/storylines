@@ -1,5 +1,6 @@
 using Storylines.Components.DialogueWindows;
 using Storylines.Components;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Modes;
 using Storylines.Scripts.Services;
 using Storylines.ViewModels;
@@ -26,6 +27,11 @@ namespace Storylines.Pages
 
         public MainPageViewModel ViewModel => ServiceLocator.MainPageViewModel;
 
+        // Session timer
+        private DispatcherTimer _sessionTimer;
+        private DateTimeOffset _sessionStart;
+        private bool _sessionActive;
+
         public MainPage()
         {
             InitializeComponent();
@@ -36,6 +42,7 @@ namespace Storylines.Pages
             ServiceLocator.Events.Subscribe<ChapterToolsStateEvent>(e => EnableOrDisableChapterTools(e.Enabled));
             ServiceLocator.Events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
             ServiceLocator.Events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
+            ServiceLocator.Events.Subscribe<SessionStatsUpdatedEvent>(OnSessionStatsUpdated);
 
             SizeChanged();
         }
@@ -152,6 +159,105 @@ namespace Storylines.Pages
 
         private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e) =>
             OpenOrCloseChapterList(closeOpenChapterListComponentIcon.Symbol == Symbol.ClosePane, true);
+        #endregion
+
+        #region Session Timer / Writing Streak
+        public void StartSessionTimer()
+        {
+            if (_sessionActive) return;
+
+            _sessionActive = true;
+            _sessionStart = DateTimeOffset.Now;
+            sessionStreakButton.Visibility = Visibility.Visible;
+
+            _sessionTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            _sessionTimer.Tick += OnSessionTimer_Tick;
+            _sessionTimer.Start();
+
+            // Seed the word baseline
+            int wordCount = GetTotalProjectWordCount();
+            WritingSessionService.OnSessionStart(wordCount);
+            UpdateStreakBadge();
+        }
+
+        private void OnSessionTimer_Tick(object sender, object e)
+        {
+            var elapsed = DateTimeOffset.Now - _sessionStart;
+            sessionTimerText.Text = $"{(int)elapsed.TotalMinutes:D2}:{elapsed.Seconds:D2}";
+        }
+
+        private void OnSessionStatsUpdated(SessionStatsUpdatedEvent e)
+        {
+            UpdateStreakBadge();
+            UpdateWordGoalBar();
+        }
+
+        private void UpdateStreakBadge()
+        {
+            int streak = WritingSessionService.GetCurrentStreak();
+            int today = WritingSessionService.GetTodayWords();
+            streakText.Text = streak > 0 ? $"🔥 {streak}d · {today}w today" : $"{today}w today";
+        }
+
+        private void OnSessionStreak_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.ShowProjectStats();
+        }
+
+        public void UpdateWordGoalBar()
+        {
+            var selectedIndex = ServiceLocator.TextEditor.SelectedChapterIndex;
+            if (selectedIndex < 0 || selectedIndex >= ServiceLocator.ProjectState.Chapters.Count)
+            {
+                wordGoalProgressBar.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            var chapter = ServiceLocator.ProjectState.Chapters[selectedIndex];
+            if (chapter.wordCountGoal == null || chapter.wordCountGoal <= 0)
+            {
+                wordGoalProgressBar.Visibility = Visibility.Collapsed;
+                return;
+            }
+
+            ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string text);
+            int wordCount = text.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+            double progress = Math.Min(100.0, wordCount * 100.0 / chapter.wordCountGoal.Value);
+
+            wordGoalProgressBar.Value = progress;
+            wordGoalProgressBar.Visibility = Visibility.Visible;
+
+            // Celebrate hitting the goal
+            if (progress >= 100 && !ViewModel.WordGoalCelebrated)
+            {
+                ViewModel.WordGoalCelebrated = true;
+                NotificationManager.DisplayInAppNotification(
+                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
+                    "Chapter goal reached!",
+                    $"You've hit your word goal for \"{chapter.name}\". Keep writing! 🎉");
+            }
+            else if (progress < 100)
+            {
+                ViewModel.WordGoalCelebrated = false;
+            }
+        }
+
+        private int GetTotalProjectWordCount()
+        {
+            string all = string.Empty;
+            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
+            {
+                if (!string.IsNullOrEmpty(chapter.text))
+                {
+                    var box = new RichEditBox();
+                    box.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.text);
+                    box.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
+                    all += txt;
+                }
+            }
+            return all.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+        #endregion
         #endregion
 
         #region Notes

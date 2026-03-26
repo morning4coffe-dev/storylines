@@ -1,8 +1,11 @@
 ﻿using Storylines.Components;
 using Storylines.Pages;
+using Windows.UI;
+using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Documents;
+using Windows.UI.Xaml.Media;
 
 namespace Storylines.Scripts.Modes
 {
@@ -15,27 +18,35 @@ namespace Storylines.Scripts.Modes
         public static void Switch()
         {
             MainPage.ReadMode = new ReadMode();
-
             MainPage.ReadMode.PrivateSwitch();
         }
 
         private void PrivateSwitch()
         {
             MainPage.ChapterText.Visibility = Visibility.Collapsed;
-
             MainPage.Current.OpenOrCloseChapterList(false, true);
-            //if edit is disabled
-            MainPage.ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out var txt);
+
+            // ── Fix: extract plain text from the RichEditBox, not raw RTF ──
+            MainPage.ChapterText.textBox.Document.GetText(TextGetOptions.None, out var plainText);
+
             txtBox = new RichTextBlock()
             {
-                Margin = new Thickness(40),
-                SelectionHighlightColor = new Windows.UI.Xaml.Media.SolidColorBrush((Windows.UI.Color)Application.Current.Resources["SystemAccentColor"]),
+                Margin = new Thickness(60, 40, 60, 40),
+                FontSize = 15,
+                LineHeight = 26,
+                TextWrapping = TextWrapping.Wrap,
+                IsTextSelectionEnabled = true,
+                SelectionHighlightColor = new SolidColorBrush(
+                    (Color)Application.Current.Resources["SystemAccentColor"]),
             };
 
-            Run run = new Run() { Text = txt };
-            Paragraph paragraph = new Paragraph();
-            paragraph.Inlines.Add(run);
-            txtBox.Blocks.Add(paragraph);
+            // Build one Paragraph per line break so formatting is clean
+            foreach (var line in (plainText ?? string.Empty).Split('\r'))
+            {
+                var paragraph = new Paragraph();
+                paragraph.Inlines.Add(new Run { Text = line });
+                txtBox.Blocks.Add(paragraph);
+            }
 
             MainPage.Current.mainGrid.Children.Add(txtBox);
             Grid.SetRow(txtBox, 1);
@@ -61,7 +72,6 @@ namespace Storylines.Scripts.Modes
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.readAloudControllHolder);
 
             ModesShared.RemoveChapterTextCommandBar();
-
             AppView.current.BackButtonCheck();
         }
 
@@ -69,9 +79,7 @@ namespace Storylines.Scripts.Modes
         {
             MainPage.ChapterText.Visibility = Visibility.Visible;
             MainPage.Current.mainGrid.Children.Remove(txtBox);
-
             MainPage.ReadMode = null;
-
             AppView.current.BackButtonCheck();
         }
     }

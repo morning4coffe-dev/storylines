@@ -120,6 +120,16 @@ namespace Storylines.Scripts.Services
     public class RefreshNotesPaneEvent { }
 
     /// <summary>
+    /// Published by <see cref="WritingSessionService"/> when the today-word-count
+    /// or streak changes so the UI can update without polling.
+    /// </summary>
+    public class SessionStatsUpdatedEvent
+    {
+        public int TodayWords { get; set; }
+        public int StreakDays { get; set; }
+    }
+
+    /// <summary>
     /// Published after a project load completes, enabling tools state updates.
     /// </summary>
     public class ProjectLoadedEvent

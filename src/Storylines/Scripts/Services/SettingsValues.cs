@@ -70,6 +70,12 @@ namespace Storylines.Scripts.Services
         public static bool newChapterShortcut => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] ?? true);
         public static string language => string.IsNullOrEmpty((string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage]) ? "" : (string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage];
 
+        public static int dailyWordGoal => Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DailyWordGoal] ?? 500);
+
+        public static string editorFontFamily => (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontFamily] as string) ?? "Calibri";
+        public static double editorFontSize => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontSize] ?? 11.0);
+        public static double editorLineSpacing => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorLineSpacing] ?? 1.2);
+
         public static void LoadSettings()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -160,6 +166,16 @@ namespace Storylines.Scripts.Services
         public static string AppLanguage { get; } = "AppLanguage";
 
         public static string ZoomValue { get; } = "TextBoxZoomValue";
+
+        // Writing session & goals
+        public static string DailyWordGoal { get; } = "DailyWordGoal";
+        public static string ChapterTagPresets { get; } = "ChapterTagPresets";
+        public static string FirstRunCompleted { get; } = "FirstRunCompleted";
+
+        // Font customisation
+        public static string EditorFontFamily { get; } = "EditorFontFamily";
+        public static string EditorFontSize { get; } = "EditorFontSize";
+        public static string EditorLineSpacing { get; } = "EditorLineSpacing";
     }
 }
 

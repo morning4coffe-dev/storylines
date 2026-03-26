@@ -49,6 +49,17 @@ namespace Storylines.Components.DialogueWindows
             Hide();
         }
 
+        private void OnAutosaveCheckBox_Click(object sender, RoutedEventArgs e)
+        {
+            autosaveTip.IsOpen = !(bool)autosaveCheckBox.IsChecked;
+        }
+
+        private void OnAutosaveTipActionButton_Click(Microsoft.UI.Xaml.Controls.TeachingTip sender, object args)
+        {
+            autosaveCheckBox.IsChecked = true;
+            autosaveTip.IsOpen = false;
+        }
+
         private void OnMinimumCheckBox_Click(object sender, RoutedEventArgs e)
         {
             measureValueNumBox.Value = 0;

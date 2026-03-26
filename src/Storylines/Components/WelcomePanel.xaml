@@ -4,7 +4,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-             mc:Ignorable="d">
+             mc:Ignorable="d"
+             Loaded="OnWelcomePanel_Loaded">
 
     <Grid x:Name="welcomeRoot"
           HorizontalAlignment="Center"
@@ -84,6 +85,55 @@
                 </Button>
 
             </StackPanel>
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    CornerRadius="8"
+                    Padding="16,12"
+                    HorizontalAlignment="Center"
+                    MinWidth="340"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    Visibility="Collapsed"
+                    x:Name="recentProjectsSection">
+                <StackPanel Spacing="8">
+                    <TextBlock x:Uid="welcomePanelRecentProjects"
+                               FontSize="12"
+                               FontWeight="SemiBold"
+                               Opacity="0.6" />
+                    <ListView x:Name="recentProjectsList"
+                              IsItemClickEnabled="True"
+                              SelectionMode="None"
+                              ItemClick="OnRecentProject_Click">
+                        <ListView.ItemContainerStyle>
+                            <Style TargetType="ListViewItem">
+                                <Setter Property="Padding" Value="0,4" />
+                                <Setter Property="MinHeight" Value="0" />
+                                <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+                            </Style>
+                        </ListView.ItemContainerStyle>
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding name}"
+                                               FontSize="13"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" />
+                                    <TextBlock Text="{Binding lastEditedFormatted}"
+                                               Grid.Column="1"
+                                               FontSize="11"
+                                               Opacity="0.55"
+                                               VerticalAlignment="Center"
+                                               Margin="12,0,0,0" />
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Border>
 
             <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
                     CornerRadius="8"

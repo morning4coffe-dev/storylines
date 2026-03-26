@@ -4,10 +4,15 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:variables="using:Storylines.Scripts.Variables"
+             xmlns:converters="using:Storylines.Converters"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="400">
+
+    <UserControl.Resources>
+        <converters:EmptyStringToCollapsedConverter x:Key="EmptyStringToCollapsedConverter" />
+    </UserControl.Resources>
 
     <Grid RightTapped="OnChaptersListView_RightTapped">
         <animations:Implicit.ShowAnimations>
@@ -91,10 +96,14 @@
                     <Grid Tag="{Binding token}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
-                          Padding="4,8"
+                          Padding="4,6,4,6"
                           RightTapped="OnChaptersListViewItem_RightTapped"
                           DoubleTapped="OnChaptersListViewItem_DoubleTapped"
                           Holding="OnChaptersListViewItem_Holding">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
@@ -103,13 +112,38 @@
                                   FontSize="14"
                                   Opacity="0.55"
                                   Margin="0,1,12,0"
-                                  VerticalAlignment="Center" />
+                                  Grid.RowSpan="2"
+                                  VerticalAlignment="Top" />
                         <TextBlock Text="{Binding name}"
                                    TextWrapping="NoWrap"
                                    TextTrimming="CharacterEllipsis"
                                    FontSize="13"
                                    Grid.Column="1"
                                    VerticalAlignment="Center" />
+                        <!-- Tag pills: visible only when chapter has tags -->
+                        <ItemsRepeater Grid.Row="1"
+                                       Grid.Column="1"
+                                       ItemsSource="{Binding tags}"
+                                       Margin="0,3,0,0"
+                                       Visibility="{Binding tagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
+                            <ItemsRepeater.Layout>
+                                <StackLayout Orientation="Horizontal"
+                                             Spacing="3" />
+                            </ItemsRepeater.Layout>
+                            <ItemsRepeater.ItemTemplate>
+                                <DataTemplate x:DataType="x:String">
+                                    <Border CornerRadius="3"
+                                            Padding="5,1"
+                                            Background="{ThemeResource SystemAccentColorLight2}"
+                                            Opacity="0.85">
+                                        <TextBlock Text="{x:Bind}"
+                                                   FontSize="10"
+                                                   Foreground="White"
+                                                   VerticalAlignment="Center" />
+                                    </Border>
+                                </DataTemplate>
+                            </ItemsRepeater.ItemTemplate>
+                        </ItemsRepeater>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -172,8 +206,14 @@
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="" />
                         </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>
-                </MenuFlyout.Items>
+                    </MenuFlyoutItem>                    <MenuFlyoutSeparator />
+                    <MenuFlyoutItem x:Name="editTagsFlyout"
+                                    Text="Edit Tags…"
+                                    Click="OnChapterEditTags_Click">
+                        <MenuFlyoutItem.Icon>
+                            <FontIcon Glyph="&#xE1CB;" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>                </MenuFlyout.Items>
             </MenuFlyout>
         </Grid.Resources>
     </Grid>

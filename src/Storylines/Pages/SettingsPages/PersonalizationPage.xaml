@@ -195,6 +195,88 @@
                               Toggled="OnAddChapterOnPageDownToggleSwitch_Toggled" />
             </Grid>
 
+            <StackPanel>
+                <TextBlock x:Uid="textEditorSetting"
+                           FontWeight="SemiBold"
+                           Margin="0,10,0,5" />
+            </StackPanel>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="&#xE8D2;"
+                          HorizontalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center"
+                            Spacing="1"
+                            Grid.Column="1">
+                    <TextBlock x:Uid="editorFontFamilySetting"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap" />
+                    <TextBlock x:Uid="editorFontFamilySettingDesc"
+                               FontWeight="Light"
+                               Opacity="0.8"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,10,0" />
+                </StackPanel>
+                <ComboBox x:Name="fontFamilyComboBox"
+                          HorizontalAlignment="Right"
+                          HorizontalContentAlignment="Left"
+                          VerticalAlignment="Center"
+                          Height="30"
+                          Width="160"
+                          Grid.Column="2"
+                          SelectionChanged="OnFontFamilyComboBox_SelectionChanged">
+                    <ComboBoxItem Content="Calibri" Tag="Calibri" />
+                    <ComboBoxItem Content="Cambria" Tag="Cambria" />
+                    <ComboBoxItem Content="Georgia" Tag="Georgia" />
+                    <ComboBoxItem Content="Times New Roman" Tag="Times New Roman" />
+                    <ComboBoxItem Content="Arial" Tag="Arial" />
+                    <ComboBoxItem Content="Segoe UI" Tag="Segoe UI" />
+                    <ComboBoxItem Content="Verdana" Tag="Verdana" />
+                    <ComboBoxItem Content="Garamond" Tag="Garamond" />
+                    <ComboBoxItem Content="Palatino Linotype" Tag="Palatino Linotype" />
+                </ComboBox>
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="0,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="&#xE8D2;"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="editorFontSizeSetting"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Grid.Column="1" />
+                <muxc:NumberBox x:Name="fontSizeNumBox"
+                                HorizontalAlignment="Right"
+                                VerticalAlignment="Center"
+                                Minimum="8"
+                                Maximum="24"
+                                SmallChange="1"
+                                SpinButtonPlacementMode="Compact"
+                                Width="100"
+                                Height="30"
+                                Grid.Column="2"
+                                ValueChanged="OnFontSizeNumBox_ValueChanged" />
+            </Grid>
+
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition IsStaggeringEnabled="True"

@@ -15,6 +15,7 @@ namespace Storylines.Scripts.Services.Interfaces
     {
         MainPage,
         Characters,
-        Settings
+        Settings,
+        Pinboard
     }
 }

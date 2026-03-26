@@ -25,7 +25,16 @@
                       IsChecked="False" />
             <CheckBox x:Name="autosaveCheckBox"
                       x:Uid="autosaveContent"
-                      IsChecked="True" />
+                      IsChecked="True"
+                      Click="OnAutosaveCheckBox_Click" />
+            <controls:TeachingTip x:Name="autosaveTip"
+                                  Target="{x:Bind autosaveCheckBox}"
+                                  Title="Autosave is off"
+                                  Subtitle="Your progress won&#x2019;t be saved automatically during Focus Mode. It&#x2019;s recommended to keep autosave enabled."
+                                  ActionButtonContent="Enable autosave"
+                                  ActionButtonClick="OnAutosaveTipActionButton_Click"
+                                  CloseButtonContent="Continue anyway"
+                                  IsLightDismissEnabled="False" />
             <CheckBox x:Name="timeCheckBox"
                       x:Uid="modeDialogueTimer"
                       IsChecked="True"
