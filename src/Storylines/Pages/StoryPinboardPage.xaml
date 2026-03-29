@@ -89,7 +89,7 @@
                             </Grid.RowDefinitions>
 
                             <!-- Chapter name -->
-                            <TextBlock Text="{Binding name}"
+                            <TextBlock Text="{Binding Name}"
                                        FontWeight="SemiBold"
                                        FontSize="13"
                                        TextWrapping="Wrap"
@@ -105,7 +105,7 @@
 
                             <!-- Synopsis excerpt -->
                             <TextBlock Grid.Row="2"
-                                       Text="{Binding synopsis}"
+                                       Text="{Binding Synopsis}"
                                        FontSize="12"
                                        Opacity="0.65"
                                        TextWrapping="Wrap"
@@ -114,7 +114,7 @@
 
                             <!-- Tag pills -->
                             <ItemsRepeater Grid.Row="3"
-                                           ItemsSource="{Binding tags}"
+                                           ItemsSource="{Binding Tags}"
                                            Margin="0,8,0,0">
                                 <ItemsRepeater.Layout>
                                     <StackLayout Orientation="Horizontal" Spacing="3" />
@@ -139,7 +139,7 @@
                                        FontSize="11"
                                        Opacity="0.45"
                                        Margin="0,8,0,0"
-                                       Tag="{Binding token}" />
+                                       Tag="{Binding Token}" />
 
                             <animations:Implicit.ShowAnimations>
                                 <animations:OpacityAnimation Duration="0:0:0.3" From="0" To="1" />

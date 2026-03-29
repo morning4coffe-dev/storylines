@@ -12,18 +12,18 @@ namespace Storylines.Components
 {
     public class ProjectFile : INotifyPropertyChanged
     {
-        public string name { get; set; }
-        public string token { get; private set; }
-        public string path { get; set; }
+        public string Name { get; set; }
+        public string Token { get; private set; }
+        public string Path { get; set; }
         public StorageFile file { get; set; }
 
         public string projectName { get; set; }
         public string projectVersion { get; set; }
 
-        public Uri icon { get; set; }
-        public string shortPath { get; set; }
-        public string lastEditedFormatted { get; private set; }
-        public DateTimeOffset lastEdited { get; private set; }
+        public Uri Icon { get; set; }
+        public string ShortPath { get; set; }
+        public string LastEditedFormatted { get; private set; }
+        public DateTimeOffset LastEdited { get; private set; }
 
         public Windows.UI.Xaml.Thickness osMargin { get; private set; } = LoadProjectDialogue.osMargin;
         public double osWidth { get; private set; } = LoadProjectDialogue.osWidth;
@@ -42,14 +42,14 @@ namespace Storylines.Components
             BasicProperties basicProperties = await file.GetBasicPropertiesAsync();
             return new ProjectFile()
             {
-                name = file.Name,
-                path = file.Path,
-                token = token,
+                Name = file.Name,
+                Path = file.Path,
+                Token = token,
                 file = file,
-                icon = new Uri(file.FileType == ".txt" ? "ms-appx:/Assets/Icons/Text-document-icon.png" : "ms-appx:/Assets/Icons/Storylines-document-icon.png"),
-                shortPath = file.Path.Replace(@"\" + file.Name, string.Empty).Replace(@"\", "/"),
-                lastEditedFormatted = basicProperties.DateModified.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture),
-                lastEdited = basicProperties.DateModified
+                Icon = new Uri(file.FileType == ".txt" ? "ms-appx:/Assets/Icons/Text-document-icon.png" : "ms-appx:/Assets/Icons/Storylines-document-icon.png"),
+                ShortPath = file.Path.Replace(@"\" + file.Name, string.Empty).Replace(@"\", "/"),
+                LastEditedFormatted = basicProperties.DateModified.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture),
+                LastEdited = basicProperties.DateModified
             };
         }
 
@@ -67,7 +67,7 @@ namespace Storylines.Components
         {
             for (int i = 0; i < projectFiles.Count; i++)
             {
-                if (projectFiles[i].token == token)
+                if (projectFiles[i].Token == token)
                 {
                     projectFiles.RemoveAt(i);
                     StorageApplicationPermissions.FutureAccessList.Remove(token);
@@ -103,7 +103,7 @@ namespace Storylines.Components
         {
             for (int i = 0; i < projectFiles.Count; i++)
             {
-                if (projectFiles[i].path == file.Path)
+                if (projectFiles[i].Path == file.Path)
                 {
                     return true;
                 }

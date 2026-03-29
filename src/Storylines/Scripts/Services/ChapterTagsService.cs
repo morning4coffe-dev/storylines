@@ -71,7 +71,7 @@ namespace Storylines.Scripts.Services
         {
             var presets = GetPresets();
             var usedTags = chapters?
-                .SelectMany(c => c.tags ?? new System.Collections.Generic.List<string>())
+                .SelectMany(c => c.Tags ?? new System.Collections.Generic.List<string>())
                 .Distinct(StringComparer.CurrentCultureIgnoreCase)
                 .ToList() ?? new List<string>();
 

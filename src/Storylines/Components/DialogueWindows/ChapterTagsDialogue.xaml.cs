@@ -37,12 +37,12 @@ namespace Storylines.Components.DialogueWindows
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            chapterNameText.Text = _chapter?.name ?? string.Empty;
+            chapterNameText.Text = _chapter?.Name ?? string.Empty;
 
             // Populate existing tags
             tagsTokenBox.Items.Clear();
-            if (_chapter?.tags != null)
-                foreach (var tag in _chapter.tags)
+            if (_chapter?.Tags != null)
+                foreach (var tag in _chapter.Tags)
                     tagsTokenBox.Items.Add(tag);
 
             // Populate suggestion pills — presets minus already-added tags
@@ -127,7 +127,7 @@ namespace Storylines.Components.DialogueWindows
                 .Distinct(StringComparer.CurrentCultureIgnoreCase)
                 .ToList();
 
-            _chapter.tags = newTags;
+            _chapter.Tags = newTags;
             Scripts.Functions.TimeTravelSystem.SomethingChanged();
 
             Hide();

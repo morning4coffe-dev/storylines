@@ -11,7 +11,7 @@ public class ChapterTests
     {
         var chapter = new Chapter();
         chapter.SetToken("abc-123");
-        Assert.Equal("abc-123", chapter.token);
+        Assert.Equal("abc-123", chapter.Token);
     }
 
     [Fact]
@@ -20,7 +20,7 @@ public class ChapterTests
         var chapter = new Chapter();
         chapter.SetToken("first");
         chapter.SetToken("second");
-        Assert.Equal("second", chapter.token);
+        Assert.Equal("second", chapter.Token);
     }
 
     [Fact]
@@ -30,9 +30,9 @@ public class ChapterTests
         var fired = new List<string>();
         chapter.PropertyChanged += (_, e) => fired.Add(e.PropertyName!);
 
-        chapter.name = "New Name";
+        chapter.Name = "New Name";
 
-        Assert.Contains("name", fired);
+        Assert.Contains("Name", fired);
     }
 
     [Fact]
@@ -42,9 +42,9 @@ public class ChapterTests
         var fired = new List<string>();
         chapter.PropertyChanged += (_, e) => fired.Add(e.PropertyName!);
 
-        chapter.text = "Chapter content";
+        chapter.Text = "Chapter content";
 
-        Assert.Contains("text", fired);
+        Assert.Contains("Text", fired);
     }
 
     [Fact]
@@ -54,9 +54,9 @@ public class ChapterTests
         var fired = new List<string>();
         chapter.PropertyChanged += (_, e) => fired.Add(e.PropertyName!);
 
-        chapter.notes = "A note";
+        chapter.Notes = "A note";
 
-        Assert.Contains("notes", fired);
+        Assert.Contains("Notes", fired);
     }
 
     [Fact]
@@ -66,9 +66,9 @@ public class ChapterTests
         var fired = new List<string>();
         chapter.PropertyChanged += (_, e) => fired.Add(e.PropertyName!);
 
-        chapter.synopsis = "A synopsis";
+        chapter.Synopsis = "A synopsis";
 
-        Assert.Contains("synopsis", fired);
+        Assert.Contains("Synopsis", fired);
     }
 
     [Fact]
@@ -78,25 +78,25 @@ public class ChapterTests
         var fired = new List<string>();
         chapter.PropertyChanged += (_, e) => fired.Add(e.PropertyName!);
 
-        chapter.wordCountGoal = 500;
+        chapter.WordCountGoal = 500;
 
-        Assert.Contains("wordCountGoal", fired);
+        Assert.Contains("WordCountGoal", fired);
     }
 
     [Fact]
     public void Name_Update_ReflectsNewValue()
     {
-        var chapter = new Chapter { name = "Old" };
-        chapter.name = "New";
-        Assert.Equal("New", chapter.name);
+        var chapter = new Chapter { Name = "Old" };
+        chapter.Name = "New";
+        Assert.Equal("New", chapter.Name);
     }
 
     [Fact]
     public void WordCountGoal_CanBeNull()
     {
-        var chapter = new Chapter { wordCountGoal = 1000 };
-        chapter.wordCountGoal = null;
-        Assert.Null(chapter.wordCountGoal);
+        var chapter = new Chapter { WordCountGoal = 1000 };
+        chapter.WordCountGoal = null;
+        Assert.Null(chapter.WordCountGoal);
     }
 
     [Fact]
@@ -104,7 +104,7 @@ public class ChapterTests
     {
         // Verifies no NullReferenceException when there are no subscribers
         var chapter = new Chapter();
-        var ex = Record.Exception(() => chapter.name = "test");
+        var ex = Record.Exception(() => chapter.Name = "test");
         Assert.Null(ex);
     }
 }

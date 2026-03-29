@@ -20,10 +20,10 @@ namespace Storylines.Components
 
             if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
             {
-                notesTextBox.Text = chapter.notes ?? string.Empty;
+                notesTextBox.Text = chapter.Notes ?? string.Empty;
                 notesTextBox.IsEnabled = true;
 
-                synopsisTextBox.Text = chapter.synopsis ?? string.Empty;
+                synopsisTextBox.Text = chapter.Synopsis ?? string.Empty;
                 synopsisTextBox.IsEnabled = true;
             }
             else
@@ -44,7 +44,7 @@ namespace Storylines.Components
 
             if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
             {
-                chapter.notes = notesTextBox.Text;
+                chapter.Notes = notesTextBox.Text;
                 Scripts.Functions.TimeTravelSystem.SomethingChanged();
             }
         }
@@ -55,7 +55,7 @@ namespace Storylines.Components
 
             if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
             {
-                chapter.synopsis = synopsisTextBox.Text;
+                chapter.Synopsis = synopsisTextBox.Text;
                 Scripts.Functions.TimeTravelSystem.SomethingChanged();
             }
         }

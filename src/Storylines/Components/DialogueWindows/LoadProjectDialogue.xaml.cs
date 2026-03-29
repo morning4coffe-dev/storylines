@@ -88,7 +88,7 @@ namespace Storylines.Components.DialogueWindows
             {
                 foreach (var projectFile in ProjectFile.projectFiles)
                 {
-                    if (projectFile.token == token)
+                    if (projectFile.Token == token)
                         SaveSystem.Load(projectFile);
                 }
             }
@@ -149,7 +149,7 @@ namespace Storylines.Components.DialogueWindows
 
         private void OnProjectsHolder_ItemClick(object sender, ItemClickEventArgs e)
         {
-            TryLoadProject(((sender as ListView).SelectedItem as ProjectFile).token);
+            TryLoadProject(((sender as ListView).SelectedItem as ProjectFile).Token);
         }
     }
 }

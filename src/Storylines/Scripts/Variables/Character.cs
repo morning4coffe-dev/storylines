@@ -1,11 +1,10 @@
+using CommunityToolkit.Mvvm.ComponentModel;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Constants;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
 using System.Linq;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
@@ -13,133 +12,87 @@ using Windows.UI.Xaml.Media.Imaging;
 
 namespace Storylines.Scripts.Variables
 {
-    public class Character : INotifyPropertyChanged
+    public partial class Character : ObservableObject
     {
+        [ObservableProperty]
         private string _name;
-        public string name
-        {
-            get { return _name; }
-            set
-            {
-                _name = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(detailsLine));
-            }
-        }
-        public string token { get; private set; }
+
+        [ObservableProperty]
         private string _description;
-        public string description
-        {
-            get { return _description; }
-            set
-            {
-                _description = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(detailsLine));
-            }
-        }
+
+        [ObservableProperty]
         private CharacterPicture _picture;
-        public CharacterPicture picture
-        {
-            get { return _picture; }
-            set
-            {
-                _picture = value;
-                NotifyPropertyChanged();
-            }
-        }
 
+        [ObservableProperty]
         private string _role;
-        public string role
-        {
-            get { return _role; }
-            set
-            {
-                _role = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(detailsLine));
-            }
-        }
 
+        [ObservableProperty]
         private string _age;
-        public string age
-        {
-            get { return _age; }
-            set
-            {
-                _age = value;
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(detailsLine));
-            }
-        }
 
+        [ObservableProperty]
         private string _appearance;
-        public string appearance
-        {
-            get { return _appearance; }
-            set
-            {
-                _appearance = value;
-                NotifyPropertyChanged();
-            }
-        }
+
+        partial void OnNameChanged(string value) => OnPropertyChanged(nameof(DetailsLine));
+        partial void OnDescriptionChanged(string value) => OnPropertyChanged(nameof(DetailsLine));
+        partial void OnRoleChanged(string value) => OnPropertyChanged(nameof(DetailsLine));
+        partial void OnAgeChanged(string value) => OnPropertyChanged(nameof(DetailsLine));
 
         private List<string> _traits = new List<string>();
-        public List<string> traits
+        public List<string> Traits
         {
-            get { return _traits; }
+            get => _traits;
             set
             {
-                _traits = value ?? new List<string>();
-                NotifyPropertyChanged();
-                NotifyPropertyChanged(nameof(traitsText));
-                NotifyPropertyChanged(nameof(detailsLine));
+                if (SetProperty(ref _traits, value ?? new List<string>()))
+                {
+                    OnPropertyChanged(nameof(TraitsText));
+                    OnPropertyChanged(nameof(DetailsLine));
+                }
             }
         }
 
-        public string traitsText
+        public string TraitsText
         {
-            get { return traits == null || traits.Count == 0 ? string.Empty : string.Join(", ", traits); }
+            get => Traits == null || Traits.Count == 0 ? string.Empty : string.Join(", ", Traits);
             set
             {
-                traits = (value ?? string.Empty)
+                Traits = (value ?? string.Empty)
                     .Split(',', StringSplitOptions.RemoveEmptyEntries)
                     .Select(item => item.Trim())
                     .Where(item => !string.IsNullOrWhiteSpace(item))
                     .Distinct(StringComparer.CurrentCultureIgnoreCase)
                     .ToList();
-
-                NotifyPropertyChanged();
+                OnPropertyChanged();
             }
         }
 
-        public string detailsLine
+        public string DetailsLine
         {
             get
             {
                 var details = new List<string>();
 
-                if (!string.IsNullOrWhiteSpace(role))
-                    details.Add(role);
+                if (!string.IsNullOrWhiteSpace(Role))
+                    details.Add(Role);
 
-                if (!string.IsNullOrWhiteSpace(age))
-                    details.Add(age);
+                if (!string.IsNullOrWhiteSpace(Age))
+                    details.Add(Age);
 
-                if (traits != null && traits.Count > 0)
-                    details.Add(string.Join(", ", traits.Take(2)) + (traits.Count > 2 ? "…" : string.Empty));
+                if (Traits != null && Traits.Count > 0)
+                    details.Add(string.Join(", ", Traits.Take(2)) + (Traits.Count > 2 ? "…" : string.Empty));
 
                 if (details.Count > 0)
                     return string.Join(" · ", details);
 
-                return description;
+                return Description;
             }
         }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public string Token { get; private set; }
 
         public void SetToken(string token)
         {
-            this.token = token;
+            Token = token;
         }
 
         public static async Task<BitmapImage> LoadProfilePictureAsync(CharacterPicture cp)
@@ -147,30 +100,25 @@ namespace Storylines.Scripts.Variables
             try
             {
                 var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
-                var file = await folder.TryGetItemAsync(cp.fileName);
+                var file = await folder.TryGetItemAsync(cp.FileName);
 
                 if (file != null)
                     return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = LayoutConstants.ProfilePictureDecodeSize, DecodePixelWidth = LayoutConstants.ProfilePictureDecodeSize };
             }
             catch (Exception ex)
             {
-                ServiceLocator.Logger.Error($"Failed to load profile picture: {cp.fileName}", ex);
+                ServiceLocator.Logger.Error($"Failed to load profile picture: {cp.FileName}", ex);
             }
 
             NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("picturesNotFound"), "");
             return null;
         }
-
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 
     public class CharacterPicture
     {
-        public string localFilePath { set; get; }
-        public string fileName { set; get; }
-        public BitmapImage image { set; get; }
+        public string LocalFilePath { set; get; }
+        public string FileName { set; get; }
+        public BitmapImage Image { set; get; }
     }
 }

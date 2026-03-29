@@ -67,7 +67,7 @@ namespace Storylines.Components
 
         private void OnFlyoutDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFlyout(listView.SelectedItem == null ? "" : (listView.SelectedItem as Chapter).token, true);
+            OpenFlyout(listView.SelectedItem == null ? "" : (listView.SelectedItem as Chapter).Token, true);
             chaptersListViewFlyout.ShowAt((Button)sender);
         }
 
@@ -75,8 +75,6 @@ namespace Storylines.Components
         {
             OpenFlyout((sender as Grid).Tag.ToString(), true);
 
-            //var s = (FrameworkElement)sender;
-            //var d = s.DataContext;
             chaptersListViewFlyout.ShowAt((Grid)sender, e.GetPosition((Grid)sender));
         }
 
@@ -148,9 +146,9 @@ namespace Storylines.Components
             {
                 try
                 {
-                    var lastNewLine = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text.LastIndexOf("\\par", StringComparison.Ordinal);
+                    var lastNewLine = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].Text.LastIndexOf("\\par", StringComparison.Ordinal);
                     if (lastNewLine >= 0)
-                        Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].text.Remove(lastNewLine, "\\par".Length);
+                        Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].Text = Scripts.Services.ServiceLocator.ProjectState.Chapters[listView.SelectedIndex].Text.Remove(lastNewLine, "\\par".Length);
                 }
                 catch (Exception ex)
                 {
@@ -161,7 +159,7 @@ namespace Storylines.Components
                 selectedIndex = listView.SelectedIndex;
 
                 ServiceLocator.TextEditor.SetText(
-                    Scripts.Services.ServiceLocator.ProjectState.FindChapter((listView.SelectedItem as Chapter).token).text ?? string.Empty);
+                    Scripts.Services.ServiceLocator.ProjectState.FindChapter((listView.SelectedItem as Chapter).Token).Text ?? string.Empty);
 
                 MainPage.ChapterText.ChangeTextColor();
                 ServiceLocator.Events.Publish(new ChapterToolsStateEvent { Enabled = true });
@@ -201,7 +199,7 @@ namespace Storylines.Components
         {
             reordering = false;
 
-            Scripts.Services.ServiceLocator.ProjectState.ReorderChapter((args.Items[0] as Chapter).token, listView.Items.IndexOf(args.Items[0]), position);
+            Scripts.Services.ServiceLocator.ProjectState.ReorderChapter((args.Items[0] as Chapter).Token, listView.Items.IndexOf(args.Items[0]), position);
         }
         #endregion
 

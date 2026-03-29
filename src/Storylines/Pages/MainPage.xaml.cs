@@ -124,7 +124,6 @@ namespace Storylines.Pages
 
             if (!open)
             {
-                //chapterListComponentMainPage.Visibility = Visibility.Collapsed;
                 chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 2);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Pixel);
                 mainGrid.ColumnDefinitions[1].MinWidth = 0;
@@ -138,7 +137,6 @@ namespace Storylines.Pages
             {
                 if (!ChapterList.closedManually || manually)
                 {
-                    // chapterListComponentMainPage.Visibility = Visibility.Visible;
                     chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
                     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                     mainGrid.ColumnDefinitions[1].MinWidth = 220;
@@ -214,7 +212,7 @@ namespace Storylines.Pages
             }
 
             var chapter = ServiceLocator.ProjectState.Chapters[selectedIndex];
-            if (chapter.wordCountGoal == null || chapter.wordCountGoal <= 0)
+            if (chapter.WordCountGoal == null || chapter.WordCountGoal <= 0)
             {
                 wordGoalProgressBar.Visibility = Visibility.Collapsed;
                 return;
@@ -222,7 +220,7 @@ namespace Storylines.Pages
 
             ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string text);
             int wordCount = text.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
-            double progress = Math.Min(100.0, wordCount * 100.0 / chapter.wordCountGoal.Value);
+            double progress = Math.Min(100.0, wordCount * 100.0 / chapter.WordCountGoal.Value);
 
             wordGoalProgressBar.Value = progress;
             wordGoalProgressBar.Visibility = Visibility.Visible;
@@ -234,7 +232,7 @@ namespace Storylines.Pages
                 NotificationManager.DisplayInAppNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
                     "Chapter goal reached!",
-                    $"You've hit your word goal for \"{chapter.name}\". Keep writing! 🎉");
+                    $"You've hit your word goal for \"{chapter.Name}\". Keep writing! 🎉");
             }
             else if (progress < 100)
             {
@@ -247,10 +245,10 @@ namespace Storylines.Pages
             string all = string.Empty;
             foreach (var chapter in ServiceLocator.ProjectState.Chapters)
             {
-                if (!string.IsNullOrEmpty(chapter.text))
+                if (!string.IsNullOrEmpty(chapter.Text))
                 {
                     var box = new RichEditBox();
-                    box.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.text);
+                    box.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
                     box.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
                     all += txt;
                 }

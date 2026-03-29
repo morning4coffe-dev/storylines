@@ -75,7 +75,7 @@ namespace Storylines.Scripts.Functions
                                         ChapterCreatorOrRenamer.Open(null, false); break;
                                 case Windows.System.VirtualKey.Delete:
                                     if (MainPage.ChapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
-                                        ServiceLocator.ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).token); break;
+                                        ServiceLocator.ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).Token); break;
 
                                 case Windows.System.VirtualKey.E:
                                     if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)

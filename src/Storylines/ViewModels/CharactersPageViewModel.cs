@@ -86,10 +86,10 @@ namespace Storylines.ViewModels
         {
             if (value != null)
             {
-                NameText = value.name ?? string.Empty;
-                DescriptionText = value.description ?? string.Empty;
-                RoleText = value.role ?? string.Empty;
-                AgeText = value.age ?? string.Empty;
+                NameText = value.Name ?? string.Empty;
+                DescriptionText = value.Description ?? string.Empty;
+                RoleText = value.Role ?? string.Empty;
+                AgeText = value.Age ?? string.Empty;
             }
         }
 
@@ -120,7 +120,7 @@ namespace Storylines.ViewModels
             IsFieldsEnabled = true;
             IsListEnabled = false;
 
-            _characterBeforeChange = _projectState.CopyCharacter(SelectedCharacter.token);
+            _characterBeforeChange = _projectState.CopyCharacter(SelectedCharacter.Token);
 
             CancelButtonVisibility = Visibility.Collapsed;
             EditButtonLabel = ResourceLoader.GetForCurrentView().GetString("cancelText");
@@ -147,10 +147,10 @@ namespace Storylines.ViewModels
                 TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Changed, SelectedCharacter);
                 UnappliedChanges = false;
 
-                SelectedCharacter.name = NameText;
-                SelectedCharacter.description = DescriptionText;
-                SelectedCharacter.role = RoleText;
-                SelectedCharacter.age = AgeText;
+                SelectedCharacter.Name = NameText;
+                SelectedCharacter.Description = DescriptionText;
+                SelectedCharacter.Role = RoleText;
+                SelectedCharacter.Age = AgeText;
             }
         }
 
@@ -159,10 +159,10 @@ namespace Storylines.ViewModels
         {
             if (_characterBeforeChange != null)
             {
-                NameText = _characterBeforeChange.name;
-                DescriptionText = _characterBeforeChange.description;
-                RoleText = _characterBeforeChange.role ?? string.Empty;
-                AgeText = _characterBeforeChange.age ?? string.Empty;
+                NameText = _characterBeforeChange.Name;
+                DescriptionText = _characterBeforeChange.Description;
+                RoleText = _characterBeforeChange.Role ?? string.Empty;
+                AgeText = _characterBeforeChange.Age ?? string.Empty;
             }
 
             ExitEditMode();
@@ -181,7 +181,7 @@ namespace Storylines.ViewModels
         {
             if (SelectedCharacter != null)
             {
-                _projectState.RemoveCharacter(SelectedCharacter.token);
+                _projectState.RemoveCharacter(SelectedCharacter.Token);
             }
         }
 
@@ -200,10 +200,10 @@ namespace Storylines.ViewModels
         public bool DidSomethingChange()
         {
             if (SelectedCharacter == null) return false;
-            return SelectedCharacter.name != NameText
-                || SelectedCharacter.description != DescriptionText
-                || SelectedCharacter.role != (string.IsNullOrEmpty(RoleText) ? null : RoleText)
-                || SelectedCharacter.age != (string.IsNullOrEmpty(AgeText) ? null : AgeText);
+            return SelectedCharacter.Name != NameText
+                || SelectedCharacter.Description != DescriptionText
+                || SelectedCharacter.Role != (string.IsNullOrEmpty(RoleText) ? null : RoleText)
+                || SelectedCharacter.Age != (string.IsNullOrEmpty(AgeText) ? null : AgeText);
         }
 
         private void SortCharacters()

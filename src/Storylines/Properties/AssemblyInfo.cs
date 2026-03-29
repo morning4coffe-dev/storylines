@@ -10,7 +10,7 @@ using System.Runtime.InteropServices;
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Morning4coffe")]
 [assembly: AssemblyProduct("Storylines")]
-[assembly: AssemblyCopyright("Copyright © Morning4coffe 2021")]
+[assembly: AssemblyCopyright("Copyright © Morning4coffe 2026")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 
@@ -24,7 +24,7 @@ using System.Runtime.InteropServices;
 // Můžete zadat všechny hodnoty nebo nastavit výchozí číslo buildu a revize 
 // pomocí zástupného znaku * takto:
 // [assembly: AssemblyVersion(1.0.*)]
-[assembly: AssemblyVersion("0.4.7.0")]
-[assembly: AssemblyFileVersion("0.6.0.0")]
+[assembly: AssemblyVersion("0.7.5.0")]
+[assembly: AssemblyFileVersion("0.7.5.0")]
 [assembly: ComVisible(false)]
 [assembly: NeutralResourcesLanguage("en")]

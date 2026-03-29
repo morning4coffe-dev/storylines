@@ -84,7 +84,7 @@
                   ItemClick="OnProjectsHolder_ItemClick">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <Button Tag="{Binding token}"
+                    <Button Tag="{Binding Token}"
                             Margin="{Binding osMargin}"
                             HorizontalAlignment="Left"
                             RightTapped="OnOpenRecentProject_RightTapped"
@@ -102,17 +102,17 @@
                                 <RowDefinition Height="3" />
                                 <RowDefinition Height="*" />
                             </Grid.RowDefinitions>
-                            <Image Source="{Binding icon}"
+                            <Image Source="{Binding Icon}"
                                    Height="36"
                                    Margin="0,0,3,0"
                                    Grid.RowSpan="3" />
-                            <TextBlock Text="{Binding name}"
+                            <TextBlock Text="{Binding Name}"
                                        FontWeight="Medium"
                                        Grid.Column="2"
                                        MaxWidth="240"
                                        HorizontalAlignment="Left"
                                        VerticalAlignment="Bottom" />
-                            <TextBlock Text="{Binding shortPath}"
+                            <TextBlock Text="{Binding ShortPath}"
                                        FontSize="12"
                                        Opacity=".7"
                                        Grid.Column="2"

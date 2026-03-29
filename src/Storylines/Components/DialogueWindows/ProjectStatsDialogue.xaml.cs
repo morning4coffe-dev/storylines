@@ -100,10 +100,10 @@ namespace Storylines.Components.DialogueWindows
             foreach (var chapter in chapters)
             {
                 var rb = new RichEditBox();
-                rb.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.text);
+                rb.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
                 rb.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string plain);
                 int words = plain.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
-                stats.Add((chapter.name, words));
+                stats.Add((chapter.Name, words));
                 if (words > maxWords) maxWords = words;
             }
 
@@ -136,7 +136,7 @@ namespace Storylines.Components.DialogueWindows
             foreach (Chapter chapter in Scripts.Services.ServiceLocator.ProjectState.Chapters)
             {
                 RichEditBox richTxt = new RichEditBox();
-                richTxt.Document.SetText(TextSetOptions.FormatRtf, chapter.text);
+                richTxt.Document.SetText(TextSetOptions.FormatRtf, chapter.Text);
                 richTxt.Document.GetText(TextGetOptions.None, out string wordC);
                 storyCharacterCount += wordC;
             }
@@ -163,7 +163,7 @@ namespace Storylines.Components.DialogueWindows
             // Update chapter name if available
             var currentChapter = Scripts.Services.ServiceLocator.ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count ? Scripts.Services.ServiceLocator.ProjectState.Chapters[ChaptersList.selectedIndex] : null;
             if (currentChapter != null)
-                MainPage.Current.downBarChapterName.Text = currentChapter.name;
+                MainPage.Current.downBarChapterName.Text = currentChapter.Name;
 
             // Keep legacy text for compatibility
             int paragraphCount = Regex.Matches(txt, @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;

@@ -60,7 +60,7 @@ namespace Storylines.ViewModels
                 if (!string.IsNullOrEmpty(SaveSystem.currentProject.projectName))
                     return SaveSystem.currentProject.projectName;
                 else
-                    return SaveSystem.currentProject.name;
+                    return SaveSystem.currentProject.Name;
             }
             return null;
         }

@@ -53,7 +53,7 @@ namespace Storylines.Components.DialogueWindows
                     break;
                 case Task.Rename:
                     titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
-                    chapterNameBox.Text = chapterToRename.name;
+                    chapterNameBox.Text = chapterToRename.Name;
                     break;
             }
         }
@@ -69,11 +69,10 @@ namespace Storylines.Components.DialogueWindows
                     MainPage.ChapterList.listView.SelectedIndex = itemID;
                     break;
                 case Task.Rename:
-                    Scripts.Services.ServiceLocator.ProjectState.RenameChapter(chapterToRename.token, chapterNameBox.Text);
+                    Scripts.Services.ServiceLocator.ProjectState.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
                     break;
             }
             chapterCreator.Hide();
-            //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)

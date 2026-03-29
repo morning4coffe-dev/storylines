@@ -52,7 +52,7 @@ namespace Storylines.Pages.SettingsPages
         private void OnProjectOnStartupToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (!loading)
-                localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = projectOnStartToggleSwitch.IsOn ? Components.SaveSystem.currentProject.token : null;
+                localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = projectOnStartToggleSwitch.IsOn ? Components.SaveSystem.currentProject.Token : null;
         }
 
         private void OnAutosaveToggleSwitch_Toggled(object sender, RoutedEventArgs e)

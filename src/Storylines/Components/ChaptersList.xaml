@@ -93,7 +93,7 @@
                   DragItemsStarting="OnChaptersListView_DragItemsStarting">
             <ListView.ItemTemplate>
                 <DataTemplate x:DataType="variables:Chapter">
-                    <Grid Tag="{Binding token}"
+                    <Grid Tag="{Binding Token}"
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
                           Padding="4,6,4,6"
@@ -114,7 +114,7 @@
                                   Margin="0,1,12,0"
                                   Grid.RowSpan="2"
                                   VerticalAlignment="Top" />
-                        <TextBlock Text="{Binding name}"
+                        <TextBlock Text="{Binding Name}"
                                    TextWrapping="NoWrap"
                                    TextTrimming="CharacterEllipsis"
                                    FontSize="13"
@@ -123,9 +123,9 @@
                         <!-- Tag pills: visible only when chapter has tags -->
                         <ItemsRepeater Grid.Row="1"
                                        Grid.Column="1"
-                                       ItemsSource="{Binding tags}"
+                                       ItemsSource="{Binding Tags}"
                                        Margin="0,3,0,0"
-                                       Visibility="{Binding tagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
+                                       Visibility="{Binding TagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
                             <ItemsRepeater.Layout>
                                 <StackLayout Orientation="Horizontal"
                                              Spacing="3" />

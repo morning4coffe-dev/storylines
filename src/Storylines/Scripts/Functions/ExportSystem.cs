@@ -30,7 +30,7 @@ namespace Storylines.Components
 
                         foreach (var item in dialogueCharacters)
                         {
-                            dialogueCharacterNames.Add(item.name);
+                            dialogueCharacterNames.Add(item.Name);
                         }
                         _ = ExportDialogues(folder, fileName, selectedExtension, chapterOrCharacterNumbers, dialogueCharacterNames);
                         break;
@@ -55,10 +55,10 @@ namespace Storylines.Components
                 {
                     for (int i = 0; i < chapterNumbers.Count; i++)
                     {
-                        box.Document.SetText(TextSetOptions.FormatRtf, ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].text);
+                        box.Document.SetText(TextSetOptions.FormatRtf, ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].Text);
                         box.Document.GetText(TextGetOptions.None, out string txt);
 
-                        toExport += $"{(withChapterName ? $"{ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].name}\n" : string.Empty)}{txt}\n";
+                        toExport += $"{(withChapterName ? $"{ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].Name}\n" : string.Empty)}{txt}\n";
                     }
                 }
                 else
@@ -88,14 +88,14 @@ namespace Storylines.Components
                 {
                     RichEditBox box2 = new RichEditBox() { RequestedTheme = Windows.UI.Xaml.ElementTheme.Light };
 
-                    string rtf1 = @"{\rtf1{\fonttbl{\f0 Segoe UI;}{\f1 Calibri;}{\f2 Verdana;}}{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}\f0\b\cf2 {chapterName}\b0\par}".Replace("{chapterName}", ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].name);
+                    string rtf1 = @"{\rtf1{\fonttbl{\f0 Segoe UI;}{\f1 Calibri;}{\f2 Verdana;}}{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}\f0\b\cf2 {chapterName}\b0\par}".Replace("{chapterName}", ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].Name);
 
                     box2.Document.SetText(TextSetOptions.FormatRtf, rtf1);
 
                     ITextRange range = box2.Document.GetRange(0, rtf1.Length);
                     range.Collapse(false);
 
-                    string rtf2 = ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].text;
+                    string rtf2 = ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].Text;
                     range.SetText(TextSetOptions.FormatRtf, rtf2);
 
                     range.CharacterFormat.ForegroundColor = Colors.Black;
@@ -105,7 +105,7 @@ namespace Storylines.Components
                 }
                 else
                 {
-                    txts[i] = ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].text;
+                    txts[i] = ServiceLocator.ProjectState.Chapters[chapterNumbers[i]].Text;
                 }
             }
 
@@ -138,7 +138,7 @@ namespace Storylines.Components
             foreach (var chapterNumber in chapterNumbers)
             {
                 RichEditBox box = new RichEditBox();
-                box.Document.SetText(TextSetOptions.FormatRtf, ServiceLocator.ProjectState.Chapters[chapterNumber].text);
+                box.Document.SetText(TextSetOptions.FormatRtf, ServiceLocator.ProjectState.Chapters[chapterNumber].Text);
                 box.Document.GetText(TextGetOptions.None, out string txt2);
                 toExport += txt2;
             }

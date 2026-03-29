@@ -189,18 +189,18 @@
                               DoubleTapped="OnCharactersListViewItem_DoubleTapped"
                               Holding="OnCharactersListViewItem_Holding"
                               RightTapped="OnCharactersListViewItem_RightTapped"
-                              Tag="{Binding token}">
+                              Tag="{Binding Token}">
                             <StackPanel Orientation="Horizontal"
                                         Spacing="8"
-                                        ToolTipService.ToolTip="{Binding name}">
+                                        ToolTipService.ToolTip="{Binding Name}">
                                 <PersonPicture x:Name="profilePicture"
                                                Height="40"
-                                               DisplayName="{Binding name}"
-                                               ProfilePicture="{Binding picture.image}" />
+                                               DisplayName="{Binding Name}"
+                                               ProfilePicture="{Binding Picture.Image}" />
                                 <StackPanel Margin="0,8">
                                     <TextBlock FontWeight="Bold"
-                                               Text="{Binding name}" />
-                                    <TextBlock Text="{Binding detailsLine}"
+                                               Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding DetailsLine}"
                                                TextTrimming="CharacterEllipsis"
                                                Opacity="0.75" />
                                 </StackPanel>
@@ -399,8 +399,6 @@
                                    Height="60"
                                    DisplayName="{Binding ElementName=nameBox, Path=Text}"
                                    IsTapEnabled="False"
-                                   PointerEntered="OnProfilePicture_PointerEntered"
-                                   PointerExited="OnProfilePicture_PointerExited"
                                    Tapped="OnProfilePicture_Tapped" />
                     <Button Width="60"
                             Height="60"

@@ -32,8 +32,6 @@ namespace Storylines.Components
         private bool selectedTextIsItalic = false;
         private bool selectedTextIsUnderlined = false;
         private bool selectedTextIsStriked = false;
-        //private bool selectedTextIsColou = false;
-
         private bool searchingInTextBox = false;
 
         public ChapterTextBox()
@@ -76,9 +74,9 @@ namespace Storylines.Components
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
 
-                if (Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text != txt && !searchingInTextBox)
+                if (Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].Text != txt && !searchingInTextBox)
                 {
-                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text = txt;
+                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].Text = txt;
 
                     MainPage.Current.UpdateDownBar();
                     Scripts.Functions.TimeTravelChapter.SomethingChanged(Scripts.Functions.TimeTravelChapter.Changed.Text, Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex], 0);
@@ -392,10 +390,10 @@ namespace Storylines.Components
 
             foreach (var chapter in Scripts.Services.ServiceLocator.ProjectState.Chapters)
             {
-                if (string.IsNullOrEmpty(chapter.text)) continue;
+                if (string.IsNullOrEmpty(chapter.Text)) continue;
 
                 var box = new RichEditBox();
-                box.Document.SetText(TextSetOptions.FormatRtf, chapter.text);
+                box.Document.SetText(TextSetOptions.FormatRtf, chapter.Text);
 
                 ITextRange range = box.Document.GetRange(0, 0);
                 while (range.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
@@ -405,14 +403,14 @@ namespace Storylines.Components
                 }
 
                 box.Document.GetText(TextGetOptions.FormatRtf, out string newRtf);
-                chapter.text = newRtf;
+                chapter.Text = newRtf;
             }
 
             // Reload the current chapter in the editor
             if (selectedIndex >= 0 && selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count)
             {
                 textBox.Document.SetText(TextSetOptions.FormatRtf,
-                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].text ?? string.Empty);
+                    Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].Text ?? string.Empty);
             }
 
             if (replacements > 0)
@@ -495,7 +493,7 @@ namespace Storylines.Components
             var query = dialoguePickerSearchBox?.Text?.Trim() ?? string.Empty;
             var characters = Scripts.Services.ServiceLocator.ProjectState.Characters
                 .Where(character => DialogueCharacterMatches(character, query))
-                .OrderBy(character => character.name)
+                .OrderBy(character => character.Name)
                 .ToList();
 
             dialoguePickerCharacters.Clear();
@@ -503,7 +501,7 @@ namespace Storylines.Components
                 dialoguePickerCharacters.Add(character);
 
             var recentCharacters = recentDialogueCharacterTokens
-                .Select(token => Scripts.Services.ServiceLocator.ProjectState.Characters.FirstOrDefault(character => character.token == token))
+                .Select(token => Scripts.Services.ServiceLocator.ProjectState.Characters.FirstOrDefault(character => character.Token == token))
                 .Where(character => character != null && DialogueCharacterMatches(character, query))
                 .ToList();
 
@@ -525,10 +523,10 @@ namespace Storylines.Components
 
             var searchTarget = string.Join(" ", new[]
             {
-                character?.name,
-                character?.role,
-                character?.traitsText,
-                character?.description,
+                character?.Name,
+                character?.Role,
+                character?.TraitsText,
+                character?.Description,
             });
 
             return searchTarget.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0;
@@ -539,10 +537,10 @@ namespace Storylines.Components
             if (character == null)
                 return;
 
-            if (recentDialogueCharacterTokens.Contains(character.token))
-                recentDialogueCharacterTokens.Remove(character.token);
+            if (recentDialogueCharacterTokens.Contains(character.Token))
+                recentDialogueCharacterTokens.Remove(character.Token);
 
-            recentDialogueCharacterTokens.Insert(0, character.token);
+            recentDialogueCharacterTokens.Insert(0, character.Token);
 
             while (recentDialogueCharacterTokens.Count > 4)
                 recentDialogueCharacterTokens.RemoveAt(recentDialogueCharacterTokens.Count - 1);
@@ -550,7 +548,6 @@ namespace Storylines.Components
 
         private void OnTextBoxDialogueNamesFlyout_Closing(Windows.UI.Xaml.Controls.Primitives.FlyoutBase sender, Windows.UI.Xaml.Controls.Primitives.FlyoutBaseClosingEventArgs args)
         {
-            //args.Cancel = true;
         }
 
         public void DialoguesOnOff(bool enabled)

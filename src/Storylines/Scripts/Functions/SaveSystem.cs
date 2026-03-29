@@ -87,13 +87,13 @@ namespace Storylines.Components
             {
                 data.Characters.Add(new CharacterData
                 {
-                    Name = character.name,
-                    Description = character.description,
-                    PictureFileName = character.picture?.fileName ?? string.Empty,
-                    Role = character.role,
-                    Age = character.age,
-                    Appearance = character.appearance,
-                    Traits = character.traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
+                    Name = character.Name,
+                    Description = character.Description,
+                    PictureFileName = character.Picture?.FileName ?? string.Empty,
+                    Role = character.Role,
+                    Age = character.Age,
+                    Appearance = character.Appearance,
+                    Traits = character.Traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
                 });
             }
 
@@ -101,12 +101,12 @@ namespace Storylines.Components
             {
                 data.Chapters.Add(new ChapterData
                 {
-                    Name = chapter.name,
-                    Text = chapter.text,
-                    Notes = chapter.notes ?? string.Empty,
-                    Synopsis = chapter.synopsis,
-                    WordCountGoal = chapter.wordCountGoal,
-                    Tags = chapter.tags?.Where(t => !string.IsNullOrWhiteSpace(t)).ToList()
+                    Name = chapter.Name,
+                    Text = chapter.Text,
+                    Notes = chapter.Notes ?? string.Empty,
+                    Synopsis = chapter.Synopsis,
+                    WordCountGoal = chapter.WordCountGoal,
+                    Tags = chapter.Tags?.Where(t => !string.IsNullOrWhiteSpace(t)).ToList()
                 });
             }
 
@@ -213,7 +213,7 @@ namespace Storylines.Components
                 currentProject = project;
 
                 if (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] != null)
-                    ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = project.token;
+                    ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = project.Token;
 
                 NotificationManager.DisplayMainProgressBar(true);
 
@@ -261,7 +261,7 @@ namespace Storylines.Components
                 foreach (var charData in projectData.Characters)
                 {
                     var picture = !string.IsNullOrEmpty(charData.PictureFileName)
-                        ? new CharacterPicture { fileName = charData.PictureFileName }
+                        ? new CharacterPicture { FileName = charData.PictureFileName }
                         : null;
                     await ServiceLocator.ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age, charData.Appearance, charData.Traits);
                 }
@@ -353,13 +353,6 @@ namespace Storylines.Components
                 ProjectFile.New(file);
         }
 
-        //private static async Task DefaultLaunchAsync(StorageFile file)
-        //{
-        //    await ProjectFile.LoadAllAsync();
-
-        //    if (!ProjectFile.CheckIfProjectExists(file))
-        //        ProjectFile.New(file);
-        //}
         #endregion
     }
 

@@ -73,7 +73,7 @@ namespace Storylines.Components.DialogueWindows
 
             for (int i = 0; i < num; i++)
             {
-                string itemName = characters ? Scripts.Services.ServiceLocator.ProjectState.Characters[i].name : Scripts.Services.ServiceLocator.ProjectState.Chapters[i].name;
+                string itemName = characters ? Scripts.Services.ServiceLocator.ProjectState.Characters[i].Name : Scripts.Services.ServiceLocator.ProjectState.Chapters[i].Name;
 
                 chaptersToExportList.Items.Add(new ListViewItem() { Content = itemName, IsSelected = true });
             }
@@ -82,7 +82,7 @@ namespace Storylines.Components.DialogueWindows
 
             for (int i = 0; i < Scripts.Services.ServiceLocator.ProjectState.Characters.Count; i++)
             {
-                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = Scripts.Services.ServiceLocator.ProjectState.Characters[i].name, IsSelected = true });
+                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = Scripts.Services.ServiceLocator.ProjectState.Characters[i].Name, IsSelected = true });
             }
         }
 

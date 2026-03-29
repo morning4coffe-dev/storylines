@@ -15,12 +15,12 @@ namespace Storylines.Scripts.Variables
         /// <summary>
         /// Gets or sets the speaking character name.
         /// </summary>
-        public string name { get; set; }
+        public string Name { get; set; }
 
         /// <summary>
         /// Gets or sets the spoken dialogue text.
         /// </summary>
-        public string text { get; set; }
+        public string Text { get; set; }
 
         /// <summary>
         /// Creates a new dialogue placeholder using the unified writer-friendly format.
@@ -31,7 +31,7 @@ namespace Storylines.Scripts.Variables
         public static string Create(Character character, bool newParagraph)
         {
             var addNewLine = newParagraph ? Environment.NewLine : string.Empty;
-            return $"{addNewLine}{character.name}: ";
+            return $"{addNewLine}{character.Name}: ";
         }
 
         /// <summary>
@@ -76,7 +76,7 @@ namespace Storylines.Scripts.Variables
             dialogues.AddRange(GetLegacySimpleDialogues(txt, characterNames));
 
             return dialogues
-                .Where(dialogue => characterNames.Count == 0 || characterNames.Contains(dialogue.name, StringComparer.CurrentCultureIgnoreCase))
+                .Where(dialogue => characterNames.Count == 0 || characterNames.Contains(dialogue.Name, StringComparer.CurrentCultureIgnoreCase))
                 .ToList();
         }
 
@@ -91,7 +91,7 @@ namespace Storylines.Scripts.Variables
 
             foreach (var dialogue in dialogues ?? new List<Dialogue>())
             {
-                txt += $"{dialogue.name.ToUpperInvariant()}: {dialogue.text}{Environment.NewLine}";
+                txt += $"{dialogue.Name.ToUpperInvariant()}: {dialogue.Text}{Environment.NewLine}";
             }
 
             return txt;
@@ -104,10 +104,10 @@ namespace Storylines.Scripts.Variables
                 .Cast<Match>()
                 .Select(match => new Dialogue
                 {
-                    name = match.Groups["name"].Value.Trim(),
-                    text = match.Groups["text"].Value.Trim(),
+                    Name = match.Groups["name"].Value.Trim(),
+                    Text = match.Groups["text"].Value.Trim(),
                 })
-                .Where(dialogue => !string.IsNullOrWhiteSpace(dialogue.name))
+                .Where(dialogue => !string.IsNullOrWhiteSpace(dialogue.Name))
                 .ToList();
         }
 
@@ -161,8 +161,8 @@ namespace Storylines.Scripts.Variables
                 {
                     dialogues.Add(new Dialogue
                     {
-                        name = characterName,
-                        text = string.Join(" ", buffer).Trim(),
+                        Name = characterName,
+                        Text = string.Join(" ", buffer).Trim(),
                     });
 
                     i = j - 1;
@@ -219,8 +219,8 @@ namespace Storylines.Scripts.Variables
                 {
                     dialogues.Add(new Dialogue
                     {
-                        name = characterName,
-                        text = string.Join(" ", buffer),
+                        Name = characterName,
+                        Text = string.Join(" ", buffer),
                     });
 
                     i = j - 1;

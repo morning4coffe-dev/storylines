@@ -118,11 +118,11 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding name}"
+                                    <TextBlock Text="{Binding Name}"
                                                FontSize="13"
                                                VerticalAlignment="Center"
                                                TextTrimming="CharacterEllipsis" />
-                                    <TextBlock Text="{Binding lastEditedFormatted}"
+                                    <TextBlock Text="{Binding LastEditedFormatted}"
                                                Grid.Column="1"
                                                FontSize="11"
                                                Opacity="0.55"

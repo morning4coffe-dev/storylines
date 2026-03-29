@@ -408,9 +408,9 @@
                                             <DataTemplate x:DataType="variables:Character">
                                                 <StackPanel Margin="0,2">
                                                     <TextBlock FontWeight="SemiBold"
-                                                               Text="{x:Bind name}" />
+                                                               Text="{x:Bind Name}" />
                                                     <TextBlock Opacity="0.75"
-                                                               Text="{x:Bind detailsLine}"
+                                                               Text="{x:Bind DetailsLine}"
                                                                TextTrimming="CharacterEllipsis" />
                                                 </StackPanel>
                                             </DataTemplate>
@@ -429,9 +429,9 @@
                                         <DataTemplate x:DataType="variables:Character">
                                             <StackPanel Margin="0,2">
                                                 <TextBlock FontWeight="SemiBold"
-                                                           Text="{x:Bind name}" />
+                                                           Text="{x:Bind Name}" />
                                                 <TextBlock Opacity="0.75"
-                                                           Text="{x:Bind detailsLine}"
+                                                           Text="{x:Bind DetailsLine}"
                                                            TextTrimming="CharacterEllipsis" />
                                             </StackPanel>
                                         </DataTemplate>

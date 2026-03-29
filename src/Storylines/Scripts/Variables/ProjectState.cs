@@ -33,7 +33,7 @@ namespace Storylines.Scripts.Variables
 
         public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null, List<string> tags = null)
         {
-            var ch = new Chapter() { name = name, text = text, notes = notes ?? string.Empty, synopsis = synopsis, wordCountGoal = wordCountGoal, tags = tags ?? new List<string>() };
+            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Synopsis = synopsis, WordCountGoal = wordCountGoal, Tags = tags ?? new List<string>() };
             ch.SetToken(token);
             Chapters.Add(ch);
             return ch;
@@ -41,7 +41,7 @@ namespace Storylines.Scripts.Variables
 
         public Chapter InsertExistingChapter(string name, string token, string text, int position, string notes = "", List<string> tags = null)
         {
-            var ch = new Chapter() { name = name, text = text, notes = notes ?? string.Empty, tags = tags ?? new List<string>() };
+            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Tags = tags ?? new List<string>() };
             ch.SetToken(token);
             Chapters.Insert(position, ch);
             return ch;
@@ -51,10 +51,10 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Chapters.Count; i++)
             {
-                if (Chapters[i].token == token)
+                if (Chapters[i].Token == token)
                 {
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Name, Chapters[i], 0);
-                    Chapters[i].name = newName;
+                    Chapters[i].Name = newName;
                 }
             }
         }
@@ -63,7 +63,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Chapters.Count; i++)
             {
-                if (Chapters[i].token == token)
+                if (Chapters[i].Token == token)
                 {
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Removed, Chapters[i], Chapters.IndexOf(Chapters[i]));
                     Chapters.RemoveAt(i);
@@ -80,14 +80,14 @@ namespace Storylines.Scripts.Variables
 
             var copy = new Chapter()
             {
-                name = original.name,
-                text = original.text,
-                notes = original.notes,
-                synopsis = original.synopsis,
-                wordCountGoal = original.wordCountGoal,
-                tags = original.tags != null ? new List<string>(original.tags) : new List<string>()
+                Name = original.Name,
+                Text = original.Text,
+                Notes = original.Notes,
+                Synopsis = original.Synopsis,
+                WordCountGoal = original.WordCountGoal,
+                Tags = original.Tags != null ? new List<string>(original.Tags) : new List<string>()
             };
-            copy.SetToken(original.token);
+            copy.SetToken(original.Token);
             return copy;
         }
 
@@ -95,7 +95,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Chapters.Count; i++)
             {
-                if (Chapters[i].token == token)
+                if (Chapters[i].Token == token)
                     return Chapters[i];
             }
             return null;
@@ -105,7 +105,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Chapters.Count; i++)
             {
-                if (Chapters[i].token == token)
+                if (Chapters[i].Token == token)
                     return i;
             }
             return 0;
@@ -128,28 +128,28 @@ namespace Storylines.Scripts.Variables
         {
             Character ch = new Character()
             {
-                name = name,
-                description = description,
-                role = role,
-                age = age,
-                appearance = appearance,
-                traits = traits?.ToList() ?? new List<string>(),
+                Name = name,
+                Description = description,
+                Role = role,
+                Age = age,
+                Appearance = appearance,
+                Traits = traits?.ToList() ?? new List<string>(),
             };
 
             ch.SetToken(token);
 
             if (picture != null)
-                if (picture.fileName != null && picture.fileName.Length > 0)
-                    ch.picture = new CharacterPicture() { fileName = picture.fileName, image = await Character.LoadProfilePictureAsync(picture) };
+                if (picture.FileName != null && picture.FileName.Length > 0)
+                    ch.Picture = new CharacterPicture() { FileName = picture.FileName, Image = await Character.LoadProfilePictureAsync(picture) };
                 else
-                    ch.picture = new CharacterPicture();
+                    ch.Picture = new CharacterPicture();
 
             Characters.Add(ch);
         }
 
         public Character CreateNewCharacter(string name, string description)
         {
-            Character ch = new Character() { name = name, description = description, picture = new CharacterPicture(), traits = new List<string>() };
+            Character ch = new Character() { Name = name, Description = description, Picture = new CharacterPicture(), Traits = new List<string>() };
             ch.SetToken(Guid.NewGuid().ToString());
             Characters.Add(ch);
             TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Added, ch);
@@ -160,7 +160,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Characters.Count; i++)
             {
-                if (Characters[i].token == token)
+                if (Characters[i].Token == token)
                 {
                     TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Removed, Characters[i]);
                     _ = Characters.Remove(Characters[i]);
@@ -173,7 +173,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Characters.Count; i++)
             {
-                if (Characters[i].token == token)
+                if (Characters[i].Token == token)
                     return Characters[i];
             }
             return null;
@@ -183,7 +183,7 @@ namespace Storylines.Scripts.Variables
         {
             for (int i = 0; i < Characters.Count; i++)
             {
-                if (Characters[i].token == token)
+                if (Characters[i].Token == token)
                     return i;
             }
             return 0;
@@ -197,26 +197,26 @@ namespace Storylines.Scripts.Variables
 
             return new Character()
             {
-                name = character.name,
-                description = character.description,
-                role = character.role,
-                age = character.age,
-                appearance = character.appearance,
-                picture = character.picture == null
+                Name = character.Name,
+                Description = character.Description,
+                Role = character.Role,
+                Age = character.Age,
+                Appearance = character.Appearance,
+                Picture = character.Picture == null
                     ? null
                     : new CharacterPicture()
                     {
-                        fileName = character.picture.fileName,
-                        image = character.picture.image,
-                        localFilePath = character.picture.localFilePath,
+                        FileName = character.Picture.FileName,
+                        Image = character.Picture.Image,
+                        LocalFilePath = character.Picture.LocalFilePath,
                     },
-                traits = character.traits?.ToList() ?? new List<string>(),
-            }.WithToken(character.token);
+                Traits = character.Traits?.ToList() ?? new List<string>(),
+            }.WithToken(character.Token);
         }
 
         public void SortCharacters()
         {
-            var sorted = Characters.OrderBy(o => o.name).ToList();
+            var sorted = Characters.OrderBy(o => o.Name).ToList();
             Characters.Clear();
             foreach (var character in sorted)
                 Characters.Add(character);

@@ -26,11 +26,11 @@ public class CharacterLogicTests
             .Distinct(StringComparer.CurrentCultureIgnoreCase)
             .ToList();
 
-    // Mirrors Character.traitsText getter
+    // Mirrors Character.TraitsText getter
     private static string FormatTraitsText(List<string> traits) =>
         traits == null || traits.Count == 0 ? string.Empty : string.Join(", ", traits);
 
-    // Mirrors Character.detailsLine getter
+    // Mirrors Character.DetailsLine getter
     private static string BuildDetailsLine(string? role, string? age, List<string>? traits, string? description)
     {
         var details = new List<string>();

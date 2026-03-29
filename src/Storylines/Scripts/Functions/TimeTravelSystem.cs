@@ -50,13 +50,13 @@ namespace Storylines.Scripts.Functions
                                 tt = new TimeTravelChapter() { chapter = chapter };
                                 break;
                     case Changed.Name:
-                        tt = new TimeTravelChapter{ chapter = new Chapter { name = chapter.name } };
+                        tt = new TimeTravelChapter{ chapter = new Chapter { Name = chapter.Name } };
                         break;
                     case Changed.Text:
-                        tt = new TimeTravelChapter { chapter = new Chapter { text = chapter.text } };
+                        tt = new TimeTravelChapter { chapter = new Chapter { Text = chapter.Text } };
                         break;
                 }
-                tt.chapter.SetToken(chapter.token);
+                tt.chapter.SetToken(chapter.Token);
 
                 tt.changed = whatChanged;
                 tt.id = TextEditor.SelectedChapterIndex;
@@ -80,7 +80,7 @@ namespace Storylines.Scripts.Functions
             {
                 var timeTravel = undoQueue.Pop();
                 if(timeTravel.changed != Changed.Removed)
-                    redoQueue.Push(new TimeTravelChapter() { changed = timeTravel.changed, chapter = State.CopyChapter(timeTravel.chapter.token), id = timeTravel.lastPosition, lastPosition = State.FindChapterID(timeTravel.chapter.token) });
+                    redoQueue.Push(new TimeTravelChapter() { changed = timeTravel.changed, chapter = State.CopyChapter(timeTravel.chapter.Token), id = timeTravel.lastPosition, lastPosition = State.FindChapterID(timeTravel.chapter.Token) });
                 else
                     redoQueue.Push(timeTravel);
                 ChapterThings(timeTravel, false);
@@ -93,7 +93,7 @@ namespace Storylines.Scripts.Functions
             {
                 var timeTravel = redoQueue.Pop();
                 if (timeTravel.changed != Changed.Added)
-                    undoQueue.Push(new TimeTravelChapter() { changed = timeTravel.changed, chapter = State.CopyChapter(timeTravel.chapter.token), id = State.FindChapterID(timeTravel.chapter.token), lastPosition = timeTravel.lastPosition });
+                    undoQueue.Push(new TimeTravelChapter() { changed = timeTravel.changed, chapter = State.CopyChapter(timeTravel.chapter.Token), id = State.FindChapterID(timeTravel.chapter.Token), lastPosition = timeTravel.lastPosition });
                 else
                     undoQueue.Push(timeTravel);
                 ChapterThings(timeTravel, true);
@@ -110,12 +110,12 @@ namespace Storylines.Scripts.Functions
             {
                 case Changed.Added:
                     if (!isRedo)
-                        State.RemoveChapter(timeTravel.chapter.token);
+                        State.RemoveChapter(timeTravel.chapter.Token);
                     else
-                        _ = State.InsertExistingChapter(timeTravel.chapter.name, timeTravel.chapter.token, timeTravel.chapter.text, timeTravel.lastPosition);
+                        _ = State.InsertExistingChapter(timeTravel.chapter.Name, timeTravel.chapter.Token, timeTravel.chapter.Text, timeTravel.lastPosition);
                     break;
                     case Changed.Name:
-                        State.RenameChapter(timeTravel.chapter.token, timeTravel.chapter.name);
+                        State.RenameChapter(timeTravel.chapter.Token, timeTravel.chapter.Name);
                     break;
 
                     case Changed.Text:
@@ -128,16 +128,16 @@ namespace Storylines.Scripts.Functions
 
                 case Changed.Reordered:
                     if (!isRedo)
-                        State.ReorderChapter(timeTravel.chapter.token, timeTravel.lastPosition, 0);
+                        State.ReorderChapter(timeTravel.chapter.Token, timeTravel.lastPosition, 0);
                     else
-                        State.ReorderChapter(timeTravel.chapter.token, timeTravel.id, 0);
+                        State.ReorderChapter(timeTravel.chapter.Token, timeTravel.id, 0);
                     break;
 
                 case Changed.Removed:
                     if (!isRedo)
-                        State.InsertExistingChapter(timeTravel.chapter.name, timeTravel.chapter.token, timeTravel.chapter.text, timeTravel.lastPosition);
+                        State.InsertExistingChapter(timeTravel.chapter.Name, timeTravel.chapter.Token, timeTravel.chapter.Text, timeTravel.lastPosition);
                     else
-                        State.RemoveChapter(timeTravel.chapter.token);
+                        State.RemoveChapter(timeTravel.chapter.Token);
                     break;
             }
             TimeTravelSystem.timeTravelling = false;
@@ -159,7 +159,7 @@ namespace Storylines.Scripts.Functions
             var undoQueueArray = undoQueue.items.ToArray();
             for (int i = 1; i < undoQueueArray.Length; i++)
             {
-                if (undoQueueArray[i - 1] != null && undoQueueArray[i - 1].changed == undoQueueArray[i].changed && undoQueueArray[i - 1].chapter.text != null && undoQueueArray[i].chapter.text != null)
+                if (undoQueueArray[i - 1] != null && undoQueueArray[i - 1].changed == undoQueueArray[i].changed && undoQueueArray[i - 1].chapter.Text != null && undoQueueArray[i].chapter.Text != null)
                 {
                     undoQueue.items[i - 1] = undoQueueArray[i];
                     undoQueue.items.RemoveAt(i);
@@ -203,7 +203,7 @@ namespace Storylines.Scripts.Functions
                         break;
                     case Changed.Changed:
                         tt = new TimeTravelCharacter();
-                        tt.character = State.CopyCharacter(character.token);
+                        tt.character = State.CopyCharacter(character.Token);
                         break;
                 }
 
@@ -223,7 +223,7 @@ namespace Storylines.Scripts.Functions
             {
                 var timeTravel = undoQueue.Pop();
                 if (timeTravel.changed == Changed.Changed)
-                    redoQueue.Push(new TimeTravelCharacter() { changed = timeTravel.changed, character = State.CopyCharacter(timeTravel.character.token) });
+                    redoQueue.Push(new TimeTravelCharacter() { changed = timeTravel.changed, character = State.CopyCharacter(timeTravel.character.Token) });
                 else
                     redoQueue.Push(timeTravel);
 
@@ -238,7 +238,7 @@ namespace Storylines.Scripts.Functions
             {
                 var timeTravel = redoQueue.Pop();
                 if (timeTravel.changed == Changed.Changed)
-                    undoQueue.Push(new TimeTravelCharacter() { changed = timeTravel.changed, character = State.CopyCharacter(timeTravel.character.token) });
+                    undoQueue.Push(new TimeTravelCharacter() { changed = timeTravel.changed, character = State.CopyCharacter(timeTravel.character.Token) });
                 else
                     undoQueue.Push(timeTravel);
 
@@ -255,20 +255,20 @@ namespace Storylines.Scripts.Functions
             {
                 case Changed.Added:
                     if (!isRedo)
-                        State.RemoveCharacter(timeTravel.character.token);
+                        State.RemoveCharacter(timeTravel.character.Token);
                     else
-                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture, timeTravel.character.role, timeTravel.character.age, timeTravel.character.appearance, timeTravel.character.traits);
+                        await State.AddExistingCharacterAsync(timeTravel.character.Name, timeTravel.character.Token, timeTravel.character.Description, timeTravel.character.Picture, timeTravel.character.Role, timeTravel.character.Age, timeTravel.character.Appearance, timeTravel.character.Traits);
                     break;
                 case Changed.Changed:
-                    var chID = State.FindCharacterID(timeTravel.character.token);
+                    var chID = State.FindCharacterID(timeTravel.character.Token);
                     State.Characters[chID] = timeTravel.character;
                     ServiceLocator.Events.Publish(new CharacterSelectedEvent { SelectedIndex = chID, HasSelection = true });
                     break;
                 case Changed.Removed:
                     if (!isRedo)
-                        await State.AddExistingCharacterAsync(timeTravel.character.name, timeTravel.character.token, timeTravel.character.description, timeTravel.character.picture, timeTravel.character.role, timeTravel.character.age, timeTravel.character.appearance, timeTravel.character.traits);
+                        await State.AddExistingCharacterAsync(timeTravel.character.Name, timeTravel.character.Token, timeTravel.character.Description, timeTravel.character.Picture, timeTravel.character.Role, timeTravel.character.Age, timeTravel.character.Appearance, timeTravel.character.Traits);
                     else
-                        State.RemoveCharacter(timeTravel.character.token);
+                        State.RemoveCharacter(timeTravel.character.Token);
                     break;
             }
             TimeTravelSystem.timeTravelling = false;
