@@ -110,7 +110,7 @@ namespace Storylines.Scripts.Variables
                 ServiceLocator.Logger.Error($"Failed to load profile picture: {cp.FileName}", ex);
             }
 
-            NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForCurrentView().GetString("picturesNotFound"), "");
+            NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"), "");
             return null;
         }
     }

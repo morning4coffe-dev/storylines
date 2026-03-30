@@ -256,7 +256,6 @@ namespace Storylines.Pages
             return all.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
         }
         #endregion
-        #endregion
 
         #region Notes
         public void ToggleNotesPane(bool show)

@@ -55,7 +55,7 @@ namespace Storylines.Scripts.Services
             get
             {
                 var ch = ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] == null ? 
-                    ResourceLoader.GetForCurrentView().GetString("chapterName") : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName].ToString();
+                    ResourceLoader.GetForViewIndependentUse().GetString("chapterName") : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName].ToString();
                 return ch;
             }
         }

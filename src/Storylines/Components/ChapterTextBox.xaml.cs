@@ -114,7 +114,7 @@ namespace Storylines.Components
                     PopulateFlyout();
 
                     Point position = CoreWindow.GetForCurrentThread().PointerPosition;
-                    textBoxDialogueNamesFlyout.ShowAt(MainPage.Current, new Point(position.X, position.Y));
+                    textBoxDialogueNamesFlyout.ShowAt(MainPage.Current, new Windows.UI.Xaml.Controls.Primitives.FlyoutShowOptions { Position = new Point(position.X, position.Y) });
                     e.Handled = true;
                 }
         }

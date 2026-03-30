@@ -7,6 +7,7 @@ using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using Storylines.ViewModels;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;

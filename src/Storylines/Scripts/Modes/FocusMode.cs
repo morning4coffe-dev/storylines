@@ -184,7 +184,7 @@ namespace Storylines.Scripts.Modes
             {
                 timer.Stop();
                 Finalized(true, measureFinal);
-                downBarTime = ResourceLoader.GetForCurrentView().GetString("done");
+                downBarTime = ResourceLoader.GetForViewIndependentUse().GetString("done");
             }
 
             MainPage.Current.downBarFocusText.Text = $"{downBarMeasure}   {downBarTime}";

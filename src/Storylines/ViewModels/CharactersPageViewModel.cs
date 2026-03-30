@@ -68,7 +68,7 @@ namespace Storylines.ViewModels
         public CharactersPageViewModel()
         {
             _projectState = ServiceLocator.ProjectState;
-            EditButtonLabel = ResourceLoader.GetForCurrentView().GetString("editText");
+            EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("editText");
 
             ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
         }
@@ -123,7 +123,7 @@ namespace Storylines.ViewModels
             _characterBeforeChange = _projectState.CopyCharacter(SelectedCharacter.Token);
 
             CancelButtonVisibility = Visibility.Collapsed;
-            EditButtonLabel = ResourceLoader.GetForCurrentView().GetString("cancelText");
+            EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("cancelText");
             EditButtonGlyph = "\uE711";
             UnappliedChanges = false;
         }
@@ -135,8 +135,8 @@ namespace Storylines.ViewModels
             IsListEnabled = true;
 
             CancelButtonVisibility = Visibility.Collapsed;
-            EditButtonLabel = ResourceLoader.GetForCurrentView().GetString("editText");
-            EditButtonGlyph = "\uE70F";
+            EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("editText");
+            EditButtonGlyph = "\uE70F"; 
             UnappliedChanges = false;
         }
 
@@ -172,7 +172,7 @@ namespace Storylines.ViewModels
         private void AddCharacter()
         {
             var ch = _projectState.CreateNewCharacter(
-                ResourceLoader.GetForCurrentView().GetString("newCharacterName"),
+                ResourceLoader.GetForViewIndependentUse().GetString("newCharacterName"),
                 string.Empty);
         }
 

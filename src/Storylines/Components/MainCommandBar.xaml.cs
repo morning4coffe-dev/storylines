@@ -1,4 +1,5 @@
 ﻿using Storylines.Pages;
+using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Storylines.Scripts.Variables;
 using Storylines.ViewModels;

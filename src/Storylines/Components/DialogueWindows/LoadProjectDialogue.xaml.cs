@@ -46,7 +46,7 @@ namespace Storylines.Components.DialogueWindows
 
             if (await Task.WhenAny(task, Task.Delay(1000)) == task)
             {
-                ProjectFile.projectFiles = new ObservableCollection<ProjectFile>(ProjectFile.projectFiles.OrderByDescending(o => o.lastEdited).ToList());
+                ProjectFile.projectFiles = new ObservableCollection<ProjectFile>(ProjectFile.projectFiles.OrderByDescending(o => o.LastEdited).ToList());
                 projectsHolder.ItemsSource = ProjectFile.projectFiles;
 
                 progressRing.IsActive = false;

@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Components;
 using Storylines.Scripts.Functions;
 using Storylines.Scripts.Services;
 using Windows.ApplicationModel;
@@ -27,8 +28,11 @@ namespace Storylines.ViewModels
 
         public enum AppPages { Settings, Characters, MainPage }
 
+        private readonly string _editedString;
+
         public AppViewModel()
         {
+            _editedString = ResourceLoader.GetForViewIndependentUse().GetString("appHeaderEdited");
             ServiceLocator.Events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
             UpdateTitleBar();
         }
@@ -49,7 +53,7 @@ namespace Storylines.ViewModels
                 TitleText = name ?? Package.Current.DisplayName;
             }
 
-            UnsavedIndicatorText = $" {ResourceLoader.GetForCurrentView().GetString("appHeaderEdited")}";
+            UnsavedIndicatorText = $" {_editedString}";
             UnsavedIndicatorVisibility = TimeTravelSystem.unSavedProgress ? Visibility.Visible : Visibility.Collapsed;
         }
 

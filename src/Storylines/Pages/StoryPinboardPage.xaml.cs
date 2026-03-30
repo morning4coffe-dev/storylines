@@ -50,7 +50,7 @@ namespace Storylines.Pages
             if (newPos != _dragStartPosition)
             {
                 ServiceLocator.ProjectState.ReorderChapter(
-                    (args.Items[0] as Chapter).token,
+                    (args.Items[0] as Chapter).Token,
                     newPos,
                     _dragStartPosition);
 

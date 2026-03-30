@@ -5,6 +5,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:customcontrols="using:Storylines.Components.CustomControls"
                xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                mc:Ignorable="d"
                CornerRadius="8"
                Opened="ContentDialog_Opened"
@@ -39,14 +40,14 @@
                    Opacity="0.55"
                    FontSize="11" />
 
-        <ItemsRepeater x:Name="suggestionPills"
+        <muxc:ItemsRepeater x:Name="suggestionPills"
                        Margin="0,0,0,4">
-            <ItemsRepeater.Layout>
-                <StackLayout Orientation="Horizontal"
+            <muxc:ItemsRepeater.Layout>
+                <muxc:StackLayout Orientation="Horizontal"
                              Spacing="4"
                              x:Name="suggestionLayout" />
-            </ItemsRepeater.Layout>
-            <ItemsRepeater.ItemTemplate>
+            </muxc:ItemsRepeater.Layout>
+            <muxc:ItemsRepeater.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
                     <Button Content="{x:Bind}"
                             CornerRadius="4"
@@ -54,8 +55,8 @@
                             FontSize="11"
                             Click="OnSuggestionPill_Click" />
                 </DataTemplate>
-            </ItemsRepeater.ItemTemplate>
-        </ItemsRepeater>
+            </muxc:ItemsRepeater.ItemTemplate>
+        </muxc:ItemsRepeater>
 
         <Grid Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
@@ -64,7 +65,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <customcontrols:SymbolButton x:Name="saveButton"
-                                         Content="Save"
+                                         Text="Save"
                                          Glyph="&#xE74E;"
                                          IsPrimary="True"
                                          HorizontalAlignment="Stretch"

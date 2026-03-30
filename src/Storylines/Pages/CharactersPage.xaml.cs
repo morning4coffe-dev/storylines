@@ -397,7 +397,7 @@ namespace Storylines.Pages
                 IsEditEnabled(EditButton.ApplyChanges);
         }
 
-        private void OnTraitsBox_TextChanged(Microsoft.Toolkit.Uwp.UI.Controls.AutoSuggestBox sender, Windows.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTraitsBox_TextChanged(Windows.UI.Xaml.Controls.AutoSuggestBox sender, Windows.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
         {
             if (args.Reason == Windows.UI.Xaml.Controls.AutoSuggestionBoxTextChangeReason.UserInput)
             {

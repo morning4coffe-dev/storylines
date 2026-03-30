@@ -1,4 +1,5 @@
 using Storylines.Scripts.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 using Windows.Security.Cryptography;
 using Windows.Storage;

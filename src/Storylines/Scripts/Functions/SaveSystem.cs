@@ -152,7 +152,7 @@ namespace Storylines.Components
                 Logger.Error("Failed to write project file", ex);
                 NotificationManager.DisplayInAppNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                    ResourceLoader.GetForCurrentView().GetString("saveSaveSystemErrorText"), "");
+                    ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
 
                 afterSave = AfterSave.DoNothing;
@@ -251,7 +251,7 @@ namespace Storylines.Components
                     Logger.Error("Unable to detect file format for: " + file.Name);
                     NotificationManager.DisplayInAppNotification(
                         Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                        ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                        ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"), "");
                     return;
                 }
 
@@ -280,7 +280,7 @@ namespace Storylines.Components
                 Logger.Error("Failed to load Storylines document", ex);
                 NotificationManager.DisplayInAppNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                    ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                    ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
         }
@@ -306,7 +306,7 @@ namespace Storylines.Components
                 Logger.Error("Failed to load plain text document", ex);
                 NotificationManager.DisplayInAppNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                    ResourceLoader.GetForCurrentView().GetString("loadSaveSystemErrorText"), "");
+                    ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"), "");
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
         }

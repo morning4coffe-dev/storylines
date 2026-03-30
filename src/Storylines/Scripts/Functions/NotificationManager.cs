@@ -174,11 +174,11 @@ namespace Storylines.Scripts.Functions
 
             ContentDialog exitDialog = new ContentDialog
             {
-                Title = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogTitle"),
-                Content = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogDescription"),
-                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogSave"),
-                SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogDontSave"),
-                CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogTitle"),
+                Content = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogDescription"),
+                PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogSave"),
+                SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogDontSave"),
+                CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = MainPage.Current.RequestedTheme,
                 //PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"]
@@ -217,10 +217,10 @@ namespace Storylines.Scripts.Functions
 
             ContentDialog leaveDialog = new ContentDialog
             {
-                Title = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueTitle"),
-                Content = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueDescription"),
-                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueStay"),
-                SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("FocusModeLeaveDialogueLeave"),
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueTitle"),
+                Content = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueDescription"),
+                PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueStay"),
+                SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = MainPage.Current.RequestedTheme,
             };
@@ -247,11 +247,11 @@ namespace Storylines.Scripts.Functions
 
             ContentDialog leaveDialog = new ContentDialog
             {
-                Title = ResourceLoader.GetForCurrentView().GetString("changesCharactersPageDialogueTitle"),
-                Content = ResourceLoader.GetForCurrentView().GetString("changesCharactersPageDialogueDescription"),
-                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("changesCharactersPageDialogueApplyChanges"),
-                SecondaryButtonText = ResourceLoader.GetForCurrentView().GetString("changesCharactersPageDialogueDontApplyChanges"),
-                CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueTitle"),
+                Content = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDescription"),
+                PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueApplyChanges"),
+                SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDontApplyChanges"),
+                CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = MainPage.Current.RequestedTheme,
             };
@@ -282,10 +282,10 @@ namespace Storylines.Scripts.Functions
 
             ContentDialog noCharactersDialog = new ContentDialog
             {
-                Title = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueTitle"),
-                Content = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueDescription"),
-                PrimaryButtonText = ResourceLoader.GetForCurrentView().GetString("noCharactersDialogueAddNew"),
-                CloseButtonText = ResourceLoader.GetForCurrentView().GetString("exitWithoutSaveDialogCancel"),
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueTitle"),
+                Content = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueDescription"),
+                PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueAddNew"),
+                CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = MainPage.Current.RequestedTheme,
             };

@@ -35,7 +35,7 @@ namespace Storylines.Components
             await ProjectFile.LoadAllAsync();
 
             var recent = ProjectFile.projectFiles
-                .OrderByDescending(p => p.lastEdited)
+                .OrderByDescending(p => p.LastEdited)
                 .Take(5)
                 .ToList();
 

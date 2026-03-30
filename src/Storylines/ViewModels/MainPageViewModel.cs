@@ -50,7 +50,7 @@ namespace Storylines.ViewModels
         {
             _projectState = ServiceLocator.ProjectState;
             _dialogs = ServiceLocator.Dialogs;
-            DownBarText = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
+            DownBarText = ResourceLoader.GetForViewIndependentUse().GetString("downBarTextS");
 
             ServiceLocator.Events.Subscribe<ToolsStateChangedEvent>(e =>
             {
@@ -62,7 +62,7 @@ namespace Storylines.ViewModels
         {
             if (!value)
             {
-                DownBarText = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
+                DownBarText = ResourceLoader.GetForViewIndependentUse().GetString("downBarTextS");
                 ShowWelcomePanel(_projectState.Chapters.Count == 0);
             }
             else
@@ -90,7 +90,7 @@ namespace Storylines.ViewModels
         }
 
         [RelayCommand]
-        private void ShowProjectStats()
+        public void ShowProjectStats()
         {
             _dialogs.OpenProjectStats(true);
         }

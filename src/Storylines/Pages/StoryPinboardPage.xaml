@@ -5,6 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:variables="using:Storylines.Scripts.Variables"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d"
       Loaded="Page_Loaded">
 
@@ -57,13 +58,17 @@
                       VerticalScrollMode="Disabled"
                       Padding="20,20,20,20">
             <ListView x:Name="pinboardList"
-                      Orientation="Horizontal"
                       SelectionMode="None"
                       CanReorderItems="True"
                       CanDragItems="True"
                       AllowDrop="True"
                       DragItemsStarting="OnDragItemsStarting"
                       DragItemsCompleted="OnDragItemsCompleted">
+                <ListView.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <ItemsStackPanel Orientation="Horizontal" />
+                    </ItemsPanelTemplate>
+                </ListView.ItemsPanel>
                 <ListView.ItemContainerStyle>
                     <Style TargetType="ListViewItem">
                         <Setter Property="Padding" Value="0" />
@@ -113,13 +118,13 @@
                                        TextTrimming="CharacterEllipsis" />
 
                             <!-- Tag pills -->
-                            <ItemsRepeater Grid.Row="3"
+                            <muxc:ItemsRepeater Grid.Row="3"
                                            ItemsSource="{Binding Tags}"
                                            Margin="0,8,0,0">
-                                <ItemsRepeater.Layout>
-                                    <StackLayout Orientation="Horizontal" Spacing="3" />
-                                </ItemsRepeater.Layout>
-                                <ItemsRepeater.ItemTemplate>
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Horizontal" Spacing="3" />
+                                </muxc:ItemsRepeater.Layout>
+                                <muxc:ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <Border CornerRadius="3"
                                                 Padding="5,1"
@@ -130,8 +135,8 @@
                                                        Foreground="White" />
                                         </Border>
                                     </DataTemplate>
-                                </ItemsRepeater.ItemTemplate>
-                            </ItemsRepeater>
+                                </muxc:ItemsRepeater.ItemTemplate>
+                            </muxc:ItemsRepeater>
 
                             <!-- Word count -->
                             <TextBlock x:Name="wordCountText"

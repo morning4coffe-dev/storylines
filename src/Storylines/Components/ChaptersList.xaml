@@ -6,6 +6,7 @@
              xmlns:variables="using:Storylines.Scripts.Variables"
              xmlns:converters="using:Storylines.Converters"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="400">
@@ -121,16 +122,16 @@
                                    Grid.Column="1"
                                    VerticalAlignment="Center" />
                         <!-- Tag pills: visible only when chapter has tags -->
-                        <ItemsRepeater Grid.Row="1"
+                        <muxc:ItemsRepeater Grid.Row="1"
                                        Grid.Column="1"
                                        ItemsSource="{Binding Tags}"
                                        Margin="0,3,0,0"
                                        Visibility="{Binding TagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
-                            <ItemsRepeater.Layout>
-                                <StackLayout Orientation="Horizontal"
+                            <muxc:ItemsRepeater.Layout>
+                                <muxc:StackLayout Orientation="Horizontal"
                                              Spacing="3" />
-                            </ItemsRepeater.Layout>
-                            <ItemsRepeater.ItemTemplate>
+                            </muxc:ItemsRepeater.Layout>
+                            <muxc:ItemsRepeater.ItemTemplate>
                                 <DataTemplate x:DataType="x:String">
                                     <Border CornerRadius="3"
                                             Padding="5,1"
@@ -142,8 +143,8 @@
                                                    VerticalAlignment="Center" />
                                     </Border>
                                 </DataTemplate>
-                            </ItemsRepeater.ItemTemplate>
-                        </ItemsRepeater>
+                            </muxc:ItemsRepeater.ItemTemplate>
+                        </muxc:ItemsRepeater>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
