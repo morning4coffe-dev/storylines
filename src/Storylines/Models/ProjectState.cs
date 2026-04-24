@@ -15,6 +15,7 @@ namespace Storylines.Models
         public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
         public List<PinboardConnectionData> PinboardConnections { get; set; } = new List<PinboardConnectionData>();
         public List<string> PlotThreads { get; set; } = new List<string>();
+        public List<BranchingDialogueGraphData> BranchingDialogues { get; set; } = new List<BranchingDialogueGraphData>();
 
         #region Chapter Operations
 
@@ -78,6 +79,8 @@ namespace Storylines.Models
                         if (conn.ToIndex > removedIndex) conn.ToIndex--;
                     }
 
+                    BranchingDialogues.RemoveAll(g => g != null && g.ChapterId == token);
+
                     Chapters.RemoveAt(i);
                     break;
                 }
@@ -133,6 +136,42 @@ namespace Storylines.Models
 
             _ = Chapters.Remove(chapter);
             Chapters.Insert(newPosition, chapter);
+        }
+
+        #endregion
+
+        #region Branching Dialogue Operations
+
+        public BranchingDialogueGraphData FindBranchingDialogueByChapter(string chapterToken)
+        {
+            return BranchingDialogues.FirstOrDefault(g => g?.ChapterId == chapterToken);
+        }
+
+        public BranchingDialogueGraphData GetOrCreateBranchingDialogueForChapter(string chapterToken)
+        {
+            var graph = FindBranchingDialogueByChapter(chapterToken);
+            if (graph != null)
+            {
+                graph.EnsureValid();
+                return graph;
+            }
+
+            var created = new BranchingDialogueGraphData
+            {
+                Id = Guid.NewGuid().ToString(),
+                ChapterId = chapterToken,
+                Nodes = new List<BranchingDialogueNodeData>()
+            };
+            created.EnsureValid();
+            BranchingDialogues.Add(created);
+            return created;
+        }
+
+        public void SetBranchingDialogues(List<BranchingDialogueGraphData> graphs)
+        {
+            BranchingDialogues = graphs ?? new List<BranchingDialogueGraphData>();
+            foreach (var graph in BranchingDialogues)
+                graph?.EnsureValid();
         }
 
         #endregion
@@ -245,6 +284,7 @@ namespace Storylines.Models
             Characters.Clear();
             PinboardConnections.Clear();
             PlotThreads.Clear();
+            BranchingDialogues.Clear();
         }
 
     }

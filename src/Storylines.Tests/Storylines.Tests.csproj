@@ -29,6 +29,11 @@
     -->
     <Compile Include="..\Storylines\Models\Chapter.cs" Link="LinkedSources\Chapter.cs" />
     <Compile Include="..\Storylines\Models\ProjectData.cs" Link="LinkedSources\ProjectData.cs" />
+    <Compile Include="..\Storylines\Models\BranchingDialogueModels.cs" Link="LinkedSources\BranchingDialogueModels.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueService.cs" Link="LinkedSources\IBranchingDialogueService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueStore.cs" Link="LinkedSources\IBranchingDialogueStore.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueEventPublisher.cs" Link="LinkedSources\IBranchingDialogueEventPublisher.cs" />
+    <Compile Include="..\Storylines\Services\BranchingDialogueService.cs" Link="LinkedSources\BranchingDialogueService.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\ISaveSerializer.cs" Link="LinkedSources\ISaveSerializer.cs" />
     <Compile Include="..\Storylines\Services\Serializers\JsonSaveSerializer.cs" Link="LinkedSources\JsonSaveSerializer.cs" />
     <Compile Include="..\Storylines\Services\Serializers\LegacySrlSerializer.cs" Link="LinkedSources\LegacySrlSerializer.cs" />

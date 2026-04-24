@@ -98,6 +98,9 @@ namespace Storylines.ViewModels
         private void NavigateToCharacters() => AppView.current.ChangePage(AppView.Pages.Characters);
 
         [RelayCommand]
+        private void NavigateToBranchingDialogue() => AppView.current.ChangePage(AppView.Pages.BranchingDialogue);
+
+        [RelayCommand]
         private void ShowShortcuts() => _dialogs.OpenShortcuts();
 
         [RelayCommand]

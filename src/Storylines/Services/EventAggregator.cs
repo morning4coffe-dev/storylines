@@ -152,5 +152,17 @@ namespace Storylines.Services
         public bool HasSelection { get; set; }
     }
 
+    public class BranchingDialogueGraphChangedEvent
+    {
+        public string ChapterId { get; set; }
+        public string GraphId { get; set; }
+    }
+
+    public class BranchingDialogueSimulationStateChangedEvent
+    {
+        public string ChapterId { get; set; }
+        public Models.BranchingDialogueSimulationState State { get; set; }
+    }
+
     #endregion
 }

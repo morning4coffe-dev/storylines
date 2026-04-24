@@ -981,6 +981,15 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarButton x:Name="branchingDialogueButton"
+                                  x:Uid="branchingDialogue"
+                                  CornerRadius="4"
+                                  Command="{x:Bind ViewModel.NavigateToBranchingDialogueCommand}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE945;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
                     <AppBarSeparator />
 
                     <AppBarToggleButton x:Name="notesToggleButton"

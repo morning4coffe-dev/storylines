@@ -28,10 +28,16 @@ namespace Storylines.Models
 
         [JsonProperty("plotThreads", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> PlotThreads { get; set; }
+
+        [JsonProperty("branchingDialogues", NullValueHandling = NullValueHandling.Ignore)]
+        public List<BranchingDialogueGraphData> BranchingDialogues { get; set; }
     }
 
     public class ChapterData
     {
+        [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
+        public string Id { get; set; }
+
         [JsonProperty("name")]
         public string Name { get; set; }
 
@@ -64,6 +70,9 @@ namespace Storylines.Models
 
         [JsonProperty("plotThreads", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> PlotThreads { get; set; }
+
+        [JsonProperty("branchingDialogueGraphId", NullValueHandling = NullValueHandling.Ignore)]
+        public string BranchingDialogueGraphId { get; set; }
     }
 
     public class PinboardConnectionData

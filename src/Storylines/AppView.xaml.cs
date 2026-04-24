@@ -154,7 +154,7 @@ namespace Storylines
         #endregion
 
         #region Pages
-        public enum Pages { Settings, Characters, MainPage }
+        public enum Pages { Settings, Characters, MainPage, BranchingDialogue }
         public Pages page;
 
         public void ChangePage(Pages currentPage)
@@ -172,6 +172,9 @@ namespace Storylines
                     break;
                 case Pages.MainPage:
                     _navigation.NavigateTo(NavigationTarget.MainPage);
+                    break;
+                case Pages.BranchingDialogue:
+                    _navigation.NavigateTo(NavigationTarget.BranchingDialogue);
                     break;
             }
 

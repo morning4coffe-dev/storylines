@@ -1068,6 +1068,111 @@
   <data name="wordGoalReachedTitle" xml:space="preserve">
     <value>Chapter goal reached!</value>
   </data>
+  <data name="branchingDialogue.Label" xml:space="preserve">
+    <value>Branching</value>
+  </data>
+  <data name="branchingDialogue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Open branching dialogue workspace</value>
+  </data>
+  <data name="branchingBackButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="branchingBackButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="branchingPageTitle.Text" xml:space="preserve">
+    <value>Branching dialogue</value>
+  </data>
+  <data name="branchingPageSubtitle.Text" xml:space="preserve">
+    <value>Writer-first chapter dialogue graph with optional map and simulator.</value>
+  </data>
+  <data name="branchingChapterSelector.Header" xml:space="preserve">
+    <value>Chapter</value>
+  </data>
+  <data name="branchingSearch.Header" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="branchingSearch.PlaceholderText" xml:space="preserve">
+    <value>Search nodes or lines</value>
+  </data>
+  <data name="branchingSpeakerFilter.Header" xml:space="preserve">
+    <value>Speaker filter</value>
+  </data>
+  <data name="branchingCreateNode.Content" xml:space="preserve">
+    <value>Create node</value>
+  </data>
+  <data name="branchingDeleteNode.Content" xml:space="preserve">
+    <value>Delete node</value>
+  </data>
+  <data name="branchingSetStartNode.Content" xml:space="preserve">
+    <value>Set start</value>
+  </data>
+  <data name="branchingMapToggle.Header" xml:space="preserve">
+    <value>Map mode</value>
+  </data>
+  <data name="branchingInspectorTitle.Text" xml:space="preserve">
+    <value>Node inspector</value>
+  </data>
+  <data name="branchingNodeTitle.Header" xml:space="preserve">
+    <value>Node title</value>
+  </data>
+  <data name="branchingNodeSpeaker.Header" xml:space="preserve">
+    <value>Speaker</value>
+  </data>
+  <data name="branchingNodeText.Header" xml:space="preserve">
+    <value>Line text</value>
+  </data>
+  <data name="branchingSaveNodeEdits.Content" xml:space="preserve">
+    <value>Save edits</value>
+  </data>
+  <data name="branchingAddChoice.Content" xml:space="preserve">
+    <value>Add choice</value>
+  </data>
+  <data name="branchingRemoveChoice.Content" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="branchingValidateGraph.Content" xml:space="preserve">
+    <value>Validate graph</value>
+  </data>
+  <data name="branchingSimulatorExpander.Header" xml:space="preserve">
+    <value>Playthrough simulator</value>
+  </data>
+  <data name="branchingSimulationStart.Content" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="branchingSimulationRestart.Content" xml:space="preserve">
+    <value>Restart</value>
+  </data>
+  <data name="branchingSimulationStop.Content" xml:space="preserve">
+    <value>Stop</value>
+  </data>
+  <data name="branchingSimulationBreadcrumb.Text" xml:space="preserve">
+    <value>Breadcrumb</value>
+  </data>
+  <data name="branchingNoChaptersMessage" xml:space="preserve">
+    <value>Create a chapter first to start branching dialogue authoring.</value>
+  </data>
+  <data name="branchingDefaultNodeTitle" xml:space="preserve">
+    <value>Node</value>
+  </data>
+  <data name="branchingAutoDestinationNodeTitleFormat" xml:space="preserve">
+    <value>Outcome {0}</value>
+  </data>
+  <data name="branchingDefaultChoiceTextFormat" xml:space="preserve">
+    <value>Choice {0}</value>
+  </data>
+  <data name="branchingValidationSummaryFormat" xml:space="preserve">
+    <value>Missing targets: {0}, unreachable nodes: {1}, empty choices: {2}</value>
+  </data>
+  <data name="branchingSimulationStopped" xml:space="preserve">
+    <value>Simulation stopped.</value>
+  </data>
+  <data name="branchingSimulationDeadEnd" xml:space="preserve">
+    <value>Dead-end reached.</value>
+  </data>
+  <data name="branchingSimulationActive" xml:space="preserve">
+    <value>Simulation running.</value>
+  </data>
 </root>
 
 

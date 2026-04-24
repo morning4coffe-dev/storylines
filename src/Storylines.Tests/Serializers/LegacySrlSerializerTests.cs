@@ -115,14 +115,14 @@ public class LegacySrlSerializerTests
         {
             Chapters = new List<ChapterData>
             {
-                new() { Name = "Ch", Text = "contains>[Y\u2267g&<separator" }
+                new() { Name = "Ch", Text = "contains>[Y\u2247g&<separator" }
             }
         };
 
         var content = _serializer.Serialize(data);
         var result = _serializer.Deserialize(content);
 
-        Assert.DoesNotContain(">[Y\u2267g&<", result.Chapters[0].Text);
+        Assert.DoesNotContain(">[Y\u2247g&<", result.Chapters[0].Text);
     }
 
     [Fact]

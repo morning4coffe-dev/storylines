@@ -23,6 +23,7 @@ public class ProjectStateTests
         public ObservableCollection<TestChapter> Chapters { get; } = new();
         public ObservableCollection<TestCharacter> Characters { get; } = new();
         public List<string> PlotThreads { get; set; } = new();
+        public List<TestPinboardConnection> PinboardConnections { get; } = new();
 
         public TestChapter AddExistingChapter(string name, string token, string text, string notes = "")
         {
@@ -55,6 +56,28 @@ public class ProjectStateTests
                     Chapters.RemoveAt(i);
                     break;
                 }
+        }
+
+        /// <summary>
+        /// Mirrors ProjectState.RemoveChapter including the PinboardConnections reindexing logic.
+        /// </summary>
+        public void RemoveChapterWithPinboard(string token)
+        {
+            for (int i = 0; i < Chapters.Count; i++)
+            {
+                if (Chapters[i].Token == token)
+                {
+                    int removedIndex = i;
+                    PinboardConnections.RemoveAll(c => c.FromIndex == removedIndex || c.ToIndex == removedIndex);
+                    foreach (var conn in PinboardConnections)
+                    {
+                        if (conn.FromIndex > removedIndex) conn.FromIndex--;
+                        if (conn.ToIndex > removedIndex) conn.ToIndex--;
+                    }
+                    Chapters.RemoveAt(i);
+                    break;
+                }
+            }
         }
 
         public TestChapter FindChapter(string token) =>
@@ -162,6 +185,12 @@ public class ProjectStateTests
         public string Description { get; set; }
         public string Role { get; set; }
         public string Age { get; set; }
+    }
+
+    private sealed class TestPinboardConnection
+    {
+        public int FromIndex { get; set; }
+        public int ToIndex { get; set; }
     }
 
     #endregion
@@ -337,6 +366,104 @@ public class ProjectStateTests
         Assert.Equal("C", state.Chapters[0].Name);
         Assert.Equal("A", state.Chapters[1].Name);
         Assert.Equal("B", state.Chapters[2].Name);
+    }
+
+    #endregion
+
+    #region Pinboard connection reindexing
+
+    [Fact]
+    public void RemoveChapter_ConnectionsReferencingRemovedChapter_AreDeleted()
+    {
+        // Chapters at indices 0, 1, 2. Remove "B" (index 1).
+        // All connections referencing index 1 (as from or to) must be removed.
+        var state = new TestProjectState();
+        state.AddExistingChapter("A", "t1", "");
+        state.AddExistingChapter("B", "t2", "");
+        state.AddExistingChapter("C", "t3", "");
+
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 1 }); // A→B: removed
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 1, ToIndex = 2 }); // B→C: removed
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 2 }); // A→C: survives (reindexed)
+
+        state.RemoveChapterWithPinboard("t2"); // remove "B" at index 1
+
+        Assert.Single(state.PinboardConnections);
+        Assert.Equal(0, state.PinboardConnections[0].FromIndex);
+        Assert.Equal(1, state.PinboardConnections[0].ToIndex); // C shifted from 2 → 1
+    }
+
+    [Fact]
+    public void RemoveChapter_IndicesAboveRemoved_AreDecremented()
+    {
+        // Chapters: A(0), B(1), C(2), D(3). Remove B(1).
+        // Connections above index 1 must have their indices decremented by 1.
+        var state = new TestProjectState();
+        state.AddExistingChapter("A", "t1", "");
+        state.AddExistingChapter("B", "t2", "");
+        state.AddExistingChapter("C", "t3", "");
+        state.AddExistingChapter("D", "t4", "");
+
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 2 }); // A→C
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 3 }); // A→D
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 2, ToIndex = 3 }); // C→D
+
+        state.RemoveChapterWithPinboard("t2"); // remove B at index 1
+
+        Assert.Equal(3, state.PinboardConnections.Count);
+        Assert.Equal(0, state.PinboardConnections[0].FromIndex);
+        Assert.Equal(1, state.PinboardConnections[0].ToIndex); // C: 2→1
+        Assert.Equal(0, state.PinboardConnections[1].FromIndex);
+        Assert.Equal(2, state.PinboardConnections[1].ToIndex); // D: 3→2
+        Assert.Equal(1, state.PinboardConnections[2].FromIndex); // C: 2→1
+        Assert.Equal(2, state.PinboardConnections[2].ToIndex); // D: 3→2
+    }
+
+    [Fact]
+    public void RemoveChapter_IndicesBelowRemoved_AreUnchanged()
+    {
+        // Chapters: A(0), B(1), C(2). Remove C(2).
+        // Connection A→B (0→1) must stay exactly the same.
+        var state = new TestProjectState();
+        state.AddExistingChapter("A", "t1", "");
+        state.AddExistingChapter("B", "t2", "");
+        state.AddExistingChapter("C", "t3", "");
+
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 1 }); // A→B (unchanged)
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 2 }); // A→C (removed)
+
+        state.RemoveChapterWithPinboard("t3"); // remove C at index 2
+
+        Assert.Single(state.PinboardConnections);
+        Assert.Equal(0, state.PinboardConnections[0].FromIndex);
+        Assert.Equal(1, state.PinboardConnections[0].ToIndex);
+    }
+
+    [Fact]
+    public void RemoveChapter_NoPinboardConnections_RemovesChapterWithoutError()
+    {
+        var state = new TestProjectState();
+        state.AddExistingChapter("A", "t1", "");
+        state.AddExistingChapter("B", "t2", "");
+
+        var ex = Record.Exception(() => state.RemoveChapterWithPinboard("t1"));
+
+        Assert.Null(ex);
+        Assert.Single(state.Chapters);
+        Assert.Equal("B", state.Chapters[0].Name);
+    }
+
+    [Fact]
+    public void RemoveChapter_LastChapter_ClearsAllConnectionsReferencing()
+    {
+        var state = new TestProjectState();
+        state.AddExistingChapter("Only", "t1", "");
+        state.PinboardConnections.Add(new TestPinboardConnection { FromIndex = 0, ToIndex = 0 });
+
+        state.RemoveChapterWithPinboard("t1");
+
+        Assert.Empty(state.Chapters);
+        Assert.Empty(state.PinboardConnections);
     }
 
     #endregion

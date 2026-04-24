@@ -18,6 +18,7 @@ namespace Storylines.Services.Interfaces
         MainPage,
         Characters,
         Settings,
-        Pinboard
+        Pinboard,
+        BranchingDialogue
     }
 }

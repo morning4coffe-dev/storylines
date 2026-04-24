@@ -23,12 +23,16 @@ namespace Storylines.Services
             services.AddSingleton<ITextEditorService, TextEditorService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();
+            services.AddSingleton<IBranchingDialogueEventPublisher, BranchingDialogueEventPublisher>();
+            services.AddSingleton<IBranchingDialogueService, BranchingDialogueService>();
             services.AddSingleton<EditorModeService>();
 
             services.AddSingleton<AppViewModel>();
             services.AddSingleton<MainPageViewModel>();
             services.AddSingleton<ChaptersListViewModel>();
             services.AddSingleton<CommandBarViewModel>();
+            services.AddSingleton<BranchingDialogueViewModel>();
             services.AddTransient<CharactersPageViewModel>();
 
             return services.BuildServiceProvider();

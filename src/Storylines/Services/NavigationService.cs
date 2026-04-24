@@ -35,6 +35,9 @@ namespace Storylines.Services
                 case NavigationTarget.Pinboard:
                     _frame.Navigate(typeof(StoryPinboardPage), null, new DrillInNavigationTransitionInfo());
                     break;
+                case NavigationTarget.BranchingDialogue:
+                    _frame.Navigate(typeof(BranchingDialoguePage), null, new DrillInNavigationTransitionInfo());
+                    break;
             }
 
             Navigated?.Invoke(target);
