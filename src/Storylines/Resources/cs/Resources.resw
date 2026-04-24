@@ -791,4 +791,151 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="newCharacterName" xml:space="preserve">
     <value>Nová postava</value>
   </data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Propojit</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Zrušit</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Které dějové linie se v této kapitole objevují? (oddělené čárkou)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Kde se tato kapitola odehrává?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Psací podněty</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>např. Rival, Láska, Mentor…</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>např. Hlavní úkol, Milostný příběh, Záhada…</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Hledat ve všech kapitolách</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Přidat</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Příběhové plátno</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>Nebyly nalezeny žádné shody</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Děj</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Nastavit stav</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Shrňte, co se v této kapitole děje…</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Synopse</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Hledejte ve všech kapitolách…</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Popis spojení (volitelné)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Přeskočit</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Přidejte kapitoly z hlavní stránky, abyste je zde viděli.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Vyberte postavu…</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Přidat vztah</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>např. Stará knihovna, Centrum města…</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Návrhy</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Kategorie</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Štítky</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Psaní</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Upravit štítky…</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Typ vztahu:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Poznámky</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Revize</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Postava:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Potřebujete inspiraci? Zde jsou podněty, které vás dostanou do psaní.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>Zatím žádné kapitoly</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Synopse kapitoly — stručné shrnutí pro vaši potřebu.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Přetáhněte karty • Kliknutím otevřete</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>např. vede k, vzpomínka na…</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>Nebyly nalezeny žádné výsledky</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Upravit štítky kapitoly</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Místo</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Vytvořit</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Finální</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>Nový podnět</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>Všechny kategorie</value>
+  </data>
+  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+    <value>Všechny kapitoly</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Filtrovat podle štítku</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Návrh</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>Pro tuto kategorii nejsou k dispozici žádné podněty.</value>
+  </data>
 </root>

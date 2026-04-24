@@ -1,11 +1,11 @@
-﻿using Microsoft.AppCenter;
+using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Uwp.Helpers;
-using Storylines.Components;
-using Storylines.Components.DialogueWindows;
-using Storylines.Scripts.Functions;
-using Storylines.Scripts.Services;
+using Storylines.Views.Controls;
+using Storylines.Views.Dialogs;
+using Storylines.Helpers;
+using Storylines.Services;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -20,6 +20,7 @@ using Windows.UI.ViewManagement;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Navigation;
+using Storylines.Models;
 
 namespace Storylines
 {
@@ -34,7 +35,7 @@ namespace Storylines
             InitializeComponent();
             Suspending += OnSuspending;
 
-            Scripts.Services.ServiceLocator.Initialize();
+            ServiceLocator.Initialize();
         }
 
         /// <param name="e">Details about the launch request and process</param>
@@ -140,7 +141,7 @@ namespace Storylines
                 }
                 catch (Exception ex)
                 {
-                    Scripts.Services.ServiceLocator.Logger?.Warning($"Failed to load last project: {ex.Message}");
+                    ServiceLocator.Logger?.Warning($"Failed to load last project: {ex.Message}");
                 }
             }
         }

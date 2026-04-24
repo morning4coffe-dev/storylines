@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="15.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
   <PropertyGroup>
@@ -27,7 +27,8 @@
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
     <AppxPackageDir>bin\AppPackages\</AppxPackageDir>
-    <PackageCertificateKeyFile></PackageCertificateKeyFile>
+    <PackageCertificateKeyFile>
+    </PackageCertificateKeyFile>
     <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
     <AppxPackageSigningTimestampServerUrl>
     </AppxPackageSigningTimestampServerUrl>
@@ -151,110 +152,111 @@
     <Compile Include="AppView.xaml.cs">
       <DependentUpon>AppView.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\CustomControls\SymbolButton.xaml.cs">
+    <Compile Include="Views\Controls\SymbolButton.xaml.cs">
       <DependentUpon>SymbolButton.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\CustomControls\ShortcutLineControl.xaml.cs">
+    <Compile Include="Views\Controls\ShortcutLineControl.xaml.cs">
       <DependentUpon>ShortcutLineControl.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\CustomControls\WhatsNextBanner.xaml.cs">
+    <Compile Include="Views\Controls\WhatsNextBanner.xaml.cs">
       <DependentUpon>WhatsNextBanner.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\ProjectRenamerDialogue.xaml.cs">
       <DependentUpon>ProjectRenamerDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ModesDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\ModesDialogue.xaml.cs">
       <DependentUpon>ModesDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ShortcutsDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\ShortcutsDialogue.xaml.cs">
       <DependentUpon>ShortcutsDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\CharactersPage.xaml.cs">
+    <Compile Include="Views\Pages\CharactersPage.xaml.cs">
       <DependentUpon>CharactersPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\ChaptersList.xaml.cs">
+    <Compile Include="Views\Controls\ChaptersList.xaml.cs">
       <DependentUpon>ChaptersList.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\ChapterTextBox.xaml.cs">
+    <Compile Include="Views\Controls\ChapterTextBox.xaml.cs">
       <DependentUpon>ChapterTextBox.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ChapterCreatorOrRenamer.xaml.cs">
+    <Compile Include="Views\Dialogs\ChapterCreatorOrRenamer.xaml.cs">
       <DependentUpon>ChapterCreatorOrRenamer.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ExportDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\ExportDialogue.xaml.cs">
       <DependentUpon>ExportDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\LoadProjectDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\LoadProjectDialogue.xaml.cs">
       <DependentUpon>LoadProjectDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\SaveDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\SaveDialogue.xaml.cs">
       <DependentUpon>SaveDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\ProjectStatsDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\ProjectStatsDialogue.xaml.cs">
       <DependentUpon>ProjectStatsDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPages\AboutPage.xaml.cs">
+    <Compile Include="Views\Pages\Settings\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPages\GeneralPage.xaml.cs">
+    <Compile Include="Views\Pages\Settings\GeneralPage.xaml.cs">
       <DependentUpon>GeneralPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPages\AccessibilityPage.xaml.cs">
+    <Compile Include="Views\Pages\Settings\AccessibilityPage.xaml.cs">
       <DependentUpon>AccessibilityPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\SettingsPages\PersonalizationPage.xaml.cs">
+    <Compile Include="Views\Pages\Settings\PersonalizationPage.xaml.cs">
       <DependentUpon>PersonalizationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Strings.cs" />
-    <Compile Include="Scripts\Functions\NotificationManager.cs" />
-    <Compile Include="Scripts\Functions\ExportSystem.cs" />
-    <Compile Include="Scripts\Functions\ShortcutManager.cs" />
-    <Compile Include="Scripts\Functions\TimeTravelSystem.cs" />
-    <Compile Include="Scripts\Modes\FocusMode.cs" />
-    <Compile Include="Scripts\Modes\ModesShared.cs" />
-    <Compile Include="Scripts\Modes\ReadMode.cs" />
-    <Compile Include="Scripts\Services\Autosave.cs" />
-    <Compile Include="Scripts\Variables\Character.cs" />
-    <Compile Include="Pages\SettingsPage.xaml.cs">
+    <Compile Include="Helpers\NotificationManager.cs" />
+    <Compile Include="Services\ExportService.cs" />
+    <Compile Include="Helpers\ShortcutManager.cs" />
+    <Compile Include="DataStructures\PartialStack.cs" />
+    <Compile Include="Helpers\TimeTravelSystem.cs" />
+    <Compile Include="Helpers\Modes\FocusMode.cs" />
+    <Compile Include="Helpers\Modes\ModesShared.cs" />
+    <Compile Include="Helpers\Modes\ReadMode.cs" />
+    <Compile Include="Services\AutosaveService.cs" />
+    <Compile Include="Models\Character.cs" />
+    <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Variables\Dialogue.cs" />
-    <Compile Include="Scripts\Functions\MicrosoftStoreAndAppCenterFunctions.cs" />
-    <Compile Include="Scripts\Functions\TextHighlighter.cs" />
-    <Compile Include="Components\MainCommandBar.xaml.cs">
+    <Compile Include="Models\Dialogue.cs" />
+    <Compile Include="Helpers\MicrosoftStoreAndAppCenterFunctions.cs" />
+    <Compile Include="Helpers\TextHighlighter.cs" />
+    <Compile Include="Views\Controls\MainCommandBar.xaml.cs">
       <DependentUpon>MainCommandBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Scripts\Functions\SaveSystem.cs" />
-    <Compile Include="Pages\MainPage.xaml.cs">
+    <Compile Include="Services\SaveSystem.cs" />
+    <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Scripts\Variables\Chapter.cs" />
-    <Compile Include="Scripts\Services\SettingsValues.cs" />
-    <Compile Include="Scripts\Services\ThemeSettings.cs" />
-    <Compile Include="Scripts\Services\ServiceLocator.cs" />
-    <Compile Include="Scripts\Services\DebugLogger.cs" />
-    <Compile Include="Scripts\Services\EventAggregator.cs" />
-    <Compile Include="Scripts\Services\FileService.cs" />
-    <Compile Include="Scripts\Services\Interfaces\ILogger.cs" />
-    <Compile Include="Scripts\Services\Interfaces\INotificationService.cs" />
-    <Compile Include="Scripts\Services\Interfaces\ISaveSerializer.cs" />
-    <Compile Include="Scripts\Services\Interfaces\IFileService.cs" />
-    <Compile Include="Scripts\Services\Interfaces\INavigationService.cs" />
-    <Compile Include="Scripts\Services\Interfaces\ITextEditorService.cs" />
-    <Compile Include="Scripts\Services\Interfaces\IDialogService.cs" />
-    <Compile Include="Scripts\Services\NavigationService.cs" />
-    <Compile Include="Scripts\Services\TextEditorService.cs" />
-    <Compile Include="Scripts\Services\DialogService.cs" />
-    <Compile Include="Scripts\Services\Serializers\JsonSaveSerializer.cs" />
-    <Compile Include="Scripts\Services\Serializers\LegacySrlSerializer.cs" />
-    <Compile Include="Scripts\Variables\ProjectData.cs" />
-    <Compile Include="Scripts\Variables\ProjectFile.cs" />
-    <Compile Include="Scripts\Variables\ProjectState.cs" />
-    <Compile Include="Components\ChapterNotesPane.xaml.cs">
+    <Compile Include="Models\Chapter.cs" />
+    <Compile Include="Services\SettingsValues.cs" />
+    <Compile Include="Services\ThemeSettings.cs" />
+    <Compile Include="Services\ServiceLocator.cs" />
+    <Compile Include="Services\DebugLogger.cs" />
+    <Compile Include="Services\EventAggregator.cs" />
+    <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\Interfaces\ILogger.cs" />
+    <Compile Include="Services\Interfaces\INotificationService.cs" />
+    <Compile Include="Services\Interfaces\ISaveSerializer.cs" />
+    <Compile Include="Services\Interfaces\IFileService.cs" />
+    <Compile Include="Services\Interfaces\INavigationService.cs" />
+    <Compile Include="Services\Interfaces\ITextEditorService.cs" />
+    <Compile Include="Services\Interfaces\IDialogService.cs" />
+    <Compile Include="Services\NavigationService.cs" />
+    <Compile Include="Services\TextEditorService.cs" />
+    <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\Serializers\JsonSaveSerializer.cs" />
+    <Compile Include="Services\Serializers\LegacySrlSerializer.cs" />
+    <Compile Include="Models\ProjectData.cs" />
+    <Compile Include="Models\ProjectFile.cs" />
+    <Compile Include="Models\ProjectState.cs" />
+    <Compile Include="Views\Controls\ChapterNotesPane.xaml.cs">
       <DependentUpon>ChapterNotesPane.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\WelcomePanel.xaml.cs">
+    <Compile Include="Views\Controls\WelcomePanel.xaml.cs">
       <DependentUpon>WelcomePanel.xaml</DependentUpon>
     </Compile>
     <Compile Include="ViewModels\AppViewModel.cs" />
@@ -264,20 +266,20 @@
     <Compile Include="ViewModels\CommandBarViewModel.cs" />
     <Compile Include="Converters\EmptyStringToCollapsedConverter.cs" />
     <Compile Include="Converters\ChapterStatusToColorConverter.cs" />
-    <Compile Include="Scripts\Constants\LayoutConstants.cs" />
-    <Compile Include="Scripts\Variables\CharacterDialoguePreview.cs" />
-    <Compile Include="Scripts\Services\WritingSessionService.cs" />
-    <Compile Include="Scripts\Services\ChapterTagsService.cs" />
-    <Compile Include="Components\DialogueWindows\ChapterTagsDialogue.xaml.cs">
+    <Compile Include="Constants\LayoutConstants.cs" />
+    <Compile Include="Models\CharacterDialoguePreview.cs" />
+    <Compile Include="Services\WritingSessionService.cs" />
+    <Compile Include="Services\ChapterTagsService.cs" />
+    <Compile Include="Views\Dialogs\ChapterTagsDialogue.xaml.cs">
       <DependentUpon>ChapterTagsDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\GlobalSearchDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\GlobalSearchDialogue.xaml.cs">
       <DependentUpon>GlobalSearchDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Components\DialogueWindows\WritingPromptsDialogue.xaml.cs">
+    <Compile Include="Views\Dialogs\WritingPromptsDialogue.xaml.cs">
       <DependentUpon>WritingPromptsDialogue.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Pages\StoryPinboardPage.xaml.cs">
+    <Compile Include="Views\Pages\StoryPinboardPage.xaml.cs">
       <DependentUpon>StoryPinboardPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
@@ -368,67 +370,67 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\CustomControls\SymbolButton.xaml">
+    <Page Include="Views\Controls\SymbolButton.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Components\CustomControls\ShortcutLineControl.xaml">
+    <Page Include="Views\Controls\ShortcutLineControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\CustomControls\WhatsNextBanner.xaml">
+    <Page Include="Views\Controls\WhatsNextBanner.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\ProjectRenamerDialogue.xaml">
+    <Page Include="Views\Dialogs\ProjectRenamerDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Components\DialogueWindows\ModesDialogue.xaml">
+    <Page Include="Views\Dialogs\ModesDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Components\DialogueWindows\ShortcutsDialogue.xaml">
+    <Page Include="Views\Dialogs\ShortcutsDialogue.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\CharactersPage.xaml">
+    <Page Include="Views\Pages\CharactersPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\ChaptersList.xaml">
+    <Page Include="Views\Controls\ChaptersList.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\ChapterTextBox.xaml">
+    <Page Include="Views\Controls\ChapterTextBox.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\ChapterCreatorOrRenamer.xaml">
+    <Page Include="Views\Dialogs\ChapterCreatorOrRenamer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\ExportDialogue.xaml">
+    <Page Include="Views\Dialogs\ExportDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\LoadProjectDialogue.xaml">
+    <Page Include="Views\Dialogs\LoadProjectDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\SaveDialogue.xaml">
+    <Page Include="Views\Dialogs\SaveDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\ProjectStatsDialogue.xaml">
+    <Page Include="Views\Dialogs\ProjectStatsDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\MainCommandBar.xaml">
+    <Page Include="Views\Controls\MainCommandBar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\MainPage.xaml">
+    <Page Include="Views\Pages\MainPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
@@ -440,23 +442,23 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPage.xaml">
+    <Page Include="Views\Pages\SettingsPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPages\AboutPage.xaml">
+    <Page Include="Views\Pages\Settings\AboutPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\SettingsPages\GeneralPage.xaml">
+    <Page Include="Views\Pages\Settings\GeneralPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\SettingsPages\AccessibilityPage.xaml">
+    <Page Include="Views\Pages\Settings\AccessibilityPage.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </Page>
-    <Page Include="Pages\SettingsPages\PersonalizationPage.xaml">
+    <Page Include="Views\Pages\Settings\PersonalizationPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -468,27 +470,27 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\ChapterNotesPane.xaml">
+    <Page Include="Views\Controls\ChapterNotesPane.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\WelcomePanel.xaml">
+    <Page Include="Views\Controls\WelcomePanel.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Pages\StoryPinboardPage.xaml">
+    <Page Include="Views\Pages\StoryPinboardPage.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\ChapterTagsDialogue.xaml">
+    <Page Include="Views\Dialogs\ChapterTagsDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\GlobalSearchDialogue.xaml">
+    <Page Include="Views\Dialogs\GlobalSearchDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
-    <Page Include="Components\DialogueWindows\WritingPromptsDialogue.xaml">
+    <Page Include="Views\Dialogs\WritingPromptsDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

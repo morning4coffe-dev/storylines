@@ -1,35 +1,14 @@
-using System.Collections.Generic;
+using Storylines.DataStructures;
 using Xunit;
 
 namespace Storylines.Tests.DataStructures;
 
 /// <summary>
 /// Tests for PartialStack&lt;T&gt; — the list-backed stack used by TimeTravelChapter
-/// for the undo queue.
-///
-/// PartialStack is defined inside TimeTravelSystem.cs which has heavy WinUI/ServiceLocator
-/// dependencies, so a local copy is used here. The logic is identical.
+/// for the undo queue. Now linked directly from Scripts/DataStructures/PartialStack.cs.
 /// </summary>
 public class PartialStackTests
 {
-    // Local copy — identical to Storylines.Scripts.Functions.PartialStack<T>
-    private sealed class PartialStack<T>
-    {
-        public List<T> items = new();
-
-        public void Push(T item) => items.Add(item);
-
-        public T Pop()
-        {
-            if (items.Count > 0)
-            {
-                T temp = items[items.Count - 1];
-                items.RemoveAt(items.Count - 1);
-                return temp;
-            }
-            return default!;
-        }
-    }
 
     [Fact]
     public void Push_AddsItemToInternalList()
@@ -137,5 +116,47 @@ public class PartialStackTests
         stack.Push(null);
         Assert.Single(stack.items);
         Assert.Null(stack.Pop());
+    }
+
+    [Fact]
+    public void Count_ReflectsNumberOfItems()
+    {
+        var stack = new PartialStack<int>();
+        Assert.Equal(0, stack.Count);
+
+        stack.Push(1);
+        Assert.Equal(1, stack.Count);
+
+        stack.Push(2);
+        Assert.Equal(2, stack.Count);
+
+        stack.Pop();
+        Assert.Equal(1, stack.Count);
+    }
+
+    [Fact]
+    public void Clear_RemovesAllItems()
+    {
+        var stack = new PartialStack<int>();
+        stack.Push(1);
+        stack.Push(2);
+        stack.Push(3);
+
+        stack.Clear();
+
+        Assert.Equal(0, stack.Count);
+        Assert.Empty(stack.items);
+    }
+
+    [Fact]
+    public void Clear_ThenPush_WorksNormally()
+    {
+        var stack = new PartialStack<string>();
+        stack.Push("a");
+        stack.Clear();
+        stack.Push("b");
+
+        Assert.Equal(1, stack.Count);
+        Assert.Equal("b", stack.Pop());
     }
 }

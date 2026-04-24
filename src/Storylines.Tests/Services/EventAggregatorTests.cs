@@ -13,7 +13,7 @@ namespace Storylines.Tests.Services;
 /// </summary>
 public class EventAggregatorTests
 {
-    // Local copy of EventAggregator — identical logic to Storylines.Scripts.Services.EventAggregator
+    // Local copy of EventAggregator — identical logic to Storylines.Services.EventAggregator
     private sealed class EventAggregator
     {
         private readonly Dictionary<Type, List<Delegate>> _subscribers = new();

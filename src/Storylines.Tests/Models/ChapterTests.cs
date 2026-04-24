@@ -1,5 +1,5 @@
 using System.Collections.Generic;
-using Storylines.Scripts.Variables;
+using Storylines.Models;
 using Xunit;
 
 namespace Storylines.Tests.Models;

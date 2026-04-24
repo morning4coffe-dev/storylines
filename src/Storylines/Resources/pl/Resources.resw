@@ -101,4 +101,152 @@
   <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve"><value>Zielony</value></data>
   <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve"><value>Niebieski</value></data>
   <data name="highlightNone.Content" xml:space="preserve"><value>Brak</value></data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Polacz</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Anuluj</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Ktore watki fabularne pojawiaja sie w tym rozdziale? (oddzielone przecinkiem)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Gdzie rozgrywa sie ten rozdzial?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Podpowiedzi do pisania</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>np. Rywal, Ukochany, Mentor...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>np. Glowny watek, Watek milosny, Tajemnica...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Szukaj we wszystkich rozdzialach</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Dodaj</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Plotno historii</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>Nie znaleziono dopasowania</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Fabuia</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Ustaw status</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Podsumuj, co dzieje sie w tym rozdziale...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Streszczenie</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Szukaj we wszystkich rozdzialach...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Etykieta polaczenia (opcjonalnie)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Pomin</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Dodaj rozdzialy ze strony glownej, aby je tu zobaczyc.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Wybierz postac...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Dodaj relacje</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>np. Stara biblioteka, Ulice centrum...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Sugestie</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Kategoria</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Tagi</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Pisanie</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Edytuj tagi...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Typ relacji:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Notatki</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Korekta</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Postac:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Potrzebujesz inspiracji? Oto kilka pomyslow na poczatek.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>Brak rozdzialow</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Streszczenie rozdzialu - krotki opis dla wlasnego uzytku.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Przeciagnij karty, aby przesunac - Kliknij, aby otworzyc</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>np. prowadzi do, retrospekcja...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>Nie znaleziono wynikow</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Edytuj tagi rozdzialu</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Miejsce</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Utworz</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Finalny</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>Nowa podpowiedz</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>Wszystkie kategorie</value>
+  </data>
+  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+    <value>Wszystkie rozdzialy</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Filtruj wedlug tagu</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Szkic</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>Brak podpowiedzi dla tej kategorii.</value>
+  </data>
 </root>
+

@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -566,5 +566,152 @@
   </data>
   <data name="highlightNone.Content" xml:space="preserve">
     <value>无</value>
+  </data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Connect</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Which plot threads appear in this chapter? (comma-separated)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Where does this chapter take place?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Writing Prompts</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>e.g. Rival, Love interest, Mentor...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. Main quest, Love subplot, Mystery...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Search All Chapters</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Story Canvas</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>No matches found</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Plot</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Set Status</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Summarise what happens in this chapter...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Synopsis</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Type to search across all chapters...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Connection Label (optional)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Add chapters from the main writing page to see them here.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Select character...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Add Relationship</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>e.g. The old library, Downtown streets...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Suggestions</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Writing</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Edit Tags...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Relationship type:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Character:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Need inspiration? Here are some prompts to get you writing.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>No chapters yet</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Chapter synopsis - a brief summary for your own reference.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Drag cards to move - Click to open</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>e.g. leads to, flashback of...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Edit Chapter Tags</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>New Prompt</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>All categories</value>
+  </data>
+  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+    <value>All chapters</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Filter by tag</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>No prompts available for this category.</value>
   </data>
 </root>

@@ -1,8 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Storylines.Scripts.Functions;
-using Storylines.Scripts.Services;
-using Storylines.Scripts.Variables;
+using Storylines.Helpers;
+using Storylines.Services;
+using Storylines.Models;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -56,6 +56,17 @@ namespace Storylines.ViewModels
         private string _ageText = string.Empty;
 
         [ObservableProperty]
+        private string _traitsText = string.Empty;
+
+        [ObservableProperty]
+        private string _appearanceText = string.Empty;
+
+        [ObservableProperty]
+        private BitmapImage _profilePicture;
+
+        private CharacterPicture _pictureData;
+
+        [ObservableProperty]
         private bool _canUndo;
 
         [ObservableProperty]
@@ -90,6 +101,10 @@ namespace Storylines.ViewModels
                 DescriptionText = value.Description ?? string.Empty;
                 RoleText = value.Role ?? string.Empty;
                 AgeText = value.Age ?? string.Empty;
+                TraitsText = value.TraitsText ?? string.Empty;
+                AppearanceText = value.Appearance ?? string.Empty;
+                ProfilePicture = value.Picture?.Image;
+                _pictureData = value.Picture;
             }
         }
 
@@ -112,7 +127,7 @@ namespace Storylines.ViewModels
             }
         }
 
-        private void EnterEditMode()
+        public void EnterEditMode()
         {
             if (SelectedCharacter == null) return;
 
@@ -128,7 +143,7 @@ namespace Storylines.ViewModels
             UnappliedChanges = false;
         }
 
-        private void ExitEditMode()
+        public void ExitEditMode()
         {
             IsEditMode = false;
             IsFieldsEnabled = false;
@@ -151,11 +166,15 @@ namespace Storylines.ViewModels
                 SelectedCharacter.Description = DescriptionText;
                 SelectedCharacter.Role = RoleText;
                 SelectedCharacter.Age = AgeText;
+                SelectedCharacter.TraitsText = TraitsText;
+                SelectedCharacter.Appearance = AppearanceText;
+                if (_pictureData != null)
+                    SelectedCharacter.Picture = _pictureData;
             }
         }
 
         [RelayCommand]
-        private void CancelEdit()
+        public void CancelEdit()
         {
             if (_characterBeforeChange != null)
             {
@@ -163,6 +182,10 @@ namespace Storylines.ViewModels
                 DescriptionText = _characterBeforeChange.Description;
                 RoleText = _characterBeforeChange.Role ?? string.Empty;
                 AgeText = _characterBeforeChange.Age ?? string.Empty;
+                TraitsText = _characterBeforeChange.TraitsText ?? string.Empty;
+                AppearanceText = _characterBeforeChange.Appearance ?? string.Empty;
+                ProfilePicture = _characterBeforeChange.Picture?.Image;
+                _pictureData = _characterBeforeChange.Picture;
             }
 
             ExitEditMode();
@@ -203,13 +226,22 @@ namespace Storylines.ViewModels
             return SelectedCharacter.Name != NameText
                 || SelectedCharacter.Description != DescriptionText
                 || SelectedCharacter.Role != (string.IsNullOrEmpty(RoleText) ? null : RoleText)
-                || SelectedCharacter.Age != (string.IsNullOrEmpty(AgeText) ? null : AgeText);
+                || SelectedCharacter.Age != (string.IsNullOrEmpty(AgeText) ? null : AgeText)
+                || SelectedCharacter.TraitsText != TraitsText
+                || SelectedCharacter.Appearance != AppearanceText
+                || SelectedCharacter.Picture?.Image != ProfilePicture;
         }
 
         private void SortCharacters()
         {
             _projectState.SortCharacters();
             OnPropertyChanged(nameof(Characters));
+        }
+
+        public void SetPicture(CharacterPicture picture, BitmapImage image)
+        {
+            _pictureData = picture;
+            ProfilePicture = image;
         }
     }
 }

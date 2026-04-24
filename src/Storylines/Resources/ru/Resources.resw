@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -780,5 +780,152 @@
   </data>
   <data name="highlightNone.Content" xml:space="preserve">
     <value>Нет</value>
+  </data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Соединить</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Какие сюжетные линии присутствуют в этой главе? (через запятую)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Где происходит действие этой главы?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Подсказки для письма</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>напр. Соперник, Возлюбленный, Наставник...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>напр. Основной квест, Любовная линия, Тайна...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Поиск по всем главам</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Холст истории</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>Совпадений не найдено</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Сюжет</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Установить статус</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Кратко опишите, что происходит в этой главе...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Синопсис</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Искать по всем главам...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Подпись связи (необязательно)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Добавьте главы на главной странице, чтобы увидеть их здесь.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Выберите персонажа...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Добавить отношение</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>напр. Старая библиотека, Улицы центра...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Предложения</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Теги</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Написание</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Редактировать теги...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Тип отношений:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Заметки</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Редактура</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Персонаж:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Нужно вдохновение? Вот несколько идей для начала.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>Пока нет глав</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Синопсис главы — краткое описание для вашего удобства.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Перетащите карточки - Нажмите, чтобы открыть</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>напр. ведёт к, воспоминание о...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>Результатов не найдено</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Редактировать теги главы</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Место</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Финал</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>Новая подсказка</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>Все категории</value>
+  </data>
+  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+    <value>Все главы</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Фильтр по тегу</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Черновик</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>Нет подсказок для этой категории.</value>
   </data>
 </root>

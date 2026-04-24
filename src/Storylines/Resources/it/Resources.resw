@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -790,5 +790,152 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   </data>
   <data name="highlightNone.Content" xml:space="preserve">
     <value>Nessuno</value>
+  </data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Collega</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Annulla</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Quali fili della trama compaiono in questo capitolo? (separati da virgola)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Dove si svolge questo capitolo?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Spunti di scrittura</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>es. Rivale, Interesse amoroso, Mentore...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>es. Missione principale, Sottotrama amorosa, Mistero...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Cerca in tutti i capitoli</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Aggiungi</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Tavola della storia</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>Nessuna corrispondenza trovata</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Trama</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Imposta stato</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Riassumi cosa succede in questo capitolo...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Sinossi</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Cerca in tutti i capitoli...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Etichetta connessione (opzionale)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Salta</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Aggiungi capitoli dalla pagina di scrittura principale per vederli qui.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Seleziona personaggio...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Aggiungi relazione</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>es. La vecchia biblioteca, Strade del centro...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Suggerimenti</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Categoria</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Scrittura</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Modifica tag...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Tipo di relazione:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Revisione</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Personaggio:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Hai bisogno di ispirazione? Ecco alcuni spunti per iniziare a scrivere.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>Nessun capitolo ancora</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Sinossi del capitolo - un breve riassunto per il tuo riferimento.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Trascina le schede per spostarle - Clicca per aprire</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>es. porta a, flashback di...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>Nessun risultato trovato</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Modifica tag del capitolo</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Luogo</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Crea</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Finale</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>Nuovo spunto</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>Tutte le categorie</value>
+  </data>
+  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+    <value>Tutti i capitoli</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Filtra per tag</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Bozza</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>Nessuno spunto disponibile per questa categoria.</value>
   </data>
 </root>

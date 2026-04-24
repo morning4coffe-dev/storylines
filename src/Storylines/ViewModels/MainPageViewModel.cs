@@ -1,8 +1,8 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Storylines.Scripts.Services;
-using Storylines.Scripts.Services.Interfaces;
-using Storylines.Scripts.Variables;
+using Storylines.Services;
+using Storylines.Services.Interfaces;
+using Storylines.Models;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;

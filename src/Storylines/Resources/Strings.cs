@@ -1,5 +1,5 @@
-﻿using Windows.ApplicationModel.Resources;
-using static Storylines.Components.DialogueWindows.SaveDialogue;
+using Windows.ApplicationModel.Resources;
+using static Storylines.Views.Dialogs.SaveDialogue;
 
 namespace Storylines.Resources
 {

@@ -1,11 +1,11 @@
 using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.UI.Xaml.Controls;
-using Storylines.Components;
-using Storylines.Components.DialogueWindows;
-using Storylines.Pages;
-using Storylines.Scripts.Functions;
-using Storylines.Scripts.Services;
-using Storylines.Scripts.Variables;
+using Storylines.Views.Controls;
+using Storylines.Views.Dialogs;
+using Storylines.Views.Pages;
+using Storylines.Helpers;
+using Storylines.Services;
+using Storylines.Models;
 using Storylines.ViewModels;
 using System;
 using Windows.ApplicationModel;
@@ -18,6 +18,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Storylines.Services.Interfaces;
 
 namespace Storylines
 {
@@ -51,7 +52,7 @@ namespace Storylines
             });
 
             if (SettingsValues.autosaveEnabled)
-                Autosave.Enable();
+                AutosaveService.Enable();
 
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
@@ -152,13 +153,13 @@ namespace Storylines
             switch (currentPage)
             {
                 case Pages.Settings:
-                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Settings);
+                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.Settings);
                     break;
                 case Pages.Characters:
-                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Characters);
+                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.Characters);
                     break;
                 case Pages.MainPage:
-                    ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.MainPage);
+                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.MainPage);
                     break;
             }
 
@@ -253,8 +254,8 @@ namespace Storylines
                 (file.FileType != ".srl" && file.FileType != ".txt"))
                 return;
 
-            if (Scripts.Functions.TimeTravelSystem.unSavedProgress)
-                _ = Scripts.Functions.NotificationManager.DisplayUnsavedProgressDialogue(false);
+            if (TimeTravelSystem.unSavedProgress)
+                _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
             else
                 SaveSystem.DefaultLaunch(file);
         }

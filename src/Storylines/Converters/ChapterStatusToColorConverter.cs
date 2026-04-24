@@ -1,4 +1,4 @@
-using Storylines.Scripts.Variables;
+using Storylines.Models;
 using System;
 using Windows.UI;
 using Windows.UI.Xaml.Data;
