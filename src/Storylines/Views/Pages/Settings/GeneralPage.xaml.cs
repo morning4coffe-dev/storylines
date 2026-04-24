@@ -1,5 +1,6 @@
 using Storylines.Services;
 using System;
+using System.Globalization;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
@@ -30,7 +31,7 @@ namespace Storylines.Views.Pages.Settings
             autosaveToggleSwitch.IsOn = SettingsValues.autosaveEnabled;
             foreach (var item in autosaveIntervalComboBox.Items)
             {
-                if (Convert.ToDouble((item as ComboBoxItem).Tag) == SettingsValues.autosaveInterval)
+                if (Convert.ToDouble((item as ComboBoxItem).Tag, CultureInfo.InvariantCulture) == SettingsValues.autosaveInterval)
                     autosaveIntervalComboBox.SelectedItem = item;
             }
             dailyWordGoalNumBox.Value = SettingsValues.dailyWordGoal;
@@ -58,13 +59,29 @@ namespace Storylines.Views.Pages.Settings
         private void OnAutosaveToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (!loading)
+            {
+                if (autosaveToggleSwitch.IsOn && SaveSystem.currentProject?.file == null)
+                {
+                    autosaveToggleSwitch.IsOn = false;
+                    return;
+                }
                 localSettings.Values[SettingsValueStrings.AutosaveEnabled] = autosaveToggleSwitch.IsOn;
+
+                if (autosaveToggleSwitch.IsOn)
+                    AutosaveService.Enable();
+                else
+                    AutosaveService.Disable();
+            }
         }
 
         private void OnAutosaveIntervalComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (!loading)
-                localSettings.Values[SettingsValueStrings.AutosaveInterval] = Convert.ToDouble((autosaveIntervalComboBox.SelectedItem as ComboBoxItem).Tag);
+            {
+                localSettings.Values[SettingsValueStrings.AutosaveInterval] = Convert.ToDouble((autosaveIntervalComboBox.SelectedItem as ComboBoxItem).Tag, CultureInfo.InvariantCulture);
+                if (SettingsValues.autosaveEnabled)
+                    AutosaveService.Enable(); // Re-enable to pick up new interval
+            }
         }
 
         private void OnDailyWordGoalNumBox_ValueChanged(Microsoft.UI.Xaml.Controls.NumberBox sender, Microsoft.UI.Xaml.Controls.NumberBoxValueChangedEventArgs args)

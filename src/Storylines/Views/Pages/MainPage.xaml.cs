@@ -55,7 +55,7 @@ namespace Storylines.Views.Pages
                 App.item = null;
             }
 
-            if (ChapterList.listView.Items.Count > 0 && ChaptersList.selectedIndex <= ChapterList.listView.Items.Count)
+            if (ChapterList.listView.Items.Count > 0 && ChaptersList.selectedIndex < ChapterList.listView.Items.Count)
                 ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
             ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
 
@@ -84,7 +84,12 @@ namespace Storylines.Views.Pages
             {
                 AppView.current.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
-                ViewModel.DownBarText = ResourceLoader.GetForCurrentView().GetString("downBarTextS");
+                var res = ResourceLoader.GetForCurrentView();
+                ViewModel.DownBarText = res.GetString("downBarTextS");
+                downBarWordsText.Text = $"{res.GetString("words")}: 0";
+                downBarCharsText.Text = $"{res.GetString("charactersStory")}: 0";
+                downBarReadTimeText.Text = string.Empty;
+                downBarChapterName.Text = string.Empty;
             }
         }
 
@@ -229,10 +234,11 @@ namespace Storylines.Views.Pages
             if (progress >= 100 && !ViewModel.WordGoalCelebrated)
             {
                 ViewModel.WordGoalCelebrated = true;
+                var res = ResourceLoader.GetForCurrentView();
                 NotificationManager.DisplayInAppNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
-                    "Chapter goal reached!",
-                    $"You've hit your word goal for \"{chapter.Name}\". Keep writing! 🎉");
+                    res.GetString("wordGoalReachedTitle"),
+                    string.Format(res.GetString("wordGoalReachedMessage"), chapter.Name));
             }
             else if (progress < 100)
             {
@@ -262,7 +268,7 @@ namespace Storylines.Views.Pages
         {
             if (show)
             {
-                notesRow.Height = new GridLength(140);
+                notesRow.Height = new GridLength(220);
                 chapterNotesPane.Visibility = Visibility.Visible;
                 chapterNotesPane.LoadNotes();
             }

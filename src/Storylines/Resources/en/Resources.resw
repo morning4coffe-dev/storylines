@@ -172,7 +172,7 @@
     <value>Interval</value>
   </data>
   <data name="autosaveInterval1.Content" xml:space="preserve">
-    <value>Instantly</value>
+    <value>30 seconds</value>
   </data>
   <data name="autosaveInterval10.Content" xml:space="preserve">
     <value>10 minutes</value>
@@ -197,6 +197,9 @@
   </data>
   <data name="autosaveText.Text" xml:space="preserve">
     <value>Autosave</value>
+  </data>
+  <data name="autosave.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Autosave (adjust interval in Settings &gt; General)</value>
   </data>
   <data name="byChapterText.Text" xml:space="preserve">
     <value>By chapter</value>
@@ -1149,5 +1152,29 @@
   </data>
   <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
     <value>Auto-arrange</value>
+  </data>
+  <data name="relationshipsTitle.Text" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+  <data name="addRelationshipButton.Content" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="noRelationshipsText.Text" xml:space="preserve">
+    <value>No relationships defined</value>
+  </data>
+  <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Add a tag…</value>
+  </data>
+  <data name="chapterTagSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="readTimeMinRead" xml:space="preserve">
+    <value>min read</value>
+  </data>
+  <data name="wordGoalReachedTitle" xml:space="preserve">
+    <value>Chapter goal reached!</value>
+  </data>
+  <data name="wordGoalReachedMessage" xml:space="preserve">
+    <value>You've hit your word goal for "{0}". Keep writing!</value>
   </data>
 </root>

@@ -12,27 +12,32 @@ namespace Storylines.Services
 
         private static void Do()
         {
-            if (SettingsValues.autosaveEnabled && TimeTravelSystem.unSavedProgress)
+            if (SettingsValues.autosaveEnabled && TimeTravelSystem.unSavedProgress && SaveSystem.currentProject?.file != null)
                 SaveSystem.Save();
                 //TODO: Play save animation
         }
 
         public static void Enable()
         {
-            if (!SettingsValues.autosaveEnabled || autosaveTimer == null)
-            {  
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = true;
-
-                Do();
-                autosaveTimer = new DispatcherTimer();
-                autosaveTimer.Tick += OnAutosaveTimer_Tick;
-                var interval = SettingsValues.autosaveInterval;
-                if (interval >= 1)
-                    autosaveTimer.Interval = new TimeSpan(0, (int)SettingsValues.autosaveInterval, 0);
-                else
-                    autosaveTimer.Interval = new TimeSpan(0, 0, (int)(SettingsValues.autosaveInterval * 10));
-                autosaveTimer.Start();
+            // Dispose any existing timer first
+            if (autosaveTimer != null)
+            {
+                autosaveTimer.Tick -= OnAutosaveTimer_Tick;
+                autosaveTimer.Stop();
+                autosaveTimer = null;
             }
+
+            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = true;
+
+            Do();
+            autosaveTimer = new DispatcherTimer();
+            autosaveTimer.Tick += OnAutosaveTimer_Tick;
+            var interval = SettingsValues.autosaveInterval;
+            if (interval >= 1)
+                autosaveTimer.Interval = new TimeSpan(0, (int)interval, 0);
+            else
+                autosaveTimer.Interval = new TimeSpan(0, 0, (int)(interval * 60));
+            autosaveTimer.Start();
         }
 
         public static void Disable()

@@ -76,7 +76,15 @@ namespace Storylines.ViewModels
         private void ToggleAutosave()
         {
             if (IsAutosaveChecked)
+            {
+                if (SaveSystem.currentProject?.file == null)
+                {
+                    // Can't autosave without a file — revert the toggle
+                    IsAutosaveChecked = false;
+                    return;
+                }
                 AutosaveService.Enable();
+            }
             else
                 AutosaveService.Disable();
         }
@@ -88,7 +96,7 @@ namespace Storylines.ViewModels
         private void ShowProjectStats() => _dialogs.OpenProjectStats(false);
 
         [RelayCommand]
-        private void NavigateToCharacters() => ServiceLocator.Navigation.NavigateTo(NavigationTarget.Characters);
+        private void NavigateToCharacters() => AppView.current.ChangePage(AppView.Pages.Characters);
 
         [RelayCommand]
         private void ShowShortcuts() => _dialogs.OpenShortcuts();

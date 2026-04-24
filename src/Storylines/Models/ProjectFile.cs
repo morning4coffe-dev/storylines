@@ -78,6 +78,8 @@ namespace Storylines.Models
 
         public static async Task LoadAllAsync()
         {
+            projectFiles.Clear();
+
             foreach (AccessListEntry token in StorageApplicationPermissions.FutureAccessList.Entries)
             {
                 Task<StorageFile> task = GetProjectFromTokenAsync(token.Token);

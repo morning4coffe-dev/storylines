@@ -1002,14 +1002,6 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
-                    <AppBarButton x:Name="globalSearchButton"
-                                  Label="Search All"
-                                  CornerRadius="4"
-                                  Click="OnGlobalSearchButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="&#xE773;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
                                                          From="8, 0, 0"

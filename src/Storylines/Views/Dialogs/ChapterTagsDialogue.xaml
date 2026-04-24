@@ -27,7 +27,7 @@
         <StackPanel Spacing="4">
             <TextBlock x:Uid="chapterTagsLabel" />
             <controls:TokenizingTextBox x:Name="tagsTokenBox"
-                                        PlaceholderText="Add a tag…"
+                                        x:Uid="chapterTagPlaceholder"
                                         TokenDelimiter=","
                                         MaxHeight="120"
                                         CornerRadius="6"
@@ -65,7 +65,7 @@
                 <ColumnDefinition />
             </Grid.ColumnDefinitions>
             <customcontrols:SymbolButton x:Name="saveButton"
-                                         Text="Save"
+                                         x:Uid="chapterTagSave"
                                          Glyph="&#xE74E;"
                                          IsPrimary="True"
                                          HorizontalAlignment="Stretch"

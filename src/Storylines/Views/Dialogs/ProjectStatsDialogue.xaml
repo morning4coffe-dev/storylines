@@ -8,8 +8,8 @@
                CornerRadius="8">
 
     <Grid MinWidth="410"
-          MaxWidth="600"
-          MaxHeight="500"
+          MaxWidth="700"
+          MaxHeight="600"
           Margin="4">
         <Grid.RowDefinitions>
             <RowDefinition Height="38" />
@@ -116,8 +116,12 @@
                                FontWeight="SemiBold"
                                FontSize="17"
                                Margin="0,8,0,0" />
-                    <StackPanel x:Name="chapterBarsPanel"
-                                Spacing="6" />
+                    <ScrollViewer MaxHeight="350"
+                                  VerticalScrollBarVisibility="Auto"
+                                  HorizontalScrollBarVisibility="Disabled">
+                        <StackPanel x:Name="chapterBarsPanel"
+                                    Spacing="6" />
+                    </ScrollViewer>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

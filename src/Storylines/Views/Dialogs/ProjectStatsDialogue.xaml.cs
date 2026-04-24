@@ -159,10 +159,10 @@ namespace Storylines.Views.Dialogs
 
             MainPage.Current.downBarWordsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";
             MainPage.Current.downBarCharsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedPrefix}{charCount}";
-            MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} min read";
+            MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} {ResourceLoader.GetForCurrentView().GetString("readTimeMinRead")}";
 
             // Update chapter name if available
-            var currentChapter = ServiceLocator.ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex < ServiceLocator.ProjectState.Chapters.Count ? ServiceLocator.ProjectState.Chapters[ChaptersList.selectedIndex] : null;
+            var currentChapter = ServiceLocator.ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex >= 0 && ChaptersList.selectedIndex < ServiceLocator.ProjectState.Chapters.Count ? ServiceLocator.ProjectState.Chapters[ChaptersList.selectedIndex] : null;
             if (currentChapter != null)
                 MainPage.Current.downBarChapterName.Text = currentChapter.Name;
 

@@ -196,7 +196,7 @@
                           SelectionChanged="OnAutosaveIntervalComboBox_SelectionChanged">
                     <ComboBox.Items>
                         <ComboBoxItem x:Uid="autosaveInterval1"
-                                      Tag="0,1" />
+                                      Tag="0.5" />
                         <ComboBoxItem x:Uid="autosaveInterval2"
                                       Tag="2" />
                         <ComboBoxItem x:Uid="autosaveInterval5"

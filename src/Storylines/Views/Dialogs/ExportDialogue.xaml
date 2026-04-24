@@ -83,15 +83,19 @@
                 <!--For animation to work properly-->
                 <StackPanel Spacing="5">
                     <TextBlock Text="{x:Bind resources:ExportDialogue.FileName}" />
-                    <StackPanel Spacing="8"
-                                Orientation="Horizontal">
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="80" />
+                        </Grid.ColumnDefinitions>
                         <TextBox x:Name="fileNameText"
                                  PlaceholderText="{x:Bind resources:ExportDialogue.FileNamePlaceholder}"
-                                 Width="212"
+                                 HorizontalAlignment="Stretch"
                                  Height="38"
                                  Style="{StaticResource SmallTextBoxStyle}"
                                  TextChanged="OnNameTextBox_TextChanged" />
                         <ComboBox x:Name="extensionComboBox"
+                                  Grid.Column="1"
                                   ItemsSource="{x:Bind extensions, Mode=OneWay}"
                                   SelectedIndex="0"
                                   Height="38"
@@ -102,7 +106,7 @@
                                   SelectionChanged="OnExtensionComboBox_SelectionChanged"
                                   DropDownOpened="Flyout_Opened"
                                   DropDownClosed="Flyout_Closed" />
-                    </StackPanel>
+                    </Grid>
                     <TextBlock x:Name="nameCollisionWarning"
                                Text="{x:Bind resources:ExportDialogue.FileNameCollisionError}"
                                Foreground="Red"
@@ -113,9 +117,12 @@
 
                 <StackPanel Spacing="8">
                     <TextBlock Text="{x:Bind resources:ExportDialogue.FileLocation}" />
-                    <StackPanel Spacing="8"
-                                Orientation="Horizontal">
-                        <Grid Width="248"
+                    <Grid ColumnSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="44" />
+                        </Grid.ColumnDefinitions>
+                        <Grid HorizontalAlignment="Stretch"
                               Background="{x:Bind fileNameText.Background, Mode=OneWay}"
                               CornerRadius="4"
                               BorderThickness="1"
@@ -130,7 +137,8 @@
                                        VerticalAlignment="Center"
                                        Visibility="Collapsed" />
                         </Grid>
-                        <Button Height="38"
+                        <Button Grid.Column="1"
+                                Height="38"
                                 CornerRadius="4"
                                 Width="44"
                                 VerticalAlignment="Bottom"
@@ -146,7 +154,7 @@
                                 </FontIcon>
                             </Button.Content>
                         </Button>
-                    </StackPanel>
+                    </Grid>
                 </StackPanel>
 
                 <CheckBox x:Name="withChapterNameCheckBox"
