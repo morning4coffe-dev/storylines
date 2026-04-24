@@ -101,7 +101,7 @@ namespace Storylines.Views.Pages.Settings
             {
                 string fontFamily = item.Tag?.ToString() ?? "Calibri";
                 localSettings.Values[SettingsValueStrings.EditorFontFamily] = fontFamily;
-                ServiceLocator.Events.Publish(new SettingChangedEvent
+                App.GetService<EventAggregator>().Publish(new SettingChangedEvent
                 {
                     SettingKey = SettingsValueStrings.EditorFontFamily,
                     Value = fontFamily
@@ -115,7 +115,7 @@ namespace Storylines.Views.Pages.Settings
             {
                 double size = fontSizeNumBox.Value;
                 localSettings.Values[SettingsValueStrings.EditorFontSize] = size;
-                ServiceLocator.Events.Publish(new SettingChangedEvent
+                App.GetService<EventAggregator>().Publish(new SettingChangedEvent
                 {
                     SettingKey = SettingsValueStrings.EditorFontSize,
                     Value = size

@@ -1,3 +1,4 @@
+using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AppCenter;
 using Microsoft.AppCenter.Analytics;
 using Microsoft.AppCenter.Crashes;
@@ -29,14 +30,30 @@ namespace Storylines
         public static IStorageItem item;
         private ApplicationViewTitleBar titleBar;
 
+        public static new App Current => Application.Current as App;
+
+        public IServiceProvider Services { get; }
+
         public event PropertyChangedEventHandler PropertyChanged;
+
         public App()
         {
             InitializeComponent();
             Suspending += OnSuspending;
 
-            ServiceLocator.Initialize();
+            Services = ServiceConfiguration.Configure();
         }
+
+        public static T GetService<T>() where T : notnull
+        {
+            if (Current?.Services is null)
+                throw new InvalidOperationException("Application services have not been configured.");
+
+            return Current.Services.GetRequiredService<T>();
+        }
+
+        public static T TryGetService<T>() where T : class
+            => Current?.Services?.GetService<T>();
 
         /// <param name="e">Details about the launch request and process</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
@@ -141,7 +158,7 @@ namespace Storylines
                 }
                 catch (Exception ex)
                 {
-                    ServiceLocator.Logger?.Warning($"Failed to load last project: {ex.Message}");
+                    GetService<Storylines.Services.Interfaces.ILogger>()?.Warning($"Failed to load last project: {ex.Message}");
                 }
             }
         }

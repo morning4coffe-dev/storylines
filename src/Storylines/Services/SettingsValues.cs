@@ -83,7 +83,7 @@ namespace Storylines.Services
             ThemeSettings.ChangeTheme(Convert.ToInt32(localSettings.Values[SettingsValueStrings.AppTheme] ?? 2), ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
             selectedAccent = (SelectedAccent)(localSettings.Values[SettingsValueStrings.AppAccent] ?? 1);
             customAccentColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor((ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppCustomAccent] ?? appAccentColor.ToHex()).ToString());
-            ServiceLocator.Events.Publish(new SettingChangedEvent
+            App.GetService<EventAggregator>().Publish(new SettingChangedEvent
             {
                 SettingKey = SettingsValueStrings.TextBoxSolidBackground,
                 Value = Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false)

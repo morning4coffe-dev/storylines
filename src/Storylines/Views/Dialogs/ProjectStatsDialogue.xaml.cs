@@ -19,6 +19,8 @@ namespace Storylines.Views.Dialogs
 {
     public sealed partial class ProjectStatsDialogue : ContentDialog
     {
+        private static ProjectState ProjectState => App.GetService<ProjectState>();
+
         public static ProjectStatsDialogue textBoxStats;
 
         public ProjectStatsDialogue()
@@ -48,7 +50,7 @@ namespace Storylines.Views.Dialogs
 
             txt = txt.ToLower();
 
-            int charactersCount = ServiceLocator.ProjectState.Characters.Count;
+            int charactersCount = ProjectState.Characters.Count;
 
             string txtWithoutSpace = txt.Replace(" ", "");
 
@@ -63,7 +65,7 @@ namespace Storylines.Views.Dialogs
 
             storyRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {storyCharCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {storyWords}\n{ResourceLoader.GetForCurrentView().GetString("estimatedReadTime")}: {readMinutes} {ResourceLoader.GetForCurrentView().GetString("min")}\n{ResourceLoader.GetForCurrentView().GetString("estimatedPageCount")}: {storyCharCount / 3838}";
             charactersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("characters")}: {charactersCount}";
-            chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {ServiceLocator.ProjectState.Chapters.Count}";
+            chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {ProjectState.Chapters.Count}";
             textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";
 
             var stringBuilder = new StringBuilder();
@@ -91,7 +93,7 @@ namespace Storylines.Views.Dialogs
         {
             chapterBarsPanel.Children.Clear();
 
-            var chapters = ServiceLocator.ProjectState.Chapters;
+            var chapters = ProjectState.Chapters;
             if (chapters == null || chapters.Count == 0)
                 return;
 
@@ -134,7 +136,7 @@ namespace Storylines.Views.Dialogs
         public static string GetTextFromAllChapters()
         { 
             string storyCharacterCount = "";
-            foreach (Chapter chapter in ServiceLocator.ProjectState.Chapters)
+            foreach (Chapter chapter in ProjectState.Chapters)
             {
                 RichEditBox richTxt = new RichEditBox();
                 richTxt.Document.SetText(TextSetOptions.FormatRtf, chapter.Text);
@@ -162,7 +164,7 @@ namespace Storylines.Views.Dialogs
             MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} {ResourceLoader.GetForCurrentView().GetString("readTimeMinRead")}";
 
             // Update chapter name if available
-            var currentChapter = ServiceLocator.ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex >= 0 && ChaptersList.selectedIndex < ServiceLocator.ProjectState.Chapters.Count ? ServiceLocator.ProjectState.Chapters[ChaptersList.selectedIndex] : null;
+            var currentChapter = ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex >= 0 && ChaptersList.selectedIndex < ProjectState.Chapters.Count ? ProjectState.Chapters[ChaptersList.selectedIndex] : null;
             if (currentChapter != null)
                 MainPage.Current.downBarChapterName.Text = currentChapter.Name;
 

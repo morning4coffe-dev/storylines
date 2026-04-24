@@ -1,6 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Storylines.Views.Controls;
 using Storylines.Helpers;
 using Storylines.Services;
 using Windows.ApplicationModel;
@@ -30,10 +28,11 @@ namespace Storylines.ViewModels
 
         private readonly string _editedString;
 
-        public AppViewModel()
+        public AppViewModel(EventAggregator events = null)
         {
+            events ??= App.TryGetService<EventAggregator>() ?? new EventAggregator();
             _editedString = ResourceLoader.GetForViewIndependentUse().GetString("appHeaderEdited");
-            ServiceLocator.Events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
+            events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
             UpdateTitleBar();
         }
 

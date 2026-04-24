@@ -42,7 +42,7 @@ namespace Storylines.Views.Dialogs
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             SaveSystem.currentProject.projectName = chapterNameBox.Text;
-            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
+            App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 
             projectRenamer.Hide();
             //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);

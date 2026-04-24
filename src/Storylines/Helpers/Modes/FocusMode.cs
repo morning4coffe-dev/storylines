@@ -146,12 +146,12 @@ namespace Storylines.Helpers.Modes
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesEnableButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesEnableButton);
 
-            mainCommandBarInstance.dialoguesEnableButton.IsEnabled = Services.ServiceLocator.ProjectState.Characters.Count > 0;
+            mainCommandBarInstance.dialoguesEnableButton.IsEnabled = App.GetService<ProjectState>().Characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(mainCommandBarInstance.dialoguesAddButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dialoguesAddButton);
 
-            mainCommandBarInstance.dialoguesAddButton.IsEnabled = Services.ServiceLocator.ProjectState.Characters.Count > 0;
+            mainCommandBarInstance.dialoguesAddButton.IsEnabled = App.GetService<ProjectState>().Characters.Count > 0;
 
             _ = mainCommandBarInstance.commandBarInsert.PrimaryCommands.Remove(MainPage.CommandBar.dictationButton);
             CommandBar.PrimaryCommands.Add(mainCommandBarInstance.dictationButton);

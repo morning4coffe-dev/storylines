@@ -2,6 +2,7 @@ using Storylines.Views.Pages;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Models;
+using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
 using System.Threading.Tasks;
@@ -17,11 +18,25 @@ namespace Storylines.Views.Controls
 {
     public sealed partial class MainCommandBar : UserControl
     {
-        public CommandBarViewModel ViewModel => ServiceLocator.CommandBarViewModel;
+        private readonly ChaptersListViewModel _chaptersListViewModel;
+        private readonly IDialogService _dialogs;
+        private readonly INavigationService _navigation;
+        private readonly ProjectState _projectState;
+        private readonly ITextEditorService _textEditor;
+        private readonly CommandBarViewModel _viewModel;
+
+        public CommandBarViewModel ViewModel => _viewModel;
 
         public MainCommandBar()
         {
             this.InitializeComponent();
+            _chaptersListViewModel = App.GetService<ChaptersListViewModel>();
+            _dialogs = App.GetService<IDialogService>();
+            _navigation = App.GetService<INavigationService>();
+            _projectState = App.GetService<ProjectState>();
+            _textEditor = App.GetService<ITextEditorService>();
+            _viewModel = App.GetService<CommandBarViewModel>();
+
             if(MainPage.FocusMode == null && MainPage.ReadMode == null)
                 MainPage.CommandBar = this;
         }
@@ -67,8 +82,8 @@ namespace Storylines.Views.Controls
         #region INSERT
         private void OnChapterAddButton_Click(object sender, RoutedEventArgs e)
         {
-            if(ServiceLocator.ChaptersListViewModel.CanAdd)
-                ServiceLocator.Dialogs.OpenChapterCreator();
+            if(_chaptersListViewModel.CanAdd)
+                _dialogs.OpenChapterCreator();
         }
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
@@ -83,13 +98,13 @@ namespace Storylines.Views.Controls
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Services.ServiceLocator.ProjectState.Chapters.Count == 0)
+            if (_projectState.Chapters.Count == 0)
             {
-                Services.ServiceLocator.ProjectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                ServiceLocator.TextEditor.SelectedChapterIndex = Services.ServiceLocator.ProjectState.Chapters.Count - 1;
+                _projectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                _textEditor.SelectedChapterIndex = _projectState.Chapters.Count - 1;
             }
 
-            ServiceLocator.TextEditor.Focus();
+            _textEditor.Focus();
 
             InputInjector inputInjector = InputInjector.TryCreate();
 
@@ -119,7 +134,7 @@ namespace Storylines.Views.Controls
             => MainPage.ChapterText.OpenSearchAndReplace();
 
         private void OnPinboardButton_Click(object sender, RoutedEventArgs e)
-            => ServiceLocator.Navigation.NavigateTo(Services.Interfaces.NavigationTarget.Pinboard);
+            => _navigation.NavigateTo(Services.Interfaces.NavigationTarget.Pinboard);
 
         private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
             => GlobalSearchDialogue.Open();
@@ -146,7 +161,7 @@ namespace Storylines.Views.Controls
 
         public void ReadAloud()
         {
-            var speechText = ServiceLocator.TextEditor.GetText(Services.Interfaces.TextFormat.PlainText);
+            var speechText = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
             if (speechText.Length > 0)
             {
                 _ = ToReadAsync(speechText);

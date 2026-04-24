@@ -6,6 +6,7 @@ using System.Linq;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
@@ -22,11 +23,13 @@ namespace Storylines.Views.Dialogs
         public static async void Open()
         {
             var dialog = new GlobalSearchDialogue();
+            var navigation = App.GetService<INavigationService>();
+            var textEditor = App.GetService<ITextEditorService>();
             dialog._navigateToChapter = (index) =>
             {
                 dialog.Hide();
-                ServiceLocator.Navigation.GoBack();
-                ServiceLocator.TextEditor.SelectedChapterIndex = index;
+                navigation.GoBack();
+                textEditor.SelectedChapterIndex = index;
                 if (Pages.MainPage.ChapterList?.listView != null)
                     Pages.MainPage.ChapterList.listView.SelectedIndex = index;
             };
@@ -47,7 +50,7 @@ namespace Storylines.Views.Dialogs
                 return;
             }
 
-            var chapters = ServiceLocator.ProjectState.Chapters;
+            var chapters = App.GetService<ProjectState>().Chapters;
             for (int i = 0; i < chapters.Count; i++)
             {
                 var chapter = chapters[i];

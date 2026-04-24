@@ -76,12 +76,13 @@ namespace Storylines.ViewModels
 
         private Character _characterBeforeChange;
 
-        public CharactersPageViewModel()
+        public CharactersPageViewModel(ProjectState projectState = null, EventAggregator events = null)
         {
-            _projectState = ServiceLocator.ProjectState;
+            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
             EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("editText");
 
-            ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            (events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator())
+                .Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)

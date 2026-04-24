@@ -61,16 +61,18 @@ namespace Storylines.Views.Dialogs
 
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
+            var projectState = App.GetService<ProjectState>();
+
             switch (currentTask)
             {
                 case Task.Create:
                     var itemID = MainPage.ChapterList.listView.Items.Count;
-                    ServiceLocator.ProjectState.AddChapterFromCreator(ServiceLocator.ProjectState.Chapters.Count + 1, chapterNameBox.Text);
+                    projectState.AddChapterFromCreator(projectState.Chapters.Count + 1, chapterNameBox.Text);
                     MainPage.ChapterList.CheckForEmptyList();
                     MainPage.ChapterList.listView.SelectedIndex = itemID;
                     break;
                 case Task.Rename:
-                    ServiceLocator.ProjectState.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
+                    projectState.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
                     break;
             }
             chapterCreator.Hide();

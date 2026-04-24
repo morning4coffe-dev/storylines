@@ -13,11 +13,16 @@ using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Shapes;
 using Storylines.Helpers;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Pages
 {
     public sealed partial class StoryPinboardPage : Page
     {
+        private INavigationService Navigation => App.GetService<INavigationService>();
+        private ProjectState ProjectState => App.GetService<ProjectState>();
+        private ITextEditorService TextEditor => App.GetService<ITextEditorService>();
+
         private const double CardWidth = 200;
         private const double CardHeight = 180;
 
@@ -49,7 +54,7 @@ namespace Storylines.Views.Pages
         {
             AppView.current.page = AppView.Pages.MainPage;
 
-            _allChapters = ServiceLocator.ProjectState.Chapters;
+            _allChapters = ProjectState.Chapters;
             _activeTagFilter = null;
 
             PopulateTagFilter();
@@ -387,7 +392,7 @@ namespace Storylines.Views.Pages
 
         private List<string> DetectCharactersInChapter(Chapter chapter)
         {
-            var characters = ServiceLocator.ProjectState.Characters;
+            var characters = ProjectState.Characters;
             if (characters == null || characters.Count == 0 || string.IsNullOrEmpty(chapter.Text))
                 return new List<string>();
 
@@ -405,7 +410,7 @@ namespace Storylines.Views.Pages
 
         private void DrawConnections()
         {
-            var connections = ServiceLocator.ProjectState.PinboardConnections;
+            var connections = ProjectState.PinboardConnections;
             if (connections == null) return;
 
             // Build a set of visible chapter indices for filtering
@@ -672,8 +677,8 @@ namespace Storylines.Views.Pages
             int index = _allChapters.IndexOf(chapter);
             if (index < 0) return;
 
-            ServiceLocator.Navigation.GoBack();
-            ServiceLocator.TextEditor.SelectedChapterIndex = index;
+            Navigation.GoBack();
+            TextEditor.SelectedChapterIndex = index;
 
             if (MainPage.ChapterList?.listView != null)
                 MainPage.ChapterList.listView.SelectedIndex = index;
@@ -727,7 +732,7 @@ namespace Storylines.Views.Pages
 
         private async System.Threading.Tasks.Task AddConnectionAsync(int fromIndex, int toIndex)
         {
-            var connections = ServiceLocator.ProjectState.PinboardConnections;
+            var connections = ProjectState.PinboardConnections;
 
             // Don't add duplicates
             bool exists = connections.Any(c =>
@@ -760,7 +765,7 @@ namespace Storylines.Views.Pages
 
         private void RemoveConnection(int fromIndex, int toIndex)
         {
-            var connections = ServiceLocator.ProjectState.PinboardConnections;
+            var connections = ProjectState.PinboardConnections;
             int removed = connections.RemoveAll(c =>
                 (c.FromIndex == fromIndex && c.ToIndex == toIndex) ||
                 (c.FromIndex == toIndex && c.ToIndex == fromIndex));
@@ -805,7 +810,7 @@ namespace Storylines.Views.Pages
 
         private void OnBackButton_Click(object sender, RoutedEventArgs e)
         {
-            ServiceLocator.Navigation.GoBack();
+            Navigation.GoBack();
         }
     }
 }

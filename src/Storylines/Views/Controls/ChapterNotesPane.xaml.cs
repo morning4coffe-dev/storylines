@@ -102,8 +102,8 @@ namespace Storylines.Views.Controls
                 // Auto-register new plot threads in the project
                 foreach (var thread in chapter.PlotThreads)
                 {
-                    if (!ServiceLocator.ProjectState.PlotThreads.Contains(thread, System.StringComparer.CurrentCultureIgnoreCase))
-                        ServiceLocator.ProjectState.PlotThreads.Add(thread);
+                    if (!App.GetService<ProjectState>().PlotThreads.Contains(thread, System.StringComparer.CurrentCultureIgnoreCase))
+                        App.GetService<ProjectState>().PlotThreads.Add(thread);
                 }
 
                 TimeTravelSystem.SomethingChanged();

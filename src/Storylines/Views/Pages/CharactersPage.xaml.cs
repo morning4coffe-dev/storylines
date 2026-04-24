@@ -21,15 +21,18 @@ namespace Storylines.Views.Pages
 {
     public sealed partial class CharactersPage : Page
     {
+        private readonly EventAggregator _events;
+        private readonly ProjectState _projectState;
+
         public bool isEditModeEnabled { set; get; } = false;
         public bool isAddEnabled { set; get; } = true;
         public bool isRemoveEnabled { set; get; } = true;
 
-        public ObservableCollection<Character> Characters => ServiceLocator.ProjectState.Characters;
+        public ObservableCollection<Character> Characters => _projectState.Characters;
         public ObservableCollection<Character> FilteredCharacters { get; } = new ObservableCollection<Character>();
         public ObservableCollection<CharacterDialoguePreview> DialoguePreviews { get; } = new ObservableCollection<CharacterDialoguePreview>();
 
-        public CharactersPageViewModel ViewModel { get; } = new CharactersPageViewModel();
+        public CharactersPageViewModel ViewModel { get; }
         private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
 
         private bool selectionChanged = false;
@@ -45,6 +48,10 @@ namespace Storylines.Views.Pages
         {
             InitializeComponent();
 
+            _events = App.GetService<EventAggregator>();
+            _projectState = App.GetService<ProjectState>();
+            ViewModel = App.GetService<CharactersPageViewModel>();
+
             current = this;
 
             AppView.current.page = AppView.Pages.Characters;
@@ -53,14 +60,14 @@ namespace Storylines.Views.Pages
 
             RefreshCharacterList();
 
-            ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            _events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
 
             // Listen for character selection events from TimeTravelCharacter
-            ServiceLocator.Events.Subscribe<ChapterSelectedEvent>(e =>
+            _events.Subscribe<ChapterSelectedEvent>(e =>
             {
-                if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < ServiceLocator.ProjectState.Characters.Count)
+                if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < _projectState.Characters.Count)
                 {
-                    var selectedToken = ServiceLocator.ProjectState.Characters[e.SelectedIndex].Token;
+                    var selectedToken = _projectState.Characters[e.SelectedIndex].Token;
                     if (FilteredCharacters.All(character => character.Token != selectedToken) && !string.IsNullOrWhiteSpace(characterSearchBox.Text))
                         characterSearchBox.Text = string.Empty;
 
@@ -99,7 +106,7 @@ namespace Storylines.Views.Pages
                 var ch = listView.SelectedItem as Character;
                 ViewModel.SelectedCharacter = ch;
                 ViewModel.EnterEditMode();
-                characterBeforeChange = ServiceLocator.ProjectState.CopyCharacter(ch.Token);
+                characterBeforeChange = _projectState.CopyCharacter(ch.Token);
 
                 listView.IsEnabled = false;
 
@@ -257,7 +264,7 @@ namespace Storylines.Views.Pages
         {
             if (!string.IsNullOrWhiteSpace(characterItemFlyoutedToken))
             {
-                listView.SelectedIndex = ServiceLocator.ProjectState.FindCharacterID(characterItemFlyoutedToken);
+                listView.SelectedIndex = _projectState.FindCharacterID(characterItemFlyoutedToken);
                 EnableEditMode(true);
             }
         }
@@ -274,7 +281,7 @@ namespace Storylines.Views.Pages
             Random rn = new Random();
             int value = rn.Next(0, 2);
 
-            listView.SelectedItem = ServiceLocator.ProjectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
+            listView.SelectedItem = _projectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
             RefreshCharacterList((listView.SelectedItem as Character)?.Token);
             EnableEditMode(true);
 
@@ -284,7 +291,7 @@ namespace Storylines.Views.Pages
         public void Remove()
         {
             if (listView.SelectedItem != null)
-                ServiceLocator.ProjectState.RemoveCharacter((listView.SelectedItem as Character).Token);
+                _projectState.RemoveCharacter((listView.SelectedItem as Character).Token);
 
             RefreshCharacterList();
             CheckForNullCharacter();
@@ -293,7 +300,7 @@ namespace Storylines.Views.Pages
         public void Sort()
         {
             var selectedToken = (listView.SelectedItem as Character)?.Token;
-            ServiceLocator.ProjectState.SortCharacters();
+            _projectState.SortCharacters();
             RefreshCharacterList(selectedToken);
         }
 
@@ -416,7 +423,7 @@ namespace Storylines.Views.Pages
             {
                 // Provide all unique traits from existing characters as suggestions
                 var allTraits = new System.Collections.Generic.HashSet<string>(System.StringComparer.CurrentCultureIgnoreCase);
-                foreach (var ch in ServiceLocator.ProjectState.Characters)
+                foreach (var ch in _projectState.Characters)
                     foreach (var trait in ch.Traits ?? new System.Collections.Generic.List<string>())
                         allTraits.Add(trait);
 
@@ -704,7 +711,7 @@ namespace Storylines.Views.Pages
             var chaptersWithDialogue = 0;
             var dialogueLines = 0;
 
-            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
+            foreach (var chapter in _projectState.Chapters)
             {
                 var chapterText = ConvertToPlainText(chapter.Text);
                 var dialogues = Dialogue.GetFromCharactersFromString(chapterText, new List<string>() { character.Name });
@@ -770,7 +777,7 @@ namespace Storylines.Views.Pages
             {
                 foreach (var rel in character.Relationships)
                 {
-                    var target = ServiceLocator.ProjectState.FindCharacter(rel.TargetCharacterToken);
+                    var target = _projectState.FindCharacter(rel.TargetCharacterToken);
                     items.Add(new RelationshipDisplayItem
                     {
                         DisplayText = target?.Name ?? "(unknown)",

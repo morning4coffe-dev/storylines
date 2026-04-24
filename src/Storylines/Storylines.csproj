@@ -234,7 +234,7 @@
     <Compile Include="Models\Chapter.cs" />
     <Compile Include="Services\SettingsValues.cs" />
     <Compile Include="Services\ThemeSettings.cs" />
-    <Compile Include="Services\ServiceLocator.cs" />
+    <Compile Include="Services\ServiceConfiguration.cs" />
     <Compile Include="Services\DebugLogger.cs" />
     <Compile Include="Services\EventAggregator.cs" />
     <Compile Include="Services\FileService.cs" />
@@ -528,6 +528,9 @@
     </PackageReference>
     <PackageReference Include="CommunityToolkit.Mvvm">
       <Version>8.2.2</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection">
+      <Version>8.0.1</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

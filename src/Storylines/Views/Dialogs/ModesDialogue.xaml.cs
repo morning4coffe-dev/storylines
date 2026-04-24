@@ -27,7 +27,7 @@ namespace Storylines.Views.Dialogs
 
             timePicker.Time = new System.TimeSpan(0, 20, 0);
 
-            if (ServiceLocator.ProjectState.Characters.Count < 1)
+            if (App.GetService<ProjectState>().Characters.Count < 1)
                 noCharacters.IsOpen = true;
         }
 

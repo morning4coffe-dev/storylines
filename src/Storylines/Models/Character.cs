@@ -114,7 +114,7 @@ namespace Storylines.Models
             }
             catch (Exception ex)
             {
-                ServiceLocator.Logger.Error($"Failed to load profile picture: {cp.FileName}", ex);
+                App.GetService<Services.Interfaces.ILogger>().Error($"Failed to load profile picture: {cp.FileName}", ex);
             }
 
             NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"), "");

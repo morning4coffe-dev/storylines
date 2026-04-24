@@ -2,6 +2,7 @@ using Storylines.Views.Dialogs;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
+using Storylines.Services.Serializers;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
@@ -20,11 +21,13 @@ namespace Storylines.Services
 
         public static ProjectFile currentProject;
 
-        private static ILogger Logger => ServiceLocator.Logger;
-        private static IFileService FileService => ServiceLocator.FileService;
-        private static ISaveSerializer JsonSerializer => ServiceLocator.JsonSerializer;
-        private static ISaveSerializer LegacySerializer => ServiceLocator.LegacySerializer;
-        private static ITextEditorService TextEditor => ServiceLocator.TextEditor;
+        private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static IFileService FileService => App.GetService<IFileService>();
+        private static ISaveSerializer JsonSerializer => App.GetService<JsonSaveSerializer>();
+        private static ISaveSerializer LegacySerializer => App.GetService<LegacySrlSerializer>();
+        private static ILogger Logger => App.GetService<ILogger>();
+        private static ProjectState ProjectState => App.GetService<ProjectState>();
+        private static ITextEditorService TextEditor => App.GetService<ITextEditorService>();
 
         #region Save
         private enum AfterSave { DoNothing, ClearEverything, Exit };
@@ -40,12 +43,12 @@ namespace Storylines.Services
                 {
                     var projectData = CollectProjectData();
                     _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
-                    ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
+                    Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
                 }
                 else if (currentProject.file.FileType == ".txt")
                 {
                     string txt = TextEditor.GetText(TextFormat.PlainText);
-                    ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
+                    Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
                     _ = WriteToFileAsync(txt);
                 }
 
@@ -84,7 +87,7 @@ namespace Storylines.Services
                 Name = currentProject.projectName
             };
 
-            foreach (var character in ServiceLocator.ProjectState.Characters)
+            foreach (var character in ProjectState.Characters)
             {
                 var charData = new CharacterData
                 {
@@ -101,7 +104,7 @@ namespace Storylines.Services
                 {
                     charData.Relationships = character.Relationships.Select(r => new CharacterRelationshipData
                     {
-                        TargetName = ServiceLocator.ProjectState.FindCharacter(r.TargetCharacterToken)?.Name ?? r.TargetCharacterToken,
+                        TargetName = ProjectState.FindCharacter(r.TargetCharacterToken)?.Name ?? r.TargetCharacterToken,
                         Type = r.Type
                     }).ToList();
                 }
@@ -109,7 +112,7 @@ namespace Storylines.Services
                 data.Characters.Add(charData);
             }
 
-            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
+            foreach (var chapter in ProjectState.Chapters)
             {
                 data.Chapters.Add(new ChapterData
                 {
@@ -127,11 +130,11 @@ namespace Storylines.Services
                 });
             }
 
-            if (ServiceLocator.ProjectState.PinboardConnections?.Count > 0)
-                data.PinboardConnections = ServiceLocator.ProjectState.PinboardConnections;
+            if (ProjectState.PinboardConnections?.Count > 0)
+                data.PinboardConnections = ProjectState.PinboardConnections;
 
-            if (ServiceLocator.ProjectState.PlotThreads?.Count > 0)
-                data.PlotThreads = ServiceLocator.ProjectState.PlotThreads;
+            if (ProjectState.PlotThreads?.Count > 0)
+                data.PlotThreads = ProjectState.PlotThreads;
 
             return data;
         }
@@ -188,7 +191,7 @@ namespace Storylines.Services
             {
                 case AfterSave.DoNothing:
                     TimeTravelSystem.unSavedProgress = false;
-                    ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
+                    Events.Publish(new TitleBarUpdateEvent());
                     break;
                 case AfterSave.ClearEverything:
                     currentProject = null;
@@ -286,7 +289,7 @@ namespace Storylines.Services
                     var picture = !string.IsNullOrEmpty(charData.PictureFileName)
                         ? new CharacterPicture { FileName = charData.PictureFileName }
                         : null;
-                    await ServiceLocator.ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age, charData.Appearance, charData.Traits);
+                    await ProjectState.AddExistingCharacterAsync(charData.Name, Guid.NewGuid().ToString(), charData.Description, picture, charData.Role, charData.Age, charData.Appearance, charData.Traits);
                 }
 
                 foreach (var chapterData in projectData.Chapters)
@@ -295,23 +298,23 @@ namespace Storylines.Services
                     if (!string.IsNullOrEmpty(chapterData.Status))
                         System.Enum.TryParse(chapterData.Status, true, out status);
 
-                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal, chapterData.Tags, chapterData.PinboardX ?? 0, chapterData.PinboardY ?? 0, status, chapterData.Location, chapterData.PlotThreads);
+                    ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal, chapterData.Tags, chapterData.PinboardX ?? 0, chapterData.PinboardY ?? 0, status, chapterData.Location, chapterData.PlotThreads);
                 }
 
-                ServiceLocator.ProjectState.PinboardConnections = projectData.PinboardConnections ?? new System.Collections.Generic.List<PinboardConnectionData>();
-                ServiceLocator.ProjectState.PlotThreads = projectData.PlotThreads ?? new System.Collections.Generic.List<string>();
+                ProjectState.PinboardConnections = projectData.PinboardConnections ?? new System.Collections.Generic.List<PinboardConnectionData>();
+                ProjectState.PlotThreads = projectData.PlotThreads ?? new System.Collections.Generic.List<string>();
 
                 // Restore character relationships by resolving target names to tokens
-                for (int ci = 0; ci < projectData.Characters.Count && ci < ServiceLocator.ProjectState.Characters.Count; ci++)
+                for (int ci = 0; ci < projectData.Characters.Count && ci < ProjectState.Characters.Count; ci++)
                 {
                     var charData = projectData.Characters[ci];
                     if (charData.Relationships != null)
                     {
-                        var character = ServiceLocator.ProjectState.Characters[ci];
+                        var character = ProjectState.Characters[ci];
                         character.Relationships = charData.Relationships
                             .Select(r =>
                             {
-                                var target = ServiceLocator.ProjectState.Characters.FirstOrDefault(
+                                var target = ProjectState.Characters.FirstOrDefault(
                                     c => string.Equals(c.Name, r.TargetName, StringComparison.CurrentCultureIgnoreCase));
                                 return target != null ? new CharacterRelationship { TargetCharacterToken = target.Token, Type = r.Type } : null;
                             })
@@ -322,7 +325,7 @@ namespace Storylines.Services
 
                 LoadVariables(projectData);
                 Loaded();
-                ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
+                Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
             }
             catch (Exception ex)
             {
@@ -344,11 +347,11 @@ namespace Storylines.Services
 
                 string txt = await FileService.ReadAsync(file);
 
-                ServiceLocator.ProjectState.AddExistingChapter(file.DisplayName, Guid.NewGuid().ToString(), txt);
+                ProjectState.AddExistingChapter(file.DisplayName, Guid.NewGuid().ToString(), txt);
                 TextEditor.SelectedChapterIndex = 0;
 
                 Loaded();
-                ServiceLocator.Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
+                Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
             }
             catch (Exception ex)
             {
@@ -370,7 +373,7 @@ namespace Storylines.Services
         {
             TimeTravelSystem.unSavedProgress = false;
             savedValues.Clear();
-            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
+            Events.Publish(new TitleBarUpdateEvent());
 
             NotificationManager.HideMainProgressBar();
         }

@@ -9,6 +9,8 @@ namespace Storylines.Helpers
 {
     class TimeTravelSystem
     {
+        private static EventAggregator Events => App.GetService<EventAggregator>();
+
         public static bool unSavedProgress = false;
 
         public static bool timeTravelling;
@@ -16,7 +18,7 @@ namespace Storylines.Helpers
         public static void SomethingChanged()
         {
             unSavedProgress = true;
-            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
+            Events.Publish(new TitleBarUpdateEvent());
         }
     }
 
@@ -31,14 +33,16 @@ namespace Storylines.Helpers
         private static readonly PartialStack<TimeTravelChapter> undoQueue = new PartialStack<TimeTravelChapter>();
         private static readonly PartialStack<TimeTravelChapter> redoQueue = new PartialStack<TimeTravelChapter>();
 
-        private static ProjectState State => ServiceLocator.ProjectState;
-        private static ITextEditorService TextEditor => ServiceLocator.TextEditor;
+        private static ChaptersListViewModel ChaptersListViewModel => App.GetService<ChaptersListViewModel>();
+        private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static ProjectState State => App.GetService<ProjectState>();
+        private static ITextEditorService TextEditor => App.GetService<ITextEditorService>();
 
         public enum Changed { Added, Name, Text, Reordered, Removed };
 
         public static void SomethingChanged(Changed whatChanged, Chapter chapter, int lastPosition)
         {
-            if (!TimeTravelSystem.timeTravelling && !ServiceLocator.ChaptersListViewModel.SwitchedChapters)
+            if (!TimeTravelSystem.timeTravelling && !ChaptersListViewModel.SwitchedChapters)
             {
                 TimeTravelSystem.SomethingChanged();
                 TimeTravelChapter tt = new TimeTravelChapter();
@@ -72,7 +76,7 @@ namespace Storylines.Helpers
             }
 
             TimeTravelSystem.timeTravelling = false;
-            ServiceLocator.ChaptersListViewModel.SwitchedChapters = false;
+            ChaptersListViewModel.SwitchedChapters = false;
         }
 
         public static void Undo()
@@ -153,7 +157,7 @@ namespace Storylines.Helpers
 
         private static void CheckForUndoOrRedoEmpty()
         {
-            ServiceLocator.Events.Publish(new UndoRedoStateChangedEvent
+            Events.Publish(new UndoRedoStateChangedEvent
             {
                 CanUndo = undoQueue.Count > 0,
                 CanRedo = redoQueue.Count > 0,
@@ -183,7 +187,8 @@ namespace Storylines.Helpers
         private static readonly Stack<TimeTravelCharacter> undoQueue = new Stack<TimeTravelCharacter>();
         private static readonly Stack<TimeTravelCharacter> redoQueue = new Stack<TimeTravelCharacter>();
 
-        private static ProjectState State => ServiceLocator.ProjectState;
+        private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static ProjectState State => App.GetService<ProjectState>();
 
         public static void ClearUndoAndRedo()
         {
@@ -268,7 +273,7 @@ namespace Storylines.Helpers
                 case Changed.Changed:
                     var chID = State.FindCharacterID(timeTravel.character.Token);
                     State.Characters[chID] = timeTravel.character;
-                    ServiceLocator.Events.Publish(new CharacterSelectedEvent { SelectedIndex = chID, HasSelection = true });
+                    Events.Publish(new CharacterSelectedEvent { SelectedIndex = chID, HasSelection = true });
                     break;
                 case Changed.Removed:
                     if (!isRedo)
@@ -278,13 +283,13 @@ namespace Storylines.Helpers
                     break;
             }
             TimeTravelSystem.timeTravelling = false;
-            ServiceLocator.Events.Publish(new TitleBarUpdateEvent());
+            Events.Publish(new TitleBarUpdateEvent());
             CheckForUndoOrRedoEmpty();
         }
 
         private static void CheckForUndoOrRedoEmpty()
         {
-            ServiceLocator.Events.Publish(new UndoRedoStateChangedEvent
+            Events.Publish(new UndoRedoStateChangedEvent
             {
                 CanUndo = undoQueue.Count > 0,
                 CanRedo = redoQueue.Count > 0,

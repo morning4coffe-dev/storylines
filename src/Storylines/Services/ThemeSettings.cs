@@ -133,7 +133,7 @@ namespace Storylines.Services
             }
             catch (Exception ex)
             {
-                ServiceLocator.Logger?.Warning($"TextBoxWhiteBackground failed during theme change: {ex.Message}");
+                App.GetService<ILogger>()?.Warning($"TextBoxWhiteBackground failed during theme change: {ex.Message}");
             }
 
             UpdateAccentColor((Color)Application.Current.Resources["SystemAccentColor"]);

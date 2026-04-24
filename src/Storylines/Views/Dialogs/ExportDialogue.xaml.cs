@@ -13,6 +13,8 @@ namespace Storylines.Views.Dialogs
 {
     public sealed partial class ExportDialogue : ContentDialog
     {
+        private static ProjectState ProjectState => App.GetService<ProjectState>();
+
         public static ExportDialogue exportDialogue;
 
         private static ExportService.WhatToExport openExport;
@@ -67,22 +69,22 @@ namespace Storylines.Views.Dialogs
 
         public void AddToExport(bool characters)
         {
-            int num = characters ? ServiceLocator.ProjectState.Characters.Count : ServiceLocator.ProjectState.Chapters.Count;
+            int num = characters ? ProjectState.Characters.Count : ProjectState.Chapters.Count;
 
             chaptersToExportList.Items.Clear();
 
             for (int i = 0; i < num; i++)
             {
-                string itemName = characters ? ServiceLocator.ProjectState.Characters[i].Name : ServiceLocator.ProjectState.Chapters[i].Name;
+                string itemName = characters ? ProjectState.Characters[i].Name : ProjectState.Chapters[i].Name;
 
                 chaptersToExportList.Items.Add(new ListViewItem() { Content = itemName, IsSelected = true });
             }
 
             characterDialoguesToExportList.Items.Clear();
 
-            for (int i = 0; i < ServiceLocator.ProjectState.Characters.Count; i++)
+            for (int i = 0; i < ProjectState.Characters.Count; i++)
             {
-                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = ServiceLocator.ProjectState.Characters[i].Name, IsSelected = true });
+                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = ProjectState.Characters[i].Name, IsSelected = true });
             }
         }
 
@@ -174,7 +176,7 @@ namespace Storylines.Views.Dialogs
 
             for (int i = 0; i < characterDialoguesToExportList.SelectedItems.Count; i++)
             {
-                selectedIndexes2.Add(ServiceLocator.ProjectState.Characters[i]);
+                selectedIndexes2.Add(ProjectState.Characters[i]);
             }
 
             ExportService.Export(saveFolder, fileNameText.Text, extensionComboBox.SelectedItem as string, selectedIndexes, selectedIndexes2, (bool)withChapterNameCheckBox.IsChecked);

@@ -46,13 +46,14 @@ namespace Storylines.ViewModels
 
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
-        public MainPageViewModel()
+        public MainPageViewModel(ProjectState projectState = null, IDialogService dialogs = null, EventAggregator events = null)
         {
-            _projectState = ServiceLocator.ProjectState;
-            _dialogs = ServiceLocator.Dialogs;
+            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
+            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
+            events ??= App.TryGetService<EventAggregator>() ?? new EventAggregator();
             DownBarText = ResourceLoader.GetForViewIndependentUse().GetString("downBarTextS");
 
-            ServiceLocator.Events.Subscribe<ToolsStateChangedEvent>(e =>
+            events.Subscribe<ToolsStateChangedEvent>(e =>
             {
                 IsStorylinesDocument = e.IsStorylinesDocument;
             });

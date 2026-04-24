@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Storylines.Views.Controls;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
@@ -37,12 +36,13 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isAutosaveChecked;
 
-        public CommandBarViewModel()
+        public CommandBarViewModel(IDialogService dialogs = null, EventAggregator events = null)
         {
-            _dialogs = ServiceLocator.Dialogs;
+            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
             IsAutosaveChecked = SettingsValues.autosaveEnabled;
 
-            ServiceLocator.Events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            (events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator())
+                .Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)

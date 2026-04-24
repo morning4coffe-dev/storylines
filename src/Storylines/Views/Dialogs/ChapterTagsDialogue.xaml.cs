@@ -62,7 +62,7 @@ namespace Storylines.Views.Dialogs
         {
             var current = GetCurrentTags();
             var suggestions = ChapterTagsService
-                .GetAllSuggestions(ServiceLocator.ProjectState.Chapters)
+                .GetAllSuggestions(App.GetService<ProjectState>().Chapters)
                 .Where(s => !current.Contains(s, StringComparer.CurrentCultureIgnoreCase))
                 .Take(12)
                 .ToList();
@@ -96,7 +96,7 @@ namespace Storylines.Views.Dialogs
             if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 var query = sender.Text.Trim();
-                var allSuggestions = ChapterTagsService.GetAllSuggestions(ServiceLocator.ProjectState.Chapters);
+                var allSuggestions = ChapterTagsService.GetAllSuggestions(App.GetService<ProjectState>().Chapters);
                 sender.ItemsSource = string.IsNullOrWhiteSpace(query)
                     ? allSuggestions
                     : allSuggestions.Where(s => s.StartsWith(query, StringComparison.CurrentCultureIgnoreCase)).ToList();

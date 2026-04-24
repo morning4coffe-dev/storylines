@@ -1,4 +1,5 @@
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -12,6 +13,9 @@ namespace Storylines.Views.Dialogs
 {
     public sealed partial class SaveDialogue : ContentDialog
     {
+        private readonly ILogger _logger;
+        private readonly ProjectState _projectState;
+
         public static SaveDialogue saveDialogue;
         public StorageFolder saveFolder;
 
@@ -25,6 +29,9 @@ namespace Storylines.Views.Dialogs
             InitializeComponent();
             saveDialogue = this;
 
+            _logger = App.GetService<ILogger>();
+            _projectState = App.GetService<ProjectState>();
+
             InitializeClickOutToClose();
 
             saveDialogue.RequestedTheme = AppView.current.RequestedTheme;
@@ -32,7 +39,7 @@ namespace Storylines.Views.Dialogs
 
             extensions.Add(".srl");
 
-            if (ServiceLocator.ProjectState.Chapters.Count <= 1 && ServiceLocator.ProjectState.Characters.Count == 0)
+            if (_projectState.Chapters.Count <= 1 && _projectState.Characters.Count == 0)
                 extensions.Add(".txt");
             else 
                 extensionComboBox.IsEnabled = false;
@@ -90,7 +97,7 @@ namespace Storylines.Views.Dialogs
                 }
                 catch (Exception ex)
                 {
-                    ServiceLocator.Logger?.Warning($"Failed to check for file collision: {ex.Message}");
+                    _logger?.Warning($"Failed to check for file collision: {ex.Message}");
                 }
         }
 

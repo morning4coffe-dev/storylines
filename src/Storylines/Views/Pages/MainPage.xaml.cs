@@ -3,6 +3,7 @@ using Storylines.Views.Controls;
 using Storylines.Helpers;
 using Storylines.Helpers.Modes;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
 using Windows.ApplicationModel.Resources;
@@ -25,7 +26,12 @@ namespace Storylines.Views.Pages
         public static FocusMode FocusMode;
         public static ReadMode ReadMode;
 
-        public MainPageViewModel ViewModel => ServiceLocator.MainPageViewModel;
+        private readonly EventAggregator _events;
+        private readonly ProjectState _projectState;
+        private readonly ITextEditorService _textEditor;
+        private readonly MainPageViewModel _viewModel;
+
+        public MainPageViewModel ViewModel => _viewModel;
 
         // Session timer
         private DispatcherTimer _sessionTimer;
@@ -37,12 +43,17 @@ namespace Storylines.Views.Pages
             InitializeComponent();
             Current = this;
 
+            _events = App.GetService<EventAggregator>();
+            _projectState = App.GetService<ProjectState>();
+            _textEditor = App.GetService<ITextEditorService>();
+            _viewModel = App.GetService<MainPageViewModel>();
+
             AppView.current.page = AppView.Pages.MainPage;
 
-            ServiceLocator.Events.Subscribe<ChapterToolsStateEvent>(e => EnableOrDisableChapterTools(e.Enabled));
-            ServiceLocator.Events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
-            ServiceLocator.Events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
-            ServiceLocator.Events.Subscribe<SessionStatsUpdatedEvent>(OnSessionStatsUpdated);
+            _events.Subscribe<ChapterToolsStateEvent>(e => EnableOrDisableChapterTools(e.Enabled));
+            _events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
+            _events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
+            _events.Subscribe<SessionStatsUpdatedEvent>(OnSessionStatsUpdated);
 
             SizeChanged();
         }
@@ -209,14 +220,14 @@ namespace Storylines.Views.Pages
 
         public void UpdateWordGoalBar()
         {
-            var selectedIndex = ServiceLocator.TextEditor.SelectedChapterIndex;
-            if (selectedIndex < 0 || selectedIndex >= ServiceLocator.ProjectState.Chapters.Count)
+            var selectedIndex = _textEditor.SelectedChapterIndex;
+            if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
             {
                 wordGoalProgressBar.Visibility = Visibility.Collapsed;
                 return;
             }
 
-            var chapter = ServiceLocator.ProjectState.Chapters[selectedIndex];
+            var chapter = _projectState.Chapters[selectedIndex];
             if (chapter.WordCountGoal == null || chapter.WordCountGoal <= 0)
             {
                 wordGoalProgressBar.Visibility = Visibility.Collapsed;
@@ -249,7 +260,7 @@ namespace Storylines.Views.Pages
         private int GetTotalProjectWordCount()
         {
             string all = string.Empty;
-            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
+            foreach (var chapter in _projectState.Chapters)
             {
                 if (!string.IsNullOrEmpty(chapter.Text))
                 {

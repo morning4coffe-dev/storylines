@@ -1,6 +1,7 @@
 using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -18,12 +19,12 @@ namespace Storylines.Views.Controls
 
         private void OnNewProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            ServiceLocator.Dialogs.OpenSaveDialogue();
+            App.GetService<IDialogService>().OpenSaveDialogue();
         }
 
         private void OnOpenProjectButton_Click(object sender, RoutedEventArgs e)
         {
-            ServiceLocator.Dialogs.OpenLoadDialogue();
+            App.GetService<IDialogService>().OpenLoadDialogue();
         }
 
         private async void OnWelcomePanel_Loaded(object sender, RoutedEventArgs e)

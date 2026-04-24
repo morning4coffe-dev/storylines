@@ -42,10 +42,10 @@ namespace Storylines.ViewModels
         public bool SwitchedChapters { get; set; }
         public bool ClosedManually { get; set; }
 
-        public ChaptersListViewModel()
+        public ChaptersListViewModel(ProjectState projectState = null, IDialogService dialogs = null)
         {
-            _projectState = ServiceLocator.ProjectState;
-            _dialogs = ServiceLocator.Dialogs;
+            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
+            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
             UpdateListState();
         }
 

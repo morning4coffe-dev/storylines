@@ -10,6 +10,8 @@ namespace Storylines.Helpers
 {
     class ShortcutManager
     {
+        private static ProjectState ProjectState => App.GetService<ProjectState>();
+
         private static bool IsCtrlKeyPressed()
         {
             var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.Control);
@@ -75,7 +77,7 @@ namespace Storylines.Helpers
                                         ChapterCreatorOrRenamer.Open(null, false); break;
                                 case Windows.System.VirtualKey.Delete:
                                     if (MainPage.ChapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
-                                        ServiceLocator.ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).Token); break;
+                                        ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).Token); break;
 
                                 case Windows.System.VirtualKey.E:
                                     if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
@@ -95,7 +97,7 @@ namespace Storylines.Helpers
                                         if (MainPage.ChapterList.listView.Items.Count == MainPage.ChapterList.listView.SelectedIndex + 1 &&
                                             System.Convert.ToBoolean(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled]))
                                         {
-                                            ServiceLocator.ProjectState.AddChapterFromCreator(ServiceLocator.ProjectState.Chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                                            ProjectState.AddChapterFromCreator(ProjectState.Chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
                                             MainPage.ChapterList.listView.SelectedIndex += 1;
                                         }
                                     break;

@@ -17,11 +17,16 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Controls
 {
     public sealed partial class ChapterTextBox : UserControl
     {
+        private readonly EventAggregator _events;
+        private readonly ProjectState _projectState;
+        private readonly ITextEditorService _textEditor;
+
         private readonly ObservableCollection<Character> dialoguePickerCharacters = new ObservableCollection<Character>();
         private readonly ObservableCollection<Character> recentDialoguePickerCharacters = new ObservableCollection<Character>();
         private readonly ObservableCollection<string> recentDialogueCharacterTokens = new ObservableCollection<string>();
@@ -38,12 +43,16 @@ namespace Storylines.Views.Controls
         {
             InitializeComponent();
 
+            _events = App.GetService<EventAggregator>();
+            _projectState = App.GetService<ProjectState>();
+            _textEditor = App.GetService<ITextEditorService>();
+
             dialoguePickerList.ItemsSource = dialoguePickerCharacters;
             dialoguePickerRecentList.ItemsSource = recentDialoguePickerCharacters;
 
             MainPage.ChapterText = this;
 
-            ServiceLocator.Events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+            _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
         }
 
         private void OnSettingChanged(SettingChangedEvent e)
@@ -69,17 +78,17 @@ namespace Storylines.Views.Controls
         #region TextBox
         private void OnTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
-            var selectedIndex = ServiceLocator.TextEditor.SelectedChapterIndex;
-            if (selectedIndex >= 0 && selectedIndex < ServiceLocator.ProjectState.Chapters.Count)
+            var selectedIndex = _textEditor.SelectedChapterIndex;
+            if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
 
-                if (ServiceLocator.ProjectState.Chapters[selectedIndex].Text != txt && !searchingInTextBox)
+                if (_projectState.Chapters[selectedIndex].Text != txt && !searchingInTextBox)
                 {
-                    ServiceLocator.ProjectState.Chapters[selectedIndex].Text = txt;
+                    _projectState.Chapters[selectedIndex].Text = txt;
 
                     MainPage.Current.UpdateDownBar();
-                    TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Text, ServiceLocator.ProjectState.Chapters[selectedIndex], 0);
+                    TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Text, _projectState.Chapters[selectedIndex], 0);
 
                     if (MainPage.FocusMode != null)
                         MainPage.FocusMode.TextChanged();
@@ -98,7 +107,7 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0)
+            if (_textEditor.SelectedChapterIndex >= 0)
             {
                 MainPage.Current.UpdateDownBar();
 
@@ -108,7 +117,7 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && dialoguesOn)
+            if (_textEditor.SelectedChapterIndex >= 0 && dialoguesOn)
                 if (e.Key == VirtualKey.Enter)
                 {
                     PopulateFlyout();
@@ -523,9 +532,9 @@ namespace Storylines.Views.Controls
             bool needsSafeReplace = replaceWith != null && ContainsWithOptions(replaceWith, textToFind, findOptions);
 
             int replacements = 0;
-            int selectedIndex = ServiceLocator.TextEditor.SelectedChapterIndex;
+            int selectedIndex = _textEditor.SelectedChapterIndex;
 
-            foreach (var chapter in ServiceLocator.ProjectState.Chapters)
+            foreach (var chapter in _projectState.Chapters)
             {
                 if (string.IsNullOrEmpty(chapter.Text)) continue;
 
@@ -562,11 +571,11 @@ namespace Storylines.Views.Controls
             }
 
             // Reload the current chapter in the editor
-            if (selectedIndex >= 0 && selectedIndex < ServiceLocator.ProjectState.Chapters.Count)
+                if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
             {
                 searchingInTextBox = true;
                 textBox.Document.SetText(TextSetOptions.FormatRtf,
-                    ServiceLocator.ProjectState.Chapters[selectedIndex].Text ?? string.Empty);
+                    _projectState.Chapters[selectedIndex].Text ?? string.Empty);
             }
 
             if (replacements > 0)
@@ -649,7 +658,7 @@ namespace Storylines.Views.Controls
         private void RefreshDialoguePickerCharacters()
         {
             var query = dialoguePickerSearchBox?.Text?.Trim() ?? string.Empty;
-            var characters = ServiceLocator.ProjectState.Characters
+            var characters = _projectState.Characters
                 .Where(character => DialogueCharacterMatches(character, query))
                 .OrderBy(character => character.Name)
                 .ToList();
@@ -659,7 +668,7 @@ namespace Storylines.Views.Controls
                 dialoguePickerCharacters.Add(character);
 
             var recentCharacters = recentDialogueCharacterTokens
-                .Select(token => ServiceLocator.ProjectState.Characters.FirstOrDefault(character => character.Token == token))
+                .Select(token => _projectState.Characters.FirstOrDefault(character => character.Token == token))
                 .Where(character => character != null && DialogueCharacterMatches(character, query))
                 .ToList();
 
@@ -716,7 +725,7 @@ namespace Storylines.Views.Controls
 
         public void AddDialogue()
         {
-            if (ServiceLocator.ProjectState.Characters.Count > 0)
+            if (_projectState.Characters.Count > 0)
             {
                 PopulateFlyout();
                 textBoxDialogueNamesFlyout.ShowAt(textBox);
@@ -749,7 +758,7 @@ namespace Storylines.Views.Controls
 
         public void BoldChapterTextBox()
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
                 textBox.Document.Selection.CharacterFormat.Bold = selectedTextIsBold ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsBold = !selectedTextIsBold; 
@@ -760,7 +769,7 @@ namespace Storylines.Views.Controls
 
         public void ItalicChapterTextBox()
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
                 textBox.Document.Selection.CharacterFormat.Italic = selectedTextIsItalic ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsItalic = !selectedTextIsItalic;
@@ -771,7 +780,7 @@ namespace Storylines.Views.Controls
 
         public void UnderlineChapterTextBox()
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
                 textBox.Document.Selection.CharacterFormat.Underline = selectedTextIsUnderlined ? UnderlineType.None : UnderlineType.Thin;
                 selectedTextIsUnderlined = !selectedTextIsUnderlined;
@@ -782,7 +791,7 @@ namespace Storylines.Views.Controls
 
         public void StrikethroughChapterTextBox()
         {
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
                 textBox.Document.Selection.CharacterFormat.Strikethrough = selectedTextIsStriked ? FormatEffect.Off : FormatEffect.On;
                 selectedTextIsStriked = !selectedTextIsStriked;
@@ -797,7 +806,7 @@ namespace Storylines.Views.Controls
             {
                 highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.selectedTool));
 
-                if (textBox.Document.Selection != null && ServiceLocator.TextEditor.SelectedChapterIndex >= 0)
+                if (textBox.Document.Selection != null && _textEditor.SelectedChapterIndex >= 0)
                     textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.selectedTool);
             }
         }
@@ -894,13 +903,13 @@ namespace Storylines.Views.Controls
 
         private void OnTextBoxRectangle_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (ServiceLocator.ProjectState.Chapters.Count == 0)
+            if (_projectState.Chapters.Count == 0)
             {
-                ServiceLocator.ProjectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                ServiceLocator.TextEditor.SelectedChapterIndex = ServiceLocator.ProjectState.Chapters.Count - 1;
+                _projectState.AddChapter(Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
+                _textEditor.SelectedChapterIndex = _projectState.Chapters.Count - 1;
             }
 
-            if (ServiceLocator.TextEditor.SelectedChapterIndex >= 0)
+            if (_textEditor.SelectedChapterIndex >= 0)
                 textBox.Document.Selection.SetRange(TextConstants.MaxUnitCount, TextConstants.MaxUnitCount);
         }
     }

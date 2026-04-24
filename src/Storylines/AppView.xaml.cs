@@ -28,15 +28,27 @@ namespace Storylines
 
         public static ContentDialog currentlyOpenedDialogue;
 
-        public AppViewModel ViewModel => ServiceLocator.AppViewModel;
+        private readonly AppViewModel _viewModel;
+        private readonly EventAggregator _events;
+        private readonly INavigationService _navigation;
+        private readonly ProjectState _projectState;
+        private readonly ITextEditorService _textEditor;
+
+        public AppViewModel ViewModel => _viewModel;
 
         public AppView()
         {
             InitializeComponent();
             current = this;
 
+            _viewModel = App.GetService<AppViewModel>();
+            _events = App.GetService<EventAggregator>();
+            _navigation = App.GetService<INavigationService>();
+            _projectState = App.GetService<ProjectState>();
+            _textEditor = App.GetService<ITextEditorService>();
+
             // Wire NavigationService to the Frame
-            ServiceLocator.InitializeNavigation(pagesView);
+            _navigation.Initialize(pagesView);
 
             ViewModel.UpdateTitleBar();
 
@@ -45,7 +57,7 @@ namespace Storylines
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
             // Subscribe to tools state changes (published by SaveSystem)
-            ServiceLocator.Events.Subscribe<ToolsStateChangedEvent>(e =>
+            _events.Subscribe<ToolsStateChangedEvent>(e =>
             {
                 if (MainPage.Current != null)
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
@@ -71,8 +83,8 @@ namespace Storylines
 
         public void ClearEverything()
         {
-            ServiceLocator.TextEditor.Clear();
-            ServiceLocator.ProjectState.Clear();
+            _textEditor.Clear();
+            _projectState.Clear();
             MainPage.Current.EnableOrDisableChapterTools(false);
         }
 
@@ -153,13 +165,13 @@ namespace Storylines
             switch (currentPage)
             {
                 case Pages.Settings:
-                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.Settings);
+                    _navigation.NavigateTo(NavigationTarget.Settings);
                     break;
                 case Pages.Characters:
-                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.Characters);
+                    _navigation.NavigateTo(NavigationTarget.Characters);
                     break;
                 case Pages.MainPage:
-                    ServiceLocator.Navigation.NavigateTo(NavigationTarget.MainPage);
+                    _navigation.NavigateTo(NavigationTarget.MainPage);
                     break;
             }
 

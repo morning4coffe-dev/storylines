@@ -82,7 +82,7 @@ namespace Storylines.Services
             Current.LastSessionDate = today;
 
             Save();
-            ServiceLocator.Events.Publish(new SessionStatsUpdatedEvent
+            App.GetService<EventAggregator>().Publish(new SessionStatsUpdatedEvent
             {
                 TodayWords = Current.TodayWords,
                 StreakDays = Current.StreakDays
