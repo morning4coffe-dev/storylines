@@ -1,7 +1,6 @@
 using Storylines.Views.Dialogs;
 using Storylines.Views.Controls;
 using Storylines.Helpers;
-using Storylines.Helpers.Modes;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
@@ -22,9 +21,6 @@ namespace Storylines.Views.Pages
         public static ChaptersList ChapterList;
         public static MainCommandBar CommandBar;
         public static ChapterTextBox ChapterText;
-
-        public static FocusMode FocusMode;
-        public static ReadMode ReadMode;
 
         private readonly EventAggregator _events;
         private readonly ProjectState _projectState;

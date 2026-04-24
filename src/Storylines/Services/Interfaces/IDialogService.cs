@@ -11,6 +11,7 @@ namespace Storylines.Services.Interfaces
         void OpenChapterCreator();
         void OpenChapterRenamer(Chapter chapter, bool doubleTap = false);
         void OpenFocusMode();
+        void OpenModePicker(string preselect = "focus");
         void OpenProjectStats(bool showInDownBar);
         void OpenShortcuts();
     }

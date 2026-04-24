@@ -1,6 +1,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
+using Storylines.Services.Modes;
 using Storylines.Services.Serializers;
 using Storylines.ViewModels;
 using System;
@@ -22,6 +23,7 @@ namespace Storylines.Services
             services.AddSingleton<ITextEditorService, TextEditorService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<EditorModeService>();
 
             services.AddSingleton<AppViewModel>();
             services.AddSingleton<MainPageViewModel>();

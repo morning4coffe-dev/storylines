@@ -2,6 +2,7 @@ using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Views.Pages;
 using Storylines.Services;
+using Storylines.Services.Modes;
 using Storylines.Models;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Input;
@@ -141,8 +142,13 @@ namespace Storylines.Helpers
                     {
                         case Windows.System.VirtualKey.S: SaveSystem.Save(); break;
                         case Windows.System.VirtualKey.I:
-                            if (AppView.current.page != AppView.Pages.Settings && MainPage.FocusMode == null)
-                                AppView.current.ChangePage(AppView.Pages.Settings); break;
+                            {
+                                var modeSvc = App.TryGetService<EditorModeService>();
+                                    bool allowsSettings = modeSvc?.Current.Chrome.AllowsSettingsShortcut ?? true;
+                                if (AppView.current.page != AppView.Pages.Settings && allowsSettings)
+                                    AppView.current.ChangePage(AppView.Pages.Settings);
+                                break;
+                            }
                     }
                     //case Windows.System.VirtualKey.F: MainPage.ChangePage(MainPage.Pages.Settings); break;   /// search
                 }

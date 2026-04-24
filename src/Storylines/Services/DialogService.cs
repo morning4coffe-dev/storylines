@@ -22,7 +22,8 @@ namespace Storylines.Services
 
         public void OpenChapterRenamer(Chapter chapter, bool doubleTap = false) => ChapterCreatorOrRenamer.Open(chapter, doubleTap);
 
-        public void OpenFocusMode() => ModesDialogue.Open();
+        public void OpenFocusMode() => ModePickerDialogue.Open("focus");
+        public void OpenModePicker(string preselect = "focus") => ModePickerDialogue.Open(preselect);
 
         public void OpenProjectStats(bool showInDownBar) => ProjectStatsDialogue.Open(showInDownBar);
 

@@ -2,6 +2,7 @@ using Storylines.Helpers;
 using Storylines.Views.Pages;
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Modes;
 using Storylines.Models;
 using System;
 using System.Collections.ObjectModel;
@@ -32,6 +33,34 @@ namespace Storylines.Views.Controls
         private readonly ObservableCollection<string> recentDialogueCharacterTokens = new ObservableCollection<string>();
 
         public bool dialoguesOn = false;
+
+        public static readonly DependencyProperty IsReadOnlyProperty =
+            DependencyProperty.Register(
+                nameof(IsReadOnly),
+                typeof(bool),
+                typeof(ChapterTextBox),
+                new PropertyMetadata(false, OnIsReadOnlyChanged));
+
+        public bool IsReadOnly
+        {
+            get => (bool)GetValue(IsReadOnlyProperty);
+            set => SetValue(IsReadOnlyProperty, value);
+        }
+
+        private static void OnIsReadOnlyChanged(DependencyObject d, DependencyPropertyChangedEventArgs e)
+        {
+            ((ChapterTextBox)d).ApplyReadOnlyState();
+        }
+
+        private void ApplyReadOnlyState()
+        {
+            // Can fire before InitializeComponent wires up the named children.
+            if (textBox == null || gridCommandBarHolder == null) return;
+
+            bool readOnly = IsReadOnly;
+            textBox.IsReadOnly = readOnly;
+            gridCommandBarHolder.Visibility = readOnly ? Visibility.Collapsed : Visibility.Visible;
+        }
 
         private bool selectedTextIsBold = false;
         private bool selectedTextIsItalic = false;
@@ -73,6 +102,8 @@ namespace Storylines.Views.Controls
             // Apply saved font preferences
             textBox.FontFamily = new Windows.UI.Xaml.Media.FontFamily(SettingsValues.editorFontFamily);
             textBox.FontSize = SettingsValues.editorFontSize;
+
+            ApplyReadOnlyState();
         }
 
         #region TextBox
@@ -90,8 +121,7 @@ namespace Storylines.Views.Controls
                     MainPage.Current.UpdateDownBar();
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Text, _projectState.Chapters[selectedIndex], 0);
 
-                    if (MainPage.FocusMode != null)
-                        MainPage.FocusMode.TextChanged();
+                    App.TryGetService<EditorModeService>()?.Current.OnTextChanged();
 
                     // Start session timer on first edit; update word count goal bar
                     MainPage.Current.StartSessionTimer();

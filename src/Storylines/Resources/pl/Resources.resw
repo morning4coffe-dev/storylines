@@ -863,6 +863,37 @@
   <data name="wordGoalReachedTitle" xml:space="preserve">
     <value>Chapter goal reached!</value>
   </data>
+
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeEdit" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeFocus" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeReadOnly" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value></value>
+  </data>
+  <data name="modeEnterButton.Content" xml:space="preserve">
+    <value></value>
+  </data>
 </root>
 
 

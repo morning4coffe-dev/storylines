@@ -236,7 +236,7 @@ namespace Storylines.Helpers
                     leaveDialog.Hide();
                     break;
                 case ContentDialogResult.Secondary:
-                    MainPage.FocusMode.Leave();
+                    App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Deactivate();
                     break;
             }
             AppView.currentlyOpenedDialogue = null;

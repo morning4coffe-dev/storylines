@@ -946,6 +946,7 @@
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
                     </AppBarButton>
+                    <AppBarButton x:Name="readOnlyModeButton"
 
                     <AppBarSeparator />
 

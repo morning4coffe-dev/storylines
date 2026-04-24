@@ -215,6 +215,10 @@
     <Compile Include="Helpers\Modes\FocusMode.cs" />
     <Compile Include="Helpers\Modes\ModesShared.cs" />
     <Compile Include="Helpers\Modes\ReadMode.cs" />
+    <Compile Include="Services\Modes\IEditorMode.cs" />
+    <Compile Include="Services\Modes\ModeChromeConfig.cs" />
+    <Compile Include="Services\Modes\EditorModeService.cs" />
+    <Compile Include="Services\Modes\Impl\EditMode.cs" />
     <Compile Include="Services\AutosaveService.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">

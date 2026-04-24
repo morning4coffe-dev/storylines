@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
+using Storylines.Services.Modes;
 using Storylines.Models;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
@@ -41,12 +42,41 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isStorylinesDocument = true;
 
+        // ── Mode-driven shell bindings (driven by EditorModeService.Current.Chrome) ──
+        [ObservableProperty]
+        private Visibility _defaultCommandBarVisibility = Visibility.Visible;
+
+        [ObservableProperty]
+        private Visibility _modeChapterListVisibility = Visibility.Visible;
+
+        [ObservableProperty]
+        private Visibility _formattingBarVisibility = Visibility.Visible;
+
+        [ObservableProperty]
+        private Visibility _downBarStatsVisibility = Visibility.Visible;
+
+        [ObservableProperty]
+        private Visibility _downBarFocusVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private bool _isChapterTextReadOnly;
+
+        [ObservableProperty]
+        private object _modeOverlayContent;
+
+        [ObservableProperty]
+        private string _currentModeId = "edit";
+
         /// <summary>Tracks whether we already showed the "goal reached" notification for the current chapter session.</summary>
         public bool WordGoalCelebrated { get; set; }
 
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
-        public MainPageViewModel(ProjectState projectState = null, IDialogService dialogs = null, EventAggregator events = null)
+        public MainPageViewModel(
+            ProjectState projectState = null,
+            IDialogService dialogs = null,
+            EventAggregator events = null,
+            EditorModeService modeService = null)
         {
             _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
             _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
@@ -57,6 +87,26 @@ namespace Storylines.ViewModels
             {
                 IsStorylinesDocument = e.IsStorylinesDocument;
             });
+
+            modeService ??= App.TryGetService<EditorModeService>();
+            if (modeService != null)
+            {
+                ApplyModeChrome(modeService.Current);
+                modeService.ModeChanged += ApplyModeChrome;
+            }
+        }
+
+        private void ApplyModeChrome(IEditorMode mode)
+        {
+            var chrome = mode.Chrome;
+            DefaultCommandBarVisibility = chrome.ShowDefaultCommandBar ? Visibility.Visible : Visibility.Collapsed;
+            ModeChapterListVisibility = chrome.ShowChapterList ? Visibility.Visible : Visibility.Collapsed;
+            FormattingBarVisibility = chrome.ShowChapterTextFormattingBar ? Visibility.Visible : Visibility.Collapsed;
+            DownBarStatsVisibility = chrome.ShowDownBarStats ? Visibility.Visible : Visibility.Collapsed;
+            DownBarFocusVisibility = chrome.ShowDownBarFocusText ? Visibility.Visible : Visibility.Collapsed;
+            IsChapterTextReadOnly = chrome.IsTextReadOnly;
+            ModeOverlayContent = chrome.OverlayContent;
+            CurrentModeId = mode.Id;
         }
 
         partial void OnIsChapterSelectedChanged(bool value)

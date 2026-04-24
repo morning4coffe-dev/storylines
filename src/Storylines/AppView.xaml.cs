@@ -183,7 +183,8 @@ namespace Storylines
 
         public void BackButtonCheck()
         {
-            bool hasModeActive = MainPage.ReadMode != null || MainPage.FocusMode != null;
+            var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
+            bool hasModeActive = modeService?.Current.Id != "edit";
             ViewModel.UpdateBackButtonVisibility(pagesView.CanGoBack, hasModeActive);
         }
 
@@ -200,17 +201,23 @@ namespace Storylines
                 pagesView.GoBack(new DrillInNavigationTransitionInfo());
             }
             else
-            if (MainPage.FocusMode != null)
             {
-                if (MainPage.FocusMode.final)
-                    MainPage.FocusMode.Leave();
-                else
-                    _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
-                MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(MainPage.FocusMode.final);
+                var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
+                if (modeService != null && modeService.Current.Id != "edit")
+                {
+                    bool wasFinal = modeService.Current.CanLeave;
+                    if (wasFinal)
+                    {
+                        MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(true);
+                        modeService.Deactivate();
+                    }
+                    else
+                    {
+                        MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(false);
+                        _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
+                    }
+                }
             }
-            else
-            if (MainPage.ReadMode != null)
-                MainPage.ReadMode.Leave();
 
             UpdateTitleBar();
             BackButtonCheck();

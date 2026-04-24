@@ -37,7 +37,8 @@ namespace Storylines.Views.Controls
             _textEditor = App.GetService<ITextEditorService>();
             _viewModel = App.GetService<CommandBarViewModel>();
 
-            if(MainPage.FocusMode == null && MainPage.ReadMode == null)
+            if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
+               || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
                 MainPage.CommandBar = this;
         }
 

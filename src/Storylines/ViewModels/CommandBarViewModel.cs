@@ -91,7 +91,6 @@ namespace Storylines.ViewModels
 
         [RelayCommand]
         private void OpenFocusMode() => _dialogs.OpenFocusMode();
-
         [RelayCommand]
         private void ShowProjectStats() => _dialogs.OpenProjectStats(false);
 

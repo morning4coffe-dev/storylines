@@ -67,11 +67,21 @@
 
         <Rectangle Grid.ColumnSpan="2" />
         <components:MainCommandBar Grid.ColumnSpan="2"
-                                   Margin="8,0" />
+                                   Margin="8,0"
+                                   Visibility="{x:Bind ViewModel.DefaultCommandBarVisibility, Mode=OneWay}" />
 
         <components:ChapterTextBox x:Name="chapterTextBoxMainPage"
                                    Grid.Row="1"
+                                   IsReadOnly="{x:Bind ViewModel.IsChapterTextReadOnly, Mode=OneWay}"
                                    Visibility="{x:Bind ViewModel.ChapterTextVisibility, Mode=OneWay}" />
+
+        <ContentControl x:Name="modeOverlayHost"
+                        Grid.Row="1"
+                        Grid.ColumnSpan="2"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Stretch"
+                        IsTabStop="False"
+                        Content="{x:Bind ViewModel.ModeOverlayContent, Mode=OneWay}" />
 
         <!-- Word-count goal progress bar — overlaid at the top of the writing area -->
         <ProgressBar x:Name="wordGoalProgressBar"
@@ -95,7 +105,8 @@
         <components:ChaptersList x:Name="chapterListComponentMainPage"
                                  Grid.Row="1"
                                  Grid.Column="1"
-                                 Margin="0,8,8,8" />
+                                 Margin="0,8,8,8"
+                                 Visibility="{x:Bind ViewModel.ModeChapterListVisibility, Mode=OneWay}" />
 
         <components:ChapterNotesPane x:Name="chapterNotesPane"
                                      x:FieldModifier="public"
@@ -212,7 +223,7 @@
                            VerticalAlignment="Center"
                            x:FieldModifier="public"
                            Foreground="{ThemeResource TextForeground}"
-                           Visibility="Collapsed" />
+                           Visibility="{x:Bind ViewModel.DownBarFocusVisibility, Mode=OneWay}" />
             </StackPanel>
 
             <StackPanel Grid.Column="2"
