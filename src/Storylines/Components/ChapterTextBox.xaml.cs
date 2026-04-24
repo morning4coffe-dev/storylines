@@ -195,6 +195,7 @@ namespace Storylines.Components
         #region Search
         private void OnSearchTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
+            searchingInTextBox = true;
             SearchBoxHighlightMatches(searchTextBox.Text);
         }
 
@@ -202,22 +203,39 @@ namespace Storylines.Components
         {
             SearchBoxRemoveHighlights();
 
+            if (string.IsNullOrEmpty(textToFind))
+                return;
+
             Color highlightForegroundColor = ThemeSettings.GetCurrentAccentColor();
 
-            if (textToFind != null)
-            {
-                ITextRange searchRange = textBox.Document.GetRange(0, 0);
-                while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, FindOptions.None) > 0)
-                    searchRange.CharacterFormat.ForegroundColor = highlightForegroundColor;
-            }
+            ITextRange searchRange = textBox.Document.GetRange(0, 0);
+            while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, FindOptions.None) > 0)
+                searchRange.CharacterFormat.ForegroundColor = highlightForegroundColor;
         }
 
+        /// <summary>
+        /// Removes search highlighting by restoring matched ranges to the default
+        /// foreground color. Uses the document's saved RTF to identify which ranges
+        /// were highlighted, so it does NOT wipe intentional formatting.
+        /// </summary>
         private void SearchBoxRemoveHighlights()
         {
-            ITextRange documentRange = textBox.Document.GetRange(0, TextConstants.MaxUnitCount);
-            SolidColorBrush defaultForeground = textBox.Foreground as SolidColorBrush;
+            Color accentColor = ThemeSettings.GetCurrentAccentColor();
+            SolidColorBrush defaultBrush = textBox.Foreground as SolidColorBrush;
+            if (defaultBrush == null) return;
+            Color defaultColor = defaultBrush.Color;
 
-            documentRange.CharacterFormat.ForegroundColor = defaultForeground.Color;
+            // Walk through the document and only reset ranges whose foreground
+            // matches the accent highlight color (i.e. ranges WE colored).
+            ITextRange range = textBox.Document.GetRange(0, 0);
+            while (range.MoveStart(TextRangeUnit.Character, 1) > 0)
+            {
+                range.MoveEnd(TextRangeUnit.Character, 0); // collapse to start
+                range.Expand(TextRangeUnit.Character);
+
+                if (range.CharacterFormat.ForegroundColor == accentColor)
+                    range.CharacterFormat.ForegroundColor = defaultColor;
+            }
         }
 
         private void OnSearchTextBox_GotFocus(object sender, RoutedEventArgs e)
@@ -249,6 +267,8 @@ namespace Storylines.Components
 
         public void EnableSeach()
         {
+            searchingInTextBox = true;
+
             if (textBox.Document.Selection.Length > 0)
                 searchTextBox.Text = textBox.Document.Selection.Text;
 
@@ -274,6 +294,9 @@ namespace Storylines.Components
         }
 
         // --- Search & Replace ---
+        private int _currentMatchIndex = -1;
+        private int _totalMatches = 0;
+
         public void OpenSearchAndReplace()
         {
             HideSearch();
@@ -304,6 +327,16 @@ namespace Storylines.Components
             SearchReplaceHighlight();
         }
 
+        private FindOptions GetFindOptions()
+        {
+            var findOptions = FindOptions.None;
+            if (matchCaseToggle.IsChecked == true)
+                findOptions |= FindOptions.Case;
+            if (wholeWordToggle.IsChecked == true)
+                findOptions |= FindOptions.Word;
+            return findOptions;
+        }
+
         private void SearchReplaceHighlight()
         {
             SearchBoxRemoveHighlights();
@@ -311,16 +344,13 @@ namespace Storylines.Components
             var textToFind = searchReplaceFindBox.Text;
             if (string.IsNullOrEmpty(textToFind))
             {
+                _totalMatches = 0;
+                _currentMatchIndex = -1;
                 searchMatchCount.Text = string.Empty;
                 return;
             }
 
-            var findOptions = FindOptions.None;
-            if (matchCaseToggle.IsChecked == true)
-                findOptions |= FindOptions.Case;
-            if (wholeWordToggle.IsChecked == true)
-                findOptions |= FindOptions.Word;
-
+            var findOptions = GetFindOptions();
             Color highlightColor = ThemeSettings.GetCurrentAccentColor();
             int matchCount = 0;
 
@@ -331,8 +361,56 @@ namespace Storylines.Components
                 matchCount++;
             }
 
-            searchMatchCount.Text = matchCount > 0 ? $"{matchCount} match{(matchCount == 1 ? "" : "es")}" : "No matches";
+            _totalMatches = matchCount;
+            if (_currentMatchIndex >= matchCount)
+                _currentMatchIndex = matchCount > 0 ? 0 : -1;
+
+            searchMatchCount.Text = matchCount > 0
+                ? $"{matchCount} match{(matchCount == 1 ? "" : "es")}"
+                : "No matches";
         }
+
+        // ─── Next / Previous match navigation ─────────────────────────
+
+        private void OnNextMatch_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateMatch(forward: true);
+        }
+
+        private void OnPrevMatch_Click(object sender, RoutedEventArgs e)
+        {
+            NavigateMatch(forward: false);
+        }
+
+        private void NavigateMatch(bool forward)
+        {
+            var textToFind = searchReplaceFindBox.Text;
+            if (string.IsNullOrEmpty(textToFind) || _totalMatches == 0) return;
+
+            var findOptions = GetFindOptions();
+            var selection = textBox.Document.Selection;
+
+            // Search forward from end of current selection, or backward from start
+            int searchFrom = forward ? selection.EndPosition : selection.StartPosition;
+            int length = forward ? TextConstants.MaxUnitCount : -TextConstants.MaxUnitCount;
+
+            ITextRange range = textBox.Document.GetRange(searchFrom, searchFrom);
+            if (range.FindText(textToFind, length, findOptions) > 0)
+            {
+                selection.SetRange(range.StartPosition, range.EndPosition);
+                return;
+            }
+
+            // Wrap around: search from beginning (forward) or end (backward)
+            int wrapFrom = forward ? 0 : TextConstants.MaxUnitCount;
+            range = textBox.Document.GetRange(wrapFrom, wrapFrom);
+            if (range.FindText(textToFind, length, findOptions) > 0)
+            {
+                selection.SetRange(range.StartPosition, range.EndPosition);
+            }
+        }
+
+        // ─── Replace single ───────────────────────────────────────────
 
         private void OnReplaceButton_Click(object sender, RoutedEventArgs e)
         {
@@ -340,30 +418,51 @@ namespace Storylines.Components
             var replaceWith = searchReplaceBox.Text;
             if (string.IsNullOrEmpty(textToFind)) return;
 
-            var findOptions = FindOptions.None;
-            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
-            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
-
-            // Find from current selection position
+            var findOptions = GetFindOptions();
             var selection = textBox.Document.Selection;
-            if (selection.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+
+            // If the current selection already matches, replace it
+            bool selectionMatchesSearch = false;
+            if (selection.Length > 0)
+            {
+                string selectedText = selection.Text;
+                bool caseSensitive = (findOptions & FindOptions.Case) != 0;
+                selectionMatchesSearch = string.Equals(
+                    selectedText, textToFind,
+                    caseSensitive ? StringComparison.Ordinal : StringComparison.OrdinalIgnoreCase);
+            }
+
+            if (selectionMatchesSearch)
             {
                 selection.SetText(TextSetOptions.None, replaceWith);
+                // Advance to next match after replacement
+                NavigateMatch(forward: true);
+            }
+            else
+            {
+                // Find the next match first; user can then click Replace again to confirm
+                NavigateMatch(forward: true);
             }
 
             SearchReplaceHighlight();
         }
+
+        // ─── Replace all (current chapter) ────────────────────────────
 
         private void OnReplaceAllButton_Click(object sender, RoutedEventArgs e)
         {
             var textToFind = searchReplaceFindBox.Text;
             var replaceWith = searchReplaceBox.Text;
             if (string.IsNullOrEmpty(textToFind)) return;
+            // Guard against infinite loop: if the replacement contains the search term
+            // the loop would never terminate.
+            if (replaceWith != null && ContainsWithOptions(replaceWith, textToFind, GetFindOptions()))
+            {
+                ReplaceAllSafe(textToFind, replaceWith, GetFindOptions());
+                return;
+            }
 
-            var findOptions = FindOptions.None;
-            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
-            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
-
+            var findOptions = GetFindOptions();
             int replacements = 0;
             ITextRange searchRange = textBox.Document.GetRange(0, 0);
             while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
@@ -372,8 +471,47 @@ namespace Storylines.Components
                 replacements++;
             }
 
+            if (replacements > 0)
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
             searchMatchCount.Text = $"{replacements} replacement{(replacements == 1 ? "" : "s")} made";
+            SearchReplaceHighlight();
         }
+
+        /// <summary>
+        /// Safe replace-all that collects all match positions first, then replaces
+        /// in reverse order to avoid offset shifting and infinite loops.
+        /// </summary>
+        private void ReplaceAllSafe(string textToFind, string replaceWith, FindOptions findOptions)
+        {
+            var matches = new System.Collections.Generic.List<(int start, int end)>();
+            ITextRange searchRange = textBox.Document.GetRange(0, 0);
+            while (searchRange.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+            {
+                matches.Add((searchRange.StartPosition, searchRange.EndPosition));
+            }
+
+            // Replace in reverse order so earlier offsets remain valid
+            for (int i = matches.Count - 1; i >= 0; i--)
+            {
+                var range = textBox.Document.GetRange(matches[i].start, matches[i].end);
+                range.SetText(TextSetOptions.None, replaceWith);
+            }
+
+            if (matches.Count > 0)
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
+            searchMatchCount.Text = $"{matches.Count} replacement{(matches.Count == 1 ? "" : "s")} made";
+            SearchReplaceHighlight();
+        }
+
+        private static bool ContainsWithOptions(string haystack, string needle, FindOptions options)
+        {
+            var comparison = (options & FindOptions.Case) != 0
+                ? StringComparison.Ordinal
+                : StringComparison.OrdinalIgnoreCase;
+            return haystack.IndexOf(needle, comparison) >= 0;
+        }
+
+        // ─── Replace all across chapters ──────────────────────────────
 
         private void OnReplaceAllChaptersButton_Click(object sender, RoutedEventArgs e)
         {
@@ -381,9 +519,8 @@ namespace Storylines.Components
             var replaceWith = searchReplaceBox.Text;
             if (string.IsNullOrEmpty(textToFind)) return;
 
-            var findOptions = FindOptions.None;
-            if (matchCaseToggle.IsChecked == true) findOptions |= FindOptions.Case;
-            if (wholeWordToggle.IsChecked == true) findOptions |= FindOptions.Word;
+            var findOptions = GetFindOptions();
+            bool needsSafeReplace = replaceWith != null && ContainsWithOptions(replaceWith, textToFind, findOptions);
 
             int replacements = 0;
             int selectedIndex = Scripts.Services.ServiceLocator.TextEditor.SelectedChapterIndex;
@@ -395,11 +532,29 @@ namespace Storylines.Components
                 var box = new RichEditBox();
                 box.Document.SetText(TextSetOptions.FormatRtf, chapter.Text);
 
-                ITextRange range = box.Document.GetRange(0, 0);
-                while (range.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+                if (needsSafeReplace)
                 {
-                    range.SetText(TextSetOptions.None, replaceWith);
-                    replacements++;
+                    // Collect matches first, replace in reverse
+                    var matches = new System.Collections.Generic.List<(int start, int end)>();
+                    ITextRange range = box.Document.GetRange(0, 0);
+                    while (range.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+                        matches.Add((range.StartPosition, range.EndPosition));
+
+                    for (int i = matches.Count - 1; i >= 0; i--)
+                    {
+                        var r = box.Document.GetRange(matches[i].start, matches[i].end);
+                        r.SetText(TextSetOptions.None, replaceWith);
+                    }
+                    replacements += matches.Count;
+                }
+                else
+                {
+                    ITextRange range = box.Document.GetRange(0, 0);
+                    while (range.FindText(textToFind, TextConstants.MaxUnitCount, findOptions) > 0)
+                    {
+                        range.SetText(TextSetOptions.None, replaceWith);
+                        replacements++;
+                    }
                 }
 
                 box.Document.GetText(TextGetOptions.FormatRtf, out string newRtf);
@@ -409,6 +564,7 @@ namespace Storylines.Components
             // Reload the current chapter in the editor
             if (selectedIndex >= 0 && selectedIndex < Scripts.Services.ServiceLocator.ProjectState.Chapters.Count)
             {
+                searchingInTextBox = true;
                 textBox.Document.SetText(TextSetOptions.FormatRtf,
                     Scripts.Services.ServiceLocator.ProjectState.Chapters[selectedIndex].Text ?? string.Empty);
             }
@@ -422,6 +578,8 @@ namespace Storylines.Components
             {
                 searchMatchCount.Text = "No matches found";
             }
+
+            SearchReplaceHighlight();
         }
 
         private void OnAllChaptersScopeToggle_Toggled(object sender, RoutedEventArgs e)

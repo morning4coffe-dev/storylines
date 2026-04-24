@@ -85,7 +85,7 @@ namespace Storylines.Components
 
             foreach (var character in ServiceLocator.ProjectState.Characters)
             {
-                data.Characters.Add(new CharacterData
+                var charData = new CharacterData
                 {
                     Name = character.Name,
                     Description = character.Description,
@@ -94,7 +94,18 @@ namespace Storylines.Components
                     Age = character.Age,
                     Appearance = character.Appearance,
                     Traits = character.Traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
-                });
+                };
+
+                if (character.Relationships?.Count > 0)
+                {
+                    charData.Relationships = character.Relationships.Select(r => new CharacterRelationshipData
+                    {
+                        TargetName = ServiceLocator.ProjectState.FindCharacter(r.TargetCharacterToken)?.Name ?? r.TargetCharacterToken,
+                        Type = r.Type
+                    }).ToList();
+                }
+
+                data.Characters.Add(charData);
             }
 
             foreach (var chapter in ServiceLocator.ProjectState.Chapters)
@@ -106,9 +117,20 @@ namespace Storylines.Components
                     Notes = chapter.Notes ?? string.Empty,
                     Synopsis = chapter.Synopsis,
                     WordCountGoal = chapter.WordCountGoal,
-                    Tags = chapter.Tags?.Where(t => !string.IsNullOrWhiteSpace(t)).ToList()
+                    Tags = chapter.Tags?.Where(t => !string.IsNullOrWhiteSpace(t)).ToList(),
+                    PinboardX = chapter.PinboardX != 0 ? chapter.PinboardX : (double?)null,
+                    PinboardY = chapter.PinboardY != 0 ? chapter.PinboardY : (double?)null,
+                    Status = chapter.Status != ChapterStatus.Draft ? chapter.Status.ToString() : null,
+                    Location = chapter.Location,
+                    PlotThreads = chapter.PlotThreads?.Count > 0 ? chapter.PlotThreads : null
                 });
             }
+
+            if (ServiceLocator.ProjectState.PinboardConnections?.Count > 0)
+                data.PinboardConnections = ServiceLocator.ProjectState.PinboardConnections;
+
+            if (ServiceLocator.ProjectState.PlotThreads?.Count > 0)
+                data.PlotThreads = ServiceLocator.ProjectState.PlotThreads;
 
             return data;
         }
@@ -268,7 +290,33 @@ namespace Storylines.Components
 
                 foreach (var chapterData in projectData.Chapters)
                 {
-                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal, chapterData.Tags);
+                    ChapterStatus status = ChapterStatus.Draft;
+                    if (!string.IsNullOrEmpty(chapterData.Status))
+                        System.Enum.TryParse(chapterData.Status, true, out status);
+
+                    ServiceLocator.ProjectState.AddExistingChapter(chapterData.Name, Guid.NewGuid().ToString(), chapterData.Text, chapterData.Notes, chapterData.Synopsis, chapterData.WordCountGoal, chapterData.Tags, chapterData.PinboardX ?? 0, chapterData.PinboardY ?? 0, status, chapterData.Location, chapterData.PlotThreads);
+                }
+
+                ServiceLocator.ProjectState.PinboardConnections = projectData.PinboardConnections ?? new System.Collections.Generic.List<PinboardConnectionData>();
+                ServiceLocator.ProjectState.PlotThreads = projectData.PlotThreads ?? new System.Collections.Generic.List<string>();
+
+                // Restore character relationships by resolving target names to tokens
+                for (int ci = 0; ci < projectData.Characters.Count && ci < ServiceLocator.ProjectState.Characters.Count; ci++)
+                {
+                    var charData = projectData.Characters[ci];
+                    if (charData.Relationships != null)
+                    {
+                        var character = ServiceLocator.ProjectState.Characters[ci];
+                        character.Relationships = charData.Relationships
+                            .Select(r =>
+                            {
+                                var target = ServiceLocator.ProjectState.Characters.FirstOrDefault(
+                                    c => string.Equals(c.Name, r.TargetName, StringComparison.CurrentCultureIgnoreCase));
+                                return target != null ? new CharacterRelationship { TargetCharacterToken = target.Token, Type = r.Type } : null;
+                            })
+                            .Where(r => r != null)
+                            .ToList();
+                    }
                 }
 
                 LoadVariables(projectData);

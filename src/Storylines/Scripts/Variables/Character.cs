@@ -88,6 +88,13 @@ namespace Storylines.Scripts.Variables
             }
         }
 
+        private List<CharacterRelationship> _relationships = new List<CharacterRelationship>();
+        public List<CharacterRelationship> Relationships
+        {
+            get => _relationships;
+            set => SetProperty(ref _relationships, value ?? new List<CharacterRelationship>());
+        }
+
         public string Token { get; private set; }
 
         public void SetToken(string token)
@@ -120,5 +127,11 @@ namespace Storylines.Scripts.Variables
         public string LocalFilePath { set; get; }
         public string FileName { set; get; }
         public BitmapImage Image { set; get; }
+    }
+
+    public class CharacterRelationship
+    {
+        public string TargetCharacterToken { get; set; }
+        public string Type { get; set; }
     }
 }

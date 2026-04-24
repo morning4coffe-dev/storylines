@@ -89,6 +89,44 @@
                              TextChanged="OnSynopsisTextBox_TextChanged" />
                 </StackPanel>
             </PivotItem>
+
+            <!-- Location tab -->
+            <PivotItem Header="Location">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Where does this chapter take place?"
+                               FontSize="11"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="locationTextBox"
+                             x:FieldModifier="public"
+                             PlaceholderText="e.g. The old library, Downtown streets…"
+                             TextWrapping="Wrap"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             TextChanged="OnLocationTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
+
+            <!-- Plot Threads tab -->
+            <PivotItem Header="Plot">
+                <StackPanel Spacing="4">
+                    <TextBlock Text="Which plot threads appear in this chapter? (comma-separated)"
+                               FontSize="11"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="plotThreadsTextBox"
+                             x:FieldModifier="public"
+                             PlaceholderText="e.g. Main quest, Love subplot, Mystery…"
+                             TextWrapping="Wrap"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             TextChanged="OnPlotThreadsTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
         </Pivot>
 
         <animations:Implicit.ShowAnimations>

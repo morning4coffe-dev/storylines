@@ -22,6 +22,12 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("characters")]
         public List<CharacterData> Characters { get; set; } = new List<CharacterData>();
+
+        [JsonProperty("pinboardConnections", NullValueHandling = NullValueHandling.Ignore)]
+        public List<PinboardConnectionData> PinboardConnections { get; set; }
+
+        [JsonProperty("plotThreads", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> PlotThreads { get; set; }
     }
 
     public class ChapterData
@@ -43,6 +49,33 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("tags", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Tags { get; set; }
+
+        [JsonProperty("pinboardX", NullValueHandling = NullValueHandling.Ignore)]
+        public double? PinboardX { get; set; }
+
+        [JsonProperty("pinboardY", NullValueHandling = NullValueHandling.Ignore)]
+        public double? PinboardY { get; set; }
+
+        [JsonProperty("status", NullValueHandling = NullValueHandling.Ignore)]
+        public string Status { get; set; }
+
+        [JsonProperty("location", NullValueHandling = NullValueHandling.Ignore)]
+        public string Location { get; set; }
+
+        [JsonProperty("plotThreads", NullValueHandling = NullValueHandling.Ignore)]
+        public List<string> PlotThreads { get; set; }
+    }
+
+    public class PinboardConnectionData
+    {
+        [JsonProperty("from")]
+        public int FromIndex { get; set; }
+
+        [JsonProperty("to")]
+        public int ToIndex { get; set; }
+
+        [JsonProperty("label", NullValueHandling = NullValueHandling.Ignore)]
+        public string Label { get; set; }
     }
 
     public class CharacterData
@@ -67,5 +100,17 @@ namespace Storylines.Scripts.Variables
 
         [JsonProperty("traits", NullValueHandling = NullValueHandling.Ignore)]
         public List<string> Traits { get; set; }
+
+        [JsonProperty("relationships", NullValueHandling = NullValueHandling.Ignore)]
+        public List<CharacterRelationshipData> Relationships { get; set; }
+    }
+
+    public class CharacterRelationshipData
+    {
+        [JsonProperty("targetName")]
+        public string TargetName { get; set; }
+
+        [JsonProperty("type")]
+        public string Type { get; set; }
     }
 }

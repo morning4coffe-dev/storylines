@@ -308,6 +308,7 @@ namespace Storylines.Pages
                 appearanceBox.Text = (listView.SelectedItem as Character).Appearance ?? "";
                 profilePicture.ProfilePicture = (listView.SelectedItem as Character).Picture.Image != null ? (listView.SelectedItem as Character).Picture.Image : null;
                 UpdateDialogueInsights(listView.SelectedItem as Character);
+                LoadRelationships(listView.SelectedItem as Character);
 
                 editButton.IsEnabled = true;
             }
@@ -318,6 +319,7 @@ namespace Storylines.Pages
                 DialoguePreviews.Clear();
                 dialogueStatsText.Text = string.Empty;
                 dialoguePreviewEmptyText.Visibility = Visibility.Collapsed;
+                LoadRelationships(null);
 
                 editButton.IsEnabled = false;
             }
@@ -745,5 +747,100 @@ namespace Storylines.Pages
 
             return preview;
         }
+
+        // ─── Relationships ────────────────────────────────────────────
+
+        public void LoadRelationships(Character character)
+        {
+            var items = new List<RelationshipDisplayItem>();
+
+            if (character?.Relationships != null)
+            {
+                foreach (var rel in character.Relationships)
+                {
+                    var target = Scripts.Services.ServiceLocator.ProjectState.FindCharacter(rel.TargetCharacterToken);
+                    items.Add(new RelationshipDisplayItem
+                    {
+                        DisplayText = target?.Name ?? "(unknown)",
+                        Type = rel.Type ?? "",
+                        TargetToken = rel.TargetCharacterToken
+                    });
+                }
+            }
+
+            relationshipsListView.ItemsSource = items;
+            noRelationshipsText.Visibility = items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
+            addRelationshipButton.IsEnabled = character != null;
+        }
+
+        private async void OnAddRelationship_Click(object sender, RoutedEventArgs e)
+        {
+            var character = listView.SelectedItem as Character;
+            if (character == null) return;
+
+            var otherCharacters = Characters.Where(c => c.Token != character.Token).ToList();
+            if (otherCharacters.Count == 0) return;
+
+            var targetCombo = new ComboBox
+            {
+                PlaceholderText = "Select character…",
+                HorizontalAlignment = HorizontalAlignment.Stretch,
+                ItemsSource = otherCharacters.Select(c => c.Name).ToList()
+            };
+            var typeBox = new TextBox { PlaceholderText = "e.g. Rival, Love interest, Mentor…" };
+
+            var panel = new StackPanel { Spacing = 8 };
+            panel.Children.Add(new TextBlock { Text = "Character:" });
+            panel.Children.Add(targetCombo);
+            panel.Children.Add(new TextBlock { Text = "Relationship type:" });
+            panel.Children.Add(typeBox);
+
+            var dialog = new ContentDialog
+            {
+                Title = "Add Relationship",
+                Content = panel,
+                PrimaryButtonText = "Add",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary
+            };
+
+            var result = await dialog.ShowAsync();
+            if (result == ContentDialogResult.Primary && targetCombo.SelectedIndex >= 0)
+            {
+                var target = otherCharacters[targetCombo.SelectedIndex];
+                character.Relationships.Add(new CharacterRelationship
+                {
+                    TargetCharacterToken = target.Token,
+                    Type = typeBox.Text?.Trim() ?? ""
+                });
+                TimeTravelSystem.SomethingChanged();
+                LoadRelationships(character);
+            }
+        }
+
+        private void OnRemoveRelationship_Click(object sender, RoutedEventArgs e)
+        {
+            var character = listView.SelectedItem as Character;
+            if (character == null) return;
+
+            var targetToken = (sender as Button)?.Tag?.ToString();
+            if (!string.IsNullOrEmpty(targetToken))
+            {
+                var rel = character.Relationships.FirstOrDefault(r => r.TargetCharacterToken == targetToken);
+                if (rel != null)
+                {
+                    character.Relationships.Remove(rel);
+                    TimeTravelSystem.SomethingChanged();
+                    LoadRelationships(character);
+                }
+            }
+        }
+    }
+
+    public class RelationshipDisplayItem
+    {
+        public string DisplayText { get; set; }
+        public string Type { get; set; }
+        public string TargetToken { get; set; }
     }
 }

@@ -263,12 +263,19 @@
     <Compile Include="ViewModels\CharactersPageViewModel.cs" />
     <Compile Include="ViewModels\CommandBarViewModel.cs" />
     <Compile Include="Converters\EmptyStringToCollapsedConverter.cs" />
+    <Compile Include="Converters\ChapterStatusToColorConverter.cs" />
     <Compile Include="Scripts\Constants\LayoutConstants.cs" />
     <Compile Include="Scripts\Variables\CharacterDialoguePreview.cs" />
     <Compile Include="Scripts\Services\WritingSessionService.cs" />
     <Compile Include="Scripts\Services\ChapterTagsService.cs" />
     <Compile Include="Components\DialogueWindows\ChapterTagsDialogue.xaml.cs">
       <DependentUpon>ChapterTagsDialogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\DialogueWindows\GlobalSearchDialogue.xaml.cs">
+      <DependentUpon>GlobalSearchDialogue.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Components\DialogueWindows\WritingPromptsDialogue.xaml.cs">
+      <DependentUpon>WritingPromptsDialogue.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\StoryPinboardPage.xaml.cs">
       <DependentUpon>StoryPinboardPage.xaml</DependentUpon>
@@ -474,6 +481,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Components\DialogueWindows\ChapterTagsDialogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\DialogueWindows\GlobalSearchDialogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Components\DialogueWindows\WritingPromptsDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

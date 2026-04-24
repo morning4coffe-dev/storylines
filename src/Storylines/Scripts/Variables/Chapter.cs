@@ -4,6 +4,14 @@ using System.Linq;
 
 namespace Storylines.Scripts.Variables
 {
+    public enum ChapterStatus
+    {
+        Draft,
+        Writing,
+        Revision,
+        Final
+    }
+
     public partial class Chapter : ObservableObject
     {
         [ObservableProperty]
@@ -20,6 +28,25 @@ namespace Storylines.Scripts.Variables
 
         [ObservableProperty]
         private int? _wordCountGoal;
+
+        [ObservableProperty]
+        private double _pinboardX;
+
+        [ObservableProperty]
+        private double _pinboardY;
+
+        [ObservableProperty]
+        private ChapterStatus _status = ChapterStatus.Draft;
+
+        [ObservableProperty]
+        private string _location;
+
+        private List<string> _plotThreads = new List<string>();
+        public List<string> PlotThreads
+        {
+            get => _plotThreads;
+            set => SetProperty(ref _plotThreads, value ?? new List<string>());
+        }
 
         private List<string> _tags = new List<string>();
         public List<string> Tags

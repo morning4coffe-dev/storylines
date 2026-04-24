@@ -13,6 +13,8 @@ namespace Storylines.Scripts.Variables
     {
         public ObservableCollection<Chapter> Chapters { get; } = new ObservableCollection<Chapter>();
         public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
+        public List<PinboardConnectionData> PinboardConnections { get; set; } = new List<PinboardConnectionData>();
+        public List<string> PlotThreads { get; set; } = new List<string>();
 
         #region Chapter Operations
 
@@ -31,9 +33,9 @@ namespace Storylines.Scripts.Variables
             AddChapter($"{chapterName}: {txt}");
         }
 
-        public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null, List<string> tags = null)
+        public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null, List<string> tags = null, double pinboardX = 0, double pinboardY = 0, ChapterStatus status = ChapterStatus.Draft, string location = null, List<string> plotThreads = null)
         {
-            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Synopsis = synopsis, WordCountGoal = wordCountGoal, Tags = tags ?? new List<string>() };
+            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Synopsis = synopsis, WordCountGoal = wordCountGoal, Tags = tags ?? new List<string>(), PinboardX = pinboardX, PinboardY = pinboardY, Status = status, Location = location, PlotThreads = plotThreads ?? new List<string>() };
             ch.SetToken(token);
             Chapters.Add(ch);
             return ch;
@@ -66,6 +68,16 @@ namespace Storylines.Scripts.Variables
                 if (Chapters[i].Token == token)
                 {
                     TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Removed, Chapters[i], Chapters.IndexOf(Chapters[i]));
+
+                    // Clean up pinboard connections referencing this chapter
+                    int removedIndex = i;
+                    PinboardConnections.RemoveAll(c => c.FromIndex == removedIndex || c.ToIndex == removedIndex);
+                    foreach (var conn in PinboardConnections)
+                    {
+                        if (conn.FromIndex > removedIndex) conn.FromIndex--;
+                        if (conn.ToIndex > removedIndex) conn.ToIndex--;
+                    }
+
                     Chapters.RemoveAt(i);
                     break;
                 }
@@ -85,7 +97,10 @@ namespace Storylines.Scripts.Variables
                 Notes = original.Notes,
                 Synopsis = original.Synopsis,
                 WordCountGoal = original.WordCountGoal,
-                Tags = original.Tags != null ? new List<string>(original.Tags) : new List<string>()
+                Tags = original.Tags != null ? new List<string>(original.Tags) : new List<string>(),
+                Status = original.Status,
+                Location = original.Location,
+                PlotThreads = original.PlotThreads != null ? new List<string>(original.PlotThreads) : new List<string>()
             };
             copy.SetToken(original.Token);
             return copy;
@@ -228,6 +243,8 @@ namespace Storylines.Scripts.Variables
         {
             Chapters.Clear();
             Characters.Clear();
+            PinboardConnections.Clear();
+            PlotThreads.Clear();
         }
 
     }

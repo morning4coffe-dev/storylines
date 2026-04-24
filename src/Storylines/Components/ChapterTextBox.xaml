@@ -252,6 +252,8 @@
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <TextBox x:Name="searchReplaceFindBox"
                          x:Uid="searchReplaceFindBox"
@@ -276,7 +278,29 @@
                               Click="OnWholeWordToggle_Click">
                     <FontIcon Glyph="&#xF78B;" FontSize="14" />
                 </ToggleButton>
-                <Button Grid.Column="3"
+                <Button x:Name="prevMatchButton"
+                        Grid.Column="3"
+                        ToolTipService.ToolTip="Previous match"
+                        Width="32" Height="32"
+                        Margin="4,0,0,0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        Click="OnPrevMatch_Click">
+                    <FontIcon Glyph="&#xE70E;" FontSize="12" />
+                </Button>
+                <Button x:Name="nextMatchButton"
+                        Grid.Column="4"
+                        ToolTipService.ToolTip="Next match"
+                        Width="32" Height="32"
+                        Margin="2,0,0,0"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="4"
+                        Click="OnNextMatch_Click">
+                    <FontIcon Glyph="&#xE70D;" FontSize="12" />
+                </Button>
+                <Button Grid.Column="5"
                         x:Uid="searchReplaceCloseButton"
                         Width="32" Height="32"
                         Margin="4,0,0,0"

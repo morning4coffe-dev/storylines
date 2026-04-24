@@ -133,6 +133,19 @@ namespace Storylines.Components
                     Components.DialogueWindows.ChapterTagsDialogue.Open(chapter);
             }
         }
+
+        private void OnSetStatus_Click(object sender, RoutedEventArgs e)
+        {
+            if (chapterItemFlyoutedToken != null && sender is MenuFlyoutItem item)
+            {
+                var chapter = Scripts.Services.ServiceLocator.ProjectState.FindChapter(chapterItemFlyoutedToken);
+                if (chapter != null && System.Enum.TryParse<Scripts.Variables.ChapterStatus>(item.Tag?.ToString(), out var status))
+                {
+                    chapter.Status = status;
+                    Scripts.Functions.TimeTravelSystem.SomethingChanged();
+                }
+            }
+        }
         #endregion
 
         private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)

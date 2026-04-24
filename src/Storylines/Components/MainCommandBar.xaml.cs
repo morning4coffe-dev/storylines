@@ -119,6 +119,12 @@ namespace Storylines.Components
 
         private void OnPinboardButton_Click(object sender, RoutedEventArgs e)
             => ServiceLocator.Navigation.NavigateTo(Scripts.Services.Interfaces.NavigationTarget.Pinboard);
+
+        private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
+            => DialogueWindows.GlobalSearchDialogue.Open();
+
+        private void OnWritingPromptsButton_Click(object sender, RoutedEventArgs e)
+            => DialogueWindows.WritingPromptsDialogue.Open();
         #endregion
 
         #region HELP

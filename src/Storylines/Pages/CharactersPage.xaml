@@ -558,6 +558,65 @@
                         </StackPanel>
                     </Border>
                 </StackPanel>
+
+                <!-- Relationships Section -->
+                <StackPanel Spacing="8">
+                    <Grid>
+                        <TextBlock Text="Relationships"
+                                   FontSize="15"
+                                   FontWeight="SemiBold" />
+                        <Button x:Name="addRelationshipButton"
+                                HorizontalAlignment="Right"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="4"
+                                IsEnabled="False"
+                                Click="OnAddRelationship_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <FontIcon Glyph="&#xE710;" FontSize="12" />
+                                <TextBlock Text="Add" FontSize="12" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <ListView x:Name="relationshipsListView"
+                              MaxHeight="200"
+                              SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <TextBlock Text="{Binding DisplayText}"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding Type}"
+                                               Opacity="0.6"
+                                               FontStyle="Italic"
+                                               FontSize="12"
+                                               VerticalAlignment="Center"
+                                               Margin="8,0" />
+                                    <Button Grid.Column="2"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Padding="4"
+                                            Tag="{Binding TargetToken}"
+                                            Click="OnRemoveRelationship_Click">
+                                        <FontIcon Glyph="&#xE107;" FontSize="10" Opacity="0.5" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock x:Name="noRelationshipsText"
+                               Text="No relationships defined"
+                               Opacity="0.5"
+                               FontSize="12"
+                               FontStyle="Italic"
+                               Visibility="Collapsed" />
+                </StackPanel>
             </StackPanel>
         </ScrollViewer>
 

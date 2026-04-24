@@ -1,5 +1,6 @@
 using Storylines.Pages;
 using Storylines.Scripts.Variables;
+using System.Linq;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -25,6 +26,12 @@ namespace Storylines.Components
 
                 synopsisTextBox.Text = chapter.Synopsis ?? string.Empty;
                 synopsisTextBox.IsEnabled = true;
+
+                locationTextBox.Text = chapter.Location ?? string.Empty;
+                locationTextBox.IsEnabled = true;
+
+                plotThreadsTextBox.Text = chapter.PlotThreads?.Count > 0 ? string.Join(", ", chapter.PlotThreads) : string.Empty;
+                plotThreadsTextBox.IsEnabled = true;
             }
             else
             {
@@ -33,6 +40,12 @@ namespace Storylines.Components
 
                 synopsisTextBox.Text = string.Empty;
                 synopsisTextBox.IsEnabled = false;
+
+                locationTextBox.Text = string.Empty;
+                locationTextBox.IsEnabled = false;
+
+                plotThreadsTextBox.Text = string.Empty;
+                plotThreadsTextBox.IsEnabled = false;
             }
 
             _isUpdating = false;
@@ -56,6 +69,41 @@ namespace Storylines.Components
             if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.Synopsis = synopsisTextBox.Text;
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
+            }
+        }
+
+        private void OnLocationTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_isUpdating) return;
+
+            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            {
+                chapter.Location = locationTextBox.Text;
+                Scripts.Functions.TimeTravelSystem.SomethingChanged();
+            }
+        }
+
+        private void OnPlotThreadsTextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            if (_isUpdating) return;
+
+            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            {
+                chapter.PlotThreads = (plotThreadsTextBox.Text ?? string.Empty)
+                    .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                    .Select(t => t.Trim())
+                    .Where(t => !string.IsNullOrWhiteSpace(t))
+                    .Distinct(System.StringComparer.CurrentCultureIgnoreCase)
+                    .ToList();
+
+                // Auto-register new plot threads in the project
+                foreach (var thread in chapter.PlotThreads)
+                {
+                    if (!Scripts.Services.ServiceLocator.ProjectState.PlotThreads.Contains(thread, System.StringComparer.CurrentCultureIgnoreCase))
+                        Scripts.Services.ServiceLocator.ProjectState.PlotThreads.Add(thread);
+                }
+
                 Scripts.Functions.TimeTravelSystem.SomethingChanged();
             }
         }

@@ -4,10 +4,15 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:variables="using:Storylines.Scripts.Variables"
+      xmlns:converters="using:Storylines.Converters"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       mc:Ignorable="d"
       Loaded="Page_Loaded">
+
+    <Page.Resources>
+        <converters:EmptyStringToCollapsedConverter x:Key="EmptyStringToCollapsedConverter" />
+    </Page.Resources>
 
     <Grid>
         <Grid.RowDefinitions>
@@ -36,124 +41,62 @@
             <StackPanel Grid.Column="1"
                         Margin="12,0"
                         VerticalAlignment="Center">
-                <TextBlock Text="Story Pinboard"
+                <TextBlock Text="Story Canvas"
                            FontSize="18"
                            FontWeight="SemiBold" />
                 <TextBlock x:Name="subtitleText"
                            FontSize="12"
                            Opacity="0.6" />
             </StackPanel>
-            <TextBlock Grid.Column="2"
-                       Text="Drag cards to reorder chapters"
-                       FontSize="11"
-                       Opacity="0.5"
-                       VerticalAlignment="Center" />
+            <StackPanel Grid.Column="2"
+                        Orientation="Horizontal"
+                        Spacing="8"
+                        VerticalAlignment="Center">
+                <!-- Tag filter -->
+                <ComboBox x:Name="tagFilterComboBox"
+                          PlaceholderText="Filter by tag"
+                          Width="160"
+                          SelectionChanged="OnTagFilter_SelectionChanged"
+                          VerticalAlignment="Center" />
+                <!-- Connect mode toggle -->
+                <ToggleButton x:Name="connectModeToggle"
+                              ToolTipService.ToolTip="Connect chapters (click two cards to link them)"
+                              Padding="8"
+                              CornerRadius="4">
+                    <StackPanel Orientation="Horizontal" Spacing="6">
+                        <FontIcon Glyph="&#xE71B;" FontSize="14" />
+                        <TextBlock Text="Connect" FontSize="12" VerticalAlignment="Center" />
+                    </StackPanel>
+                </ToggleButton>
+                <!-- Auto-arrange -->
+                <Button ToolTipService.ToolTip="Auto-arrange cards in a grid"
+                        Padding="8"
+                        CornerRadius="4"
+                        Click="OnAutoArrange_Click">
+                    <FontIcon Glyph="&#xE8A9;" FontSize="14" />
+                </Button>
+                <TextBlock Text="Drag cards to move &#x2022; Click to open"
+                           FontSize="11"
+                           Opacity="0.5"
+                           VerticalAlignment="Center" />
+            </StackPanel>
         </Grid>
 
-        <!-- Chapter cards in a horizontal scrollable list -->
-        <ScrollViewer Grid.Row="1"
+        <!-- Canvas area with pan/zoom -->
+        <ScrollViewer x:Name="canvasScrollViewer"
+                      Grid.Row="1"
                       HorizontalScrollBarVisibility="Auto"
-                      VerticalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
                       HorizontalScrollMode="Enabled"
-                      VerticalScrollMode="Disabled"
-                      Padding="20,20,20,20">
-            <ListView x:Name="pinboardList"
-                      SelectionMode="None"
-                      CanReorderItems="True"
-                      CanDragItems="True"
-                      AllowDrop="True"
-                      DragItemsStarting="OnDragItemsStarting"
-                      DragItemsCompleted="OnDragItemsCompleted">
-                <ListView.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <ItemsStackPanel Orientation="Horizontal" />
-                    </ItemsPanelTemplate>
-                </ListView.ItemsPanel>
-                <ListView.ItemContainerStyle>
-                    <Style TargetType="ListViewItem">
-                        <Setter Property="Padding" Value="0" />
-                        <Setter Property="Margin" Value="0,0,12,0" />
-                        <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-                    </Style>
-                </ListView.ItemContainerStyle>
-                <ListView.ItemTemplate>
-                    <DataTemplate x:DataType="variables:Chapter">
-                        <Grid Width="220"
-                              MinHeight="180"
-                              Padding="16"
-                              CornerRadius="8"
-                              Background="{ThemeResource LayerFillColorDefaultBrush}"
-                              BorderBrush="{ThemeResource ElementBorderColor}"
-                              BorderThickness="{ThemeResource ElementBorderThickness}">
-                            <Grid.RowDefinitions>
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
-                                <RowDefinition Height="Auto" />
-                                <RowDefinition Height="Auto" />
-                            </Grid.RowDefinitions>
-
-                            <!-- Chapter name -->
-                            <TextBlock Text="{Binding Name}"
-                                       FontWeight="SemiBold"
-                                       FontSize="13"
-                                       TextWrapping="Wrap"
-                                       MaxLines="2"
-                                       TextTrimming="CharacterEllipsis" />
-
-                            <!-- Separator -->
-                            <Rectangle Grid.Row="1"
-                                       Height="1"
-                                       Fill="{ThemeResource SeparatorFill}"
-                                       Opacity="0.15"
-                                       Margin="0,8" />
-
-                            <!-- Synopsis excerpt -->
-                            <TextBlock Grid.Row="2"
-                                       Text="{Binding Synopsis}"
-                                       FontSize="12"
-                                       Opacity="0.65"
-                                       TextWrapping="Wrap"
-                                       MaxLines="5"
-                                       TextTrimming="CharacterEllipsis" />
-
-                            <!-- Tag pills -->
-                            <muxc:ItemsRepeater Grid.Row="3"
-                                           ItemsSource="{Binding Tags}"
-                                           Margin="0,8,0,0">
-                                <muxc:ItemsRepeater.Layout>
-                                    <muxc:StackLayout Orientation="Horizontal" Spacing="3" />
-                                </muxc:ItemsRepeater.Layout>
-                                <muxc:ItemsRepeater.ItemTemplate>
-                                    <DataTemplate x:DataType="x:String">
-                                        <Border CornerRadius="3"
-                                                Padding="5,1"
-                                                Background="{ThemeResource SystemAccentColorLight2}"
-                                                Opacity="0.85">
-                                            <TextBlock Text="{x:Bind}"
-                                                       FontSize="10"
-                                                       Foreground="White" />
-                                        </Border>
-                                    </DataTemplate>
-                                </muxc:ItemsRepeater.ItemTemplate>
-                            </muxc:ItemsRepeater>
-
-                            <!-- Word count -->
-                            <TextBlock x:Name="wordCountText"
-                                       Grid.Row="4"
-                                       FontSize="11"
-                                       Opacity="0.45"
-                                       Margin="0,8,0,0"
-                                       Tag="{Binding Token}" />
-
-                            <animations:Implicit.ShowAnimations>
-                                <animations:OpacityAnimation Duration="0:0:0.3" From="0" To="1" />
-                                <animations:TranslationAnimation Duration="0:0:0.3" From="0,20,0" To="0" />
-                            </animations:Implicit.ShowAnimations>
-                        </Grid>
-                    </DataTemplate>
-                </ListView.ItemTemplate>
-            </ListView>
+                      VerticalScrollMode="Enabled"
+                      ZoomMode="Enabled"
+                      MinZoomFactor="0.25"
+                      MaxZoomFactor="2.0"
+                      Background="{ThemeResource LayerFillColorAltBrush}">
+            <Canvas x:Name="pinboardCanvas"
+                    Width="4000"
+                    Height="3000"
+                    Background="Transparent" />
         </ScrollViewer>
 
         <!-- Empty state -->
