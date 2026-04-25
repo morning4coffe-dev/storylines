@@ -1156,7 +1156,7 @@
   <data name="relationshipsTitle.Text" xml:space="preserve">
     <value>Relationships</value>
   </data>
-  <data name="addRelationshipButton.Content" xml:space="preserve">
+  <data name="addRelationshipButton.Text" xml:space="preserve">
     <value>Add</value>
   </data>
   <data name="noRelationshipsText.Text" xml:space="preserve">
@@ -1208,7 +1208,7 @@
   <data name="modeReadOnlyDescription" xml:space="preserve">
     <value>Lock the editor for distraction-free reading with formatting preserved.</value>
   </data>
-  <data name="modeEnterButton.Content" xml:space="preserve">
+  <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Enter mode</value>
   </data>
   <data name="branchingDialogue.Label" xml:space="preserve">

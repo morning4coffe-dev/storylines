@@ -838,8 +838,8 @@
     <value>Z-A</value>
   </data>
 
-  <data name="addRelationshipButton.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>Dodaj</value>
   </data>
   <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
     <value>Add a tag…</value>
@@ -865,34 +865,37 @@
   </data>
 
   <data name="readOnlyExitPill.Text" xml:space="preserve">
-    <value></value>
+    <value>Tylko do odczytu - kliknij, aby edytować</value>
   </data>
   <data name="ReadOnlyMode.Label" xml:space="preserve">
-    <value></value>
+    <value>Tylko do odczytu</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tryb tylko do odczytu</value>
   </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
-    <value></value>
+    <value>Wybierz tryb pisania</value>
   </data>
   <data name="modeEdit" xml:space="preserve">
-    <value></value>
+    <value>Edycja</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
-    <value></value>
+    <value>Pełna edycja ze wszystkimi dostępnymi narzędziami.</value>
   </data>
   <data name="modeFocus" xml:space="preserve">
-    <value></value>
+    <value>Skupienie</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
-    <value></value>
+    <value>Pisanie bez rozpraszaczy z opcjonalnym timerem i celem pomiaru.</value>
   </data>
   <data name="modeReadOnly" xml:space="preserve">
-    <value></value>
+    <value>Tylko do odczytu</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">
-    <value></value>
+    <value>Blokuje edytor do czytania bez rozpraszania, zachowując formatowanie.</value>
   </data>
-  <data name="modeEnterButton.Content" xml:space="preserve">
-    <value></value>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>Włącz tryb</value>
   </data>
   <data name="branchingDialogue.Label" xml:space="preserve">
     <value>Branching</value>

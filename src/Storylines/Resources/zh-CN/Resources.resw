@@ -1043,8 +1043,8 @@
     <value>Z-A</value>
   </data>
 
-  <data name="addRelationshipButton.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>添加</value>
   </data>
   <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
     <value>Add a tag…</value>
@@ -1172,6 +1172,39 @@
   </data>
   <data name="branchingSimulationActive" xml:space="preserve">
     <value>Simulation running.</value>
+  </data>
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value>只读 - 单击即可编辑</value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value>只读</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>只读模式</value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value>选择写作模式</value>
+  </data>
+  <data name="modeEdit" xml:space="preserve">
+    <value>编辑</value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value>提供所有可用工具的完整编辑体验。</value>
+  </data>
+  <data name="modeFocus" xml:space="preserve">
+    <value>专注</value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value>提供可选计时器和度量目标的无干扰写作。</value>
+  </data>
+  <data name="modeReadOnly" xml:space="preserve">
+    <value>只读</value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value>锁定编辑器以便无干扰阅读，并保留现有格式。</value>
+  </data>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>进入模式</value>
   </data>
 </root>
 

@@ -193,6 +193,7 @@ namespace Storylines.Helpers
             {
                 case ContentDialogResult.Primary:
                     exitDialog.Hide();
+                    AppView.currentlyOpenedDialogue = null;
                     SaveSystem.SaveAndExitOrClearAll(appClosing);
                     break;
                 case ContentDialogResult.Secondary:

@@ -4,7 +4,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      xmlns:models="using:Storylines.Models"
       xmlns:vm="using:Storylines.ViewModels"
       mc:Ignorable="d">
 
@@ -93,14 +92,14 @@
                           ItemsSource="{x:Bind ViewModel.FilteredNodes, Mode=OneWay}"
                           SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}">
                     <ListView.ItemTemplate>
-                        <DataTemplate x:DataType="models:BranchingDialogueNodeData">
+                        <DataTemplate>
                             <StackPanel Spacing="2">
-                                <TextBlock Text="{x:Bind Title, Mode=OneWay}"
+                                <TextBlock Text="{Binding Title}"
                                            FontWeight="SemiBold" />
-                                <TextBlock Text="{x:Bind Speaker, Mode=OneWay}"
+                                <TextBlock Text="{Binding Speaker}"
                                            Opacity="0.7"
                                            FontSize="12" />
-                                <TextBlock Text="{x:Bind Text, Mode=OneWay}"
+                                <TextBlock Text="{Binding Text}"
                                            Opacity="0.8"
                                            MaxLines="2"
                                            TextTrimming="CharacterEllipsis"
@@ -157,14 +156,14 @@
                                FontWeight="SemiBold" />
 
                     <TextBox x:Uid="branchingNodeTitle"
-                             Text="{x:Bind ViewModel.SelectedNode.Title, Mode=TwoWay}" />
+                             Text="{Binding SelectedNode.Title, Mode=TwoWay}" />
                     <TextBox x:Uid="branchingNodeSpeaker"
-                             Text="{x:Bind ViewModel.SelectedNode.Speaker, Mode=TwoWay}" />
+                             Text="{Binding SelectedNode.Speaker, Mode=TwoWay}" />
                     <TextBox x:Uid="branchingNodeText"
-                             Text="{x:Bind ViewModel.SelectedNode.Text, Mode=TwoWay}"
+                             Text="{Binding SelectedNode.Text, Mode=TwoWay}"
                              MinHeight="120"
-                             TextWrapping="WrapWholeWords"
-                             AcceptsReturn="True" />
+                             
+                             AcceptsReturn="True" /><!--TextWrapping="WrapWholeWords"-->
 
                     <StackPanel Orientation="Horizontal" Spacing="8">
                         <Button x:Uid="branchingSaveNodeEdits"
@@ -174,10 +173,10 @@
                     </StackPanel>
 
                     <ListView x:Name="choicesList"
-                              ItemsSource="{x:Bind ViewModel.SelectedNode.Choices, Mode=OneWay}"
-                              SelectedItem="{x:Bind ViewModel.SelectedChoice, Mode=TwoWay}">
+                              ItemsSource="{Binding SelectedNode.Choices, Mode=OneWay}"
+                              SelectedItem="{Binding SelectedChoice, Mode=TwoWay}">
                         <ListView.ItemTemplate>
-                            <DataTemplate x:DataType="models:BranchingDialogueChoiceData">
+                            <DataTemplate>
                                 <Grid ColumnSpacing="8">
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="3*" />
@@ -185,16 +184,15 @@
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
                                     <TextBox Grid.Column="0"
-                                             Text="{x:Bind Text, Mode=TwoWay}" />
+                                             Text="{Binding Text, Mode=TwoWay}" />
                                     <ComboBox Grid.Column="1"
-                                              ItemsSource="{Binding DataContext.AllNodeTargets, ElementName=RootPage}"
+                                              Loaded="OnChoiceTargetComboBox_Loaded"
                                               DisplayMemberPath="Title"
                                               SelectedValuePath="Id"
                                               SelectedValue="{Binding TargetNodeId, Mode=TwoWay}" />
                                     <Button Grid.Column="2"
                                             x:Uid="branchingRemoveChoice"
-                                            Command="{x:Bind DataContext.RemoveChoiceCommand, ElementName=RootPage}"
-                                            CommandParameter="{Binding}" />
+                                            Click="OnRemoveChoice_Click" />
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -233,14 +231,13 @@
                             <TextBlock Text="{x:Bind ViewModel.SimulatorStatus, Mode=OneWay}"
                                        Opacity="0.7" />
 
-                            <ItemsControl ItemsSource="{x:Bind ViewModel.SimulationChoices, Mode=OneWay}">
+                            <ItemsControl ItemsSource="{Binding SimulationChoices, Mode=OneWay}">
                                 <ItemsControl.ItemTemplate>
-                                    <DataTemplate x:DataType="models:BranchingDialogueChoiceData">
-                                        <Button Content="{x:Bind Text, Mode=OneWay}"
+                                    <DataTemplate>
+                                        <Button Content="{Binding Text}"
                                                 HorizontalAlignment="Stretch"
                                                 Margin="0,2,0,2"
-                                                Command="{x:Bind DataContext.ChooseSimulationChoiceCommand, ElementName=RootPage}"
-                                                CommandParameter="{Binding}" />
+                                                Click="OnSimulationChoice_Click" />
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>

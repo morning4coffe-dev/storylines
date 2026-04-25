@@ -96,12 +96,6 @@
                      Visibility="Collapsed"
                      IsHitTestVisible="False" />
 
-        <components:WelcomePanel x:Name="welcomePanel"
-                                 x:FieldModifier="public"
-                                 Grid.Row="1"
-                                 Grid.ColumnSpan="2"
-                                 Visibility="{x:Bind ViewModel.WelcomePanelVisibility, Mode=OneWay}" />
-
         <components:ChaptersList x:Name="chapterListComponentMainPage"
                                  Grid.Row="1"
                                  Grid.Column="1"

@@ -130,8 +130,8 @@ namespace Storylines.ViewModels
 
         public void ShowWelcomePanel(bool show)
         {
-            WelcomePanelVisibility = show ? Visibility.Visible : Visibility.Collapsed;
-            ChapterTextVisibility = show ? Visibility.Collapsed : Visibility.Visible;
+            WelcomePanelVisibility = Visibility.Collapsed;
+            ChapterTextVisibility = Visibility.Visible;
         }
 
         [RelayCommand]

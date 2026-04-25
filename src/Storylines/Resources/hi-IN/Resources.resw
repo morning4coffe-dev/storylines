@@ -838,8 +838,8 @@
     <value>Z-A</value>
   </data>
 
-  <data name="addRelationshipButton.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>जोड़ें</value>
   </data>
   <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
     <value>Add a tag…</value>
@@ -967,6 +967,39 @@
   </data>
   <data name="branchingSimulationActive" xml:space="preserve">
     <value>Simulation running.</value>
+  </data>
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value>केवल पढ़ने के लिए - संपादित करने हेतु क्लिक करें</value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value>केवल पढ़ने के लिए</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>केवल-पठन मोड</value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value>लेखन मोड चुनें</value>
+  </data>
+  <data name="modeEdit" xml:space="preserve">
+    <value>संपादन</value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value>सभी उपलब्ध उपकरणों के साथ पूर्ण संपादन अनुभव।</value>
+  </data>
+  <data name="modeFocus" xml:space="preserve">
+    <value>फोकस</value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value>वैकल्पिक टाइमर और माप लक्ष्य के साथ बिना व्यवधान का लेखन।</value>
+  </data>
+  <data name="modeReadOnly" xml:space="preserve">
+    <value>केवल पढ़ने के लिए</value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value>स्वरूपण सुरक्षित रखते हुए बिना व्यवधान के पढ़ने के लिए संपादक को लॉक करता है।</value>
+  </data>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>मोड शुरू करें</value>
   </data>
 </root>
 

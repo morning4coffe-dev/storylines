@@ -4,6 +4,7 @@ using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System.Collections.Generic;
 using System.Linq;
+using Storylines.ViewModels;
 
 namespace Storylines.Helpers
 {

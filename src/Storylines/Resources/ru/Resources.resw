@@ -1044,8 +1044,8 @@
     <value>Z-A</value>
   </data>
 
-  <data name="addRelationshipButton.Content" xml:space="preserve">
-    <value>Add</value>
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>Добавить</value>
   </data>
   <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
     <value>Add a tag…</value>
@@ -1173,6 +1173,39 @@
   </data>
   <data name="branchingSimulationActive" xml:space="preserve">
     <value>Simulation running.</value>
+  </data>
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value>Только чтение - нажмите, чтобы редактировать</value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Режим только чтения</value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value>Выберите режим письма</value>
+  </data>
+  <data name="modeEdit" xml:space="preserve">
+    <value>Редактирование</value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value>Полноценное редактирование со всеми доступными инструментами.</value>
+  </data>
+  <data name="modeFocus" xml:space="preserve">
+    <value>Фокус</value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value>Письмо без отвлечений с необязательным таймером и целью измерения.</value>
+  </data>
+  <data name="modeReadOnly" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value>Блокирует редактор для чтения без отвлечений с сохранением форматирования.</value>
+  </data>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>Включить режим</value>
   </data>
 </root>
 

@@ -947,6 +947,13 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarButton x:Name="readOnlyModeButton"
+                                  x:Uid="ReadOnlyMode"
+                                  CornerRadius="4"
+                                  Command="{x:Bind ViewModel.OpenReadOnlyModeCommand}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE8A5;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
 
                     <AppBarSeparator />
 

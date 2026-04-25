@@ -3,6 +3,7 @@ using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
 using System.Collections.Generic;
+using System.Windows.Input;
 using System.Linq;
 using Windows.Foundation;
 using Windows.UI;
@@ -52,6 +53,22 @@ namespace Storylines.Views.Pages
             mapScrollViewer.Visibility = ViewModel.IsMapModeEnabled ? Visibility.Visible : Visibility.Collapsed;
             if (ViewModel.IsMapModeEnabled)
                 RedrawMap();
+        }
+
+        private void OnChoiceTargetComboBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            if (sender is ComboBox comboBox)
+                comboBox.ItemsSource = ViewModel.AllNodeTargets;
+        }
+
+        private void OnRemoveChoice_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteChoiceCommand(sender, ViewModel.RemoveChoiceCommand);
+        }
+
+        private void OnSimulationChoice_Click(object sender, RoutedEventArgs e)
+        {
+            ExecuteChoiceCommand(sender, ViewModel.ChooseSimulationChoiceCommand);
         }
 
         private void RedrawMap()
@@ -208,6 +225,15 @@ namespace Storylines.Views.Pages
 
             RedrawMap();
             e.Handled = true;
+        }
+
+        private static void ExecuteChoiceCommand(object sender, ICommand command)
+        {
+            if (!(sender is FrameworkElement element) || !(element.DataContext is BranchingDialogueChoiceData choice))
+                return;
+
+            if (command?.CanExecute(choice) == true)
+                command.Execute(choice);
         }
     }
 }

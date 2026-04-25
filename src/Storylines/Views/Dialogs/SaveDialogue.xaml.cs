@@ -3,11 +3,11 @@ using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System;
 using System.Collections.ObjectModel;
-using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
+using System.Threading.Tasks;
 
 namespace Storylines.Views.Dialogs
 {
@@ -51,12 +51,15 @@ namespace Storylines.Views.Dialogs
 
         public static void Open(Type type)
         {
-            if(AppView.currentlyOpenedDialogue != null)
-                AppView.currentlyOpenedDialogue.Hide();
+            var currentDialog = AppView.currentlyOpenedDialogue;
+            if (currentDialog == LoadProjectDialogue.loadFile)
+                LoadProjectDialogue.loadFile.isEscape = false;
+
+            AppView.currentlyOpenedDialogue = null;
+            currentDialog?.Hide();
 
             SaveDialogue.type = type;
-            if (AppView.currentlyOpenedDialogue == null)
-                _ = new SaveDialogue().ShowAsync();
+            _ = new SaveDialogue().ShowAsync();
         }
 
         public async Task ChooseFileToSaveAsync()
