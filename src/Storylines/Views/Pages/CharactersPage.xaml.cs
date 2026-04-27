@@ -767,7 +767,12 @@ namespace Storylines.Views.Pages
             return preview;
         }
 
-        // ─── Relationships ────────────────────────────────────────────
+        private void OnViewDialogueNodes_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.NavigateToDialogueCommand.Execute(null);
+        }
+
+        // ─── Relationships ──────────────────────────────────────────── 
 
         public void LoadRelationships(Character character)
         {

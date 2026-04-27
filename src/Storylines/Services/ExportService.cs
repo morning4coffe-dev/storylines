@@ -2,6 +2,8 @@ using Storylines.Services;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
@@ -185,6 +187,80 @@ namespace Storylines.Services
                 //notification system.notify
             }
         }
+        #endregion
+
+        #region Branching Dialogue Export
+
+        public static async Task ExportBranchingDialogueJsonAsync(StorageFolder folder, string fileName, BranchingDialogueGraphData graph)
+        {
+            if (folder == null || graph == null)
+                return;
+
+            var json = Newtonsoft.Json.JsonConvert.SerializeObject(graph, Newtonsoft.Json.Formatting.Indented);
+
+            try
+            {
+                var storageFile = await folder.CreateFileAsync($"{fileName}.json", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(storageFile, json);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to export branching dialogue JSON: {ex.Message}");
+            }
+        }
+
+        public static async Task ExportBranchingDialogueTweeAsync(StorageFolder folder, string fileName, BranchingDialogueGraphData graph)
+        {
+            if (folder == null || graph == null)
+                return;
+
+            var twee = Helpers.BranchingDialogueExportHelper.ConvertGraphToTwee(graph);
+
+            try
+            {
+                var storageFile = await folder.CreateFileAsync($"{fileName}.twee", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(storageFile, twee);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to export branching dialogue Twee: {ex.Message}");
+            }
+        }
+
+        public static async Task ExportBranchingDialogueScreenplayAsync(StorageFolder folder, string fileName, BranchingDialogueGraphData graph)
+        {
+            if (folder == null || graph == null)
+                return;
+
+            var screenplay = Helpers.BranchingDialogueExportHelper.ConvertGraphToScreenplay(graph);
+
+            try
+            {
+                var storageFile = await folder.CreateFileAsync($"{fileName}.txt", CreationCollisionOption.ReplaceExisting);
+                await FileIO.WriteTextAsync(storageFile, screenplay);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to export branching dialogue screenplay: {ex.Message}");
+            }
+        }
+
+        public static BranchingDialogueGraphData ImportBranchingDialogueJson(string json)
+        {
+            return Helpers.BranchingDialogueExportHelper.ImportFromJson(json);
+        }
+
+        // Kept for backwards compatibility; delegates to helper
+        internal static string ConvertGraphToTwee(BranchingDialogueGraphData graph)
+        {
+            return Helpers.BranchingDialogueExportHelper.ConvertGraphToTwee(graph);
+        }
+
+        internal static string ConvertGraphToScreenplay(BranchingDialogueGraphData graph)
+        {
+            return Helpers.BranchingDialogueExportHelper.ConvertGraphToScreenplay(graph);
+        }
+
         #endregion
     }
 }

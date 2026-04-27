@@ -2,6 +2,7 @@ using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
@@ -72,6 +73,9 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _canRedo;
 
+        [ObservableProperty]
+        private string _dialogueNodeCountText;
+
         public bool UnappliedChanges { get; set; }
 
         private Character _characterBeforeChange;
@@ -106,7 +110,40 @@ namespace Storylines.ViewModels
                 AppearanceText = value.Appearance ?? string.Empty;
                 ProfilePicture = value.Picture?.Image;
                 _pictureData = value.Picture;
+                UpdateDialogueNodeCount(value);
             }
+        }
+
+        private void UpdateDialogueNodeCount(Character character)
+        {
+            if (character == null)
+            {
+                DialogueNodeCountText = null;
+                return;
+            }
+
+            var count = SpeakerResolver.CountNodesForCharacter(
+                character.Token, character.Name, _projectState.BranchingDialogues);
+
+            if (count == 0)
+            {
+                DialogueNodeCountText = null;
+                return;
+            }
+
+            var format = ResourceLoader.GetForViewIndependentUse().GetString("characterDialogueNodeCountFormat")
+                ?? "{0} dialogue nodes";
+            DialogueNodeCountText = string.Format(format, count);
+        }
+
+        [RelayCommand]
+        private void NavigateToDialogue()
+        {
+            if (SelectedCharacter == null)
+                return;
+
+            var nav = App.TryGetService<INavigationService>();
+            nav?.NavigateTo(NavigationTarget.BranchingDialogue, SelectedCharacter.Name);
         }
 
         [RelayCommand]

@@ -38,6 +38,7 @@
     <Compile Include="..\Storylines\Services\Serializers\JsonSaveSerializer.cs" Link="LinkedSources\JsonSaveSerializer.cs" />
     <Compile Include="..\Storylines\Services\Serializers\LegacySrlSerializer.cs" Link="LinkedSources\LegacySrlSerializer.cs" />
     <Compile Include="..\Storylines\DataStructures\PartialStack.cs" Link="LinkedSources\PartialStack.cs" />
+    <Compile Include="..\Storylines\Helpers\BranchingDialogueExportHelper.cs" Link="LinkedSources\BranchingDialogueExportHelper.cs" />
   </ItemGroup>
 
 </Project>

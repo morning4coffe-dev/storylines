@@ -980,7 +980,7 @@
                     </AppBarButton>
 
                     <AppBarButton x:Name="pinboardButton"
-                                  Label="Pinboard"
+                                  x:Uid="pinboardButton"
                                   CornerRadius="4"
                                   Click="OnPinboardButton_Click">
                         <AppBarButton.Icon>
@@ -1055,7 +1055,7 @@
                     </AppBarButton>
 
                     <AppBarButton x:Name="writingPromptsButton"
-                                  Label="Prompts"
+                                  x:Uid="writingPromptsButton"
                                   CornerRadius="4"
                                   Click="OnWritingPromptsButton_Click">
                         <AppBarButton.Icon>

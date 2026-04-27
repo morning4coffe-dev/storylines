@@ -468,6 +468,200 @@ public class BranchingDialogueServiceTests
             Assert.Empty(result.UnreachableNodes);
         }
 
+        #region Condition and Action Tests
+
+        [Fact]
+        public void AddCondition_CreatesConditionOnChoice()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+            var choice = service.AddChoice("chapter-1", node.Id, "Go");
+
+            var condition = service.AddCondition("chapter-1", node.Id, choice.Id, "visited", ConditionOperator.Equals, "true");
+
+            Assert.NotNull(condition);
+            Assert.Equal("visited", condition.Flag);
+            Assert.Equal(ConditionOperator.Equals, condition.Operator);
+            Assert.Equal("true", condition.Value);
+            Assert.Single(choice.Conditions);
+        }
+
+        [Fact]
+        public void RemoveCondition_RemovesConditionByIndex()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+            var choice = service.AddChoice("chapter-1", node.Id, "Go");
+            service.AddCondition("chapter-1", node.Id, choice.Id, "flag1");
+            service.AddCondition("chapter-1", node.Id, choice.Id, "flag2");
+
+            var result = service.RemoveCondition("chapter-1", node.Id, choice.Id, 0);
+
+            Assert.True(result);
+            Assert.Single(choice.Conditions);
+            Assert.Equal("flag2", choice.Conditions[0].Flag);
+        }
+
+        [Fact]
+        public void RemoveCondition_InvalidIndex_ReturnsFalse()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+            var choice = service.AddChoice("chapter-1", node.Id, "Go");
+
+            var result = service.RemoveCondition("chapter-1", node.Id, choice.Id, 5);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void AddAction_CreatesActionOnNode()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+
+            var action = service.AddAction("chapter-1", node.Id, "hasKey", "true");
+
+            Assert.NotNull(action);
+            Assert.Equal("hasKey", action.Flag);
+            Assert.Equal("true", action.Value);
+            Assert.Single(node.Actions);
+        }
+
+        [Fact]
+        public void RemoveAction_RemovesActionByIndex()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+            service.AddAction("chapter-1", node.Id, "flag1", "v1");
+            service.AddAction("chapter-1", node.Id, "flag2", "v2");
+
+            var result = service.RemoveAction("chapter-1", node.Id, 0);
+
+            Assert.True(result);
+            Assert.Single(node.Actions);
+            Assert.Equal("flag2", node.Actions[0].Flag);
+        }
+
+        [Fact]
+        public void RemoveAction_InvalidIndex_ReturnsFalse()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var node = graph.Nodes[0];
+
+            var result = service.RemoveAction("chapter-1", node.Id, 0);
+
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void Simulation_ExecutesActionsOnEntry()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var start = graph.Nodes[0];
+            start.Actions = new List<BranchingDialogueActionData>
+            {
+                new BranchingDialogueActionData { Flag = "entered", Value = "yes" }
+            };
+
+            var state = service.StartSimulation("chapter-1");
+
+            Assert.True(state.Variables.ContainsKey("entered"));
+            Assert.Equal("yes", state.Variables["entered"]);
+        }
+
+        [Fact]
+        public void Simulation_ConditionFiltersAvailableChoices()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var start = graph.Nodes[0];
+            var nodeA = service.CreateNode("chapter-1", "A");
+            var nodeB = service.CreateNode("chapter-1", "B");
+
+            var choiceA = service.AddChoice("chapter-1", start.Id, "Go A", nodeA.Id);
+            var choiceB = service.AddChoice("chapter-1", start.Id, "Go B (locked)", nodeB.Id);
+            choiceB.Conditions = new List<BranchingDialogueConditionData>
+            {
+                new BranchingDialogueConditionData { Flag = "key", Operator = ConditionOperator.Equals, Value = "true" }
+            };
+
+            var state = service.StartSimulation("chapter-1");
+
+            // Without the key variable, only choiceA should be available
+            var available = BranchingDialogueService.GetAvailableChoices(start, state);
+            Assert.Single(available);
+            Assert.Equal(choiceA.Id, available[0].Id);
+        }
+
+        [Fact]
+        public void Simulation_ConditionIsSet_AllowsWhenVariableExists()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var start = graph.Nodes[0];
+            start.Actions = new List<BranchingDialogueActionData>
+            {
+                new BranchingDialogueActionData { Flag = "key", Value = "true" }
+            };
+            var nodeA = service.CreateNode("chapter-1", "A");
+            var choiceA = service.AddChoice("chapter-1", start.Id, "Go A", nodeA.Id);
+            choiceA.Conditions = new List<BranchingDialogueConditionData>
+            {
+                new BranchingDialogueConditionData { Flag = "key", Operator = ConditionOperator.IsSet }
+            };
+
+            var state = service.StartSimulation("chapter-1");
+            var available = BranchingDialogueService.GetAvailableChoices(start, state);
+
+            Assert.Single(available);
+        }
+
+        [Fact]
+        public void ValidateGraph_DetectsUnknownSpeakers()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var start = graph.Nodes[0];
+            start.Speaker = "UnknownPerson";
+
+            var knownSpeakers = new List<string> { "Alice", "Bob" };
+            var result = service.ValidateGraph("chapter-1", knownSpeakers);
+
+            Assert.Single(result.UnknownSpeakers);
+            Assert.Contains("UnknownPerson", result.UnknownSpeakers[0].Message);
+        }
+
+        [Fact]
+        public void ValidateGraph_DetectsOrphanedConditions()
+        {
+            var service = CreateService();
+            var graph = service.GetOrCreateGraph("chapter-1");
+            var start = graph.Nodes[0];
+            var nodeB = service.CreateNode("chapter-1", "B");
+            var choice = service.AddChoice("chapter-1", start.Id, "Go B", nodeB.Id);
+
+            // Add a condition referencing flag "key" but no node sets it
+            choice.Conditions = new List<BranchingDialogueConditionData>
+            {
+                new BranchingDialogueConditionData { Flag = "key", Operator = ConditionOperator.Equals, Value = "true" }
+            };
+
+            var result = service.ValidateGraph("chapter-1");
+
+            Assert.Single(result.OrphanedConditions);
+            Assert.Contains("key", result.OrphanedConditions[0].Message);
+        }
+
+        #endregion
+
         private sealed class FakeStore : IBranchingDialogueStore
     {
         public List<BranchingDialogueGraphData> Graphs { get; } = new();

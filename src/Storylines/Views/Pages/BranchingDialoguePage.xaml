@@ -5,7 +5,9 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:Storylines.ViewModels"
-      mc:Ignorable="d">
+      xmlns:controls="using:Storylines.Views.Controls"
+      mc:Ignorable="d"
+      KeyDown="OnPage_KeyDown">
 
     <Grid x:Name="RootPage">
         <Grid.RowDefinitions>
@@ -13,238 +15,359 @@
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
 
-        <Grid Padding="16,12"
-              Background="{ThemeResource LayerFillColorDefaultBrush}"
-              BorderBrush="{ThemeResource ElementBorderColor}"
-              BorderThickness="0,0,0,1">
+        <!-- Compact toolbar row -->
+        <Grid Margin="4,0" VerticalAlignment="Center">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="320" />
+                <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
 
-            <Button x:Name="backButton"
-                    x:Uid="branchingBackButton"
-                    Width="36"
-                    Height="36"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    Click="OnBackButton_Click">
-                <FontIcon Glyph="&#xE72B;" />
-            </Button>
-
-            <StackPanel Grid.Column="1"
-                        Orientation="Vertical"
-                        Spacing="4"
-                        Margin="8,0,0,0">
-                <TextBlock x:Uid="branchingPageTitle"
-                           FontSize="18"
-                           FontWeight="SemiBold" />
-                <TextBlock x:Uid="branchingPageSubtitle"
-                           Opacity="0.7"
-                           TextWrapping="WrapWholeWords" />
+            <!-- Left: chapter selector -->
+            <StackPanel Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <ComboBox ItemsSource="{x:Bind ViewModel.Chapters, Mode=OneWay}"
+                          SelectedItem="{x:Bind ViewModel.SelectedChapter, Mode=TwoWay}"
+                          DisplayMemberPath="Name"
+                          MinWidth="140" MaxWidth="200"
+                          VerticalAlignment="Center"
+                          AutomationProperties.Name="Chapter" />
+                <TextBlock Text="{x:Bind ViewModel.ChapterStatusText, Mode=OneWay}"
+                           VerticalAlignment="Center"
+                           FontSize="11" Opacity="0.6" Margin="4,0,0,0" />
             </StackPanel>
 
-            <ComboBox Grid.Column="2"
-                      x:Uid="branchingChapterSelector"
-                      ItemsSource="{x:Bind ViewModel.Chapters, Mode=OneWay}"
-                      SelectedItem="{x:Bind ViewModel.SelectedChapter, Mode=TwoWay}"
-                      DisplayMemberPath="Name"
-                      HorizontalAlignment="Stretch"
-                      VerticalAlignment="Center" />
+            <!-- Right: action buttons -->
+            <StackPanel Grid.Column="2" Orientation="Horizontal" Spacing="2" VerticalAlignment="Center">
+                <Button CornerRadius="4" Padding="8,6"
+                        Background="Transparent"
+                        Command="{x:Bind ViewModel.CreateNodeCommand}"
+                        ToolTipService.ToolTip="Add passage"
+                        AutomationProperties.Name="Add passage">
+                    <FontIcon Glyph="&#xE710;" FontSize="14" />
+                </Button>
+                <Button CornerRadius="4" Padding="8,6"
+                        Background="Transparent"
+                        Command="{x:Bind ViewModel.ImportFromChapterTextCommand}"
+                        ToolTipService.ToolTip="Import dialogues from chapter text"
+                        AutomationProperties.Name="Import from chapter">
+                    <FontIcon Glyph="&#xE8B5;" FontSize="14" />
+                </Button>
+                <Button CornerRadius="4" Padding="8,6"
+                        Background="Transparent"
+                        Command="{x:Bind ViewModel.SyncPassagesToChapterTextCommand}"
+                        ToolTipService.ToolTip="Copy dialogue as text to clipboard"
+                        AutomationProperties.Name="Copy dialogue as text">
+                    <FontIcon Glyph="&#xE8C8;" FontSize="14" />
+                </Button>
+
+                <AppBarSeparator Margin="2,0" />
+
+                <Button CornerRadius="4" Padding="8,6"
+                        Background="Transparent"
+                        Command="{x:Bind ViewModel.ValidateGraphCommand}"
+                        ToolTipService.ToolTip="Validate graph"
+                        AutomationProperties.Name="Validate">
+                    <FontIcon Glyph="&#xE9D5;" FontSize="14" />
+                </Button>
+
+                <ToggleButton x:Name="toggleNodeListButton"
+                              IsChecked="True"
+                              Click="OnToggleNodeList_Click"
+                              CornerRadius="4" Padding="8,6"
+                              ToolTipService.ToolTip="Toggle side panel"
+                              AutomationProperties.Name="Toggle side panel">
+                    <FontIcon Glyph="&#xE8CB;" FontSize="14" />
+                </ToggleButton>
+
+                <!-- Export/Import flyout -->
+                <Button CornerRadius="4" Padding="8,6"
+                        Background="Transparent"
+                        ToolTipService.ToolTip="Export / Import"
+                        AutomationProperties.Name="Export">
+                    <FontIcon Glyph="&#xEDE1;" FontSize="14" />
+                    <Button.Flyout>
+                        <MenuFlyout>
+                            <MenuFlyoutItem x:Uid="branchingExportJson"
+                                            Command="{x:Bind ViewModel.ExportGraphJsonCommand}" />
+                            <MenuFlyoutItem x:Uid="branchingExportTwee"
+                                            Command="{x:Bind ViewModel.ExportGraphTweeCommand}" />
+                            <MenuFlyoutItem x:Uid="branchingExportScreenplay"
+                                            Command="{x:Bind ViewModel.ExportGraphScreenplayCommand}" />
+                            <MenuFlyoutSeparator />
+                            <MenuFlyoutItem x:Uid="branchingImportJson"
+                                            Command="{x:Bind ViewModel.ImportGraphJsonCommand}" />
+                        </MenuFlyout>
+                    </Button.Flyout>
+                </Button>
+            </StackPanel>
         </Grid>
 
-        <Grid Grid.Row="1"
-              Padding="12"
-              ColumnSpacing="12">
+        <!-- Main content: canvas + side panel -->
+        <Grid Grid.Row="1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="2*" />
-                <ColumnDefinition Width="3*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition x:Name="sidePanelColumn" Width="340" MinWidth="280" MaxWidth="420" />
             </Grid.ColumnDefinitions>
 
-            <!-- Left pane: node list + filters + optional map -->
-            <Grid Grid.Column="0"
+            <!-- Canvas area — extracted control -->
+            <controls:BranchingDialogueCanvasControl x:Name="canvasControl"
+                                                      Grid.Column="0" />
+
+            <!-- Side panel: inspector + node list + simulator -->
+            <Grid x:Name="sidePanel"
+                  Grid.Column="1"
                   Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"
-                  BorderThickness="{ThemeResource ElementBorderThickness}"
-                  CornerRadius="8"
-                  Padding="10"
-                  RowSpacing="8">
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="Auto" />
-                    <RowDefinition Height="180" />
-                </Grid.RowDefinitions>
+                  BorderThickness="1,0,0,0">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Padding="10,8">
+                    <StackPanel Spacing="6">
 
-                <TextBox x:Uid="branchingSearch"
-                         Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"
-                         PlaceholderText="Search nodes" />
+                        <!-- Search and filter -->
+                        <TextBox x:Uid="branchingSearch"
+                                 Text="{x:Bind ViewModel.SearchText, Mode=TwoWay}"
+                                 AutomationProperties.Name="Search passages" />
 
-                <ComboBox Grid.Row="1"
-                          x:Uid="branchingSpeakerFilter"
-                          ItemsSource="{x:Bind ViewModel.SpeakerFilters, Mode=OneWay}"
-                          SelectedItem="{x:Bind ViewModel.SelectedSpeakerFilter, Mode=TwoWay}" />
+                        <Grid ColumnSpacing="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <ComboBox Grid.Column="0"
+                                      ItemsSource="{x:Bind ViewModel.SpeakerFilters, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedSpeakerFilter, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch"
+                                      AutomationProperties.Name="Filter by speaker" />
+                            <ComboBox Grid.Column="1"
+                                      ItemsSource="{x:Bind ViewModel.TagFilters, Mode=OneWay}"
+                                      SelectedItem="{x:Bind ViewModel.SelectedTagFilter, Mode=TwoWay}"
+                                      HorizontalAlignment="Stretch"
+                                      AutomationProperties.Name="Filter by tag" />
+                        </Grid>
 
-                <ListView x:Name="nodesList"
-                          Grid.Row="2"
-                          ItemsSource="{x:Bind ViewModel.FilteredNodes, Mode=OneWay}"
-                          SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}">
-                    <ListView.ItemTemplate>
-                        <DataTemplate>
-                            <StackPanel Spacing="2">
-                                <TextBlock Text="{Binding Title}"
-                                           FontWeight="SemiBold" />
-                                <TextBlock Text="{Binding Speaker}"
-                                           Opacity="0.7"
-                                           FontSize="12" />
-                                <TextBlock Text="{Binding Text}"
-                                           Opacity="0.8"
-                                           MaxLines="2"
-                                           TextTrimming="CharacterEllipsis"
-                                           FontSize="12" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ListView.ItemTemplate>
-                </ListView>
+                        <!-- Passage list -->
+                        <ListView x:Name="nodesList"
+                                  ItemsSource="{x:Bind ViewModel.FilteredNodes, Mode=OneWay}"
+                                  SelectedItem="{x:Bind ViewModel.SelectedNode, Mode=TwoWay}"
+                                  MaxHeight="180"
+                                  SelectionChanged="OnNodesList_SelectionChanged">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <Grid ColumnSpacing="6" Padding="2,4">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="3" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <Rectangle Width="3" RadiusX="1.5" RadiusY="1.5"
+                                                   VerticalAlignment="Stretch" />
+                                        <StackPanel Grid.Column="1" Spacing="1">
+                                            <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12" />
+                                            <TextBlock Text="{Binding Speaker}" Opacity="0.6" FontSize="10" />
+                                        </StackPanel>
+                                        <TextBlock Grid.Column="2" Text="{Binding Text}" Opacity="0.4"
+                                                   MaxLines="1" TextTrimming="CharacterEllipsis"
+                                                   FontSize="10" MaxWidth="80" VerticalAlignment="Center" />
+                                    </Grid>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
 
-                <StackPanel Grid.Row="3"
-                            Orientation="Horizontal"
-                            Spacing="8">
-                    <Button x:Uid="branchingCreateNode"
-                            Command="{x:Bind ViewModel.CreateNodeCommand}" />
-                    <Button x:Uid="branchingDeleteNode"
-                            Command="{x:Bind ViewModel.DeleteSelectedNodeCommand}" />
-                    <Button x:Uid="branchingSetStartNode"
-                            Command="{x:Bind ViewModel.SetStartNodeFromSelectionCommand}" />
-                </StackPanel>
-
-                <Grid Grid.Row="4"
-                      RowSpacing="6">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <ToggleSwitch x:Uid="branchingMapToggle"
-                                  IsOn="{x:Bind ViewModel.IsMapModeEnabled, Mode=TwoWay}"
-                                  Toggled="OnMapToggle_Toggled" />
-
-                    <ScrollViewer Grid.Row="1"
-                                  x:Name="mapScrollViewer"
-                                  HorizontalScrollBarVisibility="Auto"
-                                  VerticalScrollBarVisibility="Auto"
-                                  Visibility="Collapsed">
-                        <Canvas x:Name="mapCanvas"
-                                Width="1800"
-                                Height="900" />
-                    </ScrollViewer>
-                </Grid>
-            </Grid>
-
-            <!-- Right pane: inspector + simulator -->
-            <ScrollViewer Grid.Column="1"
-                          Background="{ThemeResource LayerFillColorDefaultBrush}"
-                          BorderBrush="{ThemeResource ElementBorderColor}"
-                          BorderThickness="{ThemeResource ElementBorderThickness}"
-                          CornerRadius="8"
-                          Padding="12">
-                <StackPanel Spacing="10">
-                    <TextBlock x:Uid="branchingInspectorTitle"
-                               FontSize="16"
-                               FontWeight="SemiBold" />
-
-                    <TextBox x:Uid="branchingNodeTitle"
-                             Text="{Binding SelectedNode.Title, Mode=TwoWay}" />
-                    <TextBox x:Uid="branchingNodeSpeaker"
-                             Text="{Binding SelectedNode.Speaker, Mode=TwoWay}" />
-                    <TextBox x:Uid="branchingNodeText"
-                             Text="{Binding SelectedNode.Text, Mode=TwoWay}"
-                             MinHeight="120"
-                             
-                             AcceptsReturn="True" /><!--TextWrapping="WrapWholeWords"-->
-
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button x:Uid="branchingSaveNodeEdits"
-                                Command="{x:Bind ViewModel.SaveNodeEditsCommand}" />
-                        <Button x:Uid="branchingAddChoice"
-                                Command="{x:Bind ViewModel.AddChoiceWithAutoDestinationCommand}" />
-                    </StackPanel>
-
-                    <ListView x:Name="choicesList"
-                              ItemsSource="{Binding SelectedNode.Choices, Mode=OneWay}"
-                              SelectedItem="{Binding SelectedChoice, Mode=TwoWay}">
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid ColumnSpacing="8">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="3*" />
-                                        <ColumnDefinition Width="2*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBox Grid.Column="0"
-                                             Text="{Binding Text, Mode=TwoWay}" />
-                                    <ComboBox Grid.Column="1"
-                                              Loaded="OnChoiceTargetComboBox_Loaded"
-                                              DisplayMemberPath="Title"
-                                              SelectedValuePath="Id"
-                                              SelectedValue="{Binding TargetNodeId, Mode=TwoWay}" />
-                                    <Button Grid.Column="2"
-                                            x:Uid="branchingRemoveChoice"
-                                            Click="OnRemoveChoice_Click" />
-                                </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
-
-                    <StackPanel Orientation="Horizontal" Spacing="8">
-                        <Button x:Uid="branchingValidateGraph"
-                                Command="{x:Bind ViewModel.ValidateGraphCommand}" />
-                        <TextBlock Text="{x:Bind ViewModel.ValidationSummary, Mode=OneWay}"
-                                   VerticalAlignment="Center"
-                                   TextWrapping="WrapWholeWords"
-                                   Opacity="0.8" />
-                    </StackPanel>
-
-                    <muxc:Expander x:Uid="branchingSimulatorExpander"
-                                   IsExpanded="True">
-                        <StackPanel Spacing="8">
-                            <StackPanel Orientation="Horizontal" Spacing="8">
-                                <Button x:Uid="branchingSimulationStart"
-                                        Command="{x:Bind ViewModel.StartSimulationCommand}" />
-                                <Button x:Uid="branchingSimulationRestart"
-                                        Command="{x:Bind ViewModel.RestartSimulationCommand}" />
-                                <Button x:Uid="branchingSimulationStop"
-                                        Command="{x:Bind ViewModel.StopSimulationCommand}" />
-                            </StackPanel>
-
-                            <TextBlock x:Uid="branchingSimulationBreadcrumb"
-                                       FontWeight="SemiBold" />
-                            <TextBlock Text="{x:Bind ViewModel.SimulatorBreadcrumb, Mode=OneWay}"
-                                       TextWrapping="WrapWholeWords" />
-
-                            <TextBlock Text="{x:Bind ViewModel.SimulatorCurrentSpeaker, Mode=OneWay}"
-                                       FontWeight="SemiBold" />
-                            <TextBlock Text="{x:Bind ViewModel.SimulatorCurrentText, Mode=OneWay}"
-                                       TextWrapping="WrapWholeWords" />
-                            <TextBlock Text="{x:Bind ViewModel.SimulatorStatus, Mode=OneWay}"
-                                       Opacity="0.7" />
-
-                            <ItemsControl ItemsSource="{Binding SimulationChoices, Mode=OneWay}">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate>
-                                        <Button Content="{Binding Text}"
-                                                HorizontalAlignment="Stretch"
-                                                Margin="0,2,0,2"
-                                                Click="OnSimulationChoice_Click" />
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                        <!-- Node action buttons -->
+                        <StackPanel Orientation="Horizontal" Spacing="4">
+                            <Button x:Uid="branchingDeleteNode" CornerRadius="4" Padding="6,3"
+                                    FontSize="11"
+                                    Command="{x:Bind ViewModel.DeleteSelectedNodeCommand}"
+                                    AutomationProperties.Name="Delete passage" />
+                            <Button x:Uid="branchingSetStartNode" CornerRadius="4" Padding="6,3"
+                                    FontSize="11"
+                                    Command="{x:Bind ViewModel.SetStartNodeFromSelectionCommand}"
+                                    AutomationProperties.Name="Set as start" />
+                            <Button x:Uid="branchingViewCharacter" CornerRadius="4" Padding="6,3"
+                                    FontSize="11"
+                                    Command="{x:Bind ViewModel.NavigateToCharacterCommand}"
+                                    AutomationProperties.Name="View character" />
                         </StackPanel>
-                    </muxc:Expander>
-                </StackPanel>
-            </ScrollViewer>
+
+                        <Rectangle Height="1" Fill="{ThemeResource ElementBorderColor}" Margin="0,2" />
+
+                        <!-- Passage Editor -->
+                        <TextBlock x:Uid="branchingInspectorTitle"
+                                   FontSize="13" FontWeight="SemiBold" Opacity="0.8" />
+
+                        <TextBox x:Uid="branchingNodeTitle"
+                                 Text="{Binding SelectedNode.Title, Mode=TwoWay}"
+                                 FontSize="13" />
+
+                        <AutoSuggestBox x:Name="speakerSuggestBox"
+                                        x:Uid="branchingNodeSpeakerSuggest"
+                                        Text="{Binding SelectedNode.Speaker, Mode=TwoWay}"
+                                        ItemsSource="{x:Bind ViewModel.CharacterSuggestions, Mode=OneWay}"
+                                        TextChanged="OnSpeakerSuggestBox_TextChanged"
+                                        QuerySubmitted="OnSpeakerSuggestBox_QuerySubmitted"
+                                        UpdateTextOnSelect="True" />
+
+                        <TextBox x:Uid="branchingNodeText"
+                                 Text="{Binding SelectedNode.Text, Mode=TwoWay}"
+                                 MinHeight="80"
+                                 AcceptsReturn="True"
+                                 TextWrapping="Wrap" />
+
+                        <!-- Notes -->
+                        <muxc:Expander x:Uid="branchingNodeNotesExpander"
+                                       IsExpanded="False"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Stretch">
+                            <TextBox x:Uid="branchingNodeNotes"
+                                     Text="{Binding SelectedNode.Notes, Mode=TwoWay}"
+                                     MinHeight="50"
+                                     AcceptsReturn="True"
+                                     TextWrapping="Wrap" />
+                        </muxc:Expander>
+
+                        <!-- Node tags (comma-separated) -->
+                        <TextBox x:Name="tagsTextBox"
+                                 x:Uid="branchingNodeTags"
+                                 LostFocus="OnTagsTextBox_LostFocus"
+                                 AutomationProperties.Name="Tags (comma-separated)" />
+
+                        <!-- Node actions (set variables) -->
+                        <muxc:Expander x:Uid="branchingActionsExpander"
+                                       IsExpanded="False"
+                                       HorizontalAlignment="Stretch"
+                                       HorizontalContentAlignment="Stretch">
+                            <StackPanel Spacing="4">
+                                <ItemsControl x:Name="actionsList"
+                                              ItemsSource="{Binding SelectedNode.Actions, Mode=OneWay}">
+                                    <ItemsControl.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid ColumnSpacing="6" Padding="2">
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="*" />
+                                                    <ColumnDefinition Width="Auto" />
+                                                </Grid.ColumnDefinitions>
+                                                <TextBox Grid.Column="0" Text="{Binding Flag, Mode=TwoWay}"
+                                                         PlaceholderText="Flag" FontSize="12" />
+                                                <TextBox Grid.Column="1" Text="{Binding Value, Mode=TwoWay}"
+                                                         PlaceholderText="Value" FontSize="12" />
+                                                <Button Grid.Column="2" Content="✕" CornerRadius="4" Padding="6,4"
+                                                        Click="OnRemoveAction_Click" FontSize="12"
+                                                        AutomationProperties.Name="Remove action" />
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ItemsControl.ItemTemplate>
+                                </ItemsControl>
+                                <Button x:Uid="branchingAddAction" CornerRadius="4" Padding="6,3"
+                                        FontSize="12"
+                                        Command="{x:Bind ViewModel.AddActionCommand}" />
+                            </StackPanel>
+                        </muxc:Expander>
+
+                        <!-- Save + Add choice -->
+                        <Grid ColumnSpacing="6">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Button x:Uid="branchingSaveNodeEdits" CornerRadius="4" Padding="8,4"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{x:Bind ViewModel.SaveNodeEditsCommand}" />
+                            <Button Grid.Column="1" x:Uid="branchingAddChoice" CornerRadius="4" Padding="8,4"
+                                    HorizontalAlignment="Stretch"
+                                    Command="{x:Bind ViewModel.AddChoiceWithAutoDestinationCommand}" />
+                        </Grid>
+
+                        <!-- Choices / Connections -->
+                        <TextBlock Text="Connections" FontSize="12" FontWeight="SemiBold" Opacity="0.7"
+                                   Margin="0,4,0,0" />
+
+                        <ListView x:Name="choicesList"
+                                  ItemsSource="{Binding SelectedNode.Choices, Mode=OneWay}"
+                                  SelectedItem="{Binding SelectedChoice, Mode=TwoWay}"
+                                  SelectionMode="Single">
+                            <ListView.ItemTemplate>
+                                <DataTemplate>
+                                    <StackPanel Spacing="4" Padding="2,4">
+                                        <Grid ColumnSpacing="4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBox Grid.Column="0" Text="{Binding Text, Mode=TwoWay}"
+                                                     PlaceholderText="Choice text" FontSize="11" />
+                                            <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
+                                                <Button CornerRadius="4" Padding="5,3"
+                                                        Click="OnToggleConditions_Click"
+                                                        ToolTipService.ToolTip="Conditions"
+                                                        AutomationProperties.Name="Conditions">
+                                                    <FontIcon Glyph="&#xE71C;" FontSize="11" />
+                                                </Button>
+                                                <Button Content="✕" CornerRadius="4" Padding="5,3" FontSize="10"
+                                                        Click="OnRemoveChoice_Click"
+                                                        AutomationProperties.Name="Remove" />
+                                            </StackPanel>
+                                        </Grid>
+                                        <!-- Target selector -->
+                                        <ComboBox Loaded="OnChoiceTargetComboBox_Loaded"
+                                                  DisplayMemberPath="Title"
+                                                  SelectedValuePath="Id"
+                                                  SelectedValue="{Binding TargetNodeId, Mode=TwoWay}"
+                                                  HorizontalAlignment="Stretch"
+                                                  FontSize="11"
+                                                  PlaceholderText="→ Target passage" />
+
+                                        <!-- Inline conditions panel (toggled via button) -->
+                                        <StackPanel x:Name="conditionsPanel" Visibility="Collapsed"
+                                                    Margin="16,4,0,0" Spacing="4">
+                                            <ItemsControl ItemsSource="{Binding Conditions, Mode=OneWay}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate>
+                                                        <Grid ColumnSpacing="4" Padding="2,1">
+                                                            <Grid.ColumnDefinitions>
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                                <ColumnDefinition Width="*" />
+                                                                <ColumnDefinition Width="Auto" />
+                                                            </Grid.ColumnDefinitions>
+                                                            <TextBox Grid.Column="0" Text="{Binding Flag, Mode=TwoWay}"
+                                                                     PlaceholderText="Flag" FontSize="11" />
+                                                            <ComboBox Grid.Column="1" FontSize="11" MinWidth="80"
+                                                                      Loaded="OnConditionOperatorComboBox_Loaded"
+                                                                      SelectionChanged="OnConditionOperatorComboBox_SelectionChanged" />
+                                                            <TextBox Grid.Column="2" Text="{Binding Value, Mode=TwoWay}"
+                                                                     PlaceholderText="Value" FontSize="11" />
+                                                            <Button Grid.Column="3" Content="✕"
+                                                                    CornerRadius="4" Padding="4,2" FontSize="10"
+                                                                    Click="OnRemoveCondition_Click"
+                                                                    AutomationProperties.Name="Remove condition" />
+                                                        </Grid>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                            <Button x:Uid="branchingAddCondition" CornerRadius="4" Padding="6,3"
+                                                    FontSize="11"
+                                                    Click="OnAddCondition_Click" />
+                                        </StackPanel>
+                                    </StackPanel>
+                                </DataTemplate>
+                            </ListView.ItemTemplate>
+                        </ListView>
+
+                        <!-- Validation summary -->
+                        <TextBlock Text="{x:Bind ViewModel.ValidationSummary, Mode=OneWay}"
+                                   Visibility="{x:Bind ViewModel.HasValidationMessages, Mode=OneWay}"
+                                   TextWrapping="Wrap"
+                                   FontSize="11" Opacity="0.7"
+                                   Margin="0,4" />
+
+                        <Rectangle Height="1" Fill="{ThemeResource ElementBorderColor}" Margin="0,2" />
+
+                        <!-- Simulator — extracted control -->
+                        <controls:DialogueSimulatorControl x:Name="simulatorControl" />
+
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
         </Grid>
     </Grid>
 </Page>

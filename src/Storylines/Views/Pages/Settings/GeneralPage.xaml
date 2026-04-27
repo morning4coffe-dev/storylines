@@ -261,6 +261,45 @@
                                 ValueChanged="OnDailyWordGoalNumBox_ValueChanged" />
             </Grid>
 
+            <StackPanel>
+                <TextBlock x:Uid="experimentalSetting"
+                           FontWeight="SemiBold"
+                           Margin="0,10,0,5" />
+            </StackPanel>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="auto" />
+                    <ColumnDefinition Width="20" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="&#xE9D9;"
+                          HorizontalAlignment="Center" />
+                <StackPanel VerticalAlignment="Center"
+                            Spacing="1"
+                            Grid.Column="1">
+                    <TextBlock x:Uid="experimentalFeaturesToggle"
+                               TextWrapping="Wrap"
+                               VerticalAlignment="Center" />
+                    <TextBlock x:Uid="experimentalFeaturesToggleDesc"
+                               FontWeight="Light"
+                               Opacity="0.8"
+                               VerticalAlignment="Center"
+                               TextWrapping="Wrap"
+                               Margin="0,0,10,0" />
+                </StackPanel>
+                <ToggleSwitch x:Name="experimentalFeaturesToggleSwitch"
+                              Style="{StaticResource RightAlignedToggleSwitchStyle}"
+                              HorizontalAlignment="Right"
+                              Grid.Column="2"
+                              Toggled="OnExperimentalFeaturesToggleSwitch_Toggled" />
+            </Grid>
+
             <StackPanel.ChildrenTransitions>
                 <TransitionCollection>
                     <EntranceThemeTransition IsStaggeringEnabled="True"

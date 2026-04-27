@@ -213,6 +213,7 @@ namespace Storylines.Views.Pages
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
             headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            headerGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = GridLength.Auto });
 
             var statusDot = new Ellipse
             {
@@ -259,6 +260,24 @@ namespace Storylines.Views.Pages
             };
             Grid.SetColumn(nameText, 2);
             headerGrid.Children.Add(nameText);
+
+            // Dialogue indicator icon
+            var store = App.TryGetService<IBranchingDialogueStore>();
+            if (store?.BranchingDialogues != null &&
+                store.BranchingDialogues.Any(g => g.ChapterId == chapter.Token && g.Nodes != null && g.Nodes.Count > 0))
+            {
+                var dialogueIcon = new FontIcon
+                {
+                    Glyph = "\uE945",
+                    FontSize = 12,
+                    Opacity = 0.5,
+                    VerticalAlignment = VerticalAlignment.Center,
+                    Margin = new Thickness(4, 0, 0, 0)
+                };
+                ToolTipService.SetToolTip(dialogueIcon, _resources.GetString("pinboardDialogueIndicator") ?? "Has branching dialogue");
+                Grid.SetColumn(dialogueIcon, 3);
+                headerGrid.Children.Add(dialogueIcon);
+            }
 
             Grid.SetRow(headerGrid, 0);
             card.Children.Add(headerGrid);

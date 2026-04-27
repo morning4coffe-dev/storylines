@@ -6,7 +6,7 @@ namespace Storylines.Services.Interfaces
     public interface INavigationService
     {
         void Initialize(Frame frame);
-        void NavigateTo(NavigationTarget target);
+        void NavigateTo(NavigationTarget target, object parameter = null);
         void GoBack();
         bool CanGoBack { get; }
 

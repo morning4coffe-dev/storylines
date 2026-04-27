@@ -205,6 +205,8 @@
     </Compile>
     <Compile Include="Resources\Strings.cs" />
     <Compile Include="Helpers\NotificationManager.cs" />
+    <Compile Include="Helpers\SpeakerResolver.cs" />
+    <Compile Include="Helpers\BranchingDialogueExportHelper.cs" />
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Helpers\ShortcutManager.cs" />
     <Compile Include="DataStructures\PartialStack.cs" />
@@ -302,6 +304,12 @@
     </Compile>
     <Compile Include="Views\Pages\BranchingDialoguePage.xaml.cs">
       <DependentUpon>BranchingDialoguePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\BranchingDialogueCanvasControl.xaml.cs">
+      <DependentUpon>BranchingDialogueCanvasControl.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\Controls\DialogueSimulatorControl.xaml.cs">
+      <DependentUpon>DialogueSimulatorControl.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
@@ -416,6 +424,14 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Pages\BranchingDialoguePage.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\BranchingDialogueCanvasControl.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Controls\DialogueSimulatorControl.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

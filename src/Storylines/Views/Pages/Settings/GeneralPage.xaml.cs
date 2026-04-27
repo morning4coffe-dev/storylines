@@ -35,6 +35,7 @@ namespace Storylines.Views.Pages.Settings
                     autosaveIntervalComboBox.SelectedItem = item;
             }
             dailyWordGoalNumBox.Value = SettingsValues.dailyWordGoal;
+            experimentalFeaturesToggleSwitch.IsOn = SettingsValues.experimentalFeaturesEnabled;
             loading = false;
         }
 
@@ -109,6 +110,19 @@ namespace Storylines.Views.Pages.Settings
             {
                 chapterNameBox.Text = ResourceLoader.GetForCurrentView().GetString("chapterName");
                 ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] = ResourceLoader.GetForCurrentView().GetString("chapterName");
+            }
+        }
+
+        private void OnExperimentalFeaturesToggleSwitch_Toggled(object sender, RoutedEventArgs e)
+        {
+            if (!loading)
+            {
+                localSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] = experimentalFeaturesToggleSwitch.IsOn;
+                App.GetService<EventAggregator>().Publish(new SettingChangedEvent
+                {
+                    SettingKey = SettingsValueStrings.ExperimentalFeaturesEnabled,
+                    Value = experimentalFeaturesToggleSwitch.IsOn
+                });
             }
         }
     }

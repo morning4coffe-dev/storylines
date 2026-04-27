@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Storylines.Helpers;
+using Storylines.Models;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using System;
@@ -11,6 +12,7 @@ namespace Storylines.ViewModels
     public partial class CommandBarViewModel : ObservableObject
     {
         private readonly IDialogService _dialogs;
+        private readonly ITextEditorService _textEditor;
 
         [ObservableProperty]
         private bool _canUndo;
@@ -36,9 +38,10 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isAutosaveChecked;
 
-        public CommandBarViewModel(IDialogService dialogs = null, EventAggregator events = null)
+        public CommandBarViewModel(IDialogService dialogs = null, EventAggregator events = null, ITextEditorService textEditor = null)
         {
             _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
+            _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
             IsAutosaveChecked = SettingsValues.autosaveEnabled;
 
             (events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator())
@@ -102,7 +105,24 @@ namespace Storylines.ViewModels
         private void NavigateToCharacters() => AppView.current.ChangePage(AppView.Pages.Characters);
 
         [RelayCommand]
-        private void NavigateToBranchingDialogue() => AppView.current.ChangePage(AppView.Pages.BranchingDialogue);
+        private void NavigateToBranchingDialogue()
+        {
+            if (SettingsValues.experimentalFeaturesEnabled)
+            {
+                // Pass current chapter token so the dialogue page opens with context
+                var projectState = App.TryGetService<ProjectState>();
+                string chapterToken = null;
+                if (projectState?.Chapters != null && _textEditor != null)
+                {
+                    var idx = _textEditor.SelectedChapterIndex;
+                    if (idx >= 0 && idx < projectState.Chapters.Count)
+                        chapterToken = projectState.Chapters[idx].Token;
+                }
+
+                var nav = App.TryGetService<INavigationService>();
+                nav?.NavigateTo(NavigationTarget.BranchingDialogue, chapterToken);
+            }
+        }
 
         [RelayCommand]
         private void ShowShortcuts() => _dialogs.OpenShortcuts();

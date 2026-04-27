@@ -40,6 +40,22 @@ namespace Storylines.Views.Controls
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
                || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
                 MainPage.CommandBar = this;
+
+            UpdateExperimentalFeaturesVisibility();
+            App.GetService<EventAggregator>().Subscribe<SettingChangedEvent>(OnSettingChanged);
+        }
+
+        private void OnSettingChanged(SettingChangedEvent e)
+        {
+            if (e.SettingKey == SettingsValueStrings.ExperimentalFeaturesEnabled)
+                UpdateExperimentalFeaturesVisibility();
+        }
+
+        private void UpdateExperimentalFeaturesVisibility()
+        {
+            branchingDialogueButton.Visibility = SettingsValues.experimentalFeaturesEnabled
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         #region TEMP - NavigationView

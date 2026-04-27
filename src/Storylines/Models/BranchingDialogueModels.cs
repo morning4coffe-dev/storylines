@@ -1,10 +1,20 @@
 using Newtonsoft.Json;
+using Newtonsoft.Json.Converters;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace Storylines.Models
 {
+    [JsonConverter(typeof(StringEnumConverter))]
+    public enum ConditionOperator
+    {
+        Equals,
+        NotEquals,
+        IsSet,
+        IsNotSet
+    }
+
     public class BranchingDialogueGraphData
     {
         [JsonProperty("id")]
@@ -60,11 +70,20 @@ namespace Storylines.Models
         [JsonProperty("speaker", NullValueHandling = NullValueHandling.Ignore)]
         public string? Speaker { get; set; }
 
+        [JsonProperty("characterToken", NullValueHandling = NullValueHandling.Ignore)]
+        public string? CharacterToken { get; set; }
+
         [JsonProperty("text")]
         public string? Text { get; set; }
 
+        [JsonProperty("notes", NullValueHandling = NullValueHandling.Ignore)]
+        public string? Notes { get; set; }
+
         [JsonProperty("choices")]
         public List<BranchingDialogueChoiceData> Choices { get; set; } = new List<BranchingDialogueChoiceData>();
+
+        [JsonProperty("actions", NullValueHandling = NullValueHandling.Ignore)]
+        public List<BranchingDialogueActionData> Actions { get; set; }
 
         [JsonProperty("positionX", NullValueHandling = NullValueHandling.Ignore)]
         public double? PositionX { get; set; }
@@ -85,6 +104,7 @@ namespace Storylines.Models
 
             Text ??= string.Empty;
             Choices ??= new List<BranchingDialogueChoiceData>();
+            Actions ??= new List<BranchingDialogueActionData>();
 
             foreach (var choice in Choices)
                 choice?.EnsureValid();
@@ -124,10 +144,52 @@ namespace Storylines.Models
         public string? Flag { get; set; }
 
         [JsonProperty("operator", NullValueHandling = NullValueHandling.Ignore)]
-        public string? Operator { get; set; }
+        public ConditionOperator Operator { get; set; } = ConditionOperator.Equals;
 
         [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
         public string? Value { get; set; }
+
+        public bool Evaluate(Dictionary<string, string> variables)
+        {
+            if (string.IsNullOrWhiteSpace(Flag))
+                return true;
+
+            string? current = null;
+            var hasValue = variables != null && variables.TryGetValue(Flag, out current);
+
+            switch (Operator)
+            {
+                case ConditionOperator.IsSet:
+                    return hasValue;
+                case ConditionOperator.IsNotSet:
+                    return !hasValue;
+                case ConditionOperator.NotEquals:
+                    return !hasValue || !string.Equals(current, Value ?? string.Empty, StringComparison.Ordinal);
+                case ConditionOperator.Equals:
+                default:
+                    return hasValue && string.Equals(current, Value ?? string.Empty, StringComparison.Ordinal);
+            }
+        }
+    }
+
+    public class BranchingDialogueActionData
+    {
+        [JsonProperty("flag")]
+        public string? Flag { get; set; }
+
+        [JsonProperty("value", NullValueHandling = NullValueHandling.Ignore)]
+        public string? Value { get; set; }
+
+        public void Execute(Dictionary<string, string> variables)
+        {
+            if (string.IsNullOrWhiteSpace(Flag) || variables == null)
+                return;
+
+            if (Value == null)
+                variables.Remove(Flag);
+            else
+                variables[Flag] = Value;
+        }
     }
 
     public class BranchingDialogueValidationResult
@@ -135,8 +197,11 @@ namespace Storylines.Models
         public List<BranchingDialogueValidationIssue> MissingTargets { get; set; } = new List<BranchingDialogueValidationIssue>();
         public List<BranchingDialogueValidationIssue> UnreachableNodes { get; set; } = new List<BranchingDialogueValidationIssue>();
         public List<BranchingDialogueValidationIssue> EmptyChoiceText { get; set; } = new List<BranchingDialogueValidationIssue>();
+        public List<BranchingDialogueValidationIssue> UnknownSpeakers { get; set; } = new List<BranchingDialogueValidationIssue>();
+        public List<BranchingDialogueValidationIssue> OrphanedConditions { get; set; } = new List<BranchingDialogueValidationIssue>();
 
-        public bool HasWarnings => MissingTargets.Count > 0 || UnreachableNodes.Count > 0 || EmptyChoiceText.Count > 0;
+        public bool HasWarnings => MissingTargets.Count > 0 || UnreachableNodes.Count > 0
+            || EmptyChoiceText.Count > 0 || UnknownSpeakers.Count > 0 || OrphanedConditions.Count > 0;
     }
 
     public class BranchingDialogueValidationIssue

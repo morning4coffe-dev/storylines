@@ -40,7 +40,8 @@ namespace Storylines.Services
                 Title = string.IsNullOrWhiteSpace(title) ? $"Node {graph.Nodes.Count + 1}" : title,
                 Speaker = speaker,
                 Text = text ?? string.Empty,
-                Choices = new List<BranchingDialogueChoiceData>()
+                Choices = new List<BranchingDialogueChoiceData>(),
+                Actions = new List<BranchingDialogueActionData>()
             };
 
             graph.Nodes.Add(node);
@@ -146,6 +147,71 @@ namespace Storylines.Services
             return true;
         }
 
+        #region Condition & Action CRUD
+
+        public BranchingDialogueConditionData AddCondition(string chapterId, string nodeId, string choiceId,
+            string? flag = null, ConditionOperator op = ConditionOperator.Equals, string? value = null)
+        {
+            var node = FindNode(chapterId, nodeId, out var graph);
+            var choice = node?.Choices?.FirstOrDefault(c => c.Id == choiceId);
+            if (choice == null || graph == null)
+                return null;
+
+            choice.Conditions ??= new List<BranchingDialogueConditionData>();
+            var condition = new BranchingDialogueConditionData
+            {
+                Flag = flag ?? string.Empty,
+                Operator = op,
+                Value = value
+            };
+            choice.Conditions.Add(condition);
+            PublishGraphChanged(chapterId, graph);
+            return condition;
+        }
+
+        public bool RemoveCondition(string chapterId, string nodeId, string choiceId, int conditionIndex)
+        {
+            var node = FindNode(chapterId, nodeId, out var graph);
+            var choice = node?.Choices?.FirstOrDefault(c => c.Id == choiceId);
+            if (choice?.Conditions == null || conditionIndex < 0 || conditionIndex >= choice.Conditions.Count)
+                return false;
+
+            choice.Conditions.RemoveAt(conditionIndex);
+            PublishGraphChanged(chapterId, graph);
+            return true;
+        }
+
+        public BranchingDialogueActionData AddAction(string chapterId, string nodeId,
+            string? flag = null, string? value = null)
+        {
+            var node = FindNode(chapterId, nodeId, out var graph);
+            if (node == null || graph == null)
+                return null;
+
+            node.Actions ??= new List<BranchingDialogueActionData>();
+            var action = new BranchingDialogueActionData
+            {
+                Flag = flag ?? string.Empty,
+                Value = value
+            };
+            node.Actions.Add(action);
+            PublishGraphChanged(chapterId, graph);
+            return action;
+        }
+
+        public bool RemoveAction(string chapterId, string nodeId, int actionIndex)
+        {
+            var node = FindNode(chapterId, nodeId, out var graph);
+            if (node?.Actions == null || actionIndex < 0 || actionIndex >= node.Actions.Count)
+                return false;
+
+            node.Actions.RemoveAt(actionIndex);
+            PublishGraphChanged(chapterId, graph);
+            return true;
+        }
+
+        #endregion
+
         public bool SetStartNode(string chapterId, string nodeId)
         {
             var graph = GetOrCreateGraph(chapterId);
@@ -165,14 +231,43 @@ namespace Storylines.Services
             PublishGraphChanged(chapterId, graph);
         }
 
-        public BranchingDialogueValidationResult ValidateGraph(string chapterId)
+        public BranchingDialogueValidationResult ValidateGraph(string chapterId, IEnumerable<string> knownSpeakers = null)
         {
             var graph = GetOrCreateGraph(chapterId);
             var result = new BranchingDialogueValidationResult();
             var nodeIds = new HashSet<string>(graph.Nodes.Select(n => n.Id));
 
+            // Collect all flags set by any node action (for orphaned condition check)
+            var allSetFlags = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
             foreach (var node in graph.Nodes)
             {
+                if (node.Actions != null)
+                {
+                    foreach (var action in node.Actions)
+                    {
+                        if (!string.IsNullOrWhiteSpace(action.Flag))
+                            allSetFlags.Add(action.Flag);
+                    }
+                }
+            }
+
+            // Speaker validation set
+            HashSet<string> speakerSet = null;
+            if (knownSpeakers != null)
+                speakerSet = new HashSet<string>(knownSpeakers, StringComparer.CurrentCultureIgnoreCase);
+
+            foreach (var node in graph.Nodes)
+            {
+                // Unknown speaker validation
+                if (speakerSet != null && !string.IsNullOrWhiteSpace(node.Speaker) && !speakerSet.Contains(node.Speaker))
+                {
+                    result.UnknownSpeakers.Add(new BranchingDialogueValidationIssue
+                    {
+                        NodeId = node.Id,
+                        Message = $"Speaker \"{node.Speaker}\" does not match any character."
+                    });
+                }
+
                 foreach (var choice in node.Choices ?? Enumerable.Empty<BranchingDialogueChoiceData>())
                 {
                     if (string.IsNullOrWhiteSpace(choice.Text))
@@ -193,6 +288,25 @@ namespace Storylines.Services
                             ChoiceId = choice.Id,
                             Message = "Choice target node is missing."
                         });
+                    }
+
+                    // Orphaned conditions check
+                    if (choice.Conditions != null)
+                    {
+                        foreach (var cond in choice.Conditions)
+                        {
+                            if (!string.IsNullOrWhiteSpace(cond.Flag)
+                                && cond.Operator != ConditionOperator.IsNotSet
+                                && !allSetFlags.Contains(cond.Flag))
+                            {
+                                result.OrphanedConditions.Add(new BranchingDialogueValidationIssue
+                                {
+                                    NodeId = node.Id,
+                                    ChoiceId = choice.Id,
+                                    Message = $"Condition references flag \"{cond.Flag}\" which is never set by any node."
+                                });
+                            }
+                        }
                     }
                 }
             }
@@ -220,6 +334,11 @@ namespace Storylines.Services
                 return null;
 
             var state = CreateSimulationState(chapterId, graph, graph.StartNodeId);
+
+            // Execute actions on the start node
+            var startNode = graph.Nodes.FirstOrDefault(n => n?.Id == state.CurrentNodeId);
+            ExecuteNodeActions(startNode, state);
+
             _simulationByChapter[chapterId] = state;
             PublishSimulationState(chapterId, state);
             return state;
@@ -254,7 +373,14 @@ namespace Storylines.Services
 
             state.CurrentNodeId = nextNode.Id;
             state.BreadcrumbNodeIds.Add(nextNode.Id);
-            state.IsDeadEnd = (nextNode.Choices == null || nextNode.Choices.Count == 0);
+
+            // Execute actions on the entered node
+            ExecuteNodeActions(nextNode, state);
+
+            // Check for dead-end considering condition filtering
+            var availableChoices = GetAvailableChoices(nextNode, state);
+            state.IsDeadEnd = availableChoices.Count == 0;
+
             PublishSimulationState(chapterId, state);
             return state;
         }
@@ -277,6 +403,33 @@ namespace Storylines.Services
         {
             _simulationByChapter.TryGetValue(chapterId, out var state);
             return state;
+        }
+
+        #region Helpers
+
+        public static List<BranchingDialogueChoiceData> GetAvailableChoices(
+            BranchingDialogueNodeData node, BranchingDialogueSimulationState state)
+        {
+            if (node?.Choices == null)
+                return new List<BranchingDialogueChoiceData>();
+
+            var variables = state?.Variables ?? new Dictionary<string, string>();
+            return node.Choices.Where(c =>
+            {
+                if (c?.Conditions == null || c.Conditions.Count == 0)
+                    return true;
+                return c.Conditions.All(cond => cond.Evaluate(variables));
+            }).ToList();
+        }
+
+        private static void ExecuteNodeActions(BranchingDialogueNodeData node, BranchingDialogueSimulationState state)
+        {
+            if (node?.Actions == null || state == null)
+                return;
+
+            state.Variables ??= new Dictionary<string, string>();
+            foreach (var action in node.Actions)
+                action.Execute(state.Variables);
         }
 
         private static HashSet<string> GetReachableNodeIds(BranchingDialogueGraphData graph)
@@ -342,5 +495,7 @@ namespace Storylines.Services
         {
             _events.PublishSimulationStateChanged(chapterId, state);
         }
+
+        #endregion
     }
 }

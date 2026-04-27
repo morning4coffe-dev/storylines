@@ -19,24 +19,24 @@ namespace Storylines.Services
             _frame = frame;
         }
 
-        public void NavigateTo(NavigationTarget target)
+        public void NavigateTo(NavigationTarget target, object parameter = null)
         {
             switch (target)
             {
                 case NavigationTarget.MainPage:
-                    _frame.Navigate(typeof(MainPage), null, new DrillInNavigationTransitionInfo());
+                    _frame.Navigate(typeof(MainPage), parameter, new DrillInNavigationTransitionInfo());
                     break;
                 case NavigationTarget.Characters:
-                    _frame.Navigate(typeof(CharactersPage), null, new DrillInNavigationTransitionInfo());
+                    _frame.Navigate(typeof(CharactersPage), parameter, new DrillInNavigationTransitionInfo());
                     break;
                 case NavigationTarget.Settings:
-                    _frame.Navigate(typeof(SettingsPage));
+                    _frame.Navigate(typeof(SettingsPage), parameter);
                     break;
                 case NavigationTarget.Pinboard:
-                    _frame.Navigate(typeof(StoryPinboardPage), null, new DrillInNavigationTransitionInfo());
+                    _frame.Navigate(typeof(StoryPinboardPage), parameter, new DrillInNavigationTransitionInfo());
                     break;
                 case NavigationTarget.BranchingDialogue:
-                    _frame.Navigate(typeof(BranchingDialoguePage), null, new DrillInNavigationTransitionInfo());
+                    _frame.Navigate(typeof(BranchingDialoguePage), parameter, new DrillInNavigationTransitionInfo());
                     break;
             }
 

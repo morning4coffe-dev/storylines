@@ -1001,6 +1001,213 @@
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>मोड शुरू करें</value>
   </data>
+  <data name="experimentalSetting.Text" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
+    <value>Enable experimental features</value>
+  </data>
+  <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
+    <value>Unlock features still in development, such as branching dialogue.</value>
+  </data>
+  <data name="branchingCanvasAddNode.Text" xml:space="preserve">
+    <value>Add passage</value>
+  </data>
+  <data name="branchingCanvasAutoArrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Auto-arrange passages</value>
+  </data>
+  <data name="branchingCanvasAutoArrange.AutomationProperties.Name" xml:space="preserve">
+    <value>Auto-arrange passages</value>
+  </data>
+  <data name="branchingCanvasZoomIn.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="branchingCanvasZoomIn.AutomationProperties.Name" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="branchingCanvasZoomOut.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="branchingCanvasZoomOut.AutomationProperties.Name" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="branchingToggleNodeList.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Toggle passage list</value>
+  </data>
+  <data name="branchingToggleNodeList.AutomationProperties.Name" xml:space="preserve">
+    <value>Toggle passage list</value>
+  </data>
+  <data name="branchingImportFromText.Text" xml:space="preserve">
+    <value>Import from chapter</value>
+  </data>
+  <data name="branchingImportFromTextButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Import dialogues from the selected chapter text</value>
+  </data>
+  <data name="pinboardButton.Label" xml:space="preserve">
+    <value>Story Canvas</value>
+  </data>
+  <data name="writingPromptsButton.Label" xml:space="preserve">
+    <value>Writing Prompts</value>
+  </data>
+  <data name="branchingNodeSpeakerSuggest.Header" xml:space="preserve">
+    <value>Speaker</value>
+  </data>
+  <data name="branchingNodeSpeakerSuggest.PlaceholderText" xml:space="preserve">
+    <value>Type or select a character</value>
+  </data>
+  <data name="branchingEmptyTitle.Text" xml:space="preserve">
+    <value>No passages yet</value>
+  </data>
+  <data name="branchingEmptyDescription.Text" xml:space="preserve">
+    <value>Double-click the canvas or click "Add passage" to create your first story passage.</value>
+  </data>
+  <data name="branchingStartBadge" xml:space="preserve">
+    <value>Start</value>
+  </data>
+  <data name="branchingDeadEndBadge" xml:space="preserve">
+    <value>Dead-end</value>
+  </data>
+  <data name="branchingChoiceCountFormat" xml:space="preserve">
+    <value>{0} choices</value>
+  </data>
+  <data name="branchingImportedNodesFormat" xml:space="preserve">
+    <value>Imported {0} passages from chapter text.</value>
+  </data>
+  <data name="branchingNoDialoguesFound" xml:space="preserve">
+    <value>No dialogues found in the chapter text. Write dialogues using the "CharacterName: text" format.</value>
+  </data>
+  <data name="branchingPassageDefaultTitle" xml:space="preserve">
+    <value>Passage</value>
+  </data>
+  <data name="branchingAddPassage.Label" xml:space="preserve">
+    <value>Add passage</value>
+  </data>
+  <data name="branchingAddPassage.AutomationProperties.Name" xml:space="preserve">
+    <value>Add passage</value>
+  </data>
+  <data name="branchingImportToolbar.Label" xml:space="preserve">
+    <value>Import</value>
+  </data>
+  <data name="branchingImportToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Import from chapter</value>
+  </data>
+  <data name="branchingAutoArrangeToolbar.Label" xml:space="preserve">
+    <value>Arrange</value>
+  </data>
+  <data name="branchingAutoArrangeToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Auto-arrange passages</value>
+  </data>
+  <data name="branchingZoomInToolbar.Label" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="branchingZoomInToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Zoom in</value>
+  </data>
+  <data name="branchingZoomOutToolbar.Label" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="branchingZoomOutToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Zoom out</value>
+  </data>
+  <data name="branchingValidateToolbar.Label" xml:space="preserve">
+    <value>Validate</value>
+  </data>
+  <data name="branchingValidateToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Validate graph</value>
+  </data>
+  <data name="branchingToggleNodeListToolbar.Label" xml:space="preserve">
+    <value>Passages</value>
+  </data>
+  <data name="branchingToggleNodeListToolbar.AutomationProperties.Name" xml:space="preserve">
+    <value>Toggle passage list</value>
+  </data>
+  <data name="branchingBackToChapter.Label" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="branchingBackToChapter.AutomationProperties.Name" xml:space="preserve">
+    <value>Back to chapter</value>
+  </data>
+  <data name="branchingExportToolbar.Label" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="branchingExportJson.Text" xml:space="preserve">
+    <value>Export as JSON</value>
+  </data>
+  <data name="branchingExportTwee.Text" xml:space="preserve">
+    <value>Export as Twee</value>
+  </data>
+  <data name="branchingExportScreenplay.Text" xml:space="preserve">
+    <value>Export as Screenplay</value>
+  </data>
+  <data name="branchingImportJson.Text" xml:space="preserve">
+    <value>Import from JSON</value>
+  </data>
+  <data name="branchingTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Tag</value>
+  </data>
+  <data name="branchingViewCharacter.Content" xml:space="preserve">
+    <value>View character</value>
+  </data>
+  <data name="branchingNodeNotesExpander.Header" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="branchingNodeNotes.PlaceholderText" xml:space="preserve">
+    <value>Internal notes (not exported)</value>
+  </data>
+  <data name="branchingNodeTags.PlaceholderText" xml:space="preserve">
+    <value>Tags (comma-separated)</value>
+  </data>
+  <data name="branchingNodeTags.Header" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="branchingActionsExpander.Header" xml:space="preserve">
+    <value>Actions (set variables)</value>
+  </data>
+  <data name="branchingAddAction.Content" xml:space="preserve">
+    <value>+ Add action</value>
+  </data>
+  <data name="branchingAddCondition.Content" xml:space="preserve">
+    <value>+ Add condition</value>
+  </data>
+  <data name="branchingVariablesExpander.Header" xml:space="preserve">
+    <value>Variables</value>
+  </data>
+  <data name="branchingValidationSummaryExtendedFormat" xml:space="preserve">
+    <value>{0} missing target(s), {1} empty choice text, {2} unreachable node(s), {3} unknown speaker(s), {4} orphaned condition(s)</value>
+  </data>
+  <data name="branchingChapterWordCountFormat" xml:space="preserve">
+    <value>{0} words in dialogue</value>
+  </data>
+  <data name="branchingExportedJson" xml:space="preserve">
+    <value>Exported as JSON</value>
+  </data>
+  <data name="branchingExportedTwee" xml:space="preserve">
+    <value>Exported as Twee</value>
+  </data>
+  <data name="branchingExportedScreenplay" xml:space="preserve">
+    <value>Exported as Screenplay</value>
+  </data>
+  <data name="branchingImportFailed" xml:space="preserve">
+    <value>Failed to import — invalid file</value>
+  </data>
+  <data name="characterDialogueNodeCountFormat" xml:space="preserve">
+    <value>{0} dialogue node(s)</value>
+  </data>
+  <data name="characterViewDialogueNodes.Content" xml:space="preserve">
+    <value>View in dialogue editor</value>
+  </data>
+  <data name="pinboardDialogueIndicator" xml:space="preserve">
+    <value>Has branching dialogue</value>
+  </data>
+  <data name="branchingConnectionModeText" xml:space="preserve">
+    <value>Click a target passage to connect from "{0}"</value>
+  </data>
+  <data name="branchingConnectPortTooltip" xml:space="preserve">
+    <value>Click to connect</value>
+  </data>
+  <data name="branchingSyncedToChapterFormat" xml:space="preserve">
+    <value>Copied {0} passage(s) to clipboard</value>
+  </data>
 </root>
 
 

@@ -76,6 +76,8 @@ namespace Storylines.Services
         public static double editorFontSize => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontSize] ?? 11.0);
         public static double editorLineSpacing => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorLineSpacing] ?? 1.2);
 
+        public static bool experimentalFeaturesEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] ?? false);
+
         public static void LoadSettings()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -176,6 +178,9 @@ namespace Storylines.Services
         public static string EditorFontFamily { get; } = "EditorFontFamily";
         public static string EditorFontSize { get; } = "EditorFontSize";
         public static string EditorLineSpacing { get; } = "EditorLineSpacing";
+
+        // Experimental features
+        public static string ExperimentalFeaturesEnabled { get; } = "ExperimentalFeaturesEnabled";
     }
 }
 
