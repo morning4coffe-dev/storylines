@@ -59,6 +59,9 @@ namespace Storylines.ViewModels
         private Visibility _downBarFocusVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
+        private string _downBarFocusText = string.Empty;
+
+        [ObservableProperty]
         private bool _isChapterTextReadOnly;
 
         [ObservableProperty]
@@ -86,6 +89,11 @@ namespace Storylines.ViewModels
             events.Subscribe<ToolsStateChangedEvent>(e =>
             {
                 IsStorylinesDocument = e.IsStorylinesDocument;
+            });
+
+            events.Subscribe<FocusModeDownBarTextChangedEvent>(e =>
+            {
+                DownBarFocusText = e.Text;
             });
 
             modeService ??= App.TryGetService<EditorModeService>();

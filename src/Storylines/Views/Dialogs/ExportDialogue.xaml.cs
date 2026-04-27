@@ -116,7 +116,10 @@ namespace Storylines.Views.Dialogs
 
                     nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
                 }
-                catch { }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"File collision check failed: {ex.Message}");
+                }
         }
 
 

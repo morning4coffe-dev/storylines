@@ -1,8 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Storylines.Constants;
 using Storylines.Helpers;
+using Storylines.Services;
 using Storylines.Views.Dialogs;
-using Storylines.Views.Pages;
 using System;
+using System.Text.RegularExpressions;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 
@@ -12,6 +14,9 @@ namespace Storylines.ViewModels.Modes
 
     public partial class FocusModeViewModel : ObservableObject
     {
+        private static readonly Regex ParagraphRegex = new Regex(
+            @"[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*", RegexOptions.Compiled);
+
         // ── timer ────────────────────────────────────────────────────────────
         private DispatcherTimer _timer;
         private long _timerStartTicks;    // original duration in ticks
@@ -49,7 +54,7 @@ namespace Storylines.ViewModels.Modes
                 _timerStartTicks = time.Ticks;
                 _timerRemaining = time;
 
-                _timer = new DispatcherTimer { Interval = TimeSpan.FromMinutes(1) };
+                _timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(LayoutConstants.FocusModeTimerIntervalSeconds) };
                 _timer.Tick += OnTimerTick;
                 _timer.Start();
 
@@ -110,7 +115,7 @@ namespace Storylines.ViewModels.Modes
         // ── private helpers ───────────────────────────────────────────────────
         private void OnTimerTick(object sender, object e)
         {
-            _timerRemaining = _timerRemaining.Subtract(TimeSpan.FromMinutes(1));
+            _timerRemaining = _timerRemaining.Subtract(TimeSpan.FromSeconds(LayoutConstants.FocusModeTimerIntervalSeconds));
 
             if (_timerRemaining.Ticks > 0)
             {
@@ -136,7 +141,9 @@ namespace Storylines.ViewModels.Modes
         private void RefreshProgressBar(long currentTimeTicks, int currentMeasure)
         {
             int percentage = 0;
-            int multiplier = (_timerStartTicks < 1 || MeasureTarget < 1) ? 100 : 50;
+            int multiplier = (_timerStartTicks < 1 || MeasureTarget < 1)
+                ? LayoutConstants.FocusModeSingleTargetMultiplier
+                : LayoutConstants.FocusModeDualTargetMultiplier;
 
             if (MeasureTarget > 0)
             {
@@ -154,22 +161,22 @@ namespace Storylines.ViewModels.Modes
         private void UpdateDownBar()
         {
             DownBarText = $"{_downBarMeasure}   {_downBarTime}".Trim();
-
-            if (MainPage.Current != null)
-                MainPage.Current.downBarFocusText.Text = DownBarText;
+            App.TryGetService<EventAggregator>()?.Publish(new FocusModeDownBarTextChangedEvent { Text = DownBarText });
         }
 
         private int MeasureRaw(string text)
         {
+            if (string.IsNullOrEmpty(text))
+                return 0;
+
             switch (Metric)
             {
                 case MeasureMetric.Characters:
                     return text.Length > 0 ? text.Length - 1 : 0;
                 case MeasureMetric.Words:
-                    return text.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
+                    return text.Split(new[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
                 case MeasureMetric.Paragraphs:
-                    return System.Text.RegularExpressions.Regex.Matches(
-                        text, "[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*").Count;
+                    return ParagraphRegex.Matches(text).Count;
                 default:
                     return 0;
             }

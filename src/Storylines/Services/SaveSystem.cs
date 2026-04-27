@@ -1,9 +1,9 @@
-using Storylines.Views.Dialogs;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Serializers;
 using Storylines.Models;
+using Storylines.Views.Controls;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,17 +11,27 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Storylines.Views.Controls;
 
 namespace Storylines.Services
 {
     public class SaveSystem
     {
-        public static Dictionary<string, string> savedValues = new Dictionary<string, string>();
+        public Dictionary<string, string> SavedValues { get; } = new Dictionary<string, string>();
 
-        public static ProjectFile currentProject;
+        public ProjectFile CurrentProject { get; set; }
+
+        // Keep static accessors for backward compatibility during transition
+        public static Dictionary<string, string> savedValues => Instance.SavedValues;
+        public static ProjectFile currentProject
+        {
+            get => Instance.CurrentProject;
+            set => Instance.CurrentProject = value;
+        }
+
+        private static SaveSystem Instance => App.GetService<SaveSystem>();
 
         private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static IDialogService Dialogs => App.GetService<IDialogService>();
         private static IFileService FileService => App.GetService<IFileService>();
         private static ISaveSerializer JsonSerializer => App.GetService<JsonSaveSerializer>();
         private static ISaveSerializer LegacySerializer => App.GetService<LegacySrlSerializer>();
@@ -33,7 +43,7 @@ namespace Storylines.Services
         private enum AfterSave { DoNothing, ClearEverything, Exit };
         private static AfterSave afterSave;
 
-        public static void Save()
+        public static async Task SaveAsync()
         {
             afterSave = AfterSave.DoNothing;
 
@@ -42,40 +52,52 @@ namespace Storylines.Services
                 if (currentProject.file.FileType == ".srl")
                 {
                     var projectData = CollectProjectData();
-                    _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
+                    await WriteToFileAsync(JsonSerializer.Serialize(projectData));
                     Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
                 }
                 else if (currentProject.file.FileType == ".txt")
                 {
                     string txt = TextEditor.GetText(TextFormat.PlainText);
                     Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
-                    _ = WriteToFileAsync(txt);
+                    await WriteToFileAsync(txt);
                 }
 
                 NotificationManager.DisplayMainProgressBar(true);
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
-                SaveDialogue.Open(SaveDialogue.Type.Save);
+                Dialogs.OpenSaveDialogue();
+        }
+
+        /// <summary>Synchronous wrapper for callers that cannot await (event handlers, shortcuts).</summary>
+        public static void Save()
+        {
+            _ = SaveAsync();
         }
 
         public static void SaveCopy()
         {
-            SaveDialogue.Open(SaveDialogue.Type.SaveCopy);
+            Dialogs.OpenSaveCopyDialogue();
         }
 
-        public static void SaveAndExitOrClearAll(bool exit)
+        public static async Task SaveAndExitOrClearAllAsync(bool exit)
         {
             afterSave = exit ? AfterSave.Exit : AfterSave.ClearEverything;
 
             if (currentProject.file != null)
             {
                 var projectData = CollectProjectData();
-                _ = WriteToFileAsync(JsonSerializer.Serialize(projectData));
+                await WriteToFileAsync(JsonSerializer.Serialize(projectData));
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
-                SaveDialogue.Open(SaveDialogue.Type.Save);
+                Dialogs.OpenSaveDialogue();
+        }
+
+        /// <summary>Synchronous wrapper for callers that cannot await.</summary>
+        public static void SaveAndExitOrClearAll(bool exit)
+        {
+            _ = SaveAndExitOrClearAllAsync(exit);
         }
 
         private static ProjectData CollectProjectData()
@@ -207,9 +229,9 @@ namespace Storylines.Services
                     break;
                 case AfterSave.ClearEverything:
                     currentProject = null;
-                    AppView.current.ClearEverything();
+                    Dialogs.ClearEverything();
                     TimeTravelSystem.unSavedProgress = false;
-                    LoadProjectDialogue.Open();
+                    Dialogs.OpenLoadDialogue();
                     break;
                 case AfterSave.Exit:
                     App.Current.Exit();
@@ -244,7 +266,7 @@ namespace Storylines.Services
                 project.file = await OpenFileExplorerLoadAsync();
 
                 if(project.file != null)
-                    _ = LoadAsync(project);
+                    await LoadAsync(project);
             } 
             else
             {
@@ -256,17 +278,16 @@ namespace Storylines.Services
                 NotificationManager.DisplayMainProgressBar(true);
 
                 if (project.file.FileType == ".srl")
-                    _ = LoadStorylinesDocument(project.file);
+                    await LoadStorylinesDocument(project.file);
                 else if (project.file.FileType == ".txt")
-                    _ = LoadPlainDocument(project.file);
+                    await LoadPlainDocument(project.file);
             }
         }
 
         public static async Task LoadStorylinesDocument(StorageFile file)
         {
-            AppView.current.ClearEverything();
-            LoadProjectDialogue.loadFile.isEscape = false;
-            LoadProjectDialogue.loadFile.Hide();
+            Dialogs.ClearEverything();
+            Dialogs.DismissLoadDialogue();
             try
             {
                 string content = await FileService.ReadAsync(file);
@@ -360,9 +381,8 @@ namespace Storylines.Services
         {
             try
             {
-                AppView.current.ClearEverything();
-                LoadProjectDialogue.loadFile.isEscape = false;
-                LoadProjectDialogue.loadFile.Hide();
+                Dialogs.ClearEverything();
+                Dialogs.DismissLoadDialogue();
 
                 string txt = await FileService.ReadAsync(file);
 

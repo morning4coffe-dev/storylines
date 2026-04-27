@@ -1,9 +1,9 @@
 using Storylines.Helpers;
 using Storylines.Views.Pages;
-using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Modes;
 using Storylines.Models;
+using Storylines.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
@@ -18,7 +18,6 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
-using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Controls
 {
@@ -28,9 +27,12 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
 
-        private readonly ObservableCollection<Character> dialoguePickerCharacters = new ObservableCollection<Character>();
-        private readonly ObservableCollection<Character> recentDialoguePickerCharacters = new ObservableCollection<Character>();
-        private readonly ObservableCollection<string> recentDialogueCharacterTokens = new ObservableCollection<string>();
+        private readonly ObservableCollection<Character> _dialoguePopupCharacters = new ObservableCollection<Character>();
+        private readonly ObservableCollection<string> _recentDialogueCharacterTokens = new ObservableCollection<string>();
+
+        // True when the popup was triggered by the Enter key — newline was already inserted,
+        // so InsertDialogue must not prepend another one.
+        private bool _dialoguePopupEnteredViaKey = false;
 
         public bool dialoguesOn = false;
 
@@ -76,12 +78,14 @@ namespace Storylines.Views.Controls
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
 
-            dialoguePickerList.ItemsSource = dialoguePickerCharacters;
-            dialoguePickerRecentList.ItemsSource = recentDialoguePickerCharacters;
+            dialoguePopupList.ItemsSource = _dialoguePopupCharacters;
 
             MainPage.ChapterText = this;
 
             _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+
+            // Restore persisted dialogue mode
+            dialoguesOn = SettingsValues.dialogueModeEnabled;
         }
 
         private void OnSettingChanged(SettingChangedEvent e)
@@ -96,7 +100,7 @@ namespace Storylines.Views.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TextHighlighter.selectedTool = TextHighlighter.Tool.Yellow;
+            TextHighlighter.SelectedTool = TextHighlighter.Tool.Yellow;
             MarkTextBackground();
 
             // Apply saved font preferences
@@ -147,15 +151,59 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
-            if (_textEditor.SelectedChapterIndex >= 0 && dialoguesOn)
-                if (e.Key == VirtualKey.Enter)
+            // When the dialogue popup is open, intercept navigation keys
+            if (dialoguePopup.IsOpen)
+            {
+                switch (e.Key)
                 {
-                    PopulateFlyout();
-
-                    Point position = CoreWindow.GetForCurrentThread().PointerPosition;
-                    textBoxDialogueNamesFlyout.ShowAt(MainPage.Current, new Windows.UI.Xaml.Controls.Primitives.FlyoutShowOptions { Position = new Point(position.X, position.Y) });
-                    e.Handled = true;
+                    case VirtualKey.Down:
+                        NavigateDialoguePopup(1);
+                        e.Handled = true;
+                        return;
+                    case VirtualKey.Up:
+                        NavigateDialoguePopup(-1);
+                        e.Handled = true;
+                        return;
+                    case VirtualKey.Tab:
+                        ConfirmDialoguePopupSelection();
+                        e.Handled = true;
+                        return;
+                    case VirtualKey.Escape:
+                        dialoguePopup.IsOpen = false;
+                        e.Handled = true;
+                        return;
+                    case VirtualKey.Enter:
+                        if (dialoguePopupList.SelectedItem is Character)
+                        {
+                            ConfirmDialoguePopupSelection();
+                            e.Handled = true;
+                        }
+                        else
+                        {
+                            dialoguePopup.IsOpen = false;
+                        }
+                        return;
+                    default:
+                        // Any other key dismisses the popup and lets the user keep typing
+                        dialoguePopup.IsOpen = false;
+                        return;
                 }
+            }
+
+            // Show dialogue popup when Enter is pressed and dialogue mode is on
+            if (_textEditor.SelectedChapterIndex >= 0 && dialoguesOn && e.Key == VirtualKey.Enter)
+            {
+                // Shift+Enter: plain newline only, skip dialogue mode
+                var shiftDown = (Windows.UI.Core.CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift)
+                    & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
+                if (shiftDown)
+                    return;
+
+                // Prevent the default newline so we control exactly one insertion
+                e.Handled = true;
+                textBox.Document.Selection.TypeText("\r");
+                ShowDialoguePopup(enteredViaKey: true);
+            }
         }
 
         public void ChangeTextColor()
@@ -645,121 +693,174 @@ namespace Storylines.Views.Controls
         #endregion
 
         #region CommandBar
-        #region Storymarkdown
-        private void PopulateFlyout()
+        #region Dialogue popup
+        private void ShowDialoguePopup(bool enteredViaKey = false)
         {
-            isFlyoutOpen = true;
-            dialoguePickerSearchBox.Text = string.Empty;
-            RefreshDialoguePickerCharacters();
+            _dialoguePopupEnteredViaKey = enteredViaKey;
+
+            if (_projectState.Characters.Count == 0)
+            {
+                NoCharactersYet();
+                return;
+            }
+
+            RefreshDialoguePopupCharacters();
+
+            // Get caret position and place popup near it
+            textBox.Document.Selection.GetRect(PointOptions.ClientCoordinates, out Rect caretRect, out _);
+            var transform = textBox.TransformToVisual(gridHolder);
+            var point = transform.TransformPoint(new Point(caretRect.X, caretRect.Bottom));
+
+            dialoguePopup.HorizontalOffset = Math.Max(0, point.X);
+            dialoguePopup.VerticalOffset = point.Y + 4;
+            dialoguePopup.IsOpen = true;
+
+            // Pre-select the most recent character, or the first one
+            if (_dialoguePopupCharacters.Count > 0)
+                dialoguePopupList.SelectedIndex = 0;
+
+            // Keep focus in the text editor so the user can keep typing
+            textBox.Focus(FocusState.Keyboard);
         }
 
-        private void TextBoxDialogueNamesFlyout_Closed(object sender, object e)
+        private void RefreshDialoguePopupCharacters()
         {
-            isFlyoutOpen = false;
+            _dialoguePopupCharacters.Clear();
+
+            // Show recent characters first
+            foreach (var token in _recentDialogueCharacterTokens)
+            {
+                var character = _projectState.Characters.FirstOrDefault(c => c.Token == token);
+                if (character != null)
+                    _dialoguePopupCharacters.Add(character);
+            }
+
+            // Then add remaining characters alphabetically
+            var recentTokens = _recentDialogueCharacterTokens.ToHashSet();
+            foreach (var character in _projectState.Characters
+                .Where(c => !recentTokens.Contains(c.Token))
+                .OrderBy(c => c.Name))
+            {
+                _dialoguePopupCharacters.Add(character);
+            }
+
+            dialoguePopupEmptyText.Visibility = _dialoguePopupCharacters.Count == 0
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
-        private void OnDialoguePickerCharacter_ItemClick(object sender, ItemClickEventArgs e)
+        private void NavigateDialoguePopup(int direction)
+        {
+            if (_dialoguePopupCharacters.Count == 0) return;
+
+            int currentIndex = dialoguePopupList.SelectedIndex;
+            int newIndex = currentIndex + direction;
+
+            if (newIndex < 0) newIndex = _dialoguePopupCharacters.Count - 1;
+            else if (newIndex >= _dialoguePopupCharacters.Count) newIndex = 0;
+
+            dialoguePopupList.SelectedIndex = newIndex;
+            dialoguePopupList.ScrollIntoView(dialoguePopupList.SelectedItem);
+        }
+
+        private void ConfirmDialoguePopupSelection()
+        {
+            if (dialoguePopupList.SelectedItem is Character character)
+                InsertDialogue(character);
+            else
+                dialoguePopup.IsOpen = false;
+        }
+
+        private void OnDialoguePopupCharacter_ItemClick(object sender, ItemClickEventArgs e)
         {
             InsertDialogue((Character)e.ClickedItem);
+        }
+
+        private void OnDialoguePopup_Closed(object sender, object e)
+        {
+            // Ensure the text editor keeps focus after popup closes
+            if (_textEditor.SelectedChapterIndex >= 0)
+                textBox.Focus(FocusState.Keyboard);
         }
 
         private void InsertDialogue(Character character)
         {
             _ = textBox.Focus(FocusState.Keyboard);
 
-            var hasTextBeforeCursor = textBox.Document.Selection.StartPosition > 0;
-            string dialogueFullText = Dialogue.Create(character, hasTextBeforeCursor);
+            string dialogueFullText;
+            if (_dialoguePopupEnteredViaKey)
+            {
+                // Enter already inserted exactly one newline — just append the speaker prefix
+                dialogueFullText = $"{character.Name}: ";
+            }
+            else
+            {
+                // Triggered from the toolbar button; use Dialogue.Create which adds a
+                // leading newline when the cursor is not at the start of the document
+                var hasTextBeforeCursor = textBox.Document.Selection.StartPosition > 0;
+                dialogueFullText = Dialogue.Create(character, hasTextBeforeCursor);
+            }
+
             textBox.Document.Selection.TypeText(dialogueFullText);
 
             RememberRecentCharacter(character);
-            textBoxDialogueNamesFlyout.Hide();
+            dialoguePopup.IsOpen = false;
+
+            // Integration: also create a branching dialogue node if a graph exists
+            TryCreateBranchingDialogueNode(character);
         }
 
-        private void OnDialoguePickerSearchBox_TextChanged(object sender, TextChangedEventArgs e)
+        private void TryCreateBranchingDialogueNode(Character character)
         {
-            RefreshDialoguePickerCharacters();
-        }
+            var branchingService = App.TryGetService<IBranchingDialogueService>();
+            if (branchingService == null) return;
 
-        private void OnTextBoxDialogueNamesFlyout_Opened(object sender, object e)
-        {
-            dialoguePickerSearchBox.Focus(FocusState.Programmatic);
-        }
+            int selectedIndex = _textEditor.SelectedChapterIndex;
+            if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count) return;
 
-        private void RefreshDialoguePickerCharacters()
-        {
-            var query = dialoguePickerSearchBox?.Text?.Trim() ?? string.Empty;
-            var characters = _projectState.Characters
-                .Where(character => DialogueCharacterMatches(character, query))
-                .OrderBy(character => character.Name)
-                .ToList();
+            var chapter = _projectState.Chapters[selectedIndex];
+            var graph = _projectState.FindBranchingDialogueByChapter(chapter.Token);
 
-            dialoguePickerCharacters.Clear();
-            foreach (var character in characters)
-                dialoguePickerCharacters.Add(character);
+            // Only create nodes when the chapter already has a branching dialogue graph
+            if (graph == null) return;
 
-            var recentCharacters = recentDialogueCharacterTokens
-                .Select(token => _projectState.Characters.FirstOrDefault(character => character.Token == token))
-                .Where(character => character != null && DialogueCharacterMatches(character, query))
-                .ToList();
-
-            recentDialoguePickerCharacters.Clear();
-            foreach (var recentCharacter in recentCharacters)
-                recentDialoguePickerCharacters.Add(recentCharacter);
-
-            dialoguePickerRecentSection.Visibility = string.IsNullOrWhiteSpace(query) && recentDialoguePickerCharacters.Count > 0
-                ? Visibility.Visible
-                : Visibility.Collapsed;
-
-            dialoguePickerEmptyText.Visibility = dialoguePickerCharacters.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private static bool DialogueCharacterMatches(Character character, string query)
-        {
-            if (string.IsNullOrWhiteSpace(query))
-                return true;
-
-            var searchTarget = string.Join(" ", new[]
-            {
-                character?.Name,
-                character?.Role,
-                character?.TraitsText,
-                character?.Description,
-            });
-
-            return searchTarget.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0;
+            branchingService.CreateNode(chapter.Token, title: null, speaker: character.Name, text: null);
         }
 
         private void RememberRecentCharacter(Character character)
         {
-            if (character == null)
-                return;
+            if (character == null) return;
 
-            if (recentDialogueCharacterTokens.Contains(character.Token))
-                recentDialogueCharacterTokens.Remove(character.Token);
+            if (_recentDialogueCharacterTokens.Contains(character.Token))
+                _recentDialogueCharacterTokens.Remove(character.Token);
 
-            recentDialogueCharacterTokens.Insert(0, character.Token);
+            _recentDialogueCharacterTokens.Insert(0, character.Token);
 
-            while (recentDialogueCharacterTokens.Count > 4)
-                recentDialogueCharacterTokens.RemoveAt(recentDialogueCharacterTokens.Count - 1);
-        }
-
-        private void OnTextBoxDialogueNamesFlyout_Closing(Windows.UI.Xaml.Controls.Primitives.FlyoutBase sender, Windows.UI.Xaml.Controls.Primitives.FlyoutBaseClosingEventArgs args)
-        {
+            while (_recentDialogueCharacterTokens.Count > 4)
+                _recentDialogueCharacterTokens.RemoveAt(_recentDialogueCharacterTokens.Count - 1);
         }
 
         public void DialoguesOnOff(bool enabled)
         {
             MainPage.CommandBar.dialoguesEnableButton.IsChecked = enabled;
             dialoguesOn = enabled;
+
+            // Persist the setting
+            Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueModeEnabled] = enabled;
+
+            // Show teaching tip on first activation
+            if (enabled && !SettingsValues.dialogueTeachingTipShown)
+            {
+                dialogueTeachingTip.Target = MainPage.CommandBar.dialoguesEnableButton;
+                dialogueTeachingTip.IsOpen = true;
+                Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] = true;
+            }
         }
 
         public void AddDialogue()
         {
             if (_projectState.Characters.Count > 0)
-            {
-                PopulateFlyout();
-                textBoxDialogueNamesFlyout.ShowAt(textBox);
-            }
+                ShowDialoguePopup();
             else
                 NoCharactersYet();
         }
@@ -775,10 +876,10 @@ namespace Storylines.Views.Controls
         {
             var format = textBox.Document.Selection.CharacterFormat;
 
-            selectedTextIsBold = format.Bold != FormatEffect.Off;
-            selectedTextIsItalic = format.Italic != FormatEffect.Off;
+            selectedTextIsBold = format.Bold == FormatEffect.On;
+            selectedTextIsItalic = format.Italic == FormatEffect.On;
             selectedTextIsUnderlined = format.Underline != UnderlineType.None;
-            selectedTextIsStriked = format.Strikethrough != FormatEffect.Off;
+            selectedTextIsStriked = format.Strikethrough == FormatEffect.On;
 
             boldTextButton.IsChecked = selectedTextIsBold;
             italicTextButton.IsChecked = selectedTextIsItalic;
@@ -790,8 +891,11 @@ namespace Storylines.Views.Controls
         {
             if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
-                textBox.Document.Selection.CharacterFormat.Bold = selectedTextIsBold ? FormatEffect.Off : FormatEffect.On;
-                selectedTextIsBold = !selectedTextIsBold; 
+                // Read the current state directly from the document, not the cached field,
+                // to avoid stale state after focus changes.
+                bool isBold = textBox.Document.Selection.CharacterFormat.Bold == FormatEffect.On;
+                textBox.Document.Selection.CharacterFormat.Bold = isBold ? FormatEffect.Off : FormatEffect.On;
+                selectedTextIsBold = !isBold;
 
                 boldTextButton.IsChecked = selectedTextIsBold;
             }
@@ -801,9 +905,10 @@ namespace Storylines.Views.Controls
         {
             if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
-                textBox.Document.Selection.CharacterFormat.Italic = selectedTextIsItalic ? FormatEffect.Off : FormatEffect.On;
-                selectedTextIsItalic = !selectedTextIsItalic;
-                
+                bool isItalic = textBox.Document.Selection.CharacterFormat.Italic == FormatEffect.On;
+                textBox.Document.Selection.CharacterFormat.Italic = isItalic ? FormatEffect.Off : FormatEffect.On;
+                selectedTextIsItalic = !isItalic;
+
                 italicTextButton.IsChecked = selectedTextIsItalic;
             }
         }
@@ -812,8 +917,9 @@ namespace Storylines.Views.Controls
         {
             if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
-                textBox.Document.Selection.CharacterFormat.Underline = selectedTextIsUnderlined ? UnderlineType.None : UnderlineType.Thin;
-                selectedTextIsUnderlined = !selectedTextIsUnderlined;
+                bool isUnderlined = textBox.Document.Selection.CharacterFormat.Underline != UnderlineType.None;
+                textBox.Document.Selection.CharacterFormat.Underline = isUnderlined ? UnderlineType.None : UnderlineType.Thin;
+                selectedTextIsUnderlined = !isUnderlined;
 
                 underlineTextButton.IsChecked = selectedTextIsUnderlined;
             }
@@ -823,8 +929,9 @@ namespace Storylines.Views.Controls
         {
             if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
-                textBox.Document.Selection.CharacterFormat.Strikethrough = selectedTextIsStriked ? FormatEffect.Off : FormatEffect.On;
-                selectedTextIsStriked = !selectedTextIsStriked;
+                bool isStriked = textBox.Document.Selection.CharacterFormat.Strikethrough == FormatEffect.On;
+                textBox.Document.Selection.CharacterFormat.Strikethrough = isStriked ? FormatEffect.Off : FormatEffect.On;
+                selectedTextIsStriked = !isStriked;
 
                 strikethroughButton.IsChecked = selectedTextIsStriked;
             }
@@ -832,12 +939,12 @@ namespace Storylines.Views.Controls
 
         public void MarkTextBackground()
         {
-            if (TextHighlighter.selectedTool != TextHighlighter.Tool.None)
+            if (TextHighlighter.SelectedTool != TextHighlighter.Tool.None)
             {
-                highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.selectedTool));
+                highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.SelectedTool));
 
                 if (textBox.Document.Selection != null && _textEditor.SelectedChapterIndex >= 0)
-                    textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.selectedTool);
+                    textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.SelectedTool);
             }
         }
 
@@ -883,7 +990,7 @@ namespace Storylines.Views.Controls
 
         private void OnHighlighterColorButton_Click(object sender, RoutedEventArgs e)
         {
-            TextHighlighter.selectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
+            TextHighlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
 
             MarkTextBackground();
             highlighterButtonFlyout.Hide();
@@ -891,15 +998,36 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_LostFocus(object sender, RoutedEventArgs e)
         {
-            if (!isFlyoutOpen)
-            {
-                textBox.Document.Selection.SetRange(0, 0);
+            if (isFlyoutOpen || dialoguePopup.IsOpen)
+                return;
 
-                boldTextButton.IsChecked = false;
-                italicTextButton.IsChecked = false;
-                underlineTextButton.IsChecked = false;
-                strikethroughButton.IsChecked = false;
+            // When focus moves to a formatting button in the command bar,
+            // don't reset the selection or button states — the user is applying
+            // formatting and the state needs to be preserved.
+            var focused = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
+            if (focused != null && IsChildOf(focused, gridCommandBarHolder))
+                return;
+
+            textBox.Document.Selection.SetRange(0, 0);
+
+            boldTextButton.IsChecked = false;
+            italicTextButton.IsChecked = false;
+            underlineTextButton.IsChecked = false;
+            strikethroughButton.IsChecked = false;
+        }
+
+        /// <summary>
+        /// Checks whether <paramref name="child"/> is a visual descendant of <paramref name="parent"/>.
+        /// </summary>
+        private static bool IsChildOf(DependencyObject child, DependencyObject parent)
+        {
+            var current = child;
+            while (current != null)
+            {
+                if (current == parent) return true;
+                current = VisualTreeHelper.GetParent(current);
             }
+            return false;
         }
         #endregion 
         #endregion
@@ -923,7 +1051,7 @@ namespace Storylines.Views.Controls
 
                 int scrollValue = (int)(double)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? MainPage.Current.textBoxZoomSlider.Value);
 
-                if (scrollValue + localScrollValue >= 5 && scrollValue + localScrollValue <= 100)
+                if (scrollValue + localScrollValue >= 13 && scrollValue + localScrollValue <= 100)
                 {
                     scrollValue += localScrollValue;
                     MainPage.Current.textBoxZoomSlider.Value = scrollValue;

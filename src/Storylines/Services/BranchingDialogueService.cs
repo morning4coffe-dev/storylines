@@ -395,6 +395,7 @@ namespace Storylines.Services
             if (_simulationByChapter.TryGetValue(chapterId, out var state))
             {
                 state.IsActive = false;
+                _simulationByChapter.Remove(chapterId);
                 PublishSimulationState(chapterId, state);
             }
         }

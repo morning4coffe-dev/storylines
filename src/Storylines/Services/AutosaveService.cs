@@ -10,11 +10,19 @@ namespace Storylines.Services
     {
         private static DispatcherTimer autosaveTimer;
 
-        private static void Do()
+        private static async void Do()
         {
             if (SettingsValues.autosaveEnabled && TimeTravelSystem.unSavedProgress && SaveSystem.currentProject?.file != null)
-                SaveSystem.Save();
-                //TODO: Play save animation
+            {
+                try
+                {
+                    await SaveSystem.SaveAsync();
+                }
+                catch (Exception ex)
+                {
+                    System.Diagnostics.Debug.WriteLine($"Autosave failed: {ex.Message}");
+                }
+            }
         }
 
         public static void Enable()

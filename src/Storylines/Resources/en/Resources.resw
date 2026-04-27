@@ -873,6 +873,15 @@
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
     <value>No characters match this search.</value>
   </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ to select · Enter to confirm · Esc to dismiss</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>Dialogue Helper</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>Press Enter while writing to quickly insert character dialogue lines. Use ↑↓ arrows to pick a character, then Enter to confirm. Your dialogues can also be converted into branching dialogue nodes.</value>
+  </data>
   <data name="notesToggleButton.Label" xml:space="preserve">
     <value>Notes</value>
   </data>
@@ -1522,5 +1531,41 @@
   </data>
   <data name="branchingSyncedToChapterFormat" xml:space="preserve">
     <value>Copied {0} passage(s) to clipboard</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Strikethrough</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Strikethrough</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exit read-only mode</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Exit read-only mode</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Click a target passage to connect</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Cancel connection</value>
   </data>
 </root>

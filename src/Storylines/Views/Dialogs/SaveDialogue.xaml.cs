@@ -104,9 +104,9 @@ namespace Storylines.Views.Dialogs
                 }
         }
 
-        private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
+        private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = SaveSystem.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
+            await SaveSystem.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
             SaveSystem.currentProject.projectName = nameText.Text;
             saveDialogue.Hide();
         }

@@ -9,6 +9,7 @@ namespace Storylines.Services
     {
         private const int MaxRecentEntries = 50;
         private readonly Queue<string> _recentEntries = new Queue<string>();
+        private readonly object _lock = new object();
 
         public void Info(string message)
         {
@@ -33,13 +34,22 @@ namespace Storylines.Services
             AddEntry(entry);
         }
 
-        public IEnumerable<string> GetRecentEntries() => _recentEntries;
+        public IEnumerable<string> GetRecentEntries()
+        {
+            lock (_lock)
+            {
+                return _recentEntries.ToArray();
+            }
+        }
 
         private void AddEntry(string entry)
         {
-            _recentEntries.Enqueue(entry);
-            if (_recentEntries.Count > MaxRecentEntries)
-                _recentEntries.Dequeue();
+            lock (_lock)
+            {
+                _recentEntries.Enqueue(entry);
+                if (_recentEntries.Count > MaxRecentEntries)
+                    _recentEntries.Dequeue();
+            }
         }
     }
 }

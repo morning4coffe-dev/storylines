@@ -78,6 +78,9 @@ namespace Storylines.Services
 
         public static bool experimentalFeaturesEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] ?? false);
 
+        public static bool dialogueModeEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueModeEnabled] ?? false);
+        public static bool dialogueTeachingTipShown => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] ?? false);
+
         public static void LoadSettings()
         {
             ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
@@ -181,6 +184,10 @@ namespace Storylines.Services
 
         // Experimental features
         public static string ExperimentalFeaturesEnabled { get; } = "ExperimentalFeaturesEnabled";
+
+        // Dialogue mode
+        public static string DialogueModeEnabled { get; } = "DialogueModeEnabled";
+        public static string DialogueTeachingTipShown { get; } = "DialogueTeachingTipShown";
     }
 }
 

@@ -983,6 +983,15 @@
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
     <value>No characters match this search.</value>
   </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ выбрать · Enter подтвердить · Esc закрыть</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>Помощник диалогов</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>Нажмите Enter во время написания, чтобы быстро вставить реплику персонажа. Стрелками ↑↓ выберите персонажа, затем Enter для подтверждения. Диалоги также можно преобразовать в узлы ветвящегося диалога.</value>
+  </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
     <value>Recent</value>
   </data>
@@ -1413,6 +1422,42 @@
   </data>
   <data name="branchingSyncedToChapterFormat" xml:space="preserve">
     <value>Copied {0} passage(s) to clipboard</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Подчёркнутый</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Подчёркнутый</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Зачёркнутый</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Зачёркнутый</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выйти из режима только для чтения</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Выйти из режима только для чтения</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Нажмите на целевой отрывок для соединения</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Отменить соединение</value>
   </data>
 </root>
 

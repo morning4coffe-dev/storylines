@@ -216,6 +216,7 @@
                 <TextBlock x:Name="downBarFocusText"
                            VerticalAlignment="Center"
                            x:FieldModifier="public"
+                           Text="{x:Bind ViewModel.DownBarFocusText, Mode=OneWay}"
                            Foreground="{ThemeResource TextForeground}"
                            Visibility="{x:Bind ViewModel.DownBarFocusVisibility, Mode=OneWay}" />
             </StackPanel>
@@ -269,7 +270,7 @@
                         IsEnabled="False"
                         IsThumbToolTipEnabled="False"
                         Maximum="100"
-                        Minimum="5"
+                        Minimum="13"
                         ValueChanged="OnTextBoxZoomSlider_ValueChanged"
                         Value="25" />
 

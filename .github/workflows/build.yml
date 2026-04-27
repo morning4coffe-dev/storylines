@@ -1,0 +1,25 @@
+name: Build & Test
+
+on:
+  push:
+    branches: [main, dev]
+  pull_request:
+    branches: [main, dev]
+
+jobs:
+  build:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup MSBuild
+        uses: microsoft/setup-msbuild@v2
+
+      - name: Restore NuGet packages
+        run: msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug /t:Restore
+
+      - name: Build solution
+        run: msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug
+
+      - name: Run tests
+        run: dotnet test src/Storylines.Tests/Storylines.Tests.csproj --platform x64 --no-build --verbosity normal

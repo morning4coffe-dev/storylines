@@ -1,8 +1,8 @@
+using CommunityToolkit.Mvvm.ComponentModel;
+using Storylines.Constants;
 using Storylines.Views.Dialogs;
 using System;
 using System.Collections.ObjectModel;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -10,15 +10,21 @@ using Windows.Storage.FileProperties;
 
 namespace Storylines.Models
 {
-    public class ProjectFile : INotifyPropertyChanged
+    public partial class ProjectFile : ObservableObject
     {
         public string Name { get; set; }
         public string Token { get; private set; }
         public string Path { get; set; }
-        public StorageFile file { get; set; }
 
-        public string projectName { get; set; }
-        public string projectVersion { get; set; }
+        // PascalCase property with backward-compatible alias
+        public StorageFile File { get; set; }
+        public StorageFile file { get => File; set => File = value; }
+
+        public string ProjectName { get; set; }
+        public string projectName { get => ProjectName; set => ProjectName = value; }
+
+        public string ProjectVersion { get; set; }
+        public string projectVersion { get => ProjectVersion; set => ProjectVersion = value; }
 
         public Uri Icon { get; set; }
         public string ShortPath { get; set; }
@@ -29,8 +35,6 @@ namespace Storylines.Models
         public double osWidth { get; private set; } = LoadProjectDialogue.osWidth;
 
         public static ObservableCollection<ProjectFile> projectFiles = new ObservableCollection<ProjectFile>();
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public static void New(StorageFile file)
         {
@@ -45,7 +49,7 @@ namespace Storylines.Models
                 Name = file.Name,
                 Path = file.Path,
                 Token = token,
-                file = file,
+                File = file,
                 Icon = new Uri(file.FileType == ".txt" ? "ms-appx:/Assets/Icons/Text-document-icon.png" : "ms-appx:/Assets/Icons/Storylines-document-icon.png"),
                 ShortPath = file.Path.Replace(@"\" + file.Name, string.Empty).Replace(@"\", "/"),
                 LastEditedFormatted = basicProperties.DateModified.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture),
@@ -84,7 +88,7 @@ namespace Storylines.Models
             {
                 Task<StorageFile> task = GetProjectFromTokenAsync(token.Token);
 
-                if (await Task.WhenAny(task, Task.Delay(1000)) == task)
+                if (await Task.WhenAny(task, Task.Delay(LayoutConstants.ProjectFileLoadTimeoutMs)) == task)
                 {
                     StorageFile file = task.Result;
                     projectFiles.Add(await LoadExistingAsync(file, token.Token));
@@ -111,11 +115,6 @@ namespace Storylines.Models
                 }
             }
             return false;
-        }
-
-        public void NotifyPropertyChanged([CallerMemberName] string propertyName = "")
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

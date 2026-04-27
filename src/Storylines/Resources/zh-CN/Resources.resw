@@ -829,6 +829,15 @@
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
     <value>No characters match this search.</value>
   </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ 选择 · Enter 确认 · Esc 关闭</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>对话助手</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>写作时按 Enter 快速插入角色对话行。用 ↑↓ 箭头选择角色，然后按 Enter 确认。您的对话也可以转换为分支对话节点。</value>
+  </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
     <value>Recent</value>
   </data>
@@ -1412,6 +1421,42 @@
   </data>
   <data name="branchingSyncedToChapterFormat" xml:space="preserve">
     <value>Copied {0} passage(s) to clipboard</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>加粗</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>加粗</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>斜体</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>下划线</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>下划线</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>删除线</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>删除线</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>退出只读模式</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>退出只读模式</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>点击目标段落进行连接</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>取消连接</value>
   </data>
 </root>
 

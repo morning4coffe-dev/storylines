@@ -1,37 +1,50 @@
 using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 
 namespace Storylines.Services
 {
     public class EventAggregator
     {
-        private readonly Dictionary<Type, List<Delegate>> _subscribers = new Dictionary<Type, List<Delegate>>();
+        private readonly ConcurrentDictionary<Type, List<Delegate>> _subscribers = new ConcurrentDictionary<Type, List<Delegate>>();
+        private readonly object _lock = new object();
 
         public void Subscribe<TEvent>(Action<TEvent> handler)
         {
             var type = typeof(TEvent);
-            if (!_subscribers.ContainsKey(type))
-                _subscribers[type] = new List<Delegate>();
+            lock (_lock)
+            {
+                if (!_subscribers.ContainsKey(type))
+                    _subscribers[type] = new List<Delegate>();
 
-            _subscribers[type].Add(handler);
+                _subscribers[type].Add(handler);
+            }
         }
 
         public void Unsubscribe<TEvent>(Action<TEvent> handler)
         {
             var type = typeof(TEvent);
-            if (_subscribers.ContainsKey(type))
-                _subscribers[type].Remove(handler);
+            lock (_lock)
+            {
+                if (_subscribers.ContainsKey(type))
+                    _subscribers[type].Remove(handler);
+            }
         }
 
         public void Publish<TEvent>(TEvent eventData)
         {
             var type = typeof(TEvent);
-            if (_subscribers.ContainsKey(type))
+            Delegate[] snapshot;
+            lock (_lock)
             {
-                foreach (var handler in _subscribers[type].ToArray())
-                {
-                    (handler as Action<TEvent>)?.Invoke(eventData);
-                }
+                if (!_subscribers.ContainsKey(type))
+                    return;
+                snapshot = _subscribers[type].ToArray();
+            }
+
+            foreach (var handler in snapshot)
+            {
+                (handler as Action<TEvent>)?.Invoke(eventData);
             }
         }
     }
@@ -162,6 +175,14 @@ namespace Storylines.Services
     {
         public string ChapterId { get; set; }
         public Models.BranchingDialogueSimulationState State { get; set; }
+    }
+
+    /// <summary>
+    /// Published by FocusModeViewModel when the down-bar focus text changes.
+    /// </summary>
+    public class FocusModeDownBarTextChangedEvent
+    {
+        public string Text { get; set; }
     }
 
     #endregion

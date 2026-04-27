@@ -9,7 +9,7 @@ namespace Storylines.Services
     {
         public void OpenSaveDialogue() => SaveDialogue.Open(SaveDialogue.Type.Save);
 
-        public void OpenSaveCopyDialogue() => SaveSystem.SaveCopy();
+        public void OpenSaveCopyDialogue() => SaveDialogue.Open(SaveDialogue.Type.SaveCopy);
 
         public void OpenLoadDialogue()
         {
@@ -28,5 +28,19 @@ namespace Storylines.Services
         public void OpenProjectStats(bool showInDownBar) => ProjectStatsDialogue.Open(showInDownBar);
 
         public void OpenShortcuts() => ShortcutsDialogue.Open();
+
+        public void ClearEverything()
+        {
+            AppView.current?.ClearEverything();
+        }
+
+        public void DismissLoadDialogue()
+        {
+            if (LoadProjectDialogue.loadFile != null)
+            {
+                LoadProjectDialogue.loadFile.isEscape = false;
+                LoadProjectDialogue.loadFile.Hide();
+            }
+        }
     }
 }

@@ -447,6 +447,15 @@
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
     <value>No characters match this search.</value>
   </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ wybierz · Enter potwierdź · Esc zamknij</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>Pomocnik dialogów</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>Naciśnij Enter podczas pisania, aby szybko wstawić kwestie dialogowe postaci. Strzałkami ↑↓ wybierz postać, a Enter potwierdź. Dialogi mogą być też zamienione na węzły dialogów rozgałęzionych.</value>
+  </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
     <value>Recent</value>
   </data>
@@ -1208,6 +1217,42 @@
   </data>
   <data name="branchingSyncedToChapterFormat" xml:space="preserve">
     <value>Copied {0} passage(s) to clipboard</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Pogrubienie</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Pogrubienie</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Kursywa</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Kursywa</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Podkreślenie</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Podkreślenie</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Przekreślenie</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Przekreślenie</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Wyjdź z trybu tylko do odczytu</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Wyjdź z trybu tylko do odczytu</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Kliknij docelowy fragment, aby połączyć</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Anuluj połączenie</value>
   </data>
 </root>
 

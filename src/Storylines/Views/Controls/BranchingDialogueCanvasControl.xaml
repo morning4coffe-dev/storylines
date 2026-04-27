@@ -71,11 +71,11 @@
             <StackPanel Orientation="Horizontal" Spacing="8">
                 <FontIcon Glyph="&#xE71B;" FontSize="14" Foreground="White" />
                 <TextBlock x:Name="connectionModeText"
-                           Text="Click a target passage to connect"
+                           x:Uid="connectionModeText"
                            Foreground="White" FontSize="12" VerticalAlignment="Center" />
                 <Button Content="✕" CornerRadius="4" Padding="6,2"
                         FontSize="10" Click="OnCancelConnection_Click"
-                        AutomationProperties.Name="Cancel connection" />
+                        x:Uid="cancelConnectionButton" />
             </StackPanel>
         </Border>
 

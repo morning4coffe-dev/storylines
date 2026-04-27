@@ -39,6 +39,7 @@
     <Compile Include="..\Storylines\Services\Serializers\LegacySrlSerializer.cs" Link="LinkedSources\LegacySrlSerializer.cs" />
     <Compile Include="..\Storylines\DataStructures\PartialStack.cs" Link="LinkedSources\PartialStack.cs" />
     <Compile Include="..\Storylines\Helpers\BranchingDialogueExportHelper.cs" Link="LinkedSources\BranchingDialogueExportHelper.cs" />
+    <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
   </ItemGroup>
 
 </Project>

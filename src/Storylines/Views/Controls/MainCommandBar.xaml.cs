@@ -43,6 +43,9 @@ namespace Storylines.Views.Controls
 
             UpdateExperimentalFeaturesVisibility();
             App.GetService<EventAggregator>().Subscribe<SettingChangedEvent>(OnSettingChanged);
+
+            // Restore persisted dialogue mode state
+            dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
         }
 
         private void OnSettingChanged(SettingChangedEvent e)

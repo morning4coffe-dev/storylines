@@ -50,5 +50,10 @@ namespace Storylines.Services
                 _frame.GoBack(new DrillInNavigationTransitionInfo());
             }
         }
+
+        public void ClearFrame()
+        {
+            _frame = null;
+        }
     }
 }

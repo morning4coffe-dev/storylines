@@ -20,14 +20,14 @@ namespace Storylines.Services
         public enum WhatToExport { None, Chapters, Dialogues, Characters };
         public static WhatToExport export;
 
-        public static void Export(StorageFolder folder, string fileName, string selectedExtension, List<int> chapterOrCharacterNumbers, List<Character> dialogueCharacters, bool withChapterName)
+        public static async Task ExportAsync(StorageFolder folder, string fileName, string selectedExtension, List<int> chapterOrCharacterNumbers, List<Character> dialogueCharacters, bool withChapterName)
         {
             if (folder != null && export != default)
             {
                 switch (export)
                 {
                     case WhatToExport.Chapters:
-                        _ = ExportChapters(folder, fileName, selectedExtension, chapterOrCharacterNumbers, withChapterName);
+                        await ExportChapters(folder, fileName, selectedExtension, chapterOrCharacterNumbers, withChapterName);
                         break;
                     case WhatToExport.Dialogues:
                         var dialogueCharacterNames = new List<string>();
@@ -36,13 +36,19 @@ namespace Storylines.Services
                         {
                             dialogueCharacterNames.Add(item.Name);
                         }
-                        _ = ExportDialogues(folder, fileName, selectedExtension, chapterOrCharacterNumbers, dialogueCharacterNames);
+                        await ExportDialogues(folder, fileName, selectedExtension, chapterOrCharacterNumbers, dialogueCharacterNames);
                         break;
                     case WhatToExport.Characters:
-                        _ = ExportCharacters(folder, fileName, selectedExtension, dialogueCharacters);
+                        await ExportCharacters(folder, fileName, selectedExtension, dialogueCharacters);
                         break;
                 }
             }
+        }
+
+        /// <summary>Synchronous wrapper for callers that cannot await.</summary>
+        public static void Export(StorageFolder folder, string fileName, string selectedExtension, List<int> chapterOrCharacterNumbers, List<Character> dialogueCharacters, bool withChapterName)
+        {
+            _ = ExportAsync(folder, fileName, selectedExtension, chapterOrCharacterNumbers, dialogueCharacters, withChapterName);
         }
 
         #region Chapters
@@ -68,15 +74,15 @@ namespace Storylines.Services
                 else
                 if (extension == ".rtf")
                 {
-                    _ = ExportChaptersToRtf(storageFile, chapterNumbers, withChapterName);
+                    await ExportChaptersToRtf(storageFile, chapterNumbers, withChapterName);
                     return;
                 }
 
                 await FileIO.WriteTextAsync(storageFile, toExport);
                 }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //notification system.notify
+                App.GetService<Interfaces.ILogger>().Error("Failed to export chapters", ex);
             }
         }
 
@@ -165,9 +171,9 @@ namespace Storylines.Services
                 var storageFile = await folder.CreateFileAsync($"{fileName}{extension}", CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(storageFile, toExport); 
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //notification system.notify
+                App.GetService<Interfaces.ILogger>().Error("Failed to export dialogues", ex);
             }
         }
         #endregion
@@ -182,9 +188,9 @@ namespace Storylines.Services
                 var storageFile = await folder.CreateFileAsync($"{fileName}{extension}", CreationCollisionOption.ReplaceExisting);
                 await FileIO.WriteTextAsync(storageFile, json);
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                //notification system.notify
+                App.GetService<Interfaces.ILogger>().Error("Failed to export characters", ex);
             }
         }
         #endregion

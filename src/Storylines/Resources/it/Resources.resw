@@ -990,6 +990,15 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
     <value>No characters match this search.</value>
   </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ per selezionare · Invio per confermare · Esc per chiudere</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>Assistente dialoghi</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>Premi Invio durante la scrittura per inserire rapidamente battute di dialogo. Usa ↑↓ per scegliere un personaggio, poi Invio per confermare. I dialoghi possono anche essere convertiti in nodi di dialogo ramificato.</value>
+  </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
     <value>Recent</value>
   </data>
@@ -1414,6 +1423,42 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   </data>
   <data name="branchingSyncedToChapterFormat" xml:space="preserve">
     <value>Copied {0} passage(s) to clipboard</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Grassetto</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Grassetto</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Corsivo</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Corsivo</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Sottolineato</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Sottolineato</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Barrato</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Barrato</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Esci dalla modalità sola lettura</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Esci dalla modalità sola lettura</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Clicca su un passaggio di destinazione per collegare</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Annulla collegamento</value>
   </data>
 </root>
 

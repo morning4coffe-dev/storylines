@@ -176,22 +176,12 @@ namespace Storylines.Views.Controls
         {
             if (listView.SelectedItem != null)
             {
-                try
-                {
-                    var lastNewLine = _projectState.Chapters[listView.SelectedIndex].Text.LastIndexOf("\\par", StringComparison.Ordinal);
-                    if (lastNewLine >= 0)
-                        _projectState.Chapters[listView.SelectedIndex].Text = _projectState.Chapters[listView.SelectedIndex].Text.Remove(lastNewLine, "\\par".Length);
-                }
-                catch (Exception ex)
-                {
-                    _logger?.Warning($"Failed to trim trailing paragraph mark: {ex.Message}");
-                }
                 if (!reordering)
                     switchedChapters = true;
                 selectedIndex = listView.SelectedIndex;
 
-                _textEditor.SetText(
-                    _projectState.FindChapter((listView.SelectedItem as Chapter).Token).Text ?? string.Empty);
+                var chapter = _projectState.FindChapter((listView.SelectedItem as Chapter).Token);
+                _textEditor.LoadChapterContent(chapter);
 
                 MainPage.ChapterText.ChangeTextColor();
                 _events.Publish(new ChapterToolsStateEvent { Enabled = true });

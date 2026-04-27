@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Constants;
 using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services;
@@ -449,8 +450,8 @@ namespace Storylines.ViewModels
                 if (node != null)
                 {
                     node.CharacterToken = SpeakerResolver.ResolveToken(dialogue.Name, _projectState.Characters);
-                    node.PositionX = 40 + (col % 4) * 280;
-                    node.PositionY = 40 + (col / 4) * 160;
+                    node.PositionX = LayoutConstants.NodeAutoPlaceOffsetX + (col % LayoutConstants.NodeAutoPlaceColumnsPerRow) * LayoutConstants.NodeAutoPlaceColumnWidth;
+                    node.PositionY = LayoutConstants.NodeAutoPlaceOffsetY + (col / LayoutConstants.NodeAutoPlaceColumnsPerRow) * LayoutConstants.NodeAutoPlaceRowHeight;
                     col++;
 
                     if (prevNode != null)

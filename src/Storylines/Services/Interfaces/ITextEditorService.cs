@@ -29,6 +29,17 @@ namespace Storylines.Services.Interfaces
 
         /// <summary>Sets keyboard focus to the text editor.</summary>
         void Focus();
+
+        /// <summary>
+        /// Loads a chapter's content into the editor. Handles RTF loading safely
+        /// without raw string manipulation.
+        /// </summary>
+        void LoadChapterContent(Models.Chapter chapter);
+
+        /// <summary>
+        /// Saves the current editor content back to the specified chapter model.
+        /// </summary>
+        void SaveChapterContent(Models.Chapter chapter);
     }
 
     public enum TextFormat

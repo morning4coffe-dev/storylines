@@ -526,7 +526,10 @@ namespace Storylines.Views.Controls
                 if (Application.Current.Resources["SystemAccentColor"] is Color accent)
                     selectedBrush = new SolidColorBrush(accent);
             }
-            catch { }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Accent color lookup failed: {ex.Message}");
+            }
 
             var card = new Border
             {

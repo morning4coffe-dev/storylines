@@ -133,15 +133,12 @@ namespace Storylines.Views.Pages
 
         public void OpenOrCloseChapterList(bool open, bool manually)
         {
-            double addOrSubtract = 0;
-
             if (!open)
             {
                 chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 2);
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Pixel);
                 mainGrid.ColumnDefinitions[1].MinWidth = 0;
                 closeOpenChapterListComponentIcon.Symbol = Symbol.ClosePane;
-                addOrSubtract = chapterListComponentMainPage.ActualWidth;
 
                 if (!ChapterList.closedManually)
                     ChapterList.closedManually = manually;
@@ -154,13 +151,13 @@ namespace Storylines.Views.Pages
                     mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
                     mainGrid.ColumnDefinitions[1].MinWidth = 220;
                     closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
-                    addOrSubtract = -chapterListComponentMainPage.ActualWidth;
 
                     ChapterList.closedManually = false;
                 }
             }
 
-            ChapterText.textBox.Width = (ChapterText.textBoxScrollViewer.ActualWidth + addOrSubtract) * (1 / (textBoxZoomSlider.Value / 25));
+            // Recalculate textbox width after column layout changes
+            UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
         #region DownBar
@@ -314,7 +311,16 @@ namespace Storylines.Views.Pages
             double sliderOne = sliderValue / 25;
             _ = ChapterText.textBoxScrollViewer.ChangeView(null, null, (float)sliderOne);
 
-            ChapterText.textBox.Width = ChapterText.textBoxScrollViewer.ActualWidth * (1 / sliderOne);
+            double viewportWidth = ChapterText.textBoxScrollViewer.ActualWidth;
+            if (viewportWidth > 0 && sliderOne > 0)
+            {
+                // The textbox width must fill the viewport at the current zoom level.
+                // Clamp to at least the viewport width so the textbox remains clickable
+                // even at small zoom levels.
+                double desiredWidth = viewportWidth * (1 / sliderOne);
+                ChapterText.textBox.Width = Math.Max(desiredWidth, viewportWidth);
+            }
+
             textBoxZoomText.Text = $"{Math.Round(sliderOne * 100)}%";
         }
 

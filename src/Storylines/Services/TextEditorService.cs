@@ -1,6 +1,7 @@
 using Storylines.Views.Controls;
 using Storylines.Views.Pages;
 using Storylines.Services.Interfaces;
+using Storylines.Models;
 
 namespace Storylines.Services
 {
@@ -68,6 +69,38 @@ namespace Storylines.Services
         public void Focus()
         {
             MainPage.ChapterText?.textBox?.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+        }
+
+        public void LoadChapterContent(Chapter chapter)
+        {
+            if (chapter == null) return;
+
+            var textBox = MainPage.ChapterText?.textBox;
+            if (textBox == null) return;
+
+            // Load the chapter's RTF content into the editor using the proper API.
+            // Never manipulate RTF strings directly — the RichEditBox handles
+            // paragraph marks (\par, \pard) correctly through its document model.
+            var rtf = chapter.Text;
+            if (string.IsNullOrEmpty(rtf))
+            {
+                textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, string.Empty);
+            }
+            else
+            {
+                textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, rtf);
+            }
+        }
+
+        public void SaveChapterContent(Chapter chapter)
+        {
+            if (chapter == null) return;
+
+            var textBox = MainPage.ChapterText?.textBox;
+            if (textBox == null) return;
+
+            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out string rtf);
+            chapter.Text = rtf;
         }
     }
 }

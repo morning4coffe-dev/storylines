@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
              xmlns:components="using:Storylines.Views.Controls"
              xmlns:variables="using:Storylines.Models"
@@ -55,36 +56,36 @@
                         CompositeMode="Inherit"
                         OverflowButtonVisibility="Collapsed">
                 <AppBarToggleButton x:Name="boldTextButton"
+                                    x:Uid="boldTextButton"
                                     x:FieldModifier="public"
                                     Tag="Bold"
                                     Icon="Bold"
-                                    Label="Bold"
                                     CornerRadius="4"
                                     Width="56"
                                     Click="OnFormatterButton_Click" />
 
                 <AppBarToggleButton x:Name="italicTextButton"
+                                    x:Uid="italicTextButton"
                                     x:FieldModifier="public"
                                     Tag="Italic"
                                     Icon="Italic"
-                                    Label="Italic"
                                     CornerRadius="4"
                                     Width="56"
                                     Click="OnFormatterButton_Click" />
 
                 <AppBarToggleButton x:Name="underlineTextButton"
+                                    x:Uid="underlineTextButton"
                                     x:FieldModifier="public"
                                     Tag="Underline"
                                     Icon="Underline"
-                                    Label="Underline"
                                     CornerRadius="4"
                                     Width="56"
                                     Click="OnFormatterButton_Click" />
 
                 <AppBarToggleButton x:Name="strikethroughButton"
+                                    x:Uid="strikethroughButton"
                                     x:FieldModifier="public"
                                     Tag="Strikethrough"
-                                    Label="Strikethrough"
                                     CornerRadius="4"
                                     Visibility="Visible"
                                     Width="56"
@@ -106,7 +107,6 @@
                                       x:FieldModifier="public"
                                       Tag="Highlighter"
                                       Icon="Highlight"
-                                      Label="Highlight"
                                       CornerRadius="4"
                                       Width="56"
                                       Grid.RowSpan="3"
@@ -402,81 +402,74 @@
                                       LostFocus="OnTextBox_LostFocus"
                                       PointerWheelChanged="OnTextBox_PointerWheelChanged"
                                       Tapped="OnTextBoxRectangle_Tapped">
-                <RichEditBox.Resources>
-                    <Flyout x:Name="textBoxDialogueNamesFlyout"
-                            Opened="OnTextBoxDialogueNamesFlyout_Opened"
-                            Closing="OnTextBoxDialogueNamesFlyout_Closing"
-                            Closed="TextBoxDialogueNamesFlyout_Closed"
-                            Placement="BottomEdgeAlignedLeft">
-                        <Border MinWidth="280"
-                                MaxWidth="360"
-                                Padding="2">
-                            <StackPanel Spacing="8">
-                                <TextBox x:Name="dialoguePickerSearchBox"
-                                         x:Uid="dialoguePickerSearchBox"
-                                         CornerRadius="4"
-                                         Style="{StaticResource SmallTextBoxStyle}"
-                                         TextChanged="OnDialoguePickerSearchBox_TextChanged" />
-
-                                <StackPanel x:Name="dialoguePickerRecentSection"
-                                            Spacing="6"
-                                            Visibility="Collapsed">
-                                    <TextBlock x:Uid="dialoguePickerRecent"
-                                               FontWeight="SemiBold" />
-                                    <ListView x:Name="dialoguePickerRecentList"
-                                              IsItemClickEnabled="True"
-                                              MaxHeight="160"
-                                              SelectionMode="None"
-                                              ItemClick="OnDialoguePickerCharacter_ItemClick">
-                                        <ListView.ItemTemplate>
-                                            <DataTemplate x:DataType="variables:Character">
-                                                <StackPanel Margin="0,2">
-                                                    <TextBlock FontWeight="SemiBold"
-                                                               Text="{x:Bind Name}" />
-                                                    <TextBlock Opacity="0.75"
-                                                               Text="{x:Bind DetailsLine}"
-                                                               TextTrimming="CharacterEllipsis" />
-                                                </StackPanel>
-                                            </DataTemplate>
-                                        </ListView.ItemTemplate>
-                                    </ListView>
-                                </StackPanel>
-
-                                <TextBlock x:Uid="dialoguePickerAll"
-                                           FontWeight="SemiBold" />
-                                <ListView x:Name="dialoguePickerList"
-                                          IsItemClickEnabled="True"
-                                          MaxHeight="240"
-                                          SelectionMode="None"
-                                          ItemClick="OnDialoguePickerCharacter_ItemClick">
-                                    <ListView.ItemTemplate>
-                                        <DataTemplate x:DataType="variables:Character">
-                                            <StackPanel Margin="0,2">
-                                                <TextBlock FontWeight="SemiBold"
-                                                           Text="{x:Bind Name}" />
-                                                <TextBlock Opacity="0.75"
-                                                           Text="{x:Bind DetailsLine}"
-                                                           TextTrimming="CharacterEllipsis" />
-                                            </StackPanel>
-                                        </DataTemplate>
-                                    </ListView.ItemTemplate>
-                                </ListView>
-
-                                <TextBlock x:Name="dialoguePickerEmptyText"
-                                           x:Uid="dialoguePickerNoResults"
-                                           Opacity="0.75"
-                                           TextWrapping="WrapWholeWords"
-                                           Visibility="Collapsed" />
-                            </StackPanel>
-                        </Border>
-                    </Flyout>
-                </RichEditBox.Resources>
-
                 <RichEditBox.HandwritingView>
                     <HandwritingView PlacementAlignment="Auto" />
                 </RichEditBox.HandwritingView>
             </components:MyRichEditBox>
         </ScrollViewer>
+
+        <!-- Non-blocking dialogue character picker popup -->
+        <Popup x:Name="dialoguePopup"
+               Grid.Row="3"
+               IsLightDismissEnabled="True"
+               Closed="OnDialoguePopup_Closed">
+            <Border Background="{ThemeResource AcrylicInAppFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource SurfaceStrokeColorDefaultBrush}"
+                    BorderThickness="1"
+                    CornerRadius="8"
+                    Padding="4"
+                    MinWidth="220"
+                    MaxWidth="300">
+                <Border.Shadow>
+                    <ThemeShadow />
+                </Border.Shadow>
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="dialoguePopupHint"
+                               FontSize="11"
+                               Opacity="0.6"
+                               Margin="8,4,8,0" />
+
+                    <ListView x:Name="dialoguePopupList"
+                              MaxHeight="260"
+                              SelectionMode="Single"
+                              IsItemClickEnabled="True"
+                              ItemClick="OnDialoguePopupCharacter_ItemClick">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="variables:Character">
+                                <StackPanel Margin="0,2" Orientation="Horizontal" Spacing="8">
+                                    <TextBlock FontWeight="SemiBold"
+                                               Text="{x:Bind Name}"
+                                               VerticalAlignment="Center" />
+                                    <TextBlock Opacity="0.5"
+                                               Text="{x:Bind Role}"
+                                               FontSize="12"
+                                               VerticalAlignment="Center"
+                                               TextTrimming="CharacterEllipsis" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+
+                    <TextBlock x:Name="dialoguePopupEmptyText"
+                               x:Uid="dialoguePickerNoResults"
+                               Opacity="0.6"
+                               Margin="8,0"
+                               FontSize="12"
+                               TextWrapping="WrapWholeWords"
+                               Visibility="Collapsed" />
+                </StackPanel>
+            </Border>
+        </Popup>
+
+        <!-- Teaching tip shown on first dialogue mode activation -->
+        <muxc:TeachingTip x:Name="dialogueTeachingTip"
+                          x:Uid="dialogueTeachingTip"
+                          PreferredPlacement="Bottom"
+                          IsLightDismissEnabled="True">
+            <muxc:TeachingTip.IconSource>
+                <muxc:FontIconSource Glyph="&#xE8BD;" />
+            </muxc:TeachingTip.IconSource>
+        </muxc:TeachingTip>
 
         <Rectangle x:Name="textBoxRectangle"
                    x:FieldModifier="public"

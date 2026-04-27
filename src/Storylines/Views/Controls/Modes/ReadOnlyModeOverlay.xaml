@@ -9,6 +9,7 @@
          receives scroll/selection input. Only the exit pill is interactive. -->
     <Grid Background="Transparent" IsHitTestVisible="False">
         <Button x:Name="exitPill"
+                x:Uid="readOnlyExitPillButton"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Bottom"
                 Margin="0,0,0,24"
@@ -18,15 +19,13 @@
                 Background="{ThemeResource LayerFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
-                Click="OnExitPill_Click"
-                ToolTipService.ToolTip="Exit read-only mode">
+                Click="OnExitPill_Click">
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <FontIcon Glyph="&#xE72E;"
                           FontFamily="Segoe MDL2 Assets"
                           FontSize="14"
                           Foreground="{ThemeResource TextForeground}" />
                 <TextBlock x:Uid="readOnlyExitPill"
-                           Text="Read-only — click to edit"
                            VerticalAlignment="Center"
                            FontSize="13"
                            Foreground="{ThemeResource TextForeground}" />

@@ -14,5 +14,11 @@ namespace Storylines.Services.Interfaces
         void OpenModePicker(string preselect = "focus");
         void OpenProjectStats(bool showInDownBar);
         void OpenShortcuts();
+
+        /// <summary>Clears the editor and all project state in the shell.</summary>
+        void ClearEverything();
+
+        /// <summary>Dismisses the load-project dialogue if it is open.</summary>
+        void DismissLoadDialogue();
     }
 }

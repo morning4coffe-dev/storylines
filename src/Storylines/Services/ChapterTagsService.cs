@@ -27,7 +27,10 @@ namespace Storylines.Services
                 if (!string.IsNullOrWhiteSpace(raw))
                     return JsonConvert.DeserializeObject<List<string>>(raw) ?? new List<string>(DefaultPresets);
             }
-            catch { /* corrupt — reset */ }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Chapter tag presets corrupted, resetting to defaults: {ex.Message}");
+            }
 
             // First time: persist defaults so user can edit them later
             SavePresets(new List<string>(DefaultPresets));
@@ -61,7 +64,10 @@ namespace Storylines.Services
                 ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterTagPresets] =
                     JsonConvert.SerializeObject(presets ?? new List<string>());
             }
-            catch { /* best-effort */ }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine($"Failed to save chapter tag presets: {ex.Message}");
+            }
         }
 
         /// <summary>
