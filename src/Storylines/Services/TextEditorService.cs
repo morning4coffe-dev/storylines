@@ -53,13 +53,20 @@ namespace Storylines.Services
 
         public int SelectedChapterIndex
         {
-            get => MainPage.ChapterList?.listView?.SelectedIndex ?? -1;
+            get => MainPage.ChapterList?.ViewModel?.SelectedIndex
+                ?? MainPage.ChapterList?.listView?.SelectedIndex
+                ?? -1;
             set
             {
-                if (MainPage.ChapterList?.listView != null)
+                if (MainPage.ChapterList?.ViewModel != null)
+                    MainPage.ChapterList.ViewModel.SelectedIndex = value;
+                else if (MainPage.ChapterList?.listView != null)
                     MainPage.ChapterList.listView.SelectedIndex = value;
             }
         }
+
+        public int SelectedTextLength =>
+            MainPage.ChapterText?.textBox?.Document?.Selection?.Text?.Length ?? 0;
 
         public void SetText(string rtfText)
         {

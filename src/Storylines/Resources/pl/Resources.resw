@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -23,7 +23,7 @@
   <data name="feedbackLabel.Label" xml:space="preserve"><value>Opinie</value></data>
   <data name="keyboardShortcutsLabel.Label" xml:space="preserve"><value>Skróty klawiaturowe</value></data>
   <data name="charactersLabel.Label" xml:space="preserve"><value>Postacie</value></data>
-  <data name="textAnalytics.Label" xml:space="preserve"><value>Analityka historii</value></data>
+  <data name="textAnalytics.Label" xml:space="preserve"><value>Project Statistics</value></data>
   <data name="english.Content" xml:space="preserve"><value>Angielski</value></data>
   <data name="chinese.Content" xml:space="preserve"><value>Chiński</value></data>
   <data name="russian.Content" xml:space="preserve"><value>Rosyjski</value></data>
@@ -236,7 +236,7 @@
   <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
     <value>Wszystkie kategorie</value>
   </data>
-  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
     <value>Wszystkie rozdzialy</value>
   </data>
   <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
@@ -885,19 +885,19 @@
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Wybierz tryb pisania</value>
   </data>
-  <data name="modeEdit" xml:space="preserve">
+  <data name="modeEdit.Text" xml:space="preserve">
     <value>Edycja</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
     <value>Pełna edycja ze wszystkimi dostępnymi narzędziami.</value>
   </data>
-  <data name="modeFocus" xml:space="preserve">
+  <data name="modeFocus.Text" xml:space="preserve">
     <value>Skupienie</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
     <value>Pisanie bez rozpraszaczy z opcjonalnym timerem i celem pomiaru.</value>
   </data>
-  <data name="modeReadOnly" xml:space="preserve">
+  <data name="modeReadOnly.Text" xml:space="preserve">
     <value>Tylko do odczytu</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">
@@ -1298,7 +1298,14 @@
   <data name="saveCopyTitle" xml:space="preserve"><value>Zapisz kopię</value></data>
   <data name="saveProjectName" xml:space="preserve"><value>Nazwa projektu:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O królowej pączków"</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
 </root>
+
 
 
 

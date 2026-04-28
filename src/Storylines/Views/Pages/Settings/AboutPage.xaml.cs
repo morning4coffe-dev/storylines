@@ -23,7 +23,7 @@ namespace Storylines.Views.Pages.Settings
 
         private void OnReviewAndRateHyperlinkButton_Click(object sender, RoutedEventArgs e)
         {
-            _ = MicrosoftStoreAndAppCenterFunctions.PromptUserToRateApp();
+            _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("about_page");
         }
 
         private void OnAboutPage_SizeChanged(object sender, SizeChangedEventArgs e)

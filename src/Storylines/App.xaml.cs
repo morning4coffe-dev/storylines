@@ -1,12 +1,10 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.AppCenter;
-using Microsoft.AppCenter.Analytics;
-using Microsoft.AppCenter.Crashes;
 using Microsoft.Toolkit.Uwp.Helpers;
 using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using System;
 using System.ComponentModel;
 using System.Linq;
@@ -83,9 +81,9 @@ namespace Storylines
                     _ = rootFrame.Navigate(typeof(AppView), e.Arguments);
                 }
 
-                Start();
-
                 SystemInformation.Instance.TrackAppUse(e);
+
+                Start("launch");
 
                 _ = LoadLastProject();
             }
@@ -105,7 +103,7 @@ namespace Storylines
             }
         }
 
-        private void Start()
+        private void Start(string activationKind)
         {
             Window.Current.Activate();
 
@@ -118,13 +116,10 @@ namespace Storylines
             titleBar = ApplicationView.GetForCurrentView().TitleBar;
             titleBar.ButtonBackgroundColor = Colors.Transparent;
 
-            if (MicrosoftStoreAndAppCenterFunctions.AppCenterKey.Length > 0)
-            {
-                AppCenter.Start(MicrosoftStoreAndAppCenterFunctions.AppCenterKey, typeof(Analytics), typeof(Crashes));
-                AppCenter.SetEnabledAsync(MicrosoftStoreAndAppCenterFunctions.AppCenterEnabled);
-            }
-
             SettingsValues.LoadSettings();
+
+            var telemetry = App.GetService<ITelemetryService>();
+            _ = telemetry.InitializeAsync();
 
             CoreApplication.GetCurrentView().TitleBar.LayoutMetricsChanged += OnLayoutMetricsChanged;
 
@@ -136,11 +131,11 @@ namespace Storylines
 
             SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequest;
 
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_OnStart();
+            telemetry.TrackAppStarted(activationKind);
 
-            _ = MicrosoftStoreAndAppCenterFunctions.CheckForNewUpdateAvailableAsync();
+            _ = MicrosoftStoreFunctions.CheckForNewUpdateAvailableAsync();
 
-            MicrosoftStoreAndAppCenterFunctions.InitializeReview();
+            MicrosoftStoreFunctions.InitializeReview();
 
             AppView.current.UsingWindows10();
         }
@@ -165,9 +160,10 @@ namespace Storylines
 
         private void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_OnLeave();
+            var blockedByUnsavedChanges = TimeTravelSystem.unSavedProgress && SettingsValues.exitDiagEnabled;
+            App.GetService<ITelemetryService>().TrackAppClosingRequested(blockedByUnsavedChanges);
 
-            if (TimeTravelSystem.unSavedProgress && SettingsValues.exitDiagEnabled)
+            if (blockedByUnsavedChanges)
             {
                 e.Handled = true;
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(true);
@@ -192,7 +188,7 @@ namespace Storylines
 
         private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendCrashData_OnUnhandledException(e);
+            App.GetService<ITelemetryService>().TrackUnhandledException(e.Exception, e.Message);
 
             e.Handled = true;
         }
@@ -206,11 +202,19 @@ namespace Storylines
 
         /// <param name="sender">The source of the suspend request</param>
         /// <param name="e">Details about the suspend request</param>
-        private void OnSuspending(object sender, SuspendingEventArgs e)
+        private async void OnSuspending(object sender, SuspendingEventArgs e)
         {
             SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
-            //TODO: Save application state and stop any background activity
-            deferral.Complete();
+
+            try
+            {
+                if (TimeTravelSystem.unSavedProgress)
+                    await RecoveryService.CacheCurrentStateAsync();
+            }
+            finally
+            {
+                deferral.Complete();
+            }
         }
 
         protected override void OnFileActivated(FileActivatedEventArgs args)
@@ -236,7 +240,9 @@ namespace Storylines
                 }
             }
 
-            Start();
+            SystemInformation.Instance.TrackAppUse(args);
+
+            Start("file_activation");
         }
     }
 }

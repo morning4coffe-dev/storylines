@@ -30,7 +30,7 @@ namespace Storylines.Views.Dialogs
 
             InitializeClickOutToClose();
 
-            exportDialogue.RequestedTheme = AppView.current.RequestedTheme;
+            exportDialogue.RequestedTheme = AppView.current.ActualTheme;
 
             AppView.currentlyOpenedDialogue = exportDialogue;
 

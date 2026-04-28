@@ -12,8 +12,10 @@ using Windows.ApplicationModel.Resources;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
+using Windows.UI.Xaml.Media;
 using static System.Net.Mime.MediaTypeNames;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
@@ -31,14 +33,14 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = textBoxStats;
-            textBoxStats.RequestedTheme = AppView.current.RequestedTheme;
+            textBoxStats.RequestedTheme = AppView.current.ActualTheme;
         }
 
         public static void Open(bool fromDownBar)
         {
             _ = new ProjectStatsDialogue().ShowAsync();
 
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData("TextStatsOpenedFromDownBar", fromDownBar.ToString());
+            App.TryGetService<ITelemetryService>()?.TrackProjectStatsOpened(fromDownBar);
             textBoxStats.DisplayStats();
         }
 
@@ -91,7 +93,7 @@ namespace Storylines.Views.Dialogs
 
         private void PopulateChapterBars()
         {
-            chapterBarsPanel.Children.Clear();
+            chapterChartCanvas.Children.Clear();
 
             var chapters = ProjectState.Chapters;
             if (chapters == null || chapters.Count == 0)
@@ -110,27 +112,63 @@ namespace Storylines.Views.Dialogs
                 if (words > maxWords) maxWords = words;
             }
 
+            const double barHeight = 22;
+            const double barSpacing = 4;
+            const double labelWidth = 140;
+            const double chartWidth = 300;
+            double y = 0;
+
+            var accentBrush = new SolidColorBrush((Windows.UI.Color)Windows.UI.Xaml.Application.Current.Resources["SystemAccentColor"]);
+
             foreach (var (name, words) in stats)
             {
-                var container = new StackPanel { Spacing = 2 };
-                container.Children.Add(new TextBlock
+                double barWidth = Math.Max(2, (double)words / maxWords * chartWidth);
+
+                // Chapter label
+                var label = new TextBlock
                 {
-                    Text = $"{name}  ({words}w)",
+                    Text = name,
                     FontSize = 11,
-                    Opacity = 0.75,
+                    Opacity = 0.8,
                     TextTrimming = Windows.UI.Xaml.TextTrimming.CharacterEllipsis,
-                    MaxWidth = 180
-                });
-                container.Children.Add(new ProgressBar
+                    MaxWidth = labelWidth - 8,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Canvas.SetLeft(label, 0);
+                Canvas.SetTop(label, y + 2);
+                chapterChartCanvas.Children.Add(label);
+
+                // Bar
+                var bar = new Windows.UI.Xaml.Shapes.Rectangle
                 {
-                    Value = (double)words / maxWords * 100,
-                    Maximum = 100,
-                    Height = 6,
-                    MinWidth = 160,
-                    CornerRadius = new Windows.UI.Xaml.CornerRadius(3)
-                });
-                chapterBarsPanel.Children.Add(container);
+                    Width = barWidth,
+                    Height = barHeight - 6,
+                    RadiusX = 3,
+                    RadiusY = 3,
+                    Fill = accentBrush,
+                    Opacity = 0.7
+                };
+                Canvas.SetLeft(bar, labelWidth);
+                Canvas.SetTop(bar, y + 3);
+                chapterChartCanvas.Children.Add(bar);
+
+                // Word count label
+                var countLabel = new TextBlock
+                {
+                    Text = $"{words}w",
+                    FontSize = 10,
+                    Opacity = 0.55,
+                    VerticalAlignment = VerticalAlignment.Center
+                };
+                Canvas.SetLeft(countLabel, labelWidth + barWidth + 6);
+                Canvas.SetTop(countLabel, y + 3);
+                chapterChartCanvas.Children.Add(countLabel);
+
+                y += barHeight + barSpacing;
             }
+
+            chapterChartCanvas.Width = labelWidth + chartWidth + 60;
+            chapterChartCanvas.Height = y;
         }
 
         public static string GetTextFromAllChapters()
@@ -144,33 +182,6 @@ namespace Storylines.Views.Dialogs
                 storyCharacterCount += wordC;
             }
             return storyCharacterCount;
-        }
-
-        public static void UpdateDownBar()
-        {
-            RichEditBox textBox = MainPage.ChapterText.textBox;
-
-            textBox.Document.GetText(TextGetOptions.None, out string txt);
-
-            int charCount = txt.Length > 0 ? txt.Length - 1 : 0;
-            int wordCount = txt.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
-
-            string selectedPrefix = textBox.Document.Selection.Text.Length != 0 ? $"{textBox.Document.Selection.Text.Length} / " : "";
-
-            int readMinutes = Math.Max(1, (int)Math.Ceiling(wordCount / 200.0));
-
-            MainPage.Current.downBarWordsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";
-            MainPage.Current.downBarCharsText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedPrefix}{charCount}";
-            MainPage.Current.downBarReadTimeText.Text = $"~{readMinutes} {ResourceLoader.GetForCurrentView().GetString("readTimeMinRead")}";
-
-            // Update chapter name if available
-            var currentChapter = ProjectState.Chapters?.Count > 0 && ChaptersList.selectedIndex >= 0 && ChaptersList.selectedIndex < ProjectState.Chapters.Count ? ProjectState.Chapters[ChaptersList.selectedIndex] : null;
-            if (currentChapter != null)
-                MainPage.Current.downBarChapterName.Text = currentChapter.Name;
-
-            // Keep legacy text for compatibility
-            int paragraphCount = Regex.Matches(txt, @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;
-            MainPage.Current.downBarText.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {selectedPrefix}{charCount}   {ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}   {ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}";
         }
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)

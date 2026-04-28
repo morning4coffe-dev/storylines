@@ -2,6 +2,7 @@ using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Views.Pages;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
 using Storylines.Models;
 using System.Collections.Generic;
@@ -139,16 +140,16 @@ namespace Storylines.Helpers
                             {
                                 case Windows.System.VirtualKey.Q:
                                     if (MainPage.ChapterList.canAdd && AppView.currentlyOpenedDialogue == null)
-                                        ChapterCreatorOrRenamer.Open(null, false); break;
+                                        App.TryGetService<IChapterWorkflowService>()?.OpenCreateChapterDialog(); break;
                                 case Windows.System.VirtualKey.Delete:
-                                    if (MainPage.ChapterList.listView.SelectedItem != null && AppView.currentlyOpenedDialogue == null)
-                                        ProjectState.RemoveChapter((MainPage.ChapterList.listView.SelectedItem as Chapter).Token); break;
+                                    if (MainPage.ChapterList.listView.SelectedItem is Chapter selectedChapter && AppView.currentlyOpenedDialogue == null)
+                                        App.TryGetService<IChapterWorkflowService>()?.DeleteChapter(selectedChapter.Token); break;
 
                                 case Windows.System.VirtualKey.E:
                                     if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
                                         ExportDialogue.Open(default); break;
                                 case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
-                                case Windows.System.VirtualKey.F: MainPage.ChapterText.EnableSeach(); break;
+                                case Windows.System.VirtualKey.F: MainPage.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.H: MainPage.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.PageUp:
                                     if (MainPage.ChapterList.listView.SelectedItem != null && MainPage.ChapterList.listView.IsEnabled && MainPage.ChapterList.listView.SelectedIndex > 0)
@@ -162,8 +163,7 @@ namespace Storylines.Helpers
                                         if (MainPage.ChapterList.listView.Items.Count == MainPage.ChapterList.listView.SelectedIndex + 1 &&
                                             System.Convert.ToBoolean(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled]))
                                         {
-                                            ProjectState.AddChapterFromCreator(ProjectState.Chapters.Count + 1, Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("chapterWithoutName"));
-                                            MainPage.ChapterList.listView.SelectedIndex += 1;
+                                            App.TryGetService<IChapterWorkflowService>()?.CreateChapterFromInput(ProjectState.GetRandomChapterName());
                                         }
                                     break;
                                 case Windows.System.VirtualKey.Z:

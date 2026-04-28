@@ -278,13 +278,21 @@ namespace Storylines.Models
 
         #endregion
 
+        private static readonly string[] _starterNames = { "Prologue", "Beginning", "Introduction", "Opening", "Prelude", "Genesis", "Dawn", "Awakening", "Origins", "First Light" };
+        private static readonly Random _rng = new Random();
+
+        public static string GetRandomChapterName()
+        {
+            return _starterNames[_rng.Next(_starterNames.Length)];
+        }
+
         public void Clear()
         {
-            Chapters.Clear();
-            Characters.Clear();
-            PinboardConnections.Clear();
-            PlotThreads.Clear();
-            BranchingDialogues.Clear();
+            if (Chapters.Count > 0) Chapters.Clear();
+            if (Characters.Count > 0) Characters.Clear();
+            PinboardConnections?.Clear();
+            PlotThreads?.Clear();
+            BranchingDialogues?.Clear();
         }
 
     }

@@ -21,7 +21,7 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = projectRenamer;
-            projectRenamer.RequestedTheme = AppView.current.RequestedTheme;
+            projectRenamer.RequestedTheme = AppView.current.ActualTheme;
         }
 
         public static async System.Threading.Tasks.Task Open()

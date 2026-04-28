@@ -288,6 +288,7 @@ namespace Storylines.Helpers
 
         private static ProjectState State => App.GetService<ProjectState>();
         private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static ILogger Logger => App.GetService<ILogger>();
 
         static TimeTravelCharacter()
         {
@@ -356,13 +357,7 @@ namespace Storylines.Helpers
 
             public void Undo() => State.RemoveCharacter(_snapshot.Token);
 
-            public async void Redo()
-            {
-                await State.AddExistingCharacterAsync(
-                    _snapshot.Name, _snapshot.Token, _snapshot.Description,
-                    _snapshot.Picture, _snapshot.Role, _snapshot.Age,
-                    _snapshot.Appearance, _snapshot.Traits);
-            }
+            public void Redo() => _ = RestoreCharacterAsync(_snapshot, "redo character add");
 
             public bool TryMerge(IUndoableAction newer) => false;
         }
@@ -373,17 +368,31 @@ namespace Storylines.Helpers
 
             public CharacterRemovedAction(Character snapshot) => _snapshot = snapshot;
 
-            public async void Undo()
-            {
-                await State.AddExistingCharacterAsync(
-                    _snapshot.Name, _snapshot.Token, _snapshot.Description,
-                    _snapshot.Picture, _snapshot.Role, _snapshot.Age,
-                    _snapshot.Appearance, _snapshot.Traits);
-            }
+            public void Undo() => _ = RestoreCharacterAsync(_snapshot, "undo character removal");
 
             public void Redo() => State.RemoveCharacter(_snapshot.Token);
 
             public bool TryMerge(IUndoableAction newer) => false;
+        }
+
+        private static async System.Threading.Tasks.Task RestoreCharacterAsync(Character snapshot, string operation)
+        {
+            try
+            {
+                await State.AddExistingCharacterAsync(
+                    snapshot.Name,
+                    snapshot.Token,
+                    snapshot.Description,
+                    snapshot.Picture,
+                    snapshot.Role,
+                    snapshot.Age,
+                    snapshot.Appearance,
+                    snapshot.Traits);
+            }
+            catch (Exception ex)
+            {
+                Logger.Error($"Failed to {operation}", ex);
+            }
         }
 
         /// <summary>

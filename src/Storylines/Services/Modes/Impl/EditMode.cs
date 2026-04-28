@@ -11,7 +11,8 @@ namespace Storylines.Services.Modes.Impl
         public string DescriptionKey => "modeEditDescription";
         public string IconGlyph => "";
 
-        public ModeChromeConfig Chrome { get; } = new ModeChromeConfig();
+        public ModeChromeConfig Chrome { get; } = new ModeChromeConfig(
+            showChapterTextFormattingBar: false);
 
         public bool CanLeave => true;
 

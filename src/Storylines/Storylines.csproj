@@ -219,13 +219,14 @@
     <Compile Include="Services\Modes\Impl\FocusMode.cs" />
     <Compile Include="Services\Modes\Impl\ReadOnlyMode.cs" />
     <Compile Include="Services\AutosaveService.cs" />
+    <Compile Include="Services\RecoveryService.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\BranchingDialogueModels.cs" />
     <Compile Include="Views\Pages\SettingsPage.xaml.cs">
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Dialogue.cs" />
-    <Compile Include="Helpers\MicrosoftStoreAndAppCenterFunctions.cs" />
+    <Compile Include="Helpers\MicrosoftStoreFunctions.cs" />
     <Compile Include="Helpers\TextHighlighter.cs" />
     <Compile Include="Views\Controls\MainCommandBar.xaml.cs">
       <DependentUpon>MainCommandBar.xaml</DependentUpon>
@@ -240,8 +241,11 @@
     <Compile Include="Services\ThemeSettings.cs" />
     <Compile Include="Services\BranchingDialogueEventPublisher.cs" />
     <Compile Include="Services\BranchingDialogueService.cs" />
+    <Compile Include="Services\AppCenterTelemetryProvider.cs" />
     <Compile Include="Services\ProjectStateBranchingDialogueStore.cs" />
     <Compile Include="Services\ServiceConfiguration.cs" />
+    <Compile Include="Services\TelemetryEventPropertyBuilder.cs" />
+    <Compile Include="Services\TelemetryService.cs" />
     <Compile Include="Services\DebugLogger.cs" />
     <Compile Include="Services\EventAggregator.cs" />
     <Compile Include="Services\FileService.cs" />
@@ -250,14 +254,18 @@
     <Compile Include="Services\Interfaces\IBranchingDialogueStore.cs" />
     <Compile Include="Services\Interfaces\ILogger.cs" />
     <Compile Include="Services\Interfaces\INotificationService.cs" />
+    <Compile Include="Services\Interfaces\ITelemetryProvider.cs" />
+    <Compile Include="Services\Interfaces\ITelemetryService.cs" />
     <Compile Include="Services\Interfaces\ISaveSerializer.cs" />
     <Compile Include="Services\Interfaces\IFileService.cs" />
     <Compile Include="Services\Interfaces\INavigationService.cs" />
     <Compile Include="Services\Interfaces\ITextEditorService.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
+    <Compile Include="Services\Interfaces\IChapterWorkflowService.cs" />
     <Compile Include="Services\NavigationService.cs" />
     <Compile Include="Services\TextEditorService.cs" />
     <Compile Include="Services\DialogService.cs" />
+    <Compile Include="Services\ChapterWorkflowService.cs" />
     <Compile Include="Services\Serializers\JsonSaveSerializer.cs" />
     <Compile Include="Services\Serializers\LegacySrlSerializer.cs" />
     <Compile Include="Models\ProjectData.cs" />

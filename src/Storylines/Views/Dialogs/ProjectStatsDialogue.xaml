@@ -3,16 +3,17 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                mc:Ignorable="d"
                Closed="ContentDialog_Closed"
                CornerRadius="8">
 
-    <Grid MinWidth="410"
-          MaxWidth="700"
+    <Grid MinWidth="520"
+          MaxWidth="800"
           MaxHeight="600"
           Margin="4">
         <Grid.RowDefinitions>
-            <RowDefinition Height="38" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
@@ -21,109 +22,145 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
-            <TextBlock x:Uid="analytics"
+            <TextBlock x:Uid="projectStatistics"
                        Style="{StaticResource DialogueWindowHeaderStyle}"
-                       FontSize="25"
-                       FontStretch="ExtraExpanded" />
+                       FontSize="20"
+                       FontWeight="SemiBold" />
 
             <Button x:Name="closeButton"
-                    Width="42"
-                    Height="38"
-                    Grid.Column="2"
+                    Width="36"
+                    Height="36"
+                    Grid.Column="1"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    CornerRadius="4"
                     Click="OnCloseButton_Click">
-                <FontIcon Glyph=""
-                          Width="23"
-                          RenderTransformOrigin="-.25,.5">
-                    <FontIcon.RenderTransform>
-                        <CompositeTransform ScaleX=".9"
-                                            ScaleY=".9" />
-                    </FontIcon.RenderTransform>
-                </FontIcon>
+                <FontIcon Glyph="&#xE711;"
+                          FontSize="10" />
             </Button>
         </Grid>
 
         <ScrollViewer Grid.Row="2"
                       MinHeight="20">
-            <StackPanel Orientation="Horizontal"
-                        Spacing="24">
-                <StackPanel>
-                    <RichTextBlock x:FieldModifier="public"
-                                   LineHeight="26"
-                                   SelectionHighlightColor="{ThemeResource SystemAccentColor}">
-                        <Paragraph Margin="0,8,0,0">
-                            <Run x:Uid="selectedChapterText"
-                                 Foreground="{ThemeResource SystemAccentColor}"
-                                 FontWeight="SemiBold"
-                                 FontSize="17" />
-                        </Paragraph>
-                        <Paragraph>
-                            <Run x:Name="textRun"
-                                 FontWeight="Normal">N/A</Run>
-                        </Paragraph>
-                    </RichTextBlock>
-                    <TextBox x:Name="wordDistributionTextBox"
-                             HorizontalAlignment="Left"
-                             MaxHeight="220"
-                             Width="190"
-                             IsReadOnly="True"
-                             AcceptsReturn="True"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             ScrollViewer.HorizontalScrollBarVisibility="Auto"
-                             Text="N/A" />
+            <StackPanel Spacing="16">
+                <!-- Current chapter section -->
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="selectedChapterText"
+                               Foreground="{ThemeResource SystemAccentColor}"
+                               FontWeight="SemiBold"
+                               FontSize="15" />
+                    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                          CornerRadius="6"
+                          Padding="16,12"
+                          BorderBrush="{ThemeResource ElementBorderColor}"
+                          BorderThickness="{ThemeResource ElementBorderThickness}">
+                        <TextBlock x:Name="textRun"
+                                   x:FieldModifier="public"
+                                   TextWrapping="Wrap"
+                                   LineHeight="24"
+                                   FontSize="13">N/A</TextBlock>
+                    </Grid>
+                    <muxc:Expander HorizontalAlignment="Stretch"
+                                   HorizontalContentAlignment="Stretch"
+                                   IsExpanded="False"
+                                   Padding="0">
+                        <muxc:Expander.Header>
+                            <TextBlock x:Uid="wordDistribution"
+                                       FontSize="13"
+                                       Opacity="0.8" />
+                        </muxc:Expander.Header>
+                        <muxc:Expander.Content>
+                            <TextBox x:Name="wordDistributionTextBox"
+                                     HorizontalAlignment="Stretch"
+                                     MaxHeight="200"
+                                     IsReadOnly="True"
+                                     AcceptsReturn="True"
+                                     ScrollViewer.VerticalScrollBarVisibility="Auto"
+                                     ScrollViewer.HorizontalScrollBarVisibility="Auto"
+                                     Text="N/A" />
+                        </muxc:Expander.Content>
+                    </muxc:Expander>
                 </StackPanel>
-                <RichTextBlock x:Name="statsText"
-                               x:FieldModifier="public"
-                               LineHeight="26"
-                               SelectionHighlightColor="{ThemeResource SystemAccentColor}">
-                    <Paragraph Margin="0,8,0,0">
-                        <Run x:Uid="storyText"
-                             Foreground="{ThemeResource SystemAccentColor}"
-                             FontWeight="SemiBold"
-                             FontSize="17" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Name="storyRun"
-                             FontWeight="Normal">N/A</Run>
-                    </Paragraph>
 
-                    <Paragraph Margin="0,8,0,0">
-                        <Run x:Uid="charactersExport"
-                             Foreground="{ThemeResource SystemAccentColor}"
-                             FontWeight="SemiBold"
-                             FontSize="17" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Name="charactersRun"
-                             FontWeight="Normal">N/A</Run>
-                    </Paragraph>
+                <!-- Story overview -->
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="storyText"
+                               Foreground="{ThemeResource SystemAccentColor}"
+                               FontWeight="SemiBold"
+                               FontSize="15" />
+                    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                          CornerRadius="6"
+                          Padding="16,12"
+                          BorderBrush="{ThemeResource ElementBorderColor}"
+                          BorderThickness="{ThemeResource ElementBorderThickness}">
+                        <TextBlock x:Name="storyRun"
+                                   x:FieldModifier="public"
+                                   TextWrapping="Wrap"
+                                   LineHeight="24"
+                                   FontSize="13">N/A</TextBlock>
+                    </Grid>
+                </StackPanel>
 
-                    <Paragraph Margin="0,8,0,0">
-                        <Run x:Uid="chaptersText1"
-                             Foreground="{ThemeResource SystemAccentColor}"
-                             FontWeight="SemiBold"
-                             FontSize="17" />
-                    </Paragraph>
-                    <Paragraph>
-                        <Run x:Name="chaptersRun"
-                             FontWeight="Normal">N/A</Run>
-                    </Paragraph>
-                </RichTextBlock>
+                <!-- Characters + chapters row -->
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Spacing="4">
+                        <TextBlock x:Uid="charactersExport"
+                                   Foreground="{ThemeResource SystemAccentColor}"
+                                   FontWeight="SemiBold"
+                                   FontSize="15" />
+                        <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                              CornerRadius="6"
+                              Padding="16,12"
+                              BorderBrush="{ThemeResource ElementBorderColor}"
+                              BorderThickness="{ThemeResource ElementBorderThickness}">
+                            <TextBlock x:Name="charactersRun"
+                                       x:FieldModifier="public"
+                                       FontSize="13">N/A</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                    <StackPanel Grid.Column="2" Spacing="4">
+                        <TextBlock x:Uid="chaptersText1"
+                                   Foreground="{ThemeResource SystemAccentColor}"
+                                   FontWeight="SemiBold"
+                                   FontSize="15" />
+                        <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                              CornerRadius="6"
+                              Padding="16,12"
+                              BorderBrush="{ThemeResource ElementBorderColor}"
+                              BorderThickness="{ThemeResource ElementBorderThickness}">
+                            <TextBlock x:Name="chaptersRun"
+                                       x:FieldModifier="public"
+                                       FontSize="13">N/A</TextBlock>
+                        </Grid>
+                    </StackPanel>
+                </Grid>
 
-                <StackPanel MinWidth="160"
-                            Spacing="4">
+                <!-- Chapter breakdown chart -->
+                <StackPanel Spacing="4">
                     <TextBlock x:Uid="byChapterText"
                                Foreground="{ThemeResource SystemAccentColor}"
                                FontWeight="SemiBold"
-                               FontSize="17"
-                               Margin="0,8,0,0" />
-                    <ScrollViewer MaxHeight="350"
-                                  VerticalScrollBarVisibility="Auto"
-                                  HorizontalScrollBarVisibility="Disabled">
-                        <StackPanel x:Name="chapterBarsPanel"
-                                    Spacing="6" />
-                    </ScrollViewer>
+                               FontSize="15" />
+                    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                          CornerRadius="6"
+                          Padding="16,12"
+                          BorderBrush="{ThemeResource ElementBorderColor}"
+                          BorderThickness="{ThemeResource ElementBorderThickness}">
+                        <ScrollViewer MaxHeight="280"
+                                      VerticalScrollBarVisibility="Auto"
+                                      HorizontalScrollBarVisibility="Disabled">
+                            <Canvas x:Name="chapterChartCanvas"
+                                    HorizontalAlignment="Stretch" />
+                        </ScrollViewer>
+                    </Grid>
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>
     </Grid>
 </ContentDialog>
+

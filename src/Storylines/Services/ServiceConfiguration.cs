@@ -15,6 +15,8 @@ namespace Storylines.Services
             var services = new ServiceCollection();
 
             services.AddSingleton<ILogger, DebugLogger>();
+            services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
+            services.AddSingleton<ITelemetryService, TelemetryService>();
             services.AddSingleton<IFileService, FileService>();
             services.AddSingleton<JsonSaveSerializer>();
             services.AddSingleton<LegacySrlSerializer>();
@@ -24,6 +26,7 @@ namespace Storylines.Services
             services.AddSingleton<ITextEditorService, TextEditorService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IDialogService, DialogService>();
+            services.AddSingleton<IChapterWorkflowService, ChapterWorkflowService>();
             services.AddSingleton<IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();
             services.AddSingleton<IBranchingDialogueEventPublisher, BranchingDialogueEventPublisher>();
             services.AddSingleton<IBranchingDialogueService, BranchingDialogueService>();

@@ -147,6 +147,12 @@
   <data name="analytics.Text" xml:space="preserve">
     <value>Analytics</value>
   </data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
   <data name="app.Content" xml:space="preserve">
     <value>App</value>
   </data>
@@ -739,7 +745,7 @@
     <value>System</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Story Analytics</value>
+    <value>Project Statistics</value>
   </data>
   <data name="toAddNew.Text" xml:space="preserve">
     <value>to add new.</value>
@@ -1066,7 +1072,7 @@
     <value>Add chapters from the main writing page to see them here.</value>
   </data>
   <!-- ChapterTextBox search -->
-  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
     <value>All chapters</value>
   </data>
   <data name="noMatchesFound" xml:space="preserve">
@@ -1199,19 +1205,19 @@
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Choose a writing mode</value>
   </data>
-  <data name="modeEdit" xml:space="preserve">
+  <data name="modeEdit.Text" xml:space="preserve">
     <value>Edit</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
     <value>Full editing experience with all tools available.</value>
   </data>
-  <data name="modeFocus" xml:space="preserve">
+  <data name="modeFocus.Text" xml:space="preserve">
     <value>Focus</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
     <value>Distraction-free writing with optional timer and measure goal.</value>
   </data>
-  <data name="modeReadOnly" xml:space="preserve">
+  <data name="modeReadOnly.Text" xml:space="preserve">
     <value>Read-only</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">

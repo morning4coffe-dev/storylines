@@ -65,7 +65,7 @@
                         BorderThickness="0"
                         CornerRadius="4"
                         Padding="0"
-                        Click="OnCloseButton_Click">
+                    Command="{x:Bind ViewModel.CloseChapterListCommand}">
                     <FontIcon Glyph="&#xE711;"
                               FontSize="10"
                               Opacity="0.6" />
@@ -83,14 +83,14 @@
 
         <ListView x:Name="listView"
                   x:FieldModifier="public"
-                  ItemsSource="{x:Bind Chapters}"
+                  ItemsSource="{x:Bind ViewModel.Chapters, Mode=OneWay}"
+                  SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
                   CanReorderItems="True"
                   Grid.Row="2"
                   CanDragItems="True"
                   AllowDrop="True"
                   SelectionMode="Single"
                   Margin="-4,0"
-                  SelectionChanged="OnChaptersList_SelectionChanged"
                   DragItemsCompleted="OnChaptersListView_DragItemsCompleted"
                   DragItemsStarting="OnChaptersListView_DragItemsStarting">
             <ListView.ItemTemplate>
@@ -99,80 +99,89 @@
                           HorizontalAlignment="Stretch"
                           VerticalAlignment="Stretch"
                           Padding="4,6,4,6"
+                          Background="Transparent"
                           RightTapped="OnChaptersListViewItem_RightTapped"
                           DoubleTapped="OnChaptersListViewItem_DoubleTapped"
                           Holding="OnChaptersListViewItem_Holding">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                            <RowDefinition Height="Auto" />
-                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
                             <ColumnDefinition Width="*" />
                         </Grid.ColumnDefinitions>
 
-                        <!-- Status dot -->
-                        <Ellipse Width="8" Height="8"
-                                 Margin="3,5,12,0"
-                                 VerticalAlignment="Top"
-                                 Grid.RowSpan="3">
-                            <Ellipse.Fill>
-                                <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusToColorConverter}}" />
-                            </Ellipse.Fill>
-                        </Ellipse>
+                        <!-- Chapter icon with status indicator -->
+                        <Grid Width="36" Height="36"
+                              Margin="0,0,10,0"
+                              VerticalAlignment="Center"
+                              Grid.RowSpan="3">
+                            <FontIcon Glyph="&#xE160;"
+                                      FontSize="22"
+                                      Opacity="0.6"
+                                      HorizontalAlignment="Center"
+                                      VerticalAlignment="Center" />
+                            <Ellipse Width="10" Height="10"
+                                     HorizontalAlignment="Right"
+                                     VerticalAlignment="Bottom">
+                                <Ellipse.Fill>
+                                    <SolidColorBrush Color="{Binding Status, Converter={StaticResource StatusToColorConverter}}" />
+                                </Ellipse.Fill>
+                            </Ellipse>
+                        </Grid>
 
-                        <!-- Chapter name -->
-                        <TextBlock Text="{Binding Name}"
+                        <StackPanel Grid.Column="1"
+                                    Spacing="2"
+                                    Margin="0,2">
+                            <!-- Chapter name -->
+                            <TextBlock Text="{Binding Name}"
                                    TextWrapping="NoWrap"
                                    TextTrimming="CharacterEllipsis"
                                    FontSize="13"
                                    Grid.Column="1"
                                    VerticalAlignment="Center" />
 
-                        <!-- Status + Location line -->
-                        <StackPanel Grid.Row="1" Grid.Column="1"
+                            <!-- Status + Location line -->
+                            <StackPanel Grid.Row="1" Grid.Column="1"
                                     Orientation="Horizontal" Spacing="6"
                                     Margin="0,2,0,0">
-                            <TextBlock Text="{Binding Status}"
+                                <TextBlock Text="{Binding Status}"
                                        FontSize="10"
                                        Opacity="0.55" />
-                            <TextBlock Text="·"
+                                <TextBlock Text="·"
                                        FontSize="10"
                                        Opacity="0.35"
                                        Visibility="{Binding Location, Converter={StaticResource EmptyStringToCollapsedConverter}}" />
-                            <TextBlock Text="{Binding Location}"
+                                <TextBlock Text="{Binding Location}"
                                        FontSize="10"
                                        Opacity="0.5"
                                        Visibility="{Binding Location, Converter={StaticResource EmptyStringToCollapsedConverter}}"
                                        TextTrimming="CharacterEllipsis"
                                        MaxWidth="120" />
-                        </StackPanel>
+                            </StackPanel>
 
-                        <!-- Tag pills: visible only when chapter has tags -->
-                        <muxc:ItemsRepeater Grid.Row="2"
+                            <!-- Tag pills: visible only when chapter has tags -->
+                            <muxc:ItemsRepeater Grid.Row="2"
                                        Grid.Column="1"
                                        ItemsSource="{Binding Tags}"
                                        Margin="0,3,0,0"
                                        Visibility="{Binding TagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
-                            <muxc:ItemsRepeater.Layout>
-                                <muxc:StackLayout Orientation="Horizontal"
+                                <muxc:ItemsRepeater.Layout>
+                                    <muxc:StackLayout Orientation="Horizontal"
                                              Spacing="3" />
-                            </muxc:ItemsRepeater.Layout>
-                            <muxc:ItemsRepeater.ItemTemplate>
-                                <DataTemplate x:DataType="x:String">
-                                    <Border CornerRadius="3"
+                                </muxc:ItemsRepeater.Layout>
+                                <muxc:ItemsRepeater.ItemTemplate>
+                                    <DataTemplate x:DataType="x:String">
+                                        <Border CornerRadius="3"
                                             Padding="5,1"
                                             Background="{ThemeResource SystemAccentColorLight2}"
                                             Opacity="0.85">
-                                        <TextBlock Text="{x:Bind}"
+                                            <TextBlock Text="{x:Bind}"
                                                    FontSize="10"
                                                    Foreground="White"
                                                    VerticalAlignment="Center" />
-                                    </Border>
-                                </DataTemplate>
-                            </muxc:ItemsRepeater.ItemTemplate>
-                        </muxc:ItemsRepeater>
+                                        </Border>
+                                    </DataTemplate>
+                                </muxc:ItemsRepeater.ItemTemplate>
+                            </muxc:ItemsRepeater>
+                        </StackPanel>
                     </Grid>
                 </DataTemplate>
             </ListView.ItemTemplate>
@@ -182,6 +191,7 @@
                     VerticalAlignment="Center"
                     HorizontalAlignment="Center"
                     Grid.Row="2"
+                    Visibility="{x:Bind ViewModel.NoChaptersPlaceholderVisibility, Mode=OneWay}"
                     Spacing="14"
                     Padding="12"
                     RenderTransformOrigin=".5,.5">
@@ -235,7 +245,8 @@
                         <MenuFlyoutItem.Icon>
                             <FontIcon Glyph="" />
                         </MenuFlyoutItem.Icon>
-                    </MenuFlyoutItem>                    <MenuFlyoutSeparator />
+                    </MenuFlyoutItem>
+                    <MenuFlyoutSeparator />
                     <MenuFlyoutItem x:Name="editTagsFlyout"
                                     x:Uid="editTagsFlyout"
                                     Click="OnChapterEditTags_Click">

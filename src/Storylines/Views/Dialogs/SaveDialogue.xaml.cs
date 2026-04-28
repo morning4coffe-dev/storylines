@@ -20,6 +20,8 @@ namespace Storylines.Views.Dialogs
         public StorageFolder saveFolder;
 
         public ObservableCollection<string> extensions { get; private set; } = new ObservableCollection<string>();
+        private bool _submitted;
+        private int _collisionCheckVersion;
 
         public enum Type { Save, SaveCopy }
         private static Type type;
@@ -34,7 +36,7 @@ namespace Storylines.Views.Dialogs
 
             InitializeClickOutToClose();
 
-            saveDialogue.RequestedTheme = AppView.current.RequestedTheme;
+            saveDialogue.RequestedTheme = AppView.current.ActualTheme;
             AppView.currentlyOpenedDialogue = saveDialogue;
 
             extensions.Add(".srl");
@@ -80,33 +82,45 @@ namespace Storylines.Views.Dialogs
                 locationText.Visibility = Visibility.Visible;
                 locationTextPlaceholder.Visibility = Visibility.Collapsed;
 
-                SomethingChanged(true);
+                _ = SomethingChangedAsync(true);
             }
         }
 
-        public async void SomethingChanged(bool nameOrLocation)
+        private async Task SomethingChangedAsync(bool nameOrLocation)
         {
-            if (saveFolder != null && SettingsValues.IsStringSaveable(fileNameText.Text))
-                submitButton.IsEnabled = true;
-            else
-                submitButton.IsEnabled = false;
+            submitButton.IsEnabled = saveFolder != null && SettingsValues.IsStringSaveable(fileNameText.Text);
 
-            if (nameOrLocation && saveFolder != null && !string.IsNullOrEmpty(fileNameText.Text))
-                try
-                {
-                    var file = await saveFolder.TryGetItemAsync($"{fileNameText.Text + extensionComboBox.SelectedItem}");
+            if (!nameOrLocation || saveFolder == null || string.IsNullOrEmpty(fileNameText.Text))
+            {
+                nameCollisionWarning.Visibility = Visibility.Collapsed;
+                return;
+            }
 
-                    nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
-                }
-                catch (Exception ex)
-                {
-                    _logger?.Warning($"Failed to check for file collision: {ex.Message}");
-                }
+            var collisionCheckVersion = ++_collisionCheckVersion;
+
+            try
+            {
+                var fileName = $"{fileNameText.Text}{extensionComboBox.SelectedItem}";
+                var file = await saveFolder.TryGetItemAsync(fileName);
+
+                if (collisionCheckVersion != _collisionCheckVersion)
+                    return;
+
+                nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                if (collisionCheckVersion == _collisionCheckVersion)
+                    nameCollisionWarning.Visibility = Visibility.Collapsed;
+
+                _logger?.Warning($"Failed to check for file collision: {ex.Message}");
+            }
         }
 
         private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
             await SaveSystem.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
+            _submitted = true;
             SaveSystem.currentProject.projectName = nameText.Text;
             saveDialogue.Hide();
         }
@@ -123,7 +137,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnTextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
-            SomethingChanged(true);
+            _ = SomethingChangedAsync(true);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
@@ -139,6 +153,9 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
+            if (!_submitted)
+                SaveSystem.CancelPendingAfterSaveAction();
+
             AppView.currentlyOpenedDialogue = null;
         }
 

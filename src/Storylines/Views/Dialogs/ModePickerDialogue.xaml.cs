@@ -1,5 +1,6 @@
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
 using Storylines.Services.Modes.Impl;
 using Storylines.ViewModels.Modes;
@@ -94,11 +95,12 @@ namespace Storylines.Views.Dialogs
                     };
                     modeService.Activate(focusMode);
 
-                    MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Start(
+                    App.TryGetService<ITelemetryService>()?.TrackFocusModeStarted(
                         (bool)fullScreenCheckBox.IsChecked,
                         (bool)autosaveCheckBox.IsChecked,
-                        $"{measureValueNumBox.Value}",
-                        timePicker.Time.ToString());
+                        focusMode.Metric.ToString(),
+                        focusMode.MeasureTarget,
+                        focusMode.Time);
                     break;
 
                 case SelectedMode.ReadOnly:

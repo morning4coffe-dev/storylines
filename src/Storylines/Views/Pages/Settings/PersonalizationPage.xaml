@@ -106,40 +106,34 @@
                                    Opacity="0.8" />
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Button x:Uid="accentPresetOrange" Tag="#BE5A00" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#BE5A00" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#BE5A00" Width="36" Height="36" />
                             </Button>
                                 <Button x:Uid="accentPresetBlue" Tag="#0078D4" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#0078D4" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#0078D4" Width="36" Height="36" />
                             </Button>
                                 <Button x:Uid="accentPresetGreen" Tag="#107C10" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#107C10" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#107C10" Width="36" Height="36" />
                             </Button>
                                 <Button x:Uid="accentPresetRed" Tag="#E81123" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#E81123" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#E81123" Width="36" Height="36" />
                             </Button>
                                 <Button x:Uid="accentPresetPurple" Tag="#881798" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#881798" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#881798" Width="36" Height="36" />
                             </Button>
                                 <Button x:Uid="accentPresetRust" Tag="#CA5010" Width="38" Height="38" CornerRadius="19"
+                                    Padding="0"
                                     Click="OnAccentPresetButton_Click">
-                                <Button.Content>
-                                    <Ellipse Fill="#CA5010" Width="24" Height="24" />
-                                </Button.Content>
+                                <Ellipse Fill="#CA5010" Width="36" Height="36" />
                             </Button>
                         </StackPanel>
                         <ColorPicker x:Name="customAccentPicker"

@@ -1,16 +1,13 @@
-using Storylines.Views.Dialogs;
 using Storylines.Views.Controls;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
-using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Input;
 using Storylines.Models;
 
 namespace Storylines.Views.Pages
@@ -24,16 +21,12 @@ namespace Storylines.Views.Pages
         public static ChapterTextBox ChapterText;
 
         private readonly EventAggregator _events;
-        private readonly ProjectState _projectState;
-        private readonly ITextEditorService _textEditor;
         private readonly MainPageViewModel _viewModel;
 
-        public MainPageViewModel ViewModel => _viewModel;
-
-        // Session timer
         private DispatcherTimer _sessionTimer;
-        private DateTimeOffset _sessionStart;
-        private bool _sessionActive;
+        private bool _textFormattingContextActive;
+
+        public MainPageViewModel ViewModel => _viewModel;
 
         public MainPage()
         {
@@ -41,16 +34,13 @@ namespace Storylines.Views.Pages
             Current = this;
 
             _events = App.GetService<EventAggregator>();
-            _projectState = App.GetService<ProjectState>();
-            _textEditor = App.GetService<ITextEditorService>();
             _viewModel = App.GetService<MainPageViewModel>();
 
             AppView.current.page = AppView.Pages.MainPage;
 
-            _events.Subscribe<ChapterToolsStateEvent>(e => EnableOrDisableChapterTools(e.Enabled));
+            _events.Subscribe<ChapterToolsStateEvent>(e => OnChapterToolsStateChanged(e.Enabled));
             _events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
             _events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
-            _events.Subscribe<SessionStatsUpdatedEvent>(OnSessionStatsUpdated);
 
             SizeChanged();
         }
@@ -63,41 +53,46 @@ namespace Storylines.Views.Pages
                 App.item = null;
             }
 
-            if (ChapterList.listView.Items.Count > 0 && ChaptersList.selectedIndex < ChapterList.listView.Items.Count)
-                ChapterList.listView.SelectedIndex = ChaptersList.selectedIndex;
+            var selectedChapterIndex = ChapterList.ViewModel.SelectedIndex;
+            if (ChapterList.listView.Items.Count > 0
+                && selectedChapterIndex >= 0
+                && selectedChapterIndex < ChapterList.listView.Items.Count)
+            {
+                ChapterList.listView.SelectedIndex = selectedChapterIndex;
+            }
             ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
 
             LoadTextBoxZoom();
+            RefreshFormattingCommandAvailability();
 
             if (SaveSystem.currentProject != null && SaveSystem.currentProject.file != null)
                 EnableOrDisableToolsForStorylinesDocuments(SaveSystem.currentProject.file.FileType.Contains(".srl"));
         }
 
-        public void EnableOrDisableChapterTools(bool enable)
+        /// <summary>
+        /// Handles the UI-level side of chapter selection state changes.
+        /// ViewModel handles text/visibility via OnIsChapterSelectedChanged.
+        /// </summary>
+        private void OnChapterToolsStateChanged(bool enabled)
         {
-            ViewModel.IsChapterSelected = enable;
+            ViewModel.IsChapterSelected = enabled;
 
-            ChapterText.textBox.IsTabStop = enable;
-            ChapterText.textBoxRectangle.IsHitTestVisible = !enable;
-            ChapterText.textBox.IsHitTestVisible = enable;
-            textBoxZoomSlider.IsEnabled = enable;
-            textBoxZoomTextHyperlink.IsEnabled = enable;
+            // Child control reach-through
+            ChapterText.textBox.IsTabStop = enabled;
+            ChapterText.textBoxRectangle.IsHitTestVisible = !enabled;
+            ChapterText.textBox.IsHitTestVisible = enabled;
 
-            if (enable)
+            RefreshFormattingCommandAvailability();
+            CommandBar.searchReplaceButton.IsEnabled = enabled;
+
+            if (enabled)
             {
                 ChapterText.textBoxRectangle.Visibility = Visibility.Collapsed;
-                UpdateDownBar();
             }
             else
             {
                 AppView.current.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
-                var res = ResourceLoader.GetForCurrentView();
-                ViewModel.DownBarText = res.GetString("downBarTextS");
-                downBarWordsText.Text = $"{res.GetString("words")}: 0";
-                downBarCharsText.Text = $"{res.GetString("charactersStory")}: 0";
-                downBarReadTimeText.Text = string.Empty;
-                downBarChapterName.Text = string.Empty;
             }
         }
 
@@ -108,26 +103,34 @@ namespace Storylines.Views.Pages
 
             CommandBar.exportButton.IsEnabled = enable;
             CommandBar.charactersButton.IsEnabled = enable;
-
-            ChapterText.chapterTextCommandBar.IsEnabled = enable;
         }
 
-        private void OnPage_SizeChanged(object sender, SizeChangedEventArgs e)
+        public void SetTextFormattingContextActive(bool active)
         {
-            SizeChanged();
+            _textFormattingContextActive = active;
+            RefreshFormattingCommandAvailability();
         }
+
+        public void RefreshFormattingCommandAvailability()
+        {
+            if (CommandBar == null)
+                return;
+
+            var enableFormatting = ViewModel.IsChapterSelected
+                && _textFormattingContextActive
+                && !ViewModel.IsChapterTextReadOnly;
+
+            CommandBar.SetFormattingCommandsEnabled(enableFormatting);
+
+            if (!enableFormatting)
+                CommandBar.ClearFormattingCommandState();
+        }
+
+        private void OnPage_SizeChanged(object sender, SizeChangedEventArgs e) => SizeChanged();
 
         public new void SizeChanged()
         {
-            if (ActualWidth < 800)
-            {
-                OpenOrCloseChapterList(false, false);
-            }
-            else
-            {
-                OpenOrCloseChapterList(true, false);
-            }
-
+            OpenOrCloseChapterList(ActualWidth >= 800, false);
             UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
@@ -143,118 +146,42 @@ namespace Storylines.Views.Pages
                 if (!ChapterList.closedManually)
                     ChapterList.closedManually = manually;
             }
-            else
+            else if (!ChapterList.closedManually || manually)
             {
-                if (!ChapterList.closedManually || manually)
-                {
-                    chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
-                    mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-                    mainGrid.ColumnDefinitions[1].MinWidth = 220;
-                    closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
+                chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].MinWidth = 220;
+                closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
 
-                    ChapterList.closedManually = false;
-                }
+                ChapterList.closedManually = false;
             }
 
-            // Recalculate textbox width after column layout changes
             UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
         #region DownBar
-        public void UpdateDownBar() => ProjectStatsDialogue.UpdateDownBar();
-
-        private void OnDownBarText_Click(object sender, RoutedEventArgs e) => ProjectStatsDialogue.Open(true);
+        public void UpdateDownBar() => ViewModel.UpdateDownBar();
 
         private void OnCloseChapterListComponent_Click(object sender, RoutedEventArgs e) =>
             OpenOrCloseChapterList(closeOpenChapterListComponentIcon.Symbol == Symbol.ClosePane, true);
         #endregion
 
-        #region Session Timer / Writing Streak
+        #region Session Timer
         public void StartSessionTimer()
         {
-            if (_sessionActive) return;
-
-            _sessionActive = true;
-            _sessionStart = DateTimeOffset.Now;
-            sessionStreakButton.Visibility = Visibility.Visible;
+            int wordCount = GetTotalProjectWordCount();
+            if (!ViewModel.StartSession(wordCount)) return;
 
             _sessionTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            _sessionTimer.Tick += OnSessionTimer_Tick;
+            _sessionTimer.Tick += (s, _) => ViewModel.OnSessionTimerTick();
             _sessionTimer.Start();
-
-            // Seed the word baseline
-            int wordCount = GetTotalProjectWordCount();
-            WritingSessionService.OnSessionStart(wordCount);
-            UpdateStreakBadge();
-        }
-
-        private void OnSessionTimer_Tick(object sender, object e)
-        {
-            var elapsed = DateTimeOffset.Now - _sessionStart;
-            sessionTimerText.Text = $"{(int)elapsed.TotalMinutes:D2}:{elapsed.Seconds:D2}";
-        }
-
-        private void OnSessionStatsUpdated(SessionStatsUpdatedEvent e)
-        {
-            UpdateStreakBadge();
-            UpdateWordGoalBar();
-        }
-
-        private void UpdateStreakBadge()
-        {
-            int streak = WritingSessionService.GetCurrentStreak();
-            int today = WritingSessionService.GetTodayWords();
-            streakText.Text = streak > 0 ? $"🔥 {streak}d · {today}w today" : $"{today}w today";
-        }
-
-        private void OnSessionStreak_Click(object sender, RoutedEventArgs e)
-        {
-            ViewModel.ShowProjectStats();
-        }
-
-        public void UpdateWordGoalBar()
-        {
-            var selectedIndex = _textEditor.SelectedChapterIndex;
-            if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
-            {
-                wordGoalProgressBar.Visibility = Visibility.Collapsed;
-                return;
-            }
-
-            var chapter = _projectState.Chapters[selectedIndex];
-            if (chapter.WordCountGoal == null || chapter.WordCountGoal <= 0)
-            {
-                wordGoalProgressBar.Visibility = Visibility.Collapsed;
-                return;
-            }
-
-            ChapterText.textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string text);
-            int wordCount = text.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
-            double progress = Math.Min(100.0, wordCount * 100.0 / chapter.WordCountGoal.Value);
-
-            wordGoalProgressBar.Value = progress;
-            wordGoalProgressBar.Visibility = Visibility.Visible;
-
-            // Celebrate hitting the goal
-            if (progress >= 100 && !ViewModel.WordGoalCelebrated)
-            {
-                ViewModel.WordGoalCelebrated = true;
-                var res = ResourceLoader.GetForCurrentView();
-                NotificationManager.DisplayInAppNotification(
-                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
-                    res.GetString("wordGoalReachedTitle"),
-                    string.Format(res.GetString("wordGoalReachedMessage"), chapter.Name));
-            }
-            else if (progress < 100)
-            {
-                ViewModel.WordGoalCelebrated = false;
-            }
         }
 
         private int GetTotalProjectWordCount()
         {
+            var projectState = App.GetService<ProjectState>();
             string all = string.Empty;
-            foreach (var chapter in _projectState.Chapters)
+            foreach (var chapter in projectState.Chapters)
             {
                 if (!string.IsNullOrEmpty(chapter.Text))
                 {
@@ -290,13 +217,16 @@ namespace Storylines.Views.Pages
                 chapterNotesPane.LoadNotes();
         }
 
-        public void ShowWelcomePanel(bool show)
-        {
-            ViewModel.ShowWelcomePanel(show);
-        }
+        public void ShowWelcomePanel(bool show) => ViewModel.ShowWelcomePanel(show);
         #endregion
 
         #region Zoom
+        public void SetZoomValue(int value)
+        {
+            if (value >= 13 && value <= 100)
+                textBoxZoomSlider.Value = value;
+        }
+
         private void OnTextBoxZoomSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
             if (ChapterList.listView.SelectedItem != null)
@@ -308,26 +238,23 @@ namespace Storylines.Views.Pages
 
         public void UpdateTextBoxZoom(double sliderValue)
         {
-            double sliderOne = sliderValue / 25;
-            _ = ChapterText.textBoxScrollViewer.ChangeView(null, null, (float)sliderOne);
+            double scale = sliderValue / 25;
+            _ = ChapterText.textBoxScrollViewer.ChangeView(null, null, (float)scale);
 
             double viewportWidth = ChapterText.textBoxScrollViewer.ActualWidth;
-            if (viewportWidth > 0 && sliderOne > 0)
+            if (viewportWidth > 0 && scale > 0)
             {
-                // The textbox width must fill the viewport at the current zoom level.
-                // Clamp to at least the viewport width so the textbox remains clickable
-                // even at small zoom levels.
-                double desiredWidth = viewportWidth * (1 / sliderOne);
+                double desiredWidth = viewportWidth * (1 / scale);
                 ChapterText.textBox.Width = Math.Max(desiredWidth, viewportWidth);
             }
 
-            textBoxZoomText.Text = $"{Math.Round(sliderOne * 100)}%";
+            ViewModel.ZoomLevel = sliderValue;
         }
 
         public void LoadTextBoxZoom()
         {
             textBoxZoomSlider.Value = Convert.ToInt32(ApplicationData.Current.LocalSettings.Values["TextBoxZoomValue"] ?? 25);
-            Current.UpdateTextBoxZoom(textBoxZoomSlider.Value);
+            UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
         private void OnTextBoxZoomText_Click(object sender, RoutedEventArgs e)
@@ -339,7 +266,7 @@ namespace Storylines.Views.Pages
         private void ResetZoomButton_Click(object sender, RoutedEventArgs e)
         {
             textBoxZoomSlider.Value = 25;
-            textBoxZoomTextFlyoutTextBox.Value = textBoxZoomSlider.Value * 4;
+            textBoxZoomTextFlyoutTextBox.Value = 100;
             textBoxZoomTextFlyoutTextBox.Text = "100%";
         }
 

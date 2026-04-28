@@ -20,7 +20,7 @@ namespace Storylines.Views.Dialogs
         {
             InitializeComponent();
             current = this;
-            RequestedTheme = AppView.current.RequestedTheme;
+            RequestedTheme = AppView.current.ActualTheme;
             AppView.currentlyOpenedDialogue = this;
             InitializeClickOutToClose();
         }

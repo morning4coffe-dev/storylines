@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -615,7 +615,7 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Přibližná doba čtení</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Statistiky příběhu</value>
+    <value>Project Statistics</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Statistiky</value>
@@ -926,7 +926,7 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
     <value>Všechny kategorie</value>
   </data>
-  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
     <value>Všechny kapitoly</value>
   </data>
   <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
@@ -1196,19 +1196,19 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Zvolte režim psaní</value>
   </data>
-  <data name="modeEdit" xml:space="preserve">
+  <data name="modeEdit.Text" xml:space="preserve">
     <value>Upravit</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
     <value>Plnohodnotné úpravy se všemi dostupnými nástroji.</value>
   </data>
-  <data name="modeFocus" xml:space="preserve">
+  <data name="modeFocus.Text" xml:space="preserve">
     <value>Soustředění</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
     <value>Nerušené psaní s volitelným časovačem a cílem měření.</value>
   </data>
-  <data name="modeReadOnly" xml:space="preserve">
+  <data name="modeReadOnly.Text" xml:space="preserve">
     <value>Pouze pro čtení</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">
@@ -1504,7 +1504,14 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="saveCopyTitle" xml:space="preserve"><value>Uložit kopii</value></data>
   <data name="saveProjectName" xml:space="preserve"><value>Název projektu:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O královně koblih"</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
 </root>
+
 
 
 

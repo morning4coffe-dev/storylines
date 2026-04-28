@@ -27,6 +27,9 @@ namespace Storylines.Services.Interfaces
         /// <summary>Sets RTF text content (convenience overload).</summary>
         void SetText(string rtfText);
 
+        /// <summary>Gets the length of the currently selected text, or 0 if nothing is selected.</summary>
+        int SelectedTextLength { get; }
+
         /// <summary>Sets keyboard focus to the text editor.</summary>
         void Focus();
 

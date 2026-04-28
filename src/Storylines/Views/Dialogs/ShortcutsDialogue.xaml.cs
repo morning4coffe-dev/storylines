@@ -27,7 +27,7 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = textBoxStats;
-            textBoxStats.RequestedTheme = AppView.current.RequestedTheme;
+            textBoxStats.RequestedTheme = AppView.current.ActualTheme;
         }
 
         public static void Open()

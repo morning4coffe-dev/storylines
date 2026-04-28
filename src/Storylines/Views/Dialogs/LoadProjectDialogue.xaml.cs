@@ -37,7 +37,7 @@ namespace Storylines.Views.Dialogs
                 var loadDialogue = new LoadProjectDialogue();
                 _ = loadDialogue.ShowAsync();
 
-                loadDialogue.RequestedTheme = AppView.current.RequestedTheme;
+                loadDialogue.RequestedTheme = AppView.current.ActualTheme;
             }
             else
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(false);

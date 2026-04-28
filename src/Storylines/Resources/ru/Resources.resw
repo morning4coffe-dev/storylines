@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -611,7 +611,7 @@
     <value>Расчетное время чтения</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Аналитика историй</value>
+    <value>Project Statistics</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Аналитика</value>
@@ -916,7 +916,7 @@
   <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
     <value>Все категории</value>
   </data>
-  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
     <value>Все главы</value>
   </data>
   <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
@@ -1195,19 +1195,19 @@
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Выберите режим письма</value>
   </data>
-  <data name="modeEdit" xml:space="preserve">
+  <data name="modeEdit.Text" xml:space="preserve">
     <value>Редактирование</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
     <value>Полноценное редактирование со всеми доступными инструментами.</value>
   </data>
-  <data name="modeFocus" xml:space="preserve">
+  <data name="modeFocus.Text" xml:space="preserve">
     <value>Фокус</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
     <value>Письмо без отвлечений с необязательным таймером и целью измерения.</value>
   </data>
-  <data name="modeReadOnly" xml:space="preserve">
+  <data name="modeReadOnly.Text" xml:space="preserve">
     <value>Только чтение</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">
@@ -1503,7 +1503,14 @@
   <data name="saveCopyTitle" xml:space="preserve"><value>Сохранить копию</value></data>
   <data name="saveProjectName" xml:space="preserve"><value>Название проекта:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"О лесной королеве"</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
 </root>
+
 
 
 

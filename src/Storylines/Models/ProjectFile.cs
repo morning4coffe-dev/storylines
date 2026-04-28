@@ -3,6 +3,8 @@ using Storylines.Constants;
 using Storylines.Views.Dialogs;
 using System;
 using System.Collections.ObjectModel;
+using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.Storage.AccessCache;
@@ -84,25 +86,32 @@ namespace Storylines.Models
         {
             projectFiles.Clear();
 
-            foreach (AccessListEntry token in StorageApplicationPermissions.FutureAccessList.Entries)
+            foreach (var token in StorageApplicationPermissions.FutureAccessList.Entries.ToList())
             {
-                Task<StorageFile> task = GetProjectFromTokenAsync(token.Token);
-
-                if (await Task.WhenAny(task, Task.Delay(LayoutConstants.ProjectFileLoadTimeoutMs)) == task)
+                try
                 {
-                    StorageFile file = task.Result;
-                    projectFiles.Add(await LoadExistingAsync(file, token.Token));
+                    using var timeout = new CancellationTokenSource(LayoutConstants.ProjectFileLoadTimeoutMs);
+                    var file = await GetProjectFromTokenAsync(token.Token, timeout.Token);
+                    if (file != null)
+                        projectFiles.Add(await LoadExistingAsync(file, token.Token));
                 }
-                else
+                catch (OperationCanceledException)
+                {
                     StorageApplicationPermissions.FutureAccessList.Remove(token.Token);
+                }
+                catch
+                {
+                    StorageApplicationPermissions.FutureAccessList.Remove(token.Token);
+                }
             }
         }
 
-        public static async Task<StorageFile> GetProjectFromTokenAsync(string token)
+        public static async Task<StorageFile> GetProjectFromTokenAsync(string token, CancellationToken cancellationToken = default)
         {
             if (!StorageApplicationPermissions.FutureAccessList.ContainsItem(token))
                 return null;
-            return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token);
+
+            return await StorageApplicationPermissions.FutureAccessList.GetFileAsync(token).AsTask(cancellationToken);
         }
 
         public static bool CheckIfProjectExists(StorageFile file)

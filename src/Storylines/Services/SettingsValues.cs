@@ -72,8 +72,8 @@ namespace Storylines.Services
 
         public static int dailyWordGoal => Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DailyWordGoal] ?? 500);
 
-        public static string editorFontFamily => (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontFamily] as string) ?? "Calibri";
-        public static double editorFontSize => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontSize] ?? 11.0);
+        public static string editorFontFamily => (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontFamily] as string) ?? "Segoe UI";
+        public static double editorFontSize => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontSize] ?? 14.0);
         public static double editorLineSpacing => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorLineSpacing] ?? 1.2);
 
         public static bool experimentalFeaturesEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] ?? false);

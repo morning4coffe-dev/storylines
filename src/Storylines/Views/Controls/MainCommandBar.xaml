@@ -924,6 +924,117 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarSeparator />
+
+                    <AppBarToggleButton x:Name="mainBoldButton"
+                                        x:Uid="boldTextButton"
+                                        x:FieldModifier="public"
+                                        Tag="Bold"
+                                        Icon="Bold"
+                                        CornerRadius="4"
+                                        GotFocus="OnFormattingSurface_GotFocus"
+                                        LostFocus="OnFormattingSurface_LostFocus"
+                                        Click="OnFormatterButton_Click" />
+
+                    <AppBarToggleButton x:Name="mainItalicButton"
+                                        x:Uid="italicTextButton"
+                                        x:FieldModifier="public"
+                                        Tag="Italic"
+                                        Icon="Italic"
+                                        CornerRadius="4"
+                                        GotFocus="OnFormattingSurface_GotFocus"
+                                        LostFocus="OnFormattingSurface_LostFocus"
+                                        Click="OnFormatterButton_Click" />
+
+                    <AppBarToggleButton x:Name="mainUnderlineButton"
+                                        x:Uid="underlineTextButton"
+                                        x:FieldModifier="public"
+                                        Tag="Underline"
+                                        Icon="Underline"
+                                        CornerRadius="4"
+                                        GotFocus="OnFormattingSurface_GotFocus"
+                                        LostFocus="OnFormattingSurface_LostFocus"
+                                        Click="OnFormatterButton_Click" />
+
+                    <AppBarToggleButton x:Name="mainStrikethroughButton"
+                                        x:Uid="strikethroughButton"
+                                        x:FieldModifier="public"
+                                        Tag="Strikethrough"
+                                        CornerRadius="4"
+                                        GotFocus="OnFormattingSurface_GotFocus"
+                                        LostFocus="OnFormattingSurface_LostFocus"
+                                        Click="OnFormatterButton_Click">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon Glyph="&#xEDE0;" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+
+                    <AppBarButton x:Name="mainHighlighterButton"
+                                  x:Uid="highlighterButton"
+                                  x:FieldModifier="public"
+                                  Tag="Highlighter"
+                                  Icon="Highlight"
+                                  CornerRadius="4"
+                                  LabelPosition="Collapsed"
+                                  GotFocus="OnFormattingSurface_GotFocus"
+                                  LostFocus="OnFormattingSurface_LostFocus"
+                                  Click="OnFormatterButton_Click"
+                                  RightTapped="OnMainHighlighterButton_RightTapped">
+                        <Flyout x:Name="mainHighlighterFlyout">
+                            <StackPanel HorizontalAlignment="Stretch"
+                                        Spacing="8">
+                                <TextBlock x:Uid="highlighterFlyout"
+                                           FontWeight="Bold"
+                                           Padding="0,0,0,4" />
+                                <StackPanel HorizontalAlignment="Stretch"
+                                            Orientation="Horizontal"
+                                            Spacing="8">
+                                    <Button Tag="Yellow"
+                                            Height="38"
+                                            Width="42"
+                                            ToolTipService.ToolTip="Yellow"
+                                            AutomationProperties.Name="Yellow highlight"
+                                            Click="OnHighlighterColorButton_Click">
+                                        <Rectangle Fill="#E5C126"
+                                                   Margin="-25" />
+                                    </Button>
+                                    <Button Tag="Red"
+                                            Height="38"
+                                            Width="42"
+                                            ToolTipService.ToolTip="Red"
+                                            AutomationProperties.Name="Red highlight"
+                                            Click="OnHighlighterColorButton_Click">
+                                        <Rectangle Fill="#D61515"
+                                                   Margin="-25" />
+                                    </Button>
+                                    <Button Tag="Green"
+                                            Height="38"
+                                            Width="42"
+                                            ToolTipService.ToolTip="Green"
+                                            AutomationProperties.Name="Green highlight"
+                                            Click="OnHighlighterColorButton_Click">
+                                        <Rectangle Fill="#47CD3D"
+                                                   Margin="-25" />
+                                    </Button>
+                                    <Button Tag="Blue"
+                                            Height="38"
+                                            Width="42"
+                                            ToolTipService.ToolTip="Blue"
+                                            AutomationProperties.Name="Blue highlight"
+                                            Click="OnHighlighterColorButton_Click">
+                                        <Rectangle Fill="#1A41F6"
+                                                   Margin="-25" />
+                                    </Button>
+                                </StackPanel>
+                                <Button Tag="White"
+                                        x:Uid="highlightNone"
+                                        Height="34"
+                                        Width="192"
+                                        Click="OnHighlighterColorButton_Click" />
+                            </StackPanel>
+                        </Flyout>
+                    </AppBarButton>
+
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
                                                          From="8, 0, 0"
@@ -1009,15 +1120,15 @@
                         </AppBarToggleButton.Icon>
                     </AppBarToggleButton>
 
-                    <AppBarButton x:Name="searchReplaceButton"
+                    <AppBarToggleButton x:Name="searchReplaceButton"
                                   x:Uid="searchReplaceButton"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
                                   Click="OnSearchReplaceButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        <AppBarToggleButton.Icon>
+                            <SymbolIcon Symbol="Switch" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
 
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
@@ -1079,7 +1190,7 @@
                                             VerticalContentAlignment="Center"
                                             Margin="4,0,0,0">
                         <Grid CornerRadius="4"
-                              Width="150"
+                              Width="195"
                               Height="44">
                             <Rectangle Fill="LightGray"
                                        Opacity="{ThemeResource ReadAloudHolderOpacity}" />
@@ -1134,20 +1245,37 @@
                                             </FontIcon>
                                         </AppBarButton.Icon>
                                     </AppBarButton>
+                                    <AppBarButton x:Name="nextParagraphReadAloud"
+                                                  CornerRadius="4"
+                                                  Height="38"
+                                                  Width="44"
+                                                  ToolTipService.ToolTip="Next paragraph"
+                                                  AutomationProperties.Name="Next paragraph"
+                                                  Click="OnNextParagraphButton_Click">
+                                        <AppBarButton.Icon>
+                                            <FontIcon Glyph="&#xE893;"
+                                                      RenderTransformOrigin="0.5,-1">
+                                                <FontIcon.RenderTransform>
+                                                    <CompositeTransform ScaleX="0.8"
+                                                                        ScaleY="0.8" />
+                                                </FontIcon.RenderTransform>
+                                            </FontIcon>
+                                        </AppBarButton.Icon>
+                                    </AppBarButton>
                                 </StackPanel>
                                 <muxc:ProgressBar x:Name="readAloudProgressBar"
-                                                  Width="136"
+                                                  Width="180"
                                                   HorizontalAlignment="Left"
                                                   Value="0" />
                             </StackPanel>
                             <animations:Implicit.ShowAnimations>
                                 <animations:SizeAnimation Duration="0:0:0.4"
                                                           From="0, 45"
-                                                          To="145, 45" />
+                                                          To="190, 45" />
                             </animations:Implicit.ShowAnimations>
                             <animations:Implicit.HideAnimations>
                                 <animations:SizeAnimation Duration="0:0:0.4"
-                                                          From="145, 45"
+                                                          From="190, 45"
                                                           To="0, 45" />
                             </animations:Implicit.HideAnimations>
                         </Grid>

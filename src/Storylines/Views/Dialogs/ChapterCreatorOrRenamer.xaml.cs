@@ -28,7 +28,7 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = chapterCreator;
-            chapterCreator.RequestedTheme = AppView.current.RequestedTheme;
+            chapterCreator.RequestedTheme = AppView.current.ActualTheme;
         }
 
         public static void Open(Chapter chapter, bool doubleTap)
@@ -61,18 +61,15 @@ namespace Storylines.Views.Dialogs
 
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            var projectState = App.GetService<ProjectState>();
+            var chapterWorkflow = App.GetService<Storylines.Services.Interfaces.IChapterWorkflowService>();
 
             switch (currentTask)
             {
                 case Task.Create:
-                    var itemID = MainPage.ChapterList.listView.Items.Count;
-                    projectState.AddChapterFromCreator(projectState.Chapters.Count + 1, chapterNameBox.Text);
-                    MainPage.ChapterList.CheckForEmptyList();
-                    MainPage.ChapterList.listView.SelectedIndex = itemID;
+                    chapterWorkflow.CreateChapterFromInput(chapterNameBox.Text);
                     break;
                 case Task.Rename:
-                    projectState.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
+                    chapterWorkflow.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
                     break;
             }
             chapterCreator.Hide();

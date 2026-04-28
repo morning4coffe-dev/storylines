@@ -1,4 +1,5 @@
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Views.Pages;
@@ -87,10 +88,10 @@ namespace Storylines.Helpers
 
         public static void DisplayReviewPrompt()
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review status", "Shown");
+            App.TryGetService<ITelemetryService>()?.TrackReviewPromptDisplayed("review_timer");
             AppView.current.reviewRequestInfoBar.IsOpen = true;
             AppView.current.reviewRequestInfoBar.Visibility = Visibility.Visible;
-            AppView.current.reviewRequestInfoBar.RequestedTheme = AppView.current.RequestedTheme;
+            AppView.current.reviewRequestInfoBar.RequestedTheme = AppView.current.ActualTheme;
 
             DisplayBadgeNotification("attention");
         }
@@ -99,7 +100,7 @@ namespace Storylines.Helpers
         {
             AppView.current.reviewRequestThankYouInfoBar.IsOpen = true;
             AppView.current.reviewRequestThankYouInfoBar.Visibility = Visibility.Visible;
-            AppView.current.reviewRequestThankYouInfoBar.RequestedTheme = AppView.current.RequestedTheme;
+            AppView.current.reviewRequestThankYouInfoBar.RequestedTheme = AppView.current.ActualTheme;
         }
 
         private static DispatcherTimer InAppNotificationTimer;
@@ -112,7 +113,7 @@ namespace Storylines.Helpers
             AppView.current.alertNotificationInfoBar.Severity = severity;
             AppView.current.alertNotificationInfoBar.Title = text;
 
-            AppView.current.alertNotificationInfoBar.RequestedTheme = AppView.current.RequestedTheme;
+            AppView.current.alertNotificationInfoBar.RequestedTheme = AppView.current.ActualTheme;
 
             if (longText.Length < 1)
                 AppView.current.alertNotificationInfoBarTextStack.Visibility = Visibility.Collapsed;
@@ -224,10 +225,9 @@ namespace Storylines.Helpers
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueStay"),
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.Current.RequestedTheme,
+                RequestedTheme = AppView.current.ActualTheme,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
-            leaveDialog.RequestedTheme = AppView.current.ActualTheme;
 
             ContentDialogResult result = await leaveDialog.ShowAsync();
 
@@ -255,10 +255,9 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDontApplyChanges"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.Current.RequestedTheme,
+                RequestedTheme = AppView.current.ActualTheme,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
-            leaveDialog.RequestedTheme = AppView.current.ActualTheme;
 
             ContentDialogResult result = await leaveDialog.ShowAsync();
 
@@ -289,10 +288,9 @@ namespace Storylines.Helpers
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueAddNew"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.Current.RequestedTheme,
+                RequestedTheme = AppView.current.ActualTheme,
             };
             AppView.currentlyOpenedDialogue = noCharactersDialog;
-            noCharactersDialog.RequestedTheme = AppView.current.ActualTheme;
 
             ContentDialogResult result = await noCharactersDialog.ShowAsync();
 

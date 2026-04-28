@@ -1,8 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.Models;
+using System.Collections.Specialized;
 using System.Collections.ObjectModel;
 using Windows.UI.Xaml;
 
@@ -11,7 +13,10 @@ namespace Storylines.ViewModels
     public partial class ChaptersListViewModel : ObservableObject
     {
         private readonly ProjectState _projectState;
-        private readonly IDialogService _dialogs;
+        private readonly EventAggregator _events;
+        private readonly ITextEditorService _textEditor;
+        private readonly IChapterWorkflowService _chapterWorkflow;
+        private readonly CommandBarViewModel _commandBarViewModel;
 
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
@@ -41,58 +46,166 @@ namespace Storylines.ViewModels
 
         public bool ClosedManually { get; set; }
 
-        public ChaptersListViewModel(ProjectState projectState = null, IDialogService dialogs = null)
+        public ChaptersListViewModel(
+            ProjectState projectState = null,
+            IDialogService dialogs = null,
+            EventAggregator events = null,
+            ITextEditorService textEditor = null,
+            CommandBarViewModel commandBarViewModel = null,
+            IChapterWorkflowService chapterWorkflow = null)
         {
             _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
-            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
-            UpdateListState();
+            var dialogService = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
+            _events = events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator();
+            _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
+            _chapterWorkflow = chapterWorkflow
+                ?? App.TryGetService<IChapterWorkflowService>()
+                ?? new ChapterWorkflowService(dialogService, _projectState, _textEditor);
+            _commandBarViewModel = commandBarViewModel
+                ?? App.TryGetService<CommandBarViewModel>()
+                ?? new CommandBarViewModel(dialogService, _events, _textEditor);
+
+            _projectState.Chapters.CollectionChanged += OnChaptersCollectionChanged;
+            _projectState.Characters.CollectionChanged += OnCharactersCollectionChanged;
+
+            RefreshState();
         }
 
         partial void OnSelectedChapterChanged(Chapter value)
         {
-            UpdateListState();
+            var selectedIndex = value != null ? _projectState.Chapters.IndexOf(value) : -1;
+            if (SelectedIndex != selectedIndex)
+                SelectedIndex = selectedIndex;
+        }
+
+        partial void OnSelectedIndexChanged(int value)
+        {
+            var chapter = value >= 0 && value < _projectState.Chapters.Count
+                ? _projectState.Chapters[value]
+                : null;
+
+            if (!ReferenceEquals(SelectedChapter, chapter))
+                SelectedChapter = chapter;
+
+            ApplyChapterSelection(chapter, value);
         }
 
         partial void OnCanAddChanged(bool value)
         {
-            IsAddButtonEnabled = value;
-            UpdateListState();
+            RefreshState();
         }
 
-        public void UpdateListState()
+        private void OnChaptersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+        {
+            if (_projectState.Chapters.Count == 0)
+            {
+                if (SelectedIndex != -1)
+                {
+                    SelectedIndex = -1;
+                    return;
+                }
+
+                RefreshState();
+                return;
+            }
+
+            if (SelectedIndex >= _projectState.Chapters.Count)
+            {
+                SelectedIndex = _projectState.Chapters.Count - 1;
+                return;
+            }
+
+            if (SelectedIndex >= 0)
+            {
+                var chapter = _projectState.Chapters[SelectedIndex];
+                if (!ReferenceEquals(SelectedChapter, chapter))
+                {
+                    SelectedChapter = chapter;
+                    ApplyChapterSelection(chapter, SelectedIndex);
+                    return;
+                }
+            }
+
+            RefreshState();
+        }
+
+        private void OnCharactersCollectionChanged(object sender, NotifyCollectionChangedEventArgs e)
+            => RefreshState();
+
+        private void ApplyChapterSelection(Chapter chapter, int selectedIndex)
+        {
+            if (chapter != null)
+            {
+                using (TimeTravelChapter.SuppressRecording())
+                {
+                    _textEditor?.LoadChapterContent(chapter);
+                }
+
+                _events.Publish(new ChapterSelectedEvent
+                {
+                    SelectedIndex = selectedIndex,
+                    HasSelection = true
+                });
+                _events.Publish(new ChapterToolsStateEvent { Enabled = true });
+                _textEditor?.Focus();
+                _events.Publish(new RefreshNotesPaneEvent());
+            }
+            else
+            {
+                _events.Publish(new ChapterSelectedEvent
+                {
+                    SelectedIndex = -1,
+                    HasSelection = false
+                });
+                _events.Publish(new ChapterToolsStateEvent { Enabled = false });
+            }
+
+            RefreshState();
+        }
+
+        private void RefreshState()
         {
             NoChaptersPlaceholderVisibility = _projectState.Chapters.Count > 0 ? Visibility.Collapsed : Visibility.Visible;
             IsExportEnabled = _projectState.Chapters.Count > 0 || _projectState.Characters.Count > 0;
             IsSaveEnabled = _projectState.Chapters.Count > 0;
             IsSaveCopyEnabled = _projectState.Chapters.Count > 0;
             IsAddButtonEnabled = CanAdd;
+
+            _commandBarViewModel.IsExportEnabled = IsExportEnabled;
+            _commandBarViewModel.IsSaveEnabled = IsSaveEnabled;
+            _commandBarViewModel.IsSaveCopyEnabled = IsSaveCopyEnabled;
+            _commandBarViewModel.IsChapterAddEnabled = IsAddButtonEnabled;
         }
 
         [RelayCommand]
-        private void AddChapter()
+        private void OpenCreateChapterDialog()
         {
-            _dialogs.OpenChapterCreator();
+            _chapterWorkflow.OpenCreateChapterDialog();
         }
 
         [RelayCommand]
-        private void RenameChapter(string token)
+        private void CloseChapterList()
         {
-            if (!string.IsNullOrEmpty(token))
+            _events.Publish(new ToggleChapterListEvent
             {
-                var chapter = _projectState.FindChapter(token);
-                if (chapter != null)
-                    _dialogs.OpenChapterRenamer(chapter);
-            }
+                Open = false,
+                Manually = true
+            });
         }
 
-        [RelayCommand]
-        private void RemoveChapter(string token)
-        {
-            if (!string.IsNullOrEmpty(token))
-            {
-                _projectState.RemoveChapter(token);
-                UpdateListState();
-            }
-        }
+        public void OpenRenameChapterDialog(string token, bool doubleTap = false)
+            => _chapterWorkflow.OpenRenameChapterDialog(token, doubleTap);
+
+        public void DeleteChapter(string token)
+            => _chapterWorkflow.DeleteChapter(token);
+
+        public void OpenChapterTagsDialog(string token)
+            => _chapterWorkflow.OpenChapterTagsDialog(token);
+
+        public void SetChapterStatus(string token, ChapterStatus status)
+            => _chapterWorkflow.SetChapterStatus(token, status);
+
+        public void ReorderChapter(string token, int newPosition, int oldPosition)
+            => _chapterWorkflow.ReorderChapter(token, newPosition, oldPosition);
     }
 }

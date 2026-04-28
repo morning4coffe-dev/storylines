@@ -79,15 +79,7 @@ namespace Storylines.ViewModels
         private void ToggleAutosave()
         {
             if (IsAutosaveChecked)
-            {
-                if (SaveSystem.currentProject?.file == null)
-                {
-                    // Can't autosave without a file — revert the toggle
-                    IsAutosaveChecked = false;
-                    return;
-                }
                 AutosaveService.Enable();
-            }
             else
                 AutosaveService.Disable();
         }

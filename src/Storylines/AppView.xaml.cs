@@ -66,6 +66,8 @@ namespace Storylines
             if (SettingsValues.autosaveEnabled)
                 AutosaveService.Enable();
 
+            RecoveryService.Start();
+
             Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
         }
@@ -85,7 +87,7 @@ namespace Storylines
         {
             _textEditor.Clear();
             _projectState.Clear();
-            MainPage.Current.EnableOrDisableChapterTools(false);
+            _events.Publish(new ChapterToolsStateEvent { Enabled = false });
         }
 
         public void UsingWindows10()
@@ -107,16 +109,16 @@ namespace Storylines
         #region Review and Notifications
         private void OnRateNowButton_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Rate now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "rate_now");
 
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
-            _ = MicrosoftStoreAndAppCenterFunctions.PromptUserToRateApp();
+            _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("review_infobar");
         }
 
         private void OnRateNotNow_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Not now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -125,7 +127,7 @@ namespace Storylines
 
         private void OnRateNeverShowAgain_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Never show again");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "never_show_again");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NeverShowAgain;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -134,7 +136,7 @@ namespace Storylines
 
         private void OnRateNotNow_CloseButtonClick(InfoBar sender, object args)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Not now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -211,12 +213,12 @@ namespace Storylines
                     bool wasFinal = modeService.Current.CanLeave;
                     if (wasFinal)
                     {
-                        MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(true);
+                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(true);
                         modeService.Deactivate();
                     }
                     else
                     {
-                        MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(false);
+                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(false);
                         _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
                     }
                 }

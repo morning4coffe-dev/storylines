@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -621,7 +621,7 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>Tempo di lettura stimato</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Storia analitica</value>
+    <value>Project Statistics</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Analisi</value>
@@ -926,7 +926,7 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
     <value>Tutte le categorie</value>
   </data>
-  <data name="allChaptersScopeToggle.Header" xml:space="preserve">
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
     <value>Tutti i capitoli</value>
   </data>
   <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
@@ -1196,19 +1196,19 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Scegli una modalità di scrittura</value>
   </data>
-  <data name="modeEdit" xml:space="preserve">
+  <data name="modeEdit.Text" xml:space="preserve">
     <value>Modifica</value>
   </data>
   <data name="modeEditDescription" xml:space="preserve">
     <value>Esperienza di modifica completa con tutti gli strumenti disponibili.</value>
   </data>
-  <data name="modeFocus" xml:space="preserve">
+  <data name="modeFocus.Text" xml:space="preserve">
     <value>Concentrazione</value>
   </data>
   <data name="modeFocusDescription" xml:space="preserve">
     <value>Scrittura senza distrazioni con timer opzionale e obiettivo di misurazione.</value>
   </data>
-  <data name="modeReadOnly" xml:space="preserve">
+  <data name="modeReadOnly.Text" xml:space="preserve">
     <value>Sola lettura</value>
   </data>
   <data name="modeReadOnlyDescription" xml:space="preserve">
@@ -1504,7 +1504,14 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="saveCopyTitle" xml:space="preserve"><value>Salva Copia</value></data>
   <data name="saveProjectName" xml:space="preserve"><value>Nome progetto:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"About The Queen of Donuts"</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
 </root>
+
 
 
 

@@ -63,7 +63,7 @@ namespace Storylines.Views.Pages
             _events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
 
             // Listen for character selection events from TimeTravelCharacter
-            _events.Subscribe<ChapterSelectedEvent>(e =>
+            _events.Subscribe<CharacterSelectedEvent>(e =>
             {
                 if (e.HasSelection && e.SelectedIndex >= 0 && e.SelectedIndex < _projectState.Characters.Count)
                 {
@@ -386,7 +386,15 @@ namespace Storylines.Views.Pages
 
         private void LoadTraitsIntoTokenBox(string traitsText)
         {
-            traitsBox.Items.Clear();
+            try
+            {
+                traitsBox.Items.Clear();
+            }
+            catch (Exception)
+            {
+                // TokenizingTextBox can throw E_UNEXPECTED when clearing during state transitions
+            }
+
             if (!string.IsNullOrWhiteSpace(traitsText))
                 foreach (var t in traitsText.Split(',', StringSplitOptions.RemoveEmptyEntries))
                 {

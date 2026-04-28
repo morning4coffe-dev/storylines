@@ -3,6 +3,7 @@ using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Serializers;
 using Storylines.Models;
+using Storylines.ViewModels;
 using Storylines.Views.Controls;
 using System;
 using System.Collections.Generic;
@@ -49,6 +50,8 @@ namespace Storylines.Services
 
             if (currentProject.file != null)
             {
+                NotificationManager.DisplayMainProgressBar(true);
+
                 if (currentProject.file.FileType == ".srl")
                 {
                     var projectData = CollectProjectData();
@@ -62,7 +65,6 @@ namespace Storylines.Services
                     await WriteToFileAsync(txt);
                 }
 
-                NotificationManager.DisplayMainProgressBar(true);
                 TimeTravelSystem.unSavedProgress = false;
             }
             else
@@ -100,7 +102,12 @@ namespace Storylines.Services
             _ = SaveAndExitOrClearAllAsync(exit);
         }
 
-        private static ProjectData CollectProjectData()
+        internal static void CancelPendingAfterSaveAction()
+        {
+            afterSave = AfterSave.DoNothing;
+        }
+
+        internal static ProjectData CollectProjectData()
         {
             var data = new ProjectData
             {
@@ -205,6 +212,7 @@ namespace Storylines.Services
             try
             {
                 await FileService.WriteAsync(currentProject.file, fileContent);
+                await RecoveryService.ClearRecoveryDataAsync();
                 ToDoAfterSave();
             }
             catch (Exception ex)
@@ -404,8 +412,11 @@ namespace Storylines.Services
 
         private static void LoadVariables(ProjectData projectData)
         {
-            ChaptersList.selectedIndex = projectData.LastOpenedChapter;
-            TextEditor.SelectedChapterIndex = ChaptersList.selectedIndex;
+            var chaptersListViewModel = App.TryGetService<ChaptersListViewModel>();
+            if (chaptersListViewModel != null)
+                chaptersListViewModel.SelectedIndex = projectData.LastOpenedChapter;
+            else
+                TextEditor.SelectedChapterIndex = projectData.LastOpenedChapter;
         }
 
         private static void Loaded()
