@@ -197,7 +197,7 @@ namespace Storylines.ViewModels
         {
             if (SelectedCharacter != null && _characterBeforeChange != null)
             {
-                TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Changed, SelectedCharacter);
+                TimeTravelCharacter.RecordChanged(_characterBeforeChange);
                 UnappliedChanges = false;
 
                 SelectedCharacter.Name = NameText;

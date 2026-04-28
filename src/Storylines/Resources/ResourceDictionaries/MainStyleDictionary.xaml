@@ -14,9 +14,6 @@
 
             <SolidColorBrush x:Key="DialogueWindowBackground" Color="#E8E8E8"/>
 
-            <AcrylicBrush x:Key="LayerFillColorDefaultBrush" BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="0.78" Opacity="1" FallbackColor="#F7F7F7"/>
-            <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#F6F6F6"/>
-
             <SolidColorBrush x:Key="AppTitleColor" Color="{ThemeResource SystemAccentColorDark2}"/>
 
             <Thickness x:Key="ElementBorderThickness">0.5</Thickness>
@@ -36,9 +33,6 @@
 
             <SolidColorBrush x:Key="DialogueWindowBackground" Color="#0C0C0C"/>
 
-            <AcrylicBrush x:Key="LayerFillColorDefaultBrush" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.72" Opacity="1" FallbackColor="#141414"/>
-            <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="#0F0F0F"/>
-
             <SolidColorBrush x:Key="AppTitleColor" Color="{ThemeResource SystemAccentColorLight2}"/>
 
             <Thickness x:Key="ElementBorderThickness">0</Thickness>
@@ -57,9 +51,6 @@
             <SolidColorBrush x:Key="ColouredTextForeground" Color="Black"/>
 
             <SolidColorBrush x:Key="DialogueWindowBackground" Color="Black"/>
-
-            <SolidColorBrush x:Key="LayerFillColorDefaultBrush" Color="Black"/>
-            <SolidColorBrush x:Key="LayerFillColorAltBrush" Color="Black"/>
 
             <SolidColorBrush x:Key="AppTitleColor" Color="{ThemeResource SystemAccentColor}"/>
 

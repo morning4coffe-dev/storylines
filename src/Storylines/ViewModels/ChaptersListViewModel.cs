@@ -39,7 +39,6 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isAddButtonEnabled = true;
 
-        public bool SwitchedChapters { get; set; }
         public bool ClosedManually { get; set; }
 
         public ChaptersListViewModel(ProjectState projectState = null, IDialogService dialogs = null)

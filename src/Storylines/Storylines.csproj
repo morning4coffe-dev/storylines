@@ -211,6 +211,7 @@
     <Compile Include="Helpers\ShortcutManager.cs" />
     <Compile Include="DataStructures\PartialStack.cs" />
     <Compile Include="Helpers\TimeTravelSystem.cs" />
+    <Compile Include="Helpers\UndoRedoManager.cs" />
     <Compile Include="Services\Modes\IEditorMode.cs" />
     <Compile Include="Services\Modes\ModeChromeConfig.cs" />
     <Compile Include="Services\Modes\EditorModeService.cs" />
@@ -592,18 +593,7 @@
     <PRIResource Include="Resources\ru\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-    <PRIResource Include="Resources\en\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\cs\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\ru\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\zh-CN\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\en\ExportDialogue.resw" />
-    <PRIResource Include="Resources\cs\ExportDialogue.resw" />
-    <PRIResource Include="Resources\ru\ExportDialogue.resw" />
-    <PRIResource Include="Resources\zh-CN\ExportDialogue.resw" />
-    <PRIResource Include="Resources\en\SaveDialogue.resw" />
-    <PRIResource Include="Resources\cs\SaveDialogue.resw" />
-    <PRIResource Include="Resources\ru\SaveDialogue.resw" />
-    <PRIResource Include="Resources\zh-CN\SaveDialogue.resw" />
+
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">
@@ -612,18 +602,9 @@
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\Storylines.it.xlf" />
-    <PRIResource Include="Resources\it\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\it\SaveDialogue.resw" />
     <PRIResource Include="Resources\it\Resources.resw" />
-    <PRIResource Include="Resources\it\ExportDialogue.resw" />
-    <PRIResource Include="Resources\hi-IN\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\hi-IN\SaveDialogue.resw" />
     <PRIResource Include="Resources\hi-IN\Resources.resw" />
-    <PRIResource Include="Resources\hi-IN\ExportDialogue.resw" />
-    <PRIResource Include="Resources\pl\ShortcutsDialogue.resw" />
-    <PRIResource Include="Resources\pl\SaveDialogue.resw" />
     <PRIResource Include="Resources\pl\Resources.resw" />
-    <PRIResource Include="Resources\pl\ExportDialogue.resw" />
   </ItemGroup>
   <ItemGroup>
     <XliffResource Include="MultilingualResources\Storylines.cs.xlf" />

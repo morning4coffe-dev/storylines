@@ -49,7 +49,6 @@ namespace Storylines.Views.Pages.Settings
         {
             if (!loading)
             {
-                MainPage.ChapterList.switchedChapters = TimeTravelSystem.unSavedProgress != true;
                 ThemeSettings.ChangeTheme(themeComboBox.SelectedIndex, ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
                 //SettingsPage.settings.SwitchPage("Personalize");
             }

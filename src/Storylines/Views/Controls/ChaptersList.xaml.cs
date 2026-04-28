@@ -30,12 +30,6 @@ namespace Storylines.Views.Controls
 
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
-        public bool switchedChapters
-        {
-            get => ViewModel.SwitchedChapters;
-            set => ViewModel.SwitchedChapters = value;
-        }
-
         public bool closedManually
         {
             get => ViewModel.ClosedManually;
@@ -176,12 +170,13 @@ namespace Storylines.Views.Controls
         {
             if (listView.SelectedItem != null)
             {
-                if (!reordering)
-                    switchedChapters = true;
                 selectedIndex = listView.SelectedIndex;
 
                 var chapter = _projectState.FindChapter((listView.SelectedItem as Chapter).Token);
-                _textEditor.LoadChapterContent(chapter);
+                using (TimeTravelChapter.SuppressRecording())
+                {
+                    _textEditor.LoadChapterContent(chapter);
+                }
 
                 MainPage.ChapterText.ChangeTextColor();
                 _events.Publish(new ChapterToolsStateEvent { Enabled = true });

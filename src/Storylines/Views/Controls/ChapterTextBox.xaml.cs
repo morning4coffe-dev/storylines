@@ -113,17 +113,23 @@ namespace Storylines.Views.Controls
         #region TextBox
         private void OnTextBox_TextChanged(object sender, RoutedEventArgs e)
         {
+            // During undo/redo the action manages model state directly.
+            // Skip to avoid RTF round-trip differences from creating
+            // ghost entries or corrupting the snapshot chain.
+            if (TimeTravelChapter.IsExecuting) return;
+
             var selectedIndex = _textEditor.SelectedChapterIndex;
             if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
+                var oldText = _projectState.Chapters[selectedIndex].Text;
 
-                if (_projectState.Chapters[selectedIndex].Text != txt && !searchingInTextBox)
+                if (oldText != txt && !searchingInTextBox)
                 {
                     _projectState.Chapters[selectedIndex].Text = txt;
 
                     MainPage.Current.UpdateDownBar();
-                    TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Text, _projectState.Chapters[selectedIndex], 0);
+                    TimeTravelChapter.RecordTextChange(_projectState.Chapters[selectedIndex].Token, oldText, txt);
 
                     App.TryGetService<EditorModeService>()?.Current.OnTextChanged();
 

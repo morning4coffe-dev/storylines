@@ -22,7 +22,7 @@ namespace Storylines.Models
         public void AddChapter(string name)
         {
             var ch = AddExistingChapter(name, Guid.NewGuid().ToString(), string.Empty);
-            TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Added, ch, 0);
+            TimeTravelChapter.RecordAdded(ch, Chapters.Count - 1);
         }
 
         public void AddChapterFromCreator(int i, string txt)
@@ -56,7 +56,7 @@ namespace Storylines.Models
             {
                 if (Chapters[i].Token == token)
                 {
-                    TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Name, Chapters[i], 0);
+                    TimeTravelChapter.RecordRename(Chapters[i], newName);
                     Chapters[i].Name = newName;
                 }
             }
@@ -68,7 +68,7 @@ namespace Storylines.Models
             {
                 if (Chapters[i].Token == token)
                 {
-                    TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Removed, Chapters[i], Chapters.IndexOf(Chapters[i]));
+                    TimeTravelChapter.RecordRemoved(Chapters[i], i);
 
                     // Clean up pinboard connections referencing this chapter
                     int removedIndex = i;
@@ -132,7 +132,7 @@ namespace Storylines.Models
         public void ReorderChapter(string token, int newPosition, int lastPosition)
         {
             Chapter chapter = FindChapter(token);
-            TimeTravelChapter.SomethingChanged(TimeTravelChapter.Changed.Reordered, chapter, lastPosition);
+            TimeTravelChapter.RecordReorder(token, lastPosition, newPosition);
 
             _ = Chapters.Remove(chapter);
             Chapters.Insert(newPosition, chapter);
@@ -206,7 +206,7 @@ namespace Storylines.Models
             Character ch = new Character() { Name = name, Description = description, Picture = new CharacterPicture(), Traits = new List<string>() };
             ch.SetToken(Guid.NewGuid().ToString());
             Characters.Add(ch);
-            TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Added, ch);
+            TimeTravelCharacter.RecordAdded(ch);
             return ch;
         }
 
@@ -216,7 +216,7 @@ namespace Storylines.Models
             {
                 if (Characters[i].Token == token)
                 {
-                    TimeTravelCharacter.SomethingChanged(TimeTravelCharacter.Changed.Removed, Characters[i]);
+                    TimeTravelCharacter.RecordRemoved(Characters[i]);
                     _ = Characters.Remove(Characters[i]);
                     break;
                 }

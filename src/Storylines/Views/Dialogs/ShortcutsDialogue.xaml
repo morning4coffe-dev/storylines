@@ -5,7 +5,7 @@
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:customcontrols="using:Storylines.Views.Controls"
                xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-               xmlns:resources="using:Storylines.Resources"
+               xmlns:helpers="using:Storylines.Helpers"
                mc:Ignorable="d"
                Closed="ContentDialog_Closed"
                CornerRadius="8"
@@ -33,7 +33,7 @@
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="42" />
             </Grid.ColumnDefinitions>
-            <TextBlock Text="{x:Bind resources:ShortcutsDialogue.Title}"
+            <TextBlock x:Uid="shortcutsDialogueTitle"
                        Style="{StaticResource DialogueWindowHeaderStyle}"
                        FontSize="25" />
 
@@ -56,86 +56,68 @@
         <ScrollViewer Grid.Row="2">
             <StackPanel Spacing="8">
                 <!--Global-->
-                <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
-                               Header="{x:Bind resources:ShortcutsDialogue.Global}"
+                <muxc:Expander x:Uid="shortcutsGlobalExpander"
+                               Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch"
                                IsExpanded="True">
-                    <StackPanel HorizontalAlignment="Stretch"
-                                Spacing="8">
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Save}"
-                                                            UseControl="True"
-                                                            Shortcut="S" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.SaveCopy}"
-                                                            UseControl="True"
-                                                            UseShift="True"
-                                                            Shortcut="S" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Export}"
-                                                            UseControl="True"
-                                                            Shortcut="E" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Undo}"
-                                                            UseControl="True"
-                                                            Shortcut="Z" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Redo}"
-                                                            UseControl="True"
-                                                            Shortcut="Y" />
-                    </StackPanel>
+                    <ItemsControl ItemsSource="{x:Bind GlobalShortcuts}"
+                                  HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="helpers:ShortcutDefinition">
+                                <customcontrols:ShortcutLineControl Description="{x:Bind Description}"
+                                                                    UseControl="{x:Bind UseCtrl}"
+                                                                    UseShift="{x:Bind UseShift}"
+                                                                    Shortcut="{x:Bind KeyDisplayName}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </muxc:Expander>
                 <!--MainPage-->
-                <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
-                               Header="{x:Bind resources:ShortcutsDialogue.MainPage}"
+                <muxc:Expander x:Uid="shortcutsMainPageExpander"
+                               Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch">
-                    <StackPanel HorizontalAlignment="Stretch"
-                                Spacing="8">
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.AddChapter}"
-                                                            UseControl="True"
-                                                            Shortcut="Q" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.RemoveChapter}"
-                                                            UseControl="True"
-                                                            Shortcut="Del" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ChapterAbove}"
-                                                            UseControl="True"
-                                                            Shortcut="PageUp" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ChapterBelow}"
-                                                            UseControl="True"
-                                                            Shortcut="PageDown" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.ReadAloud}"
-                                                            UseControl="True"
-                                                            Shortcut="R" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Search}"
-                                                            UseControl="True"
-                                                            Shortcut="F" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Bold}"
-                                                            UseControl="True"
-                                                            UseShift="True"
-                                                            Shortcut="B" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Italic}"
-                                                            UseControl="True"
-                                                            UseShift="True"
-                                                            Shortcut="I" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Underline}"
-                                                            UseControl="True"
-                                                            UseShift="True"
-                                                            Shortcut="U" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.Strikethrough}"
-                                                            UseControl="True"
-                                                            UseShift="True"
-                                                            Shortcut="T" />
-                        <!--<customcontrols:ShortcutLineControl Description="{x:Bind RemoveChapter}" Shortcut="Enter"/>????-->
-                    </StackPanel>
+                    <ItemsControl ItemsSource="{x:Bind MainPageShortcuts}"
+                                  HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="helpers:ShortcutDefinition">
+                                <customcontrols:ShortcutLineControl Description="{x:Bind Description}"
+                                                                    UseControl="{x:Bind UseCtrl}"
+                                                                    UseShift="{x:Bind UseShift}"
+                                                                    Shortcut="{x:Bind KeyDisplayName}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </muxc:Expander>
                 <!--CharactersPage-->
-                <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
-                               Header="{x:Bind resources:ShortcutsDialogue.CharactersPage}"
+                <muxc:Expander x:Uid="shortcutsCharactersExpander"
+                               Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch">
-                    <StackPanel HorizontalAlignment="Stretch"
-                                Spacing="8">
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.AddCharacter}"
-                                                            UseControl="True"
-                                                            Shortcut="Q" />
-                        <customcontrols:ShortcutLineControl Description="{x:Bind resources:ShortcutsDialogue.RemoveCharacter}"
-                                                            UseControl="True"
-                                                            Shortcut="Del" />
-                    </StackPanel>
+                    <ItemsControl ItemsSource="{x:Bind CharactersPageShortcuts}"
+                                  HorizontalAlignment="Stretch">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <StackPanel Spacing="8" />
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate x:DataType="helpers:ShortcutDefinition">
+                                <customcontrols:ShortcutLineControl Description="{x:Bind Description}"
+                                                                    UseControl="{x:Bind UseCtrl}"
+                                                                    UseShift="{x:Bind UseShift}"
+                                                                    Shortcut="{x:Bind KeyDisplayName}" />
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
                 </muxc:Expander>
             </StackPanel>
         </ScrollViewer>

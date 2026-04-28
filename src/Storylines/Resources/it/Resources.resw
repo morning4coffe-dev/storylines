@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1460,6 +1460,50 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
     <value>Annulla collegamento</value>
   </data>
+  <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Scorciatoie da tastiera</value></data>
+  <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Globale</value></data>
+  <data name="shortcutsMainPageExpander.Header" xml:space="preserve"><value>Pagina principale</value></data>
+  <data name="shortcutsCharactersExpander.Header" xml:space="preserve"><value>Pagina caratteri</value></data>
+  <data name="shortcutSave" xml:space="preserve"><value>Salva</value></data>
+  <data name="shortcutSaveCopy" xml:space="preserve"><value>Salva copia</value></data>
+  <data name="shortcutExport" xml:space="preserve"><value>Esporta</value></data>
+  <data name="shortcutUndo" xml:space="preserve"><value>Annulla ultima modifica</value></data>
+  <data name="shortcutRedo" xml:space="preserve"><value>Ripristina ultima modifica</value></data>
+  <data name="shortcutOpenSettings" xml:space="preserve"><value>Apri impostazioni</value></data>
+  <data name="shortcutAddChapter" xml:space="preserve"><value>Aggiungi capitolo</value></data>
+  <data name="shortcutRemoveChapter" xml:space="preserve"><value>Rimuovi capitolo</value></data>
+  <data name="shortcutChapterAbove" xml:space="preserve"><value>Capitolo superiore</value></data>
+  <data name="shortcutChapterBelow" xml:space="preserve"><value>Capitolo inferiore</value></data>
+  <data name="shortcutReadAloud" xml:space="preserve"><value>Read aloud</value></data>
+  <data name="shortcutSearch" xml:space="preserve"><value>Cerca</value></data>
+  <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Trova e sostituisci</value></data>
+  <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Attiva/disattiva modalità dialogo</value></data>
+  <data name="shortcutBold" xml:space="preserve"><value>Grassetto</value></data>
+  <data name="shortcutItalic" xml:space="preserve"><value>Corsivo</value></data>
+  <data name="shortcutUnderline" xml:space="preserve"><value>Sottolinea</value></data>
+  <data name="shortcutStrikethrough" xml:space="preserve"><value>Barrato</value></data>
+  <data name="shortcutAddCharacter" xml:space="preserve"><value>Aggiungi carattere</value></data>
+  <data name="shortcutRemoveCharacter" xml:space="preserve"><value>Rimuovi carattere</value></data>
+  <data name="shortcutToggleEditMode" xml:space="preserve"><value>Attiva/disattiva modalità modifica</value></data>
+  <data name="exportTitle" xml:space="preserve"><value>Esporta</value></data>
+  <data name="exportOptionChapters" xml:space="preserve"><value>Capitoli</value></data>
+  <data name="exportOptionCharacters" xml:space="preserve"><value>Caratteri</value></data>
+  <data name="exportOptionDialogues" xml:space="preserve"><value>Dialoghi</value></data>
+  <data name="exportFileNameCollisionError" xml:space="preserve"><value>Questo file esiste già! Cambiare il nome o la posizione, altrimenti il file verrà sostituito.</value></data>
+  <data name="exportFileName" xml:space="preserve"><value>Nome file:</value></data>
+  <data name="exportFileNamePlaceholder" xml:space="preserve"><value>"la-regina-delle-ciambelle-export"</value></data>
+  <data name="exportFileLocation" xml:space="preserve"><value>Posizione del file:</value></data>
+  <data name="exportFileLocationPlaceholder" xml:space="preserve"><value>"C:\Utenti\Documenti"</value></data>
+  <data name="exportIncludeChapterName" xml:space="preserve"><value>Includi nome capitolo</value></data>
+  <data name="exportChaptersToExport" xml:space="preserve"><value>Capitoli da esportare:</value></data>
+  <data name="exportCharactersToExport" xml:space="preserve"><value>Caratteri da esportare:</value></data>
+  <data name="exportNone" xml:space="preserve"><value>Nessuno</value></data>
+  <data name="exportAll" xml:space="preserve"><value>Tutti</value></data>
+  <data name="exportSubmit" xml:space="preserve"><value>Esporta</value></data>
+  <data name="saveTitle" xml:space="preserve"><value>Salva</value></data>
+  <data name="saveCopyTitle" xml:space="preserve"><value>Salva Copia</value></data>
+  <data name="saveProjectName" xml:space="preserve"><value>Nome progetto:</value></data>
+  <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"About The Queen of Donuts"</value></data>
 </root>
 
 

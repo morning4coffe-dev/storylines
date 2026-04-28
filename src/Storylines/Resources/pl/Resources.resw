@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1254,6 +1254,50 @@
   <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
     <value>Anuluj połączenie</value>
   </data>
+  <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Skróty</value></data>
+  <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Globalne</value></data>
+  <data name="shortcutsMainPageExpander.Header" xml:space="preserve"><value>Strona główna</value></data>
+  <data name="shortcutsCharactersExpander.Header" xml:space="preserve"><value>Strona postaci</value></data>
+  <data name="shortcutSave" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="shortcutSaveCopy" xml:space="preserve"><value>Zapisz kopię</value></data>
+  <data name="shortcutExport" xml:space="preserve"><value>Eksport</value></data>
+  <data name="shortcutUndo" xml:space="preserve"><value>Cofnij</value></data>
+  <data name="shortcutRedo" xml:space="preserve"><value>Ponów</value></data>
+  <data name="shortcutOpenSettings" xml:space="preserve"><value>Otwórz ustawienia</value></data>
+  <data name="shortcutAddChapter" xml:space="preserve"><value>Dodaj rozdział</value></data>
+  <data name="shortcutRemoveChapter" xml:space="preserve"><value>Usuń rozdział</value></data>
+  <data name="shortcutChapterAbove" xml:space="preserve"><value>Rozdział powyżej</value></data>
+  <data name="shortcutChapterBelow" xml:space="preserve"><value>Rozdział poniżej</value></data>
+  <data name="shortcutReadAloud" xml:space="preserve"><value>Czytaj na głos</value></data>
+  <data name="shortcutSearch" xml:space="preserve"><value>Szukaj</value></data>
+  <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Znajdź i zamień</value></data>
+  <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Tryb dialogów</value></data>
+  <data name="shortcutBold" xml:space="preserve"><value>Pogrubienie</value></data>
+  <data name="shortcutItalic" xml:space="preserve"><value>Kursywa</value></data>
+  <data name="shortcutUnderline" xml:space="preserve"><value>Podkreślenie</value></data>
+  <data name="shortcutStrikethrough" xml:space="preserve"><value>Przekreślenie</value></data>
+  <data name="shortcutAddCharacter" xml:space="preserve"><value>Dodaj postać</value></data>
+  <data name="shortcutRemoveCharacter" xml:space="preserve"><value>Usuń postać</value></data>
+  <data name="shortcutToggleEditMode" xml:space="preserve"><value>Tryb edycji</value></data>
+  <data name="exportTitle" xml:space="preserve"><value>Eksport</value></data>
+  <data name="exportOptionChapters" xml:space="preserve"><value>Rozdziały</value></data>
+  <data name="exportOptionCharacters" xml:space="preserve"><value>Postacie</value></data>
+  <data name="exportOptionDialogues" xml:space="preserve"><value>Dialogi</value></data>
+  <data name="exportFileNameCollisionError" xml:space="preserve"><value>Ten plik już istnieje. Zmień nazwę lub lokalizację, albo plik zostanie zastąpiony.</value></data>
+  <data name="exportFileName" xml:space="preserve"><value>Nazwa pliku:</value></data>
+  <data name="exportFileNamePlaceholder" xml:space="preserve"><value>"krolowa-paczkow-eksport"</value></data>
+  <data name="exportFileLocation" xml:space="preserve"><value>Lokalizacja pliku:</value></data>
+  <data name="exportFileLocationPlaceholder" xml:space="preserve"><value>"C:\Users\Documents"</value></data>
+  <data name="exportIncludeChapterName" xml:space="preserve"><value>Dołącz nazwę rozdziału</value></data>
+  <data name="exportChaptersToExport" xml:space="preserve"><value>Rozdziały do eksportu:</value></data>
+  <data name="exportCharactersToExport" xml:space="preserve"><value>Postacie do eksportu:</value></data>
+  <data name="exportNone" xml:space="preserve"><value>Brak</value></data>
+  <data name="exportAll" xml:space="preserve"><value>Wszystko</value></data>
+  <data name="exportSubmit" xml:space="preserve"><value>Eksportuj</value></data>
+  <data name="saveTitle" xml:space="preserve"><value>Zapisz</value></data>
+  <data name="saveCopyTitle" xml:space="preserve"><value>Zapisz kopię</value></data>
+  <data name="saveProjectName" xml:space="preserve"><value>Nazwa projektu:</value></data>
+  <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O królowej pączków"</value></data>
 </root>
 
 

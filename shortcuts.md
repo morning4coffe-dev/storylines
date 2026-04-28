@@ -6,7 +6,9 @@
 | F6            | Export your project        | E |
 | Ctrl + S        | Save your project        | E |
 | Ctrl + Shift + S | Save a copy of your project | E |
+| Ctrl + I        | Open settings        | E |
 | Ctrl + E        | Export your project        | M, CH |
+| Ctrl + N        | Toggle edit mode | CH |
 | Ctrl + Z        | Undo changes        | M, CH |
 | Ctrl + Y        | Redo changes        | M, CH |
 | Ctrl + Q        | Add new chapter/character | M, CH |
@@ -15,6 +17,8 @@
 | Ctrl + PageDown | Selects the chapter bellow current  | M |
 | Ctrl + R | Read aloud the current chapter  | M |
 | Ctrl + F | Search in the current chapter  | M |
+| Ctrl + H | Search and replace in the current chapter | M |
+| Ctrl + Shift + D | Toggle dialogue mode | M |
 | Ctrl + Shift + B | Bold | M |
 | Ctrl + Shift + I | Italic  | M |
 | Ctrl + Shift + U | Underline  | M |

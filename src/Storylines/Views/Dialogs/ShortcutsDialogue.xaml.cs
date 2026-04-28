@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using System.Linq;
+using Storylines.Helpers;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -8,8 +11,16 @@ namespace Storylines.Views.Dialogs
     {
         public static ShortcutsDialogue textBoxStats;
 
+        public List<ShortcutDefinition> GlobalShortcuts { get; }
+        public List<ShortcutDefinition> MainPageShortcuts { get; }
+        public List<ShortcutDefinition> CharactersPageShortcuts { get; }
+
         public ShortcutsDialogue()
         {
+            GlobalShortcuts = ShortcutManager.GetShortcuts(ShortcutScope.Global).ToList();
+            MainPageShortcuts = ShortcutManager.GetShortcuts(ShortcutScope.MainPage).ToList();
+            CharactersPageShortcuts = ShortcutManager.GetShortcuts(ShortcutScope.CharactersPage).ToList();
+
             InitializeComponent();
             textBoxStats = this;
 

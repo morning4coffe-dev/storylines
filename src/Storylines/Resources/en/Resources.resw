@@ -1568,4 +1568,136 @@
   <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
     <value>Cancel connection</value>
   </data>
+  <data name="shortcutsDialogueTitle.Text" xml:space="preserve">
+    <value>Shortcuts</value>
+  </data>
+  <data name="shortcutsGlobalExpander.Header" xml:space="preserve">
+    <value>Global</value>
+  </data>
+  <data name="shortcutsMainPageExpander.Header" xml:space="preserve">
+    <value>Main Page</value>
+  </data>
+  <data name="shortcutsCharactersExpander.Header" xml:space="preserve">
+    <value>Characters Page</value>
+  </data>
+  <data name="shortcutSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="shortcutSaveCopy" xml:space="preserve">
+    <value>Save copy</value>
+  </data>
+  <data name="shortcutExport" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="shortcutUndo" xml:space="preserve">
+    <value>Undo</value>
+  </data>
+  <data name="shortcutRedo" xml:space="preserve">
+    <value>Redo</value>
+  </data>
+  <data name="shortcutOpenSettings" xml:space="preserve">
+    <value>Open settings</value>
+  </data>
+  <data name="shortcutAddChapter" xml:space="preserve">
+    <value>Add chapter</value>
+  </data>
+  <data name="shortcutRemoveChapter" xml:space="preserve">
+    <value>Remove chapter</value>
+  </data>
+  <data name="shortcutChapterAbove" xml:space="preserve">
+    <value>Chapter above</value>
+  </data>
+  <data name="shortcutChapterBelow" xml:space="preserve">
+    <value>Chapter below</value>
+  </data>
+  <data name="shortcutReadAloud" xml:space="preserve">
+    <value>Read aloud</value>
+  </data>
+  <data name="shortcutSearch" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="shortcutSearchAndReplace" xml:space="preserve">
+    <value>Search and replace</value>
+  </data>
+  <data name="shortcutToggleDialogueMode" xml:space="preserve">
+    <value>Toggle dialogue mode</value>
+  </data>
+  <data name="shortcutBold" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="shortcutItalic" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="shortcutUnderline" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="shortcutStrikethrough" xml:space="preserve">
+    <value>Strikethrough</value>
+  </data>
+  <data name="shortcutAddCharacter" xml:space="preserve">
+    <value>Add character</value>
+  </data>
+  <data name="shortcutRemoveCharacter" xml:space="preserve">
+    <value>Remove character</value>
+  </data>
+  <data name="shortcutToggleEditMode" xml:space="preserve">
+    <value>Toggle edit mode</value>
+  </data>
+  <data name="exportTitle" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="exportOptionChapters" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="exportOptionCharacters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="exportOptionDialogues" xml:space="preserve">
+    <value>Dialogues</value>
+  </data>
+  <data name="exportFileNameCollisionError" xml:space="preserve">
+    <value>This file already exists. Change the name or location, or the file will be replaced.</value>
+  </data>
+  <data name="exportFileName" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="exportFileNamePlaceholder" xml:space="preserve">
+    <value>"the-queen-of-donuts-export"</value>
+  </data>
+  <data name="exportFileLocation" xml:space="preserve">
+    <value>File location:</value>
+  </data>
+  <data name="exportFileLocationPlaceholder" xml:space="preserve">
+    <value>"C:\Users\Documents"</value>
+  </data>
+  <data name="exportIncludeChapterName" xml:space="preserve">
+    <value>Include chapter name</value>
+  </data>
+  <data name="exportChaptersToExport" xml:space="preserve">
+    <value>Chapters to export:</value>
+  </data>
+  <data name="exportCharactersToExport" xml:space="preserve">
+    <value>Characters to export:</value>
+  </data>
+  <data name="exportNone" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="exportAll" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="exportSubmit" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="saveTitle" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="saveCopyTitle" xml:space="preserve">
+    <value>Save Copy</value>
+  </data>
+  <data name="saveProjectName" xml:space="preserve">
+    <value>Project name:</value>
+  </data>
+  <data name="saveProjectNamePlaceholder" xml:space="preserve">
+    <value>"About The Queen of Donuts"</value>
+  </data>
 </root>

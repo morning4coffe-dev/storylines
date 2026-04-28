@@ -4,14 +4,78 @@ using Storylines.Views.Pages;
 using Storylines.Services;
 using Storylines.Services.Modes;
 using Storylines.Models;
+using System.Collections.Generic;
+using System.Linq;
+using Windows.ApplicationModel.Resources;
 using Windows.UI.Core;
 using Windows.UI.Xaml.Input;
 
 namespace Storylines.Helpers
 {
+    public enum ShortcutScope
+    {
+        Global,
+        MainPage,
+        CharactersPage
+    }
+
+    public class ShortcutDefinition
+    {
+        private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
+
+        public string DescriptionKey { get; }
+        public bool UseCtrl { get; }
+        public bool UseShift { get; }
+        public string KeyDisplayName { get; }
+        public ShortcutScope Scope { get; }
+
+        public ShortcutDefinition(string descriptionKey, ShortcutScope scope, string keyDisplayName, bool useCtrl = true, bool useShift = false)
+        {
+            DescriptionKey = descriptionKey;
+            Scope = scope;
+            KeyDisplayName = keyDisplayName;
+            UseCtrl = useCtrl;
+            UseShift = useShift;
+        }
+
+        public string Description => _resources.GetString(DescriptionKey);
+        public string ShortcutText => $"{(UseCtrl ? "Ctrl+" : "")}{(UseShift ? "Shift+" : "")}{KeyDisplayName}";
+    }
+
     class ShortcutManager
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
+
+        public static IReadOnlyList<ShortcutDefinition> Shortcuts { get; } = new List<ShortcutDefinition>
+        {
+            // Global
+            new("shortcutSave", ShortcutScope.Global, "S"),
+            new("shortcutSaveCopy", ShortcutScope.Global, "S", useShift: true),
+            new("shortcutExport", ShortcutScope.Global, "E"),
+            new("shortcutUndo", ShortcutScope.Global, "Z"),
+            new("shortcutRedo", ShortcutScope.Global, "Y"),
+            new("shortcutOpenSettings", ShortcutScope.Global, "I"),
+            // MainPage
+            new("shortcutAddChapter", ShortcutScope.MainPage, "Q"),
+            new("shortcutRemoveChapter", ShortcutScope.MainPage, "Del"),
+            new("shortcutChapterAbove", ShortcutScope.MainPage, "PageUp"),
+            new("shortcutChapterBelow", ShortcutScope.MainPage, "PageDown"),
+            new("shortcutReadAloud", ShortcutScope.MainPage, "R"),
+            new("shortcutSearch", ShortcutScope.MainPage, "F"),
+            new("shortcutSearchAndReplace", ShortcutScope.MainPage, "H"),
+            new("shortcutToggleDialogueMode", ShortcutScope.MainPage, "D", useShift: true),
+            new("shortcutBold", ShortcutScope.MainPage, "B", useShift: true),
+            new("shortcutItalic", ShortcutScope.MainPage, "I", useShift: true),
+            new("shortcutUnderline", ShortcutScope.MainPage, "U", useShift: true),
+            new("shortcutStrikethrough", ShortcutScope.MainPage, "T", useShift: true),
+            // CharactersPage
+            new("shortcutAddCharacter", ShortcutScope.CharactersPage, "Q"),
+            new("shortcutRemoveCharacter", ShortcutScope.CharactersPage, "Del"),
+            new("shortcutToggleEditMode", ShortcutScope.CharactersPage, "N"),
+        };
+
+        public static IEnumerable<ShortcutDefinition> GetShortcuts(ShortcutScope scope) =>
+            Shortcuts.Where(s => s.Scope == scope);
 
         private static bool IsCtrlKeyPressed()
         {
