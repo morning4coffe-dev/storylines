@@ -6,11 +6,14 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
     public sealed partial class ProjectRenamerDialogue : ContentDialog
     {
+        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
         public static ProjectRenamerDialogue projectRenamer;
 
         public ProjectRenamerDialogue()
@@ -31,17 +34,18 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (string.IsNullOrEmpty(SaveSystem.currentProject.projectName))
+            if (string.IsNullOrEmpty(Persistence.CurrentProject?.projectName))
                 titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueCreate");
             else
                 titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
 
-            chapterNameBox.Text = SaveSystem.currentProject.projectName;
+            chapterNameBox.Text = Persistence.CurrentProject?.projectName;
         }
 
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            SaveSystem.currentProject.projectName = chapterNameBox.Text;
+            if (Persistence.CurrentProject != null)
+                Persistence.CurrentProject.projectName = chapterNameBox.Text;
             App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 
             projectRenamer.Hide();

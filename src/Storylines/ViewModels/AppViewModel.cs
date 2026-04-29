@@ -1,6 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -27,10 +28,12 @@ namespace Storylines.ViewModels
         public enum AppPages { Settings, Characters, MainPage, BranchingDialogue }
 
         private readonly string _editedString;
+        private readonly IProjectPersistenceService _persistence;
 
-        public AppViewModel(EventAggregator events = null)
+        public AppViewModel(EventAggregator events = null, IProjectPersistenceService persistence = null)
         {
             events ??= App.TryGetService<EventAggregator>() ?? new EventAggregator();
+            _persistence = persistence ?? App.TryGetService<IProjectPersistenceService>();
             _editedString = ResourceLoader.GetForViewIndependentUse().GetString("appHeaderEdited");
             events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
             UpdateTitleBar();
@@ -58,12 +61,12 @@ namespace Storylines.ViewModels
 
         public string GetProjectName()
         {
-            if (SaveSystem.currentProject != null)
+            if (_persistence?.CurrentProject != null)
             {
-                if (!string.IsNullOrEmpty(SaveSystem.currentProject.projectName))
-                    return SaveSystem.currentProject.projectName;
+                if (!string.IsNullOrEmpty(_persistence.CurrentProject.projectName))
+                    return _persistence.CurrentProject.projectName;
                 else
-                    return SaveSystem.currentProject.Name;
+                    return _persistence.CurrentProject.Name;
             }
             return null;
         }

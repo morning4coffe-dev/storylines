@@ -218,7 +218,6 @@
     <Compile Include="Services\Modes\Impl\EditMode.cs" />
     <Compile Include="Services\Modes\Impl\FocusMode.cs" />
     <Compile Include="Services\Modes\Impl\ReadOnlyMode.cs" />
-    <Compile Include="Services\AutosaveService.cs" />
     <Compile Include="Services\RecoveryService.cs" />
     <Compile Include="Models\Character.cs" />
     <Compile Include="Models\BranchingDialogueModels.cs" />
@@ -231,7 +230,10 @@
     <Compile Include="Views\Controls\MainCommandBar.xaml.cs">
       <DependentUpon>MainCommandBar.xaml</DependentUpon>
     </Compile>
-    <Compile Include="Services\SaveSystem.cs" />
+    <Compile Include="Services\ProjectPersistenceService.cs" />
+    <Compile Include="Services\Persistence\DocumentPersistenceHandlerBase.cs" />
+    <Compile Include="Services\Persistence\PlainTextDocumentPersistenceHandler.cs" />
+    <Compile Include="Services\Persistence\StorylinesDocumentPersistenceHandler.cs" />
     <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -257,6 +259,7 @@
     <Compile Include="Services\Interfaces\ITelemetryProvider.cs" />
     <Compile Include="Services\Interfaces\ITelemetryService.cs" />
     <Compile Include="Services\Interfaces\ISaveSerializer.cs" />
+    <Compile Include="Services\Interfaces\IProjectPersistenceService.cs" />
     <Compile Include="Services\Interfaces\IFileService.cs" />
     <Compile Include="Services\Interfaces\INavigationService.cs" />
     <Compile Include="Services\Interfaces\ITextEditorService.cs" />
@@ -601,7 +604,6 @@
     <PRIResource Include="Resources\ru\Resources.resw">
       <SubType>Designer</SubType>
     </PRIResource>
-
   </ItemGroup>
   <ItemGroup>
     <SDKReference Include="Microsoft.Services.Store.Engagement, Version=10.0">

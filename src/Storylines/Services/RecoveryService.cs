@@ -1,5 +1,6 @@
 using Storylines.Helpers;
 using Storylines.Models;
+using Storylines.Services.Interfaces;
 using Storylines.Services.Serializers;
 using System;
 using System.Threading;
@@ -72,7 +73,11 @@ namespace Storylines.Services
                 if (serializer == null)
                     return;
 
-                var projectData = SaveSystem.CollectProjectData();
+                var persistence = App.TryGetService<IProjectPersistenceService>();
+                if (persistence == null)
+                    return;
+
+                var projectData = persistence.CollectProjectData();
                 var json = serializer.Serialize(projectData);
 
                 var file = await ApplicationData.Current.LocalFolder.CreateFileAsync(

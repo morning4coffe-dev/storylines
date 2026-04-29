@@ -34,17 +34,17 @@ namespace Storylines.Models
             AddChapter($"{chapterName}: {txt}");
         }
 
-        public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null, List<string> tags = null, double pinboardX = 0, double pinboardY = 0, ChapterStatus status = ChapterStatus.Draft, string location = null, List<string> plotThreads = null)
+        public Chapter AddExistingChapter(string name, string token, string text, string notes = "", string synopsis = null, int? wordCountGoal = null, List<string> tags = null, double pinboardX = 0, double pinboardY = 0, ChapterStatus status = ChapterStatus.Draft, string location = null, List<string> plotThreads = null, int lastCaretPosition = 0, double lastVerticalOffset = 0)
         {
-            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Synopsis = synopsis, WordCountGoal = wordCountGoal, Tags = tags ?? new List<string>(), PinboardX = pinboardX, PinboardY = pinboardY, Status = status, Location = location, PlotThreads = plotThreads ?? new List<string>() };
+            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Synopsis = synopsis, WordCountGoal = wordCountGoal, Tags = tags ?? new List<string>(), PinboardX = pinboardX, PinboardY = pinboardY, Status = status, Location = location, PlotThreads = plotThreads ?? new List<string>(), LastCaretPosition = lastCaretPosition, LastVerticalOffset = lastVerticalOffset };
             ch.SetToken(token);
             Chapters.Add(ch);
             return ch;
         }
 
-        public Chapter InsertExistingChapter(string name, string token, string text, int position, string notes = "", List<string> tags = null)
+        public Chapter InsertExistingChapter(string name, string token, string text, int position, string notes = "", List<string> tags = null, int lastCaretPosition = 0, double lastVerticalOffset = 0)
         {
-            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Tags = tags ?? new List<string>() };
+            var ch = new Chapter() { Name = name, Text = text, Notes = notes ?? string.Empty, Tags = tags ?? new List<string>(), LastCaretPosition = lastCaretPosition, LastVerticalOffset = lastVerticalOffset };
             ch.SetToken(token);
             Chapters.Insert(position, ch);
             return ch;
@@ -103,7 +103,9 @@ namespace Storylines.Models
                 Tags = original.Tags != null ? new List<string>(original.Tags) : new List<string>(),
                 Status = original.Status,
                 Location = original.Location,
-                PlotThreads = original.PlotThreads != null ? new List<string>(original.PlotThreads) : new List<string>()
+                PlotThreads = original.PlotThreads != null ? new List<string>(original.PlotThreads) : new List<string>(),
+                LastCaretPosition = original.LastCaretPosition,
+                LastVerticalOffset = original.LastVerticalOffset
             };
             copy.SetToken(original.Token);
             return copy;

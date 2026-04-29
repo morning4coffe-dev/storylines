@@ -41,6 +41,12 @@ namespace Storylines.Models
         [ObservableProperty]
         private string _location;
 
+        [ObservableProperty]
+        private int _lastCaretPosition;
+
+        [ObservableProperty]
+        private double _lastVerticalOffset;
+
         private List<string> _plotThreads = new List<string>();
         public List<string> PlotThreads
         {

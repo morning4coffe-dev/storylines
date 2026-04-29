@@ -149,7 +149,7 @@ namespace Storylines
                     var fileToken = Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart].ToString();
                     var file = await ProjectFile.GetProjectFromTokenAsync(fileToken);
                     if(file != null)
-                        SaveSystem.Load(await ProjectFile.LoadExistingAsync(file, fileToken));
+                        GetService<IProjectPersistenceService>().Load(await ProjectFile.LoadExistingAsync(file, fileToken));
                 }
                 catch (Exception ex)
                 {

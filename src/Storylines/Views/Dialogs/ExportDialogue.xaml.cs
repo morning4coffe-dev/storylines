@@ -1,4 +1,5 @@
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
@@ -14,6 +15,7 @@ namespace Storylines.Views.Dialogs
     public sealed partial class ExportDialogue : ContentDialog
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
+        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
 
         public static ExportDialogue exportDialogue;
 
@@ -34,7 +36,7 @@ namespace Storylines.Views.Dialogs
 
             AppView.currentlyOpenedDialogue = exportDialogue;
 
-            fileNameText.Text = $"{(SaveSystem.currentProject.file != null ? SaveSystem.currentProject.file.DisplayName : "my-story")}-{Storylines.Resources.ExportDialogue.Title.ToLower()}";
+            fileNameText.Text = $"{(Persistence.CurrentProject?.file != null ? Persistence.CurrentProject.file.DisplayName : "my-story")}-{Storylines.Resources.ExportDialogue.Title.ToLower()}";
 
             SomethingChanged(false);
 

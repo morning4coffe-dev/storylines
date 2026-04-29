@@ -82,9 +82,9 @@ namespace Storylines.Views.Dialogs
 
                 case SelectedMode.Focus:
                     if ((bool)autosaveCheckBox.IsChecked)
-                        AutosaveService.Enable();
+                        App.GetService<IProjectPersistenceService>().EnableAutosave();
                     else
-                        AutosaveService.Disable();
+                        App.GetService<IProjectPersistenceService>().DisableAutosave();
 
                     var focusMode = new FocusMode
                     {

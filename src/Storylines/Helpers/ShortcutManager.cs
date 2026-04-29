@@ -128,7 +128,7 @@ namespace Storylines.Helpers
 
                     switch (e.VirtualKey)
                     {
-                        case Windows.System.VirtualKey.S: SaveSystem.SaveCopy(); break;
+                        case Windows.System.VirtualKey.S: App.GetService<IProjectPersistenceService>().SaveCopy(); break;
                     }
                 }
                 else
@@ -204,7 +204,7 @@ namespace Storylines.Helpers
 
                     switch (e.VirtualKey)
                     {
-                        case Windows.System.VirtualKey.S: SaveSystem.Save(); break;
+                        case Windows.System.VirtualKey.S: App.GetService<IProjectPersistenceService>().Save(); break;
                         case Windows.System.VirtualKey.I:
                             {
                                 var modeSvc = App.TryGetService<EditorModeService>();

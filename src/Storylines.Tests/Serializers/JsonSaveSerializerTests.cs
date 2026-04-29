@@ -311,6 +311,8 @@ public class JsonSaveSerializerTests
                     {
                         Name = "Prologue", Text = "text", Notes = "note",
                         Tags = new List<string> { "Flashback", "Emotional" },
+                        LastCaretPosition = 57,
+                        LastVerticalOffset = 312.5,
                         PinboardX = 125.5,
                         PinboardY = 300.0,
                         Status = "InProgress",
@@ -326,6 +328,8 @@ public class JsonSaveSerializerTests
             var ch = result.Chapters[0];
             Assert.NotNull(ch.Tags);
             Assert.Equal(new[] { "Flashback", "Emotional" }, ch.Tags);
+            Assert.Equal(57, ch.LastCaretPosition);
+            Assert.Equal(312.5, ch.LastVerticalOffset);
             Assert.Equal(125.5, ch.PinboardX);
             Assert.Equal(300.0, ch.PinboardY);
             Assert.Equal("InProgress", ch.Status);
@@ -341,13 +345,15 @@ public class JsonSaveSerializerTests
             {
                 Chapters = new List<ChapterData>
                 {
-                    new() { Name = "Ch", Text = "T", Notes = "", Tags = null, Status = null, Location = null, PlotThreads = null }
+                    new() { Name = "Ch", Text = "T", Notes = "", Tags = null, LastCaretPosition = null, LastVerticalOffset = null, Status = null, Location = null, PlotThreads = null }
                 }
             };
 
             var json = _serializer.Serialize(data);
 
             Assert.DoesNotContain("\"tags\"", json);
+            Assert.DoesNotContain("\"lastCaretPosition\"", json);
+            Assert.DoesNotContain("\"lastVerticalOffset\"", json);
             Assert.DoesNotContain("\"status\"", json);
             Assert.DoesNotContain("\"location\"", json);
             Assert.DoesNotContain("\"plotThreads\"", json);

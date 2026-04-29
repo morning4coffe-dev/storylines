@@ -177,7 +177,7 @@ namespace Storylines.Services
                 ("app_version", SystemInformation.Instance.ApplicationVersion.ToFormattedString()),
                 ("os_version", GetOperatingSystemVersion()),
                 ("device_family", SystemInformation.Instance.DeviceFamily),
-                ("device_architecture", SystemInformation.Instance.OperatingSystemArchitecture),
+                //TODO ("device_architecture", SystemInformation.Instance.OperatingSystemArchitecture),
                 ("app_language", GetApplicationLanguage()),
                 ("ui_theme", SettingsValues.selectedTheme.ToString()),
                 ("editor_mode", _editorModeService.Current.Id));

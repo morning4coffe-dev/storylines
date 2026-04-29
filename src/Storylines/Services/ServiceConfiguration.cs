@@ -22,7 +22,7 @@ namespace Storylines.Services
             services.AddSingleton<LegacySrlSerializer>();
             services.AddSingleton<ProjectState>();
             services.AddSingleton<EventAggregator>();
-            services.AddSingleton<SaveSystem>();
+            services.AddSingleton<IProjectPersistenceService, ProjectPersistenceService>();
             services.AddSingleton<ITextEditorService, TextEditorService>();
             services.AddSingleton<INavigationService, NavigationService>();
             services.AddSingleton<IDialogService, DialogService>();

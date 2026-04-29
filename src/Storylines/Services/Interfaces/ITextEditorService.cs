@@ -2,7 +2,7 @@ namespace Storylines.Services.Interfaces
 {
     /// <summary>
     /// Abstracts RichEditBox text operations so that business logic
-    /// (SaveSystem, TimeTravelSystem) does not reference UI controls directly.
+    /// (ProjectPersistenceService, TimeTravelSystem) does not reference UI controls directly.
     /// </summary>
     public interface ITextEditorService
     {
@@ -32,6 +32,12 @@ namespace Storylines.Services.Interfaces
 
         /// <summary>Sets keyboard focus to the text editor.</summary>
         void Focus();
+
+        /// <summary>
+        /// True while the editor is applying content programmatically and UI change
+        /// notifications should not be treated as user edits.
+        /// </summary>
+        bool IsProgrammaticChangeInProgress { get; }
 
         /// <summary>
         /// Loads a chapter's content into the editor. Handles RTF loading safely

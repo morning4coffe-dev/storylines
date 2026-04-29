@@ -31,6 +31,7 @@ namespace Storylines
         private readonly AppViewModel _viewModel;
         private readonly EventAggregator _events;
         private readonly INavigationService _navigation;
+        private readonly IProjectPersistenceService _persistence;
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
 
@@ -44,6 +45,7 @@ namespace Storylines
             _viewModel = App.GetService<AppViewModel>();
             _events = App.GetService<EventAggregator>();
             _navigation = App.GetService<INavigationService>();
+            _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
 
@@ -56,7 +58,7 @@ namespace Storylines
 
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
-            // Subscribe to tools state changes (published by SaveSystem)
+            // Subscribe to tools state changes published by the persistence service.
             _events.Subscribe<ToolsStateChangedEvent>(e =>
             {
                 if (MainPage.Current != null)
@@ -64,7 +66,7 @@ namespace Storylines
             });
 
             if (SettingsValues.autosaveEnabled)
-                AutosaveService.Enable();
+                _persistence.EnableAutosave();
 
             RecoveryService.Start();
 
@@ -281,7 +283,7 @@ namespace Storylines
             if (TimeTravelSystem.unSavedProgress)
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
             else
-                SaveSystem.DefaultLaunch(file);
+                _persistence.DefaultLaunch(file);
         }
         #endregion
     }

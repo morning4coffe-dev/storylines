@@ -421,6 +421,7 @@
                       CornerRadius="8"
                       BorderBrush="{ThemeResource ElementBorderColor}"
                       BorderThickness="{ThemeResource ElementBorderThickness}"
+                      ViewChanged="OnTextBoxScrollViewer_ViewChanged"
                       Tapped="OnTextBoxRectangle_Tapped">
             <components:MyRichEditBox x:Name="textBox"
                                       x:FieldModifier="public"

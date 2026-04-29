@@ -51,7 +51,7 @@ namespace Storylines.Views.Controls
         private void OnRecentProject_Click(object sender, ItemClickEventArgs e)
         {
             if (e.ClickedItem is ProjectFile project)
-                SaveSystem.Load(project);
+                App.GetService<IProjectPersistenceService>().Load(project);
         }
     }
 }

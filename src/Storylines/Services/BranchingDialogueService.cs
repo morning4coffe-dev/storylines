@@ -1,3 +1,4 @@
+#nullable enable
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using System;
@@ -252,7 +253,7 @@ namespace Storylines.Services
             }
 
             // Speaker validation set
-            HashSet<string> speakerSet = null;
+            HashSet<string>? speakerSet = null;
             if (knownSpeakers != null)
                 speakerSet = new HashSet<string>(knownSpeakers, StringComparer.CurrentCultureIgnoreCase);
 

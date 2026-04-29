@@ -14,6 +14,8 @@ namespace Storylines.Views.Pages
 {
     public sealed partial class MainPage : Page
     {
+        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
         public static MainPage Current { get; private set; }
 
         public static ChaptersList ChapterList;
@@ -49,7 +51,7 @@ namespace Storylines.Views.Pages
         {
             if (App.item != null)
             {
-                SaveSystem.DefaultLaunch(App.item);
+                Persistence.DefaultLaunch(App.item);
                 App.item = null;
             }
 
@@ -65,8 +67,8 @@ namespace Storylines.Views.Pages
             LoadTextBoxZoom();
             RefreshFormattingCommandAvailability();
 
-            if (SaveSystem.currentProject != null && SaveSystem.currentProject.file != null)
-                EnableOrDisableToolsForStorylinesDocuments(SaveSystem.currentProject.file.FileType.Contains(".srl"));
+            if (Persistence.CurrentProject?.file != null)
+                EnableOrDisableToolsForStorylinesDocuments(Persistence.CurrentProject.file.FileType.Contains(".srl"));
         }
 
         /// <summary>

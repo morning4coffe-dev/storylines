@@ -12,6 +12,7 @@ namespace Storylines.ViewModels
     public partial class CommandBarViewModel : ObservableObject
     {
         private readonly IDialogService _dialogs;
+        private readonly IProjectPersistenceService _persistence;
         private readonly ITextEditorService _textEditor;
 
         [ObservableProperty]
@@ -38,9 +39,14 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isAutosaveChecked;
 
-        public CommandBarViewModel(IDialogService dialogs = null, EventAggregator events = null, ITextEditorService textEditor = null)
+        public CommandBarViewModel(
+            IDialogService dialogs = null,
+            EventAggregator events = null,
+            ITextEditorService textEditor = null,
+            IProjectPersistenceService persistence = null)
         {
             _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
+            _persistence = persistence ?? App.TryGetService<IProjectPersistenceService>();
             _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
             IsAutosaveChecked = SettingsValues.autosaveEnabled;
 
@@ -64,10 +70,10 @@ namespace Storylines.ViewModels
         private void Redo() => TimeTravelChapter.Redo();
 
         [RelayCommand]
-        private void Save() => SaveSystem.Save();
+        private void Save() => _persistence.Save();
 
         [RelayCommand]
-        private void SaveCopy() => SaveSystem.SaveCopy();
+        private void SaveCopy() => _persistence.SaveCopy();
 
         [RelayCommand]
         private void Load() => _dialogs.OpenLoadDialogue();
@@ -79,9 +85,9 @@ namespace Storylines.ViewModels
         private void ToggleAutosave()
         {
             if (IsAutosaveChecked)
-                AutosaveService.Enable();
+                _persistence.EnableAutosave();
             else
-                AutosaveService.Disable();
+                _persistence.DisableAutosave();
         }
 
         [RelayCommand]

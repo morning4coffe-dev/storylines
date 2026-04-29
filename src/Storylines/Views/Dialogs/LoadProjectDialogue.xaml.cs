@@ -1,6 +1,7 @@
 using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
@@ -12,6 +13,8 @@ namespace Storylines.Views.Dialogs
 {
     public sealed partial class LoadProjectDialogue : ContentDialog
     {
+        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
         public static LoadProjectDialogue loadFile;
         public bool isEscape = true;
 
@@ -66,8 +69,8 @@ namespace Storylines.Views.Dialogs
             isEscape = false;
             Hide();
 
-            SaveSystem.currentProject = new ProjectFile();
-            SaveSystem.currentProject.projectName = "Project with no name";
+            Persistence.CurrentProject = new ProjectFile();
+            Persistence.CurrentProject.projectName = "Project with no name";
 
             Pages.MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
             AppView.current.ClearEverything();
@@ -76,7 +79,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnFindProject_Click(object sender, RoutedEventArgs e)
         {
-            SaveSystem.Load(new ProjectFile() { file = null });
+            Persistence.Load(new ProjectFile() { file = null });
         }
 
         private void OnOpenRecentProject_Click(object sender, RoutedEventArgs e)
@@ -91,7 +94,7 @@ namespace Storylines.Views.Dialogs
                 foreach (var projectFile in ProjectFile.projectFiles)
                 {
                     if (projectFile.Token == token)
-                        SaveSystem.Load(projectFile);
+                        Persistence.Load(projectFile);
                 }
             }
             catch

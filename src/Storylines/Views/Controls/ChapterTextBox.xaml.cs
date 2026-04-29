@@ -92,6 +92,8 @@ namespace Storylines.Views.Controls
         private bool selectedTextIsUnderlined = false;
         private bool selectedTextIsStriked = false;
         private bool searchingInTextBox = false;
+        private int _chapterLocationCaptureSuppressionDepth;
+        private string _loadedChapterToken;
 
         public ChapterTextBox()
         {
@@ -140,6 +142,12 @@ namespace Storylines.Views.Controls
 
         private void OnChapterSelected(ChapterSelectedEvent e)
         {
+            _loadedChapterToken = e.HasSelection
+                && e.SelectedIndex >= 0
+                && e.SelectedIndex < _projectState.Chapters.Count
+                ? _projectState.Chapters[e.SelectedIndex].Token
+                : null;
+
             if (!e.HasSelection)
                 return;
 
@@ -166,19 +174,20 @@ namespace Storylines.Views.Controls
             // Skip to avoid RTF round-trip differences from creating
             // ghost entries or corrupting the snapshot chain.
             if (TimeTravelChapter.IsExecuting) return;
+            if (_textEditor?.IsProgrammaticChangeInProgress == true) return;
 
-            var selectedIndex = _textEditor.SelectedChapterIndex;
-            if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
+            var chapter = GetLoadedChapter();
+            if (chapter != null)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
-                var oldText = _projectState.Chapters[selectedIndex].Text;
+                var oldText = chapter.Text;
 
                 if (oldText != txt && !searchingInTextBox)
                 {
-                    _projectState.Chapters[selectedIndex].Text = txt;
+                    chapter.Text = txt;
 
                     MainPage.Current.UpdateDownBar();
-                    TimeTravelChapter.RecordTextChange(_projectState.Chapters[selectedIndex].Token, oldText, txt);
+                    TimeTravelChapter.RecordTextChange(chapter.Token, oldText, txt);
 
                     App.TryGetService<EditorModeService>()?.Current.OnTextChanged();
 
@@ -190,18 +199,26 @@ namespace Storylines.Views.Controls
                     textBox.Document.GetText(TextGetOptions.None, out var plain);
                     int words = plain.Split(new char[] { ' ', '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries).Length;
                     WritingSessionService.RecordWords(words);
+
+                    QueueChapterLocationCapture();
                 }
             }
         }
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
         {
-            if (_textEditor.SelectedChapterIndex >= 0)
+            if (GetLoadedChapter() != null)
             {
                 MainPage.Current.UpdateDownBar();
 
                 CheckForFormatting();
+                QueueChapterLocationCapture();
             }
+        }
+
+        private void OnTextBoxScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
+        {
+            CacheCurrentChapterLocation();
         }
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -1114,8 +1131,11 @@ namespace Storylines.Views.Controls
                 || (MainPage.CommandBar?.IsFormattingContextElement(focused) ?? false)))
                 return;
 
+            CacheCurrentChapterLocation();
+
             MainPage.Current?.SetTextFormattingContextActive(false);
 
+            SuppressChapterLocationCaptureForPendingUiCycle();
             textBox.Document.Selection.SetRange(0, 0);
 
             boldTextButton.IsChecked = false;
@@ -1148,6 +1168,52 @@ namespace Storylines.Views.Controls
                 current = VisualTreeHelper.GetParent(current);
             }
             return false;
+        }
+
+        private void QueueChapterLocationCapture()
+        {
+            if (IsChapterLocationCaptureSuppressed)
+                return;
+
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CacheCurrentChapterLocation);
+        }
+
+        private void CacheCurrentChapterLocation()
+        {
+            if (IsChapterLocationCaptureSuppressed)
+                return;
+
+            var chapter = GetLoadedChapter();
+            if (chapter == null)
+                return;
+
+            var selection = textBox?.Document?.Selection;
+            if (selection == null)
+                return;
+
+            chapter.LastCaretPosition = Math.Max(0, selection.StartPosition);
+            chapter.LastVerticalOffset = Math.Max(0, textBoxScrollViewer?.VerticalOffset ?? 0);
+        }
+
+        private void SuppressChapterLocationCaptureForPendingUiCycle()
+        {
+            _chapterLocationCaptureSuppressionDepth++;
+            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                if (_chapterLocationCaptureSuppressionDepth > 0)
+                    _chapterLocationCaptureSuppressionDepth--;
+            });
+        }
+
+        private bool IsChapterLocationCaptureSuppressed
+            => _chapterLocationCaptureSuppressionDepth > 0 || _textEditor?.IsProgrammaticChangeInProgress == true;
+
+        private Chapter GetLoadedChapter()
+        {
+            if (string.IsNullOrWhiteSpace(_loadedChapterToken))
+                return null;
+
+            return _projectState.FindChapter(_loadedChapterToken);
         }
         #endregion 
         #endregion

@@ -136,7 +136,7 @@ namespace Storylines.Helpers
             public void Redo()
             {
                 int pos = Math.Min(_position, State.Chapters.Count);
-                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos);
+                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos, lastCaretPosition: _snapshot.LastCaretPosition, lastVerticalOffset: _snapshot.LastVerticalOffset);
             }
 
             public bool TryMerge(IUndoableAction newer) => false;
@@ -156,7 +156,7 @@ namespace Storylines.Helpers
             public void Undo()
             {
                 int pos = Math.Min(_position, State.Chapters.Count);
-                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos);
+                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos, lastCaretPosition: _snapshot.LastCaretPosition, lastVerticalOffset: _snapshot.LastVerticalOffset);
             }
 
             public void Redo() => State.RemoveChapter(_snapshot.Token);

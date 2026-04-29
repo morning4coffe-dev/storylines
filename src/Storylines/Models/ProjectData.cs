@@ -44,6 +44,12 @@ namespace Storylines.Models
         [JsonProperty("text")]
         public string Text { get; set; }
 
+        [JsonProperty("lastCaretPosition", NullValueHandling = NullValueHandling.Ignore)]
+        public int? LastCaretPosition { get; set; }
+
+        [JsonProperty("lastVerticalOffset", NullValueHandling = NullValueHandling.Ignore)]
+        public double? LastVerticalOffset { get; set; }
+
         [JsonProperty("notes")]
         public string Notes { get; set; }
 

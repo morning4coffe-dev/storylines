@@ -18,6 +18,8 @@ namespace Storylines.Helpers
         public enum InAppNotificationType { None, NewUpdate, Review, ThankYou };
         public static InAppNotificationType currentInAppNotification = InAppNotificationType.None;
 
+        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
         public static void DisplayBadgeNotification(string badgeGlyphValue)
         {
             XmlDocument badgeXml = BadgeUpdateManager.GetTemplateContent(short.TryParse(badgeGlyphValue, out _) ? BadgeTemplateType.BadgeNumber : BadgeTemplateType.BadgeGlyph);
@@ -195,14 +197,15 @@ namespace Storylines.Helpers
                 case ContentDialogResult.Primary:
                     exitDialog.Hide();
                     AppView.currentlyOpenedDialogue = null;
-                    SaveSystem.SaveAndExitOrClearAll(appClosing);
+                    Persistence.SaveAndExitOrClearAll(appClosing);
                     break;
                 case ContentDialogResult.Secondary:
                     if (appClosing)
                         App.Current.Exit();
                     else
                     {
-                        SaveSystem.currentProject.file = null;
+                        if (Persistence.CurrentProject != null)
+                            Persistence.CurrentProject.file = null;
                         AppView.current.ClearEverything();
                         TimeTravelSystem.unSavedProgress = false;
 

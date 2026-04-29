@@ -14,6 +14,7 @@ namespace Storylines.Views.Dialogs
     public sealed partial class SaveDialogue : ContentDialog
     {
         private readonly ILogger _logger;
+        private readonly IProjectPersistenceService _persistence;
         private readonly ProjectState _projectState;
 
         public static SaveDialogue saveDialogue;
@@ -32,6 +33,7 @@ namespace Storylines.Views.Dialogs
             saveDialogue = this;
 
             _logger = App.GetService<ILogger>();
+            _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
 
             InitializeClickOutToClose();
@@ -119,9 +121,12 @@ namespace Storylines.Views.Dialogs
 
         private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            await SaveSystem.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
+            if (_persistence.CurrentProject == null)
+                _persistence.CurrentProject = new ProjectFile();
+
+            _persistence.CurrentProject.projectName = nameText.Text;
+            await _persistence.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
             _submitted = true;
-            SaveSystem.currentProject.projectName = nameText.Text;
             saveDialogue.Hide();
         }
 
@@ -154,7 +159,7 @@ namespace Storylines.Views.Dialogs
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             if (!_submitted)
-                SaveSystem.CancelPendingAfterSaveAction();
+                _persistence.CancelPendingAfterSaveAction();
 
             AppView.currentlyOpenedDialogue = null;
         }

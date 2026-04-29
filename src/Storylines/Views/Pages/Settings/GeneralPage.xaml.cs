@@ -1,4 +1,5 @@
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using System;
 using System.Globalization;
 using Windows.ApplicationModel.Resources;
@@ -10,6 +11,8 @@ namespace Storylines.Views.Pages.Settings
 {
     public sealed partial class GeneralPage : Page
     {
+        private IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
         public static GeneralPage current;
 
         private bool loading;
@@ -54,24 +57,23 @@ namespace Storylines.Views.Pages.Settings
         private void OnProjectOnStartupToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (!loading)
-                localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = projectOnStartToggleSwitch.IsOn ? SaveSystem.currentProject.Token : null;
+                localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = projectOnStartToggleSwitch.IsOn ? Persistence.CurrentProject?.Token : null;
         }
 
         private void OnAutosaveToggleSwitch_Toggled(object sender, RoutedEventArgs e)
         {
             if (!loading)
             {
-                if (autosaveToggleSwitch.IsOn && SaveSystem.currentProject?.file == null)
+                if (autosaveToggleSwitch.IsOn && Persistence.CurrentProject?.file == null)
                 {
                     autosaveToggleSwitch.IsOn = false;
                     return;
                 }
-                localSettings.Values[SettingsValueStrings.AutosaveEnabled] = autosaveToggleSwitch.IsOn;
 
                 if (autosaveToggleSwitch.IsOn)
-                    AutosaveService.Enable();
+                    Persistence.EnableAutosave();
                 else
-                    AutosaveService.Disable();
+                    Persistence.DisableAutosave();
             }
         }
 
@@ -81,7 +83,7 @@ namespace Storylines.Views.Pages.Settings
             {
                 localSettings.Values[SettingsValueStrings.AutosaveInterval] = Convert.ToDouble((autosaveIntervalComboBox.SelectedItem as ComboBoxItem).Tag, CultureInfo.InvariantCulture);
                 if (SettingsValues.autosaveEnabled)
-                    AutosaveService.Enable(); // Re-enable to pick up new interval
+                    Persistence.RefreshAutosave();
             }
         }
 

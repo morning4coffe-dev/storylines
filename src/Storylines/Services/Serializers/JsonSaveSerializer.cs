@@ -1,3 +1,4 @@
+#nullable enable
 using Newtonsoft.Json;
 using Storylines.Services.Interfaces;
 using Storylines.Models;
@@ -11,7 +12,7 @@ namespace Storylines.Services.Serializers
             return JsonConvert.SerializeObject(projectData, Formatting.Indented);
         }
 
-        public ProjectData Deserialize(string content)
+        public ProjectData? Deserialize(string content)
         {
             return JsonConvert.DeserializeObject<ProjectData>(content);
         }
