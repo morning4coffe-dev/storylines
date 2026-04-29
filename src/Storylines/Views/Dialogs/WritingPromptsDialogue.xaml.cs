@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Storylines.Services.Interfaces;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -76,10 +78,17 @@ namespace Storylines.Views.Dialogs
             ShowRandomPrompt();
         }
 
-        public static async void Open()
+        public static async Task OpenAsync()
         {
-            var dialog = new WritingPromptsDialogue();
-            await dialog.ShowAsync();
+            try
+            {
+                var dialog = new WritingPromptsDialogue();
+                await dialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to open writing prompts dialog: {ex.Message}");
+            }
         }
 
         private void ShowRandomPrompt()

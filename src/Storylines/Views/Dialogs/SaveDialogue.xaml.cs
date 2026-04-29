@@ -158,6 +158,8 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
+            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
+
             if (!_submitted)
                 _persistence.CancelPendingAfterSaveAction();
 
@@ -183,14 +185,16 @@ namespace Storylines.Views.Dialogs
         bool isHide = true;
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += (s, e) =>
-            {
-                if (isHide && !isFlyoutOpen)
-                    Hide();
-            };
+            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;
+        }
+
+        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            if (isHide && !isFlyoutOpen)
+                Hide();
         }
     }
 }

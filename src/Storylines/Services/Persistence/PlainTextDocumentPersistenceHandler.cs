@@ -32,18 +32,10 @@ namespace Storylines.Services.Persistence
 
         public override async Task LoadAsync(ProjectFile project)
         {
-            Dialogs.ClearEverything();
-            Dialogs.DismissLoadDialogue();
-
             try
             {
                 var text = await FileService.ReadAsync(project.file);
-
-                ProjectState.AddExistingChapter(project.file.DisplayName, Guid.NewGuid().ToString(), text);
-                TextEditor.SelectedChapterIndex = 0;
-
-                _onLoaded();
-                Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
+                await LoadTextAsync(project, text);
             }
             catch (Exception ex)
             {
@@ -51,6 +43,30 @@ namespace Storylines.Services.Persistence
                 ShowLoadErrorNotification();
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
+        }
+
+        public Task LoadTextAsync(ProjectFile project, string text)
+        {
+            Dialogs.ClearEverything();
+            Dialogs.DismissLoadDialogue();
+
+            try
+            {
+                var chapterName = project?.file?.DisplayName ?? project?.projectName ?? project?.Name ?? string.Empty;
+                ProjectState.AddExistingChapter(chapterName, Guid.NewGuid().ToString(), text ?? string.Empty);
+                TextEditor.SelectedChapterIndex = 0;
+
+                _onLoaded();
+                Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = false });
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Failed to restore plain text recovery data", ex);
+                ShowLoadErrorNotification();
+                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+            }
+
+            return Task.CompletedTask;
         }
     }
 }

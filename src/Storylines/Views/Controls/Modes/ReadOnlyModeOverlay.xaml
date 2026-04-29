@@ -22,7 +22,7 @@
                 Click="OnExitPill_Click">
             <StackPanel Orientation="Horizontal" Spacing="10">
                 <FontIcon Glyph="&#xE72E;"
-                          FontFamily="Segoe MDL2 Assets"
+                          Style="{StaticResource AppSymbolIconStyle}"
                           FontSize="14"
                           Foreground="{ThemeResource TextForeground}" />
                 <TextBlock x:Uid="readOnlyExitPill"

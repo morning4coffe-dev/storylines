@@ -261,6 +261,63 @@ namespace Storylines.Services
             }
         }
 
+        public async Task<bool> TryRestoreRecoveryAsync()
+        {
+            if (!RecoveryService.HasRecoveryData())
+                return false;
+
+            var recoveryJson = await RecoveryService.GetRecoveryJsonAsync();
+            if (!_jsonSerializer.CanDeserialize(recoveryJson))
+            {
+                await RecoveryService.ClearRecoveryDataAsync();
+                return false;
+            }
+
+            var projectData = NormalizeProjectData(_jsonSerializer.Deserialize(recoveryJson));
+            var recoveredProject = await CreateRecoveredProjectAsync(projectData);
+            var documentType = recoveredProject?.file?.FileType ?? RecoveryService.GetRecoveryDocumentType();
+
+            await _operationLock.WaitAsync();
+
+            try
+            {
+                CurrentProject = recoveredProject;
+                NotificationManager.DisplayMainProgressBar(true);
+
+                if (string.Equals(documentType, ".txt", StringComparison.OrdinalIgnoreCase))
+                {
+                    var plainTextHandler = _handlers[".txt"] as PlainTextDocumentPersistenceHandler;
+                    if (plainTextHandler == null)
+                        throw new InvalidOperationException("Plain text recovery handler is not available.");
+
+                    await plainTextHandler.LoadTextAsync(CurrentProject, GetRecoveredPlainText(projectData));
+                }
+                else
+                {
+                    var storylinesHandler = _handlers[".srl"] as StorylinesDocumentPersistenceHandler;
+                    if (storylinesHandler == null)
+                        throw new InvalidOperationException("Storylines recovery handler is not available.");
+
+                    await storylinesHandler.LoadProjectDataAsync(CurrentProject, projectData);
+                }
+
+                TimeTravelSystem.unSavedProgress = true;
+                _events.Publish(new TitleBarUpdateEvent());
+                return true;
+            }
+            catch (Exception ex)
+            {
+                _logger.Error("Failed to restore recovery data", ex);
+                ShowLoadErrorNotification();
+                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                return false;
+            }
+            finally
+            {
+                _operationLock.Release();
+            }
+        }
+
         public void DefaultLaunch(IStorageItem storageItem)
         {
             var file = storageItem as StorageFile;
@@ -361,6 +418,49 @@ namespace Storylines.Services
         {
             CurrentProject ??= new ProjectFile();
             return CurrentProject;
+        }
+
+        private async Task<ProjectFile> CreateRecoveredProjectAsync(ProjectData projectData)
+        {
+            var token = RecoveryService.GetRecoveryProjectToken();
+            if (string.IsNullOrWhiteSpace(token))
+                return CreateTransientRecoveredProject(projectData);
+
+            try
+            {
+                var file = await ProjectFile.GetProjectFromTokenAsync(token);
+                if (file == null)
+                    return CreateTransientRecoveredProject(projectData);
+
+                var project = await ProjectFile.LoadExistingAsync(file, token);
+                project.ProjectName = string.IsNullOrWhiteSpace(projectData?.Name) ? project.ProjectName : projectData.Name;
+                project.ProjectVersion = projectData?.Version;
+                return project;
+            }
+            catch (Exception ex)
+            {
+                _logger.Warning($"Failed to re-associate recovered project with its source file: {ex.Message}");
+                return CreateTransientRecoveredProject(projectData);
+            }
+        }
+
+        private static ProjectFile CreateTransientRecoveredProject(ProjectData projectData)
+        {
+            var name = !string.IsNullOrWhiteSpace(projectData?.Name)
+                ? projectData.Name
+                : projectData?.Chapters?.FirstOrDefault()?.Name;
+
+            return new ProjectFile
+            {
+                Name = name,
+                ProjectName = name,
+                ProjectVersion = projectData?.Version
+            };
+        }
+
+        private static string GetRecoveredPlainText(ProjectData projectData)
+        {
+            return projectData?.Chapters?.FirstOrDefault()?.Text ?? string.Empty;
         }
 
         private bool TryResolveHandler(StorageFile file, out DocumentPersistenceHandlerBase handler)

@@ -52,6 +52,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
+            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
             current = null;
         }
@@ -142,12 +143,15 @@ namespace Storylines.Views.Dialogs
 
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += (s, e) =>
-            {
-                if (_isHide) Hide();
-            };
+            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
             PointerExited += (s, e) => _isHide = true;
             PointerEntered += (s, e) => _isHide = false;
+        }
+
+        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            if (_isHide)
+                Hide();
         }
     }
 }

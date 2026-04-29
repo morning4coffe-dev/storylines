@@ -43,16 +43,23 @@ namespace Storylines.Views.Pages
             _events.Subscribe<ChapterToolsStateEvent>(e => OnChapterToolsStateChanged(e.Enabled));
             _events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
             _events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
+            _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
 
             SizeChanged();
         }
 
+        private void OnSettingChanged(SettingChangedEvent e)
+        {
+            if (e.SettingKey == SettingsValueStrings.ZoomValue && ChapterText != null)
+                SetZoomValue(Convert.ToInt32(e.Value));
+        }
+
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.item != null)
+            if (App.PendingActivatedItem != null)
             {
-                Persistence.DefaultLaunch(App.item);
-                App.item = null;
+                Persistence.DefaultLaunch(App.PendingActivatedItem);
+                App.PendingActivatedItem = null;
             }
 
             var selectedChapterIndex = ChapterList.ViewModel.SelectedIndex;
@@ -234,7 +241,7 @@ namespace Storylines.Views.Pages
             if (ChapterList.listView.SelectedItem != null)
             {
                 UpdateTextBoxZoom(textBoxZoomSlider.Value);
-                ApplicationData.Current.LocalSettings.Values["TextBoxZoomValue"] = textBoxZoomSlider.Value;
+                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] = textBoxZoomSlider.Value;
             }
         }
 
@@ -255,7 +262,7 @@ namespace Storylines.Views.Pages
 
         public void LoadTextBoxZoom()
         {
-            textBoxZoomSlider.Value = Convert.ToInt32(ApplicationData.Current.LocalSettings.Values["TextBoxZoomValue"] ?? 25);
+            textBoxZoomSlider.Value = Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? 25);
             UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 

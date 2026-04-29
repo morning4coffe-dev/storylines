@@ -33,7 +33,7 @@
                           AutomationProperties.Name="Chapter" />
                 <TextBlock Text="{x:Bind ViewModel.ChapterStatusText, Mode=OneWay}"
                            VerticalAlignment="Center"
-                           FontSize="11" Opacity="0.6" Margin="4,0,0,0" />
+                           FontSize="{StaticResource AppCaptionFontSize}" Opacity="0.6" Margin="4,0,0,0" />
             </StackPanel>
 
             <!-- Right: action buttons -->
@@ -82,17 +82,11 @@
                 <!-- Export/Import flyout -->
                 <Button CornerRadius="4" Padding="8,6"
                         Background="Transparent"
-                        ToolTipService.ToolTip="Export / Import"
-                        AutomationProperties.Name="Export">
+                        ToolTipService.ToolTip="{x:Bind ViewModel.ExportToolbarLabel}"
+                        AutomationProperties.Name="{x:Bind ViewModel.ExportToolbarLabel}">
                     <FontIcon Glyph="&#xEDE1;" FontSize="14" />
                     <Button.Flyout>
-                        <MenuFlyout>
-                            <MenuFlyoutItem x:Uid="branchingExportJson"
-                                            Command="{x:Bind ViewModel.ExportGraphJsonCommand}" />
-                            <MenuFlyoutItem x:Uid="branchingExportTwee"
-                                            Command="{x:Bind ViewModel.ExportGraphTweeCommand}" />
-                            <MenuFlyoutItem x:Uid="branchingExportScreenplay"
-                                            Command="{x:Bind ViewModel.ExportGraphScreenplayCommand}" />
+                        <MenuFlyout x:Name="exportImportFlyout">
                             <MenuFlyoutSeparator />
                             <MenuFlyoutItem x:Uid="branchingImportJson"
                                             Command="{x:Bind ViewModel.ImportGraphJsonCommand}" />
@@ -162,11 +156,11 @@
                                                    VerticalAlignment="Stretch" />
                                         <StackPanel Grid.Column="1" Spacing="1">
                                             <TextBlock Text="{Binding Title}" FontWeight="SemiBold" FontSize="12" />
-                                            <TextBlock Text="{Binding Speaker}" Opacity="0.6" FontSize="10" />
+                                            <TextBlock Text="{Binding Speaker}" Opacity="0.6" FontSize="{StaticResource AppCaptionFontSize}" />
                                         </StackPanel>
                                         <TextBlock Grid.Column="2" Text="{Binding Text}" Opacity="0.4"
                                                    MaxLines="1" TextTrimming="CharacterEllipsis"
-                                                   FontSize="10" MaxWidth="80" VerticalAlignment="Center" />
+                                                   FontSize="{StaticResource AppCaptionFontSize}" MaxWidth="80" VerticalAlignment="Center" />
                                     </Grid>
                                 </DataTemplate>
                             </ListView.ItemTemplate>
@@ -175,15 +169,15 @@
                         <!-- Node action buttons -->
                         <StackPanel Orientation="Horizontal" Spacing="4">
                             <Button x:Uid="branchingDeleteNode" CornerRadius="4" Padding="6,3"
-                                    FontSize="11"
+                                FontSize="{StaticResource AppCaptionFontSize}"
                                     Command="{x:Bind ViewModel.DeleteSelectedNodeCommand}"
                                     AutomationProperties.Name="Delete passage" />
                             <Button x:Uid="branchingSetStartNode" CornerRadius="4" Padding="6,3"
-                                    FontSize="11"
+                                FontSize="{StaticResource AppCaptionFontSize}"
                                     Command="{x:Bind ViewModel.SetStartNodeFromSelectionCommand}"
                                     AutomationProperties.Name="Set as start" />
                             <Button x:Uid="branchingViewCharacter" CornerRadius="4" Padding="6,3"
-                                    FontSize="11"
+                                FontSize="{StaticResource AppCaptionFontSize}"
                                     Command="{x:Bind ViewModel.NavigateToCharacterCommand}"
                                     AutomationProperties.Name="View character" />
                         </StackPanel>
@@ -294,17 +288,19 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <TextBox Grid.Column="0" Text="{Binding Text, Mode=TwoWay}"
-                                                     PlaceholderText="Choice text" FontSize="11" />
+                                                     PlaceholderText="Choice text" FontSize="{StaticResource AppCaptionFontSize}" />
                                             <StackPanel Grid.Column="1" Orientation="Horizontal" Spacing="2">
                                                 <Button CornerRadius="4" Padding="5,3"
                                                         Click="OnToggleConditions_Click"
                                                         ToolTipService.ToolTip="Conditions"
                                                         AutomationProperties.Name="Conditions">
-                                                    <FontIcon Glyph="&#xE71C;" FontSize="11" />
+                                                    <FontIcon Glyph="&#xE71C;" FontSize="{StaticResource AppCaptionFontSize}" />
                                                 </Button>
-                                                <Button Content="✕" CornerRadius="4" Padding="5,3" FontSize="10"
+                                                <Button CornerRadius="4" Padding="5,3"
                                                         Click="OnRemoveChoice_Click"
-                                                        AutomationProperties.Name="Remove" />
+                                                        AutomationProperties.Name="Remove">
+                                                    <SymbolIcon Symbol="Delete" />
+                                                </Button>
                                             </StackPanel>
                                         </Grid>
                                         <!-- Target selector -->
@@ -313,7 +309,7 @@
                                                   SelectedValuePath="Id"
                                                   SelectedValue="{Binding TargetNodeId, Mode=TwoWay}"
                                                   HorizontalAlignment="Stretch"
-                                                  FontSize="11"
+                                                  FontSize="{StaticResource AppCaptionFontSize}"
                                                   PlaceholderText="→ Target passage" />
 
                                         <!-- Inline conditions panel (toggled via button) -->
@@ -330,22 +326,24 @@
                                                                 <ColumnDefinition Width="Auto" />
                                                             </Grid.ColumnDefinitions>
                                                             <TextBox Grid.Column="0" Text="{Binding Flag, Mode=TwoWay}"
-                                                                     PlaceholderText="Flag" FontSize="11" />
-                                                            <ComboBox Grid.Column="1" FontSize="11" MinWidth="80"
+                                                                     PlaceholderText="Flag" FontSize="{StaticResource AppCaptionFontSize}" />
+                                                            <ComboBox Grid.Column="1" FontSize="{StaticResource AppCaptionFontSize}" MinWidth="80"
                                                                       Loaded="OnConditionOperatorComboBox_Loaded"
                                                                       SelectionChanged="OnConditionOperatorComboBox_SelectionChanged" />
                                                             <TextBox Grid.Column="2" Text="{Binding Value, Mode=TwoWay}"
-                                                                     PlaceholderText="Value" FontSize="11" />
-                                                            <Button Grid.Column="3" Content="✕"
-                                                                    CornerRadius="4" Padding="4,2" FontSize="10"
+                                                                     PlaceholderText="Value" FontSize="{StaticResource AppCaptionFontSize}" />
+                                                            <Button Grid.Column="3"
+                                                                    CornerRadius="4" Padding="4,2"
                                                                     Click="OnRemoveCondition_Click"
-                                                                    AutomationProperties.Name="Remove condition" />
+                                                                    AutomationProperties.Name="Remove condition">
+                                                                <SymbolIcon Symbol="Delete" />
+                                                            </Button>
                                                         </Grid>
                                                     </DataTemplate>
                                                 </ItemsControl.ItemTemplate>
                                             </ItemsControl>
                                             <Button x:Uid="branchingAddCondition" CornerRadius="4" Padding="6,3"
-                                                    FontSize="11"
+                                                    FontSize="{StaticResource AppCaptionFontSize}"
                                                     Click="OnAddCondition_Click" />
                                         </StackPanel>
                                     </StackPanel>
@@ -357,7 +355,7 @@
                         <TextBlock Text="{x:Bind ViewModel.ValidationSummary, Mode=OneWay}"
                                    Visibility="{x:Bind ViewModel.HasValidationMessages, Mode=OneWay}"
                                    TextWrapping="Wrap"
-                                   FontSize="11" Opacity="0.7"
+                                   FontSize="{StaticResource AppCaptionFontSize}" Opacity="0.7"
                                    Margin="0,4" />
 
                         <Rectangle Height="1" Fill="{ThemeResource ElementBorderColor}" Margin="0,2" />

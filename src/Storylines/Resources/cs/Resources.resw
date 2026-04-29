@@ -312,6 +312,21 @@
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Neuložený postup</value>
   </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Obnovit neuložené změny?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines našel neuložené změny z poslední relace. Obnovte je a pokračujte v práci na tomto projektu, nebo je zahodte a otevřete poslední uloženou verzi.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Obnovit změny</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Zahodit změny</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Teď ne</value>
+  </data>
   <data name="chapterDialogueCreate" xml:space="preserve">
     <value>Vytvořit kapitolu</value>
   </data>
@@ -525,9 +540,6 @@
   <data name="editFlyout.Text" xml:space="preserve">
     <value>Upravit</value>
   </data>
-  <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Přidat jednoduchou repliku</value>
-  </data>
   <data name="appHeaderEdited" xml:space="preserve">
     <value>Upraveno</value>
   </data>
@@ -689,17 +701,44 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Najít a nahradit (Ctrl+H)</value>
   </data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve">
+    <value>Najít</value>
+  </data>
   <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
     <value>Najít...</value>
+  </data>
+  <data name="matchCaseToggle.Content" xml:space="preserve">
+    <value>Rozlišovat velikost písmen</value>
   </data>
   <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Rozlišovat velikost písmen</value>
   </data>
+  <data name="wholeWordToggle.Content" xml:space="preserve">
+    <value>Celé slovo</value>
+  </data>
   <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Celé slovo</value>
   </data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Předchozí shoda</value>
+  </data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Předchozí shoda</value>
+  </data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Další shoda</value>
+  </data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Další shoda</value>
+  </data>
   <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Zavřít</value>
+  </data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve">
+    <value>Nahradit</value>
   </data>
   <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
     <value>Nahradit...</value>
@@ -1509,6 +1548,45 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
     <value>Word frequency</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>Informace o souboru</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>Jméno souboru:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Umístění:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Psaní</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Revize</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Návrh</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>Informace o souboru</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Vytvořeno:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Upraveno:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Velikost:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Typ:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Zatím neuloženo</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
 

@@ -34,10 +34,6 @@
           <source>Add dialogue</source>
           <target state="needs-review-translation">添加对话</target>
         </trans-unit>
-        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
-          <source>Add simple dialogue</source>
-          <target state="needs-review-translation">添加简单对话</target>
-        </trans-unit>
         <trans-unit id="addText.Text" translate="yes" xml:space="preserve">
           <source>Add</source>
           <target state="needs-review-translation">添加</target>
@@ -982,27 +978,27 @@ the "Add new character" button.</source>
       <group id="STORYLINES/RESOURCES/EN/EXPORTDIALOGUE.RESW" datatype="resx">
         <trans-unit id="All" translate="yes" xml:space="preserve">
           <source>All</source>
-          <target state="new">All</target>
+          <target state="translated">全部</target>
         </trans-unit>
         <trans-unit id="FileLocation" translate="yes" xml:space="preserve">
           <source>File location:</source>
-          <target state="new">File location:</target>
+          <target state="translated">文件位置</target>
         </trans-unit>
         <trans-unit id="FileLocationPlaceholder" translate="yes" xml:space="preserve">
           <source>"C:\Users\Documents"</source>
-          <target state="new">"C:\Users\Documents"</target>
+          <target state="translated">选择一个文件夹</target>
         </trans-unit>
         <trans-unit id="FileName" translate="yes" xml:space="preserve">
           <source>File name:</source>
-          <target state="new">File name:</target>
+          <target state="translated">文件名</target>
         </trans-unit>
         <trans-unit id="FileNameCollisionError" translate="yes" xml:space="preserve">
           <source>This file already exists! Change the name or location otherwise, the file is gonna be replaced.</source>
-          <target state="new">This file already exists! Change the name or location otherwise, the file is gonna be replaced.</target>
+          <target state="translated">该文件名在所选文件夹中已被使用。</target>
         </trans-unit>
         <trans-unit id="FileNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"the-queen-of-donuts-export"</source>
-          <target state="new">"the-queen-of-donuts-export"</target>
+          <target state="translated">我的故事</target>
         </trans-unit>
         <trans-unit id="IncludeChapterName" translate="yes" xml:space="preserve">
           <source>Include chapter name</source>
@@ -1010,7 +1006,7 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="None" translate="yes" xml:space="preserve">
           <source>None</source>
-          <target state="new">None</target>
+          <target state="translated">无</target>
         </trans-unit>
         <trans-unit id="OptionChapters" translate="yes" xml:space="preserve">
           <source>Chapters</source>
@@ -1018,11 +1014,11 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="OptionCharacters" translate="yes" xml:space="preserve">
           <source>Characters</source>
-          <target state="translated">字符</target>
+          <target state="translated">人物</target>
         </trans-unit>
         <trans-unit id="OptionDialogues" translate="yes" xml:space="preserve">
           <source>Dialogues</source>
-          <target state="new">Dialogues</target>
+          <target state="translated">对话</target>
         </trans-unit>
         <trans-unit id="Submit" translate="yes" xml:space="preserve">
           <source>Export</source>
@@ -1034,11 +1030,11 @@ the "Add new character" button.</source>
         </trans-unit>
         <trans-unit id="ChaptersToExport" translate="yes" xml:space="preserve">
           <source>Chapters to export:</source>
-          <target state="new">Chapters to export:</target>
+          <target state="translated">要导出的章节</target>
         </trans-unit>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
-          <target state="new">Characters to export:</target>
+          <target state="translated">要导出的人物</target>
         </trans-unit>
       </group>
     </body>
@@ -1051,11 +1047,11 @@ the "Add new character" button.</source>
       <group id="STORYLINES/RESOURCES/EN/SAVEDIALOGUE.RESW" datatype="resx">
         <trans-unit id="ProjectName" translate="yes" xml:space="preserve">
           <source>Project name:</source>
-          <target state="new">Project name:</target>
+          <target state="translated">项目名称</target>
         </trans-unit>
         <trans-unit id="ProjectNamePlaceholder" translate="yes" xml:space="preserve">
           <source>"About The Queen of Donuts"</source>
-          <target state="new">"About The Queen of Donuts"</target>
+          <target state="translated">我的故事</target>
         </trans-unit>
         <trans-unit id="SaveCopyTitle" translate="yes" xml:space="preserve">
           <source>Save Copy</source>
@@ -1118,6 +1114,214 @@ Write your stories with either your keyboard, touch, voice, or a pen</target>
         <trans-unit id="Preview" translate="yes" xml:space="preserve">
           <source>Preview</source>
           <target state="new">Preview</target>
+        </trans-unit>
+        <trans-unit id="cancelButtonText" translate="yes" xml:space="preserve">
+          <source>Cancel</source>
+          <target state="translated">取消</target>
+        </trans-unit>
+        <trans-unit id="notesPanePlotDescription.Text" translate="yes" xml:space="preserve">
+          <source>Which plot threads appear in this chapter? (comma-separated)</source>
+          <target state="translated">本章出现了哪些情节线？（用逗号分隔）</target>
+        </trans-unit>
+        <trans-unit id="notesPaneLocationDescription.Text" translate="yes" xml:space="preserve">
+          <source>Where does this chapter take place?</source>
+          <target state="translated">本章发生在哪里？</target>
+        </trans-unit>
+        <trans-unit id="writingPromptsDialogue.Title" translate="yes" xml:space="preserve">
+          <source>Writing Prompts</source>
+          <target state="translated">写作提示</target>
+        </trans-unit>
+        <trans-unit id="relationshipTypePlaceholder" translate="yes" xml:space="preserve">
+          <source>e.g. Rival, Love interest, Mentor...</source>
+          <target state="translated">例如：对手、暧昧对象、导师...</target>
+        </trans-unit>
+        <trans-unit id="notesPanePlotBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>e.g. Main quest, Love subplot, Mystery...</source>
+          <target state="translated">例如：主线任务、爱情支线、谜团...</target>
+        </trans-unit>
+        <trans-unit id="globalSearchDialogue.Title" translate="yes" xml:space="preserve">
+          <source>Search All Chapters</source>
+          <target state="translated">搜索所有章节</target>
+        </trans-unit>
+        <trans-unit id="addButtonText" translate="yes" xml:space="preserve">
+          <source>Add</source>
+          <target state="translated">添加</target>
+        </trans-unit>
+        <trans-unit id="storyCanvasTitle.Text" translate="yes" xml:space="preserve">
+          <source>Story Canvas</source>
+          <target state="translated">故事画布</target>
+        </trans-unit>
+        <trans-unit id="noMatchesFound" translate="yes" xml:space="preserve">
+          <source>No matches found</source>
+          <target state="translated">未找到匹配项</target>
+        </trans-unit>
+        <trans-unit id="notesPanePlotTab.Header" translate="yes" xml:space="preserve">
+          <source>Plot</source>
+          <target state="translated">情节</target>
+        </trans-unit>
+        <trans-unit id="setStatusFlyout.Text" translate="yes" xml:space="preserve">
+          <source>Set Status</source>
+          <target state="translated">设置状态</target>
+        </trans-unit>
+        <trans-unit id="notesPaneSynopsisBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Summarise what happens in this chapter...</source>
+          <target state="translated">概述本章发生的内容...</target>
+        </trans-unit>
+        <trans-unit id="notesPaneSynopsisTab.Header" translate="yes" xml:space="preserve">
+          <source>Synopsis</source>
+          <target state="translated">梗概</target>
+        </trans-unit>
+        <trans-unit id="globalSearchBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Type to search across all chapters...</source>
+          <target state="translated">输入内容以搜索所有章节...</target>
+        </trans-unit>
+        <trans-unit id="connectionLabelTitle" translate="yes" xml:space="preserve">
+          <source>Connection Label (optional)</source>
+          <target state="translated">连接标签（可选）</target>
+        </trans-unit>
+        <trans-unit id="skipButtonText" translate="yes" xml:space="preserve">
+          <source>Skip</source>
+          <target state="translated">跳过</target>
+        </trans-unit>
+        <trans-unit id="pinboardEmptyDescription.Text" translate="yes" xml:space="preserve">
+          <source>Add chapters from the main writing page to see them here.</source>
+          <target state="translated">从主写作页面添加章节后，即可在这里看到它们。</target>
+        </trans-unit>
+        <trans-unit id="relationshipSelectCharacter" translate="yes" xml:space="preserve">
+          <source>Select character...</source>
+          <target state="translated">选择角色...</target>
+        </trans-unit>
+        <trans-unit id="addRelationshipTitle" translate="yes" xml:space="preserve">
+          <source>Add Relationship</source>
+          <target state="translated">添加关系</target>
+        </trans-unit>
+        <trans-unit id="notesPaneLocationBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>e.g. The old library, Downtown streets...</source>
+          <target state="translated">例如：老图书馆、市中心街道...</target>
+        </trans-unit>
+        <trans-unit id="chapterTagsSuggestions.Text" translate="yes" xml:space="preserve">
+          <source>Suggestions</source>
+          <target state="translated">建议</target>
+        </trans-unit>
+        <trans-unit id="writingPromptsCategory.Header" translate="yes" xml:space="preserve">
+          <source>Category</source>
+          <target state="translated">类别</target>
+        </trans-unit>
+        <trans-unit id="chapterTagsLabel.Text" translate="yes" xml:space="preserve">
+          <source>Tags</source>
+          <target state="translated">标签</target>
+        </trans-unit>
+        <trans-unit id="branchingSearch.Header" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">搜索</target>
+        </trans-unit>
+        <trans-unit id="branchingSearch.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search nodes or lines</source>
+          <target state="translated">搜索节点或台词</target>
+        </trans-unit>
+        <trans-unit id="branchingSpeakerFilter.Header" translate="yes" xml:space="preserve">
+          <source>Speaker filter</source>
+          <target state="translated">说话者筛选</target>
+        </trans-unit>
+        <trans-unit id="branchingCreateNode.Content" translate="yes" xml:space="preserve">
+          <source>Create node</source>
+          <target state="translated">创建节点</target>
+        </trans-unit>
+        <trans-unit id="branchingDeleteNode.Content" translate="yes" xml:space="preserve">
+          <source>Delete node</source>
+          <target state="translated">删除节点</target>
+        </trans-unit>
+        <trans-unit id="branchingSetStartNode.Content" translate="yes" xml:space="preserve">
+          <source>Set start</source>
+          <target state="translated">设为起点</target>
+        </trans-unit>
+        <trans-unit id="branchingMapToggle.Header" translate="yes" xml:space="preserve">
+          <source>Map mode</source>
+          <target state="translated">地图模式</target>
+        </trans-unit>
+        <trans-unit id="branchingInspectorTitle.Text" translate="yes" xml:space="preserve">
+          <source>Node inspector</source>
+          <target state="translated">节点检查器</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeTitle.Header" translate="yes" xml:space="preserve">
+          <source>Node title</source>
+          <target state="translated">节点标题</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeaker.Header" translate="yes" xml:space="preserve">
+          <source>Speaker</source>
+          <target state="translated">说话者</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeText.Header" translate="yes" xml:space="preserve">
+          <source>Line text</source>
+          <target state="translated">台词文本</target>
+        </trans-unit>
+        <trans-unit id="branchingSaveNodeEdits.Content" translate="yes" xml:space="preserve">
+          <source>Save edits</source>
+          <target state="translated">保存修改</target>
+        </trans-unit>
+        <trans-unit id="branchingAddChoice.Content" translate="yes" xml:space="preserve">
+          <source>Add choice</source>
+          <target state="translated">添加选项</target>
+        </trans-unit>
+        <trans-unit id="branchingRemoveChoice.Content" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="translated">删除</target>
+        </trans-unit>
+        <trans-unit id="branchingValidateGraph.Content" translate="yes" xml:space="preserve">
+          <source>Validate graph</source>
+          <target state="translated">验证图谱</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulatorExpander.Header" translate="yes" xml:space="preserve">
+          <source>Playthrough simulator</source>
+          <target state="translated">流程模拟器</target>
+        </trans-unit>
+        <trans-unit id="pinboardButton.Label" translate="yes" xml:space="preserve">
+          <source>Story Canvas</source>
+          <target state="translated">故事画布</target>
+        </trans-unit>
+        <trans-unit id="writingPromptsButton.Label" translate="yes" xml:space="preserve">
+          <source>Writing Prompts</source>
+          <target state="translated">写作提示</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeakerSuggest.Header" translate="yes" xml:space="preserve">
+          <source>Speaker</source>
+          <target state="translated">说话者</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeakerSuggest.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Type or select a character</source>
+          <target state="translated">输入或选择一个角色</target>
+        </trans-unit>
+        <trans-unit id="branchingEmptyTitle.Text" translate="yes" xml:space="preserve">
+          <source>No passages yet</source>
+          <target state="translated">还没有段落</target>
+        </trans-unit>
+        <trans-unit id="branchingEmptyDescription.Text" translate="yes" xml:space="preserve">
+          <source>Double-click the canvas or click "Add passage" to create your first story passage.</source>
+          <target state="translated">双击画布或点击“添加段落”来创建你的第一个故事段落。</target>
+        </trans-unit>
+        <trans-unit id="branchingStartBadge" translate="yes" xml:space="preserve">
+          <source>Start</source>
+          <target state="translated">起点</target>
+        </trans-unit>
+        <trans-unit id="branchingDeadEndBadge" translate="yes" xml:space="preserve">
+          <source>Dead-end</source>
+          <target state="translated">死路</target>
+        </trans-unit>
+        <trans-unit id="branchingChoiceCountFormat" translate="yes" xml:space="preserve">
+          <source>{0} choices</source>
+          <target state="translated">{0} 个选项</target>
+        </trans-unit>
+        <trans-unit id="branchingImportedNodesFormat" translate="yes" xml:space="preserve">
+          <source>Imported {0} passages from chapter text.</source>
+          <target state="translated">已从章节文本导入 {0} 个段落。</target>
+        </trans-unit>
+        <trans-unit id="projectStatistics.Text" translate="yes" xml:space="preserve">
+          <source>Project Statistics</source>
+          <target state="translated">项目统计</target>
+        </trans-unit>
+        <trans-unit id="wordDistribution.Text" translate="yes" xml:space="preserve">
+          <source>Word frequency</source>
+          <target state="translated">词频统计</target>
         </trans-unit>
       </group>
     </body>

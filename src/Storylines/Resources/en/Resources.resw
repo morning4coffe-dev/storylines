@@ -414,6 +414,21 @@
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Unsaved progress</value>
   </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Restore unsaved changes?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines found unsaved changes from the last session. Restore them and continue working on this project, or discard them and open the last saved version.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Restore changes</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Discard changes</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Not now</value>
+  </data>
   <data name="experience.Title" xml:space="preserve">
     <value>Tell us about your experience</value>
   </data>
@@ -900,17 +915,44 @@
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Find &amp; Replace (Ctrl+H)</value>
   </data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve">
+    <value>Find</value>
+  </data>
   <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
     <value>Find...</value>
+  </data>
+  <data name="matchCaseToggle.Content" xml:space="preserve">
+    <value>Match Case</value>
   </data>
   <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Match Case</value>
   </data>
+  <data name="wholeWordToggle.Content" xml:space="preserve">
+    <value>Whole Word</value>
+  </data>
   <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Whole Word</value>
   </data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Previous match</value>
+  </data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Previous match</value>
+  </data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Next match</value>
+  </data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Next match</value>
+  </data>
   <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve">
+    <value>Replace</value>
   </data>
   <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
     <value>Replace...</value>
@@ -1705,5 +1747,44 @@
   </data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve">
     <value>"About The Queen of Donuts"</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>File Information</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Location:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Writing</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>File Information</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Created:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Modified:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Size:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Type:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Not saved yet</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>

@@ -33,6 +33,8 @@ namespace Storylines.Services.Interfaces
 
         Task LoadAsync(ProjectFile project);
 
+        Task<bool> TryRestoreRecoveryAsync();
+
         void DefaultLaunch(IStorageItem storageItem);
 
         void EnableAutosave();

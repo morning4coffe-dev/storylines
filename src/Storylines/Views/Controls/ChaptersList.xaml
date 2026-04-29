@@ -54,7 +54,8 @@
                         Padding="0"
                         Click="OnFlyoutDisplayButton_Click">
                     <FontIcon Glyph="&#xE712;"
-                              FontSize="12"
+                              Style="{StaticResource AppSymbolIconStyle}"
+                              FontSize="{StaticResource AppCaptionFontSize}"
                               Opacity="0.6" />
                 </Button>
 
@@ -66,9 +67,8 @@
                         CornerRadius="4"
                         Padding="0"
                     Command="{x:Bind ViewModel.CloseChapterListCommand}">
-                    <FontIcon Glyph="&#xE711;"
-                              FontSize="10"
-                              Opacity="0.6" />
+                    <SymbolIcon Symbol="Cancel"
+                                Opacity="0.6" />
                 </Button>
             </StackPanel>
         </Grid>
@@ -143,14 +143,14 @@
                                     Orientation="Horizontal" Spacing="6"
                                     Margin="0,2,0,0">
                                 <TextBlock Text="{Binding Status}"
-                                       FontSize="10"
+                                        FontSize="{StaticResource AppCaptionFontSize}"
                                        Opacity="0.55" />
                                 <TextBlock Text="·"
-                                       FontSize="10"
+                                        FontSize="{StaticResource AppCaptionFontSize}"
                                        Opacity="0.35"
                                        Visibility="{Binding Location, Converter={StaticResource EmptyStringToCollapsedConverter}}" />
                                 <TextBlock Text="{Binding Location}"
-                                       FontSize="10"
+                                        FontSize="{StaticResource AppCaptionFontSize}"
                                        Opacity="0.5"
                                        Visibility="{Binding Location, Converter={StaticResource EmptyStringToCollapsedConverter}}"
                                        TextTrimming="CharacterEllipsis"
@@ -174,7 +174,7 @@
                                             Background="{ThemeResource SystemAccentColorLight2}"
                                             Opacity="0.85">
                                             <TextBlock Text="{x:Bind}"
-                                                   FontSize="10"
+                                                  FontSize="{StaticResource AppCaptionFontSize}"
                                                    Foreground="White"
                                                    VerticalAlignment="Center" />
                                         </Border>
@@ -228,7 +228,7 @@
                                     x:Uid="addText"
                                     Click="OnChapterAdd_Click">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="" />
+                            <SymbolIcon Symbol="Add" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     <MenuFlyoutSeparator />
@@ -236,14 +236,14 @@
                                     x:Uid="renameFlyout"
                                     Click="OnChapterRename_Click">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="" />
+                            <SymbolIcon Symbol="Edit" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     <MenuFlyoutItem x:Name="removeFlyout"
                                     x:Uid="removeFlyout"
                                     Click="OnChapterDeleteFlyout_Click">
                         <MenuFlyoutItem.Icon>
-                            <FontIcon Glyph="" />
+                            <SymbolIcon Symbol="Delete" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
                     <MenuFlyoutSeparator />

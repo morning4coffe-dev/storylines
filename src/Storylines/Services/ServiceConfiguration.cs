@@ -18,6 +18,9 @@ namespace Storylines.Services
             services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
             services.AddSingleton<ITelemetryService, TelemetryService>();
             services.AddSingleton<IFileService, FileService>();
+            services.AddSingleton<IFilePickerService, FilePickerService>();
+            services.AddSingleton<IExportService, ExportService>();
+            services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<JsonSaveSerializer>();
             services.AddSingleton<LegacySrlSerializer>();
             services.AddSingleton<ProjectState>();
@@ -37,7 +40,11 @@ namespace Storylines.Services
             services.AddSingleton<ChaptersListViewModel>();
             services.AddSingleton<CommandBarViewModel>();
             services.AddSingleton<BranchingDialogueViewModel>();
+            services.AddTransient<ExportDialogViewModel>();
             services.AddTransient<CharactersPageViewModel>();
+            services.AddTransient<ViewModels.Settings.GeneralSettingsViewModel>();
+            services.AddTransient<ViewModels.Settings.PersonalizationSettingsViewModel>();
+            services.AddTransient<ViewModels.Settings.AccessibilitySettingsViewModel>();
 
             return services.BuildServiceProvider();
         }

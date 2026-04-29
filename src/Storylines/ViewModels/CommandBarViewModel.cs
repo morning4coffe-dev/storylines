@@ -100,6 +100,9 @@ namespace Storylines.ViewModels
         private void ShowProjectStats() => _dialogs.OpenProjectStats(false);
 
         [RelayCommand]
+        private void ShowProjectFileInfo() => _dialogs.OpenProjectFileInfo();
+
+        [RelayCommand]
         private void NavigateToCharacters() => AppView.current.ChangePage(AppView.Pages.Characters);
 
         [RelayCommand]

@@ -44,6 +44,7 @@ namespace Storylines.Views.Pages
             ViewModel.GraphRefreshed += OnGraphRefreshed;
             ViewModel.PropertyChanged += OnViewModel_PropertyChanged;
 
+            BuildExportMenuItems();
             canvasControl.RedrawCanvas();
             UpdateTagsTextBox();
         }
@@ -98,6 +99,26 @@ namespace Storylines.Views.Pages
         private void OnGraphRefreshed()
         {
             canvasControl.RedrawCanvas();
+        }
+
+        private void BuildExportMenuItems()
+        {
+            if (exportImportFlyout == null)
+                return;
+
+            while (exportImportFlyout.Items.Count > 0 && exportImportFlyout.Items[0] is MenuFlyoutItem)
+                exportImportFlyout.Items.RemoveAt(0);
+
+            var insertIndex = 0;
+            foreach (var format in ViewModel.BranchingExportFormats)
+            {
+                var menuItem = new MenuFlyoutItem
+                {
+                    Text = format.MenuText,
+                };
+                menuItem.Click += async (sender, args) => await ViewModel.ExportGraphAsync(format.Definition.Id);
+                exportImportFlyout.Items.Insert(insertIndex++, menuItem);
+            }
         }
 
         #endregion

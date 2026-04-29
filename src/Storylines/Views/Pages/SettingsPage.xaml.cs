@@ -1,5 +1,7 @@
 using Microsoft.UI.Xaml.Controls;
+using Storylines.Constants;
 using Storylines.Views.Pages.Settings;
+using System;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Media.Animation;
 
@@ -7,12 +9,12 @@ namespace Storylines.Views.Pages
 {
     public sealed partial class SettingsPage : Windows.UI.Xaml.Controls.Page
     {
-        public static SettingsPage settings;
+        private const double MinimalPaneBreakpoint = LayoutConstants.CompactBreakpoint;
+        private const double CompactPaneBreakpoint = 1100;
 
         public SettingsPage()
         {
             InitializeComponent();
-            settings = this;
 
             AppView.current.page = AppView.Pages.MainPage;
 
@@ -27,32 +29,22 @@ namespace Storylines.Views.Pages
 
         public void SwitchPage(string tag)
         {
-            switch (tag)
+            Type pageType = tag switch
             {
-                case "General":
-                    contentFrame.Navigate(typeof(GeneralPage), null, new SuppressNavigationTransitionInfo());
-                    break;
-                case "Personalize":
-                    contentFrame.Navigate(typeof(PersonalizationPage), null, new SuppressNavigationTransitionInfo());
-                    break;
-                case "Accessibility":
-                    contentFrame.Navigate(typeof(AccessibilityPage), null, new SuppressNavigationTransitionInfo());
-                    break;
-                case "About":
-                    contentFrame.Navigate(typeof(AboutPage), null, new SuppressNavigationTransitionInfo());
-                    break;
-            }
-        }
+                "General" => typeof(GeneralPage),
+                "Personalize" => typeof(PersonalizationPage),
+                "Accessibility" => typeof(AccessibilityPage),
+                "About" => typeof(AboutPage),
+                _ => null
+            };
 
+            if (pageType != null)
+                contentFrame.Navigate(pageType, null, new SuppressNavigationTransitionInfo());
+        }
 
         private void OnAboutPageItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             settingsNavigationView.SelectedItem = aboutPageItem;
-        }
-
-        private void OnAboutPageItem_GotFocus(object sender, RoutedEventArgs e)
-        {
-            //OnAboutPageItem_Tapped(sender, new Windows.UI.Xaml.Input.TappedRoutedEventArgs());
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -60,17 +52,16 @@ namespace Storylines.Views.Pages
             UpdateSize();
         }
 
-        private void UserControl_ActualThemeChanged(FrameworkElement sender, object args)
-        {
-            //themeBorderThickness = sender.ActualTheme == ElementTheme.Dark ? new Thickness(0) : new Thickness(0.5);
-        }
-
         public void UpdateSize()
         {
-            if (ActualWidth < 780)
-                settingsNavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.LeftCompact;
-            else
-                settingsNavigationView.PaneDisplayMode = NavigationViewPaneDisplayMode.Auto;
+            var paneDisplayMode = ActualWidth < MinimalPaneBreakpoint
+                ? NavigationViewPaneDisplayMode.LeftMinimal
+                : ActualWidth < CompactPaneBreakpoint
+                    ? NavigationViewPaneDisplayMode.LeftCompact
+                    : NavigationViewPaneDisplayMode.Auto;
+
+            settingsNavigationView.PaneDisplayMode = paneDisplayMode;
+            settingsNavigationView.IsPaneOpen = paneDisplayMode == NavigationViewPaneDisplayMode.Auto;
         }
 
         private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)

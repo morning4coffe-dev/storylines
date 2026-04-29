@@ -264,10 +264,10 @@ namespace Storylines.Views.Controls
             => _navigation.NavigateTo(Services.Interfaces.NavigationTarget.Pinboard);
 
         private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
-            => GlobalSearchDialogue.Open();
+            => _ = GlobalSearchDialogue.OpenAsync();
 
         private void OnWritingPromptsButton_Click(object sender, RoutedEventArgs e)
-            => WritingPromptsDialogue.Open();
+            => _ = WritingPromptsDialogue.OpenAsync();
         #endregion
 
         #region HELP

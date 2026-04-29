@@ -1,12 +1,9 @@
-using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.Models;
+using Storylines.ViewModels;
 using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
-using Windows.Storage;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 
@@ -14,259 +11,77 @@ namespace Storylines.Views.Dialogs
 {
     public sealed partial class ExportDialogue : ContentDialog
     {
-        private static ProjectState ProjectState => App.GetService<ProjectState>();
-        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+        public ExportDialogViewModel ViewModel { get; }
 
-        public static ExportDialogue exportDialogue;
-
-        private static ExportService.WhatToExport openExport;
-
-        public StorageFolder saveFolder;
-
-        public ObservableCollection<string> extensions { get; private set; } = new ObservableCollection<string>();
-
-        public ExportDialogue()
+        public ExportDialogue(ExportTarget initialTarget = ExportTarget.None)
         {
             InitializeComponent();
-            exportDialogue = this;
+
+            ViewModel = App.GetService<ExportDialogViewModel>();
+            DataContext = ViewModel;
 
             InitializeClickOutToClose();
 
-            exportDialogue.RequestedTheme = AppView.current.ActualTheme;
+            RequestedTheme = AppView.current.ActualTheme;
 
-            AppView.currentlyOpenedDialogue = exportDialogue;
+            AppView.currentlyOpenedDialogue = this;
+            ViewModel.Initialize(initialTarget);
 
-            fileNameText.Text = $"{(Persistence.CurrentProject?.file != null ? Persistence.CurrentProject.file.DisplayName : "my-story")}-{Storylines.Resources.ExportDialogue.Title.ToLower()}";
-
-            SomethingChanged(false);
-
-            if (openExport != default)
-            {
+            if (initialTarget != ExportTarget.None)
                 chooseWhatToExportAnimation.FromVerticalOffset = 0;
-                switch (openExport)
-                {
-                    case ExportService.WhatToExport.Chapters:
-                        chooseExportChaptersButton.IsChecked = true;
-                        exportDialogue.OnChooseExportChaptersButton_Click(new object(), new RoutedEventArgs());
-                        break;
-                    case ExportService.WhatToExport.Dialogues:
-                        chooseExportDialoguesButton.IsChecked = true;
-                        exportDialogue.OnChooseExportDialoguesButton_Click(new object(), new RoutedEventArgs());
-                        break;
-                    case ExportService.WhatToExport.Characters:
-                        chooseExportCharactersButton.IsChecked = true;
-                        exportDialogue.OnChooseExportCharactersButton_Click(new object(), new RoutedEventArgs());
-                        break;
-                }
+        }
 
-                openExport = default;
+        public static void Open(ExportTarget target = ExportTarget.None)
+            => _ = OpenAsync(target);
+
+        public static async Task OpenAsync(ExportTarget target = ExportTarget.None)
+        {
+            try
+            {
+                await new ExportDialogue(target).ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to open export dialog: {ex.Message}");
             }
         }
 
-        public static void Open(ExportService.WhatToExport openExport)
+        private async void OnExportButton_Click(object sender, RoutedEventArgs e)
         {
-            ExportDialogue.openExport = openExport;
-            _ = new ExportDialogue().ShowAsync();
-        }
-
-        public void AddToExport(bool characters)
-        {
-            int num = characters ? ProjectState.Characters.Count : ProjectState.Chapters.Count;
-
-            chaptersToExportList.Items.Clear();
-
-            for (int i = 0; i < num; i++)
-            {
-                string itemName = characters ? ProjectState.Characters[i].Name : ProjectState.Chapters[i].Name;
-
-                chaptersToExportList.Items.Add(new ListViewItem() { Content = itemName, IsSelected = true });
-            }
-
-            characterDialoguesToExportList.Items.Clear();
-
-            for (int i = 0; i < ProjectState.Characters.Count; i++)
-            {
-                characterDialoguesToExportList.Items.Add(new ListViewItem() { Content = ProjectState.Characters[i].Name, IsSelected = true });
-            }
-        }
-
-        public void SomethingChanged(bool nameOrLocation)
-        {
-            //if(Character.characters > 0)
-            if (saveFolder != null && fileNameText.Text.Length > 0 && SettingsValues.IsStringSaveable(fileNameText.Text))
-            {
-                if (ExportService.export != ExportService.WhatToExport.Characters && chaptersToExportList.SelectedItems.Count > 0)
-                {
-                    submitButton.IsEnabled = true;
-                } 
-                else
-                {
-                    if (ExportService.export == ExportService.WhatToExport.Characters && characterDialoguesToExportList.SelectedItems.Count > 0)
-                        submitButton.IsEnabled = true;
-                    else
-                        submitButton.IsEnabled = false;
-                }
-            }
-            else
-                submitButton.IsEnabled = false;
-
-            if (nameOrLocation && saveFolder != null && !string.IsNullOrEmpty(fileNameText.Text))
-                try
-                {
-                    var n = fileNameText.Text + extensionComboBox.SelectedItem;
-                    IStorageItem file = saveFolder.TryGetItemAsync($"{n}").AsTask().GetAwaiter().GetResult();
-
-                    nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
-                }
-                catch (Exception ex)
-                {
-                    System.Diagnostics.Debug.WriteLine($"File collision check failed: {ex.Message}");
-                }
-        }
-
-
-        public string DropdownContent(ListView listView)
-        {
-            SomethingChanged(true);
-
-            if (listView.SelectedItems.Count == listView.Items.Count && listView.SelectedItems.Count > 0)
-                return Storylines.Resources.ExportDialogue.All;
-            else
-            if (listView.SelectedItems.Count == 0)
-                return Storylines.Resources.ExportDialogue.None;
-            else
-            {
-                string txt = "";
-
-                for (int i = 0; i < listView.SelectedItems.Count; i++)
-                {
-                    txt += txt != "" ? $", {(listView.SelectedItems[i] as ListViewItem).Content}" : $"{(listView.SelectedItems[i] as ListViewItem).Content}";
-                }
-                return txt;
-            }
-        }
-
-        public async Task ChooseFileToExportAsync()
-        {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add("*");
-
-            StorageFolder folder = await picker.PickSingleFolderAsync();
-
-            if (folder != null)
-            {
-                saveFolder = folder;
-                locationText.Text = folder.Path;
-                locationText.Visibility = Visibility.Visible;
-                locationTextPlaceholder.Visibility = Visibility.Collapsed;
-
-                SomethingChanged(true);
-            }
-        }
-
-        private void OnExportButton_Click(object sender, RoutedEventArgs e)
-        {
-            List<int> selectedIndexes = new List<int>();
-
-            for (int i = 0; i < chaptersToExportList.SelectedItems.Count; i++)
-            {
-                selectedIndexes.Add(chaptersToExportList.Items.IndexOf(chaptersToExportList.SelectedItems[i]));
-            }
-
-            List<Character> selectedIndexes2 = new List<Character>();
-
-            for (int i = 0; i < characterDialoguesToExportList.SelectedItems.Count; i++)
-            {
-                selectedIndexes2.Add(ProjectState.Characters[i]);
-            }
-
-            ExportService.Export(saveFolder, fileNameText.Text, extensionComboBox.SelectedItem as string, selectedIndexes, selectedIndexes2, (bool)withChapterNameCheckBox.IsChecked);
-            Hide();
+            if (await ViewModel.SubmitAsync())
+                Hide();
         }
 
         private void OnChooseExportChaptersButton_Click(object sender, RoutedEventArgs e)
         {
-            chooseExportChaptersPanel.Visibility = (bool)chooseExportChaptersButton.IsChecked ? Visibility.Visible : Visibility.Collapsed;
-            if ((bool)chooseExportChaptersButton.IsChecked)
-            {
-                withChapterNameCheckBox.Visibility = Visibility.Visible;
-                characterDialoguesToExportHolder.Visibility = Visibility.Collapsed;
-
-                extensions.Clear();
-
-                AddToExport(false);
-
-                extensions.Add(".txt");
-                extensions.Add(".rtf");
-                extensionComboBox.SelectedIndex = 0;
-
-                ExportService.export = ExportService.WhatToExport.Chapters;
-
-                chooseExportDialoguesButton.IsChecked = false;
-                chooseExportCharactersButton.IsChecked = false;
-            }
+            ViewModel.SelectTarget(ExportTarget.Chapters);
         }
 
         private void OnChooseExportDialoguesButton_Click(object sender, RoutedEventArgs e)
         {
-            chooseExportChaptersPanel.Visibility = (bool)chooseExportDialoguesButton.IsChecked ? Visibility.Visible : Visibility.Collapsed;
-            withChapterNameCheckBox.Visibility = Visibility.Collapsed;
-            characterDialoguesToExportHolder.Visibility = Visibility.Visible;
-
-            extensions.Clear();
-
-            AddToExport(false);
-
-            extensions.Add(".txt");
-            extensions.Add(".json");
-            extensionComboBox.SelectedIndex = 0;
-
-            ExportService.export = ExportService.WhatToExport.Dialogues;
-
-            chooseExportChaptersButton.IsChecked = false;
-            chooseExportCharactersButton.IsChecked = false;
+            ViewModel.SelectTarget(ExportTarget.Dialogues);
         }
 
         private void OnChooseExportCharactersButton_Click(object sender, RoutedEventArgs e)
         {
-            chooseExportChaptersPanel.Visibility = (bool)chooseExportCharactersButton.IsChecked ? Visibility.Visible : Visibility.Collapsed;
-            withChapterNameCheckBox.Visibility = Visibility.Collapsed;
-            characterDialoguesToExportHolder.Visibility = Visibility.Collapsed;
-
-            extensions.Clear();
-
-            AddToExport(true);
-
-            extensions.Add(".json");
-            extensionComboBox.SelectedIndex = 0;
-
-            ExportService.export = ExportService.WhatToExport.Characters;
-
-            chooseExportChaptersButton.IsChecked = false;
-            chooseExportDialoguesButton.IsChecked = false;
+            ViewModel.SelectTarget(ExportTarget.Characters);
         }
 
-        private void OnChaptersToExportList_SelectionChanged(object sender, SelectionChangedEventArgs e) => chaptersToExport.Content = DropdownContent(chaptersToExportList);
+        private async void OnExportToLocationButton_Click(object sender, RoutedEventArgs e) => await ViewModel.PickFolderAsync();
 
-        private void OnCharacterDialoguesToList_SelectionChanged(object sender, SelectionChangedEventArgs e) => characterDialoguesToExport.Content = DropdownContent(characterDialoguesToExportList);
-
-        private void OnExportToLocationButton_Click(object sender, RoutedEventArgs e) => _ = ChooseFileToExportAsync();
-
-        private void OnExportLocationFrame_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) => _ = ChooseFileToExportAsync();
+        private async void OnExportLocationFrame_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) => await ViewModel.PickFolderAsync();
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args) => AppView.currentlyOpenedDialogue = null;
-
-        private void OnNameTextBox_TextChanged(object sender, TextChangedEventArgs e) => SomethingChanged(true);
+        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        {
+            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
+            AppView.currentlyOpenedDialogue = null;
+        }
 
         private void ContentDialog_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
+            if (e.Key == Windows.System.VirtualKey.Enter && ViewModel.CanSubmit)
                 OnExportButton_Click(sender, new RoutedEventArgs());
         }
 
@@ -278,19 +93,16 @@ namespace Storylines.Views.Dialogs
         bool isHide = true;
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += (s, e) =>
-            {
-                if (isHide && !isFlyoutOpen)
-                    Hide();
-            };
+            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;
         }
 
-        private void OnExtensionComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        private void OnWindowPointerPressed(CoreWindow sender, PointerEventArgs args)
         {
-            SomethingChanged(true);
+            if (isHide && !isFlyoutOpen)
+                Hide();
         }
     }
 }

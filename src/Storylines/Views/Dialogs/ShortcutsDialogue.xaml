@@ -42,14 +42,7 @@
                     Height="38"
                     Grid.Column="2"
                     Click="OnCloseButton_Click">
-                <FontIcon Glyph=""
-                          Width="23"
-                          RenderTransformOrigin="-.25,.5">
-                    <FontIcon.RenderTransform>
-                        <CompositeTransform ScaleX=".9"
-                                            ScaleY=".9" />
-                    </FontIcon.RenderTransform>
-                </FontIcon>
+                <SymbolIcon Symbol="Cancel" />
             </Button>
         </Grid>
 

@@ -841,6 +841,15 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarButton x:Name="projectInfoButton"
+                                  x:Uid="projectFileInfoButton"
+                                  CornerRadius="4"
+                                  Command="{x:Bind ViewModel.ShowProjectFileInfoCommand}">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
                     <AppBarToggleButton x:Name="autosaveToggleButton"
                                         x:Uid="autosave"
                                         x:FieldModifier="public"
@@ -888,7 +897,7 @@
                                   IsEnabled="{x:Bind ViewModel.IsChapterAddEnabled, Mode=OneWay}"
                                   Click="OnChapterAddButton_Click">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
+                            <SymbolIcon Symbol="Add" />
                         </AppBarButton.Icon>
                     </AppBarButton>
                     <AppBarSeparator />
@@ -909,7 +918,8 @@
                                   CornerRadius="4"
                                   Click="OnDialoguesAddButton_Click">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
+                            <FontIcon Glyph="&#xE8BD;"
+                                      Style="{StaticResource AppSymbolIconStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
@@ -1151,7 +1161,8 @@
                                   CornerRadius="4"
                                   Command="{x:Bind ViewModel.OpenFeedbackCommand}">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
+                            <FontIcon Glyph=""
+                                      Style="{StaticResource AppSymbolIconStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
@@ -1161,7 +1172,8 @@
                                   CornerRadius="4"
                                   Command="{x:Bind ViewModel.ShowShortcutsCommand}">
                         <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
+                            <FontIcon Glyph=""
+                                      Style="{StaticResource AppSymbolIconStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 

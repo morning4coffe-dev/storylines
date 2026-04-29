@@ -9,10 +9,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.ApplicationModel.Resources;
-using Windows.Storage;
-using Windows.Storage.Pickers;
 using Windows.UI.Xaml;
 
 namespace Storylines.ViewModels
@@ -21,6 +20,9 @@ namespace Storylines.ViewModels
     {
         private readonly ProjectState _projectState;
         private readonly IBranchingDialogueService _service;
+        private readonly IExportService _exportService;
+        private readonly IFilePickerService _filePickerService;
+        private readonly IFileService _fileService;
         private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
 
         private BranchingDialogueGraphData _activeGraph;
@@ -33,6 +35,7 @@ namespace Storylines.ViewModels
         public ObservableCollection<BranchingDialogueChoiceData> SimulationChoices { get; } = new ObservableCollection<BranchingDialogueChoiceData>();
         public ObservableCollection<string> CharacterSuggestions { get; } = new ObservableCollection<string>();
         public ObservableCollection<KeyValuePair<string, string>> SimulationVariables { get; } = new ObservableCollection<KeyValuePair<string, string>>();
+        public ObservableCollection<BranchingExportFormatViewModel> BranchingExportFormats { get; } = new ObservableCollection<BranchingExportFormatViewModel>();
 
         public event Action GraphRefreshed;
 
@@ -86,13 +89,24 @@ namespace Storylines.ViewModels
         private string _chapterWordCountText;
 
         public bool HasChapters => Chapters.Count > 0;
+        public string ExportToolbarLabel => _resources.GetString("branchingExportToolbar.Label") ?? "Export";
 
         private string _pendingChapterToken;
 
-        public BranchingDialogueViewModel(ProjectState projectState = null, IBranchingDialogueService service = null)
+        public BranchingDialogueViewModel(
+            ProjectState projectState = null,
+            IBranchingDialogueService service = null,
+            IExportService exportService = null,
+            IFilePickerService filePickerService = null,
+            IFileService fileService = null)
         {
             _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
             _service = service ?? App.TryGetService<IBranchingDialogueService>();
+            _exportService = exportService ?? App.TryGetService<IExportService>();
+            _filePickerService = filePickerService ?? App.TryGetService<IFilePickerService>();
+            _fileService = fileService ?? App.TryGetService<IFileService>() ?? new FileService();
+
+            LoadBranchingExportFormats();
 
             RefreshCharacterSuggestions();
 
@@ -541,106 +555,61 @@ namespace Storylines.ViewModels
             return string.Join("\n", lines);
         }
 
-        [RelayCommand]
-        private async void ExportGraphJson()
+        public async Task ExportGraphAsync(ExportFormatId formatId)
         {
-            if (_activeGraph == null)
+            if (_activeGraph == null || _exportService == null || _filePickerService == null)
                 return;
 
-            var picker = new FileSavePicker();
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeChoices.Add("JSON", new List<string> { ".json" });
-            picker.SuggestedFileName = $"dialogue-{SelectedChapter?.Name ?? "graph"}";
+            var format = BranchingExportFormats.FirstOrDefault(item => item.Definition.Id == formatId);
+            if (format == null)
+                return;
 
-            var file = await picker.PickSaveFileAsync();
+            var file = await _filePickerService.PickSaveFileAsync(new SaveFilePickerRequest
+            {
+                SuggestedFileName = BuildSuggestedExportFileName(formatId),
+                DisplayTypeName = format.DisplayTypeName,
+                FileExtensions = format.Definition.Extensions,
+            });
+
             if (file == null)
                 return;
 
-            try
+            var result = await _exportService.ExportAsync(new ExportRequest
             {
-                var json = Newtonsoft.Json.JsonConvert.SerializeObject(_activeGraph, Newtonsoft.Json.Formatting.Indented);
-                await FileIO.WriteTextAsync(file, json);
-                ValidationSummary = _resources.GetString("branchingExportedJson") ?? "Exported as JSON.";
-            }
-            catch (Exception ex)
-            {
-                ValidationSummary = $"Export failed: {ex.Message}";
-            }
-        }
+                Target = ExportTarget.BranchingDialogue,
+                FormatId = formatId,
+                File = file,
+                Graph = _activeGraph,
+            });
 
-        [RelayCommand]
-        private async void ExportGraphTwee()
-        {
-            if (_activeGraph == null)
+            if (result.Succeeded)
+            {
+                ValidationSummary = _resources.GetString(format.Definition.SuccessMessageResourceKey)
+                    ?? _resources.GetString("branchingExportedJson")
+                    ?? "Exported.";
                 return;
-
-            var picker = new FileSavePicker();
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeChoices.Add("Twee", new List<string> { ".twee", ".tw" });
-            picker.SuggestedFileName = $"dialogue-{SelectedChapter?.Name ?? "graph"}";
-
-            var file = await picker.PickSaveFileAsync();
-            if (file == null)
-                return;
-
-            try
-            {
-                var twee = BranchingDialogueExportHelper.ConvertGraphToTwee(_activeGraph);
-                await FileIO.WriteTextAsync(file, twee);
-                ValidationSummary = _resources.GetString("branchingExportedTwee") ?? "Exported as Twee.";
             }
-            catch (Exception ex)
-            {
-                ValidationSummary = $"Export failed: {ex.Message}";
-            }
-        }
 
-        [RelayCommand]
-        private async void ExportGraphScreenplay()
-        {
-            if (_activeGraph == null)
-                return;
-
-            var picker = new FileSavePicker();
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeChoices.Add("Text", new List<string> { ".txt" });
-            picker.SuggestedFileName = $"screenplay-{SelectedChapter?.Name ?? "graph"}";
-
-            var file = await picker.PickSaveFileAsync();
-            if (file == null)
-                return;
-
-            try
-            {
-                var screenplay = BranchingDialogueExportHelper.ConvertGraphToScreenplay(_activeGraph);
-                await FileIO.WriteTextAsync(file, screenplay);
-                ValidationSummary = _resources.GetString("branchingExportedScreenplay") ?? "Exported as screenplay.";
-            }
-            catch (Exception ex)
-            {
-                ValidationSummary = $"Export failed: {ex.Message}";
-            }
+            ValidationSummary = _resources.GetString(result.ErrorResourceKey)
+                ?? _resources.GetString("exportFailedGeneric")
+                ?? "Export failed.";
         }
 
         [RelayCommand]
         private async void ImportGraphJson()
         {
             var chapterId = GetSelectedChapterId();
-            if (chapterId == null)
+            if (chapterId == null || _filePickerService == null || _exportService == null)
                 return;
 
-            var picker = new FileOpenPicker();
-            picker.SuggestedStartLocation = PickerLocationId.DocumentsLibrary;
-            picker.FileTypeFilter.Add(".json");
-
-            var file = await picker.PickSingleFileAsync();
+            var file = await _filePickerService.PickOpenFileAsync(new[] { ".json" });
             if (file == null)
                 return;
 
             try
             {
-                var json = await FileIO.ReadTextAsync(file);
-                var imported = ExportService.ImportBranchingDialogueJson(json);
+                var json = await _fileService.ReadAsync(file);
+                var imported = _exportService.ImportBranchingDialogueJson(json);
                 if (imported == null || imported.Nodes == null || imported.Nodes.Count == 0)
                 {
                     ValidationSummary = _resources.GetString("branchingImportFailed") ?? "Import failed: invalid JSON or no passages found.";
@@ -691,6 +660,31 @@ namespace Storylines.ViewModels
                     _resources.GetString("branchingImportFailed") ?? "Import failed: {0}",
                     ex.Message);
             }
+        }
+
+        private void LoadBranchingExportFormats()
+        {
+            BranchingExportFormats.Clear();
+
+            var capability = _exportService?.GetCapability(ExportTarget.BranchingDialogue);
+            if (capability == null)
+                return;
+
+            foreach (var format in capability.Formats)
+            {
+                var menuText = !string.IsNullOrWhiteSpace(format.MenuTextResourceKey)
+                    ? _resources.GetString(format.MenuTextResourceKey)
+                    : format.DefaultExtension;
+
+                BranchingExportFormats.Add(new BranchingExportFormatViewModel(format, menuText));
+            }
+        }
+
+        private string BuildSuggestedExportFileName(ExportFormatId formatId)
+        {
+            return formatId == ExportFormatId.Screenplay
+                ? $"screenplay-{SelectedChapter?.Name ?? "graph"}"
+                : $"dialogue-{SelectedChapter?.Name ?? "graph"}";
         }
 
         #endregion
@@ -947,5 +941,18 @@ namespace Storylines.ViewModels
         {
             return SelectedChapter?.Token;
         }
+    }
+
+    public sealed class BranchingExportFormatViewModel
+    {
+        public BranchingExportFormatViewModel(ExportFormatDefinition definition, string menuText)
+        {
+            Definition = definition;
+            MenuText = menuText;
+        }
+
+        public ExportFormatDefinition Definition { get; }
+        public string MenuText { get; }
+        public string DisplayTypeName => Definition.DefaultExtension.TrimStart('.').ToUpperInvariant();
     }
 }

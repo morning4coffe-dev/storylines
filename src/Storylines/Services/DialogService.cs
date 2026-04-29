@@ -16,7 +16,7 @@ namespace Storylines.Services
             LoadProjectDialogue.Open();
         }
 
-        public void OpenExportDialogue() => ExportDialogue.Open(default);
+        public void OpenExportDialogue(ExportTarget target = ExportTarget.None) => ExportDialogue.Open(target);
 
         public void OpenChapterCreator() => ChapterCreatorOrRenamer.Open(null, false);
 
@@ -28,6 +28,7 @@ namespace Storylines.Services
         public void OpenModePicker(string preselect = "focus") => ModePickerDialogue.Open(preselect);
 
         public void OpenProjectStats(bool showInDownBar) => ProjectStatsDialogue.Open(showInDownBar);
+        public void OpenProjectFileInfo() => ProjectFileInfoDialogue.Open();
 
         public void OpenShortcuts() => ShortcutsDialogue.Open();
 

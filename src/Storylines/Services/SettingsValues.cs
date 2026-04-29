@@ -8,7 +8,7 @@ using Windows.UI;
 
 namespace Storylines.Services
 {
-    class SettingsValues
+    public static class SettingsValues
     {
         public enum SelectedTheme { Light, Dark, System };
         public static SelectedTheme selectedTheme = SelectedTheme.System;

@@ -35,8 +35,7 @@
                     BorderThickness="0"
                     CornerRadius="4"
                     Click="OnCloseButton_Click">
-                <FontIcon Glyph="&#xE711;"
-                          FontSize="10" />
+                <SymbolIcon Symbol="Cancel" />
             </Button>
         </Grid>
 

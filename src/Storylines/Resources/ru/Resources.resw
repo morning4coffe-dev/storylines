@@ -318,6 +318,21 @@
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Несохраненный прогресс</value>
   </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Восстановить несохраненные изменения?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines обнаружил несохраненные изменения из прошлого сеанса. Восстановите их и продолжите работу над этим проектом или отбросьте их и откройте последнюю сохраненную версию.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Восстановить изменения</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Отбросить изменения</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Не сейчас</value>
+  </data>
   <data name="chapterDialogueCreate" xml:space="preserve">
     <value>Создать главу</value>
   </data>
@@ -484,7 +499,7 @@
     <value>Уже уходите?</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
-    <value>"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</value>
+    <value>"У этого персонажа короткие каштановые волосы. Отличается умом и добротой..."</value>
   </data>
   <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
     <value>Имя</value>
@@ -536,9 +551,6 @@
   </data>
   <data name="editFlyout.Text" xml:space="preserve">
     <value>Изменить</value>
-  </data>
-  <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Добавить простой диалог</value>
   </data>
   <data name="appHeaderEdited" xml:space="preserve">
     <value>Изменено</value>
@@ -682,17 +694,44 @@
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Найти и заменить (Ctrl+H)</value>
   </data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve">
+    <value>Найти</value>
+  </data>
   <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
     <value>Найти...</value>
+  </data>
+  <data name="matchCaseToggle.Content" xml:space="preserve">
+    <value>Учитывать регистр</value>
   </data>
   <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Учитывать регистр</value>
   </data>
+  <data name="wholeWordToggle.Content" xml:space="preserve">
+    <value>Слово целиком</value>
+  </data>
   <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Слово целиком</value>
   </data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Предыдущее совпадение</value>
+  </data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Предыдущее совпадение</value>
+  </data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Следующее совпадение</value>
+  </data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Следующее совпадение</value>
+  </data>
   <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Закрыть</value>
+  </data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve">
+    <value>Заменить</value>
   </data>
   <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
     <value>Заменить...</value>
@@ -800,7 +839,7 @@
     <value>напр. Соперник, Возлюбленный, Наставник...</value>
   </data>
   <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
-    <value>напр. Основной квест, Любовная линия, Тайна...</value>
+    <value>напр. Основной сюжет, любовная линия, тайна...</value>
   </data>
   <data name="globalSearchDialogue.Title" xml:space="preserve">
     <value>Поиск по всем главам</value>
@@ -842,7 +881,7 @@
     <value>Выберите персонажа...</value>
   </data>
   <data name="addRelationshipTitle" xml:space="preserve">
-    <value>Добавить отношение</value>
+    <value>Добавить связь</value>
   </data>
   <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
     <value>напр. Старая библиотека, Улицы центра...</value>
@@ -1100,70 +1139,70 @@
     <value>Chapter</value>
   </data>
   <data name="branchingSearch.Header" xml:space="preserve">
-    <value>Search</value>
+    <value>Поиск</value>
   </data>
   <data name="branchingSearch.PlaceholderText" xml:space="preserve">
-    <value>Search nodes or lines</value>
+    <value>Ищите узлы или реплики</value>
   </data>
   <data name="branchingSpeakerFilter.Header" xml:space="preserve">
-    <value>Speaker filter</value>
+    <value>Фильтр по говорящему</value>
   </data>
   <data name="branchingCreateNode.Content" xml:space="preserve">
-    <value>Create node</value>
+    <value>Создать узел</value>
   </data>
   <data name="branchingDeleteNode.Content" xml:space="preserve">
-    <value>Delete node</value>
+    <value>Удалить узел</value>
   </data>
   <data name="branchingSetStartNode.Content" xml:space="preserve">
-    <value>Set start</value>
+    <value>Назначить началом</value>
   </data>
   <data name="branchingMapToggle.Header" xml:space="preserve">
-    <value>Map mode</value>
+    <value>Режим карты</value>
   </data>
   <data name="branchingInspectorTitle.Text" xml:space="preserve">
-    <value>Node inspector</value>
+    <value>Инспектор узла</value>
   </data>
   <data name="branchingNodeTitle.Header" xml:space="preserve">
-    <value>Node title</value>
+    <value>Название узла</value>
   </data>
   <data name="branchingNodeSpeaker.Header" xml:space="preserve">
-    <value>Speaker</value>
+    <value>Говорящий</value>
   </data>
   <data name="branchingNodeText.Header" xml:space="preserve">
-    <value>Line text</value>
+    <value>Текст реплики</value>
   </data>
   <data name="branchingSaveNodeEdits.Content" xml:space="preserve">
-    <value>Save edits</value>
+    <value>Сохранить изменения</value>
   </data>
   <data name="branchingAddChoice.Content" xml:space="preserve">
-    <value>Add choice</value>
+    <value>Добавить выбор</value>
   </data>
   <data name="branchingRemoveChoice.Content" xml:space="preserve">
-    <value>Remove</value>
+    <value>Удалить</value>
   </data>
   <data name="branchingValidateGraph.Content" xml:space="preserve">
-    <value>Validate graph</value>
+    <value>Проверить граф</value>
   </data>
   <data name="branchingSimulatorExpander.Header" xml:space="preserve">
-    <value>Playthrough simulator</value>
+    <value>Симулятор прохождения</value>
   </data>
   <data name="branchingSimulationStart.Content" xml:space="preserve">
-    <value>Start</value>
+    <value>Запустить</value>
   </data>
   <data name="branchingSimulationRestart.Content" xml:space="preserve">
-    <value>Restart</value>
+    <value>Перезапустить</value>
   </data>
   <data name="branchingSimulationStop.Content" xml:space="preserve">
-    <value>Stop</value>
+    <value>Остановить</value>
   </data>
   <data name="branchingSimulationBreadcrumb.Text" xml:space="preserve">
-    <value>Breadcrumb</value>
+    <value>Ход прохождения</value>
   </data>
   <data name="branchingNoChaptersMessage" xml:space="preserve">
-    <value>Create a chapter first to start branching dialogue authoring.</value>
+    <value>Сначала создайте главу, чтобы начать работу над ветвящимся диалогом.</value>
   </data>
   <data name="branchingDefaultNodeTitle" xml:space="preserve">
-    <value>Node</value>
+    <value>Узел</value>
   </data>
   <data name="branchingAutoDestinationNodeTitleFormat" xml:space="preserve">
     <value>Outcome {0}</value>
@@ -1265,28 +1304,28 @@
     <value>Подсказки для письма</value>
   </data>
   <data name="branchingNodeSpeakerSuggest.Header" xml:space="preserve">
-    <value>Speaker</value>
+    <value>Говорящий</value>
   </data>
   <data name="branchingNodeSpeakerSuggest.PlaceholderText" xml:space="preserve">
-    <value>Type or select a character</value>
+    <value>Введите имя персонажа или выберите его</value>
   </data>
   <data name="branchingEmptyTitle.Text" xml:space="preserve">
-    <value>No passages yet</value>
+    <value>Пока нет фрагментов</value>
   </data>
   <data name="branchingEmptyDescription.Text" xml:space="preserve">
-    <value>Double-click the canvas or click "Add passage" to create your first story passage.</value>
+    <value>Дважды щёлкните по холсту или нажмите «Добавить фрагмент», чтобы создать первый фрагмент истории.</value>
   </data>
   <data name="branchingStartBadge" xml:space="preserve">
-    <value>Start</value>
+    <value>Старт</value>
   </data>
   <data name="branchingDeadEndBadge" xml:space="preserve">
-    <value>Dead-end</value>
+    <value>Тупик</value>
   </data>
   <data name="branchingChoiceCountFormat" xml:space="preserve">
-    <value>{0} choices</value>
+    <value>{0} вариантов</value>
   </data>
   <data name="branchingImportedNodesFormat" xml:space="preserve">
-    <value>Imported {0} passages from chapter text.</value>
+    <value>Импортировано {0} фрагментов из текста главы.</value>
   </data>
   <data name="branchingNoDialoguesFound" xml:space="preserve">
     <value>No dialogues found in the chapter text. Write dialogues using the "CharacterName: text" format.</value>
@@ -1508,6 +1547,45 @@
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
     <value>Word frequency</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>Информация о файле</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>Имя файла:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Расположение:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Написание</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Редактура</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Черновик</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>Информация о файле</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Создан:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Изменен:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Размер:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Тип:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Еще не сохранено</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
 

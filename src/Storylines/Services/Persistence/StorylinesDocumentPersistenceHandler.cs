@@ -79,81 +79,7 @@ namespace Storylines.Services.Persistence
                     return;
                 }
 
-                project.projectVersion = projectData.Version;
-                project.projectName = projectData.Name;
-
-                foreach (var charData in projectData.Characters)
-                {
-                    var picture = !string.IsNullOrEmpty(charData.PictureFileName)
-                        ? new CharacterPicture { FileName = charData.PictureFileName }
-                        : null;
-
-                    await ProjectState.AddExistingCharacterAsync(
-                        charData.Name,
-                        Guid.NewGuid().ToString(),
-                        charData.Description,
-                        picture,
-                        charData.Role,
-                        charData.Age,
-                        charData.Appearance,
-                        charData.Traits);
-                }
-
-                foreach (var chapterData in projectData.Chapters)
-                {
-                    var status = ChapterStatus.Draft;
-                    if (!string.IsNullOrEmpty(chapterData.Status))
-                        Enum.TryParse(chapterData.Status, true, out status);
-
-                    var chapterToken = !string.IsNullOrWhiteSpace(chapterData.Id)
-                        ? chapterData.Id
-                        : Guid.NewGuid().ToString();
-
-                    ProjectState.AddExistingChapter(
-                        chapterData.Name,
-                        chapterToken,
-                        chapterData.Text,
-                        chapterData.Notes,
-                        chapterData.Synopsis,
-                        chapterData.WordCountGoal,
-                        chapterData.Tags,
-                        chapterData.PinboardX ?? 0,
-                        chapterData.PinboardY ?? 0,
-                        status,
-                        chapterData.Location,
-                        chapterData.PlotThreads,
-                        chapterData.LastCaretPosition ?? 0,
-                        chapterData.LastVerticalOffset ?? 0);
-                }
-
-                ProjectState.PinboardConnections = projectData.PinboardConnections ?? new List<PinboardConnectionData>();
-                ProjectState.PlotThreads = projectData.PlotThreads ?? new List<string>();
-                ProjectState.SetBranchingDialogues(projectData.BranchingDialogues?.Select(_cloneAndNormalizeGraph).ToList());
-
-                for (var charIndex = 0; charIndex < projectData.Characters.Count && charIndex < ProjectState.Characters.Count; charIndex++)
-                {
-                    var charData = projectData.Characters[charIndex];
-                    if (charData.Relationships == null)
-                        continue;
-
-                    var character = ProjectState.Characters[charIndex];
-                    character.Relationships = charData.Relationships
-                        .Select(relationship =>
-                        {
-                            var target = ProjectState.Characters.FirstOrDefault(existing =>
-                                string.Equals(existing.Name, relationship.TargetName, StringComparison.CurrentCultureIgnoreCase));
-
-                            return target != null
-                                ? new CharacterRelationship { TargetCharacterToken = target.Token, Type = relationship.Type }
-                                : null;
-                        })
-                        .Where(relationship => relationship != null)
-                        .ToList();
-                }
-
-                _loadVariables(projectData);
-                _onLoaded();
-                Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
+                await ApplyProjectDataAsync(project, projectData);
             }
             catch (Exception ex)
             {
@@ -161,6 +87,102 @@ namespace Storylines.Services.Persistence
                 ShowLoadErrorNotification();
                 NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
             }
+        }
+
+        public async Task LoadProjectDataAsync(ProjectFile project, ProjectData projectData)
+        {
+            Dialogs.ClearEverything();
+            Dialogs.DismissLoadDialogue();
+
+            try
+            {
+                await ApplyProjectDataAsync(project, _normalizeProjectData(projectData));
+            }
+            catch (Exception ex)
+            {
+                Logger.Error("Failed to restore Storylines recovery data", ex);
+                ShowLoadErrorNotification();
+                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+            }
+        }
+
+        private async Task ApplyProjectDataAsync(ProjectFile project, ProjectData projectData)
+        {
+            project.projectVersion = projectData.Version;
+            project.projectName = projectData.Name;
+
+            foreach (var charData in projectData.Characters)
+            {
+                var picture = !string.IsNullOrEmpty(charData.PictureFileName)
+                    ? new CharacterPicture { FileName = charData.PictureFileName }
+                    : null;
+
+                await ProjectState.AddExistingCharacterAsync(
+                    charData.Name,
+                    Guid.NewGuid().ToString(),
+                    charData.Description,
+                    picture,
+                    charData.Role,
+                    charData.Age,
+                    charData.Appearance,
+                    charData.Traits);
+            }
+
+            foreach (var chapterData in projectData.Chapters)
+            {
+                var status = ChapterStatus.Draft;
+                if (!string.IsNullOrEmpty(chapterData.Status))
+                    Enum.TryParse(chapterData.Status, true, out status);
+
+                var chapterToken = !string.IsNullOrWhiteSpace(chapterData.Id)
+                    ? chapterData.Id
+                    : Guid.NewGuid().ToString();
+
+                ProjectState.AddExistingChapter(
+                    chapterData.Name,
+                    chapterToken,
+                    chapterData.Text,
+                    chapterData.Notes,
+                    chapterData.Synopsis,
+                    chapterData.WordCountGoal,
+                    chapterData.Tags,
+                    chapterData.PinboardX ?? 0,
+                    chapterData.PinboardY ?? 0,
+                    status,
+                    chapterData.Location,
+                    chapterData.PlotThreads,
+                    chapterData.LastCaretPosition ?? 0,
+                    chapterData.LastVerticalOffset ?? 0);
+            }
+
+            ProjectState.PinboardConnections = projectData.PinboardConnections ?? new List<PinboardConnectionData>();
+            ProjectState.PlotThreads = projectData.PlotThreads ?? new List<string>();
+            ProjectState.SetBranchingDialogues(projectData.BranchingDialogues?.Select(_cloneAndNormalizeGraph).ToList());
+
+            for (var charIndex = 0; charIndex < projectData.Characters.Count && charIndex < ProjectState.Characters.Count; charIndex++)
+            {
+                var charData = projectData.Characters[charIndex];
+                if (charData.Relationships == null)
+                    continue;
+
+                var character = ProjectState.Characters[charIndex];
+                character.Relationships = charData.Relationships
+                    .Select(relationship =>
+                    {
+                        var target = ProjectState.Characters.FirstOrDefault(existing =>
+                            string.Equals(existing.Name, relationship.TargetName, StringComparison.CurrentCultureIgnoreCase));
+
+                        return target != null
+                            ? new CharacterRelationship { TargetCharacterToken = target.Token, Type = relationship.Type }
+                            : null;
+                    })
+                    .Where(relationship => relationship != null)
+                    .ToList();
+            }
+
+            _loadVariables(projectData);
+            _onLoaded();
+            Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
         }
     }
 }

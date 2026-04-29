@@ -4,9 +4,7 @@
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
     xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
     xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      mc:Ignorable="d"
-      Loaded="OnAccessibilityPage_Loaded"
-      SizeChanged="OnAccessibilityPage_SizeChanged">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -18,10 +16,105 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="accessibilityPage"
-                    Margin="35"
-                    Spacing="6"
+                Margin="16,16,16,24"
+                Spacing="10"
                     HorizontalAlignment="Stretch"
                     MaxWidth="1000">
+            <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="CompactLayout">
+                <VisualState.Setters>
+                    <Setter Target="accessibilityPage.Margin"
+                        Value="16,16,16,24" />
+                    <Setter Target="languageControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="langComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="langComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="langComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="langComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="langComboBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="readAloudVolumeControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="readAloudVolumeStack.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="readAloudVolumeStack.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="readAloudVolumeStack.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="readAloudVolumeStack.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="readAloudVolumeStack.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="readAloudVolumeSlider.Width"
+                        Value="120" />
+                    <Setter Target="voiceControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="voiceComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="voiceComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="voiceComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="voiceComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="voiceComboBox.Margin"
+                        Value="0,12,0,0" />
+                </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="1100" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="accessibilityPage.Margin"
+                        Value="32,24,32,24" />
+                    <Setter Target="languageControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="langComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="langComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="langComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="langComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="langComboBox.Margin"
+                        Value="0" />
+                    <Setter Target="readAloudVolumeControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="readAloudVolumeStack.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="readAloudVolumeStack.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="readAloudVolumeStack.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="readAloudVolumeStack.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="readAloudVolumeStack.Margin"
+                        Value="0" />
+                    <Setter Target="readAloudVolumeSlider.Width"
+                        Value="150" />
+                    <Setter Target="voiceControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="voiceComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="voiceComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="voiceComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="voiceComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="voiceComboBox.Margin"
+                        Value="0" />
+                </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <TextBlock x:Uid="accessibilityText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -31,14 +124,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+              Padding="16,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                <ColumnDefinition x:Name="languageControlColumn"
+                          Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                  VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -59,8 +157,10 @@
                           VerticalAlignment="Center"
                           Height="30"
                           Width="150"
+                          MinWidth="150"
                           Grid.Column="2"
-                          SelectionChanged="OnLanguageComboBox_SelectionChanged">
+                          SelectedValuePath="Tag"
+                          SelectedValue="{x:Bind ViewModel.SelectedLanguageTag, Mode=TwoWay}">
                     <ComboBox.Items>
                         <ComboBoxItem x:Uid="english"
                                       Tag="en" />
@@ -86,7 +186,7 @@
                     BorderThickness="{ThemeResource ElementBorderThickness}"
                     CornerRadius="4"
                     Padding="16,12"
-                    Visibility="Collapsed">
+                        Visibility="{x:Bind ViewModel.LanguageRestartBannerVisibility, Mode=OneWay}">
                 <StackPanel Spacing="10">
                     <TextBlock x:Uid="languageRestartText"
                                TextWrapping="WrapWholeWords" />
@@ -95,15 +195,15 @@
                         <Button x:Name="restartNowButton"
                                 x:Uid="restartNowButton"
                                 Style="{ThemeResource AccentButtonStyle}"
-                                Click="OnRestartNowButton_Click" />
+                            Command="{x:Bind ViewModel.RestartNowCommand}" />
                         <Button x:Name="restartLaterButton"
                                 x:Uid="restartLaterButton"
-                                Click="OnRestartLaterButton_Click" />
+                            Command="{x:Bind ViewModel.DismissRestartBannerCommand}" />
                     </StackPanel>
                     <muxc:InfoBar x:Name="languageRestartFailedInfoBar"
                                   x:Uid="languageRestartFailedInfoBar"
                                   IsClosable="False"
-                                  IsOpen="False"
+                              IsOpen="{x:Bind ViewModel.LanguageRestartFailed, Mode=OneWay}"
                                   Severity="Warning" />
                 </StackPanel>
             </Border>
@@ -112,14 +212,14 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="whiteTextBackgroundSetting"
                            VerticalAlignment="Center"
@@ -130,7 +230,7 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnTextBoxBackgroundToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.TextBoxSolidBackground, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel>
@@ -142,14 +242,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="readAloudVolumeControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="readAloudVolumeSetting"
                            VerticalAlignment="Center"
@@ -163,22 +268,21 @@
                             HorizontalAlignment="Right"
                             Grid.Column="2">
                     <TextBlock x:Name="readAloudVolumeText"
-                               Text="{x:Bind readAloudVolumeSlider.Value, Mode=OneWay}"
+                               Text="{x:Bind ViewModel.ReadAloudVolumeText, Mode=OneWay}"
                                VerticalAlignment="Center"
                                TextAlignment="Right"
                                Width="23"
                                Opacity="0.8" />
                     <Slider x:Name="readAloudVolumeSlider"
                             Width="150"
-                            Value="100"
+                        Value="{x:Bind ViewModel.ReadAloudVolume, Mode=TwoWay}"
                             Maximum="100"
-                            ValueChanged="OnReadAloudVolumeSlider_ValueChanged" />
-                    <Button  HorizontalAlignment="Right"
+                            Minimum="0" />
+                    <Button HorizontalAlignment="Right"
                              HorizontalContentAlignment="Center"
-                             Click="OnReadAloudVolumeButton_Click"
-                             Loaded="VolumeButton_Loaded">
+                            Command="{x:Bind ViewModel.ToggleReadAloudMuteCommand}">
                         <FontIcon x:Name="readAloudVolumeButtonIcon"
-                                  Glyph=""
+                                  Glyph="{x:Bind ViewModel.ReadAloudVolumeGlyph, Mode=OneWay}"
                                   RenderTransformOrigin="0.70,0.75">
                             <FontIcon.RenderTransform>
                                 <CompositeTransform ScaleX="0.8"
@@ -193,14 +297,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="voiceControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="readAloudVoiceSetting"
                            VerticalAlignment="Center"
@@ -208,9 +317,13 @@
                            TextWrapping="Wrap" />
                 <ComboBox x:Name="voiceComboBox"
                           Width="180"
+                          MinWidth="180"
                           HorizontalAlignment="Right"
                           Grid.Column="2"
-                          SelectionChanged="OnVoiceComboBox_SelectionChanged" />
+                          ItemsSource="{x:Bind ViewModel.Voices, Mode=OneWay}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedValuePath="Id"
+                          SelectedValue="{x:Bind ViewModel.SelectedVoiceId, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel.ChildrenTransitions>

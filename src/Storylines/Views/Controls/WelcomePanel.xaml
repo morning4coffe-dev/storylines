@@ -124,7 +124,7 @@
                                                TextTrimming="CharacterEllipsis" />
                                     <TextBlock Text="{Binding LastEditedFormatted}"
                                                Grid.Column="1"
-                                               FontSize="11"
+                                               FontSize="{StaticResource AppCaptionFontSize}"
                                                Opacity="0.55"
                                                VerticalAlignment="Center"
                                                Margin="12,0,0,0" />
@@ -144,11 +144,11 @@
                 <StackPanel Spacing="4"
                             Opacity="0.6">
                     <TextBlock x:Uid="welcomePanelKeyboardShortcuts"
-                               FontSize="11"
+                               FontSize="{StaticResource AppCaptionFontSize}"
                                FontWeight="SemiBold"
                                HorizontalAlignment="Center" />
                     <TextBlock x:Uid="welcomePanelKeyboardShortcutHint"
-                               FontSize="11"
+                               FontSize="{StaticResource AppCaptionFontSize}"
                                HorizontalAlignment="Center"
                                Foreground="{ThemeResource TextForeground}"
                                Opacity="0.8"

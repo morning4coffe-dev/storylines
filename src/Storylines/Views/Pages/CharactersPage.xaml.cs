@@ -2,6 +2,7 @@ using Storylines.Views.Dialogs;
 using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
 using System.Collections.Generic;
@@ -378,7 +379,7 @@ namespace Storylines.Views.Pages
 
         private void OnExportButton_Click(object sender, RoutedEventArgs e)
         {
-            ExportDialogue.Open(ExportService.WhatToExport.Characters);
+            App.GetService<IDialogService>().OpenExportDialogue(ExportTarget.Characters);
         }
         #endregion
 
@@ -390,9 +391,9 @@ namespace Storylines.Views.Pages
             {
                 traitsBox.Items.Clear();
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // TokenizingTextBox can throw E_UNEXPECTED when clearing during state transitions
+                App.TryGetService<ILogger>()?.Warning($"Failed to clear traits token box: {ex.Message}");
             }
 
             if (!string.IsNullOrWhiteSpace(traitsText))
@@ -526,9 +527,19 @@ namespace Storylines.Views.Pages
 
         private async Task RemovePicture(CharacterPicture cp)
         {
-            StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
-            StorageFile file = await folder.GetFileAsync(cp.FileName);
-            _ = file.DeleteAsync();
+            if (cp == null || string.IsNullOrWhiteSpace(cp.FileName))
+                return;
+
+            try
+            {
+                StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
+                StorageFile file = await folder.GetFileAsync(cp.FileName);
+                await file.DeleteAsync();
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to remove profile picture: {ex.Message}");
+            }
         }
 
         private CharacterPicture _picture;
@@ -563,7 +574,7 @@ namespace Storylines.Views.Pages
 
             try
             {
-                var files = folder.GetFilesAsync().AsTask().GetAwaiter().GetResult();
+                var files = await folder.GetFilesAsync();
                 List<CharacterPicture> images = new List<CharacterPicture>();
 
                 foreach (var file in files)
@@ -572,7 +583,11 @@ namespace Storylines.Views.Pages
                 }
                 return images;
             }
-            catch { return null; }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to load profile pictures: {ex.Message}");
+                return new List<CharacterPicture>();
+            }
         }
 
         private async Task OpenFilePickerAsync()
@@ -600,9 +615,9 @@ namespace Storylines.Views.Pages
             }
         }
 
-        private void OnPictureRemove_Click(object sender, RoutedEventArgs e)
+        private async void OnPictureRemove_Click(object sender, RoutedEventArgs e)
         {
-            _ = RemovePicture((imageSender as Button).Tag as CharacterPicture);
+            await RemovePicture((imageSender as Button).Tag as CharacterPicture);
             profilePictureHolder.Children.Remove(imageSender as Button);
         }
 

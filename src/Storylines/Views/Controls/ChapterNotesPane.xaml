@@ -73,7 +73,7 @@
             <PivotItem x:Uid="notesPaneSynopsisTab">
                 <StackPanel Spacing="4">
                     <TextBlock x:Uid="notesPaneSynopsisDescription"
-                               FontSize="11"
+                               FontSize="{StaticResource AppCaptionFontSize}"
                                Opacity="0.5"
                                TextWrapping="Wrap" />
                     <TextBox x:Name="synopsisTextBox"
@@ -94,7 +94,7 @@
             <PivotItem x:Uid="notesPaneLocationTab">
                 <StackPanel Spacing="4">
                     <TextBlock x:Uid="notesPaneLocationDescription"
-                               FontSize="11"
+                               FontSize="{StaticResource AppCaptionFontSize}"
                                Opacity="0.5"
                                TextWrapping="Wrap" />
                     <TextBox x:Name="locationTextBox"
@@ -113,7 +113,7 @@
             <PivotItem x:Uid="notesPanePlotTab">
                 <StackPanel Spacing="4">
                     <TextBlock x:Uid="notesPanePlotDescription"
-                               FontSize="11"
+                               FontSize="{StaticResource AppCaptionFontSize}"
                                Opacity="0.5"
                                TextWrapping="Wrap" />
                     <TextBox x:Name="plotThreadsTextBox"

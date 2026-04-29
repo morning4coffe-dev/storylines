@@ -200,6 +200,8 @@ namespace Storylines.Helpers
                     Persistence.SaveAndExitOrClearAll(appClosing);
                     break;
                 case ContentDialogResult.Secondary:
+                    await RecoveryService.ClearRecoveryDataAsync();
+
                     if (appClosing)
                         App.Current.Exit();
                     else

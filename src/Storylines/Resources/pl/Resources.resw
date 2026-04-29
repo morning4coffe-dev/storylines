@@ -75,10 +75,19 @@
   <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve"><value>Pokaż lub ukryj notatki do rozdziału</value></data>
   <data name="searchReplaceButton.Label" xml:space="preserve"><value>Znajdź i zamień</value></data>
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve"><value>Znajdź i zamień (Ctrl+H)</value></data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve"><value>Znajdź</value></data>
   <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve"><value>Znajdź...</value></data>
+  <data name="matchCaseToggle.Content" xml:space="preserve"><value>Uwzględniaj wielkość liter</value></data>
   <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve"><value>Uwzględniaj wielkość liter</value></data>
+  <data name="wholeWordToggle.Content" xml:space="preserve"><value>Całe słowo</value></data>
   <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve"><value>Całe słowo</value></data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve"><value>Poprzednie dopasowanie</value></data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve"><value>Poprzednie dopasowanie</value></data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve"><value>Następne dopasowanie</value></data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve"><value>Następne dopasowanie</value></data>
   <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve"><value>Zamknij</value></data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve"><value>Zamień</value></data>
   <data name="searchReplaceBox.PlaceholderText" xml:space="preserve"><value>Zamień...</value></data>
   <data name="replaceButton.Content" xml:space="preserve"><value>Zamień</value></data>
   <data name="replaceAllButton.Content" xml:space="preserve"><value>Wszystko</value></data>
@@ -117,55 +126,55 @@
     <value>Podpowiedzi do pisania</value>
   </data>
   <data name="relationshipTypePlaceholder" xml:space="preserve">
-    <value>np. Rywal, Ukochany, Mentor...</value>
+    <value>np. Rywal, obiekt uczuć, mentor...</value>
   </data>
   <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
-    <value>np. Glowny watek, Watek milosny, Tajemnica...</value>
+    <value>np. Główny wątek, wątek miłosny, tajemnica...</value>
   </data>
   <data name="globalSearchDialogue.Title" xml:space="preserve">
-    <value>Szukaj we wszystkich rozdzialach</value>
+    <value>Szukaj we wszystkich rozdziałach</value>
   </data>
   <data name="addButtonText" xml:space="preserve">
     <value>Dodaj</value>
   </data>
   <data name="storyCanvasTitle.Text" xml:space="preserve">
-    <value>Plotno historii</value>
+    <value>Płótno historii</value>
   </data>
   <data name="noMatchesFound" xml:space="preserve">
-    <value>Nie znaleziono dopasowania</value>
+    <value>Nie znaleziono dopasowań</value>
   </data>
   <data name="notesPanePlotTab.Header" xml:space="preserve">
-    <value>Fabuia</value>
+    <value>Fabuła</value>
   </data>
   <data name="setStatusFlyout.Text" xml:space="preserve">
     <value>Ustaw status</value>
   </data>
   <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
-    <value>Podsumuj, co dzieje sie w tym rozdziale...</value>
+    <value>Podsumuj, co dzieje się w tym rozdziale...</value>
   </data>
   <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
     <value>Streszczenie</value>
   </data>
   <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Szukaj we wszystkich rozdzialach...</value>
+    <value>Wpisz, aby przeszukać wszystkie rozdziały...</value>
   </data>
   <data name="connectionLabelTitle" xml:space="preserve">
-    <value>Etykieta polaczenia (opcjonalnie)</value>
+    <value>Etykieta połączenia (opcjonalnie)</value>
   </data>
   <data name="skipButtonText" xml:space="preserve">
-    <value>Pomin</value>
+    <value>Pomiń</value>
   </data>
   <data name="pinboardEmptyDescription.Text" xml:space="preserve">
-    <value>Dodaj rozdzialy ze strony glownej, aby je tu zobaczyc.</value>
+    <value>Dodaj rozdziały ze strony głównej, aby zobaczyć je tutaj.</value>
   </data>
   <data name="relationshipSelectCharacter" xml:space="preserve">
-    <value>Wybierz postac...</value>
+    <value>Wybierz postać...</value>
   </data>
   <data name="addRelationshipTitle" xml:space="preserve">
-    <value>Dodaj relacje</value>
+    <value>Dodaj relację</value>
   </data>
   <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
-    <value>np. Stara biblioteka, Ulice centrum...</value>
+    <value>np. Stara biblioteka, ulice śródmieścia...</value>
   </data>
   <data name="chapterTagsSuggestions.Text" xml:space="preserve">
     <value>Sugestie</value>
@@ -250,13 +259,13 @@
   </data>
 
   <data name="addChapter.Label" xml:space="preserve">
-    <value>Add chapter</value>
+    <value>Dodaj rozdział</value>
   </data>
   <data name="addDialogue.Label" xml:space="preserve">
-    <value>Insert dialogue</value>
+    <value>Wstaw dialog</value>
   </data>
   <data name="addText.Text" xml:space="preserve">
-    <value>Add</value>
+    <value>Dodaj</value>
   </data>
   <data name="all" xml:space="preserve">
     <value>All</value>
@@ -521,6 +530,21 @@
   </data>
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Unsaved progress</value>
+  </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Przywrócić niezapisane zmiany?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines znalazł niezapisane zmiany z poprzedniej sesji. Przywróć je i kontynuuj pracę nad tym projektem albo je odrzuć i otwórz ostatnią zapisaną wersję.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Przywróć zmiany</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Odrzuć zmiany</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Nie teraz</value>
   </data>
   <data name="experience.Title" xml:space="preserve">
     <value>Tell us about your experience</value>
@@ -925,91 +949,91 @@
     <value>Writer-first chapter dialogue graph with optional map and simulator.</value>
   </data>
   <data name="branchingChapterSelector.Header" xml:space="preserve">
-    <value>Chapter</value>
+    <value>Rozdział</value>
   </data>
   <data name="branchingSearch.Header" xml:space="preserve">
-    <value>Search</value>
+    <value>Szukaj</value>
   </data>
   <data name="branchingSearch.PlaceholderText" xml:space="preserve">
-    <value>Search nodes or lines</value>
+    <value>Szukaj węzłów lub kwestii</value>
   </data>
   <data name="branchingSpeakerFilter.Header" xml:space="preserve">
-    <value>Speaker filter</value>
+    <value>Filtr mówcy</value>
   </data>
   <data name="branchingCreateNode.Content" xml:space="preserve">
-    <value>Create node</value>
+    <value>Utwórz węzeł</value>
   </data>
   <data name="branchingDeleteNode.Content" xml:space="preserve">
-    <value>Delete node</value>
+    <value>Usuń węzeł</value>
   </data>
   <data name="branchingSetStartNode.Content" xml:space="preserve">
-    <value>Set start</value>
+    <value>Ustaw początek</value>
   </data>
   <data name="branchingMapToggle.Header" xml:space="preserve">
-    <value>Map mode</value>
+    <value>Tryb mapy</value>
   </data>
   <data name="branchingInspectorTitle.Text" xml:space="preserve">
-    <value>Node inspector</value>
+    <value>Inspektor węzła</value>
   </data>
   <data name="branchingNodeTitle.Header" xml:space="preserve">
-    <value>Node title</value>
+    <value>Tytuł węzła</value>
   </data>
   <data name="branchingNodeSpeaker.Header" xml:space="preserve">
-    <value>Speaker</value>
+    <value>Mówca</value>
   </data>
   <data name="branchingNodeText.Header" xml:space="preserve">
-    <value>Line text</value>
+    <value>Tekst kwestii</value>
   </data>
   <data name="branchingSaveNodeEdits.Content" xml:space="preserve">
-    <value>Save edits</value>
+    <value>Zapisz zmiany</value>
   </data>
   <data name="branchingAddChoice.Content" xml:space="preserve">
-    <value>Add choice</value>
+    <value>Dodaj wybór</value>
   </data>
   <data name="branchingRemoveChoice.Content" xml:space="preserve">
-    <value>Remove</value>
+    <value>Usuń</value>
   </data>
   <data name="branchingValidateGraph.Content" xml:space="preserve">
-    <value>Validate graph</value>
+    <value>Sprawdź graf</value>
   </data>
   <data name="branchingSimulatorExpander.Header" xml:space="preserve">
-    <value>Playthrough simulator</value>
+    <value>Symulator przejścia</value>
   </data>
   <data name="branchingSimulationStart.Content" xml:space="preserve">
-    <value>Start</value>
+    <value>Uruchom</value>
   </data>
   <data name="branchingSimulationRestart.Content" xml:space="preserve">
-    <value>Restart</value>
+    <value>Uruchom ponownie</value>
   </data>
   <data name="branchingSimulationStop.Content" xml:space="preserve">
-    <value>Stop</value>
+    <value>Zatrzymaj</value>
   </data>
   <data name="branchingSimulationBreadcrumb.Text" xml:space="preserve">
-    <value>Breadcrumb</value>
+    <value>Ścieżka</value>
   </data>
   <data name="branchingNoChaptersMessage" xml:space="preserve">
-    <value>Create a chapter first to start branching dialogue authoring.</value>
+    <value>Najpierw utwórz rozdział, aby zacząć tworzyć dialog rozgałęziony.</value>
   </data>
   <data name="branchingDefaultNodeTitle" xml:space="preserve">
-    <value>Node</value>
+    <value>Węzeł</value>
   </data>
   <data name="branchingAutoDestinationNodeTitleFormat" xml:space="preserve">
-    <value>Outcome {0}</value>
+    <value>Wynik {0}</value>
   </data>
   <data name="branchingDefaultChoiceTextFormat" xml:space="preserve">
-    <value>Choice {0}</value>
+    <value>Wybór {0}</value>
   </data>
   <data name="branchingValidationSummaryFormat" xml:space="preserve">
-    <value>Missing targets: {0}, unreachable nodes: {1}, empty choices: {2}</value>
+    <value>Brakujące cele: {0}, nieosiągalne węzły: {1}, puste wybory: {2}</value>
   </data>
   <data name="branchingSimulationStopped" xml:space="preserve">
-    <value>Simulation stopped.</value>
+    <value>Symulacja zatrzymana.</value>
   </data>
   <data name="branchingSimulationDeadEnd" xml:space="preserve">
-    <value>Dead-end reached.</value>
+    <value>Osiągnięto ślepy zaułek.</value>
   </data>
   <data name="branchingSimulationActive" xml:space="preserve">
-    <value>Simulation running.</value>
+    <value>Symulacja trwa.</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>Experimental</value>
@@ -1060,28 +1084,28 @@
     <value>Podpowiedzi do pisania</value>
   </data>
   <data name="branchingNodeSpeakerSuggest.Header" xml:space="preserve">
-    <value>Speaker</value>
+    <value>Mówca</value>
   </data>
   <data name="branchingNodeSpeakerSuggest.PlaceholderText" xml:space="preserve">
-    <value>Type or select a character</value>
+    <value>Wpisz lub wybierz postać</value>
   </data>
   <data name="branchingEmptyTitle.Text" xml:space="preserve">
-    <value>No passages yet</value>
+    <value>Brak fragmentów</value>
   </data>
   <data name="branchingEmptyDescription.Text" xml:space="preserve">
-    <value>Double-click the canvas or click "Add passage" to create your first story passage.</value>
+    <value>Kliknij dwukrotnie na płótnie lub kliknij „Dodaj fragment”, aby utworzyć pierwszy fragment historii.</value>
   </data>
   <data name="branchingStartBadge" xml:space="preserve">
     <value>Start</value>
   </data>
   <data name="branchingDeadEndBadge" xml:space="preserve">
-    <value>Dead-end</value>
+    <value>Ślepy zaułek</value>
   </data>
   <data name="branchingChoiceCountFormat" xml:space="preserve">
-    <value>{0} choices</value>
+    <value>{0} wyborów</value>
   </data>
   <data name="branchingImportedNodesFormat" xml:space="preserve">
-    <value>Imported {0} passages from chapter text.</value>
+    <value>Zaimportowano {0} fragmentów z tekstu rozdziału.</value>
   </data>
   <data name="branchingNoDialoguesFound" xml:space="preserve">
     <value>No dialogues found in the chapter text. Write dialogues using the "CharacterName: text" format.</value>
@@ -1303,6 +1327,45 @@
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
     <value>Word frequency</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>Informacje o pliku</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Location:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Pisanie</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Korekta</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Szkic</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>Informacje o pliku</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Utworzono:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Zmodyfikowano:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Rozmiar:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Typ:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Jeszcze nie zapisano</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
 

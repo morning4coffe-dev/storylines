@@ -38,14 +38,18 @@ namespace Storylines.Views.Dialogs
 
         public static void Open(bool fromDownBar)
         {
-            _ = new ProjectStatsDialogue().ShowAsync();
+            var dialog = new ProjectStatsDialogue();
+
+            _ = dialog.ShowAsync();
 
             App.TryGetService<ITelemetryService>()?.TrackProjectStatsOpened(fromDownBar);
-            textBoxStats.DisplayStats();
+            dialog.DisplayStats();
         }
 
         public void DisplayStats()
         {
+            var resourceLoader = ResourceLoader.GetForCurrentView();
+
             RichEditBox textBox = MainPage.ChapterText.textBox;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
@@ -64,11 +68,16 @@ namespace Storylines.Views.Dialogs
             int storyCharCount = storyText.Length > 1 ? storyText.Length - 2 : storyText.Length;
             int storyWords = storyText.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
             int readMinutes = Math.Max(1, (int)Math.Ceiling(storyWords / 200.0));
+            int chapterCount = ProjectState.Chapters.Count;
+            int draftCount = ProjectState.Chapters.Count(chapter => chapter.Status == ChapterStatus.Draft);
+            int writingCount = ProjectState.Chapters.Count(chapter => chapter.Status == ChapterStatus.Writing);
+            int revisionCount = ProjectState.Chapters.Count(chapter => chapter.Status == ChapterStatus.Revision);
+            int doneCount = ProjectState.Chapters.Count(chapter => chapter.Status == ChapterStatus.Final);
 
-            storyRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")}: {storyCharCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {storyWords}\n{ResourceLoader.GetForCurrentView().GetString("estimatedReadTime")}: {readMinutes} {ResourceLoader.GetForCurrentView().GetString("min")}\n{ResourceLoader.GetForCurrentView().GetString("estimatedPageCount")}: {storyCharCount / 3838}";
-            charactersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("characters")}: {charactersCount}";
-            chaptersRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("chapters")}: {ProjectState.Chapters.Count}";
-            textRun.Text = $"{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withoutSpaces")}): {txt.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("charactersStory")} ({ResourceLoader.GetForCurrentView().GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{ResourceLoader.GetForCurrentView().GetString("paragraphs")}: {paragraphCount}\n{ResourceLoader.GetForCurrentView().GetString("words")}: {wordCount}";
+            storyRun.Text = $"{resourceLoader.GetString("charactersStory")}: {storyCharCount}\n{resourceLoader.GetString("words")}: {storyWords}\n{resourceLoader.GetString("estimatedReadTime")}: {readMinutes} {resourceLoader.GetString("min")}\n{resourceLoader.GetString("estimatedPageCount")}: {storyCharCount / 3838}";
+            charactersRun.Text = $"{resourceLoader.GetString("characters")}: {charactersCount}";
+            chaptersRun.Text = $"{resourceLoader.GetString("chapters")}: {chapterCount}\n{resourceLoader.GetString("done")}: {doneCount}\n{resourceLoader.GetString("projectStatsWritingLabel")}: {writingCount}\n{resourceLoader.GetString("projectStatsRevisionLabel")}: {revisionCount}\n{resourceLoader.GetString("projectStatsDraftLabel")}: {draftCount}";
+            textRun.Text = $"{resourceLoader.GetString("charactersStory")} ({resourceLoader.GetString("withoutSpaces")}): {txt.Length - 1}\n{resourceLoader.GetString("charactersStory")} ({resourceLoader.GetString("withSpaces")}): {txtWithoutSpace.Length - 1}\n{resourceLoader.GetString("paragraphs")}: {paragraphCount}\n{resourceLoader.GetString("words")}: {wordCount}";
 
             var stringBuilder = new StringBuilder();
             IOrderedEnumerable<IGrouping<string, Match>> wordFrequency
@@ -186,6 +195,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
+            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
         }
 
@@ -197,14 +207,16 @@ namespace Storylines.Views.Dialogs
         bool isHide = true;
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += (s, e) =>
-            {
-                if (isHide)
-                    Hide();
-            };
+            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;
+        }
+
+        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        {
+            if (isHide)
+                Hide();
         }
     }
 }

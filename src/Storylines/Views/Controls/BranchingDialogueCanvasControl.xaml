@@ -73,8 +73,8 @@
                 <TextBlock x:Name="connectionModeText"
                            x:Uid="connectionModeText"
                            Foreground="White" FontSize="12" VerticalAlignment="Center" />
-                <Button Content="✕" CornerRadius="4" Padding="6,2"
-                        FontSize="10" Click="OnCancelConnection_Click"
+                <Button CornerRadius="4" Padding="6,2"
+                    Click="OnCancelConnection_Click"
                         x:Uid="cancelConnectionButton" />
             </StackPanel>
         </Border>

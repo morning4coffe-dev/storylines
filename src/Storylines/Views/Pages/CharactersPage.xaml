@@ -268,7 +268,7 @@
                                         x:Uid="addText"
                                         Click="OnAddButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Add" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator />
@@ -276,14 +276,14 @@
                                         x:Uid="editFlyout"
                                         Click="OnEditFlyout_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Edit" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Name="removeFlyout"
                                         x:Uid="removeFlyout"
                                         Click="OnRemoveButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Delete" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout.Items>
@@ -604,7 +604,6 @@
                                     <TextBlock Grid.Column="1"
                                                Text="{Binding Type}"
                                                Opacity="0.6"
-                                               FontStyle="Italic"
                                                FontSize="12"
                                                VerticalAlignment="Center"
                                                Margin="8,0" />
@@ -614,7 +613,8 @@
                                             Padding="4"
                                             Tag="{Binding TargetToken}"
                                             Click="OnRemoveRelationship_Click">
-                                        <FontIcon Glyph="&#xE107;" FontSize="10" Opacity="0.5" />
+                                        <SymbolIcon Symbol="Delete"
+                                                    Opacity="0.5" />
                                     </Button>
                                 </Grid>
                             </DataTemplate>
@@ -624,7 +624,6 @@
                                x:Uid="noRelationshipsText"
                                Opacity="0.5"
                                FontSize="12"
-                               FontStyle="Italic"
                                Visibility="Collapsed" />
                 </StackPanel>
             </StackPanel>

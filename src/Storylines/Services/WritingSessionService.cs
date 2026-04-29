@@ -1,5 +1,6 @@
 using Newtonsoft.Json;
 using System;
+using Storylines.Services.Interfaces;
 using Windows.Storage;
 
 namespace Storylines.Services
@@ -111,7 +112,11 @@ namespace Storylines.Services
                 if (!string.IsNullOrWhiteSpace(raw))
                     return JsonConvert.DeserializeObject<WritingSessionData>(raw) ?? new WritingSessionData();
             }
-            catch { /* corrupt data — start fresh */ }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to load writing session data: {ex.Message}");
+            }
+
             return new WritingSessionData();
         }
 
@@ -121,7 +126,10 @@ namespace Storylines.Services
             {
                 ApplicationData.Current.LocalSettings.Values[SettingsKey] = JsonConvert.SerializeObject(Current);
             }
-            catch { /* best-effort */ }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to save writing session data: {ex.Message}");
+            }
         }
 
         // ─── Helpers ─────────────────────────────────────────────────

@@ -713,10 +713,6 @@ Opravdu chcete odejít bez uložení své práce?</target>
           <source>Edit</source>
           <target state="translated">Upravit</target>
         </trans-unit>
-        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
-          <source>Add simple dialogue</source>
-          <target state="translated">Přidat jednoduchou repliku</target>
-        </trans-unit>
         <trans-unit id="appHeaderEdited" translate="yes" xml:space="preserve">
           <source>Edited</source>
           <target state="translated">Upraveno</target>

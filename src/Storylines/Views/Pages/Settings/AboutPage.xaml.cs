@@ -25,24 +25,5 @@ namespace Storylines.Views.Pages.Settings
         {
             _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("about_page");
         }
-
-        private void OnAboutPage_SizeChanged(object sender, SizeChangedEventArgs e)
-        {
-            if (this.ActualWidth < 1070)
-                aboutPage.Width = this.ActualWidth - 70;
-            else
-                aboutPage.Width = 1000;
-
-            if (aboutPage.ActualWidth < 600)
-            {
-                linksStack.Orientation = Orientation.Vertical;
-                linksStack.Spacing = 8;
-            }
-            else
-            {
-                linksStack.Orientation = Orientation.Horizontal;
-                linksStack.Spacing = 120;
-            }
-        }
     }
 }

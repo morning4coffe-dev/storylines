@@ -732,11 +732,10 @@ namespace Storylines.Views.Controls
             }
 
             // Reload the current chapter in the editor
-                if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
+            if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
             {
                 searchingInTextBox = true;
-                textBox.Document.SetText(TextSetOptions.FormatRtf,
-                    _projectState.Chapters[selectedIndex].Text ?? string.Empty);
+                _textEditor?.LoadChapterContent(_projectState.Chapters[selectedIndex]);
             }
 
             if (replacements > 0)
@@ -1291,9 +1290,9 @@ namespace Storylines.Views.Controls
                     Document.Selection.TypeText(text);
                 }
             }
-            catch (Exception)
+            catch (Exception ex)
             {
-                // Clipboard access can fail (e.g., remote desktop, locked clipboard)
+                App.TryGetService<ILogger>()?.Warning($"Failed to paste from clipboard: {ex.Message}");
             }
         }
     }

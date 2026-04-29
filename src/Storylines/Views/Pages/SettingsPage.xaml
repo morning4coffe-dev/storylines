@@ -7,7 +7,6 @@
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       d:DesignHeight="800"
       d:DesignWidth="1000"
-      ActualThemeChanged="UserControl_ActualThemeChanged"
       KeyDown="Page_KeyDown"
       SizeChanged="UserControl_SizeChanged"
       mc:Ignorable="d">
@@ -18,8 +17,9 @@
                              x:FieldModifier="public"
                              IsBackButtonVisible="Collapsed"
                              IsSettingsVisible="False"
-                             OpenPaneLength="280"
-                             PaneDisplayMode="Left"
+                             CompactPaneLength="48"
+                             OpenPaneLength="264"
+                             PaneDisplayMode="Auto"
                              SelectionChanged="OnSettingsNavigationView_SelectionChanged">
             <muxc:NavigationView.MenuItems>
                 <muxc:NavigationViewItem x:Uid="general"
@@ -32,7 +32,7 @@
                                 <animatedvisuals:AnimatedSettingsVisualSource />
                             </muxc:AnimatedIcon.Source>
                             <muxc:AnimatedIcon.FallbackIconSource>
-                                <muxc:FontIconSource FontFamily="Segoe MDL2 Assets"
+                                <muxc:FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                      Glyph="&#xE713;" />
                             </muxc:AnimatedIcon.FallbackIconSource>
                         </muxc:AnimatedIcon>
@@ -43,7 +43,8 @@
                                          CornerRadius="4"
                                          Tag="Personalize">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="" />
+                        <FontIcon Glyph=""
+                                  Style="{StaticResource AppSymbolIconStyle}" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
 
@@ -51,18 +52,19 @@
                                          Tag="Accessibility"
                                          Visibility="Visible">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="" />
+                        <FontIcon Glyph=""
+                                  Style="{StaticResource AppSymbolIconStyle}" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.MenuItems>
             <muxc:NavigationView.PaneFooter>
                 <muxc:NavigationViewItem x:Name="aboutPageItem"
                                          x:Uid="about"
-                                         GotFocus="OnAboutPageItem_GotFocus"
                                          Tag="About"
                                          Tapped="OnAboutPageItem_Tapped">
                     <muxc:NavigationViewItem.Icon>
-                        <FontIcon Glyph="" />
+                        <FontIcon Glyph=""
+                                  Style="{StaticResource AppSymbolIconStyle}" />
                     </muxc:NavigationViewItem.Icon>
                 </muxc:NavigationViewItem>
             </muxc:NavigationView.PaneFooter>

@@ -36,9 +36,6 @@
   <data name="addDialogue.Label" xml:space="preserve">
     <value>Aggiungi dialogo</value>
   </data>
-  <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Aggiungi dialogo semplice</value>
-  </data>
   <data name="addText.Text" xml:space="preserve">
     <value>Aggiungi</value>
   </data>
@@ -264,6 +261,21 @@ Volevi uscire senza salvare i tuoi progressi?</value>
   </data>
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Progressi non salvati</value>
+  </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Ripristinare le modifiche non salvate?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines ha trovato modifiche non salvate dall'ultima sessione. Ripristinale e continua a lavorare su questo progetto, oppure scartale e apri l'ultima versione salvata.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Ripristina modifiche</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Scarta modifiche</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Non ora</value>
   </data>
   <data name="experience.Title" xml:space="preserve">
     <value>Dicci cosa ne pensi</value>
@@ -692,17 +704,44 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Trova e sostituisci (Ctrl+H)</value>
   </data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve">
+    <value>Trova</value>
+  </data>
   <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
     <value>Trova...</value>
+  </data>
+  <data name="matchCaseToggle.Content" xml:space="preserve">
+    <value>Maiuscole/minuscole</value>
   </data>
   <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Maiuscole/minuscole</value>
   </data>
+  <data name="wholeWordToggle.Content" xml:space="preserve">
+    <value>Parola intera</value>
+  </data>
   <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
     <value>Parola intera</value>
   </data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Corrispondenza precedente</value>
+  </data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Corrispondenza precedente</value>
+  </data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Corrispondenza successiva</value>
+  </data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Corrispondenza successiva</value>
+  </data>
   <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
     <value>Chiudi</value>
+  </data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve">
+    <value>Sostituisci</value>
   </data>
   <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
     <value>Sostituisci...</value>
@@ -1509,6 +1548,45 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
     <value>Word frequency</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>Informazioni sul file</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>Nome file:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Percorso:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Scrittura</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Revisione</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Bozza</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>Informazioni sul file</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Creato:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Modificato:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Dimensione:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Tipo:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Non ancora salvato</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
   </data>
 </root>
 

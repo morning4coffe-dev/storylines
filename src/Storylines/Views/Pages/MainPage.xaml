@@ -198,6 +198,7 @@
                         Visibility="Collapsed">
                     <FontIcon Margin="0,1,-5,0"
                               Glyph=""
+                              Style="{StaticResource AppSymbolIconStyle}"
                               RenderTransformOrigin="0,.5">
                         <FontIcon.RenderTransform>
                             <CompositeTransform ScaleX=".75"
@@ -220,7 +221,6 @@
                            FontSize="12"
                            Foreground="{ThemeResource TextForeground}"
                            Opacity="0.6"
-                           FontStyle="Italic"
                            Text="{x:Bind ViewModel.DownBarGuidanceText, Mode=OneWay}"
                            Visibility="{x:Bind ViewModel.DownBarGuidanceVisibility, Mode=OneWay}" />
 
@@ -252,18 +252,18 @@
                     <StackPanel Orientation="Horizontal" Spacing="6">
                         <TextBlock x:Name="sessionTimerText"
                                    VerticalAlignment="Center"
-                                   FontSize="11"
+                                   FontSize="{StaticResource AppCaptionFontSize}"
                                    Foreground="{ThemeResource TextForeground}"
                                    Opacity="0.7"
                                    Text="{x:Bind ViewModel.SessionTimerText, Mode=OneWay}" />
                         <TextBlock Text="|"
                                    VerticalAlignment="Center"
-                                   FontSize="11"
+                                   FontSize="{StaticResource AppCaptionFontSize}"
                                    Foreground="{ThemeResource TextForeground}"
                                    Opacity="0.4" />
                         <TextBlock x:Name="streakText"
                                    VerticalAlignment="Center"
-                                   FontSize="11"
+                                   FontSize="{StaticResource AppCaptionFontSize}"
                                    Foreground="{ThemeResource TextForeground}"
                                    Opacity="0.7"
                                    Text="{x:Bind ViewModel.StreakText, Mode=OneWay}" />

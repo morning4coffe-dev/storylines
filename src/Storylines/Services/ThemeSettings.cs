@@ -13,6 +13,7 @@ namespace Storylines.Services
     public static class ThemeSettings
     {
         private static readonly UISettings uiSettings = new UISettings();
+        private static bool _isAccentChangeRegistered;
         public static readonly ThemeListener themeListener = new ThemeListener();
 
         public static ElementTheme RootTheme
@@ -62,7 +63,11 @@ namespace Storylines.Services
 
         public static void InitializeAppAccentColor()
         {
-            uiSettings.ColorValuesChanged += UiSettings_ColorValuesChanged;
+            if (!_isAccentChangeRegistered)
+            {
+                uiSettings.ColorValuesChanged += UiSettings_ColorValuesChanged;
+                _isAccentChangeRegistered = true;
+            }
 
             UpdateAccentColor(GetCurrentAccentColor());
         }
@@ -138,7 +143,7 @@ namespace Storylines.Services
 
             UpdateAccentColor((Color)Application.Current.Resources["SystemAccentColor"]);
 
-            ApplicationData.Current.LocalSettings.Values["AppTheme"] = id;
+            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppTheme] = id;
         }
 
         public static ElementTheme ToElementTheme(this ApplicationTheme theme)

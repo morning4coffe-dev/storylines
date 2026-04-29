@@ -1,7 +1,9 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Storylines.Constants;
+using Storylines.Helpers;
 using Storylines.Views.Dialogs;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading;
@@ -14,6 +16,8 @@ namespace Storylines.Models
 {
     public partial class ProjectFile : ObservableObject
     {
+        private static readonly SemaphoreSlim _futureAccessListLock = new SemaphoreSlim(1, 1);
+
         public string Name { get; set; }
         public string Token { get; private set; }
         public string Path { get; set; }
@@ -40,7 +44,7 @@ namespace Storylines.Models
 
         public static void New(StorageFile file)
         {
-            _ = Remember(file);
+            _ = RememberSafelyAsync(file);
         }
 
         public static async Task<ProjectFile> LoadExistingAsync(StorageFile file, string token)
@@ -59,14 +63,72 @@ namespace Storylines.Models
             };
         }
 
-        private static string Remember(StorageFile file)
+        private static async Task RememberSafelyAsync(StorageFile file)
         {
-            string token = Guid.NewGuid().ToString();
-            if (StorageApplicationPermissions.FutureAccessList.Entries.Count >= StorageApplicationPermissions.FutureAccessList.MaximumItemsAllowed)
-                StorageApplicationPermissions.FutureAccessList.Remove(StorageApplicationPermissions.FutureAccessList.Entries[0].Token);
+            try
+            {
+                await RememberAsync(file);
+            }
+            catch
+            {
+            }
+        }
 
-            StorageApplicationPermissions.FutureAccessList.AddOrReplace(token, file);
-            return token;
+        private static async Task<string> RememberAsync(StorageFile file)
+        {
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
+            await _futureAccessListLock.WaitAsync();
+
+            try
+            {
+                var futureAccessList = StorageApplicationPermissions.FutureAccessList;
+                var existingToken = RecentProjectDeduplicator.FindExistingToken(
+                    await LoadRememberedProjectReferencesAsync(),
+                    file.Path);
+
+                if (!string.IsNullOrWhiteSpace(existingToken))
+                {
+                    futureAccessList.AddOrReplace(existingToken, file);
+                    return existingToken;
+                }
+
+                string token = Guid.NewGuid().ToString();
+                if (futureAccessList.Entries.Count >= futureAccessList.MaximumItemsAllowed)
+                    futureAccessList.Remove(futureAccessList.Entries[0].Token);
+
+                futureAccessList.AddOrReplace(token, file);
+                return token;
+            }
+            finally
+            {
+                _futureAccessListLock.Release();
+            }
+        }
+
+        private static async Task<List<RecentProjectReference>> LoadRememberedProjectReferencesAsync()
+        {
+            var rememberedProjects = new List<RecentProjectReference>();
+
+            foreach (var entry in StorageApplicationPermissions.FutureAccessList.Entries.ToList())
+            {
+                try
+                {
+                    using var timeout = new CancellationTokenSource(LayoutConstants.ProjectFileLoadTimeoutMs);
+                    var existingFile = await GetProjectFromTokenAsync(entry.Token, timeout.Token);
+                    if (existingFile != null)
+                        rememberedProjects.Add(new RecentProjectReference(entry.Token, existingFile.Path));
+                }
+                catch (OperationCanceledException)
+                {
+                }
+                catch
+                {
+                }
+            }
+
+            return rememberedProjects;
         }
 
         public static void Remove(string token)
@@ -85,6 +147,7 @@ namespace Storylines.Models
         public static async Task LoadAllAsync()
         {
             projectFiles.Clear();
+            var loadedProjects = new List<ProjectFile>();
 
             foreach (var token in StorageApplicationPermissions.FutureAccessList.Entries.ToList())
             {
@@ -93,7 +156,7 @@ namespace Storylines.Models
                     using var timeout = new CancellationTokenSource(LayoutConstants.ProjectFileLoadTimeoutMs);
                     var file = await GetProjectFromTokenAsync(token.Token, timeout.Token);
                     if (file != null)
-                        projectFiles.Add(await LoadExistingAsync(file, token.Token));
+                        loadedProjects.Add(await LoadExistingAsync(file, token.Token));
                 }
                 catch (OperationCanceledException)
                 {
@@ -104,6 +167,9 @@ namespace Storylines.Models
                     StorageApplicationPermissions.FutureAccessList.Remove(token.Token);
                 }
             }
+
+            foreach (var projectFile in RecentProjectDeduplicator.DistinctByPath(loadedProjects, currentProject => currentProject.Path))
+                projectFiles.Add(projectFile);
         }
 
         public static async Task<StorageFile> GetProjectFromTokenAsync(string token, CancellationToken cancellationToken = default)
@@ -118,7 +184,7 @@ namespace Storylines.Models
         {
             for (int i = 0; i < projectFiles.Count; i++)
             {
-                if (projectFiles[i].Path == file.Path)
+                if (RecentProjectDeduplicator.PathsMatch(projectFiles[i].Path, file.Path))
                 {
                     return true;
                 }

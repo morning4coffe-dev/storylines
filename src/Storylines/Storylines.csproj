@@ -191,6 +191,9 @@
     <Compile Include="Views\Dialogs\ProjectStatsDialogue.xaml.cs">
       <DependentUpon>ProjectStatsDialogue.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Views\Dialogs\ProjectFileInfoDialogue.xaml.cs">
+      <DependentUpon>ProjectFileInfoDialogue.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Views\Pages\Settings\AboutPage.xaml.cs">
       <DependentUpon>AboutPage.xaml</DependentUpon>
     </Compile>
@@ -204,7 +207,9 @@
       <DependentUpon>PersonalizationPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Resources\Strings.cs" />
+    <Compile Include="Helpers\ChapterTextNormalization.cs" />
     <Compile Include="Helpers\NotificationManager.cs" />
+    <Compile Include="Helpers\RecentProjectDeduplicator.cs" />
     <Compile Include="Helpers\SpeakerResolver.cs" />
     <Compile Include="Helpers\BranchingDialogueExportHelper.cs" />
     <Compile Include="Services\ExportService.cs" />
@@ -225,6 +230,7 @@
       <DependentUpon>SettingsPage.xaml</DependentUpon>
     </Compile>
     <Compile Include="Models\Dialogue.cs" />
+    <Compile Include="Models\ExportModels.cs" />
     <Compile Include="Helpers\MicrosoftStoreFunctions.cs" />
     <Compile Include="Helpers\TextHighlighter.cs" />
     <Compile Include="Views\Controls\MainCommandBar.xaml.cs">
@@ -234,6 +240,7 @@
     <Compile Include="Services\Persistence\DocumentPersistenceHandlerBase.cs" />
     <Compile Include="Services\Persistence\PlainTextDocumentPersistenceHandler.cs" />
     <Compile Include="Services\Persistence\StorylinesDocumentPersistenceHandler.cs" />
+    <Compile Include="Services\AppSettingsService.cs" />
     <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -251,9 +258,13 @@
     <Compile Include="Services\DebugLogger.cs" />
     <Compile Include="Services\EventAggregator.cs" />
     <Compile Include="Services\FileService.cs" />
+    <Compile Include="Services\FilePickerService.cs" />
     <Compile Include="Services\Interfaces\IBranchingDialogueEventPublisher.cs" />
     <Compile Include="Services\Interfaces\IBranchingDialogueService.cs" />
     <Compile Include="Services\Interfaces\IBranchingDialogueStore.cs" />
+    <Compile Include="Services\Interfaces\IAppSettingsService.cs" />
+    <Compile Include="Services\Interfaces\IExportService.cs" />
+    <Compile Include="Services\Interfaces\IFilePickerService.cs" />
     <Compile Include="Services\Interfaces\ILogger.cs" />
     <Compile Include="Services\Interfaces\INotificationService.cs" />
     <Compile Include="Services\Interfaces\ITelemetryProvider.cs" />
@@ -282,10 +293,14 @@
     </Compile>
     <Compile Include="ViewModels\AppViewModel.cs" />
     <Compile Include="ViewModels\BranchingDialogueViewModel.cs" />
+    <Compile Include="ViewModels\ExportDialogViewModel.cs" />
     <Compile Include="ViewModels\MainPageViewModel.cs" />
     <Compile Include="ViewModels\ChaptersListViewModel.cs" />
     <Compile Include="ViewModels\CharactersPageViewModel.cs" />
     <Compile Include="ViewModels\CommandBarViewModel.cs" />
+    <Compile Include="ViewModels\Settings\AccessibilitySettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\GeneralSettingsViewModel.cs" />
+    <Compile Include="ViewModels\Settings\PersonalizationSettingsViewModel.cs" />
     <Compile Include="ViewModels\Modes\FocusModeViewModel.cs" />
     <Compile Include="Converters\EmptyStringToCollapsedConverter.cs" />
     <Compile Include="Converters\ChapterStatusToColorConverter.cs" />
@@ -472,6 +487,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Views\Dialogs\ProjectStatsDialogue.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\Dialogs\ProjectFileInfoDialogue.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

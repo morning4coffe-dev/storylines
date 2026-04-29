@@ -43,7 +43,6 @@
                    x:Uid="globalSearchNoResults"
                    Visibility="Collapsed"
                    Opacity="0.5"
-                   FontStyle="Italic"
                    HorizontalAlignment="Center" />
     </StackPanel>
 </ContentDialog>

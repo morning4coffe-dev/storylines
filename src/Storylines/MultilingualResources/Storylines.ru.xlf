@@ -651,7 +651,7 @@ Did you want to exit without saving your progress?</source>
         </trans-unit>
         <trans-unit id="ownDescription.PlaceholderText" translate="yes" xml:space="preserve">
           <source>"This character has short brown hair. Is smart and kind..."</source>
-          <target state="translated">"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</target>
+          <target state="translated">"У этого персонажа короткие каштановые волосы. Отличается умом и добротой..."</target>
         </trans-unit>
         <trans-unit id="newChapter.PlaceholderText" translate="no" xml:space="preserve">
           <source>"Uten navn"</source>
@@ -724,10 +724,6 @@ Did you want to exit without saving your progress?</source>
         <trans-unit id="editFlyout.Text" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="translated">Изменить</target>
-        </trans-unit>
-        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
-          <source>Add simple dialogue</source>
-          <target state="translated">Добавить простой диалог</target>
         </trans-unit>
         <trans-unit id="appHeaderEdited" translate="yes" xml:space="preserve">
           <source>Edited</source>
@@ -1119,6 +1115,134 @@ Write your stories with either your keyboard, touch, voice, or a pen</target>
         <trans-unit id="Preview" translate="yes" xml:space="preserve">
           <source>Preview</source>
           <target state="new">Preview</target>
+        </trans-unit>
+        <trans-unit id="notesPanePlotBox.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>e.g. Main quest, Love subplot, Mystery...</source>
+          <target state="translated">напр. Основной сюжет, любовная линия, тайна...</target>
+        </trans-unit>
+        <trans-unit id="addRelationshipTitle" translate="yes" xml:space="preserve">
+          <source>Add Relationship</source>
+          <target state="translated">Добавить связь</target>
+        </trans-unit>
+        <trans-unit id="branchingSearch.Header" translate="yes" xml:space="preserve">
+          <source>Search</source>
+          <target state="translated">Поиск</target>
+        </trans-unit>
+        <trans-unit id="branchingSearch.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Search nodes or lines</source>
+          <target state="translated">Ищите узлы или реплики</target>
+        </trans-unit>
+        <trans-unit id="branchingSpeakerFilter.Header" translate="yes" xml:space="preserve">
+          <source>Speaker filter</source>
+          <target state="translated">Фильтр по говорящему</target>
+        </trans-unit>
+        <trans-unit id="branchingCreateNode.Content" translate="yes" xml:space="preserve">
+          <source>Create node</source>
+          <target state="translated">Создать узел</target>
+        </trans-unit>
+        <trans-unit id="branchingDeleteNode.Content" translate="yes" xml:space="preserve">
+          <source>Delete node</source>
+          <target state="translated">Удалить узел</target>
+        </trans-unit>
+        <trans-unit id="branchingSetStartNode.Content" translate="yes" xml:space="preserve">
+          <source>Set start</source>
+          <target state="translated">Назначить началом</target>
+        </trans-unit>
+        <trans-unit id="branchingMapToggle.Header" translate="yes" xml:space="preserve">
+          <source>Map mode</source>
+          <target state="translated">Режим карты</target>
+        </trans-unit>
+        <trans-unit id="branchingInspectorTitle.Text" translate="yes" xml:space="preserve">
+          <source>Node inspector</source>
+          <target state="translated">Инспектор узла</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeTitle.Header" translate="yes" xml:space="preserve">
+          <source>Node title</source>
+          <target state="translated">Название узла</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeaker.Header" translate="yes" xml:space="preserve">
+          <source>Speaker</source>
+          <target state="translated">Говорящий</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeText.Header" translate="yes" xml:space="preserve">
+          <source>Line text</source>
+          <target state="translated">Текст реплики</target>
+        </trans-unit>
+        <trans-unit id="branchingSaveNodeEdits.Content" translate="yes" xml:space="preserve">
+          <source>Save edits</source>
+          <target state="translated">Сохранить изменения</target>
+        </trans-unit>
+        <trans-unit id="branchingAddChoice.Content" translate="yes" xml:space="preserve">
+          <source>Add choice</source>
+          <target state="translated">Добавить выбор</target>
+        </trans-unit>
+        <trans-unit id="branchingRemoveChoice.Content" translate="yes" xml:space="preserve">
+          <source>Remove</source>
+          <target state="translated">Удалить</target>
+        </trans-unit>
+        <trans-unit id="branchingValidateGraph.Content" translate="yes" xml:space="preserve">
+          <source>Validate graph</source>
+          <target state="translated">Проверить граф</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulatorExpander.Header" translate="yes" xml:space="preserve">
+          <source>Playthrough simulator</source>
+          <target state="translated">Симулятор прохождения</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulationStart.Content" translate="yes" xml:space="preserve">
+          <source>Start</source>
+          <target state="translated">Запустить</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulationRestart.Content" translate="yes" xml:space="preserve">
+          <source>Restart</source>
+          <target state="translated">Перезапустить</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulationStop.Content" translate="yes" xml:space="preserve">
+          <source>Stop</source>
+          <target state="translated">Остановить</target>
+        </trans-unit>
+        <trans-unit id="branchingSimulationBreadcrumb.Text" translate="yes" xml:space="preserve">
+          <source>Breadcrumb</source>
+          <target state="translated">Ход прохождения</target>
+        </trans-unit>
+        <trans-unit id="branchingNoChaptersMessage" translate="yes" xml:space="preserve">
+          <source>Create a chapter first to start branching dialogue authoring.</source>
+          <target state="translated">Сначала создайте главу, чтобы начать работу над ветвящимся диалогом.</target>
+        </trans-unit>
+        <trans-unit id="branchingDefaultNodeTitle" translate="yes" xml:space="preserve">
+          <source>Node</source>
+          <target state="translated">Узел</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeakerSuggest.Header" translate="yes" xml:space="preserve">
+          <source>Speaker</source>
+          <target state="translated">Говорящий</target>
+        </trans-unit>
+        <trans-unit id="branchingNodeSpeakerSuggest.PlaceholderText" translate="yes" xml:space="preserve">
+          <source>Type or select a character</source>
+          <target state="translated">Введите имя персонажа или выберите его</target>
+        </trans-unit>
+        <trans-unit id="branchingEmptyTitle.Text" translate="yes" xml:space="preserve">
+          <source>No passages yet</source>
+          <target state="translated">Пока нет фрагментов</target>
+        </trans-unit>
+        <trans-unit id="branchingEmptyDescription.Text" translate="yes" xml:space="preserve">
+          <source>Double-click the canvas or click "Add passage" to create your first story passage.</source>
+          <target state="translated">Дважды щёлкните по холсту или нажмите «Добавить фрагмент», чтобы создать первый фрагмент истории.</target>
+        </trans-unit>
+        <trans-unit id="branchingStartBadge" translate="yes" xml:space="preserve">
+          <source>Start</source>
+          <target state="translated">Старт</target>
+        </trans-unit>
+        <trans-unit id="branchingDeadEndBadge" translate="yes" xml:space="preserve">
+          <source>Dead-end</source>
+          <target state="translated">Тупик</target>
+        </trans-unit>
+        <trans-unit id="branchingChoiceCountFormat" translate="yes" xml:space="preserve">
+          <source>{0} choices</source>
+          <target state="translated">{0} вариантов</target>
+        </trans-unit>
+        <trans-unit id="branchingImportedNodesFormat" translate="yes" xml:space="preserve">
+          <source>Imported {0} passages from chapter text.</source>
+          <target state="translated">Импортировано {0} фрагментов из текста главы.</target>
         </trans-unit>
       </group>
     </body>

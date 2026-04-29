@@ -3,6 +3,7 @@ using Storylines.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.UI.Text;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
@@ -20,21 +21,28 @@ namespace Storylines.Views.Dialogs
             InitializeComponent();
         }
 
-        public static async void Open()
+        public static async Task OpenAsync()
         {
-            var dialog = new GlobalSearchDialogue();
-            var navigation = App.GetService<INavigationService>();
-            var textEditor = App.GetService<ITextEditorService>();
-            dialog._navigateToChapter = (index) =>
+            try
             {
-                dialog.Hide();
-                navigation.GoBack();
-                textEditor.SelectedChapterIndex = index;
-                if (Pages.MainPage.ChapterList?.listView != null)
-                    Pages.MainPage.ChapterList.listView.SelectedIndex = index;
-            };
+                var dialog = new GlobalSearchDialogue();
+                var navigation = App.GetService<INavigationService>();
+                var textEditor = App.GetService<ITextEditorService>();
+                dialog._navigateToChapter = (index) =>
+                {
+                    dialog.Hide();
+                    navigation.GoBack();
+                    textEditor.SelectedChapterIndex = index;
+                    if (Pages.MainPage.ChapterList?.listView != null)
+                        Pages.MainPage.ChapterList.listView.SelectedIndex = index;
+                };
 
-            await dialog.ShowAsync();
+                await dialog.ShowAsync();
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to open global search dialog: {ex.Message}");
+            }
         }
 
         private void OnSearchBox_TextChanged(object sender, TextChangedEventArgs e)

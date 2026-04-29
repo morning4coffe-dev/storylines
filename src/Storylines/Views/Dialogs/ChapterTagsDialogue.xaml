@@ -38,7 +38,7 @@
 
         <TextBlock x:Uid="chapterTagsSuggestions"
                    Opacity="0.55"
-                   FontSize="11" />
+                   FontSize="{StaticResource AppCaptionFontSize}" />
 
         <muxc:ItemsRepeater x:Name="suggestionPills"
                        Margin="0,0,0,4">
@@ -52,7 +52,7 @@
                     <Button Content="{x:Bind}"
                             CornerRadius="4"
                             Padding="8,2"
-                            FontSize="11"
+                            FontSize="{StaticResource AppCaptionFontSize}"
                             Click="OnSuggestionPill_Click" />
                 </DataTemplate>
             </muxc:ItemsRepeater.ItemTemplate>

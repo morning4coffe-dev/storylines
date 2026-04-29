@@ -38,10 +38,6 @@
           <source>Add dialogue</source>
           <target state="translated">Aggiungi dialogo</target>
         </trans-unit>
-        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
-          <source>Add simple dialogue</source>
-          <target state="translated">Aggiungi dialogo semplice</target>
-        </trans-unit>
         <trans-unit id="addText.Text" translate="yes" xml:space="preserve">
           <source>Add</source>
           <target state="translated">Aggiungi</target>

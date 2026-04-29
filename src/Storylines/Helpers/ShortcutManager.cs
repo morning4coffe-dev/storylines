@@ -147,7 +147,7 @@ namespace Storylines.Helpers
 
                                 case Windows.System.VirtualKey.E:
                                     if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
-                                        ExportDialogue.Open(default); break;
+                                        App.GetService<IDialogService>().OpenExportDialogue(); break;
                                 case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
                                 case Windows.System.VirtualKey.F: MainPage.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.H: MainPage.ChapterText.OpenSearchAndReplace(); break;
@@ -185,7 +185,7 @@ namespace Storylines.Helpers
                                         CharactersPage.current.Remove(); break;
                                 case Windows.System.VirtualKey.E:
                                     if (CharactersPage.current.exportButton.IsEnabled)
-                                        ExportDialogue.Open(ExportService.WhatToExport.Characters); break;
+                                        App.GetService<IDialogService>().OpenExportDialogue(ExportTarget.Characters); break;
                                 case Windows.System.VirtualKey.N:
                                     if (CharactersPage.current.editButton.IsEnabled)
                                         CharactersPage.current.EnableEditMode(!(bool)CharactersPage.current.editButton.IsChecked); break;

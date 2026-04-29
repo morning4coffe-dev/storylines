@@ -78,7 +78,7 @@
                     <FontIcon Glyph="&#xE8A9;" FontSize="14" />
                 </Button>
                 <TextBlock x:Uid="pinboardHelpText"
-                           FontSize="11"
+                           FontSize="{StaticResource AppCaptionFontSize}"
                            Opacity="0.5"
                            VerticalAlignment="Center" />
             </StackPanel>

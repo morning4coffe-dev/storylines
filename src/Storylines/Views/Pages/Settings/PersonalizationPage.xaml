@@ -4,9 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      mc:Ignorable="d"
-      Loaded="OnPersonalizationPage_Loaded"
-      SizeChanged="OnPersonalizationPage_SizeChanged">
+    mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
@@ -18,10 +16,149 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="personalizationPage"
-                    Margin="35,35,35,0"
-                    Spacing="6"
+                Margin="16,16,16,24"
+                Spacing="10"
                     HorizontalAlignment="Stretch"
                     MaxWidth="1000">
+            <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="CompactLayout">
+                <VisualState.Setters>
+                    <Setter Target="personalizationPage.Margin"
+                        Value="16,16,16,24" />
+                    <Setter Target="themeControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="themeComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="themeComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="themeComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="themeComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="themeComboBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="accentControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="accentComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="accentComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="accentComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="accentComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="accentComboBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="fontFamilyControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="fontFamilyComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="fontFamilyComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="fontFamilyComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="fontFamilyComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="fontFamilyComboBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="fontSizeControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="fontSizeNumBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="fontSizeNumBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="fontSizeNumBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="fontSizeNumBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="fontSizeNumBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="zoomControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="editorZoomStack.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="editorZoomStack.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="editorZoomStack.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="editorZoomStack.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="editorZoomStack.Margin"
+                        Value="0,12,0,0" />
+                </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="1100" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="personalizationPage.Margin"
+                        Value="32,24,32,24" />
+                    <Setter Target="themeControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="themeComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="themeComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="themeComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="themeComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="themeComboBox.Margin"
+                        Value="0" />
+                    <Setter Target="accentControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="accentComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="accentComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="accentComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="accentComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="accentComboBox.Margin"
+                        Value="0" />
+                    <Setter Target="fontFamilyControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="fontFamilyComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="fontFamilyComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="fontFamilyComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="fontFamilyComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="fontFamilyComboBox.Margin"
+                        Value="0" />
+                    <Setter Target="fontSizeControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="fontSizeNumBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="fontSizeNumBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="fontSizeNumBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="fontSizeNumBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="fontSizeNumBox.Margin"
+                        Value="0" />
+                    <Setter Target="zoomControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="editorZoomStack.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="editorZoomStack.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="editorZoomStack.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="editorZoomStack.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="editorZoomStack.Margin"
+                        Value="0" />
+                </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <TextBlock x:Uid="personalizationText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -31,14 +168,20 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+              Padding="16,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                <ColumnDefinition x:Name="themeControlColumn"
+                          Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                          Style="{StaticResource AppSymbolIconStyle}"
+                  VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="chooseThemeSetting"
                            VerticalAlignment="Center"
@@ -50,9 +193,9 @@
                           VerticalAlignment="Center"
                           Height="30"
                           Width="120"
-                          SelectedIndex="2"
+                          MinWidth="120"
                           Grid.Column="2"
-                          SelectionChanged="OnThemeComboBox_SelectionChanged">
+                          SelectedIndex="{x:Bind ViewModel.SelectedThemeIndex, Mode=TwoWay}">
                     <ComboBox.Items>
                         <ComboBoxItem x:Uid="light" />
                         <ComboBoxItem x:Uid="dark" />
@@ -70,12 +213,19 @@
                            IsExpanded="True">
                 <muxc:Expander.Header>
                     <Grid Padding="-15,20,-12,20">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="56" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
+                            <ColumnDefinition x:Name="accentControlColumn"
+                                              Width="Auto" />
                         </Grid.ColumnDefinitions>
                         <FontIcon Glyph=""
+                                  Style="{StaticResource AppSymbolIconStyle}"
+                                  VerticalAlignment="Center"
                                   HorizontalAlignment="Center" />
                         <TextBlock x:Uid="chooseAccentColorSetting"
                                    VerticalAlignment="Center"
@@ -87,9 +237,9 @@
                                   VerticalAlignment="Center"
                                   Height="30"
                                   Width="120"
-                                  SelectedIndex="1"
+                                                                    MinWidth="120"
                                   Grid.Column="2"
-                                  SelectionChanged="OnAccentComboBox_SelectionChanged">
+                                                                    SelectedIndex="{x:Bind ViewModel.SelectedAccentIndex, Mode=TwoWay}">
                             <ComboBox.Items>
                                 <ComboBoxItem x:Uid="system" />
                                 <ComboBoxItem x:Uid="app" />
@@ -99,7 +249,8 @@
                     </Grid>
                 </muxc:Expander.Header>
                 <muxc:Expander.Content>
-                    <StackPanel Spacing="12" Margin="30,10">
+                    <StackPanel Spacing="12"
+                                Margin="16,12">
                         <TextBlock x:Uid="quickPresets"
                                    FontWeight="Medium"
                                    FontSize="13"
@@ -107,32 +258,38 @@
                         <StackPanel Orientation="Horizontal" Spacing="8">
                             <Button x:Uid="accentPresetOrange" Tag="#BE5A00" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#BE5A00">
                                 <Ellipse Fill="#BE5A00" Width="36" Height="36" />
                             </Button>
-                                <Button x:Uid="accentPresetBlue" Tag="#0078D4" Width="38" Height="38" CornerRadius="19"
+                            <Button x:Uid="accentPresetBlue" Tag="#0078D4" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#0078D4">
                                 <Ellipse Fill="#0078D4" Width="36" Height="36" />
                             </Button>
-                                <Button x:Uid="accentPresetGreen" Tag="#107C10" Width="38" Height="38" CornerRadius="19"
+                            <Button x:Uid="accentPresetGreen" Tag="#107C10" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#107C10">
                                 <Ellipse Fill="#107C10" Width="36" Height="36" />
                             </Button>
-                                <Button x:Uid="accentPresetRed" Tag="#E81123" Width="38" Height="38" CornerRadius="19"
+                            <Button x:Uid="accentPresetRed" Tag="#E81123" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#E81123">
                                 <Ellipse Fill="#E81123" Width="36" Height="36" />
                             </Button>
-                                <Button x:Uid="accentPresetPurple" Tag="#881798" Width="38" Height="38" CornerRadius="19"
+                            <Button x:Uid="accentPresetPurple" Tag="#881798" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#881798">
                                 <Ellipse Fill="#881798" Width="36" Height="36" />
                             </Button>
-                                <Button x:Uid="accentPresetRust" Tag="#CA5010" Width="38" Height="38" CornerRadius="19"
+                            <Button x:Uid="accentPresetRust" Tag="#CA5010" Width="38" Height="38" CornerRadius="19"
                                     Padding="0"
-                                    Click="OnAccentPresetButton_Click">
+                                    Command="{x:Bind ViewModel.ApplyAccentPresetCommand}"
+                                    CommandParameter="#CA5010">
                                 <Ellipse Fill="#CA5010" Width="36" Height="36" />
                             </Button>
                         </StackPanel>
@@ -144,8 +301,8 @@
                                      IsColorChannelTextInputVisible="True"
                                      IsHexInputVisible="True"
                                      IsAlphaEnabled="False"
-                                     IsEnabled="False"
-                                     ColorChanged="ColorPicker_ColorChanged" />
+                                     IsEnabled="{x:Bind ViewModel.IsCustomAccentSelected, Mode=OneWay}"
+                                     Color="{x:Bind ViewModel.CustomAccentColor, Mode=TwoWay}" />
                     </StackPanel>
                 </muxc:Expander.Content>
             </muxc:Expander>
@@ -154,14 +311,15 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                          Style="{StaticResource AppSymbolIconStyle}"
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -180,7 +338,7 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnAddChapterOnPageDownToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.AddChapterOnPageDownEnabled, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel>
@@ -193,14 +351,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="fontFamilyControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph="&#xE8D2;"
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -221,8 +384,10 @@
                           VerticalAlignment="Center"
                           Height="30"
                           Width="160"
+                          MinWidth="160"
                           Grid.Column="2"
-                          SelectionChanged="OnFontFamilyComboBox_SelectionChanged">
+                          SelectedValuePath="Tag"
+                          SelectedValue="{x:Bind ViewModel.EditorFontFamily, Mode=TwoWay}">
                     <ComboBoxItem Content="Calibri" Tag="Calibri" />
                     <ComboBoxItem Content="Cambria" Tag="Cambria" />
                     <ComboBoxItem Content="Georgia" Tag="Georgia" />
@@ -239,14 +404,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="fontSizeControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph="&#xE8D2;"
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="editorFontSizeSetting"
                            VerticalAlignment="Center"
@@ -260,9 +430,55 @@
                                 SmallChange="1"
                                 SpinButtonPlacementMode="Compact"
                                 Width="100"
+                                MinWidth="100"
                                 Height="30"
                                 Grid.Column="2"
-                                ValueChanged="OnFontSizeNumBox_ValueChanged" />
+                                Value="{x:Bind ViewModel.EditorFontSize, Mode=TwoWay}" />
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition x:Name="zoomControlColumn"
+                                      Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph="&#xE71E;"
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="zoom"
+                           VerticalAlignment="Center"
+                           TextWrapping="Wrap"
+                           Grid.Column="1" />
+                <StackPanel x:Name="editorZoomStack"
+                            Orientation="Horizontal"
+                            Spacing="8"
+                            VerticalAlignment="Center"
+                            HorizontalAlignment="Right"
+                            Grid.Column="2">
+                    <muxc:NumberBox x:Name="editorZoomNumBox"
+                                    HorizontalAlignment="Right"
+                                    VerticalAlignment="Center"
+                                    Minimum="52"
+                                    Maximum="400"
+                                    SmallChange="10"
+                                    SpinButtonPlacementMode="Compact"
+                                    Width="100"
+                                    MinWidth="100"
+                                    Height="30"
+                                    Value="{x:Bind ViewModel.EditorZoomPercent, Mode=TwoWay}" />
+                    <TextBlock Text="%"
+                               VerticalAlignment="Center"
+                               Opacity="0.8" />
+                </StackPanel>
             </Grid>
 
             <StackPanel.ChildrenTransitions>

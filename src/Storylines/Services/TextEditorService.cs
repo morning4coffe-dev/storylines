@@ -1,3 +1,4 @@
+using Storylines.Helpers;
 using Storylines.Views.Controls;
 using Storylines.Views.Pages;
 using Storylines.Services.Interfaces;
@@ -34,14 +35,15 @@ namespace Storylines.Services
 
         public void SetText(TextFormat format, string text)
         {
-            var textBox = MainPage.ChapterText?.textBox;
+            var chapterText = MainPage.ChapterText;
+            var textBox = chapterText?.textBox;
             if (textBox == null) return;
 
             var options = format == TextFormat.Rtf
                 ? Windows.UI.Text.TextSetOptions.FormatRtf
                 : Windows.UI.Text.TextSetOptions.None;
 
-            textBox.Document.SetText(options, text ?? string.Empty);
+            ApplyEditorText(chapterText, GetSelectedChapter(), options, text ?? string.Empty, restoreChapterLocation: false);
         }
 
         public void Clear()
@@ -94,36 +96,76 @@ namespace Storylines.Services
             var textBox = chapterText?.textBox;
             if (textBox == null) return;
 
+            ApplyEditorText(chapterText, chapter, Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text ?? string.Empty, restoreChapterLocation: true);
+        }
+
+        private void ApplyEditorText(ChapterTextBox chapterText, Chapter chapter, TextSetOptions options, string sourceText, bool restoreChapterLocation)
+        {
+            var textBox = chapterText?.textBox;
+            if (textBox == null)
+                return;
+
             Interlocked.Increment(ref _programmaticChangeDepth);
 
-            // Load the chapter's RTF content into the editor using the proper API.
-            // Never manipulate RTF strings directly — the RichEditBox handles
-            // paragraph marks (\par, \pard) correctly through its document model.
             try
             {
-                var rtf = chapter.Text;
-                if (string.IsNullOrEmpty(rtf))
+                if (options == Windows.UI.Text.TextSetOptions.FormatRtf && string.IsNullOrEmpty(sourceText))
                 {
                     textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, string.Empty);
                 }
                 else
                 {
-                    textBox.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, rtf);
+                    textBox.Document.SetText(options, sourceText);
                 }
+
+                SyncLoadedChapterText(chapter, textBox, sourceText);
             }
             finally
             {
-                _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                {
+                ScheduleProgrammaticChangeCompletion(textBox, chapterText, chapter, restoreChapterLocation);
+            }
+        }
+
+        private static void SyncLoadedChapterText(Chapter chapter, MyRichEditBox textBox, string sourceText)
+        {
+            if (chapter == null || textBox == null)
+                return;
+
+            // RichEditBox normalizes paragraph markers as it loads content.
+            // Keep the model aligned before programmatic change suppression ends,
+            // otherwise the next TextChanged can look like a user edit.
+            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string plainText);
+            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out string normalizedRtf);
+
+            var normalizedChapterText = ChapterTextNormalization.NormalizeLoadedChapterText(sourceText, plainText, normalizedRtf);
+            if (chapter.Text != normalizedChapterText)
+                chapter.Text = normalizedChapterText;
+        }
+
+        private void ScheduleProgrammaticChangeCompletion(MyRichEditBox textBox, ChapterTextBox chapterText, Chapter chapter, bool restoreChapterLocation)
+        {
+            _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            {
+                if (restoreChapterLocation)
                     RestoreChapterLocation(chapterText, chapter);
 
-                    _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
-                    {
-                        if (_programmaticChangeDepth > 0)
-                            Interlocked.Decrement(ref _programmaticChangeDepth);
-                    });
+                _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                {
+                    if (_programmaticChangeDepth > 0)
+                        Interlocked.Decrement(ref _programmaticChangeDepth);
                 });
-            }
+            });
+        }
+
+        private Chapter GetSelectedChapter()
+        {
+            var projectState = App.TryGetService<ProjectState>();
+            var selectedIndex = SelectedChapterIndex;
+
+            if (projectState?.Chapters == null || selectedIndex < 0 || selectedIndex >= projectState.Chapters.Count)
+                return null;
+
+            return projectState.Chapters[selectedIndex];
         }
 
         private static void RestoreChapterLocation(ChapterTextBox chapterText, Chapter chapter)

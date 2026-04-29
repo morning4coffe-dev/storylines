@@ -5,9 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      mc:Ignorable="d"
-      Loaded="GeneralPage_Loaded"
-      SizeChanged="GeneralPage_SizeChanged">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -19,10 +17,101 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="generalPage"
-                    Margin="35"
-                    Spacing="6"
+                Margin="16,16,16,24"
+                Spacing="10"
                     HorizontalAlignment="Stretch"
                     MaxWidth="1000">
+            <VisualStateManager.VisualStateGroups>
+            <VisualStateGroup>
+                <VisualState x:Name="CompactLayout">
+                <VisualState.Setters>
+                    <Setter Target="generalPage.Margin"
+                        Value="16,16,16,24" />
+                    <Setter Target="chapterNameControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="chapterNameStack.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="chapterNameStack.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="chapterNameStack.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="chapterNameStack.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="chapterNameStack.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="autosaveIntervalControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="autosaveIntervalComboBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="autosaveIntervalComboBox.Margin"
+                        Value="0,12,0,0" />
+                    <Setter Target="dailyWordGoalControlColumn.Width"
+                        Value="0" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.Row)"
+                        Value="1" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.Column)"
+                        Value="1" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.ColumnSpan)"
+                        Value="2" />
+                    <Setter Target="dailyWordGoalNumBox.HorizontalAlignment"
+                        Value="Left" />
+                    <Setter Target="dailyWordGoalNumBox.Margin"
+                        Value="0,12,0,0" />
+                </VisualState.Setters>
+                </VisualState>
+                <VisualState x:Name="WideLayout">
+                <VisualState.StateTriggers>
+                    <AdaptiveTrigger MinWindowWidth="1100" />
+                </VisualState.StateTriggers>
+                <VisualState.Setters>
+                    <Setter Target="generalPage.Margin"
+                        Value="32,24,32,24" />
+                    <Setter Target="chapterNameControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="chapterNameStack.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="chapterNameStack.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="chapterNameStack.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="chapterNameStack.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="chapterNameStack.Margin"
+                        Value="0" />
+                    <Setter Target="autosaveIntervalControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="autosaveIntervalComboBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="autosaveIntervalComboBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="autosaveIntervalComboBox.Margin"
+                        Value="0" />
+                    <Setter Target="dailyWordGoalControlColumn.Width"
+                        Value="Auto" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.Row)"
+                        Value="0" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.Column)"
+                        Value="2" />
+                    <Setter Target="dailyWordGoalNumBox.(Grid.ColumnSpan)"
+                        Value="1" />
+                    <Setter Target="dailyWordGoalNumBox.HorizontalAlignment"
+                        Value="Right" />
+                    <Setter Target="dailyWordGoalNumBox.Margin"
+                        Value="0" />
+                </VisualState.Setters>
+                </VisualState>
+            </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <TextBlock x:Uid="generalText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -31,16 +120,20 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+              Padding="16,20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                <ColumnDefinition x:Name="chapterNameControlColumn"
+                          Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <FontIcon Glyph=""
-                          HorizontalAlignment="Center" />
-                <StackPanel VerticalAlignment="Center"
+            <SymbolIcon Symbol="Edit"
+                    VerticalAlignment="Center" />
+            <StackPanel VerticalAlignment="Center"
                             Spacing="1"
                             Grid.Column="1">
                     <TextBlock x:Uid="chapterNameSetting"
@@ -58,13 +151,14 @@
                             Grid.Column="2"
                             Spacing="6"
                             Orientation="Horizontal"
+                        HorizontalAlignment="Right"
                             VerticalAlignment="Center">
                     <TextBox x:Name="chapterNameBox"
                              Width="150"
                              Height="32"
-                             TextChanged="OnChapterNameTextBox_TextChanged" />
+                         Text="{x:Bind ViewModel.ChapterName, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Button HorizontalAlignment="Right"
-                            Click="ResetChapterNameButton_Click">
+                        Command="{x:Bind ViewModel.ResetChapterNameCommand}">
                         <FontIcon Glyph=""
                                   RenderTransformOrigin="0.5,0.5">
                             <FontIcon.RenderTransform>
@@ -85,14 +179,14 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="unsavedProgressAlert"
                            VerticalAlignment="Center"
@@ -102,21 +196,21 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnExitDialogueToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.ExitDialogueEnabled, Mode=TwoWay}" />
             </Grid>
 
             <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -135,7 +229,7 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnProjectOnStartupToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.LoadLastProjectOnStart, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel>
@@ -148,14 +242,14 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="autosaveEnable"
                            VerticalAlignment="Center"
@@ -165,21 +259,26 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnAutosaveToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.AutosaveEnabled, Mode=TwoWay}" />
             </Grid>
 
             <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="autosaveIntervalControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph=""
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <TextBlock x:Uid="autosaveInterval"
                            VerticalAlignment="Center"
@@ -191,9 +290,10 @@
                           VerticalAlignment="Center"
                           Height="30"
                           Width="120"
-                          SelectedIndex="2"
                           Grid.Column="2"
-                          SelectionChanged="OnAutosaveIntervalComboBox_SelectionChanged">
+                          MinWidth="120"
+                          SelectedValuePath="Tag"
+                          SelectedValue="{x:Bind ViewModel.AutosaveIntervalKey, Mode=TwoWay}">
                     <ComboBox.Items>
                         <ComboBoxItem x:Uid="autosaveInterval1"
                                       Tag="0.5" />
@@ -225,14 +325,19 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto" />
+                    <RowDefinition Height="Auto" />
+                </Grid.RowDefinitions>
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                    <ColumnDefinition x:Name="dailyWordGoalControlColumn"
+                                      Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph="&#xE8EF;"
+                          VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -256,9 +361,10 @@
                                 LargeChange="500"
                                 SpinButtonPlacementMode="Compact"
                                 Width="120"
+                                MinWidth="120"
                                 Height="30"
                                 Grid.Column="2"
-                                ValueChanged="OnDailyWordGoalNumBox_ValueChanged" />
+                                Value="{x:Bind ViewModel.DailyWordGoal, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel>
@@ -271,14 +377,14 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,15">
+                                    Padding="16,15">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                                        <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="auto" />
-                    <ColumnDefinition Width="20" />
+                                        <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <FontIcon Glyph="&#xE9D9;"
+                                                    VerticalAlignment="Center"
                           HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -297,7 +403,7 @@
                               Style="{StaticResource RightAlignedToggleSwitchStyle}"
                               HorizontalAlignment="Right"
                               Grid.Column="2"
-                              Toggled="OnExperimentalFeaturesToggleSwitch_Toggled" />
+                              IsOn="{x:Bind ViewModel.ExperimentalFeaturesEnabled, Mode=TwoWay}" />
             </Grid>
 
             <StackPanel.ChildrenTransitions>

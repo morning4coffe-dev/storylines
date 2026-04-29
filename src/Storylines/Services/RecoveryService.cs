@@ -19,6 +19,8 @@ namespace Storylines.Services
     {
         private const string RecoveryCacheFileName = "RecoveryCache.json";
         private const string RecoveryCacheTimestampKey = "RecoveryCacheTimestamp";
+        private const string RecoveryProjectTokenKey = "RecoveryProjectToken";
+        private const string RecoveryDocumentTypeKey = "RecoveryDocumentType";
         private const int CacheIntervalSeconds = 30;
 
         private static DispatcherTimer _cacheTimer;
@@ -88,6 +90,14 @@ namespace Storylines.Services
 
                 var settings = ApplicationData.Current.LocalSettings;
                 settings.Values[RecoveryCacheTimestampKey] = DateTimeOffset.UtcNow.ToString("o");
+
+                var currentProject = persistence.CurrentProject;
+                if (!string.IsNullOrWhiteSpace(currentProject?.Token))
+                    settings.Values[RecoveryProjectTokenKey] = currentProject.Token;
+                else
+                    settings.Values.Remove(RecoveryProjectTokenKey);
+
+                settings.Values[RecoveryDocumentTypeKey] = currentProject?.file?.FileType ?? ".srl";
             }
             catch (Exception ex)
             {
@@ -125,6 +135,16 @@ namespace Storylines.Services
             return null;
         }
 
+        public static string GetRecoveryProjectToken()
+        {
+            return ApplicationData.Current.LocalSettings.Values[RecoveryProjectTokenKey] as string;
+        }
+
+        public static string GetRecoveryDocumentType()
+        {
+            return ApplicationData.Current.LocalSettings.Values[RecoveryDocumentTypeKey] as string ?? ".srl";
+        }
+
         public static void ClearRecoveryData()
         {
             _ = ClearRecoveryDataAsync();
@@ -137,6 +157,8 @@ namespace Storylines.Services
             try
             {
                 ApplicationData.Current.LocalSettings.Values.Remove(RecoveryCacheTimestampKey);
+                ApplicationData.Current.LocalSettings.Values.Remove(RecoveryProjectTokenKey);
+                ApplicationData.Current.LocalSettings.Values.Remove(RecoveryDocumentTypeKey);
 
                 var existingFile = await ApplicationData.Current.LocalFolder.TryGetItemAsync(RecoveryCacheFileName);
                 if (existingFile != null)

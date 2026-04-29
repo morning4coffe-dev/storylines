@@ -4,8 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      mc:Ignorable="d"
-      SizeChanged="OnAboutPage_SizeChanged">
+    mc:Ignorable="d">
 
     <Page.Resources>
         <ResourceDictionary>
@@ -17,10 +16,37 @@
 
     <ScrollViewer VerticalScrollBarVisibility="Auto">
         <StackPanel x:Name="aboutPage"
-                    Margin="35"
-                    Spacing="6"
+                    Margin="16,16,16,24"
+                    Spacing="10"
                     HorizontalAlignment="Stretch"
                     MaxWidth="1000">
+            <VisualStateManager.VisualStateGroups>
+                <VisualStateGroup>
+                    <VisualState x:Name="CompactLayout">
+                        <VisualState.Setters>
+                            <Setter Target="aboutPage.Margin"
+                                    Value="16,16,16,24" />
+                            <Setter Target="linksStack.Orientation"
+                                    Value="Vertical" />
+                            <Setter Target="linksStack.Spacing"
+                                    Value="8" />
+                        </VisualState.Setters>
+                    </VisualState>
+                    <VisualState x:Name="WideLayout">
+                        <VisualState.StateTriggers>
+                            <AdaptiveTrigger MinWindowWidth="1100" />
+                        </VisualState.StateTriggers>
+                        <VisualState.Setters>
+                            <Setter Target="aboutPage.Margin"
+                                    Value="32,24,32,24" />
+                            <Setter Target="linksStack.Orientation"
+                                    Value="Horizontal" />
+                            <Setter Target="linksStack.Spacing"
+                                    Value="80" />
+                        </VisualState.Setters>
+                    </VisualState>
+                </VisualStateGroup>
+            </VisualStateManager.VisualStateGroups>
             <TextBlock x:Uid="aboutText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -30,14 +56,15 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}"
                   CornerRadius="4"
-                  Padding="0,20">
+                  Padding="16,20">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
+                    <ColumnDefinition Width="56" />
                     <ColumnDefinition Width="*" />
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/Icons/Storylines-icon.png"
                        Margin="10, 0"
                        Width="35"
+                       VerticalAlignment="Center"
                        HorizontalAlignment="Center" />
                 <StackPanel VerticalAlignment="Center"
                             Spacing="1"
@@ -64,11 +91,11 @@
                 <muxc:Expander.Header>
                     <Grid Padding="-15,20,-12,20">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="75" />
+                            <ColumnDefinition Width="56" />
                             <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="auto" />
                         </Grid.ColumnDefinitions>
                         <FontIcon Glyph=""
+                                  VerticalAlignment="Center"
                                   HorizontalAlignment="Center" />
                         <TextBlock x:Uid="links"
                                    VerticalAlignment="Center"
