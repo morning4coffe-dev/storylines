@@ -211,6 +211,7 @@
     <Compile Include="Helpers\NotificationManager.cs" />
     <Compile Include="Helpers\RecentProjectDeduplicator.cs" />
     <Compile Include="Helpers\SpeakerResolver.cs" />
+      <Compile Include="Helpers\TaskExtensions.cs" />
     <Compile Include="Helpers\BranchingDialogueExportHelper.cs" />
     <Compile Include="Services\ExportService.cs" />
     <Compile Include="Helpers\ShortcutManager.cs" />
@@ -241,6 +242,13 @@
     <Compile Include="Services\Persistence\PlainTextDocumentPersistenceHandler.cs" />
     <Compile Include="Services\Persistence\StorylinesDocumentPersistenceHandler.cs" />
     <Compile Include="Services\AppSettingsService.cs" />
+      <Compile Include="Services\CommandRegistry.cs" />
+      <Compile Include="Services\DictationService.cs" />
+      <Compile Include="Services\SpeechService.cs" />
+      <Compile Include="Services\SupportedLanguages.cs" />
+      <Compile Include="Services\ThemeService.cs" />
+      <Compile Include="Services\UwpDispatcherService.cs" />
+      <Compile Include="Services\WritingStatsService.cs" />
     <Compile Include="Views\Pages\MainPage.xaml.cs">
       <DependentUpon>MainPage.xaml</DependentUpon>
     </Compile>
@@ -265,15 +273,26 @@
     <Compile Include="Services\Interfaces\IAppSettingsService.cs" />
     <Compile Include="Services\Interfaces\IExportService.cs" />
     <Compile Include="Services\Interfaces\IFilePickerService.cs" />
+      <Compile Include="Services\Interfaces\ICharacterPictureService.cs" />
+      <Compile Include="Services\Interfaces\ICommandRegistry.cs" />
+      <Compile Include="Services\Interfaces\IDictationService.cs" />
+      <Compile Include="Services\Interfaces\IDispatcherService.cs" />
     <Compile Include="Services\Interfaces\ILogger.cs" />
     <Compile Include="Services\Interfaces\INotificationService.cs" />
+      <Compile Include="Services\Interfaces\IInspectorViewModel.cs" />
     <Compile Include="Services\Interfaces\ITelemetryProvider.cs" />
     <Compile Include="Services\Interfaces\ITelemetryService.cs" />
     <Compile Include="Services\Interfaces\ISaveSerializer.cs" />
     <Compile Include="Services\Interfaces\IProjectPersistenceService.cs" />
     <Compile Include="Services\Interfaces\IFileService.cs" />
     <Compile Include="Services\Interfaces\INavigationService.cs" />
+      <Compile Include="Services\Interfaces\IShellService.cs" />
+      <Compile Include="Services\Interfaces\ISnapshotService.cs" />
+      <Compile Include="Services\Interfaces\ISpeechService.cs" />
     <Compile Include="Services\Interfaces\ITextEditorService.cs" />
+      <Compile Include="Services\Interfaces\IThemeService.cs" />
+      <Compile Include="Services\Interfaces\IUndoRedoService.cs" />
+      <Compile Include="Services\Interfaces\IWritingStatsService.cs" />
     <Compile Include="Services\Interfaces\IDialogService.cs" />
     <Compile Include="Services\Interfaces\IChapterWorkflowService.cs" />
     <Compile Include="Services\NavigationService.cs" />
@@ -298,6 +317,8 @@
     <Compile Include="ViewModels\ChaptersListViewModel.cs" />
     <Compile Include="ViewModels\CharactersPageViewModel.cs" />
     <Compile Include="ViewModels\CommandBarViewModel.cs" />
+      <Compile Include="ViewModels\InspectorViewModel.cs" />
+      <Compile Include="ViewModels\SpeechHubViewModel.cs" />
     <Compile Include="ViewModels\Settings\AccessibilitySettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\GeneralSettingsViewModel.cs" />
     <Compile Include="ViewModels\Settings\PersonalizationSettingsViewModel.cs" />

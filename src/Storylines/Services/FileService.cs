@@ -11,8 +11,10 @@ namespace Storylines.Services
     {
         public async Task WriteAsync(StorageFile file, string content)
         {
-            IBuffer buffer = CryptographicBuffer.ConvertStringToBinary(content, BinaryStringEncoding.Utf8);
-            await FileIO.WriteBufferAsync(file, buffer);
+            if (file == null)
+                throw new ArgumentNullException(nameof(file));
+
+            await FileIO.WriteTextAsync(file, content ?? string.Empty);
         }
 
         public async Task<string> ReadAsync(StorageFile file)

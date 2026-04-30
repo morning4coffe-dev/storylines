@@ -1538,6 +1538,8 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="exportCharactersToExport" xml:space="preserve"><value>Caratteri da esportare:</value></data>
   <data name="exportNone" xml:space="preserve"><value>Nessuno</value></data>
   <data name="exportAll" xml:space="preserve"><value>Tutti</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>Esportazione non riuscita.</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>Nessun dialogo corrisponde alla selezione di esportazione corrente.</value></data>
   <data name="exportSubmit" xml:space="preserve"><value>Esporta</value></data>
   <data name="saveTitle" xml:space="preserve"><value>Salva</value></data>
   <data name="saveCopyTitle" xml:space="preserve"><value>Salva Copia</value></data>

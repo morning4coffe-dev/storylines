@@ -17,6 +17,8 @@ namespace Storylines.Models
     {
         PlainText,
         RichText,
+        Markdown,
+        Csv,
         Json,
         Twee,
         Screenplay
@@ -184,7 +186,8 @@ namespace Storylines.Models
                 formats: new[]
                 {
                     new ExportFormatDefinition(ExportFormatId.PlainText, ".txt"),
-                    new ExportFormatDefinition(ExportFormatId.RichText, ".rtf")
+                    new ExportFormatDefinition(ExportFormatId.RichText, ".rtf"),
+                    new ExportFormatDefinition(ExportFormatId.Markdown, ".md")
                 }),
 
             new ExportCapabilityDefinition(
@@ -196,6 +199,8 @@ namespace Storylines.Models
                 formats: new[]
                 {
                     new ExportFormatDefinition(ExportFormatId.PlainText, ".txt"),
+                    new ExportFormatDefinition(ExportFormatId.Markdown, ".md"),
+                    new ExportFormatDefinition(ExportFormatId.Csv, ".csv"),
                     new ExportFormatDefinition(ExportFormatId.Json, ".json")
                 }),
 
@@ -207,6 +212,7 @@ namespace Storylines.Models
                 showsSecondaryCharacterFilter: false,
                 formats: new[]
                 {
+                    new ExportFormatDefinition(ExportFormatId.Markdown, ".md"),
                     new ExportFormatDefinition(ExportFormatId.Json, ".json")
                 }),
 

@@ -4,6 +4,7 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                xmlns:customcontrols="using:Storylines.Views.Controls"
                xmlns:resources="using:Storylines.Resources"
                xmlns:viewModels="using:Storylines.ViewModels"
@@ -117,11 +118,12 @@
                                FontSize="12"
                                TextWrapping="WrapWholeWords"
                                          Visibility="{x:Bind ViewModel.NameCollisionVisibility, Mode=OneWay}" />
-                          <TextBlock Text="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
-                                         Foreground="Red"
-                                         FontSize="12"
-                                         TextWrapping="WrapWholeWords"
-                                         Visibility="{x:Bind ViewModel.ErrorVisibility, Mode=OneWay}" />
+                    <muxc:InfoBar IsClosable="True"
+                                  IsOpen="{x:Bind ViewModel.IsErrorOpen, Mode=OneWay}"
+                                  Severity="{x:Bind ViewModel.ErrorSeverity, Mode=OneWay}"
+                                  Title="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
+                                  Visibility="{x:Bind ViewModel.ErrorVisibility, Mode=OneWay}"
+                                  CloseButtonClick="OnErrorInfoBar_CloseButtonClick" />
                 </StackPanel>
 
                 <StackPanel Spacing="8">

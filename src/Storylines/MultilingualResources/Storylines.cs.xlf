@@ -55,10 +55,14 @@
           <target state="final">Exportovat</target>
         </trans-unit>
         <trans-unit id="load.Label" translate="yes" xml:space="preserve">
-          <source>Load</source>
-          <target state="final">Načíst</target>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Export se nezdařil.</target>
         </trans-unit>
-        <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="exportNoDialoguesFound" translate="yes" xml:space="preserve">
+          <source>No dialogues matched the current export selection.</source>
+          <target state="needs-review-translation">Žádné repliky neodpovídají aktuálnímu výběru exportu.</target>
+        </trans-unit>
           <source>Read aloud</source>
           <target state="translated">Předčítat</target>
         </trans-unit>
@@ -1037,6 +1041,10 @@ na tlačítko "Přidat novou postavu".</target>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
           <target state="translated">Postavy k exportování:</target>
+        </trans-unit>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Export se nezdařil.</target>
         </trans-unit>
       </group>
     </body>

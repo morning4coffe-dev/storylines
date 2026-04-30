@@ -42,11 +42,34 @@ namespace Storylines.Services.Interfaces
     /// <summary>
     /// Metadata for a single snapshot. Body is loaded lazily on restore.
     /// </summary>
-    public sealed record class SnapshotEntry(
-        string Id,
-        DateTimeOffset Captured,
-        string Reason,
-        int ChapterCount,
-        int CharacterCount,
-        long ApproximateBytes);
+    public sealed class SnapshotEntry
+    {
+        public SnapshotEntry(
+            string id,
+            DateTimeOffset captured,
+            string reason,
+            int chapterCount,
+            int characterCount,
+            long approximateBytes)
+        {
+            Id = id;
+            Captured = captured;
+            Reason = reason;
+            ChapterCount = chapterCount;
+            CharacterCount = characterCount;
+            ApproximateBytes = approximateBytes;
+        }
+
+        public string Id { get; }
+
+        public DateTimeOffset Captured { get; }
+
+        public string Reason { get; }
+
+        public int ChapterCount { get; }
+
+        public int CharacterCount { get; }
+
+        public long ApproximateBytes { get; }
+    }
 }

@@ -44,12 +44,34 @@ namespace Storylines.Services.Interfaces
     /// <summary>
     /// A finalised dictation hypothesis ready to be inserted into the editor.
     /// </summary>
-    public sealed record class DictationResult(string Text, double Confidence);
+    public sealed class DictationResult
+    {
+        public DictationResult(string text, double confidence)
+        {
+            Text = text;
+            Confidence = confidence;
+        }
+
+        public string Text { get; }
+
+        public double Confidence { get; }
+    }
 
     /// <summary>
     /// Lifecycle event for <see cref="IDictationService"/>.
     /// </summary>
-    public sealed record class DictationStateChange(DictationState State, string Message = null);
+    public sealed class DictationStateChange
+    {
+        public DictationStateChange(DictationState state, string message = null)
+        {
+            State = state;
+            Message = message;
+        }
+
+        public DictationState State { get; }
+
+        public string Message { get; }
+    }
 
     /// <summary>
     /// High-level dictation lifecycle states surfaced to the UI.

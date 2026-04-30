@@ -1317,6 +1317,8 @@
   <data name="exportCharactersToExport" xml:space="preserve"><value>Postacie do eksportu:</value></data>
   <data name="exportNone" xml:space="preserve"><value>Brak</value></data>
   <data name="exportAll" xml:space="preserve"><value>Wszystko</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>Eksport nie powiódł się.</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>Żadne dialogi nie pasują do bieżącego wyboru eksportu.</value></data>
   <data name="exportSubmit" xml:space="preserve"><value>Eksportuj</value></data>
   <data name="saveTitle" xml:space="preserve"><value>Zapisz</value></data>
   <data name="saveCopyTitle" xml:space="preserve"><value>Zapisz kopię</value></data>

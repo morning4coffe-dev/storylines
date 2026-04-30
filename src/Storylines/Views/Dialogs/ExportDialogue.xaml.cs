@@ -73,6 +73,11 @@ namespace Storylines.Views.Dialogs
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
+        private void OnErrorInfoBar_CloseButtonClick(Microsoft.UI.Xaml.Controls.InfoBar sender, object args)
+        {
+            ViewModel.DismissError();
+        }
+
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
             Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;

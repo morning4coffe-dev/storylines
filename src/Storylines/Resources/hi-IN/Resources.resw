@@ -1316,6 +1316,8 @@
   <data name="exportCharactersToExport" xml:space="preserve"><value>निर्यात करने वाले पात्र</value></data>
   <data name="exportNone" xml:space="preserve"><value>कोई नहीं</value></data>
   <data name="exportAll" xml:space="preserve"><value>सभी</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>निर्यात विफल हुआ।</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>वर्तमान निर्यात चयन से कोई संवाद मेल नहीं खाता।</value></data>
   <data name="exportSubmit" xml:space="preserve"><value>निर्यात</value></data>
   <data name="saveTitle" xml:space="preserve"><value>सहेजें</value></data>
   <data name="saveCopyTitle" xml:space="preserve"><value>प्रतिलिपि सहेजें</value></data>

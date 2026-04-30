@@ -56,10 +56,14 @@
         </trans-unit>
         <trans-unit id="export.Label" translate="yes" xml:space="preserve">
           <source>Export</source>
-          <target state="translated">Экспортировать</target>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Не удалось выполнить экспорт.</target>
         </trans-unit>
-        <trans-unit id="load.Label" translate="yes" xml:space="preserve">
-          <source>Load</source>
+        <trans-unit id="exportNoDialoguesFound" translate="yes" xml:space="preserve">
+          <source>No dialogues matched the current export selection.</source>
+          <target state="needs-review-translation">Ни один диалог не соответствует текущему выбору экспорта.</target>
+        </trans-unit>
           <target state="translated">Загрузить</target>
         </trans-unit>
         <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
@@ -1036,6 +1040,10 @@ the "Add new character" button.</source>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
           <target state="needs-review-translation">Символы для экспорта:</target>
+        </trans-unit>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Не удалось выполнить экспорт.</target>
         </trans-unit>
       </group>
     </body>

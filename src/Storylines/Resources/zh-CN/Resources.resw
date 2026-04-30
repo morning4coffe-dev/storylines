@@ -1536,6 +1536,8 @@
   <data name="exportCharactersToExport" xml:space="preserve"><value>要导出的人物</value></data>
   <data name="exportNone" xml:space="preserve"><value>无</value></data>
   <data name="exportAll" xml:space="preserve"><value>全部</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>导出失败。</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>没有对话符合当前的导出选择。</value></data>
   <data name="exportSubmit" xml:space="preserve"><value>导出</value></data>
   <data name="saveTitle" xml:space="preserve"><value>保存</value></data>
   <data name="saveCopyTitle" xml:space="preserve"><value>保存副本</value></data>

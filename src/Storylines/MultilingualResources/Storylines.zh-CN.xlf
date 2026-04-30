@@ -147,10 +147,14 @@
           <target state="new">Create chapter</target>
         </trans-unit>
         <trans-unit id="chapterDialogueName.Text" translate="yes" xml:space="preserve">
-          <source>Chapter name:</source>
-          <target state="new">Chapter name:</target>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">导出失败。</target>
         </trans-unit>
-        <trans-unit id="chapterDialogueRename" translate="yes" xml:space="preserve">
+        <trans-unit id="exportNoDialoguesFound" translate="yes" xml:space="preserve">
+          <source>No dialogues matched the current export selection.</source>
+          <target state="needs-review-translation">没有对话符合当前的导出选择。</target>
+        </trans-unit>
           <source>Rename chapter</source>
           <target state="new">Rename chapter</target>
         </trans-unit>
@@ -1035,6 +1039,10 @@ the "Add new character" button.</source>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
           <target state="translated">要导出的人物</target>
+        </trans-unit>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">导出失败。</target>
         </trans-unit>
       </group>
     </body>

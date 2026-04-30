@@ -14,6 +14,7 @@ namespace Storylines.Services
         private readonly IAppSettingsService _settings;
 
         private DateTime _today;
+        private bool _hasStartOfDayBaseline;
         private int _wordsAtStartOfDay;
         private int _lastKnownWordCount;
         private int _sessionStartWordCount;
@@ -50,8 +51,11 @@ namespace Storylines.Services
         {
             RolloverIfNeeded();
 
-            if (_wordsAtStartOfDay == 0 && WordsToday == 0)
+            if (!_hasStartOfDayBaseline)
+            {
                 _wordsAtStartOfDay = currentWordCount;
+                _hasStartOfDayBaseline = true;
+            }
 
             var delta = currentWordCount - _wordsAtStartOfDay;
             WordsToday = delta < 0 ? 0 : delta;
@@ -101,6 +105,7 @@ namespace Storylines.Services
             _settings.WritingStreakDays = CurrentStreakDays;
 
             _today = current;
+            _hasStartOfDayBaseline = true;
             _wordsAtStartOfDay = _lastKnownWordCount;
             WordsToday = 0;
         }

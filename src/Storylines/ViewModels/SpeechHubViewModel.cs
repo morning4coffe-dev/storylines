@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Services;
 using Storylines.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -40,7 +41,7 @@ namespace Storylines.ViewModels
             _notifications = notifications;
 
             _mode = _speech.Mode;
-            _speech.ModeChanged += OnModeChanged;
+            _speech.ModeChanged += HandleModeChanged;
             _speech.Dictation.ResultRecognized += OnDictationResult;
             _speech.Dictation.StateChanged += OnDictationStateChanged;
         }
@@ -71,7 +72,7 @@ namespace Storylines.ViewModels
             await _speech.Dictation.StartAsync(languageTag).ConfigureAwait(false);
         }
 
-        private void OnModeChanged(SpeechMode mode)
+        private void HandleModeChanged(SpeechMode mode)
         {
             Mode = mode;
             OnPropertyChanged(nameof(IsDictating));

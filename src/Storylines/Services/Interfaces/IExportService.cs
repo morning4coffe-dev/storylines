@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml.Controls;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
@@ -22,19 +23,21 @@ namespace Storylines.Services.Interfaces
 
     public sealed class ExportOperationResult
     {
-        private ExportOperationResult(bool succeeded, string errorResourceKey)
+        private ExportOperationResult(bool succeeded, string errorResourceKey, InfoBarSeverity notificationSeverity)
         {
             Succeeded = succeeded;
             ErrorResourceKey = errorResourceKey;
+            NotificationSeverity = notificationSeverity;
         }
 
         public bool Succeeded { get; }
         public string ErrorResourceKey { get; }
+        public InfoBarSeverity NotificationSeverity { get; }
 
-        public static ExportOperationResult Success() => new ExportOperationResult(true, null);
+        public static ExportOperationResult Success() => new ExportOperationResult(true, null, InfoBarSeverity.Informational);
 
-        public static ExportOperationResult Failure(string errorResourceKey) =>
-            new ExportOperationResult(false, errorResourceKey);
+        public static ExportOperationResult Failure(string errorResourceKey, InfoBarSeverity notificationSeverity = InfoBarSeverity.Error) =>
+            new ExportOperationResult(false, errorResourceKey, notificationSeverity);
     }
 
     public interface IExportService

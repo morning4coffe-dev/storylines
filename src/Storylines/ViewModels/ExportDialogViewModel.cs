@@ -1,4 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
+using Microsoft.UI.Xaml.Controls;
 using Storylines.Models;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
@@ -53,6 +54,12 @@ namespace Storylines.ViewModels
 
         [ObservableProperty]
         private Visibility _errorVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
+        private bool _isErrorOpen;
+
+        [ObservableProperty]
+        private InfoBarSeverity _errorSeverity = InfoBarSeverity.Error;
 
         [ObservableProperty]
         private string _errorMessage;
@@ -121,8 +128,7 @@ namespace Storylines.ViewModels
             LocationPlaceholderVisibility = Visibility.Visible;
 
             IncludeChapterName = true;
-            ErrorMessage = string.Empty;
-            ErrorVisibility = Visibility.Collapsed;
+            ClearError();
             NameCollisionVisibility = Visibility.Collapsed;
             IsSubmitting = false;
 
@@ -133,13 +139,14 @@ namespace Storylines.ViewModels
 
         partial void OnFileNameChanged(string value)
         {
-            ErrorVisibility = Visibility.Collapsed;
+            ClearError();
             RecalculateState();
             _ = UpdateNameCollisionWarningAsync();
         }
 
         partial void OnSelectedFormatChanged(ExportFormatOptionViewModel value)
         {
+            ClearError();
             RecalculateState();
             _ = UpdateNameCollisionWarningAsync();
         }
@@ -189,7 +196,7 @@ namespace Storylines.ViewModels
             LoadPrimarySelections(capability.PrimarySelectionKind);
             LoadDialogueCharacterSelections(capability.ShowsSecondaryCharacterFilter);
 
-            ErrorVisibility = Visibility.Collapsed;
+            ClearError();
             RecalculateState();
             _ = UpdateNameCollisionWarningAsync();
         }
@@ -207,7 +214,7 @@ namespace Storylines.ViewModels
                 LocationTextVisibility = Visibility.Visible;
                 LocationPlaceholderVisibility = Visibility.Collapsed;
 
-                ErrorVisibility = Visibility.Collapsed;
+                ClearError();
                 RecalculateState();
                 await UpdateNameCollisionWarningAsync();
             }
@@ -224,7 +231,7 @@ namespace Storylines.ViewModels
                 return false;
 
             IsSubmitting = true;
-            ErrorVisibility = Visibility.Collapsed;
+            ClearError();
 
             try
             {
@@ -248,7 +255,7 @@ namespace Storylines.ViewModels
                 var result = await _exportService.ExportAsync(request);
                 if (!result.Succeeded)
                 {
-                    ShowError(result.ErrorResourceKey);
+                    ShowError(result.ErrorResourceKey, result.NotificationSeverity);
                     return false;
                 }
 
@@ -285,6 +292,7 @@ namespace Storylines.ViewModels
             SelectedFormat = null;
             PrimarySelectionSummary = Storylines.Resources.ExportDialogue.All;
             DialogueCharacterSelectionSummary = Storylines.Resources.ExportDialogue.All;
+            ClearError();
 
             RecalculateState();
         }
@@ -355,6 +363,7 @@ namespace Storylines.ViewModels
             if (e.PropertyName != nameof(ExportSelectionItemViewModel.IsSelected))
                 return;
 
+            ClearError();
             UpdateSelectionSummaries();
             RecalculateState();
         }
@@ -431,7 +440,20 @@ namespace Storylines.ViewModels
             }
         }
 
-        private void ShowError(string resourceKey)
+        public void DismissError()
+        {
+            IsErrorOpen = false;
+            ErrorVisibility = Visibility.Collapsed;
+        }
+
+        private void ClearError()
+        {
+            ErrorMessage = string.Empty;
+            ErrorSeverity = InfoBarSeverity.Error;
+            DismissError();
+        }
+
+        private void ShowError(string resourceKey, InfoBarSeverity severity = InfoBarSeverity.Error)
         {
             var message = !string.IsNullOrWhiteSpace(resourceKey)
                 ? _resources.GetString(resourceKey)
@@ -441,6 +463,8 @@ namespace Storylines.ViewModels
                 message = _resources.GetString("exportFailedGeneric") ?? "Export failed.";
 
             ErrorMessage = message;
+            ErrorSeverity = severity;
+            IsErrorOpen = true;
             ErrorVisibility = Visibility.Visible;
         }
 
