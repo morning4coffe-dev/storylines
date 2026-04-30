@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Services;
 using Storylines.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
@@ -15,16 +16,6 @@ namespace Storylines.ViewModels.Settings
 {
     public partial class AccessibilitySettingsViewModel : ObservableObject
     {
-        private static readonly string[] SupportedLanguageTags =
-        {
-            "en",
-            "zh-CN",
-            "ru",
-            "it",
-            "cs",
-            "hi-IN",
-            "pl"
-        };
 
         private readonly IAppSettingsService _settings;
         private readonly string _loadedLanguageTag;
@@ -150,13 +141,13 @@ namespace Storylines.ViewModels.Settings
 
         private string ResolveSupportedLanguageTag(string languageTag)
         {
-            foreach (var supportedLanguageTag in SupportedLanguageTags)
+            foreach (var supportedLanguageTag in SupportedLanguages.Tags)
             {
                 if (_settings.LanguageTagsMatch(languageTag, supportedLanguageTag))
                     return supportedLanguageTag;
             }
 
-            return "en";
+            return SupportedLanguages.DefaultTag;
         }
 
         private static string GetVolumeGlyph(double value)

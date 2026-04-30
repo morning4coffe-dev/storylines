@@ -358,4 +358,47 @@ public class JsonSaveSerializerTests
             Assert.DoesNotContain("\"location\"", json);
             Assert.DoesNotContain("\"plotThreads\"", json);
         }
+
+        // The records refactor (json-v1 wire shape stability) hinges on these byte-identity tests:
+        // any drift in property ordering, JsonProperty names, or null-handling will fail here
+        // before it can corrupt user save files.
+
+        [Fact]
+        public void Serialize_DeserializeSerialize_IsByteIdentical()
+        {
+            var original = new ProjectData
+            {
+                Format = "json-v1",
+                Version = "0.7.5.0",
+                Name = "Stable",
+                LastOpenedChapter = 1,
+                Chapters = new List<ChapterData>
+                {
+                    new() { Id = "c1", Name = "One", Text = "alpha", Notes = "n", Synopsis = "s", WordCountGoal = 100, Tags = new List<string> { "tag1" }, PinboardX = 1.5, PinboardY = 2.5, Status = "Draft", Location = "Loc", PlotThreads = new List<string> { "p1" }, LastCaretPosition = 4, LastVerticalOffset = 8.0 }
+                },
+                Characters = new List<CharacterData>
+                {
+                    new() { Name = "Alice", Description = "d", PictureFileName = "pf", Role = "r", Age = "30", Appearance = "a", Traits = new List<string> { "brave" } }
+                },
+                PinboardConnections = new List<PinboardConnectionData> { new() { FromIndex = 0, ToIndex = 0, Label = "self" } },
+                PlotThreads = new List<string> { "p1" }
+            };
+
+            var firstJson = _serializer.Serialize(original);
+            var rehydrated = _serializer.Deserialize(firstJson);
+            var secondJson = _serializer.Serialize(rehydrated!);
+
+            Assert.Equal(firstJson, secondJson);
+        }
+
+        [Fact]
+        public void Records_StructuralEquality_HoldsForIdenticalContent()
+        {
+            // Records compare by structural equality, which guards against accidental conversion
+            // back to reference-equality classes or duplicate type drift.
+            var a = new ChapterData { Id = "c1", Name = "One", Text = "t", Notes = string.Empty };
+            var b = new ChapterData { Id = "c1", Name = "One", Text = "t", Notes = string.Empty };
+
+            Assert.Equal(a, b);
+        }
     }

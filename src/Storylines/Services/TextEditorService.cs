@@ -198,5 +198,23 @@ namespace Storylines.Services
             textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out string rtf);
             chapter.Text = rtf;
         }
+
+        public void InsertTextAtCaret(string text)
+        {
+            if (string.IsNullOrEmpty(text))
+                return;
+
+            var textBox = MainPage.ChapterText?.textBox;
+            if (textBox == null) return;
+
+            var selection = textBox.Document.Selection;
+            if (selection == null) return;
+
+            // Replace the current selection (or insert at caret if collapsed) with the new text.
+            selection.SetText(Windows.UI.Text.TextSetOptions.None, text);
+
+            // Move caret to the end of the inserted text.
+            selection.SetRange(selection.EndPosition, selection.EndPosition);
+        }
     }
 }

@@ -15,6 +15,7 @@ namespace Storylines.Services
             var services = new ServiceCollection();
 
             services.AddSingleton<ILogger, DebugLogger>();
+            services.AddSingleton<IDispatcherService, UwpDispatcherService>();
             services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
             services.AddSingleton<ITelemetryService, TelemetryService>();
             services.AddSingleton<IFileService, FileService>();
@@ -33,6 +34,12 @@ namespace Storylines.Services
             services.AddSingleton<IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();
             services.AddSingleton<IBranchingDialogueEventPublisher, BranchingDialogueEventPublisher>();
             services.AddSingleton<IBranchingDialogueService, BranchingDialogueService>();
+            services.AddSingleton<IDictationService, DictationService>();
+            services.AddSingleton<ISpeechService, SpeechService>();
+            services.AddSingleton<IWritingStatsService, WritingStatsService>();
+            services.AddSingleton<IThemeService, ThemeService>();
+            services.AddSingleton<ICommandRegistry, CommandRegistry>();
+            services.AddSingleton<IInspectorViewModel, ViewModels.InspectorViewModel>();
             services.AddSingleton<EditorModeService>();
 
             services.AddSingleton<AppViewModel>();
@@ -40,6 +47,7 @@ namespace Storylines.Services
             services.AddSingleton<ChaptersListViewModel>();
             services.AddSingleton<CommandBarViewModel>();
             services.AddSingleton<BranchingDialogueViewModel>();
+            services.AddSingleton<SpeechHubViewModel>();
             services.AddTransient<ExportDialogViewModel>();
             services.AddTransient<CharactersPageViewModel>();
             services.AddTransient<ViewModels.Settings.GeneralSettingsViewModel>();

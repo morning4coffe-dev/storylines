@@ -596,7 +596,7 @@ namespace Storylines.ViewModels
         }
 
         [RelayCommand]
-        private async void ImportGraphJson()
+        private async System.Threading.Tasks.Task ImportGraphJsonAsync()
         {
             var chapterId = GetSelectedChapterId();
             if (chapterId == null || _filePickerService == null || _exportService == null)

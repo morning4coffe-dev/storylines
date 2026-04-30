@@ -49,6 +49,13 @@ namespace Storylines.Services.Interfaces
         /// Saves the current editor content back to the specified chapter model.
         /// </summary>
         void SaveChapterContent(Models.Chapter chapter);
+
+        /// <summary>
+        /// Inserts <paramref name="text"/> at the current caret position. Used by the dictation
+        /// service to push recognized speech into the editor without the view-model needing to
+        /// reach into the RichEditBox directly.
+        /// </summary>
+        void InsertTextAtCaret(string text);
     }
 
     public enum TextFormat

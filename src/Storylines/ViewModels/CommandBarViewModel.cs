@@ -129,7 +129,7 @@ namespace Storylines.ViewModels
         private void ShowShortcuts() => _dialogs.OpenShortcuts();
 
         [RelayCommand]
-        private async void OpenFeedback()
+        private async System.Threading.Tasks.Task OpenFeedbackAsync()
         {
             await Launcher.LaunchUriAsync(new Uri("https://github.com/morning4coffe-dev/Storylines/issues/new"));
         }

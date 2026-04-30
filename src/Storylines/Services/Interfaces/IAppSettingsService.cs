@@ -15,6 +15,7 @@ namespace Storylines.Services.Interfaces
         bool AutosaveEnabled { get; set; }
         double AutosaveInterval { get; set; }
         int DailyWordGoal { get; set; }
+        int WritingStreakDays { get; set; }
         bool ExperimentalFeaturesEnabled { get; set; }
 
         bool AddChapterOnPageDownEnabled { get; set; }

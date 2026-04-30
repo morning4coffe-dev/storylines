@@ -47,15 +47,11 @@ namespace Storylines.Services
 
         public static string chapterName
         {
-            //set
-            //{
-            //    //_selectedAccent = value;
-            //    ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] = chapterName;
-            //}
             get
             {
-                var ch = ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] == null ? 
-                    ResourceLoader.GetForViewIndependentUse().GetString("chapterName") : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName].ToString();
+                var ch = ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] == null
+                    ? ResourceLoader.GetForViewIndependentUse().GetString("chapterName")
+                    : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName].ToString();
                 return ch;
             }
         }
@@ -174,6 +170,7 @@ namespace Storylines.Services
 
         // Writing session & goals
         public static string DailyWordGoal { get; } = "DailyWordGoal";
+        public static string WritingStreakDays { get; } = "WritingStreakDays";
         public static string ChapterTagPresets { get; } = "ChapterTagPresets";
         public static string FirstRunCompleted { get; } = "FirstRunCompleted";
 

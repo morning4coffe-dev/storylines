@@ -15,7 +15,7 @@ namespace Storylines.Models
         IsNotSet
     }
 
-    public class BranchingDialogueGraphData
+    public record class BranchingDialogueGraphData
     {
         [JsonProperty("id")]
         public string? Id { get; set; }
@@ -59,7 +59,7 @@ namespace Storylines.Models
         }
     }
 
-    public class BranchingDialogueNodeData
+    public record class BranchingDialogueNodeData
     {
         [JsonProperty("id")]
         public string? Id { get; set; }
@@ -111,7 +111,7 @@ namespace Storylines.Models
         }
     }
 
-    public class BranchingDialogueChoiceData
+    public record class BranchingDialogueChoiceData
     {
         [JsonProperty("id")]
         public string? Id { get; set; }
@@ -138,7 +138,7 @@ namespace Storylines.Models
         }
     }
 
-    public class BranchingDialogueConditionData
+    public record class BranchingDialogueConditionData
     {
         [JsonProperty("flag")]
         public string? Flag { get; set; }
@@ -172,7 +172,7 @@ namespace Storylines.Models
         }
     }
 
-    public class BranchingDialogueActionData
+    public record class BranchingDialogueActionData
     {
         [JsonProperty("flag")]
         public string? Flag { get; set; }

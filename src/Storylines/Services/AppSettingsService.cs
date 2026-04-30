@@ -106,6 +106,12 @@ namespace Storylines.Services
             set => _localSettings.Values[SettingsValueStrings.DailyWordGoal] = Math.Max(0, value);
         }
 
+        public int WritingStreakDays
+        {
+            get => Convert.ToInt32(_localSettings.Values[SettingsValueStrings.WritingStreakDays] ?? 0);
+            set => _localSettings.Values[SettingsValueStrings.WritingStreakDays] = Math.Max(0, value);
+        }
+
         public bool ExperimentalFeaturesEnabled
         {
             get => SettingsValues.experimentalFeaturesEnabled;

@@ -76,6 +76,7 @@
 
   <Capabilities>
 	  <Capability Name="internetClient" />
+	  <DeviceCapability Name="microphone" />
 	  <rescap:Capability Name="confirmAppClose"/>
     <rescap:Capability Name = "inputInjectionBrokered" />
   </Capabilities>

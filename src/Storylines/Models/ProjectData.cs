@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Storylines.Models
 {
-    public class ProjectData
+    public record class ProjectData
     {
         [JsonProperty("format")]
         public string Format { get; set; } = "json-v1";
@@ -33,7 +33,7 @@ namespace Storylines.Models
         public List<BranchingDialogueGraphData> BranchingDialogues { get; set; }
     }
 
-    public class ChapterData
+    public record class ChapterData
     {
         [JsonProperty("id", NullValueHandling = NullValueHandling.Ignore)]
         public string Id { get; set; }
@@ -81,7 +81,7 @@ namespace Storylines.Models
         public string BranchingDialogueGraphId { get; set; }
     }
 
-    public class PinboardConnectionData
+    public record class PinboardConnectionData
     {
         [JsonProperty("from")]
         public int FromIndex { get; set; }
@@ -93,7 +93,7 @@ namespace Storylines.Models
         public string Label { get; set; }
     }
 
-    public class CharacterData
+    public record class CharacterData
     {
         [JsonProperty("name")]
         public string Name { get; set; }
@@ -120,7 +120,7 @@ namespace Storylines.Models
         public List<CharacterRelationshipData> Relationships { get; set; }
     }
 
-    public class CharacterRelationshipData
+    public record class CharacterRelationshipData
     {
         [JsonProperty("targetName")]
         public string TargetName { get; set; }
