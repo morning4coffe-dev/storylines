@@ -1,11 +1,13 @@
-﻿using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.Toolkit.Uwp.Helpers;
 using Microsoft.UI.Xaml.Controls;
-using Storylines.Components;
-using Storylines.Components.DialogueWindows;
-using Storylines.Pages;
-using Storylines.Scripts.Functions;
-using Storylines.Scripts.Services;
-using Storylines.Scripts.Variables;
+using Storylines.Views.Controls;
+using Storylines.Views.Dialogs;
+using Storylines.Views.Pages;
+using Storylines.Helpers;
+using Storylines.Services;
+using Storylines.Models;
+using Storylines.ViewModels;
+using System;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
@@ -16,6 +18,7 @@ using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media;
 using Windows.UI.Xaml.Media.Animation;
+using Storylines.Services.Interfaces;
 
 namespace Storylines
 {
@@ -25,65 +28,148 @@ namespace Storylines
 
         public static ContentDialog currentlyOpenedDialogue;
 
+        private readonly AppViewModel _viewModel;
+        private readonly EventAggregator _events;
+        private readonly INavigationService _navigation;
+        private readonly IProjectPersistenceService _persistence;
+        private readonly ProjectState _projectState;
+        private readonly ITextEditorService _textEditor;
+
+        public AppViewModel ViewModel => _viewModel;
+
         public AppView()
         {
             InitializeComponent();
             current = this;
 
-            UpdateTitleBar();
+            _viewModel = App.GetService<AppViewModel>();
+            _events = App.GetService<EventAggregator>();
+            _navigation = App.GetService<INavigationService>();
+            _persistence = App.GetService<IProjectPersistenceService>();
+            _projectState = App.GetService<ProjectState>();
+            _textEditor = App.GetService<ITextEditorService>();
+
+            // Wire NavigationService to the Frame
+            _navigation.Initialize(pagesView);
+
+            ViewModel.UpdateTitleBar();
 
             ChangePage(Pages.MainPage);
 
             SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
 
-            if (SettingsValues.autosaveEnabled)
-                Autosave.Enable();
+            // Subscribe to tools state changes published by the persistence service.
+            _events.Subscribe<ToolsStateChangedEvent>(e =>
+            {
+                if (MainPage.Current != null)
+                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
+            });
 
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown; ;
+            // Route INotificationService events to UI — decouples service from AppView.current refs.
+            _events.Subscribe<InAppNotificationEvent>(e =>
+                NotificationManager.DisplayInAppNotification(e.Severity, e.Title, e.LongText));
+
+            _events.Subscribe<ProgressBarEvent>(e =>
+            {
+                if (!e.Show)
+                {
+                    NotificationManager.HideMainProgressBar();
+                    return;
+                }
+                NotificationManager.DisplayMainProgressBar(e.IsIndeterminate);
+                if (e.Value > 0)
+                    NotificationManager.UpdateMainProgressBar(
+                        e.Value,
+                        (NotificationManager.ProgressState)(int)e.State);
+            });
+
+            if (SettingsValues.autosaveEnabled)
+                _persistence.EnableAutosave();
+
+            RecoveryService.Start();
+
+            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
         }
 
         public void UpdateTitleBar()
         {
-            if (page == Pages.Settings)
-            {
-                var version = Package.Current.Id.Version;
-                appHeader.Text =
-                $"{Package.Current.DisplayName}" +
-                $" {version.Major}.{version.Minor}{(version.Build.ToString().Equals("0") ? string.Empty : $".{version.Build}")}{(version.Revision.ToString().Equals("0") ? string.Empty : $".{version.Revision}")}" +
-                $"{(Package.Current.IsDevelopmentMode ? " Dev" : " Preview")}";
-            }
-            else
-            {
-                var name = GetName();
-                if (name == null)
-                    appHeader.Text = Package.Current.DisplayName;
-                else
-                    appHeader.Text = name;
-            }
+            ViewModel.CurrentPage = (AppViewModel.AppPages)(int)page;
+            ViewModel.UpdateTitleBar();
+        }
 
-            appHeaderSave.Text = $" {ResourceLoader.GetForCurrentView().GetString("appHeaderEdited")}";
-            appHeaderSave.Visibility = TimeTravelSystem.unSavedProgress ? Visibility.Visible : Visibility.Collapsed;
-            //$"{_ = (TimeTravelSystem.unSavedProgress ? "*" : string.Empty)} -";
+        // ── Global keyboard accelerator handlers ──────────────────────────────
+
+        private void OnSaveAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            _persistence.Save();
+        }
+
+        private void OnSaveCopyAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            _persistence.SaveCopy();
+        }
+
+        private void OnUndoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+            string context = page == Pages.Characters ? "characters" : "chapters";
+            if (undoSvc.CanUndo(context))
+                undoSvc.Undo(context);
+        }
+
+        private void OnRedoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+            string context = page == Pages.Characters ? "characters" : "chapters";
+            if (undoSvc.CanRedo(context))
+                undoSvc.Redo(context);
+        }
+
+        private void OnCommandPaletteAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            // Placeholder: will open command palette overlay when Phase 6 UI ships.
+        }
+
+        private void OnFocusModeAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var modeSvc = App.TryGetService<Services.Modes.EditorModeService>();
+            if (modeSvc == null) return;
+            // F11: toggle — leave focus if active, otherwise open mode picker
+            if (modeSvc.IsInMode("focus"))
+                modeSvc.TryLeave();
+            else
+                App.GetService<Services.Interfaces.IDialogService>().OpenFocusMode();
+        }
+
+        private void OnReadAloudAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            Views.Pages.MainPage.CommandBar.ReadAloud();
+        }
+
+        private void OnDictationAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            App.GetService<SpeechHubViewModel>().ToggleDictationCommand.Execute(null);
         }
 
         public string GetName()
         {
-            if (SaveSystem.currentProject != null)
-                if (!string.IsNullOrEmpty(SaveSystem.currentProject.projectName))
-                    return SaveSystem.currentProject.projectName;
-                else
-                    return SaveSystem.currentProject.name;
-            else
-                return null;
+            return ViewModel.GetProjectName();
         }
 
         public void ClearEverything()
         {
-            MainPage.ChapterText.textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, "");
-            Chapter.chapters.Clear();
-            Character.characters.Clear();
-            MainPage.Current.EnableOrDisableChapterTools(false);
+            _textEditor.Clear();
+            _projectState.Clear();
+            _events.Publish(new ChapterToolsStateEvent { Enabled = false });
         }
 
         public void UsingWindows10()
@@ -105,16 +191,16 @@ namespace Storylines
         #region Review and Notifications
         private void OnRateNowButton_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Rate now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "rate_now");
 
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
-            _ = MicrosoftStoreAndAppCenterFunctions.PromptUserToRateApp();
+            _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("review_infobar");
         }
 
         private void OnRateNotNow_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Not now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -123,7 +209,7 @@ namespace Storylines
 
         private void OnRateNeverShowAgain_Click(object sender, RoutedEventArgs e)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Never show again");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "never_show_again");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NeverShowAgain;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -132,7 +218,7 @@ namespace Storylines
 
         private void OnRateNotNow_CloseButtonClick(InfoBar sender, object args)
         {
-            MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_Review("Review infoBar", "Not now");
+            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
             ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
@@ -143,6 +229,16 @@ namespace Storylines
         {
             NotificationManager.InAppNotification_Close();
             AppView.current.alertNotificationInfoBar.Visibility = Visibility.Collapsed;
+        }
+
+        private void OnUpdateAvailablePrimaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = MicrosoftStoreFunctions.InstallAvailableUpdatesAsync();
+        }
+
+        private void OnUpdateAvailableSecondaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationManager.NewUpdateAvailable_Close();
         }
 
         private void OnUpdateAvailableInfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
@@ -159,18 +255,17 @@ namespace Storylines
         {
             current.backButton.Visibility = Visibility.Visible;
 
+            // Use NavigationService for consistent navigation
             switch (currentPage)
             {
                 case Pages.Settings:
-                    pagesView.Navigate(typeof(SettingsPage));
+                    _navigation.NavigateTo(NavigationTarget.Settings);
                     break;
-
                 case Pages.Characters:
-                    pagesView.Navigate(typeof(CharactersPage), null, new DrillInNavigationTransitionInfo());
+                    _navigation.NavigateTo(NavigationTarget.Characters);
                     break;
-
                 case Pages.MainPage:
-                    pagesView.Navigate(typeof(MainPage), null, new DrillInNavigationTransitionInfo());
+                    _navigation.NavigateTo(NavigationTarget.MainPage);
                     break;
             }
 
@@ -182,10 +277,9 @@ namespace Storylines
 
         public void BackButtonCheck()
         {
-            if (pagesView.CanGoBack || MainPage.ReadMode != null || MainPage.FocusMode != null)
-                backButton.Visibility = Visibility.Visible;
-            else
-                backButton.Visibility = Visibility.Collapsed;
+            var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
+            bool hasModeActive = modeService?.Current.Id != "edit";
+            ViewModel.UpdateBackButtonVisibility(pagesView.CanGoBack, hasModeActive);
         }
 
         public void GoBack()
@@ -201,17 +295,23 @@ namespace Storylines
                 pagesView.GoBack(new DrillInNavigationTransitionInfo());
             }
             else
-            if (MainPage.FocusMode != null)
             {
-                if (MainPage.FocusMode.final)
-                    MainPage.FocusMode.Leave();
-                else
-                    _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
-                MicrosoftStoreAndAppCenterFunctions.SendAnalyticData_FocusMode_Leave(MainPage.FocusMode.final);
+                var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
+                if (modeService != null && modeService.Current.Id != "edit")
+                {
+                    bool wasFinal = modeService.Current.CanLeave;
+                    if (wasFinal)
+                    {
+                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(true);
+                        modeService.Deactivate();
+                    }
+                    else
+                    {
+                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(false);
+                        _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
+                    }
+                }
             }
-            else
-            if (MainPage.ReadMode != null)
-                MainPage.ReadMode.Leave();
 
             UpdateTitleBar();
             BackButtonCheck();
@@ -228,14 +328,50 @@ namespace Storylines
         }
         #endregion
 
-        private void OnShortCut_Pressed(object sender, KeyRoutedEventArgs e)
-        {
-            //ShortcutManager.Check(e);
-        }
-
         private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs e)
         {
             ShortcutManager.Check(e);
         }
+
+        #region Drag and Drop
+        private async void OnGrid_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
+                return;
+
+            var deferral = e.GetDeferral();
+            try
+            {
+                var items = await e.DataView.GetStorageItemsAsync();
+                if (items.Count == 1 && items[0] is StorageFile file &&
+                    (file.FileType == ".srl" || file.FileType == ".txt"))
+                {
+                    e.AcceptedOperation = Windows.ApplicationModel.DataTransfer.DataPackageOperation.Copy;
+                    e.DragUIOverride.Caption = "Open in Storylines";
+                    e.DragUIOverride.IsGlyphVisible = true;
+                }
+            }
+            finally
+            {
+                deferral.Complete();
+            }
+        }
+
+        private async void OnGrid_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        {
+            if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
+                return;
+
+            var items = await e.DataView.GetStorageItemsAsync();
+            if (items.Count != 1 || !(items[0] is StorageFile file) ||
+                (file.FileType != ".srl" && file.FileType != ".txt"))
+                return;
+
+            if (TimeTravelSystem.unSavedProgress)
+                _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
+            else
+                _persistence.DefaultLaunch(file);
+        }
+        #endregion
     }
 }
