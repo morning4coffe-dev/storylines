@@ -1,11 +1,13 @@
-﻿<Page x:Class="Storylines.Pages.CharactersPage"
+<Page x:Class="Storylines.Views.Pages.CharactersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      xmlns:variables="using:Storylines.Scripts.Variables"
+      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:variables="using:Storylines.Models"
+      xmlns:vm="using:Storylines.ViewModels"
       Loaded="Page_Loaded"
       SizeChanged="Page_SizeChanged"
       mc:Ignorable="d">
@@ -129,6 +131,7 @@
               RightTapped="OnChaptersListView_RightTapped">
             <Grid.RowDefinitions>
                 <RowDefinition Height="28" />
+                <RowDefinition Height="40" />
                 <RowDefinition Height="10" />
                 <RowDefinition Height="*" />
             </Grid.RowDefinitions>
@@ -159,17 +162,25 @@
                 </StackPanel>
             </Grid>
 
-            <Rectangle Grid.Row="1"
+            <TextBox x:Name="characterSearchBox"
+                     x:Uid="characterSearchBox"
+                     Grid.Row="1"
+                     Margin="0,8,0,0"
+                     CornerRadius="4"
+                     Style="{StaticResource SmallTextBoxStyle}"
+                     TextChanged="OnCharacterSearchBox_TextChanged" />
+
+            <Rectangle Grid.Row="2"
                        Height="0.5"
                        VerticalAlignment="Center"
                        Fill="{ThemeResource SeparatorFill}"
                        Opacity=".1" />
 
             <ListView x:Name="listView"
-                      Grid.Row="2"
+                      Grid.Row="3"
                       Margin="-5,0"
                       x:FieldModifier="public"
-                      ItemsSource="{x:Bind variables:Character.characters, Mode=OneWay}"
+                      ItemsSource="{x:Bind FilteredCharacters, Mode=OneWay}"
                       SelectionChanged="OnListDetailsView_SelectionChanged">
                 <ListView.ItemTemplate>
                     <DataTemplate x:DataType="variables:Character">
@@ -178,18 +189,20 @@
                               DoubleTapped="OnCharactersListViewItem_DoubleTapped"
                               Holding="OnCharactersListViewItem_Holding"
                               RightTapped="OnCharactersListViewItem_RightTapped"
-                              Tag="{Binding token}">
+                              Tag="{Binding Token}">
                             <StackPanel Orientation="Horizontal"
                                         Spacing="8"
-                                        ToolTipService.ToolTip="{Binding name}">
+                                        ToolTipService.ToolTip="{Binding Name}">
                                 <PersonPicture x:Name="profilePicture"
                                                Height="40"
-                                               DisplayName="{Binding name}"
-                                               ProfilePicture="{Binding picture.image}" />
+                                               DisplayName="{Binding Name}"
+                                               ProfilePicture="{Binding Picture.Image}" />
                                 <StackPanel Margin="0,8">
                                     <TextBlock FontWeight="Bold"
-                                               Text="{Binding name}" />
-                                    <TextBlock Text="{Binding description}" />
+                                               Text="{Binding Name}" />
+                                    <TextBlock Text="{Binding DetailsLine}"
+                                               TextTrimming="CharacterEllipsis"
+                                               Opacity="0.75" />
                                 </StackPanel>
                             </StackPanel>
                         </Grid>
@@ -198,7 +211,7 @@
             </ListView>
 
             <StackPanel x:Name="charactersNullText"
-                        Grid.Row="2"
+                        Grid.Row="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
                         Spacing="18">
@@ -228,6 +241,25 @@
                 </animations:Implicit.ShowAnimations>
             </StackPanel>
 
+                <StackPanel x:Name="charactersSearchNullText"
+                            Grid.Row="3"
+                            HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Spacing="12"
+                            Visibility="Collapsed">
+                    <FontIcon Glyph="&#xE721;"
+                              Opacity="0.7"
+                              RenderTransformOrigin=".5,.5">
+                        <FontIcon.RenderTransform>
+                            <CompositeTransform ScaleX="1.4"
+                                                ScaleY="1.4" />
+                        </FontIcon.RenderTransform>
+                    </FontIcon>
+                    <TextBlock x:Uid="charactersSearchEmpty"
+                               FontSize="15"
+                               TextAlignment="Center" />
+                </StackPanel>
+
             <Grid.Resources>
                 <MenuFlyout x:Name="chaptersListViewFlyout"
                             Closed="ChaptersListViewItemFlyout_Closed">
@@ -236,7 +268,7 @@
                                         x:Uid="addText"
                                         Click="OnAddButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Add" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutSeparator />
@@ -244,14 +276,14 @@
                                         x:Uid="editFlyout"
                                         Click="OnEditFlyout_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Edit" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                         <MenuFlyoutItem x:Name="removeFlyout"
                                         x:Uid="removeFlyout"
                                         Click="OnRemoveButton_Click">
                             <MenuFlyoutItem.Icon>
-                                <FontIcon Glyph="" />
+                                <SymbolIcon Symbol="Delete" />
                             </MenuFlyoutItem.Icon>
                         </MenuFlyoutItem>
                     </MenuFlyout.Items>
@@ -269,7 +301,7 @@
             <TextBlock x:Name="charactersCountText"
                        x:Uid="charactersPageCharactersCount"
                        Margin="5,0" />
-            <TextBlock Text="{x:Bind variables:Character.characters.Count, Mode=OneWay}" />
+            <TextBlock Text="{x:Bind Characters.Count, Mode=OneWay}" />
         </StackPanel>
 
         <Frame Grid.ColumnSpan="3"
@@ -277,7 +309,7 @@
                Background="{ThemeResource LayerFillColorDefaultBrush}"
                BorderBrush="{ThemeResource ElementBorderColor}"
                BorderThickness="{ThemeResource ElementBorderThickness}"
-               CornerRadius="8" />
+               CornerRadius="4" />
         <CommandBar Grid.ColumnSpan="3"
                     Margin="8,0"
                     HorizontalAlignment="Left"
@@ -289,7 +321,7 @@
             <AppBarButton x:Name="undoButton"
                           x:FieldModifier="public"
                           Click="OnUndoButton_Click"
-                          IsEnabled="False">
+                          IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Undo" />
                 </AppBarButton.Icon>
@@ -297,7 +329,7 @@
             <AppBarButton x:Name="redoButton"
                           x:FieldModifier="public"
                           Click="OnRedoButton_Click"
-                          IsEnabled="False">
+                          IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Redo" />
                 </AppBarButton.Icon>
@@ -326,7 +358,7 @@
             <AppBarElementContainer x:Name="cancelButton"
                                     Margin="2,0"
                                     VerticalAlignment="Center"
-                                    Visibility="Collapsed">
+                                    Visibility="{x:Bind ViewModel.CancelButtonVisibility, Mode=OneWay}">
                 <Button x:Uid="cancel"
                         Height="36"
                         VerticalAlignment="Center"
@@ -348,102 +380,209 @@
                Background="{ThemeResource LayerFillColorDefaultBrush}"
                BorderBrush="{ThemeResource ElementBorderColor}"
                BorderThickness="{ThemeResource ElementBorderThickness}"
-               CornerRadius="8, 0, 0, 0" />
-        <StackPanel x:Name="characterValuesPanel"
-                    Grid.Row="2"
-                    Grid.Column="2"
-                    Margin="35,30"
-                    Spacing="20"
-                    Visibility="Collapsed">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="60" />
-                    <ColumnDefinition Width="20" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-                <PersonPicture x:Name="profilePicture"
-                               Height="60"
-                               DisplayName="{Binding ElementName=nameBox, Path=Text}"
-                               IsTapEnabled="False"
-                               PointerEntered="OnProfilePicture_PointerEntered"
-                               PointerExited="OnProfilePicture_PointerExited"
-                               Tapped="OnProfilePicture_Tapped" />
-                <Button Width="60"
-                        Height="60"
-                        Click="OnProfilePictureButton_Click"
-                        CornerRadius="800"
-                        IsEnabled="{x:Bind profilePicture.IsTapEnabled, Mode=OneWay}"
-                        Style="{StaticResource ProfilePictureButton}" />
-                <muxc:TeachingTip x:Name="profilePictureFlyout"
-                                  Background="{ThemeResource AppAcrylicBackground}"
-                                  Target="{x:Bind profilePicture}">
-                    <muxc:TeachingTip.Content>
-                        <StackPanel Padding="2,0,2,-12"
-                                    HorizontalAlignment="Stretch">
-                            <TextBlock x:Uid="profilePicturesFlyout"
-                                       Padding="0,0,0,4"
-                                       FontWeight="Bold" />
-                            <ScrollViewer x:Name="profilePictureHolderScroll"
-                                          HorizontalScrollBarVisibility="Auto"
-                                          HorizontalScrollMode="Enabled"
-                                          VerticalScrollBarVisibility="Hidden"
-                                          VerticalScrollMode="Disabled"
-                                          Visibility="Visible">
-                                <StackPanel x:Name="profilePictureHolder"
-                                            Margin="0,8,0,15"
-                                            Orientation="Horizontal"
-                                            Spacing="8">
-                                    <Button x:Name="newImageButton"
-                                            Width="90"
-                                            Height="80"
-                                            Click="OnAddNewImageButton_Click">
-                                        <SymbolIcon Symbol="OpenFile" />
-                                    </Button>
-                                    <StackPanel.ChildrenTransitions>
-                                        <TransitionCollection>
-                                            <EntranceThemeTransition x:Name="chooseWhatToExportAnimation"
-                                                                     FromVerticalOffset="30"
-                                                                     IsStaggeringEnabled="True" />
-                                        </TransitionCollection>
-                                    </StackPanel.ChildrenTransitions>
+               CornerRadius="4, 0, 0, 0" />
+        <ScrollViewer x:Name="characterValuesPanel"
+                      Grid.Row="2"
+                      Grid.Column="2"
+                      Margin="20,16,18,10"
+                      HorizontalScrollBarVisibility="Disabled"
+                      VerticalScrollBarVisibility="Auto"
+                      Visibility="Collapsed">
+            <StackPanel Spacing="16">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="60" />
+                        <ColumnDefinition Width="20" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <PersonPicture x:Name="profilePicture"
+                                   Height="60"
+                                   DisplayName="{Binding ElementName=nameBox, Path=Text}"
+                                   IsTapEnabled="False"
+                                   Tapped="OnProfilePicture_Tapped" />
+                    <Button Width="60"
+                            Height="60"
+                            Click="OnProfilePictureButton_Click"
+                            CornerRadius="800"
+                            IsEnabled="{x:Bind profilePicture.IsTapEnabled, Mode=OneWay}"
+                            Style="{StaticResource ProfilePictureButton}" />
+                    <muxc:TeachingTip x:Name="profilePictureFlyout"
+                                      Background="{ThemeResource AppAcrylicBackground}"
+                                      Target="{x:Bind profilePicture}">
+                        <muxc:TeachingTip.Content>
+                            <StackPanel Padding="2,0,2,-12"
+                                        HorizontalAlignment="Stretch">
+                                <TextBlock x:Uid="profilePicturesFlyout"
+                                           Padding="0,0,0,4"
+                                           FontWeight="Bold" />
+                                <ScrollViewer x:Name="profilePictureHolderScroll"
+                                              HorizontalScrollBarVisibility="Auto"
+                                              HorizontalScrollMode="Enabled"
+                                              VerticalScrollBarVisibility="Hidden"
+                                              VerticalScrollMode="Disabled"
+                                              Visibility="Visible">
+                                    <StackPanel x:Name="profilePictureHolder"
+                                                Margin="0,8,0,15"
+                                                Orientation="Horizontal"
+                                                Spacing="8">
+                                        <Button x:Name="newImageButton"
+                                                Width="90"
+                                                Height="80"
+                                                Click="OnAddNewImageButton_Click">
+                                            <SymbolIcon Symbol="OpenFile" />
+                                        </Button>
+                                        <StackPanel.ChildrenTransitions>
+                                            <TransitionCollection>
+                                                <EntranceThemeTransition x:Name="chooseWhatToExportAnimation"
+                                                                         FromVerticalOffset="30"
+                                                                         IsStaggeringEnabled="True" />
+                                            </TransitionCollection>
+                                        </StackPanel.ChildrenTransitions>
 
-                                    <StackPanel.ContextFlyout>
-                                        <MenuFlyout x:Name="picturesHolderFlyout">
-                                            <MenuFlyoutItem x:Uid="removeFlyout"
-                                                            Click="OnPictureRemove_Click"
-                                                            CornerRadius="4">
-                                                <MenuFlyoutItem.Icon>
-                                                    <FontIcon Glyph="&#xE107;" />
-                                                </MenuFlyoutItem.Icon>
-                                            </MenuFlyoutItem>
-                                        </MenuFlyout>
-                                    </StackPanel.ContextFlyout>
-                                </StackPanel>
-                            </ScrollViewer>
-                        </StackPanel>
-                    </muxc:TeachingTip.Content>
-                </muxc:TeachingTip>
-                <TextBox x:Name="nameBox"
-                         x:Uid="characterPlaceholderName"
-                         Grid.Column="2"
-                         Height="38"
-                         Padding="12,7"
-                         HorizontalAlignment="Stretch"
+                                        <StackPanel.ContextFlyout>
+                                            <MenuFlyout x:Name="picturesHolderFlyout">
+                                                <MenuFlyoutItem x:Uid="removeFlyout"
+                                                                Click="OnPictureRemove_Click"
+                                                                CornerRadius="4">
+                                                    <MenuFlyoutItem.Icon>
+                                                        <FontIcon Glyph="&#xE107;" />
+                                                    </MenuFlyoutItem.Icon>
+                                                </MenuFlyoutItem>
+                                            </MenuFlyout>
+                                        </StackPanel.ContextFlyout>
+                                    </StackPanel>
+                                </ScrollViewer>
+                            </StackPanel>
+                        </muxc:TeachingTip.Content>
+                    </muxc:TeachingTip>
+                    <TextBox x:Name="nameBox"
+                             x:Uid="characterPlaceholderName"
+                             Grid.Column="2"
+                             Height="38"
+                             Padding="12,7"
+                             HorizontalAlignment="Stretch"
+                             CornerRadius="4"
+                             IsEnabled="False"
+                             Style="{StaticResource CharactersTextBoxesStyle}"
+                             TextChanged="Box_TextChanged" />
+                </Grid>
+                <Grid ColumnSpacing="12">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="roleBox"
+                             x:Uid="characterRole"
+                             Grid.Column="0"
+                             Height="38"
+                             Padding="12,7"
+                             CornerRadius="4"
+                             IsEnabled="False"
+                             Style="{StaticResource CharactersTextBoxesStyle}"
+                             TextChanged="Box_TextChanged" />
+                    <TextBox x:Name="ageBox"
+                             x:Uid="characterAge"
+                             Grid.Column="1"
+                             Height="38"
+                             Padding="12,7"
+                             CornerRadius="4"
+                             IsEnabled="False"
+                             Style="{StaticResource CharactersTextBoxesStyle}"
+                             TextChanged="Box_TextChanged" />
+                </Grid>
+                <controls:TokenizingTextBox x:Name="traitsBox"
+                         x:Uid="characterTraits"
+                         MinHeight="38"
+                         Padding="4,4"
                          CornerRadius="4"
                          IsEnabled="False"
-                         PlaceholderText="Name"
+                         TokenDelimiter=","
+                         TokenItemAdded="OnTraitsTokenItem_Added"
+                         TokenItemRemoving="OnTraitsTokenItem_Removing"
+                         TextChanged="OnTraitsBox_TextChanged" />
+                <TextBox x:Name="appearanceBox"
+                         x:Uid="characterAppearance"
+                         MinHeight="90"
+                         CornerRadius="4"
+                         IsEnabled="False"
                          Style="{StaticResource CharactersTextBoxesStyle}"
-                         TextChanged="Box_TextChanged" />
-            </Grid>
-            <TextBox x:Name="descriptionBox"
-                     x:Uid="ownDescription"
-                     Height="250"
-                     CornerRadius="4"
-                     IsEnabled="False"
-                     Style="{StaticResource CharactersTextBoxesStyle}"
-                     TextChanged="Box_TextChanged"
-                     TextWrapping="Wrap" />
-        </StackPanel>
+                         TextChanged="Box_TextChanged"
+                         TextWrapping="Wrap" />
+                <TextBox x:Name="descriptionBox"
+                         x:Uid="ownDescription"
+                         MinHeight="150"
+                         CornerRadius="4"
+                         IsEnabled="False"
+                         Style="{StaticResource CharactersTextBoxesStyle}"
+                         TextChanged="Box_TextChanged"
+                         TextWrapping="Wrap" />
+
+                <!-- Relationships Section -->
+                <StackPanel Spacing="8">
+                    <Grid>
+                        <TextBlock x:Uid="relationshipsTitle"
+                                   FontSize="15"
+                                   FontWeight="SemiBold" />
+                        <Button x:Name="addRelationshipButton"
+                                HorizontalAlignment="Right"
+                                Background="Transparent"
+                                BorderThickness="0"
+                                Padding="4"
+                                IsEnabled="False"
+                                Click="OnAddRelationship_Click">
+                            <StackPanel Orientation="Horizontal" Spacing="4">
+                                <FontIcon Glyph="&#xE710;" FontSize="12" />
+                                <TextBlock x:Uid="addRelationshipButton" FontSize="12" />
+                            </StackPanel>
+                        </Button>
+                    </Grid>
+                    <ListView x:Name="relationshipsListView"
+                              MaxHeight="200"
+                              SelectionMode="None">
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="0,2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Button Content="{Binding DisplayText}"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            HorizontalContentAlignment="Left"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Click="OnRelationshipTarget_Click"
+                                            Tag="{Binding TargetToken}" />
+                                    <TextBlock Grid.Column="1"
+                                               Text="{Binding Type}"
+                                               Opacity="0.6"
+                                               FontSize="12"
+                                               VerticalAlignment="Center"
+                                               Margin="8,0" />
+                                    <Button Grid.Column="2"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Padding="4"
+                                            Tag="{Binding TargetToken}"
+                                            Click="OnRemoveRelationship_Click">
+                                        <SymbolIcon Symbol="Delete"
+                                                    Opacity="0.5" />
+                                    </Button>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    <TextBlock x:Name="noRelationshipsText"
+                               x:Uid="noRelationshipsText"
+                               Opacity="0.5"
+                               FontSize="12"
+                               Visibility="Collapsed" />
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
 
         <StackPanel x:Name="selectedCharactersNullText"
                     Grid.Row="2"

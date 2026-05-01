@@ -1,0 +1,142 @@
+<UserControl x:Class="Storylines.Views.Controls.ChapterNotesPane"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+             mc:Ignorable="d"
+             d:DesignHeight="200"
+             d:DesignWidth="600">
+
+    <Grid x:Name="notesPaneRoot"
+          Background="{ThemeResource LayerFillColorDefaultBrush}"
+          BorderBrush="{ThemeResource ElementBorderColor}"
+          BorderThickness="{ThemeResource ElementBorderThickness}"
+          CornerRadius="4"
+          Padding="14,10">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <Grid Margin="0,0,0,6">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+            </Grid.ColumnDefinitions>
+            <FontIcon Glyph="&#xE70B;"
+                      FontSize="13"
+                      Margin="0,0,8,0"
+                      VerticalAlignment="Center"
+                      Opacity="0.6" />
+                <TextBlock x:Uid="chapterNotesPaneTitle"
+                       Grid.Column="1"
+                       FontWeight="SemiBold"
+                       FontSize="12"
+                       VerticalAlignment="Center"
+                       Opacity="0.75" />
+            <Button Grid.Column="2"
+                    x:Uid="chapterNotesPaneCollapseButton"
+                    Width="28" Height="28"
+                    Background="Transparent"
+                    BorderThickness="0"
+                    Padding="0"
+                    Click="OnCollapseButton_Click">
+                <SymbolIcon Symbol="Cancel"
+                            RenderTransformOrigin=".5,.5">
+                    <SymbolIcon.RenderTransform>
+                        <CompositeTransform ScaleX=".55" ScaleY=".55" />
+                    </SymbolIcon.RenderTransform>
+                </SymbolIcon>
+            </Button>
+        </Grid>
+
+        <Pivot Grid.Row="1"
+               Margin="-12,0,-14,0">
+            <!-- Notes tab -->
+            <PivotItem x:Uid="notesPaneNotesTab">
+                <TextBox x:Name="notesTextBox"
+                         x:Uid="chapterNotesPaneTextBox"
+                         x:FieldModifier="public"
+                         TextWrapping="Wrap"
+                         AcceptsReturn="True"
+                         Background="Transparent"
+                         BorderThickness="0"
+                         Padding="0,4"
+                         FontSize="13"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto"
+                         TextChanged="OnNotesTextBox_TextChanged" />
+            </PivotItem>
+
+            <!-- Synopsis tab -->
+            <PivotItem x:Uid="notesPaneSynopsisTab">
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="notesPaneSynopsisDescription"
+                               FontSize="{StaticResource AppCaptionFontSize}"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="synopsisTextBox"
+                             x:Uid="notesPaneSynopsisBox"
+                             x:FieldModifier="public"
+                             TextWrapping="Wrap"
+                             AcceptsReturn="True"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             ScrollViewer.VerticalScrollBarVisibility="Auto"
+                             TextChanged="OnSynopsisTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
+
+            <!-- Location tab -->
+            <PivotItem x:Uid="notesPaneLocationTab">
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="notesPaneLocationDescription"
+                               FontSize="{StaticResource AppCaptionFontSize}"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="locationTextBox"
+                             x:Uid="notesPaneLocationBox"
+                             x:FieldModifier="public"
+                             TextWrapping="Wrap"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             TextChanged="OnLocationTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
+
+            <!-- Plot Threads tab -->
+            <PivotItem x:Uid="notesPanePlotTab">
+                <StackPanel Spacing="4">
+                    <TextBlock x:Uid="notesPanePlotDescription"
+                               FontSize="{StaticResource AppCaptionFontSize}"
+                               Opacity="0.5"
+                               TextWrapping="Wrap" />
+                    <TextBox x:Name="plotThreadsTextBox"
+                             x:Uid="notesPanePlotBox"
+                             x:FieldModifier="public"
+                             TextWrapping="Wrap"
+                             Background="Transparent"
+                             BorderThickness="0"
+                             Padding="0,4"
+                             FontSize="13"
+                             TextChanged="OnPlotThreadsTextBox_TextChanged" />
+                </StackPanel>
+            </PivotItem>
+        </Pivot>
+
+        <animations:Implicit.ShowAnimations>
+            <animations:TranslationAnimation Duration="0:0:0.25"
+                                             From="0, 20, 0"
+                                             To="0"
+                                             EasingMode="EaseOut" />
+            <animations:OpacityAnimation Duration="0:0:0.2"
+                                         From="0"
+                                         To="1.0" />
+        </animations:Implicit.ShowAnimations>
+    </Grid>
+</UserControl>
