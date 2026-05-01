@@ -1,0 +1,67 @@
+<UserControl x:Class="Storylines.Views.Controls.Modes.FocusModeOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!--
+        Focus overlay: a mini command bar at the top, absolutely positioned,
+        anchored above the writing area.  The bar binds commands from the shared
+        CommandBarViewModel so we never reparent any AppBarButton instances.
+        The overlay root is NOT hit-test transparent (the bar must receive input).
+    -->
+    <Grid Background="Transparent">
+        <!-- Mini command bar (top of overlay, col-span over both writing area and chapter list column) -->
+        <CommandBar x:Name="focusMiniBar"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Top"
+                    Height="48"
+                    DefaultLabelPosition="Right"
+                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="8"
+                    Margin="8,0">
+
+            <AppBarButton Icon="Undo"
+                          CornerRadius="4"
+                          IsEnabled="{x:Bind _cmdBarVm.CanUndo, Mode=OneWay}"
+                          Command="{x:Bind _cmdBarVm.UndoCommand}" />
+
+            <AppBarButton Icon="Redo"
+                          CornerRadius="4"
+                          IsEnabled="{x:Bind _cmdBarVm.CanRedo, Mode=OneWay}"
+                          Command="{x:Bind _cmdBarVm.RedoCommand}" />
+
+            <AppBarSeparator />
+
+            <AppBarButton x:Uid="save"
+                          Icon="Save"
+                          CornerRadius="4"
+                          LabelPosition="Default"
+                          IsEnabled="{x:Bind _cmdBarVm.IsSaveEnabled, Mode=OneWay}"
+                          Command="{x:Bind _cmdBarVm.SaveCommand}" />
+
+            <AppBarToggleButton x:Uid="autosave"
+                                CornerRadius="4"
+                                IsChecked="{x:Bind _cmdBarVm.IsAutosaveChecked, Mode=TwoWay}"
+                                Click="OnAutosaveToggle_Click">
+                <AppBarToggleButton.Icon>
+                    <SymbolIcon Symbol="Sync" />
+                </AppBarToggleButton.Icon>
+            </AppBarToggleButton>
+
+            <AppBarSeparator />
+
+            <AppBarButton x:Uid="readAloud"
+                          CornerRadius="4"
+                          Click="OnReadAloudButton_Click">
+                <AppBarButton.Icon>
+                    <FontIcon Glyph="&#xE720;" />
+                </AppBarButton.Icon>
+            </AppBarButton>
+
+        </CommandBar>
+    </Grid>
+</UserControl>

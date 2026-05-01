@@ -70,6 +70,13 @@
     <Color x:Key="SystemAccentColorLight2">#BE5A00</Color>
     <Color x:Key="SystemAccentColorLight3">#BE5A00</Color>
 
+    <x:Double x:Key="AppCaptionFontSize">12</x:Double>
+
+    <Style x:Key="AppSymbolIconStyle" TargetType="FontIcon">
+        <Setter Property="FontFamily" Value="{ThemeResource SymbolThemeFontFamily}"/>
+        <Setter Property="FontSize" Value="16"/>
+    </Style>
+
     <Style x:Key="DialogueWindowHeaderStyle" TargetType="TextBlock">
         <Setter Property="Foreground" Value="{ThemeResource TextForeground}"/>
         <Setter Property="VerticalAlignment" Value="Center"/>
@@ -329,7 +336,7 @@
         <Setter Property="TextLineBounds" Value="Full"/>
     </Style>
     <Style x:Key="CaptionTextBlockStyle" BasedOn="{StaticResource BaseTextBlockStyle}" TargetType="TextBlock">
-        <Setter Property="FontSize" Value="12"/>
+        <Setter Property="FontSize" Value="{StaticResource AppCaptionFontSize}"/>
         <Setter Property="FontWeight" Value="Normal"/>
     </Style>
     <Style x:Key="SmallTextBoxStyle" TargetType="TextBox">

@@ -1,0 +1,35 @@
+<UserControl x:Class="Storylines.Views.Controls.Modes.ReadOnlyModeOverlay"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!-- Root is hit-test transparent so the underlying (read-only) editor still
+         receives scroll/selection input. Only the exit pill is interactive. -->
+    <Grid Background="Transparent" IsHitTestVisible="False">
+        <Button x:Name="exitPill"
+                x:Uid="readOnlyExitPillButton"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Bottom"
+                Margin="0,0,0,24"
+                Padding="14,8"
+                CornerRadius="24"
+                IsHitTestVisible="True"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                Click="OnExitPill_Click">
+            <StackPanel Orientation="Horizontal" Spacing="10">
+                <FontIcon Glyph="&#xE72E;"
+                          Style="{StaticResource AppSymbolIconStyle}"
+                          FontSize="14"
+                          Foreground="{ThemeResource TextForeground}" />
+                <TextBlock x:Uid="readOnlyExitPill"
+                           VerticalAlignment="Center"
+                           FontSize="13"
+                           Foreground="{ThemeResource TextForeground}" />
+            </StackPanel>
+        </Button>
+    </Grid>
+</UserControl>
