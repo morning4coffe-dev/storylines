@@ -104,17 +104,17 @@ namespace Storylines.ViewModels
         private ExportFormatOptionViewModel _selectedFormat;
 
         public ExportDialogViewModel(
-            ProjectState projectState = null,
-            IProjectPersistenceService persistence = null,
-            IExportService exportService = null,
-            IFilePickerService filePickerService = null,
-            ILogger logger = null)
+            ProjectState projectState,
+            IProjectPersistenceService persistence,
+            IExportService exportService,
+            IFilePickerService filePickerService,
+            ILogger logger)
         {
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
-            _persistence = persistence ?? App.TryGetService<IProjectPersistenceService>();
-            _exportService = exportService ?? App.TryGetService<IExportService>();
-            _filePickerService = filePickerService ?? App.TryGetService<IFilePickerService>();
-            _logger = logger ?? App.TryGetService<ILogger>();
+            _projectState = projectState;
+            _persistence = persistence;
+            _exportService = exportService;
+            _filePickerService = filePickerService;
+            _logger = logger;
         }
 
         public void Initialize(ExportTarget initialTarget)

@@ -35,14 +35,8 @@ namespace Storylines.Services
 
         public event Action<SpeechMode> ModeChanged;
 
-        /// <summary>
-        /// Notifies the hub that read-aloud (TTS) has started so dictation can be ruled out.
-        /// </summary>
         public void NotifyReadingStarted() => Mode = SpeechMode.Reading;
 
-        /// <summary>
-        /// Notifies the hub that read-aloud has stopped (cancelled or completed).
-        /// </summary>
         public void NotifyReadingStopped()
         {
             if (Mode == SpeechMode.Reading)

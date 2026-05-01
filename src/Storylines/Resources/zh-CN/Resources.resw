@@ -1588,6 +1588,30 @@
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>
   </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>复制</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0}（副本）</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0}（副本 {1}）</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>复制提示</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>新建章节</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>所有类别</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>提示已复制到剪贴板。</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>{0} 提示</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>写作提示</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>已保存的预设</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>删除预设</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>删除预设</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>还没有已保存的预设。</value></data>
+  <data name="branchingValidationDetailsTitle.Text" xml:space="preserve"><value>验证详情</value></data>
+  <data name="branchingValidationGroupMissingTargets" xml:space="preserve"><value>缺失目标</value></data>
+  <data name="branchingValidationGroupUnreachableNodes" xml:space="preserve"><value>无法到达的段落</value></data>
+  <data name="branchingValidationGroupEmptyChoices" xml:space="preserve"><value>空白选项</value></data>
+  <data name="branchingValidationGroupUnknownSpeakers" xml:space="preserve"><value>未知说话者</value></data>
+  <data name="branchingValidationGroupOrphanedConditions" xml:space="preserve"><value>孤立条件</value></data>
+  <data name="branchingValidationUnknownSpeakerMessageFormat" xml:space="preserve"><value>说话者“{0}”与任何角色都不匹配。</value></data>
+  <data name="branchingValidationEmptyChoiceMessage" xml:space="preserve"><value>选项文本为空。</value></data>
+  <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>选项目标节点缺失。</value></data>
+  <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>条件引用了标记“{0}”，但没有任何节点会设置它。</value></data>
+  <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>该节点无法从起始节点到达。</value></data>
 </root>
 
 

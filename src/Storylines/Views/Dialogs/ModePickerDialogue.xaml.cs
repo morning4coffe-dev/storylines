@@ -86,12 +86,14 @@ namespace Storylines.Views.Dialogs
                     else
                         App.GetService<IProjectPersistenceService>().DisableAutosave();
 
-                    var focusMode = new FocusMode
+                    var focusMode = new FocusMode(
+                        App.GetService<EventAggregator>(),
+                        App.GetService<INotificationService>())
                     {
-                        FullScreen   = (bool)fullScreenCheckBox.IsChecked,
-                        Time         = timePicker.Time,
-                        MeasureTarget= (int)measureValueNumBox.Value,
-                        Metric       = (MeasureMetric)toMeasureComboBox.SelectedIndex,
+                        FullScreen    = (bool)fullScreenCheckBox.IsChecked,
+                        Time          = timePicker.Time,
+                        MeasureTarget = (int)measureValueNumBox.Value,
+                        Metric        = (MeasureMetric)toMeasureComboBox.SelectedIndex,
                     };
                     modeService.Activate(focusMode);
 

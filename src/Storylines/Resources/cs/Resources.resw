@@ -1590,6 +1590,30 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>
   </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>Duplikovat</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (Kopie)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (Kopie {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>Kopírovat podnět</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>Vytvořit kapitolu</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>Všechny kategorie</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>Podnět byl zkopírován do schránky.</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>Podnět: {0}</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>Psací podnět</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>Uložené předvolby</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>Odebrat předvolbu</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>Odebrat předvolbu</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>Zatím nejsou uloženy žádné předvolby.</value></data>
+  <data name="branchingValidationDetailsTitle.Text" xml:space="preserve"><value>Podrobnosti validace</value></data>
+  <data name="branchingValidationGroupMissingTargets" xml:space="preserve"><value>Chybějící cíle</value></data>
+  <data name="branchingValidationGroupUnreachableNodes" xml:space="preserve"><value>Nedosažitelné pasáže</value></data>
+  <data name="branchingValidationGroupEmptyChoices" xml:space="preserve"><value>Prázdné volby</value></data>
+  <data name="branchingValidationGroupUnknownSpeakers" xml:space="preserve"><value>Neznámí mluvčí</value></data>
+  <data name="branchingValidationGroupOrphanedConditions" xml:space="preserve"><value>Osiřelé podmínky</value></data>
+  <data name="branchingValidationUnknownSpeakerMessageFormat" xml:space="preserve"><value>Mluvčí "{0}" neodpovídá žádné postavě.</value></data>
+  <data name="branchingValidationEmptyChoiceMessage" xml:space="preserve"><value>Text volby je prázdný.</value></data>
+  <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Cílový uzel volby chybí.</value></data>
+  <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Podmínka odkazuje na příznak "{0}", který žádný uzel nikdy nenastavuje.</value></data>
+  <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Uzel není dosažitelný ze startovního uzlu.</value></data>
 </root>
 
 

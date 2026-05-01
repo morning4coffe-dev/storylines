@@ -1,5 +1,4 @@
 using Microsoft.Toolkit.Uwp.Helpers;
-using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
@@ -17,14 +16,16 @@ namespace Storylines.Services
         private readonly ProjectState _projectState;
         private readonly EditorModeService _editorModeService;
         private readonly ILogger _logger;
+        private readonly IUndoRedoService _undoRedo;
         private readonly string _sessionId = Guid.NewGuid().ToString("N");
 
-        public TelemetryService(ITelemetryProvider provider, ProjectState projectState, EditorModeService editorModeService, ILogger logger)
+        public TelemetryService(ITelemetryProvider provider, ProjectState projectState, EditorModeService editorModeService, ILogger logger, IUndoRedoService undoRedo)
         {
             _provider = provider;
             _projectState = projectState;
             _editorModeService = editorModeService;
             _logger = logger;
+            _undoRedo = undoRedo;
         }
 
         public Task InitializeAsync() => _provider.InitializeAsync();
@@ -54,7 +55,7 @@ namespace Storylines.Services
                 TelemetryEventPropertyBuilder.Create(
                     ("blocked_by_unsaved_changes", blockedByUnsavedChanges.ToString()),
                     ("uptime_minutes", FormatNumber(SystemInformation.Instance.AppUptime.TotalMinutes)),
-                    ("unsaved_progress", TimeTravelSystem.unSavedProgress.ToString())));
+                    ("unsaved_progress", _undoRedo.IsDirty.ToString())));
 
             TrackProviderEvent("app_close_requested", properties);
         }
@@ -145,7 +146,7 @@ namespace Storylines.Services
                     ("inner_exception_type", exception?.InnerException?.GetType().Name),
                     ("available_memory", FormatNumber(SystemInformation.Instance.AvailableMemory)),
                     ("uptime_minutes", FormatNumber(SystemInformation.Instance.AppUptime.TotalMinutes)),
-                    ("unsaved_progress", TimeTravelSystem.unSavedProgress.ToString())));
+                    ("unsaved_progress", _undoRedo.IsDirty.ToString())));
 
             TrackProviderEvent("app_unhandled_exception", eventProperties);
 

@@ -1,4 +1,3 @@
-using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using System;
@@ -17,8 +16,9 @@ namespace Storylines.Services.Persistence
             ILogger logger,
             ProjectState projectState,
             ITextEditorService textEditor,
-            Action onLoaded)
-            : base(fileService, dialogs, events, logger, projectState, textEditor)
+            Action onLoaded,
+            INotificationService notifications)
+            : base(fileService, dialogs, events, logger, projectState, textEditor, notifications)
         {
             _onLoaded = onLoaded;
         }
@@ -41,7 +41,7 @@ namespace Storylines.Services.Persistence
             {
                 Logger.Error("Failed to load plain text document", ex);
                 ShowLoadErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                Notifications.UpdateProgressBar(0, ProgressBarState.Error);
             }
         }
 
@@ -63,7 +63,7 @@ namespace Storylines.Services.Persistence
             {
                 Logger.Error("Failed to restore plain text recovery data", ex);
                 ShowLoadErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                Notifications.UpdateProgressBar(0, ProgressBarState.Error);
             }
 
             return Task.CompletedTask;

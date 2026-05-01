@@ -24,11 +24,16 @@ namespace Storylines.Views.Controls
 
         private const double NodeCardWidth = 200;
         private const double NodeCardHeight = 90;
+        private const double NodeCardHorizontalInset = 7;
+        private const double NodeWrapperWidth = NodeCardWidth + (NodeCardHorizontalInset * 2);
 
         private readonly Dictionary<string, Border> _nodeCards = new Dictionary<string, Border>();
+        private readonly List<UIElement> _connectionVisuals = new List<UIElement>();
         private Border _draggingCard;
         private BranchingDialogueNodeData _draggingNode;
         private Point _dragOffset;
+        private Point _dragStartPoint;
+        private bool _dragHasMoved;
 
         // Connection mode state
         private bool _isConnecting;
@@ -39,6 +44,7 @@ namespace Storylines.Views.Controls
 
         public event Action<BranchingDialogueNodeData> NodeSelected;
         public event Action<BranchingDialogueNodeData> NodeDoubleTapped;
+    public event Action CanvasBackgroundTapped;
         public event Action<double, double> CanvasDoubleTapped;
         public event Action<BranchingDialogueNodeData, BranchingDialogueNodeData> ConnectionRequested;
 
@@ -51,6 +57,7 @@ namespace Storylines.Views.Controls
         {
             mapCanvas.Children.Clear();
             _nodeCards.Clear();
+            _connectionVisuals.Clear();
 
             if (ViewModel == null)
                 return;
@@ -63,16 +70,17 @@ namespace Storylines.Views.Controls
             foreach (var node in nodes)
                 EnsurePosition(node);
 
-            DrawConnections(nodes);
-
             foreach (var node in nodes)
             {
                 var card = CreateNodeCard(node, characters);
                 _nodeCards[node.Id] = card;
-                Canvas.SetLeft(card, (node.PositionX ?? 0) - 7);
+                Canvas.SetLeft(card, GetWrapperLeft(node));
                 Canvas.SetTop(card, node.PositionY ?? 0);
+                Canvas.SetZIndex(card, 10);
                 mapCanvas.Children.Add(card);
             }
+
+            RedrawConnections(nodes);
         }
 
         public void ScrollToNode(BranchingDialogueNodeData node)
@@ -80,9 +88,10 @@ namespace Storylines.Views.Controls
             if (node?.PositionX == null || node?.PositionY == null)
                 return;
 
+            var bounds = GetNodeBounds(node);
             var zoom = canvasScrollViewer.ZoomFactor;
-            var targetX = (node.PositionX ?? 0) * zoom - canvasScrollViewer.ActualWidth / 2 + NodeCardWidth * zoom / 2;
-            var targetY = (node.PositionY ?? 0) * zoom - canvasScrollViewer.ActualHeight / 2 + NodeCardHeight * zoom / 2;
+            var targetX = bounds.Left * zoom - canvasScrollViewer.ActualWidth / 2 + bounds.Width * zoom / 2;
+            var targetY = bounds.Top * zoom - canvasScrollViewer.ActualHeight / 2 + bounds.Height * zoom / 2;
 
             canvasScrollViewer.ChangeView(
                 Math.Max(0, targetX),
@@ -133,6 +142,15 @@ namespace Storylines.Views.Controls
             canvasScrollViewer.ChangeView(null, null, newZoom);
         }
 
+        public bool CancelConnectionMode()
+        {
+            if (!_isConnecting)
+                return false;
+
+            CancelConnection();
+            return true;
+        }
+
         #region Event Handlers
 
         private void OnCanvas_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -140,6 +158,21 @@ namespace Storylines.Views.Controls
             if (_isConnecting) { CancelConnection(); return; }
             var position = e.GetPosition(mapCanvas);
             CanvasDoubleTapped?.Invoke(position.X - NodeCardWidth / 2, position.Y - NodeCardHeight / 2);
+        }
+
+        private void OnCanvas_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (!(e.OriginalSource is Canvas))
+                return;
+
+            if (_isConnecting)
+            {
+                CancelConnection();
+                e.Handled = true;
+                return;
+            }
+
+            CanvasBackgroundTapped?.Invoke();
         }
 
         private void OnCanvas_PointerMoved(object sender, PointerRoutedEventArgs e)
@@ -191,8 +224,9 @@ namespace Storylines.Views.Controls
             _isConnecting = true;
             _connectSourceNode = sourceNode;
 
-            var startX = (sourceNode.PositionX ?? 0) + NodeCardWidth;
-            var startY = (sourceNode.PositionY ?? 0) + NodeCardHeight / 2;
+            var sourceBounds = GetNodeBounds(sourceNode);
+            var startX = sourceBounds.Right;
+            var startY = sourceBounds.CenterY;
 
             _connectPreviewLine = new Line
             {
@@ -203,6 +237,7 @@ namespace Storylines.Views.Controls
                 StrokeDashArray = new DoubleCollection { 6, 3 },
                 IsHitTestVisible = false
             };
+            Canvas.SetZIndex(_connectPreviewLine, 20);
             mapCanvas.Children.Add(_connectPreviewLine);
 
             connectionModeBanner.Visibility = Visibility.Visible;
@@ -249,6 +284,62 @@ namespace Storylines.Views.Controls
             node.PositionY = 60 + row * 140;
         }
 
+        private static double GetWrapperLeft(BranchingDialogueNodeData node)
+        {
+            return (node.PositionX ?? 0) - NodeCardHorizontalInset;
+        }
+
+        private CanvasConnectionRect GetNodeBounds(BranchingDialogueNodeData node)
+        {
+            var measuredHeight = GetMeasuredNodeHeight(node?.Id);
+
+            return new CanvasConnectionRect(
+                GetWrapperLeft(node),
+                node?.PositionY ?? 0,
+                NodeCardWidth,
+                measuredHeight);
+        }
+
+        private double GetMeasuredNodeHeight(string nodeId)
+        {
+            if (!string.IsNullOrWhiteSpace(nodeId) && _nodeCards.TryGetValue(nodeId, out var card))
+            {
+                var height = Math.Max(card.ActualHeight, card.DesiredSize.Height);
+                if (height > 0)
+                    return Math.Max(NodeCardHeight, height);
+            }
+
+            return NodeCardHeight;
+        }
+
+        private void ClearConnectionVisuals()
+        {
+            foreach (var visual in _connectionVisuals)
+                mapCanvas.Children.Remove(visual);
+
+            _connectionVisuals.Clear();
+        }
+
+        private void AddConnectionVisual(UIElement visual, int zIndex)
+        {
+            _connectionVisuals.Add(visual);
+            Canvas.SetZIndex(visual, zIndex);
+            mapCanvas.Children.Add(visual);
+        }
+
+        private void RedrawConnections(IReadOnlyList<BranchingDialogueNodeData> nodes = null)
+        {
+            ClearConnectionVisuals();
+
+            if (ViewModel == null)
+                return;
+
+            DrawConnections(nodes?.ToList() ?? ViewModel.AllNodeTargets.ToList());
+
+            if (_connectPreviewLine != null)
+                Canvas.SetZIndex(_connectPreviewLine, 20);
+        }
+
         private void DrawConnections(List<BranchingDialogueNodeData> nodes)
         {
             var byId = nodes.ToDictionary(n => n.Id, n => n);
@@ -259,10 +350,9 @@ namespace Storylines.Views.Controls
                     if (string.IsNullOrWhiteSpace(choice.TargetNodeId) || !byId.TryGetValue(choice.TargetNodeId, out var target))
                         continue;
 
-                    var startX = (from.PositionX ?? 0) + NodeCardWidth;
-                    var startY = (from.PositionY ?? 0) + NodeCardHeight / 2;
-                    var endX = (target.PositionX ?? 0);
-                    var endY = (target.PositionY ?? 0) + NodeCardHeight / 2;
+                    var connection = CanvasConnectionGeometry.CreateBranchingConnection(
+                        GetNodeBounds(from),
+                        GetNodeBounds(target));
 
                     var speakerColor = BranchingDialogueViewModel.GetSpeakerColor(from.Speaker);
                     var connectionColor = Color.FromArgb(200, speakerColor.R, speakerColor.G, speakerColor.B);
@@ -270,13 +360,15 @@ namespace Storylines.Views.Controls
                     // Conditional choice indicator — dashed line
                     bool hasConditions = choice.Conditions != null && choice.Conditions.Count > 0;
 
-                    var controlDistance = Math.Max(80, Math.Abs(endX - startX) * 0.4);
-                    var pathFigure = new PathFigure { StartPoint = new Point(startX, startY) };
+                    var pathFigure = new PathFigure
+                    {
+                        StartPoint = new Point(connection.Start.X, connection.Start.Y)
+                    };
                     pathFigure.Segments.Add(new BezierSegment
                     {
-                        Point1 = new Point(startX + controlDistance, startY),
-                        Point2 = new Point(endX - controlDistance, endY),
-                        Point3 = new Point(endX, endY)
+                        Point1 = new Point(connection.Control1.X, connection.Control1.Y),
+                        Point2 = new Point(connection.Control2.X, connection.Control2.Y),
+                        Point3 = new Point(connection.End.X, connection.End.Y)
                     });
 
                     var pathGeometry = new PathGeometry();
@@ -287,7 +379,8 @@ namespace Storylines.Views.Controls
                         Data = pathGeometry,
                         Stroke = new SolidColorBrush(connectionColor),
                         StrokeThickness = 2,
-                        Opacity = 0.8
+                        Opacity = 0.8,
+                        IsHitTestVisible = false
                     };
 
                     if (hasConditions)
@@ -295,45 +388,56 @@ namespace Storylines.Views.Controls
                         path.StrokeDashArray = new DoubleCollection { 4, 2 };
                     }
 
-                    mapCanvas.Children.Add(path);
+                    AddConnectionVisual(path, 0);
 
-                    DrawArrowHead(endX, endY, connectionColor);
+                    DrawArrowHead(connection, connectionColor);
 
                     if (!string.IsNullOrWhiteSpace(choice.Text) && choice.Text != "→")
                     {
-                        var labelX = (startX + endX) / 2;
-                        var labelY = (startY + endY) / 2 - 12;
-                        var label = new TextBlock
+                        var label = new Border
                         {
-                            Text = choice.Text,
-                            FontSize = 10,
-                            Opacity = 0.7,
-                            Foreground = new SolidColorBrush(connectionColor),
-                            MaxWidth = 120,
-                            TextTrimming = TextTrimming.CharacterEllipsis
+                            Background = (Brush)Application.Current.Resources["LayerFillColorDefaultBrush"],
+                            BorderBrush = (Brush)Application.Current.Resources["CardStrokeColorDefaultBrush"],
+                            BorderThickness = new Thickness(1),
+                            CornerRadius = new CornerRadius(4),
+                            Padding = new Thickness(6, 2, 6, 2),
+                            IsHitTestVisible = false,
+                            Child = new TextBlock
+                            {
+                                Text = choice.Text,
+                                FontSize = 10,
+                                Opacity = 0.75,
+                                Foreground = new SolidColorBrush(connectionColor),
+                                MaxWidth = 140,
+                                TextTrimming = TextTrimming.CharacterEllipsis
+                            }
                         };
-                        Canvas.SetLeft(label, labelX - 30);
-                        Canvas.SetTop(label, labelY);
-                        mapCanvas.Children.Add(label);
+                        Canvas.SetLeft(label, connection.Label.X - 36);
+                        Canvas.SetTop(label, connection.Label.Y - 14);
+                        AddConnectionVisual(label, 2);
                     }
                 }
             }
         }
 
-        private void DrawArrowHead(double tipX, double tipY, Color color)
+        private void DrawArrowHead(CanvasBezierConnection connection, Color color)
         {
-            var size = 8.0;
+            var points = CanvasConnectionGeometry.CreateArrowHead(
+                connection.End,
+                connection.EndTangentAngleRadians);
             var polygon = new Polygon
             {
-                Points = {
-                    new Point(tipX, tipY),
-                    new Point(tipX - size, tipY - size / 2),
-                    new Point(tipX - size, tipY + size / 2)
+                Points = new PointCollection
+                {
+                    new Point(points[0].X, points[0].Y),
+                    new Point(points[1].X, points[1].Y),
+                    new Point(points[2].X, points[2].Y)
                 },
                 Fill = new SolidColorBrush(color),
-                Opacity = 0.8
+                Opacity = 0.8,
+                IsHitTestVisible = false
             };
-            mapCanvas.Children.Add(polygon);
+            AddConnectionVisual(polygon, 1);
         }
 
         private Border CreateNodeCard(BranchingDialogueNodeData node,
@@ -548,6 +652,8 @@ namespace Storylines.Views.Controls
             card.PointerPressed += Card_PointerPressed;
             card.PointerMoved += Card_PointerMoved;
             card.PointerReleased += Card_PointerReleased;
+            card.PointerCanceled += Card_PointerCanceled;
+            card.PointerCaptureLost += Card_PointerCaptureLost;
             card.DoubleTapped += Card_DoubleTapped;
 
             // Wrap card in a Grid so we can overlay an output port
@@ -589,10 +695,12 @@ namespace Storylines.Views.Controls
 
             var wrapperBorder = new Border
             {
-                Width = NodeCardWidth + 14,
+                Width = NodeWrapperWidth,
                 Child = wrapper,
                 Tag = node.Id
             };
+
+            wrapperBorder.Measure(new Size(NodeWrapperWidth, double.PositiveInfinity));
             return wrapperBorder;
         }
 
@@ -634,7 +742,9 @@ namespace Storylines.Views.Controls
 
             _draggingCard = FindParentWrapper(card);
             var pos = e.GetCurrentPoint(mapCanvas).Position;
+            _dragStartPoint = pos;
             _dragOffset = new Point(pos.X - Canvas.GetLeft(_draggingCard), pos.Y - Canvas.GetTop(_draggingCard));
+            _dragHasMoved = false;
             _draggingCard.CapturePointer(e.Pointer);
 
             NodeSelected?.Invoke(_draggingNode);
@@ -647,34 +757,59 @@ namespace Storylines.Views.Controls
                 return;
 
             var pos = e.GetCurrentPoint(mapCanvas).Position;
-            var left = Math.Max(-7, pos.X - _dragOffset.X);
+
+            if (!_dragHasMoved && !CanvasConnectionGeometry.HasMovedBeyondThreshold(
+                new CanvasConnectionPoint(_dragStartPoint.X, _dragStartPoint.Y),
+                new CanvasConnectionPoint(pos.X, pos.Y)))
+            {
+                return;
+            }
+
+            _dragHasMoved = true;
+
+            var left = Math.Max(-NodeCardHorizontalInset, pos.X - _dragOffset.X);
             var top = Math.Max(0, pos.Y - _dragOffset.Y);
 
             Canvas.SetLeft(_draggingCard, left);
             Canvas.SetTop(_draggingCard, top);
 
-            _draggingNode.PositionX = left + 7;
+            _draggingNode.PositionX = left + NodeCardHorizontalInset;
             _draggingNode.PositionY = top;
+
+            RedrawConnections();
 
             e.Handled = true;
         }
 
         private void Card_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
+            var didDrag = _dragHasMoved;
+
             if (_draggingCard != null)
                 _draggingCard.ReleasePointerCapture(e.Pointer);
 
-            if (_draggingNode != null && ViewModel?.SelectedChapter != null)
+            if (didDrag && _draggingNode != null && ViewModel?.SelectedChapter != null)
             {
                 var service = App.TryGetService<IBranchingDialogueService>();
                 service?.NotifyGraphChanged(ViewModel.SelectedChapter.Token);
             }
 
-            _draggingCard = null;
-            _draggingNode = null;
+            ResetDragState();
 
-            RedrawCanvas();
+            if (didDrag)
+                RedrawCanvas();
+
             e.Handled = true;
+        }
+
+        private void Card_PointerCanceled(object sender, PointerRoutedEventArgs e)
+        {
+            ResetDragState();
+        }
+
+        private void Card_PointerCaptureLost(object sender, PointerRoutedEventArgs e)
+        {
+            ResetDragState();
         }
 
         private void Card_DoubleTapped(object sender, DoubleTappedRoutedEventArgs e)
@@ -687,6 +822,13 @@ namespace Storylines.Views.Controls
                 NodeDoubleTapped?.Invoke(node);
 
             e.Handled = true;
+        }
+
+        private void ResetDragState()
+        {
+            _draggingCard = null;
+            _draggingNode = null;
+            _dragHasMoved = false;
         }
 
         private static Border FindParentWrapper(FrameworkElement element)

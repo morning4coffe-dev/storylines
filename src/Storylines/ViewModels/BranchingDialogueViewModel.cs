@@ -23,6 +23,7 @@ namespace Storylines.ViewModels
         private readonly IExportService _exportService;
         private readonly IFilePickerService _filePickerService;
         private readonly IFileService _fileService;
+        private readonly INavigationService _navigation;
         private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
 
         private BranchingDialogueGraphData _activeGraph;
@@ -30,6 +31,7 @@ namespace Storylines.ViewModels
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
         public ObservableCollection<BranchingDialogueNodeData> FilteredNodes { get; } = new ObservableCollection<BranchingDialogueNodeData>();
         public ObservableCollection<BranchingDialogueNodeData> AllNodeTargets { get; } = new ObservableCollection<BranchingDialogueNodeData>();
+        public ObservableCollection<BranchingDialogueValidationGroupViewModel> ValidationIssueGroups { get; } = new ObservableCollection<BranchingDialogueValidationGroupViewModel>();
         public ObservableCollection<string> SpeakerFilters { get; } = new ObservableCollection<string>();
         public ObservableCollection<string> TagFilters { get; } = new ObservableCollection<string>();
         public ObservableCollection<BranchingDialogueChoiceData> SimulationChoices { get; } = new ObservableCollection<BranchingDialogueChoiceData>();
@@ -64,6 +66,9 @@ namespace Storylines.ViewModels
         public Visibility HasValidationMessages =>
             string.IsNullOrEmpty(ValidationSummary) ? Visibility.Collapsed : Visibility.Visible;
 
+        public Visibility ValidationIssueGroupsVisibility =>
+            ValidationIssueGroups.Count > 0 ? Visibility.Visible : Visibility.Collapsed;
+
         [ObservableProperty]
         private bool _isMapModeEnabled;
 
@@ -94,17 +99,19 @@ namespace Storylines.ViewModels
         private string _pendingChapterToken;
 
         public BranchingDialogueViewModel(
-            ProjectState projectState = null,
-            IBranchingDialogueService service = null,
-            IExportService exportService = null,
-            IFilePickerService filePickerService = null,
-            IFileService fileService = null)
+            ProjectState projectState,
+            IBranchingDialogueService service,
+            IExportService exportService,
+            IFilePickerService filePickerService,
+            IFileService fileService,
+            INavigationService navigation)
         {
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
-            _service = service ?? App.TryGetService<IBranchingDialogueService>();
-            _exportService = exportService ?? App.TryGetService<IExportService>();
-            _filePickerService = filePickerService ?? App.TryGetService<IFilePickerService>();
-            _fileService = fileService ?? App.TryGetService<IFileService>() ?? new FileService();
+            _projectState = projectState;
+            _service = service;
+            _exportService = exportService;
+            _filePickerService = filePickerService;
+            _fileService = fileService;
+            _navigation = navigation;
 
             LoadBranchingExportFormats();
 
@@ -118,6 +125,7 @@ namespace Storylines.ViewModels
             else
             {
                 ValidationSummary = _resources.GetString("branchingNoChaptersMessage");
+                ClearValidationIssueGroups();
             }
         }
 
@@ -410,11 +418,13 @@ namespace Storylines.ViewModels
             if (chapterId == null)
             {
                 ValidationSummary = _resources.GetString("branchingNoChaptersMessage");
+                ClearValidationIssueGroups();
                 return;
             }
 
             var knownSpeakers = SpeakerResolver.GetKnownSpeakers(_projectState.Characters);
             var result = _service.ValidateGraph(chapterId, knownSpeakers);
+            UpdateValidationIssueGroups(result);
 
             var format = _resources.GetString("branchingValidationSummaryExtendedFormat")
                 ?? "Missing targets: {0}, unreachable: {1}, empty choices: {2}, unknown speakers: {3}, orphaned conditions: {4}";
@@ -762,8 +772,7 @@ namespace Storylines.ViewModels
             var character = SpeakerResolver.Resolve(SelectedNode, _projectState.Characters);
             if (character != null)
             {
-                var nav = App.TryGetService<INavigationService>();
-                nav?.NavigateTo(NavigationTarget.Characters, character.Token);
+                _navigation?.NavigateTo(NavigationTarget.Characters, character.Token);
             }
         }
 
@@ -783,6 +792,7 @@ namespace Storylines.ViewModels
                 SimulationVariables.Clear();
                 SelectedNode = null;
                 ValidationSummary = _resources.GetString("branchingNoChaptersMessage");
+                ClearValidationIssueGroups();
                 return;
             }
 
@@ -790,6 +800,7 @@ namespace Storylines.ViewModels
             if (_activeGraph == null)
             {
                 ValidationSummary = "Failed to initialize graph.";
+                ClearValidationIssueGroups();
                 return;
             }
 
@@ -941,6 +952,65 @@ namespace Storylines.ViewModels
         {
             return SelectedChapter?.Token;
         }
+
+        public bool SelectValidationIssue(BranchingDialogueValidationIssueItemViewModel issueItem)
+        {
+            if (issueItem?.Issue?.NodeId == null || _activeGraph?.Nodes == null)
+                return false;
+
+            var node = _activeGraph.Nodes.FirstOrDefault(candidate => candidate?.Id == issueItem.Issue.NodeId);
+            if (node == null)
+                return false;
+
+            SelectedNode = node;
+            SelectedChoice = !string.IsNullOrWhiteSpace(issueItem.Issue.ChoiceId)
+                ? node.Choices?.FirstOrDefault(choice => choice?.Id == issueItem.Issue.ChoiceId)
+                : node.Choices?.FirstOrDefault();
+
+            return true;
+        }
+
+        private void UpdateValidationIssueGroups(BranchingDialogueValidationResult result)
+        {
+            ValidationIssueGroups.Clear();
+
+            AddValidationGroup(_resources.GetString("branchingValidationGroupMissingTargets") ?? "Missing targets", result?.MissingTargets);
+            AddValidationGroup(_resources.GetString("branchingValidationGroupUnreachableNodes") ?? "Unreachable passages", result?.UnreachableNodes);
+            AddValidationGroup(_resources.GetString("branchingValidationGroupEmptyChoices") ?? "Empty choices", result?.EmptyChoiceText);
+            AddValidationGroup(_resources.GetString("branchingValidationGroupUnknownSpeakers") ?? "Unknown speakers", result?.UnknownSpeakers);
+            AddValidationGroup(_resources.GetString("branchingValidationGroupOrphanedConditions") ?? "Orphaned conditions", result?.OrphanedConditions);
+
+            OnPropertyChanged(nameof(ValidationIssueGroupsVisibility));
+        }
+
+        private void AddValidationGroup(string title, IEnumerable<BranchingDialogueValidationIssue> issues)
+        {
+            var items = (issues ?? Enumerable.Empty<BranchingDialogueValidationIssue>())
+                .Select(CreateValidationIssueItem)
+                .Where(item => item != null)
+                .ToList();
+
+            if (items.Count == 0)
+                return;
+
+            ValidationIssueGroups.Add(new BranchingDialogueValidationGroupViewModel(title, items));
+        }
+
+        private BranchingDialogueValidationIssueItemViewModel CreateValidationIssueItem(BranchingDialogueValidationIssue issue)
+        {
+            var node = _activeGraph?.Nodes?.FirstOrDefault(candidate => candidate?.Id == issue?.NodeId);
+            var nodeTitle = !string.IsNullOrWhiteSpace(node?.Title)
+                ? node.Title
+                : issue?.NodeId;
+
+            return new BranchingDialogueValidationIssueItemViewModel(issue, nodeTitle);
+        }
+
+        private void ClearValidationIssueGroups()
+        {
+            ValidationIssueGroups.Clear();
+            OnPropertyChanged(nameof(ValidationIssueGroupsVisibility));
+        }
     }
 
     public sealed class BranchingExportFormatViewModel
@@ -954,5 +1024,31 @@ namespace Storylines.ViewModels
         public ExportFormatDefinition Definition { get; }
         public string MenuText { get; }
         public string DisplayTypeName => Definition.DefaultExtension.TrimStart('.').ToUpperInvariant();
+    }
+
+    public sealed class BranchingDialogueValidationGroupViewModel
+    {
+        public BranchingDialogueValidationGroupViewModel(string title, IEnumerable<BranchingDialogueValidationIssueItemViewModel> issues)
+        {
+            Title = title;
+            Issues = new ObservableCollection<BranchingDialogueValidationIssueItemViewModel>(issues ?? Enumerable.Empty<BranchingDialogueValidationIssueItemViewModel>());
+        }
+
+        public string Title { get; }
+        public ObservableCollection<BranchingDialogueValidationIssueItemViewModel> Issues { get; }
+    }
+
+    public sealed class BranchingDialogueValidationIssueItemViewModel
+    {
+        public BranchingDialogueValidationIssueItemViewModel(BranchingDialogueValidationIssue issue, string nodeTitle)
+        {
+            Issue = issue;
+            Message = issue?.Message ?? string.Empty;
+            NodeTitle = nodeTitle ?? string.Empty;
+        }
+
+        public BranchingDialogueValidationIssue Issue { get; }
+        public string Message { get; }
+        public string NodeTitle { get; }
     }
 }

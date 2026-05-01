@@ -95,6 +95,37 @@ namespace Storylines.Views.Controls
         private int _chapterLocationCaptureSuppressionDepth;
         private string _loadedChapterToken;
 
+        private bool _isTypewriterModeActive = false;
+        private bool _isTypewriterCentering = false;
+
+        public bool IsTypewriterModeActive
+        {
+            get => _isTypewriterModeActive;
+            set
+            {
+                _isTypewriterModeActive = value;
+                if (value)
+                    _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
+            }
+        }
+
+        private void CenterCaretInViewport()
+        {
+            if (!_isTypewriterModeActive || textBoxScrollViewer == null || textBox == null)
+                return;
+
+            textBox.Document.Selection.GetRect(PointOptions.ClientCoordinates, out Rect caretRect, out _);
+
+            double targetOffset = textBoxScrollViewer.VerticalOffset + caretRect.Y - textBoxScrollViewer.ViewportHeight / 2;
+            targetOffset = Math.Max(0, targetOffset);
+
+            if (Math.Abs(targetOffset - textBoxScrollViewer.VerticalOffset) < 1.0)
+                return;
+
+            _isTypewriterCentering = true;
+            textBoxScrollViewer.ChangeView(null, targetOffset, null, disableAnimation: true);
+        }
+
         public ChapterTextBox()
         {
             InitializeComponent();
@@ -214,11 +245,24 @@ namespace Storylines.Views.Controls
                 CheckForFormatting();
                 QueueChapterLocationCapture();
             }
+
+            if (_isTypewriterModeActive)
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
         }
 
         private void OnTextBoxScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
         {
+            if (_isTypewriterCentering)
+            {
+                if (!e.IsIntermediate)
+                    _isTypewriterCentering = false;
+                return;
+            }
+
             CacheCurrentChapterLocation();
+
+            if (_isTypewriterModeActive && !(_textEditor?.IsProgrammaticChangeInProgress == true))
+                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
         }
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -985,15 +1029,18 @@ namespace Storylines.Views.Controls
             underlineTextButton.IsChecked = selectedTextIsUnderlined;
             strikethroughButton.IsChecked = selectedTextIsStriked;
 
-            // Sync MainCommandBar formatting buttons
-            var commandBar = MainPage.CommandBar;
-            if (commandBar != null)
+            PublishFormattingState();
+        }
+
+        private void PublishFormattingState()
+        {
+            _events.Publish(new TextFormattingStateChangedEvent
             {
-                commandBar.mainBoldButton.IsChecked = selectedTextIsBold;
-                commandBar.mainItalicButton.IsChecked = selectedTextIsItalic;
-                commandBar.mainUnderlineButton.IsChecked = selectedTextIsUnderlined;
-                commandBar.mainStrikethroughButton.IsChecked = selectedTextIsStriked;
-            }
+                IsBold = selectedTextIsBold,
+                IsItalic = selectedTextIsItalic,
+                IsUnderlined = selectedTextIsUnderlined,
+                IsStrikethrough = selectedTextIsStriked,
+            });
         }
 
         public void BoldChapterTextBox()
@@ -1005,8 +1052,7 @@ namespace Storylines.Views.Controls
                 selectedTextIsBold = !isBold;
 
                 boldTextButton.IsChecked = selectedTextIsBold;
-                if (MainPage.CommandBar != null)
-                    MainPage.CommandBar.mainBoldButton.IsChecked = selectedTextIsBold;
+                PublishFormattingState();
             }
         }
 
@@ -1019,8 +1065,7 @@ namespace Storylines.Views.Controls
                 selectedTextIsItalic = !isItalic;
 
                 italicTextButton.IsChecked = selectedTextIsItalic;
-                if (MainPage.CommandBar != null)
-                    MainPage.CommandBar.mainItalicButton.IsChecked = selectedTextIsItalic;
+                PublishFormattingState();
             }
         }
 
@@ -1033,8 +1078,7 @@ namespace Storylines.Views.Controls
                 selectedTextIsUnderlined = !isUnderlined;
 
                 underlineTextButton.IsChecked = selectedTextIsUnderlined;
-                if (MainPage.CommandBar != null)
-                    MainPage.CommandBar.mainUnderlineButton.IsChecked = selectedTextIsUnderlined;
+                PublishFormattingState();
             }
         }
 
@@ -1047,8 +1091,7 @@ namespace Storylines.Views.Controls
                 selectedTextIsStriked = !isStriked;
 
                 strikethroughButton.IsChecked = selectedTextIsStriked;
-                if (MainPage.CommandBar != null)
-                    MainPage.CommandBar.mainStrikethroughButton.IsChecked = selectedTextIsStriked;
+                PublishFormattingState();
             }
         }
 
@@ -1229,6 +1272,12 @@ namespace Storylines.Views.Controls
         private void OnTextBox_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
             var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
+
+            if (_isTypewriterModeActive && (ctrlState & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down)
+            {
+                e.Handled = true;
+                return;
+            }
 
             if ((ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
             {

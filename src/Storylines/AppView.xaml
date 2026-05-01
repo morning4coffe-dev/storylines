@@ -10,6 +10,40 @@
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Background="{ThemeResource AppAcrylicBackground}">
 
+    <!--  Global keyboard accelerators. Per-page accelerators live in each Page's XAML.
+          Handlers route through EventAggregator events or App.GetService to avoid coupling
+          the shell to any specific page. ShortcutManager handles the Ctrl+Shift combos below
+          at the CoreWindow level; these accelerators handle the remaining standard ones that
+          don't need page-context checks. -->
+    <Page.KeyboardAccelerators>
+        <!--  File operations  -->
+        <KeyboardAccelerator Modifiers="Control"
+                             Key="S"
+                             Invoked="OnSaveAccelerator" />
+        <KeyboardAccelerator Modifiers="Control,Shift"
+                             Key="S"
+                             Invoked="OnSaveCopyAccelerator" />
+        <KeyboardAccelerator Modifiers="Control"
+                             Key="Z"
+                             Invoked="OnUndoAccelerator" />
+        <KeyboardAccelerator Modifiers="Control"
+                             Key="Y"
+                             Invoked="OnRedoAccelerator" />
+        <!--  Navigation  -->
+        <KeyboardAccelerator Modifiers="Control"
+                             Key="K"
+                             Invoked="OnCommandPaletteAccelerator" />
+        <KeyboardAccelerator Key="F11"
+                             Invoked="OnFocusModeAccelerator" />
+        <!--  Speech  -->
+        <KeyboardAccelerator Modifiers="Control,Shift"
+                             Key="P"
+                             Invoked="OnReadAloudAccelerator" />
+        <KeyboardAccelerator Modifiers="Control,Shift"
+                             Key="D"
+                             Invoked="OnDictationAccelerator" />
+    </Page.KeyboardAccelerators>
+
     <Grid AllowDrop="True"
           DragOver="OnGrid_DragOver"
           Drop="OnGrid_Drop">

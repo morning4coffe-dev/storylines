@@ -19,6 +19,7 @@
                     Width="4000" Height="3000"
                     Background="Transparent"
                     DoubleTapped="OnCanvas_DoubleTapped"
+                    Tapped="OnCanvas_Tapped"
                     PointerMoved="OnCanvas_PointerMoved"
                     RightTapped="OnCanvas_RightTapped" />
         </ScrollViewer>

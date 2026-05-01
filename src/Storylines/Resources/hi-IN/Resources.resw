@@ -1368,6 +1368,30 @@
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>
   </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>डुप्लिकेट करें</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (कॉपी)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (कॉपी {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>प्रॉम्प्ट कॉपी करें</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>अध्याय बनाएँ</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>सभी श्रेणियाँ</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>प्रॉम्प्ट क्लिपबोर्ड पर कॉपी हो गया।</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>{0} प्रॉम्प्ट</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>लेखन प्रॉम्प्ट</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>सहेजे गए प्रीसेट</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>प्रीसेट हटाएँ</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>प्रीसेट हटाएँ</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>अभी तक कोई सहेजा गया प्रीसेट नहीं है।</value></data>
+  <data name="branchingValidationDetailsTitle.Text" xml:space="preserve"><value>सत्यापन विवरण</value></data>
+  <data name="branchingValidationGroupMissingTargets" xml:space="preserve"><value>गुम लक्ष्य</value></data>
+  <data name="branchingValidationGroupUnreachableNodes" xml:space="preserve"><value>अप्राप्य अंश</value></data>
+  <data name="branchingValidationGroupEmptyChoices" xml:space="preserve"><value>खाली विकल्प</value></data>
+  <data name="branchingValidationGroupUnknownSpeakers" xml:space="preserve"><value>अज्ञात वक्ता</value></data>
+  <data name="branchingValidationGroupOrphanedConditions" xml:space="preserve"><value>अनाथ शर्तें</value></data>
+  <data name="branchingValidationUnknownSpeakerMessageFormat" xml:space="preserve"><value>वक्ता "{0}" किसी भी चरित्र से मेल नहीं खाता।</value></data>
+  <data name="branchingValidationEmptyChoiceMessage" xml:space="preserve"><value>विकल्प का पाठ खाली है।</value></data>
+  <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>विकल्प का लक्ष्य नोड गायब है।</value></data>
+  <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>शर्त उस फ़्लैग "{0}" का संदर्भ देती है जिसे कोई भी नोड कभी सेट नहीं करता।</value></data>
+  <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>नोड प्रारंभिक नोड से पहुँचा नहीं जा सकता।</value></data>
 </root>
 
 

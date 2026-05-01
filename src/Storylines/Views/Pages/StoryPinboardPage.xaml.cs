@@ -39,6 +39,7 @@ namespace Storylines.Views.Pages
         private Grid _draggingCard;
         private Chapter _draggingChapter;
         private Point _dragOffset;
+        private Point _dragStartPoint;
 
         // Connect mode state
         private Chapter _connectSource;
@@ -123,17 +124,15 @@ namespace Storylines.Views.Pages
 
         private void RebuildCanvas()
         {
+            ClearPendingConnectionSelection();
+
             pinboardCanvas.Children.Clear();
             _cardElements.Clear();
             _connectionPaths.Clear();
             _connectionLabels.Clear();
-            _connectSource = null;
 
             // Auto-assign positions for chapters that have none
             AssignDefaultPositions();
-
-            // Draw connection lines first (behind cards)
-            DrawConnections();
 
             // Create chapter cards
             for (int i = 0; i < _filteredView.Count; i++)
@@ -144,8 +143,12 @@ namespace Storylines.Views.Pages
 
                 Canvas.SetLeft(card, chapter.PinboardX);
                 Canvas.SetTop(card, chapter.PinboardY);
+                Canvas.SetZIndex(card, 10);
                 pinboardCanvas.Children.Add(card);
             }
+
+            // Draw connection lines behind cards using measured bounds.
+            DrawConnections();
         }
 
         private void AssignDefaultPositions()
@@ -193,6 +196,7 @@ namespace Storylines.Views.Pages
             var card = new Grid
             {
                 Width = CardWidth,
+                MinHeight = CardHeight,
                 Padding = new Thickness(14),
                 CornerRadius = new CornerRadius(8),
                 Background = (Brush)Application.Current.Resources["LayerFillColorDefaultBrush"],
@@ -406,6 +410,8 @@ namespace Storylines.Views.Pages
             card.PointerReleased += Card_PointerReleased;
             card.PointerCanceled += Card_PointerCanceled;
 
+            card.Measure(new Size(CardWidth, double.PositiveInfinity));
+
             return card;
         }
 
@@ -447,16 +453,17 @@ namespace Storylines.Views.Pages
                 if (!visibleTokens.Contains(fromChapter.Token) || !visibleTokens.Contains(toChapter.Token))
                     continue;
 
-                var path = CreateConnectionPath(fromChapter, toChapter);
+                var connection = CanvasConnectionGeometry.CreatePinboardConnection(
+                    GetChapterBounds(fromChapter),
+                    GetChapterBounds(toChapter));
+                var path = CreateConnectionPath(fromChapter, toChapter, connection);
                 _connectionPaths.Add(path);
+                Canvas.SetZIndex(path, 0);
                 pinboardCanvas.Children.Add(path);
 
                 // Add label if present
                 if (!string.IsNullOrWhiteSpace(conn.Label))
                 {
-                    double midX = (fromChapter.PinboardX + toChapter.PinboardX) / 2 + CardWidth / 2;
-                    double midY = (fromChapter.PinboardY + toChapter.PinboardY) / 2 + CardHeight / 2;
-
                     var label = new Border
                     {
                         CornerRadius = new CornerRadius(4),
@@ -474,53 +481,45 @@ namespace Storylines.Views.Pages
                         }
                     };
                     label.RightTapped += ConnectionLabel_RightTapped;
-                    Canvas.SetLeft(label, midX - 30);
-                    Canvas.SetTop(label, midY - 10);
+                    Canvas.SetLeft(label, connection.Label.X - 30);
+                    Canvas.SetTop(label, connection.Label.Y - 10);
+                    Canvas.SetZIndex(label, 1);
                     _connectionLabels.Add(label);
                     pinboardCanvas.Children.Add(label);
                 }
             }
         }
 
-        private Path CreateConnectionPath(Chapter from, Chapter to)
+        private CanvasConnectionRect GetChapterBounds(Chapter chapter)
         {
-            double fromX = from.PinboardX + CardWidth / 2;
-            double fromY = from.PinboardY + CardHeight / 2;
-            double toX = to.PinboardX + CardWidth / 2;
-            double toY = to.PinboardY + CardHeight / 2;
-
-            // Determine if the connection is more horizontal or vertical
-            double dx = toX - fromX;
-            double dy = toY - fromY;
-
-            double cp1X, cp1Y, cp2X, cp2Y;
-            if (Math.Abs(dx) > Math.Abs(dy))
+            if (chapter != null && !string.IsNullOrWhiteSpace(chapter.Token) && _cardElements.TryGetValue(chapter.Token, out var card))
             {
-                // Horizontal bias: control points push horizontally
-                cp1X = fromX + dx * 0.4;
-                cp1Y = fromY;
-                cp2X = toX - dx * 0.4;
-                cp2Y = toY;
-            }
-            else
-            {
-                // Vertical bias: control points push vertically
-                cp1X = fromX;
-                cp1Y = fromY + dy * 0.4;
-                cp2X = toX;
-                cp2Y = toY - dy * 0.4;
+                var height = Math.Max(card.ActualHeight, card.DesiredSize.Height);
+                if (height > 0)
+                {
+                    return new CanvasConnectionRect(
+                        chapter.PinboardX,
+                        chapter.PinboardY,
+                        CardWidth,
+                        Math.Max(CardHeight, height));
+                }
             }
 
+            return new CanvasConnectionRect(chapter.PinboardX, chapter.PinboardY, CardWidth, CardHeight);
+        }
+
+        private Path CreateConnectionPath(Chapter from, Chapter to, CanvasBezierConnection connection)
+        {
             var pathFigure = new PathFigure
             {
-                StartPoint = new Point(fromX, fromY),
+                StartPoint = new Point(connection.Start.X, connection.Start.Y),
                 IsClosed = false
             };
             pathFigure.Segments.Add(new BezierSegment
             {
-                Point1 = new Point(cp1X, cp1Y),
-                Point2 = new Point(cp2X, cp2Y),
-                Point3 = new Point(toX, toY)
+                Point1 = new Point(connection.Control1.X, connection.Control1.Y),
+                Point2 = new Point(connection.Control2.X, connection.Control2.Y),
+                Point3 = new Point(connection.End.X, connection.End.Y)
             });
 
             var pathGeometry = new PathGeometry();
@@ -598,11 +597,19 @@ namespace Storylines.Views.Pages
                 if (_draggingChapter == null) return;
 
                 _draggingCard = card;
-                _isDragging = true;
                 _dragMoved = false;
 
                 var pos = e.GetCurrentPoint(pinboardCanvas).Position;
+                _dragStartPoint = pos;
                 _dragOffset = new Point(pos.X - Canvas.GetLeft(card), pos.Y - Canvas.GetTop(card));
+
+                if (connectModeToggle.IsChecked == true)
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                _isDragging = true;
 
                 card.CapturePointer(e.Pointer);
 
@@ -618,10 +625,15 @@ namespace Storylines.Views.Pages
         {
             if (!_isDragging || _draggingCard == null) return;
 
-            // In connect mode, don't drag
-            if (connectModeToggle.IsChecked == true) return;
-
             var pos = e.GetCurrentPoint(pinboardCanvas).Position;
+
+            if (!_dragMoved && !CanvasConnectionGeometry.HasMovedBeyondThreshold(
+                new CanvasConnectionPoint(_dragStartPoint.X, _dragStartPoint.Y),
+                new CanvasConnectionPoint(pos.X, pos.Y)))
+            {
+                return;
+            }
+
             double newX = Math.Max(0, pos.X - _dragOffset.X);
             double newY = Math.Max(0, pos.Y - _dragOffset.Y);
 
@@ -641,14 +653,18 @@ namespace Storylines.Views.Pages
 
         private void Card_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            if (_draggingCard != null)
+            if (_isDragging && _draggingCard != null)
             {
                 _draggingCard.ReleasePointerCapture(e.Pointer);
                 Canvas.SetZIndex(_draggingCard, 0);
                 _draggingCard.Opacity = 1.0;
             }
 
-            if (_isDragging && _dragMoved)
+            if (connectModeToggle.IsChecked == true && _draggingChapter != null)
+            {
+                HandleCardClick(_draggingChapter);
+            }
+            else if (_isDragging && _dragMoved)
             {
                 TimeTravelSystem.SomethingChanged();
             }
@@ -668,7 +684,7 @@ namespace Storylines.Views.Pages
 
         private void Card_PointerCanceled(object sender, PointerRoutedEventArgs e)
         {
-            if (_draggingCard != null)
+            if (_isDragging && _draggingCard != null)
             {
                 Canvas.SetZIndex(_draggingCard, 0);
                 _draggingCard.Opacity = 1.0;
@@ -717,9 +733,7 @@ namespace Storylines.Views.Pages
             {
                 if (_connectSource.Token == chapter.Token)
                 {
-                    // Clicked same card: deselect
-                    HighlightCard(_connectSource.Token, false);
-                    _connectSource = null;
+                    ClearPendingConnectionSelection();
                     return;
                 }
 
@@ -732,9 +746,16 @@ namespace Storylines.Views.Pages
                     _ = AddConnectionAsync(fromIdx, toIdx);
                 }
 
-                HighlightCard(_connectSource.Token, false);
-                _connectSource = null;
+                ClearPendingConnectionSelection();
             }
+        }
+
+        private void ClearPendingConnectionSelection()
+        {
+            if (_connectSource != null)
+                HighlightCard(_connectSource.Token, false);
+
+            _connectSource = null;
         }
 
         private void HighlightCard(string token, bool highlight)
@@ -780,6 +801,25 @@ namespace Storylines.Views.Pages
                 TimeTravelSystem.SomethingChanged();
                 RedrawConnections();
             }
+        }
+
+        private void OnCanvas_Tapped(object sender, TappedRoutedEventArgs e)
+        {
+            if (!(e.OriginalSource is Canvas))
+                return;
+
+            if (connectModeToggle.IsChecked == true)
+                ClearPendingConnectionSelection();
+        }
+
+        private void OnConnectModeToggle_Checked(object sender, RoutedEventArgs e)
+        {
+            ClearPendingConnectionSelection();
+        }
+
+        private void OnConnectModeToggle_Unchecked(object sender, RoutedEventArgs e)
+        {
+            ClearPendingConnectionSelection();
         }
 
         private void RemoveConnection(int fromIndex, int toIndex)

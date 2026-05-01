@@ -25,17 +25,76 @@ public class ProjectStateTests
         public List<string> PlotThreads { get; set; } = new();
         public List<TestPinboardConnection> PinboardConnections { get; } = new();
 
-        public TestChapter AddExistingChapter(string name, string token, string text, string notes = "")
+        public TestChapter AddExistingChapter(
+            string name,
+            string token,
+            string text,
+            string notes = "",
+            string synopsis = null,
+            int? wordCountGoal = null,
+            List<string> tags = null,
+            double pinboardX = 0,
+            double pinboardY = 0,
+            TestChapterStatus status = TestChapterStatus.Draft,
+            string location = null,
+            List<string> plotThreads = null,
+            int lastCaretPosition = 0,
+            double lastVerticalOffset = 0)
         {
-            var ch = new TestChapter { Name = name, Text = text, Notes = notes };
+            var ch = new TestChapter
+            {
+                Name = name,
+                Text = text,
+                Notes = notes,
+                Synopsis = synopsis,
+                WordCountGoal = wordCountGoal,
+                Tags = tags ?? new List<string>(),
+                PinboardX = pinboardX,
+                PinboardY = pinboardY,
+                Status = status,
+                Location = location,
+                PlotThreads = plotThreads ?? new List<string>(),
+                LastCaretPosition = lastCaretPosition,
+                LastVerticalOffset = lastVerticalOffset
+            };
             ch.Token = token;
             Chapters.Add(ch);
             return ch;
         }
 
-        public TestChapter InsertExistingChapter(string name, string token, string text, int position)
+        public TestChapter InsertExistingChapter(
+            string name,
+            string token,
+            string text,
+            int position,
+            string notes = "",
+            string synopsis = null,
+            int? wordCountGoal = null,
+            List<string> tags = null,
+            double pinboardX = 0,
+            double pinboardY = 0,
+            TestChapterStatus status = TestChapterStatus.Draft,
+            string location = null,
+            List<string> plotThreads = null,
+            int lastCaretPosition = 0,
+            double lastVerticalOffset = 0)
         {
-            var ch = new TestChapter { Name = name, Text = text };
+            var ch = new TestChapter
+            {
+                Name = name,
+                Text = text,
+                Notes = notes,
+                Synopsis = synopsis,
+                WordCountGoal = wordCountGoal,
+                Tags = tags ?? new List<string>(),
+                PinboardX = pinboardX,
+                PinboardY = pinboardY,
+                Status = status,
+                Location = location,
+                PlotThreads = plotThreads ?? new List<string>(),
+                LastCaretPosition = lastCaretPosition,
+                LastVerticalOffset = lastVerticalOffset
+            };
             ch.Token = token;
             Chapters.Insert(position, ch);
             return ch;
@@ -100,6 +159,16 @@ public class ProjectStateTests
                 Name = original.Name,
                 Text = original.Text,
                 Notes = original.Notes,
+                Synopsis = original.Synopsis,
+                WordCountGoal = original.WordCountGoal,
+                Tags = original.Tags?.ToList() ?? new List<string>(),
+                PinboardX = original.PinboardX,
+                PinboardY = original.PinboardY,
+                Status = original.Status,
+                Location = original.Location,
+                PlotThreads = original.PlotThreads?.ToList() ?? new List<string>(),
+                LastCaretPosition = original.LastCaretPosition,
+                LastVerticalOffset = original.LastVerticalOffset,
                 Token = original.Token
             };
         }
@@ -176,6 +245,23 @@ public class ProjectStateTests
         public string Name { get; set; }
         public string Text { get; set; }
         public string Notes { get; set; }
+        public string Synopsis { get; set; }
+        public int? WordCountGoal { get; set; }
+        public List<string> Tags { get; set; } = new();
+        public double PinboardX { get; set; }
+        public double PinboardY { get; set; }
+        public TestChapterStatus Status { get; set; }
+        public string Location { get; set; }
+        public List<string> PlotThreads { get; set; } = new();
+        public int LastCaretPosition { get; set; }
+        public double LastVerticalOffset { get; set; }
+    }
+
+    private enum TestChapterStatus
+    {
+        Draft,
+        InProgress,
+        Completed
     }
 
     private sealed class TestCharacter
@@ -219,6 +305,42 @@ public class ProjectStateTests
 
         Assert.Equal(3, state.Chapters.Count);
         Assert.Equal("Second", state.Chapters[1].Name);
+    }
+
+    [Fact]
+    public void InsertExistingChapter_PreservesRichMetadata()
+    {
+        var state = new TestProjectState();
+
+        state.InsertExistingChapter(
+            "Inserted",
+            "t1",
+            "text",
+            0,
+            notes: "note",
+            synopsis: "synopsis",
+            wordCountGoal: 1200,
+            tags: new List<string> { "scene", "mystery" },
+            pinboardX: 42,
+            pinboardY: 64,
+            status: TestChapterStatus.InProgress,
+            location: "Archive",
+            plotThreads: new List<string> { "Thread A" },
+            lastCaretPosition: 18,
+            lastVerticalOffset: 21.5);
+
+        var chapter = state.Chapters[0];
+        Assert.Equal("note", chapter.Notes);
+        Assert.Equal("synopsis", chapter.Synopsis);
+        Assert.Equal(1200, chapter.WordCountGoal);
+        Assert.Equal(new[] { "scene", "mystery" }, chapter.Tags);
+        Assert.Equal(42, chapter.PinboardX);
+        Assert.Equal(64, chapter.PinboardY);
+        Assert.Equal(TestChapterStatus.InProgress, chapter.Status);
+        Assert.Equal("Archive", chapter.Location);
+        Assert.Equal(new[] { "Thread A" }, chapter.PlotThreads);
+        Assert.Equal(18, chapter.LastCaretPosition);
+        Assert.Equal(21.5, chapter.LastVerticalOffset);
     }
 
     [Fact]
@@ -292,6 +414,46 @@ public class ProjectStateTests
         Assert.Equal("some text", copy.Text);
         Assert.Equal("a note", copy.Notes);
         Assert.Equal("t1", copy.Token);
+    }
+
+    [Fact]
+    public void CopyChapter_CopiesRichMetadataAndCollections()
+    {
+        var state = new TestProjectState();
+        state.AddExistingChapter(
+            "Original",
+            "t1",
+            "some text",
+            notes: "a note",
+            synopsis: "summary",
+            wordCountGoal: 900,
+            tags: new List<string> { "tag1" },
+            pinboardX: 10,
+            pinboardY: 12,
+            status: TestChapterStatus.Completed,
+            location: "Harbor",
+            plotThreads: new List<string> { "plot" },
+            lastCaretPosition: 8,
+            lastVerticalOffset: 13.5);
+
+        var copy = state.CopyChapter("t1");
+
+        Assert.Equal("summary", copy.Synopsis);
+        Assert.Equal(900, copy.WordCountGoal);
+        Assert.Equal(new[] { "tag1" }, copy.Tags);
+        Assert.Equal(10, copy.PinboardX);
+        Assert.Equal(12, copy.PinboardY);
+        Assert.Equal(TestChapterStatus.Completed, copy.Status);
+        Assert.Equal("Harbor", copy.Location);
+        Assert.Equal(new[] { "plot" }, copy.PlotThreads);
+        Assert.Equal(8, copy.LastCaretPosition);
+        Assert.Equal(13.5, copy.LastVerticalOffset);
+
+        copy.Tags.Add("tag2");
+        copy.PlotThreads.Add("plot2");
+
+        Assert.Single(state.Chapters[0].Tags);
+        Assert.Single(state.Chapters[0].PlotThreads);
     }
 
     [Fact]

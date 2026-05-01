@@ -1589,6 +1589,30 @@
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>
   </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>Дублировать</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (Копия)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (Копия {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>Копировать подсказку</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>Создать главу</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>Все категории</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>Подсказка скопирована в буфер обмена.</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>Подсказка: {0}</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>Писательская подсказка</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>Сохраненные пресеты</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>Удалить пресет</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>Удалить пресет</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>Сохраненных пресетов пока нет.</value></data>
+  <data name="branchingValidationDetailsTitle.Text" xml:space="preserve"><value>Подробности проверки</value></data>
+  <data name="branchingValidationGroupMissingTargets" xml:space="preserve"><value>Отсутствующие цели</value></data>
+  <data name="branchingValidationGroupUnreachableNodes" xml:space="preserve"><value>Недостижимые фрагменты</value></data>
+  <data name="branchingValidationGroupEmptyChoices" xml:space="preserve"><value>Пустые варианты</value></data>
+  <data name="branchingValidationGroupUnknownSpeakers" xml:space="preserve"><value>Неизвестные говорящие</value></data>
+  <data name="branchingValidationGroupOrphanedConditions" xml:space="preserve"><value>Осиротевшие условия</value></data>
+  <data name="branchingValidationUnknownSpeakerMessageFormat" xml:space="preserve"><value>Говорящий "{0}" не соответствует ни одному персонажу.</value></data>
+  <data name="branchingValidationEmptyChoiceMessage" xml:space="preserve"><value>Текст варианта пуст.</value></data>
+  <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Отсутствует целевой узел варианта.</value></data>
+  <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Условие ссылается на флаг "{0}", который ни один узел никогда не устанавливает.</value></data>
+  <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Узел недостижим из начального узла.</value></data>
 </root>
 
 

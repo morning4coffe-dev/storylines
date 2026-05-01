@@ -27,8 +27,11 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
         private readonly CommandBarViewModel _viewModel;
+        private readonly SpeechHubViewModel _speechHub;
+        private readonly ISpeechService _speechService;
 
         public CommandBarViewModel ViewModel => _viewModel;
+        public SpeechHubViewModel SpeechHub => _speechHub;
 
         public MainCommandBar()
         {
@@ -39,13 +42,17 @@ namespace Storylines.Views.Controls
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
             _viewModel = App.GetService<CommandBarViewModel>();
+            _speechHub = App.GetService<SpeechHubViewModel>();
+            _speechService = App.GetService<ISpeechService>();
 
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
                || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
                 MainPage.CommandBar = this;
 
             UpdateExperimentalFeaturesVisibility();
-            App.GetService<EventAggregator>().Subscribe<SettingChangedEvent>(OnSettingChanged);
+            var events = App.GetService<EventAggregator>();
+            events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+            events.Subscribe<TextFormattingStateChangedEvent>(OnTextFormattingStateChanged);
 
             // Restore persisted dialogue mode state
             dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
@@ -55,6 +62,14 @@ namespace Storylines.Views.Controls
         {
             if (e.SettingKey == SettingsValueStrings.ExperimentalFeaturesEnabled)
                 UpdateExperimentalFeaturesVisibility();
+        }
+
+        private void OnTextFormattingStateChanged(TextFormattingStateChangedEvent e)
+        {
+            mainBoldButton.IsChecked = e.IsBold;
+            mainItalicButton.IsChecked = e.IsItalic;
+            mainUnderlineButton.IsChecked = e.IsUnderlined;
+            mainStrikethroughButton.IsChecked = e.IsStrikethrough;
         }
 
         private void UpdateExperimentalFeaturesVisibility()
@@ -249,6 +264,9 @@ namespace Storylines.Views.Controls
         #endregion
 
         #region VIEW
+        private void OnTypewriterModeButton_Click(object sender, RoutedEventArgs e)
+            => MainPage.ChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
+
         private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
             => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);
 
@@ -346,6 +364,7 @@ namespace Storylines.Views.Controls
             playReadAloud.IsEnabled = false;
             readAloudProgressBar.Value = 0;
 
+            _speechService?.NotifyReadingStarted();
             NotificationManager.DisplayBadgeNotification("playing");
         }
 
@@ -446,6 +465,7 @@ namespace Storylines.Views.Controls
             _paragraphs = null;
 
             readAloudControllHolder.Visibility = Visibility.Collapsed;
+            _speechService?.NotifyReadingStopped();
             NotificationManager.ClearBadgeNotification();
         }
 

@@ -36,6 +36,7 @@ namespace Storylines.Views.Pages
             canvasControl.ViewModel = ViewModel;
             canvasControl.NodeSelected += OnCanvasNodeSelected;
             canvasControl.NodeDoubleTapped += OnCanvasNodeDoubleTapped;
+            canvasControl.CanvasBackgroundTapped += OnCanvasBackgroundTapped;
             canvasControl.CanvasDoubleTapped += OnCanvasDoubleTapped;
             canvasControl.ConnectionRequested += OnCanvasConnectionRequested;
 
@@ -62,13 +63,11 @@ namespace Storylines.Views.Pages
         private void OnCanvasNodeSelected(BranchingDialogueNodeData node)
         {
             ViewModel.SelectedNode = node;
-            UpdateTagsTextBox();
         }
 
         private void OnCanvasNodeDoubleTapped(BranchingDialogueNodeData node)
         {
             ViewModel.SelectedNode = node;
-            UpdateTagsTextBox();
 
             // Ensure side panel is visible
             if (!ViewModel.IsNodeListVisible)
@@ -82,6 +81,11 @@ namespace Storylines.Views.Pages
         private void OnCanvasDoubleTapped(double x, double y)
         {
             ViewModel.CreateNodeAtPosition(x, y);
+        }
+
+        private void OnCanvasBackgroundTapped()
+        {
+            ViewModel.SelectedNode = null;
         }
 
         private void OnCanvasConnectionRequested(BranchingDialogueNodeData source, BranchingDialogueNodeData target)
@@ -140,6 +144,29 @@ namespace Storylines.Views.Pages
         {
             if (ViewModel.SelectedNode != null)
             {
+                canvasControl.ScrollToNode(ViewModel.SelectedNode);
+                UpdateTagsTextBox();
+            }
+        }
+
+        private void OnValidationIssue_Click(object sender, RoutedEventArgs e)
+        {
+            if (!((sender as FrameworkElement)?.Tag is BranchingDialogueValidationIssueItemViewModel issueItem))
+                return;
+
+            if (!ViewModel.SelectValidationIssue(issueItem))
+                return;
+
+            if (!ViewModel.IsNodeListVisible)
+            {
+                ViewModel.IsNodeListVisible = true;
+                sidePanelColumn.Width = new GridLength(340);
+                sidePanel.Visibility = Visibility.Visible;
+            }
+
+            if (ViewModel.SelectedNode != null)
+            {
+                nodesList?.ScrollIntoView(ViewModel.SelectedNode);
                 canvasControl.ScrollToNode(ViewModel.SelectedNode);
                 UpdateTagsTextBox();
             }
@@ -204,7 +231,10 @@ namespace Storylines.Views.Pages
         private void OnViewModel_PropertyChanged(object sender, System.ComponentModel.PropertyChangedEventArgs e)
         {
             if (e.PropertyName == nameof(ViewModel.SelectedNode))
+            {
                 UpdateTagsTextBox();
+                canvasControl.RedrawCanvas();
+            }
         }
 
         #endregion
@@ -320,6 +350,23 @@ namespace Storylines.Views.Pages
 
         private void OnPage_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            if (e.Key == VirtualKey.Escape)
+            {
+                if (canvasControl.CancelConnectionMode())
+                {
+                    e.Handled = true;
+                    return;
+                }
+
+                if (ViewModel.SelectedNode != null)
+                {
+                    ViewModel.SelectedNode = null;
+                    e.Handled = true;
+                }
+
+                return;
+            }
+
             if (e.Key == VirtualKey.Delete && ViewModel.SelectedNode != null)
             {
                 var focused = FocusManager.GetFocusedElement();

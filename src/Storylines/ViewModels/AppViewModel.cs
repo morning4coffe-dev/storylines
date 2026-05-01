@@ -1,5 +1,4 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Windows.ApplicationModel;
@@ -29,11 +28,12 @@ namespace Storylines.ViewModels
 
         private readonly string _editedString;
         private readonly IProjectPersistenceService _persistence;
+        private readonly IUndoRedoService _undoRedo;
 
-        public AppViewModel(EventAggregator events = null, IProjectPersistenceService persistence = null)
+        public AppViewModel(EventAggregator events, IProjectPersistenceService persistence, IUndoRedoService undoRedo)
         {
-            events ??= App.TryGetService<EventAggregator>() ?? new EventAggregator();
-            _persistence = persistence ?? App.TryGetService<IProjectPersistenceService>();
+            _persistence = persistence;
+            _undoRedo = undoRedo;
             _editedString = ResourceLoader.GetForViewIndependentUse().GetString("appHeaderEdited");
             events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
             UpdateTitleBar();
@@ -56,7 +56,7 @@ namespace Storylines.ViewModels
             }
 
             UnsavedIndicatorText = $" {_editedString}";
-            UnsavedIndicatorVisibility = TimeTravelSystem.unSavedProgress ? Visibility.Visible : Visibility.Collapsed;
+            UnsavedIndicatorVisibility = _undoRedo.IsDirty ? Visibility.Visible : Visibility.Collapsed;
         }
 
         public string GetProjectName()

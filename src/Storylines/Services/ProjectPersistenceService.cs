@@ -26,6 +26,8 @@ namespace Storylines.Services
         private readonly ILogger _logger;
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
+        private readonly IUndoRedoService _undoRedo;
+        private readonly INotificationService _notifications;
         private readonly Dictionary<string, DocumentPersistenceHandlerBase> _handlers;
         private readonly SemaphoreSlim _operationLock = new SemaphoreSlim(1, 1);
 
@@ -47,13 +49,17 @@ namespace Storylines.Services
             LegacySrlSerializer legacySerializer,
             ILogger logger,
             ProjectState projectState,
-            ITextEditorService textEditor)
+            ITextEditorService textEditor,
+            IUndoRedoService undoRedo,
+            INotificationService notifications)
         {
             _events = events;
             _dialogs = dialogs;
             _fileService = fileService;
             _jsonSerializer = jsonSerializer;
             _legacySerializer = legacySerializer;
+            _undoRedo = undoRedo;
+            _notifications = notifications;
             _logger = logger;
             _projectState = projectState;
             _textEditor = textEditor;
@@ -73,7 +79,8 @@ namespace Storylines.Services
                     NormalizeProjectData,
                     CloneAndNormalizeGraph,
                     LoadVariables,
-                    OnProjectLoaded),
+                    OnProjectLoaded,
+                    _notifications),
                 [".txt"] = new PlainTextDocumentPersistenceHandler(
                     _fileService,
                     _dialogs,
@@ -81,7 +88,8 @@ namespace Storylines.Services
                     _logger,
                     _projectState,
                     _textEditor,
-                    OnProjectLoaded)
+                    OnProjectLoaded,
+                    _notifications)
             };
         }
 
@@ -243,13 +251,13 @@ namespace Storylines.Services
                 if (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] != null)
                     ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = project.Token;
 
-                NotificationManager.DisplayMainProgressBar(true);
+                _notifications.ShowProgressBar(true);
 
                 if (!TryResolveHandler(project.file, out var handler))
                 {
                     _logger.Error($"Unsupported project file type: {project.file.FileType}");
                     ShowLoadErrorNotification();
-                    NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                    _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                     return;
                 }
 
@@ -282,7 +290,7 @@ namespace Storylines.Services
             try
             {
                 CurrentProject = recoveredProject;
-                NotificationManager.DisplayMainProgressBar(true);
+                _notifications.ShowProgressBar(true);
 
                 if (string.Equals(documentType, ".txt", StringComparison.OrdinalIgnoreCase))
                 {
@@ -301,7 +309,7 @@ namespace Storylines.Services
                     await storylinesHandler.LoadProjectDataAsync(CurrentProject, projectData);
                 }
 
-                TimeTravelSystem.unSavedProgress = true;
+                _undoRedo.MarkDirty();
                 _events.Publish(new TitleBarUpdateEvent());
                 return true;
             }
@@ -309,7 +317,7 @@ namespace Storylines.Services
             {
                 _logger.Error("Failed to restore recovery data", ex);
                 ShowLoadErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                 return false;
             }
             finally
@@ -385,13 +393,13 @@ namespace Storylines.Services
                     return;
                 }
 
-                NotificationManager.DisplayMainProgressBar(true);
+                _notifications.ShowProgressBar(true);
 
                 if (!TryResolveHandler(project.file, out var handler))
                 {
                     _logger.Error($"Unsupported project file type: {project.file.FileType}");
                     ShowSaveErrorNotification();
-                    NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                    _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                     _afterSaveAction = AfterSaveAction.None;
                     return;
                 }
@@ -405,7 +413,7 @@ namespace Storylines.Services
             {
                 _logger.Error("Failed to write project file", ex);
                 ShowSaveErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                 _afterSaveAction = AfterSaveAction.None;
             }
             finally
@@ -486,7 +494,7 @@ namespace Storylines.Services
             var pendingAction = _afterSaveAction;
             _afterSaveAction = AfterSaveAction.None;
 
-            TimeTravelSystem.unSavedProgress = false;
+            _undoRedo.MarkClean();
 
             switch (pendingAction)
             {
@@ -503,25 +511,23 @@ namespace Storylines.Services
                     break;
             }
 
-            NotificationManager.HideMainProgressBar();
+            _notifications.HideProgressBar();
         }
 
         private void LoadVariables(ProjectData projectData)
         {
-            var chaptersListViewModel = App.TryGetService<ChaptersListViewModel>();
-            if (chaptersListViewModel != null)
-                chaptersListViewModel.SelectedIndex = projectData.LastOpenedChapter;
-            else
-                _textEditor.SelectedChapterIndex = projectData.LastOpenedChapter;
+            // Route selection through ITextEditorService so persistence has no VM dependency.
+            // The ChaptersListViewModel observes SelectedChapterIndex via its own bindings.
+            _textEditor.SelectedChapterIndex = projectData.LastOpenedChapter;
         }
 
         private void OnProjectLoaded()
         {
-            TimeTravelSystem.unSavedProgress = false;
+            _undoRedo.MarkClean();
             SavedValues.Clear();
             _events.Publish(new TitleBarUpdateEvent());
 
-            NotificationManager.HideMainProgressBar();
+            _notifications.HideProgressBar();
         }
 
         private void OnAutosaveTimerTick(object sender, object e)
@@ -531,7 +537,7 @@ namespace Storylines.Services
 
         private async Task TryAutosaveAsync()
         {
-            if (!SettingsValues.autosaveEnabled || !TimeTravelSystem.unSavedProgress || CurrentProject?.file == null || _afterSaveAction != AfterSaveAction.None)
+            if (!SettingsValues.autosaveEnabled || !_undoRedo.IsDirty || CurrentProject?.file == null || _afterSaveAction != AfterSaveAction.None)
                 return;
 
             try
@@ -562,20 +568,18 @@ namespace Storylines.Services
                 : TimeSpan.FromSeconds(interval * 60);
         }
 
-        private static void ShowSaveErrorNotification()
+        private void ShowSaveErrorNotification()
         {
-            NotificationManager.DisplayInAppNotification(
+            _notifications.ShowNotification(
                 Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"),
-                "");
+                ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"));
         }
 
-        private static void ShowLoadErrorNotification()
+        private void ShowLoadErrorNotification()
         {
-            NotificationManager.DisplayInAppNotification(
+            _notifications.ShowNotification(
                 Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
-                "");
+                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"));
         }
 
         private static ProjectData NormalizeProjectData(ProjectData projectData)
@@ -639,42 +643,7 @@ namespace Storylines.Services
 
         private static BranchingDialogueGraphData CloneAndNormalizeGraph(BranchingDialogueGraphData graph)
         {
-            if (graph == null)
-                return null;
-
-            var clone = new BranchingDialogueGraphData
-            {
-                Id = graph.Id,
-                ChapterId = graph.ChapterId,
-                StartNodeId = graph.StartNodeId,
-                Nodes = graph.Nodes?.Select(node => new BranchingDialogueNodeData
-                {
-                    Id = node.Id,
-                    Title = node.Title,
-                    Speaker = node.Speaker,
-                    Text = node.Text,
-                    PositionX = node.PositionX,
-                    PositionY = node.PositionY,
-                    Tags = node.Tags?.ToList(),
-                    Metadata = node.Metadata != null ? new Dictionary<string, string>(node.Metadata) : null,
-                    Choices = node.Choices?.Select(choice => new BranchingDialogueChoiceData
-                    {
-                        Id = choice.Id,
-                        Text = choice.Text,
-                        TargetNodeId = choice.TargetNodeId,
-                        Metadata = choice.Metadata != null ? new Dictionary<string, string>(choice.Metadata) : null,
-                        Conditions = choice.Conditions?.Select(condition => new BranchingDialogueConditionData
-                        {
-                            Flag = condition.Flag,
-                            Operator = condition.Operator,
-                            Value = condition.Value
-                        }).ToList()
-                    }).ToList()
-                }).ToList()
-            };
-
-            clone.EnsureValid();
-            return clone;
+            return BranchingDialogueGraphCloner.Clone(graph);
         }
     }
 }

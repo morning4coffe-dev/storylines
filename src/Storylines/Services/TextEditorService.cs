@@ -16,6 +16,13 @@ namespace Storylines.Services
     /// </summary>
     public class TextEditorService : ITextEditorService
     {
+        private readonly ProjectState _projectState;
+
+        public TextEditorService(ProjectState projectState)
+        {
+            _projectState = projectState;
+        }
+
         private int _programmaticChangeDepth;
 
         public bool IsProgrammaticChangeInProgress => _programmaticChangeDepth > 0;
@@ -159,13 +166,12 @@ namespace Storylines.Services
 
         private Chapter GetSelectedChapter()
         {
-            var projectState = App.TryGetService<ProjectState>();
             var selectedIndex = SelectedChapterIndex;
 
-            if (projectState?.Chapters == null || selectedIndex < 0 || selectedIndex >= projectState.Chapters.Count)
+            if (_projectState?.Chapters == null || selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
                 return null;
 
-            return projectState.Chapters[selectedIndex];
+            return _projectState.Chapters[selectedIndex];
         }
 
         private static void RestoreChapterLocation(ChapterTextBox chapterText, Chapter chapter)

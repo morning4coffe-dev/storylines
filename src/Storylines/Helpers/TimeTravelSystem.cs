@@ -57,7 +57,8 @@ namespace Storylines.Helpers
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyChapter(chapter.Token);
-            _manager.Record(new ChapterAddedAction(snapshot, position));
+            var graphSnapshot = CreateGraphSnapshot(chapter.Token);
+            _manager.Record(new ChapterAddedAction(snapshot, position, graphSnapshot));
         }
 
         /// <summary>Record that a chapter is about to be renamed. Call BEFORE the rename.</summary>
@@ -76,7 +77,8 @@ namespace Storylines.Helpers
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyChapter(chapter.Token);
-            _manager.Record(new ChapterRemovedAction(snapshot, position));
+            var graphSnapshot = CreateGraphSnapshot(chapter.Token);
+            _manager.Record(new ChapterRemovedAction(snapshot, position, graphSnapshot));
         }
 
         /// <summary>Record that a chapter is about to be reordered. Call BEFORE the move.</summary>
@@ -118,17 +120,24 @@ namespace Storylines.Helpers
             });
         }
 
+        private static BranchingDialogueGraphData CreateGraphSnapshot(string chapterToken)
+        {
+            return BranchingDialogueGraphCloner.Clone(State.FindBranchingDialogueByChapter(chapterToken));
+        }
+
         // ── Action classes ────────────────────────────────────────────
 
         private sealed class ChapterAddedAction : IUndoableAction
         {
             private readonly Chapter _snapshot;
             private readonly int _position;
+            private readonly BranchingDialogueGraphData _graphSnapshot;
 
-            public ChapterAddedAction(Chapter snapshot, int position)
+            public ChapterAddedAction(Chapter snapshot, int position, BranchingDialogueGraphData graphSnapshot)
             {
                 _snapshot = snapshot;
                 _position = position;
+                _graphSnapshot = graphSnapshot;
             }
 
             public void Undo() => State.RemoveChapter(_snapshot.Token);
@@ -136,7 +145,10 @@ namespace Storylines.Helpers
             public void Redo()
             {
                 int pos = Math.Min(_position, State.Chapters.Count);
-                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos, lastCaretPosition: _snapshot.LastCaretPosition, lastVerticalOffset: _snapshot.LastVerticalOffset);
+                State.InsertExistingChapter(_snapshot, pos);
+
+                if (_graphSnapshot != null)
+                    State.RestoreBranchingDialogueGraph(_graphSnapshot);
             }
 
             public bool TryMerge(IUndoableAction newer) => false;
@@ -146,17 +158,22 @@ namespace Storylines.Helpers
         {
             private readonly Chapter _snapshot;
             private readonly int _position;
+            private readonly BranchingDialogueGraphData _graphSnapshot;
 
-            public ChapterRemovedAction(Chapter snapshot, int position)
+            public ChapterRemovedAction(Chapter snapshot, int position, BranchingDialogueGraphData graphSnapshot)
             {
                 _snapshot = snapshot;
                 _position = position;
+                _graphSnapshot = graphSnapshot;
             }
 
             public void Undo()
             {
                 int pos = Math.Min(_position, State.Chapters.Count);
-                State.InsertExistingChapter(_snapshot.Name, _snapshot.Token, _snapshot.Text, pos, lastCaretPosition: _snapshot.LastCaretPosition, lastVerticalOffset: _snapshot.LastVerticalOffset);
+                State.InsertExistingChapter(_snapshot, pos);
+
+                if (_graphSnapshot != null)
+                    State.RestoreBranchingDialogueGraph(_graphSnapshot);
             }
 
             public void Redo() => State.RemoveChapter(_snapshot.Token);

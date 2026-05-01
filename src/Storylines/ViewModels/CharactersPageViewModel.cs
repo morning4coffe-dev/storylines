@@ -14,6 +14,7 @@ namespace Storylines.ViewModels
     public partial class CharactersPageViewModel : ObservableObject
     {
         private readonly ProjectState _projectState;
+        private readonly INavigationService _navigation;
 
         public ObservableCollection<Character> Characters => _projectState.Characters;
 
@@ -80,13 +81,16 @@ namespace Storylines.ViewModels
 
         private Character _characterBeforeChange;
 
-        public CharactersPageViewModel(ProjectState projectState = null, EventAggregator events = null)
+        public CharactersPageViewModel(
+            ProjectState projectState,
+            EventAggregator events,
+            INavigationService navigation)
         {
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
+            _projectState = projectState;
+            _navigation = navigation;
             EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("editText");
 
-            (events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator())
-                .Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
@@ -142,8 +146,7 @@ namespace Storylines.ViewModels
             if (SelectedCharacter == null)
                 return;
 
-            var nav = App.TryGetService<INavigationService>();
-            nav?.NavigateTo(NavigationTarget.BranchingDialogue, SelectedCharacter.Name);
+            _navigation?.NavigateTo(NavigationTarget.BranchingDialogue, SelectedCharacter.Name);
         }
 
         [RelayCommand]

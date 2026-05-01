@@ -47,23 +47,17 @@ namespace Storylines.ViewModels
         public bool ClosedManually { get; set; }
 
         public ChaptersListViewModel(
-            ProjectState projectState = null,
-            IDialogService dialogs = null,
-            EventAggregator events = null,
-            ITextEditorService textEditor = null,
-            CommandBarViewModel commandBarViewModel = null,
-            IChapterWorkflowService chapterWorkflow = null)
+            ProjectState projectState,
+            EventAggregator events,
+            ITextEditorService textEditor,
+            CommandBarViewModel commandBarViewModel,
+            IChapterWorkflowService chapterWorkflow)
         {
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
-            var dialogService = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
-            _events = events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator();
-            _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
-            _chapterWorkflow = chapterWorkflow
-                ?? App.TryGetService<IChapterWorkflowService>()
-                ?? new ChapterWorkflowService(dialogService, _projectState, _textEditor);
-            _commandBarViewModel = commandBarViewModel
-                ?? App.TryGetService<CommandBarViewModel>()
-                ?? new CommandBarViewModel(dialogService, _events, _textEditor);
+            _projectState = projectState;
+            _events = events;
+            _textEditor = textEditor;
+            _chapterWorkflow = chapterWorkflow;
+            _commandBarViewModel = commandBarViewModel;
 
             _projectState.Chapters.CollectionChanged += OnChaptersCollectionChanged;
             _projectState.Characters.CollectionChanged += OnCharactersCollectionChanged;
@@ -198,6 +192,9 @@ namespace Storylines.ViewModels
 
         public void DeleteChapter(string token)
             => _chapterWorkflow.DeleteChapter(token);
+
+        public void DuplicateChapter(string token)
+            => _chapterWorkflow.DuplicateChapter(token);
 
         public void OpenChapterTagsDialog(string token)
             => _chapterWorkflow.OpenChapterTagsDialog(token);

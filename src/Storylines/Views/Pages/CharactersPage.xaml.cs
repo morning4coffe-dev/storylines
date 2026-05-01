@@ -17,13 +17,16 @@ using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Input;
 using Windows.UI.Xaml.Media.Imaging;
+using Windows.UI.Xaml.Navigation;
 
 namespace Storylines.Views.Pages
 {
     public sealed partial class CharactersPage : Page
     {
         private readonly EventAggregator _events;
+        private readonly INavigationService _navigation;
         private readonly ProjectState _projectState;
+        private string _pendingSelectedCharacterToken;
 
         public bool isEditModeEnabled { set; get; } = false;
         public bool isAddEnabled { set; get; } = true;
@@ -50,6 +53,7 @@ namespace Storylines.Views.Pages
             InitializeComponent();
 
             _events = App.GetService<EventAggregator>();
+            _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             ViewModel = App.GetService<CharactersPageViewModel>();
 
@@ -75,6 +79,14 @@ namespace Storylines.Views.Pages
                     RefreshCharacterList(selectedToken);
                 }
             });
+        }
+
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _pendingSelectedCharacterToken = e.Parameter as string;
+            TrySelectPendingCharacter();
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
@@ -663,6 +675,7 @@ namespace Storylines.Views.Pages
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             RefreshCharacterList();
+            TrySelectPendingCharacter();
             CheckForNullCharacter();
 
             IsEditEnabled(EditButton.Edit);
@@ -752,6 +765,7 @@ namespace Storylines.Views.Pages
                 {
                     DialoguePreviews.Add(new CharacterDialoguePreview()
                     {
+                        ChapterToken = chapter.Token,
                         ChapterName = chapter.Name,
                         Preview = BuildDialoguePreview(dialogue.Text),
                     });
@@ -793,6 +807,12 @@ namespace Storylines.Views.Pages
         private void OnViewDialogueNodes_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.NavigateToDialogueCommand.Execute(null);
+        }
+
+        private void OnDialoguePreview_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.Tag is string chapterToken)
+                NavigateToChapter(chapterToken);
         }
 
         // ─── Relationships ──────────────────────────────────────────── 
@@ -881,6 +901,43 @@ namespace Storylines.Views.Pages
                     LoadRelationships(character);
                 }
             }
+        }
+
+        private void OnRelationshipTarget_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.Tag is string targetToken)
+                SelectCharacterByToken(targetToken);
+        }
+
+        private void TrySelectPendingCharacter()
+        {
+            if (string.IsNullOrWhiteSpace(_pendingSelectedCharacterToken))
+                return;
+
+            SelectCharacterByToken(_pendingSelectedCharacterToken);
+
+            if ((listView.SelectedItem as Character)?.Token == _pendingSelectedCharacterToken)
+                _pendingSelectedCharacterToken = null;
+        }
+
+        private void SelectCharacterByToken(string characterToken)
+        {
+            if (string.IsNullOrWhiteSpace(characterToken))
+                return;
+
+            if (FilteredCharacters.All(character => character.Token != characterToken)
+                && !string.IsNullOrWhiteSpace(characterSearchBox?.Text))
+            {
+                characterSearchBox.Text = string.Empty;
+            }
+
+            RefreshCharacterList(characterToken);
+        }
+
+        private void NavigateToChapter(string chapterToken)
+        {
+            if (!string.IsNullOrWhiteSpace(chapterToken))
+                _navigation?.NavigateTo(NavigationTarget.MainPage, chapterToken);
         }
     }
 

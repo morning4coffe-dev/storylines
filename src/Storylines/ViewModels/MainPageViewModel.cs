@@ -19,6 +19,7 @@ namespace Storylines.ViewModels
         private readonly IDialogService _dialogs;
         private readonly ITextEditorService _textEditor;
         private readonly ResourceLoader _resources;
+        private readonly INotificationService _notifications;
 
         // ── Chapter state ──
 
@@ -133,18 +134,18 @@ namespace Storylines.ViewModels
         public ObservableCollection<Chapter> Chapters => _projectState.Chapters;
 
         public MainPageViewModel(
-            ProjectState projectState = null,
-            IDialogService dialogs = null,
-            EventAggregator events = null,
-            EditorModeService modeService = null,
-            ITextEditorService textEditor = null)
+            ProjectState projectState,
+            IDialogService dialogs,
+            EventAggregator events,
+            EditorModeService modeService,
+            ITextEditorService textEditor,
+            INotificationService notifications)
         {
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
-            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
-            _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
+            _projectState = projectState;
+            _dialogs = dialogs;
+            _textEditor = textEditor;
+            _notifications = notifications;
             _resources = ResourceLoader.GetForViewIndependentUse();
-
-            events ??= App.TryGetService<EventAggregator>() ?? new EventAggregator();
 
             DownBarGuidanceText = _resources.GetString("downBarTextS");
             DownBarText = _resources.GetString("downBarTextS");
@@ -157,12 +158,8 @@ namespace Storylines.ViewModels
                 UpdateWordGoalBar();
             });
 
-            modeService ??= App.TryGetService<EditorModeService>();
-            if (modeService != null)
-            {
-                ApplyModeChrome(modeService.Current);
-                modeService.ModeChanged += ApplyModeChrome;
-            }
+            ApplyModeChrome(modeService.Current);
+            modeService.ModeChanged += ApplyModeChrome;
         }
 
         private void ApplyModeChrome(IEditorMode mode)
@@ -269,7 +266,7 @@ namespace Storylines.ViewModels
             if (progress >= 100 && !WordGoalCelebrated)
             {
                 WordGoalCelebrated = true;
-                NotificationManager.DisplayInAppNotification(
+                _notifications.ShowNotification(
                     Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
                     _resources.GetString("wordGoalReachedTitle"),
                     string.Format(_resources.GetString("wordGoalReachedMessage"), chapter.Name));

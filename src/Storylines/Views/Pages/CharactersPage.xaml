@@ -549,14 +549,23 @@
                                       SelectionMode="None">
                                 <ListView.ItemTemplate>
                                     <DataTemplate>
-                                        <StackPanel Margin="0,0,0,8">
-                                            <TextBlock FontWeight="SemiBold"
-                                                       Text="{Binding ChapterName}" />
-                                            <TextBlock Margin="0,2,0,0"
-                                                       Opacity="0.8"
-                                                       Text="{Binding Preview}"
-                                                       TextWrapping="WrapWholeWords" />
-                                        </StackPanel>
+                                        <Button Margin="0,0,0,8"
+                                                Padding="0"
+                                                HorizontalAlignment="Stretch"
+                                                HorizontalContentAlignment="Stretch"
+                                                Background="Transparent"
+                                                BorderThickness="0"
+                                                Click="OnDialoguePreview_Click"
+                                                Tag="{Binding ChapterToken}">
+                                            <StackPanel>
+                                                <TextBlock FontWeight="SemiBold"
+                                                           Text="{Binding ChapterName}" />
+                                                <TextBlock Margin="0,2,0,0"
+                                                           Opacity="0.8"
+                                                           Text="{Binding Preview}"
+                                                           TextWrapping="WrapWholeWords" />
+                                            </StackPanel>
+                                        </Button>
                                     </DataTemplate>
                                 </ListView.ItemTemplate>
                             </ListView>
@@ -599,8 +608,15 @@
                                         <ColumnDefinition Width="Auto" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding DisplayText}"
-                                               VerticalAlignment="Center" />
+                                    <Button Content="{Binding DisplayText}"
+                                            VerticalAlignment="Center"
+                                            HorizontalAlignment="Left"
+                                            HorizontalContentAlignment="Left"
+                                            Padding="0"
+                                            Background="Transparent"
+                                            BorderThickness="0"
+                                            Click="OnRelationshipTarget_Click"
+                                            Tag="{Binding TargetToken}" />
                                     <TextBlock Grid.Column="1"
                                                Text="{Binding Type}"
                                                Opacity="0.6"

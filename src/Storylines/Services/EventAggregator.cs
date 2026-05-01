@@ -185,5 +185,19 @@ namespace Storylines.Services
         public string Text { get; set; }
     }
 
+    /// <summary>
+    /// Published by <c>ChapterTextBox</c> whenever the character-format of the current selection
+    /// changes. Replaces direct cross-control references to
+    /// <c>MainPage.CommandBar.mainBoldButton</c> etc., letting the command bar subscribe and
+    /// update its toggle-button states without either control knowing about the other.
+    /// </summary>
+    public class TextFormattingStateChangedEvent
+    {
+        public bool IsBold { get; set; }
+        public bool IsItalic { get; set; }
+        public bool IsUnderlined { get; set; }
+        public bool IsStrikethrough { get; set; }
+    }
+
     #endregion
 }

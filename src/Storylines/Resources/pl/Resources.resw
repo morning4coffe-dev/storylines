@@ -1369,6 +1369,30 @@
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>
   </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>Duplikuj</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (Kopia)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (Kopia {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>Kopiuj podpowiedź</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>Utwórz rozdział</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>Wszystkie kategorie</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>Podpowiedź skopiowano do schowka.</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>Podpowiedź: {0}</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>Podpowiedź do pisania</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>Zapisane presety</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>Usuń preset</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>Usuń preset</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>Nie zapisano jeszcze żadnych presetów.</value></data>
+  <data name="branchingValidationDetailsTitle.Text" xml:space="preserve"><value>Szczegóły walidacji</value></data>
+  <data name="branchingValidationGroupMissingTargets" xml:space="preserve"><value>Brakujące cele</value></data>
+  <data name="branchingValidationGroupUnreachableNodes" xml:space="preserve"><value>Nieosiągalne fragmenty</value></data>
+  <data name="branchingValidationGroupEmptyChoices" xml:space="preserve"><value>Puste wybory</value></data>
+  <data name="branchingValidationGroupUnknownSpeakers" xml:space="preserve"><value>Nieznani mówcy</value></data>
+  <data name="branchingValidationGroupOrphanedConditions" xml:space="preserve"><value>Osierocone warunki</value></data>
+  <data name="branchingValidationUnknownSpeakerMessageFormat" xml:space="preserve"><value>Mówca „{0}” nie pasuje do żadnej postaci.</value></data>
+  <data name="branchingValidationEmptyChoiceMessage" xml:space="preserve"><value>Tekst wyboru jest pusty.</value></data>
+  <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Brakuje docelowego węzła wyboru.</value></data>
+  <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Warunek odwołuje się do flagi „{0}”, której żaden węzeł nigdy nie ustawia.</value></data>
+  <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Nie można dotrzeć do węzła ze węzła początkowego.</value></data>
 </root>
 
 

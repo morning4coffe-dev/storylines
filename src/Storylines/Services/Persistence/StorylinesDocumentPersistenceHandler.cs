@@ -1,4 +1,3 @@
-using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Serializers;
@@ -32,8 +31,9 @@ namespace Storylines.Services.Persistence
             Func<ProjectData, ProjectData> normalizeProjectData,
             Func<BranchingDialogueGraphData, BranchingDialogueGraphData> cloneAndNormalizeGraph,
             Action<ProjectData> loadVariables,
-            Action onLoaded)
-            : base(fileService, dialogs, events, logger, projectState, textEditor)
+            Action onLoaded,
+            INotificationService notifications)
+            : base(fileService, dialogs, events, logger, projectState, textEditor, notifications)
         {
             _jsonSerializer = jsonSerializer;
             _legacySerializer = legacySerializer;
@@ -75,7 +75,7 @@ namespace Storylines.Services.Persistence
                 {
                     Logger.Error("Unable to detect file format for: " + project.file.Name);
                     ShowLoadErrorNotification();
-                    NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                    Notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                     return;
                 }
 
@@ -85,7 +85,7 @@ namespace Storylines.Services.Persistence
             {
                 Logger.Error("Failed to load Storylines document", ex);
                 ShowLoadErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                Notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
             }
         }
 
@@ -102,7 +102,7 @@ namespace Storylines.Services.Persistence
             {
                 Logger.Error("Failed to restore Storylines recovery data", ex);
                 ShowLoadErrorNotification();
-                NotificationManager.UpdateMainProgressBar(0, NotificationManager.ProgressState.Error);
+                Notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
             }
         }
 

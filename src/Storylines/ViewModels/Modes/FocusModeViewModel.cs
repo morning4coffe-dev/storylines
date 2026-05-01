@@ -1,7 +1,7 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using Storylines.Constants;
-using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.Views.Dialogs;
 using System;
 using System.Text.RegularExpressions;
@@ -14,6 +14,9 @@ namespace Storylines.ViewModels.Modes
 
     public partial class FocusModeViewModel : ObservableObject
     {
+        private readonly EventAggregator _events;
+        private readonly INotificationService _notifications;
+
         private static readonly Regex ParagraphRegex = new Regex(
             @"[^\r\n]+((\r|\n|\r\n)[^\r\n]+)*", RegexOptions.Compiled);
 
@@ -37,6 +40,12 @@ namespace Storylines.ViewModels.Modes
 
         [ObservableProperty]
         private string _downBarText = string.Empty;
+
+        public FocusModeViewModel(EventAggregator events, INotificationService notifications)
+        {
+            _events = events;
+            _notifications = notifications;
+        }
 
         // ── leave gate ────────────────────────────────────────────────────────
         /// <summary>True once both the time target (if any) and measure target (if any) have been reached.</summary>
@@ -78,7 +87,7 @@ namespace Storylines.ViewModels.Modes
             }
 
             UpdateDownBar();
-            NotificationManager.DisplayMainProgressBar(false);
+            _notifications.ShowProgressBar(false);
         }
 
         // ── text-changed callback (called by FocusMode.OnTextChanged) ─────────
@@ -109,7 +118,7 @@ namespace Storylines.ViewModels.Modes
                 _timer.Stop();
                 _timer = null;
             }
-            NotificationManager.HideMainProgressBar();
+            _notifications.HideProgressBar();
         }
 
         // ── private helpers ───────────────────────────────────────────────────
@@ -155,13 +164,13 @@ namespace Storylines.ViewModels.Modes
                 percentage += (int)((_timerStartTicks - currentTimeTicks) * multiplier / _timerStartTicks);
 
             percentage = Math.Max(0, Math.Min(100, percentage));
-            NotificationManager.UpdateMainProgressBar(percentage, NotificationManager.ProgressState.Normal);
+            _notifications.UpdateProgressBar(percentage);
         }
 
         private void UpdateDownBar()
         {
             DownBarText = $"{_downBarMeasure}   {_downBarTime}".Trim();
-            App.TryGetService<EventAggregator>()?.Publish(new FocusModeDownBarTextChangedEvent { Text = DownBarText });
+            _events?.Publish(new FocusModeDownBarTextChangedEvent { Text = DownBarText });
         }
 
         private int MeasureRaw(string text)

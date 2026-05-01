@@ -4,6 +4,7 @@ using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
 using Storylines.Services.Serializers;
 using Storylines.ViewModels;
+using Storylines.ViewModels.Settings;
 using System;
 
 namespace Storylines.Services
@@ -16,6 +17,8 @@ namespace Storylines.Services
 
             services.AddSingleton<ILogger, DebugLogger>();
             services.AddSingleton<IDispatcherService, UwpDispatcherService>();
+            services.AddSingleton<INotificationService, NotificationService>();
+            services.AddSingleton<IUndoRedoService, UndoRedoService>();
             services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
             services.AddSingleton<ITelemetryService, TelemetryService>();
             services.AddSingleton<IFileService, FileService>();
@@ -40,6 +43,7 @@ namespace Storylines.Services
             services.AddSingleton<IThemeService, ThemeService>();
             services.AddSingleton<ICommandRegistry, CommandRegistry>();
             services.AddSingleton<IInspectorViewModel, ViewModels.InspectorViewModel>();
+            services.AddSingleton<ISnapshotService, SnapshotService>();
             services.AddSingleton<EditorModeService>();
 
             services.AddSingleton<AppViewModel>();

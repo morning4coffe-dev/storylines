@@ -358,6 +358,51 @@
                                    FontSize="{StaticResource AppCaptionFontSize}" Opacity="0.7"
                                    Margin="0,4" />
 
+                        <StackPanel Visibility="{x:Bind ViewModel.ValidationIssueGroupsVisibility, Mode=OneWay}"
+                                    Spacing="6"
+                                    Margin="0,0,0,4">
+                            <TextBlock x:Uid="branchingValidationDetailsTitle"
+                                       FontSize="12"
+                                       FontWeight="SemiBold"
+                                       Opacity="0.75" />
+                            <ItemsControl ItemsSource="{x:Bind ViewModel.ValidationIssueGroups, Mode=OneWay}">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate x:DataType="vm:BranchingDialogueValidationGroupViewModel">
+                                        <StackPanel Spacing="4" Margin="0,0,0,6">
+                                            <TextBlock Text="{x:Bind Title}"
+                                                       FontWeight="SemiBold"
+                                                       FontSize="12"
+                                                       Opacity="0.85" />
+                                            <ItemsControl ItemsSource="{x:Bind Issues}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate x:DataType="vm:BranchingDialogueValidationIssueItemViewModel">
+                                                        <Button Padding="0"
+                                                                Margin="0,0,0,4"
+                                                                HorizontalAlignment="Stretch"
+                                                                HorizontalContentAlignment="Stretch"
+                                                                Background="Transparent"
+                                                                BorderThickness="0"
+                                                                Click="OnValidationIssue_Click"
+                                                                Tag="{x:Bind}">
+                                                            <StackPanel>
+                                                                <TextBlock Text="{x:Bind Message}"
+                                                                           TextWrapping="WrapWholeWords"
+                                                                           FontSize="12" />
+                                                                <TextBlock Text="{x:Bind NodeTitle}"
+                                                                           Opacity="0.55"
+                                                                           FontSize="11"
+                                                                           TextTrimming="CharacterEllipsis" />
+                                                            </StackPanel>
+                                                        </Button>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </StackPanel>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+
                         <Rectangle Height="1" Fill="{ThemeResource ElementBorderColor}" Margin="0,2" />
 
                         <!-- Simulator — extracted control -->

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
+using Windows.ApplicationModel.DataTransfer;
 using Storylines.Services.Interfaces;
 using Windows.ApplicationModel.Resources;
 using Windows.UI.Xaml;
@@ -12,6 +12,10 @@ namespace Storylines.Views.Dialogs
     public sealed partial class WritingPromptsDialogue : ContentDialog
     {
         private static readonly Random _rng = new Random();
+        private readonly IChapterWorkflowService _chapterWorkflow;
+        private readonly INavigationService _navigation;
+        private readonly ProjectState _projectState;
+        private readonly ResourceLoader _resources;
         private string _selectedCategory;
 
         private static readonly Dictionary<string, List<string>> Prompts = new Dictionary<string, List<string>>
@@ -70,7 +74,12 @@ namespace Storylines.Views.Dialogs
         {
             InitializeComponent();
 
-            categoryComboBox.Items.Add("All categories");
+            _chapterWorkflow = App.GetService<IChapterWorkflowService>();
+            _navigation = App.GetService<INavigationService>();
+            _projectState = App.GetService<ProjectState>();
+            _resources = ResourceLoader.GetForViewIndependentUse();
+
+            categoryComboBox.Items.Add(_resources.GetString("writingPromptsAllCategories") ?? "All categories");
             foreach (var cat in Prompts.Keys)
                 categoryComboBox.Items.Add(cat);
             categoryComboBox.SelectedIndex = 0;
@@ -97,10 +106,12 @@ namespace Storylines.Views.Dialogs
                 ? Prompts.Values.SelectMany(p => p).ToList()
                 : Prompts.ContainsKey(_selectedCategory) ? Prompts[_selectedCategory] : new List<string>();
 
+            promptActionStatusText.Text = string.Empty;
+
             if (pool.Count > 0)
                 promptText.Text = pool[_rng.Next(pool.Count)];
             else
-                promptText.Text = ResourceLoader.GetForViewIndependentUse().GetString("noPromptsAvailable");
+                promptText.Text = _resources.GetString("noPromptsAvailable");
         }
 
         private void OnShuffle_Click(object sender, RoutedEventArgs e)
@@ -116,6 +127,42 @@ namespace Storylines.Views.Dialogs
                 _selectedCategory = categoryComboBox.SelectedItem as string;
 
             ShowRandomPrompt();
+        }
+
+        private void OnCopyPrompt_Click(object sender, RoutedEventArgs e)
+        {
+            var prompt = promptText.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(prompt))
+                return;
+
+            var package = new DataPackage();
+            package.SetText(prompt);
+            Clipboard.SetContent(package);
+
+            promptActionStatusText.Text = _resources.GetString("writingPromptCopiedStatus") ?? "Prompt copied to clipboard.";
+        }
+
+        private void OnCreateChapterFromPrompt_Click(object sender, RoutedEventArgs e)
+        {
+            var prompt = promptText.Text?.Trim();
+            if (string.IsNullOrWhiteSpace(prompt))
+                return;
+
+            var beforeCount = _projectState.Chapters.Count;
+            var chapterNameSeed = !string.IsNullOrWhiteSpace(_selectedCategory)
+                ? string.Format(_resources.GetString("writingPromptCategoryChapterSeedFormat") ?? "{0} prompt", _selectedCategory)
+                : (_resources.GetString("writingPromptDefaultChapterSeed") ?? "Writing prompt");
+
+            _chapterWorkflow.CreateChapterWithContent(chapterNameSeed, prompt);
+
+            var createdChapter = beforeCount < _projectState.Chapters.Count
+                ? _projectState.Chapters[beforeCount]
+                : _projectState.Chapters.LastOrDefault();
+
+            if (createdChapter != null && AppView.current?.page != AppView.Pages.MainPage)
+                _navigation?.NavigateTo(NavigationTarget.MainPage, createdChapter.Token);
+
+            Hide();
         }
     }
 }

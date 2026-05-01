@@ -14,6 +14,8 @@ namespace Storylines.ViewModels
         private readonly IDialogService _dialogs;
         private readonly IProjectPersistenceService _persistence;
         private readonly ITextEditorService _textEditor;
+        private readonly ProjectState _projectState;
+        private readonly INavigationService _navigation;
 
         [ObservableProperty]
         private bool _canUndo;
@@ -40,18 +42,21 @@ namespace Storylines.ViewModels
         private bool _isAutosaveChecked;
 
         public CommandBarViewModel(
-            IDialogService dialogs = null,
-            EventAggregator events = null,
-            ITextEditorService textEditor = null,
-            IProjectPersistenceService persistence = null)
+            IDialogService dialogs,
+            EventAggregator events,
+            ITextEditorService textEditor,
+            IProjectPersistenceService persistence,
+            ProjectState projectState,
+            INavigationService navigation)
         {
-            _dialogs = dialogs ?? App.TryGetService<IDialogService>() ?? new DialogService();
-            _persistence = persistence ?? App.TryGetService<IProjectPersistenceService>();
-            _textEditor = textEditor ?? App.TryGetService<ITextEditorService>();
+            _dialogs = dialogs;
+            _persistence = persistence;
+            _textEditor = textEditor;
+            _projectState = projectState;
+            _navigation = navigation;
             IsAutosaveChecked = SettingsValues.autosaveEnabled;
 
-            (events ?? App.TryGetService<EventAggregator>() ?? new EventAggregator())
-                .Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
@@ -108,21 +113,18 @@ namespace Storylines.ViewModels
         [RelayCommand]
         private void NavigateToBranchingDialogue()
         {
-            if (SettingsValues.experimentalFeaturesEnabled)
-            {
-                // Pass current chapter token so the dialogue page opens with context
-                var projectState = App.TryGetService<ProjectState>();
-                string chapterToken = null;
-                if (projectState?.Chapters != null && _textEditor != null)
-                {
-                    var idx = _textEditor.SelectedChapterIndex;
-                    if (idx >= 0 && idx < projectState.Chapters.Count)
-                        chapterToken = projectState.Chapters[idx].Token;
-                }
+            if (!SettingsValues.experimentalFeaturesEnabled)
+                return;
 
-                var nav = App.TryGetService<INavigationService>();
-                nav?.NavigateTo(NavigationTarget.BranchingDialogue, chapterToken);
+            string chapterToken = null;
+            if (_projectState?.Chapters != null && _textEditor != null)
+            {
+                var idx = _textEditor.SelectedChapterIndex;
+                if (idx >= 0 && idx < _projectState.Chapters.Count)
+                    chapterToken = _projectState.Chapters[idx].Token;
             }
+
+            _navigation?.NavigateTo(NavigationTarget.BranchingDialogue, chapterToken);
         }
 
         [RelayCommand]

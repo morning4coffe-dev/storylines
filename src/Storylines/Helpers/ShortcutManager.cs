@@ -65,6 +65,7 @@ namespace Storylines.Helpers
             new("shortcutSearch", ShortcutScope.MainPage, "F"),
             new("shortcutSearchAndReplace", ShortcutScope.MainPage, "H"),
             new("shortcutToggleDialogueMode", ShortcutScope.MainPage, "D", useShift: true),
+            new("shortcutTypewriterMode", ShortcutScope.MainPage, "W", useShift: true),
             new("shortcutBold", ShortcutScope.MainPage, "B", useShift: true),
             new("shortcutItalic", ShortcutScope.MainPage, "I", useShift: true),
             new("shortcutUnderline", ShortcutScope.MainPage, "U", useShift: true),
@@ -102,6 +103,11 @@ namespace Storylines.Helpers
                             switch (e.VirtualKey)
                             {
                                 case Windows.System.VirtualKey.D: MainPage.ChapterText.DialoguesOnOff(!(bool)MainPage.CommandBar.dialoguesEnableButton.IsChecked); break;
+                                case Windows.System.VirtualKey.W:
+                                    bool tw = !(MainPage.CommandBar.typewriterModeButton.IsChecked == true);
+                                    MainPage.CommandBar.typewriterModeButton.IsChecked = tw;
+                                    MainPage.ChapterText.IsTypewriterModeActive = tw;
+                                    break;
                                 case Windows.System.VirtualKey.B:
                                     if (MainPage.ChapterText.chapterTextCommandBar.IsEnabled)
                                         MainPage.ChapterText.BoldChapterTextBox();
@@ -167,11 +173,19 @@ namespace Storylines.Helpers
                                         }
                                     break;
                                 case Windows.System.VirtualKey.Z:
-                                    if (MainPage.CommandBar.undoButton.IsEnabled)
-                                        TimeTravelChapter.Undo(); break;
+                                {
+                                    var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+                                    if (undoSvc.CanUndo("chapters"))
+                                        undoSvc.Undo("chapters");
+                                    break;
+                                }
                                 case Windows.System.VirtualKey.Y:
-                                    if (MainPage.CommandBar.redoButton.IsEnabled)
-                                        TimeTravelChapter.Redo(); break;
+                                {
+                                    var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+                                    if (undoSvc.CanRedo("chapters"))
+                                        undoSvc.Redo("chapters");
+                                    break;
+                                }
                             }
                             break;
                         case AppView.Pages.Characters:
@@ -191,11 +205,19 @@ namespace Storylines.Helpers
                                         CharactersPage.current.EnableEditMode(!(bool)CharactersPage.current.editButton.IsChecked); break;
 
                                 case Windows.System.VirtualKey.Z:
-                                    if (CharactersPage.current.undoButton.IsEnabled)
-                                        TimeTravelCharacter.Undo(); break;
+                                {
+                                    var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+                                    if (undoSvc.CanUndo("characters"))
+                                        undoSvc.Undo("characters");
+                                    break;
+                                }
                                 case Windows.System.VirtualKey.Y:
-                                    if (CharactersPage.current.redoButton.IsEnabled)
-                                        TimeTravelCharacter.Redo(); break;
+                                {
+                                    var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+                                    if (undoSvc.CanRedo("characters"))
+                                        undoSvc.Redo("characters");
+                                    break;
+                                }
                             }
                             break;
                         case AppView.Pages.Settings:

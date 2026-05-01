@@ -58,6 +58,46 @@
             </muxc:ItemsRepeater.ItemTemplate>
         </muxc:ItemsRepeater>
 
+        <StackPanel Spacing="6">
+            <TextBlock x:Uid="chapterTagsSavedPresets"
+                       Opacity="0.55"
+                       FontSize="{StaticResource AppCaptionFontSize}" />
+            <ItemsControl x:Name="savedPresetsList">
+                <ItemsControl.ItemTemplate>
+                    <DataTemplate x:DataType="x:String">
+                        <Grid Margin="0,0,0,4">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <Border Padding="8,4"
+                                    CornerRadius="4"
+                                    Background="{ThemeResource LayerFillColorDefaultBrush}"
+                                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                                    BorderThickness="1">
+                                <TextBlock Text="{x:Bind}" />
+                            </Border>
+                            <Button Grid.Column="1"
+                                    x:Uid="chapterTagsRemovePresetButton"
+                                    Margin="8,0,0,0"
+                                    Padding="4"
+                                    Background="Transparent"
+                                    BorderThickness="0"
+                                    Click="OnRemovePreset_Click"
+                                    Tag="{x:Bind}">
+                                <SymbolIcon Symbol="Delete" />
+                            </Button>
+                        </Grid>
+                    </DataTemplate>
+                </ItemsControl.ItemTemplate>
+            </ItemsControl>
+            <TextBlock x:Name="savedPresetsEmptyText"
+                       x:Uid="chapterTagsSavedPresetsEmpty"
+                       Opacity="0.55"
+                       FontSize="{StaticResource AppCaptionFontSize}"
+                       Visibility="Collapsed" />
+        </StackPanel>
+
         <Grid Margin="0,8,0,0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition />

@@ -65,6 +65,24 @@ namespace Storylines
                     MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
             });
 
+            // Route INotificationService events to UI — decouples service from AppView.current refs.
+            _events.Subscribe<InAppNotificationEvent>(e =>
+                NotificationManager.DisplayInAppNotification(e.Severity, e.Title, e.LongText));
+
+            _events.Subscribe<ProgressBarEvent>(e =>
+            {
+                if (!e.Show)
+                {
+                    NotificationManager.HideMainProgressBar();
+                    return;
+                }
+                NotificationManager.DisplayMainProgressBar(e.IsIndeterminate);
+                if (e.Value > 0)
+                    NotificationManager.UpdateMainProgressBar(
+                        e.Value,
+                        (NotificationManager.ProgressState)(int)e.State);
+            });
+
             if (SettingsValues.autosaveEnabled)
                 _persistence.EnableAutosave();
 
@@ -78,6 +96,68 @@ namespace Storylines
         {
             ViewModel.CurrentPage = (AppViewModel.AppPages)(int)page;
             ViewModel.UpdateTitleBar();
+        }
+
+        // ── Global keyboard accelerator handlers ──────────────────────────────
+
+        private void OnSaveAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            _persistence.Save();
+        }
+
+        private void OnSaveCopyAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            _persistence.SaveCopy();
+        }
+
+        private void OnUndoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+            string context = page == Pages.Characters ? "characters" : "chapters";
+            if (undoSvc.CanUndo(context))
+                undoSvc.Undo(context);
+        }
+
+        private void OnRedoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
+            string context = page == Pages.Characters ? "characters" : "chapters";
+            if (undoSvc.CanRedo(context))
+                undoSvc.Redo(context);
+        }
+
+        private void OnCommandPaletteAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            // Placeholder: will open command palette overlay when Phase 6 UI ships.
+        }
+
+        private void OnFocusModeAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            var modeSvc = App.TryGetService<Services.Modes.EditorModeService>();
+            if (modeSvc == null) return;
+            // F11: toggle — leave focus if active, otherwise open mode picker
+            if (modeSvc.IsInMode("focus"))
+                modeSvc.TryLeave();
+            else
+                App.GetService<Services.Interfaces.IDialogService>().OpenFocusMode();
+        }
+
+        private void OnReadAloudAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            Views.Pages.MainPage.Current?.CommandBar?.ReadAloud();
+        }
+
+        private void OnDictationAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        {
+            args.Handled = true;
+            App.GetService<SpeechHubViewModel>().ToggleDictationCommand.Execute(null);
         }
 
         public string GetName()

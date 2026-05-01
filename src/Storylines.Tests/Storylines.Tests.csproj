@@ -53,6 +53,7 @@
     <Compile Include="..\Storylines\Helpers\UndoRedoManager.cs" Link="LinkedSources\UndoRedoManager.cs" />
     <Compile Include="..\Storylines\Helpers\RecentProjectDeduplicator.cs" Link="LinkedSources\RecentProjectDeduplicator.cs" />
     <Compile Include="..\Storylines\Helpers\ChapterTextNormalization.cs" Link="LinkedSources\ChapterTextNormalization.cs" />
+    <Compile Include="..\Storylines\Helpers\CanvasConnectionGeometry.cs" Link="LinkedSources\CanvasConnectionGeometry.cs" />
     <Compile Include="..\Storylines\Helpers\BranchingDialogueExportHelper.cs" Link="LinkedSources\BranchingDialogueExportHelper.cs" />
     <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
     <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />

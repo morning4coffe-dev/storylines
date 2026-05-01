@@ -1,4 +1,3 @@
-using Storylines.Helpers;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using System.Threading.Tasks;
@@ -14,7 +13,8 @@ namespace Storylines.Services.Persistence
             EventAggregator events,
             ILogger logger,
             ProjectState projectState,
-            ITextEditorService textEditor)
+            ITextEditorService textEditor,
+            INotificationService notifications)
         {
             FileService = fileService;
             Dialogs = dialogs;
@@ -22,6 +22,7 @@ namespace Storylines.Services.Persistence
             Logger = logger;
             ProjectState = projectState;
             TextEditor = textEditor;
+            Notifications = notifications;
         }
 
         protected IFileService FileService { get; }
@@ -30,17 +31,17 @@ namespace Storylines.Services.Persistence
         protected ILogger Logger { get; }
         protected ProjectState ProjectState { get; }
         protected ITextEditorService TextEditor { get; }
+        protected INotificationService Notifications { get; }
 
         public abstract Task SaveAsync(ProjectFile project);
 
         public abstract Task LoadAsync(ProjectFile project);
 
-        protected static void ShowLoadErrorNotification()
+        protected void ShowLoadErrorNotification()
         {
-            NotificationManager.DisplayInAppNotification(
+            Notifications.ShowNotification(
                 Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
-                "");
+                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"));
         }
     }
 }

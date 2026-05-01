@@ -221,4 +221,104 @@ namespace Storylines.Models
         public bool IsDeadEnd { get; set; }
         public bool IsActive { get; set; }
     }
+
+    public static class BranchingDialogueGraphCloner
+    {
+        public static BranchingDialogueGraphData Clone(
+            BranchingDialogueGraphData graph,
+            string? chapterIdOverride = null,
+            bool regenerateIds = false)
+        {
+            if (graph == null)
+                return null;
+
+            var nodeIdMap = regenerateIds
+                ? new Dictionary<string, string>(StringComparer.Ordinal)
+                : null;
+
+            var clone = new BranchingDialogueGraphData
+            {
+                Id = regenerateIds ? Guid.NewGuid().ToString() : graph.Id,
+                ChapterId = chapterIdOverride ?? graph.ChapterId,
+                StartNodeId = graph.StartNodeId,
+                Nodes = new List<BranchingDialogueNodeData>()
+            };
+
+            foreach (var node in graph.Nodes ?? Enumerable.Empty<BranchingDialogueNodeData>())
+            {
+                if (node == null)
+                    continue;
+
+                var clonedNodeId = regenerateIds ? Guid.NewGuid().ToString() : node.Id;
+                if (regenerateIds && !string.IsNullOrWhiteSpace(node.Id))
+                    nodeIdMap[node.Id] = clonedNodeId;
+
+                clone.Nodes.Add(new BranchingDialogueNodeData
+                {
+                    Id = clonedNodeId,
+                    Title = node.Title,
+                    Speaker = node.Speaker,
+                    CharacterToken = node.CharacterToken,
+                    Text = node.Text,
+                    Notes = node.Notes,
+                    Actions = node.Actions?.Select(action => action == null
+                        ? null
+                        : new BranchingDialogueActionData
+                        {
+                            Flag = action.Flag,
+                            Value = action.Value
+                        })
+                        .Where(action => action != null)
+                        .ToList(),
+                    PositionX = node.PositionX,
+                    PositionY = node.PositionY,
+                    Tags = node.Tags?.ToList(),
+                    Metadata = node.Metadata != null
+                        ? new Dictionary<string, string>(node.Metadata)
+                        : null,
+                    Choices = node.Choices?.Select(choice => choice == null
+                        ? null
+                        : new BranchingDialogueChoiceData
+                        {
+                            Id = regenerateIds ? Guid.NewGuid().ToString() : choice.Id,
+                            Text = choice.Text,
+                            TargetNodeId = choice.TargetNodeId,
+                            Metadata = choice.Metadata != null
+                                ? new Dictionary<string, string>(choice.Metadata)
+                                : null,
+                            Conditions = choice.Conditions?.Select(condition => condition == null
+                                ? null
+                                : new BranchingDialogueConditionData
+                                {
+                                    Flag = condition.Flag,
+                                    Operator = condition.Operator,
+                                    Value = condition.Value
+                                })
+                                .Where(condition => condition != null)
+                                .ToList()
+                        })
+                        .Where(choice => choice != null)
+                        .ToList()
+                });
+            }
+
+            if (regenerateIds && nodeIdMap != null)
+            {
+                if (!string.IsNullOrWhiteSpace(graph.StartNodeId) && nodeIdMap.TryGetValue(graph.StartNodeId, out var mappedStartNodeId))
+                    clone.StartNodeId = mappedStartNodeId;
+
+                foreach (var node in clone.Nodes)
+                {
+                    foreach (var choice in node.Choices ?? Enumerable.Empty<BranchingDialogueChoiceData>())
+                    {
+                        if (!string.IsNullOrWhiteSpace(choice?.TargetNodeId) && nodeIdMap.TryGetValue(choice.TargetNodeId, out var mappedTargetNodeId))
+                            choice.TargetNodeId = mappedTargetNodeId;
+                    }
+                }
+            }
+
+            clone.EnsureValid();
+            return clone;
+        }
+    }
 }

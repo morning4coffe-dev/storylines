@@ -48,6 +48,7 @@ namespace Storylines.Views.Dialogs
 
             // Populate suggestion pills — presets minus already-added tags
             RefreshSuggestions();
+            RefreshSavedPresets();
         }
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
@@ -69,6 +70,17 @@ namespace Storylines.Views.Dialogs
                 .ToList();
 
             suggestionPills.ItemsSource = suggestions;
+        }
+
+        private void RefreshSavedPresets()
+        {
+            var presets = ChapterTagsService
+                .GetPresets()
+                .OrderBy(preset => preset, StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+
+            savedPresetsList.ItemsSource = presets;
+            savedPresetsEmptyText.Visibility = presets.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
         }
 
         private List<string> GetCurrentTags()
@@ -111,11 +123,22 @@ namespace Storylines.Views.Dialogs
                 ChapterTagsService.AddPreset(tag.Trim());
 
             RefreshSuggestions();
+            RefreshSavedPresets();
         }
 
         private void OnTokenItem_Removing(TokenizingTextBox sender, TokenItemRemovingEventArgs args)
         {
             RefreshSuggestions();
+        }
+
+        private void OnRemovePreset_Click(object sender, RoutedEventArgs e)
+        {
+            if ((sender as FrameworkElement)?.Tag is string preset && !string.IsNullOrWhiteSpace(preset))
+            {
+                ChapterTagsService.RemovePreset(preset);
+                RefreshSuggestions();
+                RefreshSavedPresets();
+            }
         }
 
         // ─── Action buttons ───────────────────────────────────────────

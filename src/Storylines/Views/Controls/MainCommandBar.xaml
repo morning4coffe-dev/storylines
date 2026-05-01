@@ -1076,6 +1076,16 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarToggleButton x:Name="typewriterModeButton"
+                                        x:Uid="typewriterModeButton"
+                                        x:FieldModifier="public"
+                                        CornerRadius="4"
+                                        Click="OnTypewriterModeButton_Click">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon Glyph="&#xE8E3;" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+
                     <AppBarSeparator />
 
                     <AppBarButton x:Name="textAnalyticsButton"
@@ -1195,6 +1205,18 @@
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
                     </AppBarButton>
+
+                    <!--  Dictation toggle — bound to SpeechHubViewModel  -->
+                    <AppBarToggleButton x:Name="dictationButton"
+                                        x:Uid="dictation"
+                                        CornerRadius="4"
+                                        IsChecked="{x:Bind SpeechHub.IsDictating, Mode=OneWay}"
+                                        Command="{x:Bind SpeechHub.ToggleDictationCommand}"
+                                        AutomationProperties.Name="Toggle dictation">
+                        <AppBarToggleButton.Icon>
+                            <FontIcon Glyph="&#xE720;" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
 
                     <AppBarElementContainer x:Name="readAloudControllHolder"
                                             x:FieldModifier="public"

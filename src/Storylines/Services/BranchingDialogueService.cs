@@ -265,7 +265,10 @@ namespace Storylines.Services
                     result.UnknownSpeakers.Add(new BranchingDialogueValidationIssue
                     {
                         NodeId = node.Id,
-                        Message = $"Speaker \"{node.Speaker}\" does not match any character."
+                        Message = string.Format(
+                            GetResourceString("branchingValidationUnknownSpeakerMessageFormat")
+                                ?? "Speaker \"{0}\" does not match any character.",
+                            node.Speaker)
                     });
                 }
 
@@ -277,7 +280,8 @@ namespace Storylines.Services
                         {
                             NodeId = node.Id,
                             ChoiceId = choice.Id,
-                            Message = "Choice text is empty."
+                            Message = GetResourceString("branchingValidationEmptyChoiceMessage")
+                                ?? "Choice text is empty."
                         });
                     }
 
@@ -287,7 +291,8 @@ namespace Storylines.Services
                         {
                             NodeId = node.Id,
                             ChoiceId = choice.Id,
-                            Message = "Choice target node is missing."
+                            Message = GetResourceString("branchingValidationMissingTargetMessage")
+                                ?? "Choice target node is missing."
                         });
                     }
 
@@ -304,7 +309,10 @@ namespace Storylines.Services
                                 {
                                     NodeId = node.Id,
                                     ChoiceId = choice.Id,
-                                    Message = $"Condition references flag \"{cond.Flag}\" which is never set by any node."
+                                    Message = string.Format(
+                                        GetResourceString("branchingValidationOrphanedConditionMessageFormat")
+                                            ?? "Condition references flag \"{0}\" which is never set by any node.",
+                                        cond.Flag)
                                 });
                             }
                         }
@@ -320,7 +328,8 @@ namespace Storylines.Services
                     result.UnreachableNodes.Add(new BranchingDialogueValidationIssue
                     {
                         NodeId = node.Id,
-                        Message = "Node is unreachable from start node."
+                        Message = GetResourceString("branchingValidationUnreachableNodeMessage")
+                            ?? "Node is unreachable from start node."
                     });
                 }
             }
@@ -408,6 +417,23 @@ namespace Storylines.Services
         }
 
         #region Helpers
+
+        private static string? GetResourceString(string key)
+        {
+            try
+            {
+                var resourceLoaderType = Type.GetType("Windows.ApplicationModel.Resources.ResourceLoader, Windows, ContentType=WindowsRuntime");
+                var getLoaderMethod = resourceLoaderType?.GetMethod("GetForViewIndependentUse", Type.EmptyTypes);
+                var loader = getLoaderMethod?.Invoke(null, null);
+                var getStringMethod = resourceLoaderType?.GetMethod("GetString", new[] { typeof(string) });
+
+                return getStringMethod?.Invoke(loader, new object[] { key }) as string;
+            }
+            catch
+            {
+                return null;
+            }
+        }
 
         public static List<BranchingDialogueChoiceData> GetAvailableChoices(
             BranchingDialogueNodeData node, BranchingDialogueSimulationState state)

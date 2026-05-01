@@ -34,7 +34,20 @@
                     <TextBlock x:Uid="writingPromptsNewPrompt" />
                 </StackPanel>
             </Button>
+            <Button x:Uid="writingPromptsCopyPrompt"
+                    Click="OnCopyPrompt_Click"
+                    Padding="12,8"
+                    CornerRadius="4" />
+            <Button x:Uid="writingPromptsCreateChapterFromPrompt"
+                    Click="OnCreateChapterFromPrompt_Click"
+                    Padding="12,8"
+                    CornerRadius="4" />
         </StackPanel>
+
+        <TextBlock x:Name="promptActionStatusText"
+                   FontSize="12"
+                   Opacity="0.65"
+                   TextWrapping="Wrap" />
 
         <ComboBox x:Name="categoryComboBox"
                   x:Uid="writingPromptsCategory"

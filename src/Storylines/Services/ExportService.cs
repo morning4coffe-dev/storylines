@@ -33,13 +33,13 @@ namespace Storylines.Services
         }
 
         public ExportService(
-            IFileService fileService = null,
-            Interfaces.ILogger logger = null,
-            ProjectState projectState = null)
+            IFileService fileService,
+            Interfaces.ILogger logger,
+            ProjectState projectState)
         {
-            _fileService = fileService ?? App.TryGetService<IFileService>() ?? new FileService();
-            _logger = logger ?? App.TryGetService<Interfaces.ILogger>();
-            _projectState = projectState ?? App.TryGetService<ProjectState>() ?? new ProjectState();
+            _fileService = fileService;
+            _logger = logger;
+            _projectState = projectState;
         }
 
         public enum WhatToExport { None, Chapters, Dialogues, Characters };

@@ -15,7 +15,7 @@ This document is the maintainer checklist for shipping a new Storylines version 
 ## Pre-Release Checklist
 
 - Confirm the release scope is complete and merged.
-- Update [change-log.md](../change-log.md) with the final user-facing release notes.
+- Update [change-log.md](../change-log.md) by moving the relevant notes from `[Unreleased]` into the final release section.
 - Review [README.md](../README.md) if the release materially changes user-visible features.
 - Review [privacy-policy.md](../privacy-policy.md) if telemetry, crash reporting, or data collection changed.
 - Verify any new user-facing strings were localized in the `.resw` files and translation assets.
@@ -23,10 +23,28 @@ This document is the maintainer checklist for shipping a new Storylines version 
 
 ## Versioning
 
-1. Open `src/Storylines/Package.appxmanifest`.
-2. Update the `Identity Version` value.
-3. Keep the four-part Store version format: `Major.Minor.Build.Revision`.
-4. Make sure the version in release notes matches the manifest version you are submitting.
+Storylines now uses two aligned version formats:
+
+- Public release notes and changelog: `MAJOR.MINOR.PATCH`
+- Windows package and assembly metadata: `MAJOR.MINOR.PATCH.REVISION`
+
+Although the Store manifest calls the third segment `Build`, treat it as the semantic version `PATCH` segment.
+
+Version bump rules:
+
+- `MAJOR`: compatibility boundary or milestone release. Moving to `1.0.0` is a good fit once the app and project format feel stable.
+- `MINOR`: new features, new tools/pages, or sizeable UI and UX updates.
+- `PATCH`: bug fixes, localization updates, polish, and other safe maintenance changes.
+- `REVISION`: Store resubmissions or packaging-only rebuilds of the same `MAJOR.MINOR.PATCH` release.
+
+Release steps:
+
+1. Choose the next public version, for example `0.7.5` -> `0.8.0` for a feature release or `0.7.5` -> `0.7.6` for a fix release.
+2. Update [change-log.md](../change-log.md) by moving the relevant notes from `[Unreleased]` to `## [MAJOR.MINOR.PATCH]`.
+3. Update `src/Storylines/Package.appxmanifest` `Identity Version` to `MAJOR.MINOR.PATCH.REVISION`.
+4. Update `src/Storylines/Properties/AssemblyInfo.cs` `AssemblyVersion` and `AssemblyFileVersion` to the same value.
+5. For a normal release, keep `REVISION` at `0` so the changelog, Store notes, and the user-facing app version all align on `MAJOR.MINOR.PATCH`.
+6. If you must resubmit the same release to the Store, keep the changelog entry unchanged and increment only `REVISION`.
 
 ## Build And Test
 

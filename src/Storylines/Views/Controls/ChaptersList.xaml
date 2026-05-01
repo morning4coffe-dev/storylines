@@ -239,6 +239,13 @@
                             <SymbolIcon Symbol="Edit" />
                         </MenuFlyoutItem.Icon>
                     </MenuFlyoutItem>
+                    <MenuFlyoutItem x:Name="duplicateFlyout"
+                                    x:Uid="duplicateFlyout"
+                                    Click="OnChapterDuplicate_Click">
+                        <MenuFlyoutItem.Icon>
+                            <SymbolIcon Symbol="Copy" />
+                        </MenuFlyoutItem.Icon>
+                    </MenuFlyoutItem>
                     <MenuFlyoutItem x:Name="removeFlyout"
                                     x:Uid="removeFlyout"
                                     Click="OnChapterDeleteFlyout_Click">

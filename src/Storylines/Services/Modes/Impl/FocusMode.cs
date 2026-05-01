@@ -1,4 +1,5 @@
 using Storylines.Helpers;
+using Storylines.Services;
 using Storylines.ViewModels.Modes;
 using Storylines.Views.Controls.Modes;
 using System;
@@ -13,6 +14,15 @@ namespace Storylines.Services.Modes.Impl
     /// </summary>
     public sealed class FocusMode : IEditorMode
     {
+        private readonly EventAggregator _events;
+        private readonly INotificationService _notifications;
+
+        public FocusMode(EventAggregator events, INotificationService notifications)
+        {
+            _events = events;
+            _notifications = notifications;
+        }
+
         // ── options set by the mode picker before Activate ────────────────────
         public bool FullScreen { get; set; }
         public TimeSpan Time { get; set; }
@@ -44,7 +54,7 @@ namespace Storylines.Services.Modes.Impl
 
         public void Enter()
         {
-            _vm = new FocusModeViewModel();
+            _vm = new FocusModeViewModel(_events, _notifications);
             _overlay = new FocusModeOverlay(_vm);
 
             if (FullScreen)

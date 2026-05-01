@@ -1,6 +1,5 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
-using Storylines.Services;
 using Storylines.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
@@ -61,8 +60,8 @@ namespace Storylines.ViewModels
 
             // Mutual-exclusion: stop reading first if it is active. The current TTS path lives
             // in the command-bar code-behind and listens to ISpeechService mode changes there.
-            if (_speech.Mode == SpeechMode.Reading && _speech is SpeechService service)
-                service.NotifyReadingStopped();
+            if (_speech.Mode == SpeechMode.Reading)
+                _speech.NotifyReadingStopped();
 
             IsPermissionDenied = false;
             var languageTag = string.IsNullOrWhiteSpace(_settings.UserLanguage)

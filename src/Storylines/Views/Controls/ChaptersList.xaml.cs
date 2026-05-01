@@ -44,6 +44,7 @@ namespace Storylines.Views.Controls
             addFlyout.IsEnabled = ViewModel.IsAddButtonEnabled;
 
             renameFlyout.IsEnabled = enabled;
+            duplicateFlyout.IsEnabled = enabled;
             removeFlyout.IsEnabled = enabled;
             editTagsFlyout.IsEnabled = enabled;
             setStatusFlyout.IsEnabled = enabled;
@@ -103,6 +104,11 @@ namespace Storylines.Views.Controls
         private void OnChapterDeleteFlyout_Click(object sender, RoutedEventArgs e)
         {
             ViewModel.DeleteChapter(chapterItemFlyoutedToken);
+        }
+
+        private void OnChapterDuplicate_Click(object sender, RoutedEventArgs e)
+        {
+            ViewModel.DuplicateChapter(chapterItemFlyoutedToken);
         }
 
         private void OnChapterEditTags_Click(object sender, RoutedEventArgs e)

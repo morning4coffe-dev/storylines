@@ -8,6 +8,7 @@ using Windows.Storage;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Controls.Primitives;
+using Windows.UI.Xaml.Navigation;
 using Storylines.Models;
 
 namespace Storylines.Views.Pages
@@ -24,6 +25,7 @@ namespace Storylines.Views.Pages
 
         private readonly EventAggregator _events;
         private readonly MainPageViewModel _viewModel;
+        private string _pendingChapterToken;
 
         private DispatcherTimer _sessionTimer;
         private bool _textFormattingContextActive;
@@ -48,6 +50,14 @@ namespace Storylines.Views.Pages
             SizeChanged();
         }
 
+        protected override void OnNavigatedTo(NavigationEventArgs e)
+        {
+            base.OnNavigatedTo(e);
+
+            _pendingChapterToken = e.Parameter as string;
+            TrySelectPendingChapter();
+        }
+
         private void OnSettingChanged(SettingChangedEvent e)
         {
             if (e.SettingKey == SettingsValueStrings.ZoomValue && ChapterText != null)
@@ -69,6 +79,9 @@ namespace Storylines.Views.Pages
             {
                 ChapterList.listView.SelectedIndex = selectedChapterIndex;
             }
+
+            TrySelectPendingChapter();
+
             ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
 
             LoadTextBoxZoom();
@@ -118,6 +131,29 @@ namespace Storylines.Views.Pages
         {
             _textFormattingContextActive = active;
             RefreshFormattingCommandAvailability();
+        }
+
+        private void TrySelectPendingChapter()
+        {
+            if (string.IsNullOrWhiteSpace(_pendingChapterToken) || ChapterList?.ViewModel == null)
+                return;
+
+            var projectState = App.TryGetService<ProjectState>();
+            var chapter = projectState?.FindChapter(_pendingChapterToken);
+            if (chapter == null)
+                return;
+
+            var chapterIndex = projectState.FindChapterID(_pendingChapterToken);
+            ChapterList.ViewModel.SelectedIndex = chapterIndex;
+
+            if (ChapterList.listView != null
+                && chapterIndex >= 0
+                && chapterIndex < ChapterList.listView.Items.Count)
+            {
+                ChapterList.listView.SelectedIndex = chapterIndex;
+            }
+
+            _pendingChapterToken = null;
         }
 
         public void RefreshFormattingCommandAvailability()
