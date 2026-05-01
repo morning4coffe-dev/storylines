@@ -453,6 +453,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Доступно обновление</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Обновление Storylines готово к установке.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>Это обновление обязательно, и некоторые функции могут быть ограничены, пока установка не завершится.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Установить сейчас</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Идёт загрузка и установка обновления. Storylines может закрыться, когда начнётся установка.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Обновление готово</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Последнее обновление Storylines успешно установлено.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Обновление отменено</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>Обновление не было установлено. Вы можете попробовать снова в любое время.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Не удалось обновить</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines не удалось установить обновление прямо сейчас. Повторите попытку позже.</value>
+  </data>
   <data name="autosaveEnable.Text" xml:space="preserve">
     <value>Разрешить</value>
   </data>

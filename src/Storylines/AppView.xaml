@@ -145,21 +145,42 @@
                       Grid.Row="1"
                       VerticalAlignment="Bottom"
                       HorizontalAlignment="Center"
-                      Width="400"
+                      Width="440"
                       Margin="0, 80"
                       Closed="OnUpdateAvailableInfoBar_Closed">
             <muxc:InfoBar.Content>
-                <RichTextBlock IsTextSelectionEnabled="False"
-                               Margin="0,-6,0,0">
-                    <Paragraph>
-                        <Run x:Uid="newUpdateAvailable" />
-                        <Hyperlink NavigateUri="ms-windows-store://pdp/?productid=9PN77P9WJ3CX">
-                            <Run x:Uid="clickHereText" />
-                        </Hyperlink>
-                        <Run x:Uid="newUpdateAvailable2" />
-                        <LineBreak />
-                    </Paragraph>
-                </RichTextBlock>
+                <StackPanel Margin="0,-4,0,0"
+                            Spacing="10">
+                    <TextBlock x:Name="updateAvailableInfoBarText"
+                               x:FieldModifier="public"
+                               x:Uid="storeUpdateAvailableMessage"
+                               TextWrapping="WrapWholeWords" />
+                    <TextBlock x:Name="updateAvailableInfoBarDetailText"
+                               x:FieldModifier="public"
+                               Visibility="Collapsed"
+                               Opacity="0.85"
+                               TextWrapping="WrapWholeWords" />
+                    <ProgressBar x:Name="updateAvailableProgressBar"
+                                 x:FieldModifier="public"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Height="4"
+                                 Visibility="Collapsed" />
+                    <StackPanel x:Name="updateAvailableActionsPanel"
+                                x:FieldModifier="public"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                Margin="0,0,0,4">
+                        <Button x:Name="updateAvailablePrimaryButton"
+                                x:FieldModifier="public"
+                                x:Uid="storeUpdateInstallNow"
+                                Click="OnUpdateAvailablePrimaryButton_Click" />
+                        <Button x:Name="updateAvailableSecondaryButton"
+                                x:FieldModifier="public"
+                                x:Uid="storeUpdateLater"
+                                Click="OnUpdateAvailableSecondaryButton_Click" />
+                    </StackPanel>
+                </StackPanel>
             </muxc:InfoBar.Content>
             <muxc:InfoBar.IconSource>
                 <muxc:FontIconSource Glyph="" />

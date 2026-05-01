@@ -1066,6 +1066,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Storylines 更新已可安装。</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>这是必需更新，在安装完成之前某些功能可能会受到限制。</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>立即安装</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>稍后</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>正在下载并安装更新。开始安装时 Storylines 可能会关闭。</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>更新已就绪</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>最新的 Storylines 更新已成功安装。</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>更新已取消</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>更新未安装。你可以稍后再次尝试。</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>更新失败</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines 目前无法安装更新。请稍后再试。</value>
+  </data>
   <data name="website.Content" xml:space="preserve">
     <value>Website</value>
   </data>

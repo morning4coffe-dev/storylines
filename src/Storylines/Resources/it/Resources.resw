@@ -590,6 +590,39 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Aggiornamento disponibile</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Un aggiornamento di Storylines è pronto per l'installazione.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>Questo aggiornamento è obbligatorio e alcune funzionalità potrebbero restare limitate finché l'installazione non sarà completata.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Installa ora</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Più tardi</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Download e installazione dell'aggiornamento in corso. Storylines potrebbe chiudersi quando inizierà l'installazione.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Aggiornamento pronto</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>L'ultimo aggiornamento di Storylines è stato installato correttamente.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Aggiornamento annullato</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>L'aggiornamento non è stato installato. Puoi riprovare in qualsiasi momento.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Aggiornamento non riuscito</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines non è riuscito a installare l'aggiornamento in questo momento. Riprova più tardi.</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Versione</value>
   </data>

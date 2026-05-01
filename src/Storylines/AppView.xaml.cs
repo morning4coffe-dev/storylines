@@ -231,6 +231,16 @@ namespace Storylines
             AppView.current.alertNotificationInfoBar.Visibility = Visibility.Collapsed;
         }
 
+        private void OnUpdateAvailablePrimaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = MicrosoftStoreFunctions.InstallAvailableUpdatesAsync();
+        }
+
+        private void OnUpdateAvailableSecondaryButton_Click(object sender, RoutedEventArgs e)
+        {
+            NotificationManager.NewUpdateAvailable_Close();
+        }
+
         private void OnUpdateAvailableInfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
         {
             NotificationManager.NewUpdateAvailable_Close();

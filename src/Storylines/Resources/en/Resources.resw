@@ -774,6 +774,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>A Storylines update is ready to install.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>This update is required and some features may stay limited until it finishes installing.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Install now</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Later</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Downloading and installing the update. Storylines may close when the installation begins.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Update ready</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>The latest Storylines update was installed successfully.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Update cancelled</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>The update was not installed. You can try again anytime.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Update failed</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines couldn't install the update right now. Please try again later.</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Version</value>
   </data>

@@ -6,6 +6,50 @@
     </header>
     <body>
       <group id="STORYLINES/RESOURCES/EN/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="storeUpdateAvailableMessage.Text" translate="yes" xml:space="preserve">
+          <source>A Storylines update is ready to install.</source>
+          <target state="translated">Storylines 更新已可安装。</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateMandatoryMessage" translate="yes" xml:space="preserve">
+          <source>This update is required and some features may stay limited until it finishes installing.</source>
+          <target state="translated">这是必需更新，在安装完成之前某些功能可能会受到限制。</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+          <source>Install now</source>
+          <target state="translated">立即安装</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+          <source>Later</source>
+          <target state="translated">稍后</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstallingMessage" translate="yes" xml:space="preserve">
+          <source>Downloading and installing the update. Storylines may close when the installation begins.</source>
+          <target state="translated">正在下载并安装更新。开始安装时 Storylines 可能会关闭。</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstalledTitle" translate="yes" xml:space="preserve">
+          <source>Update ready</source>
+          <target state="translated">更新已就绪</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstalledMessage" translate="yes" xml:space="preserve">
+          <source>The latest Storylines update was installed successfully.</source>
+          <target state="translated">最新的 Storylines 更新已成功安装。</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateCancelledTitle" translate="yes" xml:space="preserve">
+          <source>Update cancelled</source>
+          <target state="translated">更新已取消</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateCancelledMessage" translate="yes" xml:space="preserve">
+          <source>The update was not installed. You can try again anytime.</source>
+          <target state="translated">更新未安装。你可以稍后再次尝试。</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateFailedTitle" translate="yes" xml:space="preserve">
+          <source>Update failed</source>
+          <target state="translated">更新失败</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateFailedMessage" translate="yes" xml:space="preserve">
+          <source>Storylines couldn't install the update right now. Please try again later.</source>
+          <target state="translated">Storylines 目前无法安装更新。请稍后再试。</target>
+        </trans-unit>
         <trans-unit id="about.Content" translate="yes" xml:space="preserve">
           <source>About</source>
           <target state="needs-review-translation">关于</target>

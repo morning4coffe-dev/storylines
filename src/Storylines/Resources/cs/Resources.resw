@@ -444,6 +444,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Nová aktualizace je dostupná</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Aktualizace Storylines je připravena k instalaci.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>Tato aktualizace je povinná a některé funkce mohou zůstat omezené, dokud se nedokončí její instalace.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Instalovat nyní</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Později</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Aktualizace se stahuje a instaluje. Storylines se může při zahájení instalace zavřít.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Aktualizace je připravena</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Nejnovější aktualizace Storylines byla úspěšně nainstalována.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Aktualizace zrušena</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>Aktualizace nebyla nainstalována. Kdykoli to můžete zkusit znovu.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Aktualizace se nezdařila</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines teď nemohl aktualizaci nainstalovat. Zkuste to prosím znovu později.</value>
+  </data>
   <data name="autosaveEnable.Text" xml:space="preserve">
     <value>Povolit</value>
   </data>

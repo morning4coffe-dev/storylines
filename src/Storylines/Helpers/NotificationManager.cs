@@ -75,6 +75,8 @@ namespace Storylines.Helpers
 
         public static void DisplayNewUpdateAvailable()
         {
+            currentInAppNotification = InAppNotificationType.NewUpdate;
+            AppView.current.updateAvailableInfoBar.RequestedTheme = AppView.current.ActualTheme;
             AppView.current.updateAvailableInfoBar.IsOpen = true;
             AppView.current.updateAvailableInfoBar.Visibility = Visibility.Visible;
 
@@ -83,6 +85,7 @@ namespace Storylines.Helpers
 
         public static void NewUpdateAvailable_Close()
         {
+            currentInAppNotification = InAppNotificationType.None;
             AppView.current.updateAvailableInfoBar.IsOpen = false;
             AppView.current.updateAvailableInfoBar.Visibility = Visibility.Collapsed;
             ClearBadgeNotification();

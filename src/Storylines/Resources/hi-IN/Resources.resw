@@ -825,6 +825,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Storylines के लिए एक नया अपडेट इंस्टॉल करने के लिए तैयार है।</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>यह अपडेट आवश्यक है और इंस्टॉल पूरा होने तक कुछ सुविधाएँ सीमित रह सकती हैं।</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>अभी इंस्टॉल करें</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>बाद में</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>अपडेट डाउनलोड और इंस्टॉल किया जा रहा है। इंस्टॉलेशन शुरू होने पर Storylines बंद हो सकता है।</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>अपडेट तैयार है</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Storylines का नवीनतम अपडेट सफलतापूर्वक इंस्टॉल हो गया।</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>अपडेट रद्द किया गया</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>अपडेट इंस्टॉल नहीं हुआ। आप कभी भी फिर से कोशिश कर सकते हैं।</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>अपडेट विफल रहा</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines अभी अपडेट इंस्टॉल नहीं कर सका। कृपया बाद में फिर कोशिश करें।</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Version</value>
   </data>

@@ -1,9 +1,12 @@
+using Microsoft.UI.Xaml.Controls;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 using Windows.Services.Store;
+using Windows.UI.Core;
 using Windows.UI.Xaml;
 
 namespace Storylines.Helpers
@@ -12,16 +15,82 @@ namespace Storylines.Helpers
     {
         private static readonly StoreContext _storeContext = StoreContext.GetDefault();
         private static readonly DispatcherTimer _closeThanksInterval = new DispatcherTimer();
+        private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
+        private static IReadOnlyList<StorePackageUpdate> _availableUpdates = Array.Empty<StorePackageUpdate>();
 
         private static DispatcherTimer _reviewTimer;
+        private static bool _hasMandatoryUpdate;
+        private static bool _isUpdateInstallInProgress;
 
         public static async Task CheckForNewUpdateAvailableAsync()
         {
             IReadOnlyList<StorePackageUpdate> updates = await _storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
+            _availableUpdates = updates;
+            _hasMandatoryUpdate = false;
+
+            foreach (var update in updates)
+            {
+                if (update.Mandatory)
+                {
+                    _hasMandatoryUpdate = true;
+                    break;
+                }
+            }
+
             if (updates.Count > 0)
             {
                 App.TryGetService<ITelemetryService>()?.TrackStoreUpdateAvailable(updates.Count);
-                NotificationManager.DisplayNewUpdateAvailable();
+                await RunOnUiThreadAsync(ShowAvailableUpdateState);
+            }
+            else
+            {
+                await RunOnUiThreadAsync(NotificationManager.NewUpdateAvailable_Close);
+            }
+        }
+
+        public static async Task InstallAvailableUpdatesAsync()
+        {
+            if (_isUpdateInstallInProgress)
+                return;
+
+            if (_availableUpdates == null || _availableUpdates.Count < 1)
+            {
+                await CheckForNewUpdateAvailableAsync();
+                if (_availableUpdates == null || _availableUpdates.Count < 1)
+                    return;
+            }
+
+            _isUpdateInstallInProgress = true;
+
+            try
+            {
+                bool useSilentInstall = _storeContext.CanSilentlyDownloadStorePackageUpdates;
+                await RunOnUiThreadAsync(() => ShowInstallingUpdateState(useSilentInstall));
+
+                StorePackageUpdateResult result;
+                if (useSilentInstall)
+                {
+                    result = await _storeContext.TrySilentDownloadAndInstallStorePackageUpdatesAsync(_availableUpdates);
+                }
+                else
+                {
+                    var installOperation = _storeContext.RequestDownloadAndInstallStorePackageUpdatesAsync(_availableUpdates);
+                    installOperation.Progress = async (asyncInfo, progress) => await UpdateInstallProgressAsync(progress);
+                    result = await installOperation.AsTask();
+                }
+
+                await RunOnUiThreadAsync(() => HandleInstallResult(result));
+            }
+            catch (Exception ex)
+            {
+                _isUpdateInstallInProgress = false;
+                App.TryGetService<ILogger>()?.Warning($"Failed to install Store updates: {ex.Message}");
+
+                await RunOnUiThreadAsync(() =>
+                    ShowAvailableUpdateState(
+                        _resources.GetString("storeUpdateFailedTitle"),
+                        InfoBarSeverity.Error,
+                        _resources.GetString("storeUpdateFailedMessage")));
             }
         }
 
@@ -89,6 +158,133 @@ namespace Storylines.Helpers
 
             _closeThanksInterval.Stop();
             _closeThanksInterval.Tick -= CloseThanksInterval_Tick;
+        }
+
+        private static async Task UpdateInstallProgressAsync(StorePackageUpdateStatus progress)
+        {
+            double progressValue = Math.Max(0, Math.Min(100, progress.PackageDownloadProgress * 100));
+
+            await RunOnUiThreadAsync(() =>
+            {
+                if (AppView.current?.updateAvailableProgressBar == null)
+                    return;
+
+                AppView.current.updateAvailableProgressBar.IsIndeterminate = false;
+                AppView.current.updateAvailableProgressBar.Value = progressValue;
+            });
+        }
+
+        private static void HandleInstallResult(StorePackageUpdateResult result)
+        {
+            _isUpdateInstallInProgress = false;
+
+            switch (result.OverallState)
+            {
+                case StorePackageUpdateState.Completed:
+                    _availableUpdates = Array.Empty<StorePackageUpdate>();
+                    _hasMandatoryUpdate = false;
+                    ShowUpdateInfoBar(
+                        _resources.GetString("storeUpdateInstalledTitle"),
+                        InfoBarSeverity.Success,
+                        _resources.GetString("storeUpdateInstalledMessage"),
+                        string.Empty,
+                        showActions: false,
+                        showProgressBar: false,
+                        isProgressIndeterminate: false);
+                    NotificationManager.ClearBadgeNotification();
+                    break;
+                case StorePackageUpdateState.Canceled:
+                    ShowAvailableUpdateState(
+                        _resources.GetString("storeUpdateCancelledTitle"),
+                        InfoBarSeverity.Warning,
+                        _resources.GetString("storeUpdateCancelledMessage"));
+                    break;
+                default:
+                    ShowAvailableUpdateState(
+                        _resources.GetString("storeUpdateFailedTitle"),
+                        InfoBarSeverity.Error,
+                        _resources.GetString("storeUpdateFailedMessage"));
+                    break;
+            }
+        }
+
+        private static void ShowAvailableUpdateState()
+        {
+            ShowUpdateInfoBar(
+                _resources.GetString("updateAvailableTitle.Title"),
+                _hasMandatoryUpdate ? InfoBarSeverity.Warning : InfoBarSeverity.Informational,
+                _resources.GetString("storeUpdateAvailableMessage.Text"),
+                _hasMandatoryUpdate ? _resources.GetString("storeUpdateMandatoryMessage") : string.Empty,
+                showActions: true,
+                showProgressBar: false,
+                isProgressIndeterminate: false);
+        }
+
+        private static void ShowAvailableUpdateState(string title, InfoBarSeverity severity, string message)
+        {
+            ShowUpdateInfoBar(
+                title,
+                severity,
+                message,
+                _hasMandatoryUpdate ? _resources.GetString("storeUpdateMandatoryMessage") : string.Empty,
+                showActions: true,
+                showProgressBar: false,
+                isProgressIndeterminate: false);
+        }
+
+        private static void ShowInstallingUpdateState(bool useSilentInstall)
+        {
+            ShowUpdateInfoBar(
+                _resources.GetString("updateAvailableTitle.Title"),
+                InfoBarSeverity.Informational,
+                _resources.GetString("storeUpdateInstallingMessage"),
+                string.Empty,
+                showActions: false,
+                showProgressBar: true,
+                isProgressIndeterminate: useSilentInstall);
+        }
+
+        private static void ShowUpdateInfoBar(
+            string title,
+            InfoBarSeverity severity,
+            string message,
+            string detail,
+            bool showActions,
+            bool showProgressBar,
+            bool isProgressIndeterminate)
+        {
+            if (AppView.current == null)
+                return;
+
+            AppView.current.updateAvailableInfoBar.Title = title;
+            AppView.current.updateAvailableInfoBar.Severity = severity;
+            AppView.current.updateAvailableInfoBar.RequestedTheme = AppView.current.ActualTheme;
+            AppView.current.updateAvailableInfoBar.IsClosable = !_isUpdateInstallInProgress;
+
+            AppView.current.updateAvailableInfoBarText.Text = message;
+            AppView.current.updateAvailableInfoBarDetailText.Text = detail;
+            AppView.current.updateAvailableInfoBarDetailText.Visibility =
+                string.IsNullOrWhiteSpace(detail) ? Visibility.Collapsed : Visibility.Visible;
+
+            AppView.current.updateAvailableProgressBar.Value = 0;
+            AppView.current.updateAvailableProgressBar.IsIndeterminate = isProgressIndeterminate;
+            AppView.current.updateAvailableProgressBar.Visibility =
+                showProgressBar ? Visibility.Visible : Visibility.Collapsed;
+
+            AppView.current.updateAvailableActionsPanel.Visibility =
+                showActions ? Visibility.Visible : Visibility.Collapsed;
+            AppView.current.updateAvailablePrimaryButton.IsEnabled = !_isUpdateInstallInProgress;
+            AppView.current.updateAvailableSecondaryButton.IsEnabled = !_isUpdateInstallInProgress;
+
+            NotificationManager.DisplayNewUpdateAvailable();
+        }
+
+        private static async Task RunOnUiThreadAsync(Action action)
+        {
+            if (AppView.current?.Dispatcher == null)
+                return;
+
+            await AppView.current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action());
         }
     }
 }

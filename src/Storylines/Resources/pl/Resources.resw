@@ -825,6 +825,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
+  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+    <value>Aktualizacja Storylines jest gotowa do zainstalowania.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>Ta aktualizacja jest wymagana i do czasu zakończenia instalacji niektóre funkcje mogą być ograniczone.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Zainstaluj teraz</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Później</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Trwa pobieranie i instalowanie aktualizacji. Gdy instalacja się rozpocznie, Storylines może zostać zamknięty.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Aktualizacja gotowa</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Najnowsza aktualizacja Storylines została pomyślnie zainstalowana.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Aktualizacja anulowana</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>Aktualizacja nie została zainstalowana. Możesz spróbować ponownie w dowolnym momencie.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Aktualizacja nie powiodła się</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines nie mógł teraz zainstalować aktualizacji. Spróbuj ponownie później.</value>
+  </data>
   <data name="version" xml:space="preserve">
     <value>Version</value>
   </data>
