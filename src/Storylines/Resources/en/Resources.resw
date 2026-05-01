@@ -666,9 +666,6 @@
   <data name="readAloud.Label" xml:space="preserve">
     <value>Read aloud</value>
   </data>
-  <data name="dictation.Label" xml:space="preserve">
-    <value>Dictate</value>
-  </data>
   <data name="readAloudText.Text" xml:space="preserve">
     <value>Read aloud</value>
   </data>
@@ -774,11 +771,14 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Check for updates</value>
+  </data>
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>A Storylines update is ready to install.</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>This update is required and some features may stay limited until it finishes installing.</value>
+    <value>Some features may stay limited until this update finishes installing.</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>Install now</value>
@@ -946,6 +946,9 @@
     <value>Toggle Chapter Notes</value>
   </data>
   <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>Find &amp; Replace</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
     <value>Find &amp; Replace</value>
   </data>
   <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
@@ -1197,6 +1200,9 @@
   </data>
   <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
     <value>All categories</value>
+  </data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Experimental</value>
   </data>
   <data name="noPromptsAvailable" xml:space="preserve">
     <value>No prompts available for this category.</value>
@@ -1819,6 +1825,9 @@
   </data>
   <data name="projectFileInfoText.Text" xml:space="preserve">
     <value>File Information</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Close</value>
   </data>
   <data name="projectFileCreatedLabel" xml:space="preserve">
     <value>Created:</value>

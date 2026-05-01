@@ -67,8 +67,10 @@
                         CornerRadius="4"
                         Padding="0"
                     Command="{x:Bind ViewModel.CloseChapterListCommand}">
-                    <SymbolIcon Symbol="Cancel"
-                                Opacity="0.6" />
+                    <FontIcon Glyph="&#xE711;"
+                              Style="{StaticResource AppSymbolIconStyle}"
+                              FontSize="{StaticResource AppCaptionFontSize}"
+                              Opacity="0.6" />
                 </Button>
             </StackPanel>
         </Grid>

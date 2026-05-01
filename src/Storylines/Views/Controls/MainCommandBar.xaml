@@ -924,17 +924,6 @@
                     </AppBarButton>
 
                     <AppBarSeparator />
-                    <AppBarButton x:Name="dictationButton"
-                                  x:FieldModifier="public"
-                                  x:Uid="dictation"
-                                  CornerRadius="4"
-                                  Click="OnDictationButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
-                    <AppBarSeparator />
 
                     <AppBarToggleButton x:Name="mainBoldButton"
                                         x:Uid="boldTextButton"
@@ -942,6 +931,7 @@
                                         Tag="Bold"
                                         Icon="Bold"
                                         CornerRadius="4"
+                                        LabelPosition="Collapsed"
                                         GotFocus="OnFormattingSurface_GotFocus"
                                         LostFocus="OnFormattingSurface_LostFocus"
                                         Click="OnFormatterButton_Click" />
@@ -952,6 +942,7 @@
                                         Tag="Italic"
                                         Icon="Italic"
                                         CornerRadius="4"
+                                        LabelPosition="Collapsed"
                                         GotFocus="OnFormattingSurface_GotFocus"
                                         LostFocus="OnFormattingSurface_LostFocus"
                                         Click="OnFormatterButton_Click" />
@@ -962,6 +953,7 @@
                                         Tag="Underline"
                                         Icon="Underline"
                                         CornerRadius="4"
+                                        LabelPosition="Collapsed"
                                         GotFocus="OnFormattingSurface_GotFocus"
                                         LostFocus="OnFormattingSurface_LostFocus"
                                         Click="OnFormatterButton_Click" />
@@ -971,6 +963,7 @@
                                         x:FieldModifier="public"
                                         Tag="Strikethrough"
                                         CornerRadius="4"
+                                        LabelPosition="Collapsed"
                                         GotFocus="OnFormattingSurface_GotFocus"
                                         LostFocus="OnFormattingSurface_LostFocus"
                                         Click="OnFormatterButton_Click">
@@ -1045,6 +1038,17 @@
                         </Flyout>
                     </AppBarButton>
 
+                    <AppBarSeparator />
+                    <AppBarButton x:Name="dictationStartButton"
+                                  x:FieldModifier="public"
+                                  x:Uid="dictation"
+                                  CornerRadius="4"
+                                  Click="OnDictationButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
                                                          From="8, 0, 0"
@@ -1080,6 +1084,8 @@
                                         x:Uid="typewriterModeButton"
                                         x:FieldModifier="public"
                                         CornerRadius="4"
+                                        GotFocus="OnFormattingSurface_GotFocus"
+                                        LostFocus="OnFormattingSurface_LostFocus"
                                         Click="OnTypewriterModeButton_Click">
                         <AppBarToggleButton.Icon>
                             <FontIcon Glyph="&#xE8E3;" />

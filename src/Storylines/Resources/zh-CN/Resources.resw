@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1066,11 +1066,11 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Storylines 更新已可安装。</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>这是必需更新，在安装完成之前某些功能可能会受到限制。</value>
+    <value>在安装完成之前某些功能可能会受到限制。</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>立即安装</value>
@@ -1645,6 +1645,18 @@
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>选项目标节点缺失。</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>条件引用了标记“{0}”，但没有任何节点会设置它。</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>该节点无法从起始节点到达。</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>实验性</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>检查更新</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>查找和替换</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>关闭</value>
+  </data>
 </root>
 
 

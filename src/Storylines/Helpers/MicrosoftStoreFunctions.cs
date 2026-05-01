@@ -213,7 +213,7 @@ namespace Storylines.Helpers
             ShowUpdateInfoBar(
                 _resources.GetString("updateAvailableTitle.Title"),
                 _hasMandatoryUpdate ? InfoBarSeverity.Warning : InfoBarSeverity.Informational,
-                _resources.GetString("storeUpdateAvailableMessage.Text"),
+                _resources.GetString("storeUpdateAvailableMessage"),
                 _hasMandatoryUpdate ? _resources.GetString("storeUpdateMandatoryMessage") : string.Empty,
                 showActions: true,
                 showProgressBar: false,

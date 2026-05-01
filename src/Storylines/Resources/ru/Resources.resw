@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -453,11 +453,11 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Доступно обновление</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Обновление Storylines готово к установке.</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>Это обновление обязательно, и некоторые функции могут быть ограничены, пока установка не завершится.</value>
+    <value>Некоторые функции могут быть ограничены, пока установка не завершится.</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>Установить сейчас</value>
@@ -1646,6 +1646,18 @@
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Отсутствует целевой узел варианта.</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Условие ссылается на флаг "{0}", который ни один узел никогда не устанавливает.</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Узел недостижим из начального узла.</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Экспериментально</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Проверить обновления</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>Найти и заменить</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
 </root>
 
 

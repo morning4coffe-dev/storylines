@@ -151,7 +151,7 @@ namespace Storylines
         private void OnReadAloudAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
-            Views.Pages.MainPage.Current?.CommandBar?.ReadAloud();
+            Views.Pages.MainPage.CommandBar.ReadAloud();
         }
 
         private void OnDictationAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)

@@ -104,6 +104,12 @@ namespace Storylines.Views.Controls
             set
             {
                 _isTypewriterModeActive = value;
+                if (value && textBox?.Document?.Selection?.Length > 0)
+                {
+                    var selection = textBox.Document.Selection;
+                    selection.SetRange(selection.EndPosition, selection.EndPosition);
+                }
+
                 if (value)
                     _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
             }
@@ -145,7 +151,6 @@ namespace Storylines.Views.Controls
             // Restore persisted dialogue mode
             dialoguesOn = SettingsValues.dialogueModeEnabled;
 
-            searchReplaceTitleText.Text = _resources.GetString("searchReplaceButton.Label");
             UpdateReplaceAllButtonContent();
         }
 
@@ -180,7 +185,10 @@ namespace Storylines.Views.Controls
                 : null;
 
             if (!e.HasSelection)
+            {
+                _textEditor?.Clear();
                 return;
+            }
 
             ChangeTextColor();
             CheckForFormatting();
@@ -267,6 +275,12 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
         {
+            if (ShouldBlockTypewriterDeletion(e))
+            {
+                e.Handled = true;
+                return;
+            }
+
             // When the dialogue popup is open, intercept navigation keys
             if (dialoguePopup.IsOpen)
             {
@@ -320,6 +334,25 @@ namespace Storylines.Views.Controls
                 textBox.Document.Selection.TypeText("\r");
                 ShowDialoguePopup(enteredViaKey: true);
             }
+        }
+
+        private bool ShouldBlockTypewriterDeletion(KeyRoutedEventArgs e)
+        {
+            if (!_isTypewriterModeActive || textBox?.Document?.Selection == null)
+                return false;
+
+            var controlState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
+            bool controlDown = (controlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+
+            if (e.Key == VirtualKey.Back || e.Key == VirtualKey.Delete)
+                return true;
+
+            if (controlDown && e.Key == VirtualKey.X)
+                return true;
+
+            return controlDown
+                && e.Key == VirtualKey.V
+                && textBox.Document.Selection.Length > 0;
         }
 
         public void ChangeTextColor()

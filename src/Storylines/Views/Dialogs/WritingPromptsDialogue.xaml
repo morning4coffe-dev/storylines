@@ -8,10 +8,20 @@
                CornerRadius="8"
                MinWidth="480">
     <StackPanel Spacing="16" MinWidth="440">
-        <TextBlock x:Uid="writingPromptsDescription"
-                   FontSize="12"
-                   Opacity="0.6"
-                   TextWrapping="Wrap" />
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock x:Uid="writingPromptsDescription"
+                       FontSize="12"
+                       Opacity="0.6"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" />
+            <Border CornerRadius="4"
+                    Padding="6,2"
+                    Background="{ThemeResource SystemAccentColorLight2}">
+                <TextBlock x:Uid="experimentalBadge"
+                           FontSize="11"
+                           Foreground="White" />
+            </Border>
+        </StackPanel>
 
         <Border Padding="16"
                 CornerRadius="8"

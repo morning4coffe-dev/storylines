@@ -8,10 +8,8 @@
                Closed="ContentDialog_Closed"
                CornerRadius="8">
 
-    <Grid MinWidth="520"
-          MaxWidth="800"
-          MaxHeight="600"
-          Margin="4">
+    <Grid Margin="4, 0"                
+          MaxHeight="550">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="8" />
@@ -35,12 +33,15 @@
                     BorderThickness="0"
                     CornerRadius="4"
                     Click="OnCloseButton_Click">
-                <SymbolIcon Symbol="Cancel" />
+                <FontIcon Glyph="&#xE711;"
+                        Style="{StaticResource AppSymbolIconStyle}"
+                        FontSize="{StaticResource AppCaptionFontSize}"
+                        Opacity="0.6" />
             </Button>
         </Grid>
 
         <ScrollViewer Grid.Row="2"
-                      MinHeight="20">
+                      MinHeight="20" Padding="0,0,12,0">
             <StackPanel Spacing="16">
                 <!-- Current chapter section -->
                 <StackPanel Spacing="4">
@@ -102,41 +103,45 @@
 
                 <!-- Characters + chapters row -->
                 <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="auto" />
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="12" />
                         <ColumnDefinition Width="*" />
                     </Grid.ColumnDefinitions>
-                    <StackPanel Spacing="4">
-                        <TextBlock x:Uid="charactersExport"
+                    <TextBlock x:Uid="charactersExport"
                                    Foreground="{ThemeResource SystemAccentColor}"
                                    FontWeight="SemiBold"
                                    FontSize="15" />
-                        <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                          VerticalAlignment="Stretch"
+                          CornerRadius="6"
+                          Padding="16,12"
+                          BorderBrush="{ThemeResource ElementBorderColor}"
+                          BorderThickness="{ThemeResource ElementBorderThickness}"
+                          Grid.Row="1">
+                        <TextBlock x:Name="charactersRun"
+                                       x:FieldModifier="public"
+                                       FontSize="13">N/A</TextBlock>
+                    </Grid>
+                    <TextBlock x:Uid="chaptersText1"
+                                Foreground="{ThemeResource SystemAccentColor}"
+                                FontWeight="SemiBold"
+                                FontSize="15" 
+                                Grid.Column="2" />
+                    <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                               CornerRadius="6"
                               Padding="16,12"
                               BorderBrush="{ThemeResource ElementBorderColor}"
-                              BorderThickness="{ThemeResource ElementBorderThickness}">
-                            <TextBlock x:Name="charactersRun"
+                              BorderThickness="{ThemeResource ElementBorderThickness}"
+                              Grid.Column="2" Grid.Row="1">
+                        <TextBlock x:Name="chaptersRun"
                                        x:FieldModifier="public"
                                        FontSize="13">N/A</TextBlock>
-                        </Grid>
-                    </StackPanel>
-                    <StackPanel Grid.Column="2" Spacing="4">
-                        <TextBlock x:Uid="chaptersText1"
-                                   Foreground="{ThemeResource SystemAccentColor}"
-                                   FontWeight="SemiBold"
-                                   FontSize="15" />
-                        <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
-                              CornerRadius="6"
-                              Padding="16,12"
-                              BorderBrush="{ThemeResource ElementBorderColor}"
-                              BorderThickness="{ThemeResource ElementBorderThickness}">
-                            <TextBlock x:Name="chaptersRun"
-                                       x:FieldModifier="public"
-                                       FontSize="13">N/A</TextBlock>
-                        </Grid>
-                    </StackPanel>
+                    </Grid>
                 </Grid>
 
                 <!-- Chapter breakdown chart -->

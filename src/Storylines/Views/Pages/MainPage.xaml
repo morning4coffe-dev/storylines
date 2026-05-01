@@ -280,6 +280,7 @@
                 <Slider x:Name="textBoxZoomSlider"
                         Width="100"
                         HorizontalAlignment="Stretch"
+                        VerticalAlignment="Center"
                         IsEnabled="{x:Bind ViewModel.IsChapterSelected, Mode=OneWay}"
                         IsThumbToolTipEnabled="False"
                         Maximum="100"

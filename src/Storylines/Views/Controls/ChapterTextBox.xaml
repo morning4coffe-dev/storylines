@@ -261,6 +261,7 @@
                     </Grid.ColumnDefinitions>
 
                     <TextBlock x:Name="searchReplaceTitleText"
+                               x:Uid="searchReplaceTitleText"
                                Style="{StaticResource BaseTextBlockStyle}"
                                FontSize="14"
                                VerticalAlignment="Center"

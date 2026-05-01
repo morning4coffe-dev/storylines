@@ -6,6 +6,7 @@
       xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
       xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:Storylines.ViewModels"
+      KeyboardAcceleratorPlacementMode="Hidden"
       mc:Ignorable="d"
       muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Background="{ThemeResource AppAcrylicBackground}">
@@ -170,7 +171,7 @@
                                 x:FieldModifier="public"
                                 Orientation="Horizontal"
                                 Spacing="8"
-                                Margin="0,0,0,4">
+                                Margin="0,0,0,12">
                         <Button x:Name="updateAvailablePrimaryButton"
                                 x:FieldModifier="public"
                                 x:Uid="storeUpdateInstallNow"

@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Input.Preview.Injection;
 using Windows.UI.Xaml;
 using Windows.UI.Xaml.Controls;
 using Windows.UI.Xaml.Media;
@@ -144,23 +143,10 @@ namespace Storylines.Views.Controls
 
             _textEditor.Focus();
 
-            InputInjector inputInjector = InputInjector.TryCreate();
-
-            InjectedInputKeyboardInfo win = new InjectedInputKeyboardInfo
+            if (_speechHub.ToggleDictationCommand.CanExecute(null))
             {
-                VirtualKey = (ushort)VirtualKey.LeftWindows,
-                KeyOptions = InjectedInputKeyOptions.None
-            };
-
-
-            InjectedInputKeyboardInfo h = new InjectedInputKeyboardInfo
-            {
-                VirtualKey = (ushort)VirtualKey.H,
-                KeyOptions = InjectedInputKeyOptions.None
-            };
-
-
-            inputInjector.InjectKeyboardInput(new[] { win, h });
+                _speechHub.ToggleDictationCommand.Execute(null);
+            }
         }
         #endregion
 
@@ -229,6 +215,7 @@ namespace Storylines.Views.Controls
                 || IsChildOf(element, mainUnderlineButton)
                 || IsChildOf(element, mainStrikethroughButton)
                 || IsChildOf(element, mainHighlighterButton)
+                || IsChildOf(element, typewriterModeButton)
                 || IsChildOf(element, mainHighlighterFlyout.Content as DependencyObject);
         }
 
@@ -265,7 +252,12 @@ namespace Storylines.Views.Controls
 
         #region VIEW
         private void OnTypewriterModeButton_Click(object sender, RoutedEventArgs e)
-            => MainPage.ChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
+        {
+            MainPage.ChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
+
+            if (_textEditor.SelectedChapterIndex >= 0)
+                _textEditor.Focus();
+        }
 
         private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
             => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);

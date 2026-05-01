@@ -25,5 +25,10 @@ namespace Storylines.Views.Pages.Settings
         {
             _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("about_page");
         }
+
+        private void OnCheckForUpdatesButton_Click(object sender, RoutedEventArgs e)
+        {
+            _ = MicrosoftStoreFunctions.CheckForNewUpdateAvailableAsync();
+        }
     }
 }

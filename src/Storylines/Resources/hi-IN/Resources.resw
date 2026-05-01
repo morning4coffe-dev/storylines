@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -825,11 +825,11 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Storylines के लिए एक नया अपडेट इंस्टॉल करने के लिए तैयार है।</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>यह अपडेट आवश्यक है और इंस्टॉल पूरा होने तक कुछ सुविधाएँ सीमित रह सकती हैं।</value>
+    <value>इंस्टॉल पूरा होने तक कुछ सुविधाएँ सीमित रह सकती हैं।</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>अभी इंस्टॉल करें</value>
@@ -1425,6 +1425,18 @@
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>विकल्प का लक्ष्य नोड गायब है।</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>शर्त उस फ़्लैग "{0}" का संदर्भ देती है जिसे कोई भी नोड कभी सेट नहीं करता।</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>नोड प्रारंभिक नोड से पहुँचा नहीं जा सकता।</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>प्रयोगात्मक</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>अपडेट की जाँच करें</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>खोजें और बदलें</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>बंद करें</value>
+  </data>
 </root>
 
 

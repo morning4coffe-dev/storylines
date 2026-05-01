@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -590,11 +590,11 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Aggiornamento disponibile</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Un aggiornamento di Storylines è pronto per l'installazione.</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>Questo aggiornamento è obbligatorio e alcune funzionalità potrebbero restare limitate finché l'installazione non sarà completata.</value>
+    <value>Alcune funzionalità potrebbero restare limitate finché l'installazione non sarà completata.</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>Installa ora</value>
@@ -1647,6 +1647,18 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Il nodo di destinazione della scelta è mancante.</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>La condizione fa riferimento al flag "{0}", che non viene mai impostato da alcun nodo.</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Il nodo non è raggiungibile dal nodo iniziale.</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Sperimentale</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Controlla aggiornamenti</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>Trova e sostituisci</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Chiudi</value>
+  </data>
 </root>
 
 

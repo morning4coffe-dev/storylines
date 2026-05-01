@@ -1,5 +1,6 @@
 using Storylines.Helpers;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 using Storylines.ViewModels.Modes;
 using Storylines.Views.Controls.Modes;
 using System;

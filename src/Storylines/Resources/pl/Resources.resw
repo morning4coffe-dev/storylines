@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -825,11 +825,11 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Update available</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Aktualizacja Storylines jest gotowa do zainstalowania.</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>Ta aktualizacja jest wymagana i do czasu zakończenia instalacji niektóre funkcje mogą być ograniczone.</value>
+    <value>Do czasu zakończenia instalacji niektóre funkcje mogą być ograniczone.</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>Zainstaluj teraz</value>
@@ -1426,6 +1426,18 @@
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Brakuje docelowego węzła wyboru.</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Warunek odwołuje się do flagi „{0}”, której żaden węzeł nigdy nie ustawia.</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Nie można dotrzeć do węzła ze węzła początkowego.</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Eksperymentalne</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Sprawdź aktualizacje</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>Znajdź i zamień</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Zamknij</value>
+  </data>
 </root>
 
 

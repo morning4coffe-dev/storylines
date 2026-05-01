@@ -1,6 +1,8 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Storylines.Models;
 using Windows.ApplicationModel.DataTransfer;
 using Storylines.Services.Interfaces;
 using Windows.ApplicationModel.Resources;

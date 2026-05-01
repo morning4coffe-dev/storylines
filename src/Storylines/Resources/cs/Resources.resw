@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -444,11 +444,11 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Nová aktualizace je dostupná</value>
   </data>
-  <data name="storeUpdateAvailableMessage.Text" xml:space="preserve">
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
     <value>Aktualizace Storylines je připravena k instalaci.</value>
   </data>
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
-    <value>Tato aktualizace je povinná a některé funkce mohou zůstat omezené, dokud se nedokončí její instalace.</value>
+    <value>Některé funkce mohou zůstat omezené, dokud se nedokončí instalace této aktualizace.</value>
   </data>
   <data name="storeUpdateInstallNow.Content" xml:space="preserve">
     <value>Instalovat nyní</value>
@@ -1647,6 +1647,18 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="branchingValidationMissingTargetMessage" xml:space="preserve"><value>Cílový uzel volby chybí.</value></data>
   <data name="branchingValidationOrphanedConditionMessageFormat" xml:space="preserve"><value>Podmínka odkazuje na příznak "{0}", který žádný uzel nikdy nenastavuje.</value></data>
   <data name="branchingValidationUnreachableNodeMessage" xml:space="preserve"><value>Uzel není dosažitelný ze startovního uzlu.</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Experimentální</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Zkontrolovat aktualizace</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>Najít &amp; nahradit</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Zavřít</value>
+  </data>
 </root>
 
 

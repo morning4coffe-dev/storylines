@@ -6,7 +6,7 @@
     </header>
     <body>
       <group id="STORYLINES/RESOURCES/EN/RESOURCES.RESW" datatype="resx">
-        <trans-unit id="storeUpdateAvailableMessage.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateAvailableMessage" translate="yes" xml:space="preserve">
           <source>A Storylines update is ready to install.</source>
           <target state="translated">Storylines 更新已可安装。</target>
         </trans-unit>
