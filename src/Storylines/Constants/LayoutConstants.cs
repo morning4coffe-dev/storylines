@@ -13,13 +13,6 @@ namespace Storylines.Constants
         public const double SeparatorHeight = 4.5;
         public const int ProjectFileLoadTimeoutMs = 1000;
 
-        // Branching dialogue canvas auto-placement
-        public const int NodeAutoPlaceOffsetX = 40;
-        public const int NodeAutoPlaceOffsetY = 40;
-        public const int NodeAutoPlaceColumnWidth = 280;
-        public const int NodeAutoPlaceRowHeight = 160;
-        public const int NodeAutoPlaceColumnsPerRow = 4;
-
         // Focus mode
         public const int FocusModeTimerIntervalSeconds = 60;
         public const int FocusModeDualTargetMultiplier = 50;
