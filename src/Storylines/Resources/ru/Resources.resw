@@ -265,13 +265,13 @@
     <value>Некоторые изображения не были загружены.</value>
   </data>
   <data name="chapterName" xml:space="preserve">
-    <value>Глава {номер}</value>
+    <value>Глава {number}</value>
   </data>
   <data name="chapterNameSetting.Text" xml:space="preserve">
     <value>Название главы</value>
   </data>
   <data name="chapterNameSettingDesc.Text" xml:space="preserve">
-    <value>Задайте название главы. Для выбора места нумерации используйте {номер}.</value>
+    <value>Задайте название главы. Чтобы указать место для нумерации, используйте {number}.</value>
   </data>
   <data name="chooseAccentColorSetting.Text" xml:space="preserve">
     <value>Контрастный цвет</value>
@@ -317,6 +317,21 @@
   </data>
   <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
     <value>Несохраненный прогресс</value>
+  </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>Восстановить несохраненные изменения?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines обнаружил несохраненные изменения из прошлого сеанса. Восстановите их и продолжите работу над этим проектом или отбросьте их и откройте последнюю сохраненную версию.</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>Восстановить изменения</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>Отбросить изменения</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>Не сейчас</value>
   </data>
   <data name="chapterDialogueCreate" xml:space="preserve">
     <value>Создать главу</value>
@@ -438,6 +453,39 @@
   <data name="updateAvailableTitle.Title" xml:space="preserve">
     <value>Доступно обновление</value>
   </data>
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
+    <value>Обновление Storylines готово к установке.</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>Некоторые функции могут быть ограничены, пока установка не завершится.</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>Установить сейчас</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>Идёт загрузка и установка обновления. Storylines может закрыться, когда начнётся установка.</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>Обновление готово</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Последнее обновление Storylines успешно установлено.</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>Обновление отменено</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>Обновление не было установлено. Вы можете попробовать снова в любое время.</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>Не удалось обновить</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines не удалось установить обновление прямо сейчас. Повторите попытку позже.</value>
+  </data>
   <data name="autosaveEnable.Text" xml:space="preserve">
     <value>Разрешить</value>
   </data>
@@ -457,7 +505,7 @@
     <value>Чтение вслух</value>
   </data>
   <data name="autosaveInterval1.Content" xml:space="preserve">
-    <value>Сразу</value>
+    <value>30 seconds</value>
   </data>
   <data name="autosaveInterval2.Content" xml:space="preserve">
     <value>2 минуты</value>
@@ -484,10 +532,10 @@
     <value>Уже уходите?</value>
   </data>
   <data name="ownDescription.PlaceholderText" xml:space="preserve">
-    <value>"Этот персонаж имеет короткие темные волосы. Он честный и отважный..."</value>
+    <value>"У этого персонажа короткие каштановые волосы. Отличается умом и добротой..."</value>
   </data>
   <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve">
-    <value>"Алекс Уайт"</value>
+    <value>Имя</value>
   </data>
   <data name="noCharacters.Text" xml:space="preserve">
     <value>Персонажей пока нет.</value>
@@ -536,9 +584,6 @@
   </data>
   <data name="editFlyout.Text" xml:space="preserve">
     <value>Изменить</value>
-  </data>
-  <data name="addSimpleDialogue.Label" xml:space="preserve">
-    <value>Добавить простой диалог</value>
   </data>
   <data name="appHeaderEdited" xml:space="preserve">
     <value>Изменено</value>
@@ -611,7 +656,7 @@
     <value>Расчетное время чтения</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Аналитика историй</value>
+    <value>Project Statistics</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Аналитика</value>
@@ -637,4 +682,686 @@
   <data name="submitText.Text" xml:space="preserve">
     <value>Отправить</value>
   </data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve">
+    <value>Добро пожаловать в Storylines</value>
+  </data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve">
+    <value>Создайте новый проект или откройте существующий, чтобы начать писать.</value>
+  </data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve">
+    <value>Новый проект</value>
+  </data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve">
+    <value>Открыть проект</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve">
+    <value>Сочетания клавиш</value>
+  </data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve">
+    <value>Ctrl+N  Новый  |  Ctrl+O  Открыть  |  Ctrl+S  Сохранить</value>
+  </data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve">
+    <value>Заметки к главе</value>
+  </data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Скрыть заметки</value>
+  </data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve">
+    <value>Добавьте заметки к этой главе...</value>
+  </data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve">
+    <value>Роль (например, главный герой)</value>
+  </data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve">
+    <value>Возраст</value>
+  </data>
+  <data name="notesToggleButton.Label" xml:space="preserve">
+    <value>Заметки</value>
+  </data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Показать или скрыть заметки к главе</value>
+  </data>
+  <data name="searchReplaceButton.Label" xml:space="preserve">
+    <value>Найти и заменить</value>
+  </data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Найти и заменить (Ctrl+H)</value>
+  </data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve">
+    <value>Найти</value>
+  </data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve">
+    <value>Найти...</value>
+  </data>
+  <data name="matchCaseToggle.Content" xml:space="preserve">
+    <value>Учитывать регистр</value>
+  </data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Учитывать регистр</value>
+  </data>
+  <data name="wholeWordToggle.Content" xml:space="preserve">
+    <value>Слово целиком</value>
+  </data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Слово целиком</value>
+  </data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Предыдущее совпадение</value>
+  </data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Предыдущее совпадение</value>
+  </data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Следующее совпадение</value>
+  </data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Следующее совпадение</value>
+  </data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve">
+    <value>Заменить</value>
+  </data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve">
+    <value>Заменить...</value>
+  </data>
+  <data name="replaceButton.Content" xml:space="preserve">
+    <value>Заменить</value>
+  </data>
+  <data name="replaceAllButton.Content" xml:space="preserve">
+    <value>Все</value>
+  </data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Нажмите, чтобы открыть подробную статистику</value>
+  </data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Сбросить</value>
+  </data>
+  <data name="quickPresets.Text" xml:space="preserve">
+    <value>Быстрые пресеты</value>
+  </data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Оранжевый Storylines</value>
+  </data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Фиолетовый</value>
+  </data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Ржавый</value>
+  </data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Найти проект</value>
+  </data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Новый проект</value>
+  </data>
+  <data name="hindi.Content" xml:space="preserve">
+    <value>Хинди</value>
+  </data>
+  <data name="polish.Content" xml:space="preserve">
+    <value>Польский</value>
+  </data>
+  <data name="languageRestartText.Text" xml:space="preserve">
+    <value>Перезапустите Storylines, чтобы применить выбранный язык во всём приложении.</value>
+  </data>
+  <data name="restartNowButton.Content" xml:space="preserve">
+    <value>Перезапустить сейчас</value>
+  </data>
+  <data name="restartLaterButton.Content" xml:space="preserve">
+    <value>Позже</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve">
+    <value>Не удалось перезапустить автоматически</value>
+  </data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve">
+    <value>Закройте и снова откройте Storylines, чтобы полностью применить новый язык.</value>
+  </data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve">
+    <value>Ещё</value>
+  </data>
+  <data name="highlighterButton.Label" xml:space="preserve">
+    <value>Выделение</value>
+  </data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выделение (Ctrl+Shift+H, щёлкните правой кнопкой или удерживайте, чтобы открыть другие цвета)</value>
+  </data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Жёлтый</value>
+  </data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Красный</value>
+  </data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Зелёный</value>
+  </data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Синий</value>
+  </data>
+  <data name="highlightNone.Content" xml:space="preserve">
+    <value>Нет</value>
+  </data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>Соединить</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>Отмена</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>Какие сюжетные линии присутствуют в этой главе? (через запятую)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>Где происходит действие этой главы?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>Подсказки для письма</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>напр. Соперник, Возлюбленный, Наставник...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>напр. Основной сюжет, любовная линия, тайна...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>Поиск по всем главам</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>Холст истории</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>Совпадений не найдено</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>Сюжет</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>Установить статус</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>Кратко опишите, что происходит в этой главе...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>Синопсис</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Искать по всем главам...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>Подпись связи (необязательно)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>Пропустить</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>Добавьте главы на главной странице, чтобы увидеть их здесь.</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>Выберите персонажа...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>Добавить связь</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>напр. Старая библиотека, Улицы центра...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Предложения</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Категория</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Теги</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Написание</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Редактировать теги...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Тип отношений:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Заметки</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Редактура</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Персонаж:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Нужно вдохновение? Вот несколько идей для начала.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>Пока нет глав</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Синопсис главы — краткое описание для вашего удобства.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Перетащите карточки - Нажмите, чтобы открыть</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>напр. ведёт к, воспоминание о...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>Результатов не найдено</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Редактировать теги главы</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Место</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Создать</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Финал</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>Новая подсказка</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>Все категории</value>
+  </data>
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
+    <value>Все главы</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Фильтр по тегу</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Черновик</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>Нет подсказок для этой категории.</value>
+  </data>
+
+  <data name="aToZ.Text" xml:space="preserve">
+    <value>A-Z</value>
+  </data>
+  <data name="autosave.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Autosave (adjust interval in Settings &gt; General)</value>
+  </data>
+  <data name="byChapterText.Text" xml:space="preserve">
+    <value>By chapter</value>
+  </data>
+  <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="characterAppearance.PlaceholderText" xml:space="preserve">
+    <value>Appearance and visual notes</value>
+  </data>
+  <data name="characterDialoguePreview.Text" xml:space="preserve">
+    <value>Sample lines</value>
+  </data>
+  <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
+    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+  </data>
+  <data name="characterDialogueStatsEmpty" xml:space="preserve">
+    <value>No dialogue lines found yet.</value>
+  </data>
+  <data name="characterDialogueStatsFormat" xml:space="preserve">
+    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+  </data>
+  <data name="characterDialogueUsage.Text" xml:space="preserve">
+    <value>Dialogue usage</value>
+  </data>
+  <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search characters</value>
+  </data>
+  <data name="charactersSearchEmpty.Text" xml:space="preserve">
+    <value>No characters match your search.</value>
+  </data>
+  <data name="characterTraits.PlaceholderText" xml:space="preserve">
+    <value>Traits (comma separated)</value>
+  </data>
+  <data name="dailyWordGoalSetting.Text" xml:space="preserve">
+    <value>Daily word goal</value>
+  </data>
+  <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
+    <value>Track your daily writing progress. Set to 0 to disable.</value>
+  </data>
+  <data name="dialoguePickerAll.Text" xml:space="preserve">
+    <value>All characters</value>
+  </data>
+  <data name="dialoguePickerNoResults.Text" xml:space="preserve">
+    <value>No characters match this search.</value>
+  </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ выбрать · Enter подтвердить · Esc закрыть</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>Помощник диалогов</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>Нажмите Enter во время написания, чтобы быстро вставить реплику персонажа. Стрелками ↑↓ выберите персонажа, затем Enter для подтверждения. Диалоги также можно преобразовать в узлы ветвящегося диалога.</value>
+  </data>
+  <data name="dialoguePickerRecent.Text" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Find character</value>
+  </data>
+  <data name="editorFontFamilySetting.Text" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
+    <value>Default font used for new text in the editor.</value>
+  </data>
+  <data name="editorFontSizeSetting.Text" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="githubBannerDescription.Text" xml:space="preserve">
+    <value>Click here to give Storylines a Star on GitHub</value>
+  </data>
+  <data name="githubBannerTitle.Text" xml:space="preserve">
+    <value>GitHub Stars Count</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="newChapter.PlaceholderText" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="newCharacterName" xml:space="preserve">
+    <value>New Character</value>
+  </data>
+  <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Auto-arrange</value>
+  </data>
+  <data name="pinboardBackButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="pinboardBackButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="profilePicturesFlyout.Text" xml:space="preserve">
+    <value>Character pictures</value>
+  </data>
+  <data name="recurrentsDescription.Text" xml:space="preserve">
+    <value>Download our New App for Windows Today</value>
+  </data>
+  <data name="recurrentsTitle.Text" xml:space="preserve">
+    <value>Manage Your Subscriptions</value>
+  </data>
+  <data name="textEditorSetting.Text" xml:space="preserve">
+    <value>Text Editor</value>
+  </data>
+  <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
+    <value>Recent projects</value>
+  </data>
+  <data name="writingGoalSetting.Text" xml:space="preserve">
+    <value>Writing Goal</value>
+  </data>
+  <data name="zToA.Text" xml:space="preserve">
+    <value>Z-A</value>
+  </data>
+
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>Добавить</value>
+  </data>
+  <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Add a tag…</value>
+  </data>
+  <data name="chapterTagSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="noRelationshipsText.Text" xml:space="preserve">
+    <value>No relationships defined</value>
+  </data>
+  <data name="readTimeMinRead" xml:space="preserve">
+    <value>min read</value>
+  </data>
+  <data name="relationshipsTitle.Text" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+
+  <data name="wordGoalReachedMessage" xml:space="preserve">
+    <value>You've hit your word goal for "{0}". Keep writing!</value>
+  </data>
+  <data name="wordGoalReachedTitle" xml:space="preserve">
+    <value>Chapter goal reached!</value>
+  </data>
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value>Только чтение - нажмите, чтобы редактировать</value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Режим только чтения</value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value>Выберите режим письма</value>
+  </data>
+  <data name="modeEdit.Text" xml:space="preserve">
+    <value>Редактирование</value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value>Полноценное редактирование со всеми доступными инструментами.</value>
+  </data>
+  <data name="modeFocus.Text" xml:space="preserve">
+    <value>Фокус</value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value>Письмо без отвлечений с необязательным таймером и целью измерения.</value>
+  </data>
+  <data name="modeReadOnly.Text" xml:space="preserve">
+    <value>Только чтение</value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value>Блокирует редактор для чтения без отвлечений с сохранением форматирования.</value>
+  </data>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>Включить режим</value>
+  </data>
+  <data name="experimentalSetting.Text" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
+    <value>Enable experimental features</value>
+  </data>
+  <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
+    <value>Unlock features still in development, such as branching dialogue.</value>
+  </data>
+  <data name="pinboardButton.Label" xml:space="preserve">
+    <value>Холст истории</value>
+  </data>
+  <data name="writingPromptsButton.Label" xml:space="preserve">
+    <value>Подсказки для письма</value>
+  </data>
+  <data name="characterDialogueNodeCountFormat" xml:space="preserve">
+    <value>{0} dialogue node(s)</value>
+  </data>
+  <data name="characterViewDialogueNodes.Content" xml:space="preserve">
+    <value>View in dialogue editor</value>
+  </data>
+  <data name="pinboardDialogueIndicator" xml:space="preserve">
+    <value>Has branching dialogue</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Жирный</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Курсив</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Подчёркнутый</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Подчёркнутый</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Зачёркнутый</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Зачёркнутый</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Выйти из режима только для чтения</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Выйти из режима только для чтения</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Нажмите на целевой отрывок для соединения</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Отменить соединение</value>
+  </data>
+  <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Ярлыки</value></data>
+  <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Глобальный</value></data>
+  <data name="shortcutsMainPageExpander.Header" xml:space="preserve"><value>Главная страница</value></data>
+  <data name="shortcutsCharactersExpander.Header" xml:space="preserve"><value>Страница персонажей</value></data>
+  <data name="shortcutSave" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="shortcutSaveCopy" xml:space="preserve"><value>Сохранить копию</value></data>
+  <data name="shortcutExport" xml:space="preserve"><value>Экспортировать</value></data>
+  <data name="shortcutUndo" xml:space="preserve"><value>Отменить</value></data>
+  <data name="shortcutRedo" xml:space="preserve"><value>Повторно</value></data>
+  <data name="shortcutOpenSettings" xml:space="preserve"><value>Открыть настройки</value></data>
+  <data name="shortcutAddChapter" xml:space="preserve"><value>Добавить главу</value></data>
+  <data name="shortcutRemoveChapter" xml:space="preserve"><value>Удалить главу</value></data>
+  <data name="shortcutChapterAbove" xml:space="preserve"><value>Глава выше</value></data>
+  <data name="shortcutChapterBelow" xml:space="preserve"><value>Глава ниже</value></data>
+  <data name="shortcutReadAloud" xml:space="preserve"><value>Чтение вслух</value></data>
+  <data name="shortcutSearch" xml:space="preserve"><value>Поиск</value></data>
+  <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Найти и заменить</value></data>
+  <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Режим диалогов</value></data>
+  <data name="shortcutBold" xml:space="preserve"><value>Смелый</value></data>
+  <data name="shortcutItalic" xml:space="preserve"><value>Курсив</value></data>
+  <data name="shortcutUnderline" xml:space="preserve"><value>Подчеркните</value></data>
+  <data name="shortcutStrikethrough" xml:space="preserve"><value>Зачеркивание</value></data>
+  <data name="shortcutAddCharacter" xml:space="preserve"><value>Добавить характер</value></data>
+  <data name="shortcutRemoveCharacter" xml:space="preserve"><value>Удалить символ</value></data>
+  <data name="shortcutToggleEditMode" xml:space="preserve"><value>Режим редактирования</value></data>
+  <data name="exportTitle" xml:space="preserve"><value>Экспортировать</value></data>
+  <data name="exportOptionChapters" xml:space="preserve"><value>Главы</value></data>
+  <data name="exportOptionCharacters" xml:space="preserve"><value>Символы</value></data>
+  <data name="exportOptionDialogues" xml:space="preserve"><value>Диалоги</value></data>
+  <data name="exportFileNameCollisionError" xml:space="preserve"><value>Этот файл уже существует! Измените имя или расположение, иначе файл будет заменен.</value></data>
+  <data name="exportFileName" xml:space="preserve"><value>Имя файла:</value></data>
+  <data name="exportFileNamePlaceholder" xml:space="preserve"><value>"экспорт-лесной-королевы"</value></data>
+  <data name="exportFileLocation" xml:space="preserve"><value>Расположение файла:</value></data>
+  <data name="exportFileLocationPlaceholder" xml:space="preserve"><value>"C:\Users\Documents"</value></data>
+  <data name="exportIncludeChapterName" xml:space="preserve"><value>В том числе название главы</value></data>
+  <data name="exportChaptersToExport" xml:space="preserve"><value>Главы для экспорта:</value></data>
+  <data name="exportCharactersToExport" xml:space="preserve"><value>Символы для экспорта:</value></data>
+  <data name="exportNone" xml:space="preserve"><value>Отсутствует</value></data>
+  <data name="exportAll" xml:space="preserve"><value>Все</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>Не удалось выполнить экспорт.</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>Ни один диалог не соответствует текущему выбору экспорта.</value></data>
+  <data name="exportSubmit" xml:space="preserve"><value>Экспортировать</value></data>
+  <data name="saveTitle" xml:space="preserve"><value>Сохранить</value></data>
+  <data name="saveCopyTitle" xml:space="preserve"><value>Сохранить копию</value></data>
+  <data name="saveProjectName" xml:space="preserve"><value>Название проекта:</value></data>
+  <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"О лесной королеве"</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>Project Statistics</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>Word frequency</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>Информация о файле</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>Имя файла:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Расположение:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Написание</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Редактура</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Черновик</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>Информация о файле</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>Создан:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>Изменен:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>Размер:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>Тип:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>Еще не сохранено</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>Дублировать</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (Копия)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (Копия {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>Копировать подсказку</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>Создать главу</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>Все категории</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>Подсказка скопирована в буфер обмена.</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>Подсказка: {0}</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>Писательская подсказка</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>Сохраненные пресеты</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>Удалить пресет</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>Удалить пресет</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>Сохраненных пресетов пока нет.</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>Экспериментально</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>Проверить обновления</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>Найти и заменить</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>Закрыть</value>
+  </data>
 </root>
+
+
+
+
+
