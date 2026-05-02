@@ -1,7 +1,7 @@
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Controls
 {
@@ -21,7 +21,7 @@ namespace Storylines.Views.Controls
 
         public string Text
         {
-            get => IsCancel ? ResourceLoader.GetForCurrentView().GetString("cancelText") : (string)GetValue(TextProperty);
+            get => IsCancel ? ResourceLoader.GetForViewIndependentUse().GetString("cancelText") : (string)GetValue(TextProperty);
             set => SetValue(TextProperty, value);
         }
 

@@ -7,10 +7,10 @@ using System.Collections.ObjectModel;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
+using Microsoft.Windows.AppLifecycle;
 using Windows.Globalization;
 using Windows.Media.SpeechSynthesis;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Storylines.ViewModels.Settings
 {
@@ -65,17 +65,18 @@ namespace Storylines.ViewModels.Settings
         }
 
         [RelayCommand]
-        private async Task RestartNowAsync()
+        private Task RestartNowAsync()
         {
             try
             {
-                var result = await CoreApplication.RequestRestartAsync(string.Empty);
+                var result = AppInstance.Restart(string.Empty);
                 LanguageRestartFailed = result != AppRestartFailureReason.RestartPending;
             }
             catch (Exception)
             {
                 LanguageRestartFailed = true;
             }
+            return Task.CompletedTask;
         }
 
         [RelayCommand]

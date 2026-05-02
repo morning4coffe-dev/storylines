@@ -4,7 +4,7 @@ using Storylines.Services.Interfaces;
 using Storylines.ViewModels.Modes;
 using Storylines.Views.Controls.Modes;
 using System;
-using Windows.UI.ViewManagement;
+using Microsoft.UI.Windowing;
 
 namespace Storylines.Services.Modes.Impl
 {
@@ -60,9 +60,7 @@ namespace Storylines.Services.Modes.Impl
 
             if (FullScreen)
             {
-                var view = ApplicationView.GetForCurrentView();
-                view.TryEnterFullScreenMode();
-                ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.FullScreen;
+                App.MainWindow.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
             }
 
             _vm.Initialize(Time, MeasureTarget, Metric);
@@ -75,9 +73,7 @@ namespace Storylines.Services.Modes.Impl
 
             if (FullScreen)
             {
-                var view = ApplicationView.GetForCurrentView();
-                view.ExitFullScreenMode();
-                ApplicationView.PreferredLaunchWindowingMode = ApplicationViewWindowingMode.Auto;
+                App.MainWindow.AppWindow.SetPresenter(AppWindowPresenterKind.Default);
             }
 
             _overlay = null;
