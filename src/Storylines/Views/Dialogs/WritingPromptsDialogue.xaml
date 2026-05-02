@@ -1,0 +1,67 @@
+<ContentDialog x:Class="Storylines.Views.Dialogs.WritingPromptsDialogue"
+               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               mc:Ignorable="d"
+               x:Uid="writingPromptsDialogue"
+               CornerRadius="8"
+               MinWidth="480">
+    <StackPanel Spacing="16" MinWidth="440">
+        <StackPanel Orientation="Horizontal" Spacing="8">
+            <TextBlock x:Uid="writingPromptsDescription"
+                       FontSize="12"
+                       Opacity="0.6"
+                       TextWrapping="Wrap"
+                       VerticalAlignment="Center" />
+            <Border CornerRadius="4"
+                    Padding="6,2"
+                    Background="{ThemeResource SystemAccentColorLight2}">
+                <TextBlock x:Uid="experimentalBadge"
+                           FontSize="11"
+                           Foreground="White" />
+            </Border>
+        </StackPanel>
+
+        <Border Padding="16"
+                CornerRadius="8"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1">
+            <TextBlock x:Name="promptText"
+                       FontSize="15"
+                       TextWrapping="Wrap"
+                       MinHeight="60" />
+        </Border>
+
+        <StackPanel Orientation="Horizontal" Spacing="8" HorizontalAlignment="Center">
+            <Button x:Name="shuffleButton"
+                    Click="OnShuffle_Click"
+                    Padding="12,8"
+                    CornerRadius="4">
+                <StackPanel Orientation="Horizontal" Spacing="6">
+                    <FontIcon Glyph="&#xE8B1;" FontSize="14" />
+                    <TextBlock x:Uid="writingPromptsNewPrompt" />
+                </StackPanel>
+            </Button>
+            <Button x:Uid="writingPromptsCopyPrompt"
+                    Click="OnCopyPrompt_Click"
+                    Padding="12,8"
+                    CornerRadius="4" />
+            <Button x:Uid="writingPromptsCreateChapterFromPrompt"
+                    Click="OnCreateChapterFromPrompt_Click"
+                    Padding="12,8"
+                    CornerRadius="4" />
+        </StackPanel>
+
+        <TextBlock x:Name="promptActionStatusText"
+                   FontSize="12"
+                   Opacity="0.65"
+                   TextWrapping="Wrap" />
+
+        <ComboBox x:Name="categoryComboBox"
+                  x:Uid="writingPromptsCategory"
+                  HorizontalAlignment="Stretch"
+                  SelectionChanged="OnCategory_SelectionChanged" />
+    </StackPanel>
+</ContentDialog>
