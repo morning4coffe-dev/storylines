@@ -3,12 +3,10 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
       xmlns:vm="using:Storylines.ViewModels"
       KeyboardAcceleratorPlacementMode="Hidden"
       mc:Ignorable="d"
-      muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Background="{ThemeResource AppAcrylicBackground}">
 
     <!--  Global keyboard accelerators. Per-page accelerators live in each Page's XAML.
@@ -134,7 +132,7 @@
             </Frame>
         </Grid>
 
-        <muxc:InfoBar x:Name="updateAvailableInfoBar"
+        <InfoBar x:Name="updateAvailableInfoBar"
                       x:FieldModifier="public"
                       x:Uid="updateAvailableTitle"
                       IsOpen="False"
@@ -149,7 +147,7 @@
                       Width="440"
                       Margin="0, 80"
                       Closed="OnUpdateAvailableInfoBar_Closed">
-            <muxc:InfoBar.Content>
+            <InfoBar.Content>
                 <StackPanel Margin="0,-4,0,0"
                             Spacing="10">
                     <TextBlock x:Name="updateAvailableInfoBarText"
@@ -182,10 +180,10 @@
                                 Click="OnUpdateAvailableSecondaryButton_Click" />
                     </StackPanel>
                 </StackPanel>
-            </muxc:InfoBar.Content>
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
+            </InfoBar.Content>
+            <InfoBar.IconSource>
+                <FontIconSource Glyph="" />
+            </InfoBar.IconSource>
 
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.5"
@@ -207,9 +205,9 @@
                                              From="1.0"
                                              To="0" />
             </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
+        </InfoBar>
 
-        <muxc:InfoBar x:Name="reviewRequestInfoBar"
+        <InfoBar x:Name="reviewRequestInfoBar"
                       x:FieldModifier="public"
                       x:Uid="experience"
                       IsOpen="False"
@@ -224,7 +222,7 @@
                       HorizontalAlignment="Center"
                       Margin="0, 80"
                       CloseButtonClick="OnRateNotNow_CloseButtonClick">
-            <muxc:InfoBar.Content>
+            <InfoBar.Content>
                 <StackPanel Margin="0,-4,0,0">
                     <RichTextBlock IsTextSelectionEnabled="False">
                         <Paragraph>
@@ -244,7 +242,7 @@
                                  Click="OnRateNeverShowAgain_Click" />
                     </StackPanel>
                 </StackPanel>
-            </muxc:InfoBar.Content>
+            </InfoBar.Content>
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.5"
                                                  From="0, 35, 0"
@@ -265,12 +263,12 @@
                                              From="1.0"
                                              To="0" />
             </animations:Implicit.HideAnimations>
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
-        </muxc:InfoBar>
+            <InfoBar.IconSource>
+                <FontIconSource Glyph="" />
+            </InfoBar.IconSource>
+        </InfoBar>
 
-        <muxc:InfoBar x:Name="reviewRequestThankYouInfoBar"
+        <InfoBar x:Name="reviewRequestThankYouInfoBar"
                       x:Uid="reviewRequestThankYou"
                       x:FieldModifier="public"
                       IsOpen="False"
@@ -283,9 +281,9 @@
                       BorderBrush="{ThemeResource ElementBorderColor}"
                       BorderThickness="{ThemeResource ElementBorderThickness}"
                       Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}">
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
+            <InfoBar.IconSource>
+                <FontIconSource Glyph="" />
+            </InfoBar.IconSource>
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.5"
                                                  From="0, 35, 0"
@@ -306,9 +304,9 @@
                                              From="1.0"
                                              To="0" />
             </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
+        </InfoBar>
 
-        <muxc:InfoBar x:Name="alertNotificationInfoBar"
+        <InfoBar x:Name="alertNotificationInfoBar"
                       x:FieldModifier="public"
                       IsOpen="False"
                       Visibility="Collapsed"
@@ -323,7 +321,7 @@
                       HorizontalAlignment="Center"
                       Margin="0, 80"
                       CloseButtonClick="OnAlertNotificationInfoBar_CloseButtonClick">
-            <muxc:InfoBar.Content>
+            <InfoBar.Content>
                 <StackPanel Margin="0,-4,0,0"
                             x:Name="alertNotificationInfoBarTextStack"
                             x:FieldModifier="public">
@@ -335,7 +333,7 @@
                         </Paragraph>
                     </RichTextBlock>
                 </StackPanel>
-            </muxc:InfoBar.Content>
+            </InfoBar.Content>
             <animations:Implicit.ShowAnimations>
                 <animations:TranslationAnimation Duration="0:0:0.5"
                                                  From="0, 35, 0"
@@ -356,6 +354,6 @@
                                              From="1.0"
                                              To="0" />
             </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
+        </InfoBar>
     </Grid>
 </Page>

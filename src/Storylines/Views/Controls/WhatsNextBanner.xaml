@@ -3,9 +3,8 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+             xmlns:animations="using:CommunityToolkit.WinUI.Animations"
              mc:Ignorable="d"
-             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
              d:DesignHeight="300"
              d:DesignWidth="400">
 
@@ -69,7 +68,7 @@
 
         </FlipView>
 
-        <muxc:PipsPager x:Name="FlipViewPipsPager"
+        <PipsPager x:Name="FlipViewPipsPager"
                         HorizontalAlignment="Center"
                         Margin="0, 10, 0, 0"
                         NumberOfPages="2"

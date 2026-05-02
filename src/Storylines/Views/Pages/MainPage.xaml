@@ -4,7 +4,6 @@
       xmlns:components="using:Storylines.Views.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:Storylines.ViewModels"
       Loaded="Page_Loaded"
       SizeChanged="OnPage_SizeChanged"
@@ -121,7 +120,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-            <muxc:ProgressBar x:Name="mainProgressBar"
+            <ProgressBar x:Name="mainProgressBar"
                               Grid.ColumnSpan="3"
                               Margin="0,-1,0,3"
                               VerticalAlignment="Top"
@@ -324,7 +323,7 @@
                                             </AppBarButton.Icon>
                                         </AppBarButton>
                                     </Grid>
-                                    <muxc:NumberBox x:Name="textBoxZoomTextFlyoutTextBox"
+                                    <NumberBox x:Name="textBoxZoomTextFlyoutTextBox"
                                                     Width="180"
                                                     Height="38"
                                                     Padding="10,8"

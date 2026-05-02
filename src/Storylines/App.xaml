@@ -5,8 +5,6 @@
     <Application.Resources>
         <ResourceDictionary>
             <ResourceDictionary.MergedDictionaries>
-                <XamlControlsResources xmlns="using:Microsoft.UI.Xaml.Controls"
-                                       ControlsResourcesVersion="Version2" />
                 <ResourceDictionary Source="Resources/ResourceDictionaries/MainStyleDictionary.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>

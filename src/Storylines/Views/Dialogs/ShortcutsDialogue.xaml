@@ -4,7 +4,6 @@
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:customcontrols="using:Storylines.Views.Controls"
-               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
                xmlns:helpers="using:Storylines.Helpers"
                mc:Ignorable="d"
                Closed="ContentDialog_Closed"
@@ -49,7 +48,7 @@
         <ScrollViewer Grid.Row="2">
             <StackPanel Spacing="8">
                 <!--Global-->
-                <muxc:Expander x:Uid="shortcutsGlobalExpander"
+                <Expander x:Uid="shortcutsGlobalExpander"
                                Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch"
                                IsExpanded="True">
@@ -69,9 +68,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </muxc:Expander>
+                </Expander>
                 <!--MainPage-->
-                <muxc:Expander x:Uid="shortcutsMainPageExpander"
+                <Expander x:Uid="shortcutsMainPageExpander"
                                Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch">
                     <ItemsControl ItemsSource="{x:Bind MainPageShortcuts}"
@@ -90,9 +89,9 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </muxc:Expander>
+                </Expander>
                 <!--CharactersPage-->
-                <muxc:Expander x:Uid="shortcutsCharactersExpander"
+                <Expander x:Uid="shortcutsCharactersExpander"
                                Style="{StaticResource CustomExpanderStyle}"
                                HorizontalAlignment="Stretch">
                     <ItemsControl ItemsSource="{x:Bind CharactersPageShortcuts}"
@@ -111,7 +110,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                </muxc:Expander>
+                </Expander>
             </StackPanel>
         </ScrollViewer>
     </Grid>

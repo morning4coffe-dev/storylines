@@ -5,8 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:variables="using:Storylines.Models"
       xmlns:converters="using:Storylines.Converters"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
       mc:Ignorable="d"
       Loaded="Page_Loaded">
 

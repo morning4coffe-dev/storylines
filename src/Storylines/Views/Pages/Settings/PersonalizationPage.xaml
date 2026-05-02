@@ -3,7 +3,6 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -204,14 +203,14 @@
                 </ComboBox>
             </Grid>
 
-            <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
+            <Expander Style="{StaticResource CustomExpanderStyle}"
                            BorderBrush="{ThemeResource LayerFillColorDefaultBrush}"
                            BorderThickness="{ThemeResource ElementBorderThickness}"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"
                            HorizontalContentAlignment="Left"
                            IsExpanded="True">
-                <muxc:Expander.Header>
+                <Expander.Header>
                     <Grid Padding="-15,20,-12,20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -247,8 +246,8 @@
                             </ComboBox.Items>
                         </ComboBox>
                     </Grid>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
+                </Expander.Header>
+                <Expander.Content>
                     <StackPanel Spacing="12"
                                 Margin="16,12">
                         <TextBlock x:Uid="quickPresets"
@@ -304,8 +303,8 @@
                                      IsEnabled="{x:Bind ViewModel.IsCustomAccentSelected, Mode=OneWay}"
                                      Color="{x:Bind ViewModel.CustomAccentColor, Mode=TwoWay}" />
                     </StackPanel>
-                </muxc:Expander.Content>
-            </muxc:Expander>
+                </Expander.Content>
+            </Expander>
 
             <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"
@@ -422,7 +421,7 @@
                            VerticalAlignment="Center"
                            TextWrapping="Wrap"
                            Grid.Column="1" />
-                <muxc:NumberBox x:Name="fontSizeNumBox"
+                <NumberBox x:Name="fontSizeNumBox"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Minimum="8"
@@ -464,7 +463,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Grid.Column="2">
-                    <muxc:NumberBox x:Name="editorZoomNumBox"
+                    <NumberBox x:Name="editorZoomNumBox"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Minimum="52"

@@ -4,8 +4,7 @@
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
                xmlns:customcontrols="using:Storylines.Views.Controls"
-               xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
-               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+               xmlns:controls="using:CommunityToolkit.WinUI.Controls"
                mc:Ignorable="d"
                CornerRadius="8"
                Opened="ContentDialog_Opened"
@@ -40,14 +39,14 @@
                    Opacity="0.55"
                    FontSize="{StaticResource AppCaptionFontSize}" />
 
-        <muxc:ItemsRepeater x:Name="suggestionPills"
+        <ItemsRepeater x:Name="suggestionPills"
                        Margin="0,0,0,4">
-            <muxc:ItemsRepeater.Layout>
-                <muxc:StackLayout Orientation="Horizontal"
+            <ItemsRepeater.Layout>
+                <StackLayout Orientation="Horizontal"
                              Spacing="4"
                              x:Name="suggestionLayout" />
-            </muxc:ItemsRepeater.Layout>
-            <muxc:ItemsRepeater.ItemTemplate>
+            </ItemsRepeater.Layout>
+            <ItemsRepeater.ItemTemplate>
                 <DataTemplate x:DataType="x:String">
                     <Button Content="{x:Bind}"
                             CornerRadius="4"
@@ -55,8 +54,8 @@
                             FontSize="{StaticResource AppCaptionFontSize}"
                             Click="OnSuggestionPill_Click" />
                 </DataTemplate>
-            </muxc:ItemsRepeater.ItemTemplate>
-        </muxc:ItemsRepeater>
+            </ItemsRepeater.ItemTemplate>
+        </ItemsRepeater>
 
         <StackPanel Spacing="6">
             <TextBlock x:Uid="chapterTagsSavedPresets"
