@@ -981,26 +981,6 @@ namespace Storylines.Views.Controls
 
             RememberRecentCharacter(character);
             dialoguePopup.IsOpen = false;
-
-            // Integration: also create a branching dialogue node if a graph exists
-            TryCreateBranchingDialogueNode(character);
-        }
-
-        private void TryCreateBranchingDialogueNode(Character character)
-        {
-            var branchingService = App.TryGetService<IBranchingDialogueService>();
-            if (branchingService == null) return;
-
-            int selectedIndex = _textEditor.SelectedChapterIndex;
-            if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count) return;
-
-            var chapter = _projectState.Chapters[selectedIndex];
-            var graph = _projectState.FindBranchingDialogueByChapter(chapter.Token);
-
-            // Only create nodes when the chapter already has a branching dialogue graph
-            if (graph == null) return;
-
-            branchingService.CreateNode(chapter.Token, title: null, speaker: character.Name, text: null);
         }
 
         private void RememberRecentCharacter(Character character)

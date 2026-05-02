@@ -29,12 +29,7 @@
     -->
     <Compile Include="..\Storylines\Models\Chapter.cs" Link="LinkedSources\Chapter.cs" />
     <Compile Include="..\Storylines\Models\ProjectData.cs" Link="LinkedSources\ProjectData.cs" />
-    <Compile Include="..\Storylines\Models\BranchingDialogueModels.cs" Link="LinkedSources\BranchingDialogueModels.cs" />
     <Compile Include="..\Storylines\Models\ExportModels.cs" Link="LinkedSources\ExportModels.cs" />
-    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueService.cs" Link="LinkedSources\IBranchingDialogueService.cs" />
-    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueStore.cs" Link="LinkedSources\IBranchingDialogueStore.cs" />
-    <Compile Include="..\Storylines\Services\Interfaces\IBranchingDialogueEventPublisher.cs" Link="LinkedSources\IBranchingDialogueEventPublisher.cs" />
-    <Compile Include="..\Storylines\Services\BranchingDialogueService.cs" Link="LinkedSources\BranchingDialogueService.cs" />
     <Compile Include="..\Storylines\Services\CommandRegistry.cs" Link="LinkedSources\CommandRegistry.cs" />
     <Compile Include="..\Storylines\Services\SpeechService.cs" Link="LinkedSources\SpeechService.cs" />
     <Compile Include="..\Storylines\Services\WritingStatsService.cs" Link="LinkedSources\WritingStatsService.cs" />
@@ -53,8 +48,6 @@
     <Compile Include="..\Storylines\Helpers\UndoRedoManager.cs" Link="LinkedSources\UndoRedoManager.cs" />
     <Compile Include="..\Storylines\Helpers\RecentProjectDeduplicator.cs" Link="LinkedSources\RecentProjectDeduplicator.cs" />
     <Compile Include="..\Storylines\Helpers\ChapterTextNormalization.cs" Link="LinkedSources\ChapterTextNormalization.cs" />
-    <Compile Include="..\Storylines\Helpers\CanvasConnectionGeometry.cs" Link="LinkedSources\CanvasConnectionGeometry.cs" />
-    <Compile Include="..\Storylines\Helpers\BranchingDialogueExportHelper.cs" Link="LinkedSources\BranchingDialogueExportHelper.cs" />
     <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
     <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />
     <Compile Include="..\Storylines\ViewModels\InspectorViewModel.cs" Link="LinkedSources\InspectorViewModel.cs" />

@@ -77,7 +77,6 @@ namespace Storylines.Services
                     _legacySerializer,
                     CollectProjectData,
                     NormalizeProjectData,
-                    CloneAndNormalizeGraph,
                     LoadVariables,
                     OnProjectLoaded,
                     _notifications),
@@ -163,8 +162,6 @@ namespace Storylines.Services
 
             foreach (var chapter in _projectState.Chapters)
             {
-                var graph = _projectState.FindBranchingDialogueByChapter(chapter.Token);
-
                 data.Chapters.Add(new ChapterData
                 {
                     Id = chapter.Token,
@@ -180,8 +177,7 @@ namespace Storylines.Services
                     PinboardY = chapter.PinboardY != 0 ? chapter.PinboardY : (double?)null,
                     Status = chapter.Status != ChapterStatus.Draft ? chapter.Status.ToString() : null,
                     Location = chapter.Location,
-                    PlotThreads = chapter.PlotThreads?.Count > 0 ? chapter.PlotThreads : null,
-                    BranchingDialogueGraphId = graph?.Id
+                    PlotThreads = chapter.PlotThreads?.Count > 0 ? chapter.PlotThreads : null
                 });
             }
 
@@ -190,14 +186,6 @@ namespace Storylines.Services
 
             if (_projectState.PlotThreads?.Count > 0)
                 data.PlotThreads = _projectState.PlotThreads;
-
-            if (_projectState.BranchingDialogues?.Count > 0)
-            {
-                data.BranchingDialogues = _projectState.BranchingDialogues
-                    .Where(graph => graph != null && !string.IsNullOrWhiteSpace(graph.ChapterId))
-                    .Select(CloneAndNormalizeGraph)
-                    .ToList();
-            }
 
             return data;
         }
@@ -589,7 +577,6 @@ namespace Storylines.Services
             projectData.Characters ??= new List<CharacterData>();
             projectData.PinboardConnections ??= new List<PinboardConnectionData>();
             projectData.PlotThreads ??= new List<string>();
-            projectData.BranchingDialogues ??= new List<BranchingDialogueGraphData>();
 
             var chapterIds = new HashSet<string>();
             foreach (var chapter in projectData.Chapters)
@@ -603,31 +590,6 @@ namespace Storylines.Services
                 chapter.Notes ??= string.Empty;
             }
 
-            foreach (var graph in projectData.BranchingDialogues)
-            {
-                if (graph == null)
-                    continue;
-
-                if (string.IsNullOrWhiteSpace(graph.ChapterId) || !chapterIds.Contains(graph.ChapterId))
-                {
-                    var chapterFromLink = projectData.Chapters.FirstOrDefault(chapter => chapter?.BranchingDialogueGraphId == graph.Id);
-                    if (!string.IsNullOrWhiteSpace(chapterFromLink?.Id))
-                        graph.ChapterId = chapterFromLink.Id;
-                }
-
-                graph.EnsureValid();
-            }
-
-            projectData.BranchingDialogues = projectData.BranchingDialogues
-                .Where(graph => graph != null && !string.IsNullOrWhiteSpace(graph.ChapterId) && chapterIds.Contains(graph.ChapterId))
-                .ToList();
-
-            foreach (var chapter in projectData.Chapters)
-            {
-                var graph = projectData.BranchingDialogues.FirstOrDefault(item => item.ChapterId == chapter.Id);
-                chapter.BranchingDialogueGraphId = graph?.Id;
-            }
-
             return projectData;
         }
 
@@ -639,11 +601,6 @@ namespace Storylines.Services
 
             existing.Add(candidate);
             return candidate;
-        }
-
-        private static BranchingDialogueGraphData CloneAndNormalizeGraph(BranchingDialogueGraphData graph)
-        {
-            return BranchingDialogueGraphCloner.Clone(graph);
         }
     }
 }

@@ -167,9 +167,6 @@ namespace Storylines.Services
 
             if (data.PlotThreads != null)
                 _projectState.PlotThreads = data.PlotThreads.ToList();
-
-            if (data.BranchingDialogues != null)
-                _projectState.SetBranchingDialogues(data.BranchingDialogues.ToList());
         }
 
         private static ChapterStatus ParseStatus(string status)

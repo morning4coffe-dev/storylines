@@ -14,7 +14,6 @@ namespace Storylines.Services.Persistence
         private readonly LegacySrlSerializer _legacySerializer;
         private readonly Func<ProjectData> _collectProjectData;
         private readonly Func<ProjectData, ProjectData> _normalizeProjectData;
-        private readonly Func<BranchingDialogueGraphData, BranchingDialogueGraphData> _cloneAndNormalizeGraph;
         private readonly Action<ProjectData> _loadVariables;
         private readonly Action _onLoaded;
 
@@ -29,7 +28,6 @@ namespace Storylines.Services.Persistence
             LegacySrlSerializer legacySerializer,
             Func<ProjectData> collectProjectData,
             Func<ProjectData, ProjectData> normalizeProjectData,
-            Func<BranchingDialogueGraphData, BranchingDialogueGraphData> cloneAndNormalizeGraph,
             Action<ProjectData> loadVariables,
             Action onLoaded,
             INotificationService notifications)
@@ -39,7 +37,6 @@ namespace Storylines.Services.Persistence
             _legacySerializer = legacySerializer;
             _collectProjectData = collectProjectData;
             _normalizeProjectData = normalizeProjectData;
-            _cloneAndNormalizeGraph = cloneAndNormalizeGraph;
             _loadVariables = loadVariables;
             _onLoaded = onLoaded;
         }
@@ -157,7 +154,6 @@ namespace Storylines.Services.Persistence
 
             ProjectState.PinboardConnections = projectData.PinboardConnections ?? new List<PinboardConnectionData>();
             ProjectState.PlotThreads = projectData.PlotThreads ?? new List<string>();
-            ProjectState.SetBranchingDialogues(projectData.BranchingDialogues?.Select(_cloneAndNormalizeGraph).ToList());
 
             for (var charIndex = 0; charIndex < projectData.Characters.Count && charIndex < ProjectState.Characters.Count; charIndex++)
             {

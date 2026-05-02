@@ -24,7 +24,7 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private AppPages _currentPage;
 
-        public enum AppPages { Settings, Characters, MainPage, BranchingDialogue }
+        public enum AppPages { Settings, Characters, MainPage }
 
         private readonly string _editedString;
         private readonly IProjectPersistenceService _persistence;
