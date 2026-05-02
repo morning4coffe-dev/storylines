@@ -87,7 +87,7 @@ namespace Storylines.Views.Dialogs
         {
             return date == default
                 ? fallback
-                : date.ToString("g", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture);
+                : date.ToString("g", System.Globalization.CultureInfo.CurrentCulture);
         }
 
         private static string FormatFileSize(ulong size)
@@ -106,8 +106,8 @@ namespace Storylines.Views.Dialogs
             }
 
             string formattedValue = value >= 10 || unitIndex == 0
-                ? value.ToString("0", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture)
-                : value.ToString("0.#", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture);
+                ? value.ToString("0", System.Globalization.CultureInfo.CurrentCulture)
+                : value.ToString("0.#", System.Globalization.CultureInfo.CurrentCulture);
 
             return $"{formattedValue} {units[unitIndex]}";
         }

@@ -420,13 +420,13 @@ namespace Storylines.Views.Pages
             return string.Join(", ", parts);
         }
 
-        private void OnTraitsTokenItem_Added(CommunityToolkit.WinUI.UI.Controls.TokenizingTextBox sender, object args)
+        private void OnTraitsTokenItem_Added(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, object args)
         {
             if (!selectionChanged && DidSomethingChange())
                 IsEditEnabled(EditButton.ApplyChanges);
         }
 
-        private void OnTraitsTokenItem_Removing(CommunityToolkit.WinUI.UI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.UI.Controls.TokenItemRemovingEventArgs args)
+        private void OnTraitsTokenItem_Removing(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemRemovingEventArgs args)
         {
             if (!selectionChanged && DidSomethingChange())
                 IsEditEnabled(EditButton.ApplyChanges);
@@ -871,6 +871,15 @@ namespace Storylines.Views.Pages
         {
             if (!string.IsNullOrWhiteSpace(chapterToken))
                 _navigation?.NavigateTo(NavigationTarget.MainPage, chapterToken);
+        }
+
+        /// <summary>
+        /// Refreshes branching dialogue insights for the given character.
+        /// Only available when the dialogue plugin is compiled in.
+        /// </summary>
+        private void UpdateDialogueInsights(Character character)
+        {
+            // No-op when the dialogue plugin is not available.
         }
     }
 

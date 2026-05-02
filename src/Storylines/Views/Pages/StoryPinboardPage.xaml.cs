@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Storylines.Services;
 using Storylines.Models;
 using System;
@@ -7,11 +8,11 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Shapes;
 using Storylines.Helpers;
 using Storylines.Services.Interfaces;
 
@@ -243,7 +244,7 @@ namespace Storylines.Views.Pages
                 {
                     Text = chapterNumber.ToString(),
                     FontSize = 11,
-                    FontWeight = Windows.UI.Text.FontWeights.SemiBold,
+                    FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(Colors.White),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center
@@ -255,7 +256,7 @@ namespace Storylines.Views.Pages
             var nameText = new TextBlock
             {
                 Text = chapter.Name ?? "",
-                FontWeight = Windows.UI.Text.FontWeights.SemiBold,
+                FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 FontSize = 13,
                 TextWrapping = TextWrapping.Wrap,
                 MaxLines = 2,
@@ -328,7 +329,7 @@ namespace Storylines.Views.Pages
                         {
                             Text = initials,
                             FontSize = 8,
-                            FontWeight = Windows.UI.Text.FontWeights.Bold,
+                            FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                             Foreground = new SolidColorBrush(Colors.White),
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center

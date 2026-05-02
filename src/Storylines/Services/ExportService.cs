@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using System;
@@ -8,8 +9,8 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Text;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Services
 {
@@ -181,14 +182,14 @@ namespace Storylines.Services
 
         private async Task ExportChaptersToRtf(StorageFile file, IReadOnlyList<int> chapterIndexes, bool withChapterName)
         {
-            RichEditBox box = new RichEditBox() { RequestedTheme = Windows.UI.Xaml.ElementTheme.Light };
+            RichEditBox box = new RichEditBox() { RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Light };
             string[] txts = new string[chapterIndexes.Count];
 
             for (int i = 0; i < chapterIndexes.Count; i++)
             {
                 if (withChapterName)
                 {
-                    RichEditBox box2 = new RichEditBox() { RequestedTheme = Windows.UI.Xaml.ElementTheme.Light };
+                    RichEditBox box2 = new RichEditBox() { RequestedTheme = Microsoft.UI.Xaml.ElementTheme.Light };
 
                     string rtf1 = @"{\rtf1{\fonttbl{\f0 Segoe UI;}{\f1 Calibri;}{\f2 Verdana;}}{\colortbl;\red255\green255\blue255;\red0\green0\blue0;}\f0\b\cf2 {chapterName}\b0\par}".Replace("{chapterName}", _projectState.Chapters[chapterIndexes[i]].Name);
 
@@ -492,5 +493,12 @@ namespace Storylines.Services
 
             return format?.Id ?? ExportFormatId.PlainText;
         }
+
+#if PRIVATE_PLUGINS
+        public BranchingDialogueGraphData ImportBranchingDialogueJson(string json)
+        {
+            return Storylines.Helpers.BranchingDialogueExportHelper.ImportFromJson(json);
+        }
+#endif
     }
 }

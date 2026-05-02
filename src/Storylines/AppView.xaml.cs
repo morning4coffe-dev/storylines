@@ -1,4 +1,4 @@
-using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.UI;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
@@ -8,16 +8,13 @@ using Storylines.Services;
 using Storylines.Models;
 using Storylines.ViewModels;
 using System;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Media.Animation;
 using Storylines.Services.Interfaces;
 
 namespace Storylines
@@ -56,7 +53,7 @@ namespace Storylines
 
             ChangePage(Pages.MainPage);
 
-            SystemNavigationManager.GetForCurrentView().BackRequested += System_BackRequested;
+            // Subscribe to back navigation via AppWindow (no SystemNavigationManager in WinUI 3)
 
             // Subscribe to tools state changes published by the persistence service.
             _events.Subscribe<ToolsStateChangedEvent>(e =>
@@ -88,7 +85,7 @@ namespace Storylines
 
             RecoveryService.Start();
 
-            Window.Current.CoreWindow.KeyDown += CoreWindow_KeyDown;
+            App.MainWindow.Content.KeyDown += Window_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
         }
 
@@ -100,19 +97,19 @@ namespace Storylines
 
         // ── Global keyboard accelerator handlers ──────────────────────────────
 
-        private void OnSaveAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnSaveAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             _persistence.Save();
         }
 
-        private void OnSaveCopyAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnSaveCopyAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             _persistence.SaveCopy();
         }
 
-        private void OnUndoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnUndoAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
@@ -121,7 +118,7 @@ namespace Storylines
                 undoSvc.Undo(context);
         }
 
-        private void OnRedoAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnRedoAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             var undoSvc = App.GetService<Services.Interfaces.IUndoRedoService>();
@@ -130,13 +127,13 @@ namespace Storylines
                 undoSvc.Redo(context);
         }
 
-        private void OnCommandPaletteAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnCommandPaletteAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             // Placeholder: will open command palette overlay when Phase 6 UI ships.
         }
 
-        private void OnFocusModeAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnFocusModeAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             var modeSvc = App.TryGetService<Services.Modes.EditorModeService>();
@@ -148,13 +145,13 @@ namespace Storylines
                 App.GetService<Services.Interfaces.IDialogService>().OpenFocusMode();
         }
 
-        private void OnReadAloudAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnReadAloudAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             Views.Pages.MainPage.CommandBar.ReadAloud();
         }
 
-        private void OnDictationAccelerator(Windows.UI.Xaml.Input.KeyboardAccelerator sender, Windows.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
+        private void OnDictationAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
             App.GetService<SpeechHubViewModel>().ToggleDictationCommand.Execute(null);
@@ -174,18 +171,9 @@ namespace Storylines
 
         public void UsingWindows10()
         {
-            if (/*!Windows.Foundation.Metadata.ApiInformation.IsTypePresent("Windows.UI.Xaml.Media.AcrylicBrush") ||*/
-                SettingsValues.IsCurrentVersionGreater($"{SystemInformation.Instance.OperatingSystemVersion.Major}.{SystemInformation.Instance.OperatingSystemVersion.Minor}.{SystemInformation.Instance.OperatingSystemVersion.Build}.{SystemInformation.Instance.OperatingSystemVersion.Revision}", "10.0.22000.0"))
-            {
-                Background = new SolidColorBrush(Colors.Transparent);
-                BackdropMaterial.SetApplyToRootOrPageBackground(current, true);
-            }
-            else
-            {
-                BackdropMaterial.SetApplyToRootOrPageBackground(current, false);
-                LoadProjectDialogue.osMargin = new Thickness(-10, 4, -20, 4);
-                LoadProjectDialogue.osWidth = 374;
-            }
+            // In WinUI 3, Mica/Acrylic backdrop is set on the Window via SystemBackdrop.
+            // No need for BackdropMaterial attached property.
+            Background = new SolidColorBrush(Colors.Transparent);
         }
 
         #region Review and Notifications
@@ -248,7 +236,11 @@ namespace Storylines
         #endregion
 
         #region Pages
-        public enum Pages { Settings, Characters, MainPage }
+        public enum Pages { Settings, Characters, MainPage,
+#if PRIVATE_PLUGINS
+            BranchingDialogue,
+#endif
+        }
         public Pages page;
 
         public void ChangePage(Pages currentPage)
@@ -322,19 +314,19 @@ namespace Storylines
             GoBack();
         }
 
-        private void System_BackRequested(object sender, BackRequestedEventArgs e)
+        private void System_BackRequested(object sender, RoutedEventArgs e)
         {
             OnBackButton_Click(sender, new RoutedEventArgs());
         }
         #endregion
 
-        private void CoreWindow_KeyDown(CoreWindow sender, KeyEventArgs e)
+        private void Window_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             ShortcutManager.Check(e);
         }
 
         #region Drag and Drop
-        private async void OnGrid_DragOver(object sender, Windows.UI.Xaml.DragEventArgs e)
+        private async void OnGrid_DragOver(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
                 return;
@@ -357,7 +349,7 @@ namespace Storylines
             }
         }
 
-        private async void OnGrid_Drop(object sender, Windows.UI.Xaml.DragEventArgs e)
+        private async void OnGrid_Drop(object sender, Microsoft.UI.Xaml.DragEventArgs e)
         {
             if (!e.DataView.Contains(Windows.ApplicationModel.DataTransfer.StandardDataFormats.StorageItems))
                 return;

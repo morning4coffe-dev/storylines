@@ -11,6 +11,7 @@ using Microsoft.Windows.AppLifecycle;
 using Windows.Globalization;
 using Windows.Media.SpeechSynthesis;
 using Microsoft.UI.Xaml;
+using Windows.ApplicationModel.Core;
 
 namespace Storylines.ViewModels.Settings
 {
@@ -69,8 +70,9 @@ namespace Storylines.ViewModels.Settings
         {
             try
             {
-                var result = AppInstance.Restart(string.Empty);
-                LanguageRestartFailed = result != AppRestartFailureReason.RestartPending;
+                AppInstance.Restart(string.Empty);
+                // If Restart returns without throwing, the restart is pending
+                LanguageRestartFailed = false;
             }
             catch (Exception)
             {

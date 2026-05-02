@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Storylines.Helpers;
 using Storylines.Views.Pages;
 using Storylines.Services;
@@ -371,7 +372,7 @@ namespace Storylines.Views.Controls
             {
                 textBox.RequestedTheme = ElementTheme.Light;
                 textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
-                textBoxScrollViewer.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.White);
+                textBoxScrollViewer.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.White);
             }
             else
             {
