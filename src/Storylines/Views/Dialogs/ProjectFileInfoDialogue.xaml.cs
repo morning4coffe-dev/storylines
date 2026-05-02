@@ -4,8 +4,9 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Views.Dialogs
 {
@@ -36,7 +37,7 @@ namespace Storylines.Views.Dialogs
 
         public async Task DisplayFileInfoAsync()
         {
-            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             var project = ProjectPersistence?.CurrentProject;
             StorageFile file = project?.file;
 
@@ -86,7 +87,7 @@ namespace Storylines.Views.Dialogs
         {
             return date == default
                 ? fallback
-                : date.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture);
+                : date.ToString("g", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture);
         }
 
         private static string FormatFileSize(ulong size)
@@ -105,15 +106,15 @@ namespace Storylines.Views.Dialogs
             }
 
             string formattedValue = value >= 10 || unitIndex == 0
-                ? value.ToString("0", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture)
-                : value.ToString("0.#", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture);
+                ? value.ToString("0", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture)
+                : value.ToString("0.#", CommunityToolkit.WinUI.Helpers.SystemInformation.Instance.Culture);
 
             return $"{formattedValue} {units[unitIndex]}";
         }
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
+            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
         }
 
@@ -126,13 +127,13 @@ namespace Storylines.Views.Dialogs
 
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
+            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;
         }
 
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        private void OnWindowPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             if (isHide)
                 Hide();

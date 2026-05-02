@@ -1,11 +1,12 @@
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using CommunityToolkit.WinUI.UI.Controls;
 using Storylines.Services;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
@@ -53,7 +54,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
+            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
             current = null;
         }
@@ -166,12 +167,12 @@ namespace Storylines.Views.Dialogs
 
         private void InitializeClickOutToClose()
         {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
+            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
             PointerExited += (s, e) => _isHide = true;
             PointerEntered += (s, e) => _isHide = false;
         }
 
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
+        private void OnWindowPointerPressed(object sender, PointerRoutedEventArgs e)
         {
             if (_isHide)
                 Hide();
