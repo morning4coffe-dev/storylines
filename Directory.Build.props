@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Private developer override. This file is NOT committed to the OSS repository.
+  It wires up the external dialogue plugin repo so the plugin source files are
+  injected into the main project at build time.
+
+  Setup: clone the private plugin repo as a sibling of this repo, then copy this
+  file to the repository root (next to Storylines.sln). The plugin activates
+  automatically whenever its Build\Storylines.DialoguePlugin.props is found.
+
+  Expected layout:
+    Projects/
+      storylines/                   ← this OSS repo
+        Directory.Build.props       ← this file (not committed)
+      storylines-dialogue-plugin/   ← private plugin repo
+        Build/
+          Storylines.DialoguePlugin.props
+
+  To use a different path, change DialoguePluginRoot below.
+-->
+<Project>
+  <PropertyGroup>
+    <DialoguePluginRoot>$(MSBuildThisFileDirectory)..\storylines-dialogue-plugin\</DialoguePluginRoot>
+    <PrivatePlugins Condition="Exists('$(DialoguePluginRoot)Build\Storylines.DialoguePlugin.props')">true</PrivatePlugins>
+  </PropertyGroup>
+</Project>
