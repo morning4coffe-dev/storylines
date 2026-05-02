@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Data.Xml.Dom;
 using Windows.UI.Notifications;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Helpers
 {
@@ -188,6 +188,7 @@ namespace Storylines.Helpers
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = MainPage.Current.RequestedTheme,
+                XamlRoot = App.MainWindow.Content.XamlRoot,
                 //PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"]
             };
             AppView.currentlyOpenedDialogue = exitDialog;
@@ -234,6 +235,7 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = AppView.current.ActualTheme,
+                XamlRoot = App.MainWindow.Content.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
 
@@ -264,6 +266,7 @@ namespace Storylines.Helpers
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = AppView.current.ActualTheme,
+                XamlRoot = App.MainWindow.Content.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
 
@@ -297,6 +300,7 @@ namespace Storylines.Helpers
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = AppView.current.ActualTheme,
+                XamlRoot = App.MainWindow.Content.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = noCharactersDialog;
 

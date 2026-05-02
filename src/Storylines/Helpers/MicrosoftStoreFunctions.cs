@@ -6,14 +6,14 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Services.Store;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Storylines.Helpers
 {
     internal static class MicrosoftStoreFunctions
     {
         private static readonly StoreContext _storeContext = StoreContext.GetDefault();
+        private static bool _storeContextInitialized;
         private static readonly DispatcherTimer _closeThanksInterval = new DispatcherTimer();
         private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
         private static IReadOnlyList<StorePackageUpdate> _availableUpdates = Array.Empty<StorePackageUpdate>();
@@ -24,6 +24,7 @@ namespace Storylines.Helpers
 
         public static async Task CheckForNewUpdateAvailableAsync()
         {
+            EnsureStoreContextInitialized();
             IReadOnlyList<StorePackageUpdate> updates = await _storeContext.GetAppAndOptionalStorePackageUpdatesAsync();
             _availableUpdates = updates;
             _hasMandatoryUpdate = false;
@@ -279,12 +280,28 @@ namespace Storylines.Helpers
             NotificationManager.DisplayNewUpdateAvailable();
         }
 
-        private static async Task RunOnUiThreadAsync(Action action)
+        private static void EnsureStoreContextInitialized()
         {
-            if (AppView.current?.Dispatcher == null)
-                return;
+            if (!_storeContextInitialized && App.MainWindow != null)
+            {
+                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+                WinRT.Interop.InitializeWithWindow.Initialize(_storeContext, hwnd);
+                _storeContextInitialized = true;
+            }
+        }
 
-            await AppView.current.Dispatcher.RunAsync(CoreDispatcherPriority.Normal, () => action());
+        private static Task RunOnUiThreadAsync(Action action)
+        {
+            if (AppView.current?.DispatcherQueue == null)
+                return Task.CompletedTask;
+
+            var tcs = new TaskCompletionSource<object>();
+            AppView.current.DispatcherQueue.TryEnqueue(() =>
+            {
+                action();
+                tcs.SetResult(null);
+            });
+            return tcs.Task;
         }
     }
 }

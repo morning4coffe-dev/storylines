@@ -5,8 +5,8 @@ using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System;
 using System.Threading;
-using Windows.UI.Core;
-using Windows.UI.Text;
+using Microsoft.UI.Dispatching;
+using Microsoft.UI.Text;
 
 namespace Storylines.Services
 {
@@ -33,8 +33,8 @@ namespace Storylines.Services
             if (textBox == null) return string.Empty;
 
             var options = format == TextFormat.Rtf
-                ? Windows.UI.Text.TextGetOptions.FormatRtf
-                : Windows.UI.Text.TextGetOptions.None;
+                ? Microsoft.UI.Text.TextGetOptions.FormatRtf
+                : Microsoft.UI.Text.TextGetOptions.None;
 
             textBox.Document.GetText(options, out string text);
             return text;
@@ -47,8 +47,8 @@ namespace Storylines.Services
             if (textBox == null) return;
 
             var options = format == TextFormat.Rtf
-                ? Windows.UI.Text.TextSetOptions.FormatRtf
-                : Windows.UI.Text.TextSetOptions.None;
+                ? Microsoft.UI.Text.TextSetOptions.FormatRtf
+                : Microsoft.UI.Text.TextSetOptions.None;
 
             ApplyEditorText(chapterText, GetSelectedChapter(), options, text ?? string.Empty, restoreChapterLocation: false);
         }
@@ -92,7 +92,7 @@ namespace Storylines.Services
 
         public void Focus()
         {
-            MainPage.ChapterText?.textBox?.Focus(Windows.UI.Xaml.FocusState.Keyboard);
+            MainPage.ChapterText?.textBox?.Focus(Microsoft.UI.Xaml.FocusState.Keyboard);
         }
 
         public void LoadChapterContent(Chapter chapter)
@@ -103,7 +103,7 @@ namespace Storylines.Services
             var textBox = chapterText?.textBox;
             if (textBox == null) return;
 
-            ApplyEditorText(chapterText, chapter, Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text ?? string.Empty, restoreChapterLocation: true);
+            ApplyEditorText(chapterText, chapter, Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text ?? string.Empty, restoreChapterLocation: true);
         }
 
         private void ApplyEditorText(ChapterTextBox chapterText, Chapter chapter, TextSetOptions options, string sourceText, bool restoreChapterLocation)
@@ -116,9 +116,9 @@ namespace Storylines.Services
 
             try
             {
-                if (options == Windows.UI.Text.TextSetOptions.FormatRtf && string.IsNullOrEmpty(sourceText))
+                if (options == Microsoft.UI.Text.TextSetOptions.FormatRtf && string.IsNullOrEmpty(sourceText))
                 {
-                    textBox.Document.SetText(Windows.UI.Text.TextSetOptions.None, string.Empty);
+                    textBox.Document.SetText(Microsoft.UI.Text.TextSetOptions.None, string.Empty);
                 }
                 else
                 {
@@ -141,8 +141,8 @@ namespace Storylines.Services
             // RichEditBox normalizes paragraph markers as it loads content.
             // Keep the model aligned before programmatic change suppression ends,
             // otherwise the next TextChanged can look like a user edit.
-            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string plainText);
-            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out string normalizedRtf);
+            textBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string plainText);
+            textBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.FormatRtf, out string normalizedRtf);
 
             var normalizedChapterText = ChapterTextNormalization.NormalizeLoadedChapterText(sourceText, plainText, normalizedRtf);
             if (chapter.Text != normalizedChapterText)
@@ -151,12 +151,12 @@ namespace Storylines.Services
 
         private void ScheduleProgrammaticChangeCompletion(MyRichEditBox textBox, ChapterTextBox chapterText, Chapter chapter, bool restoreChapterLocation)
         {
-            _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            textBox.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
                 if (restoreChapterLocation)
                     RestoreChapterLocation(chapterText, chapter);
 
-                _ = textBox.Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+                textBox.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
                 {
                     if (_programmaticChangeDepth > 0)
                         Interlocked.Decrement(ref _programmaticChangeDepth);
@@ -201,7 +201,7 @@ namespace Storylines.Services
             var textBox = MainPage.ChapterText?.textBox;
             if (textBox == null) return;
 
-            textBox.Document.GetText(Windows.UI.Text.TextGetOptions.FormatRtf, out string rtf);
+            textBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.FormatRtf, out string rtf);
             chapter.Text = rtf;
         }
 
@@ -217,7 +217,7 @@ namespace Storylines.Services
             if (selection == null) return;
 
             // Replace the current selection (or insert at caret if collapsed) with the new text.
-            selection.SetText(Windows.UI.Text.TextSetOptions.None, text);
+            selection.SetText(Microsoft.UI.Text.TextSetOptions.None, text);
 
             // Move caret to the end of the inserted text.
             selection.SetRange(selection.EndPosition, selection.EndPosition);

@@ -11,9 +11,9 @@ using System.Threading.Tasks;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Storylines.Views.Dialogs;
 
 namespace Storylines.Views.Controls
@@ -170,7 +170,7 @@ namespace Storylines.Views.Controls
             }
         }
 
-        private void OnMainHighlighterButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        private void OnMainHighlighterButton_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             if (!mainHighlighterFlyout.IsOpen)
                 mainHighlighterFlyout.ShowAt(mainHighlighterButton);
@@ -221,7 +221,7 @@ namespace Storylines.Views.Controls
 
         private void OnFormattingSurface_LostFocus(object sender, RoutedEventArgs e)
         {
-            var focused = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
+            var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
             if (IsFormattingContextElement(focused)
                 || (MainPage.ChapterText?.IsFormattingContextElement(focused) ?? false))
             {
@@ -291,7 +291,7 @@ namespace Storylines.Views.Controls
             if (string.IsNullOrWhiteSpace(speechText))
                 return;
 
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Stopped || readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Closed)
+            if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Stopped || readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Closed)
                 ReadAloud();
         }
 
@@ -366,7 +366,7 @@ namespace Storylines.Views.Controls
             _currentReadChapterIndex = nextIndex;
 
             // Select the next chapter in the UI
-            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
+            DispatcherQueue.TryEnqueue(() =>
             {
                 if (MainPage.ChapterList?.listView != null && nextIndex < MainPage.ChapterList.listView.Items.Count)
                     MainPage.ChapterList.listView.SelectedIndex = nextIndex;
@@ -446,7 +446,7 @@ namespace Storylines.Views.Controls
             _readAloudCts?.Cancel();
             _readAloudCts = null;
 
-            if (readAloudMediaElement.CurrentState != Windows.UI.Xaml.Media.MediaElementState.Stopped)
+            if (readAloudMediaElement.CurrentState != Microsoft.UI.Xaml.Media.MediaElementState.Stopped)
                 readAloudMediaElement.Stop();
 
             timer?.Stop();
@@ -465,7 +465,7 @@ namespace Storylines.Views.Controls
 
         private void OnPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Paused)
+            if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Paused)
             {
                 readAloudMediaElement.Play();
                 readAloudProgressBar.ShowPaused = false;
@@ -478,7 +478,7 @@ namespace Storylines.Views.Controls
 
         private void OnPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Playing)
+            if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Playing)
             {
                 readAloudMediaElement.Pause();
                 readAloudProgressBar.ShowPaused = true;
