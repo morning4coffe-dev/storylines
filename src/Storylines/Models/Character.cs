@@ -8,7 +8,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Storylines.Models
 {

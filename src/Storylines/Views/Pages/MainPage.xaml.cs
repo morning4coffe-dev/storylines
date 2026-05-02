@@ -5,10 +5,10 @@ using Storylines.Services.Interfaces;
 using Storylines.ViewModels;
 using System;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Controls.Primitives;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls.Primitives;
+using Microsoft.UI.Xaml.Navigation;
 using Storylines.Models;
 
 namespace Storylines.Views.Pages
@@ -231,8 +231,8 @@ namespace Storylines.Views.Pages
                 if (!string.IsNullOrEmpty(chapter.Text))
                 {
                     var box = new RichEditBox();
-                    box.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
-                    box.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string txt);
+                    box.Document.SetText(Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
+                    box.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string txt);
                     all += txt;
                 }
             }

@@ -3,7 +3,7 @@ using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Storylines.ViewModels
 {

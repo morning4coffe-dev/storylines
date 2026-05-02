@@ -2,9 +2,9 @@ using Storylines.Views.Pages;
 using Storylines.Models;
 using Storylines.ViewModels;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Views.Controls
 {
@@ -126,7 +126,7 @@ namespace Storylines.Views.Controls
         }
         #endregion
 
-        private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        private void OnHyperlink_Click(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
             ViewModel.OpenCreateChapterDialogCommand.Execute(null);
         }

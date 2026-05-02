@@ -1,8 +1,8 @@
 using Storylines.Views.Pages;
 using Storylines.Services.Interfaces;
 using System;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace Storylines.Services
 {

@@ -1,34 +1,31 @@
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Toolkit.Uwp.Helpers;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Navigation;
 using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
+using Storylines.Models;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel;
 using Windows.ApplicationModel.Activation;
-using Windows.ApplicationModel.Core;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI;
-using Windows.UI.Core.Preview;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Navigation;
-using Storylines.Models;
+using Microsoft.Windows.AppLifecycle;
 
 namespace Storylines
 {
-    public sealed partial class App : Application
+    public partial class App : Application
     {
         private Task _telemetryInitializationTask;
         private bool _isWindowInitialized;
 
         public static new App Current => Application.Current as App;
+
+        public static Window MainWindow { get; private set; }
 
         internal static IStorageItem PendingActivatedItem { get; set; }
 
@@ -37,7 +34,6 @@ namespace Storylines
         public App()
         {
             InitializeComponent();
-            Suspending += OnSuspending;
             UnhandledException += App_UnhandledException;
 
             Services = ServiceConfiguration.Configure();
@@ -54,17 +50,27 @@ namespace Storylines
         public static T TryGetService<T>() where T : class
             => Current?.Services?.GetService<T>();
 
-        /// <param name="e">Details about the launch request and process</param>
-        protected override async void OnLaunched(LaunchActivatedEventArgs e)
+        protected override async void OnLaunched(Microsoft.UI.Xaml.LaunchActivatedEventArgs args)
         {
+            MainWindow = new Window();
+            MainWindow.Title = "Storylines";
+            MainWindow.SystemBackdrop = new Microsoft.UI.Xaml.Media.MicaBackdrop();
+
             var rootFrame = EnsureRootFrame();
-            if (e.PrelaunchActivated)
-                return;
 
             var hasRecoveryData = RecoveryService.HasRecoveryData();
 
-            EnsureShell(rootFrame, e.Arguments, "OnLaunched");
-            await ActivateAsync(e, "launch", !hasRecoveryData);
+            EnsureShell(rootFrame, string.Empty, "OnLaunched");
+            await ActivateAsync("launch", !hasRecoveryData);
+
+            // Handle file activation via AppLifecycle
+            var activatedArgs = AppInstance.GetCurrent().GetActivatedEventArgs();
+            if (activatedArgs?.Kind == Microsoft.Windows.AppLifecycle.ExtendedActivationKind.File)
+            {
+                var fileArgs = activatedArgs.Data as Windows.ApplicationModel.Activation.IFileActivatedEventArgs;
+                if (fileArgs?.Files?.Count > 0)
+                    PendingActivatedItem = fileArgs.Files.FirstOrDefault();
+            }
 
             if (hasRecoveryData)
             {
@@ -94,12 +100,12 @@ namespace Storylines
 
         private Frame EnsureRootFrame()
         {
-            if (Window.Current.Content is Frame existingRootFrame)
+            if (MainWindow.Content is Frame existingRootFrame)
                 return existingRootFrame;
 
             var rootFrame = new Frame();
             rootFrame.NavigationFailed += OnNavigationFailed;
-            Window.Current.Content = rootFrame;
+            MainWindow.Content = rootFrame;
             return rootFrame;
         }
 
@@ -112,12 +118,11 @@ namespace Storylines
                 throw new Exception($"Failed to create initial page ({activationSource})");
         }
 
-        private async Task ActivateAsync(IActivatedEventArgs activationArgs, string activationKind, bool openLoadDialog = true)
+        private async Task ActivateAsync(string activationKind, bool openLoadDialog = true)
         {
             LanguageCheck();
 
-            Window.Current.Activate();
-            SystemInformation.Instance.TrackAppUse(activationArgs);
+            MainWindow.Activate();
 
             ConfigureCurrentWindow(activationKind, openLoadDialog);
             await TryProcessPendingActivationItemAsync();
@@ -152,6 +157,7 @@ namespace Storylines
                 CloseButtonText = resources.GetString("recoveryRestoreDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
                 RequestedTheme = AppView.current?.ActualTheme ?? ElementTheme.Default,
+                XamlRoot = MainWindow.Content.XamlRoot,
             };
 
             AppView.currentlyOpenedDialogue = recoveryDialog;
@@ -176,14 +182,13 @@ namespace Storylines
 
         private void ConfigureCurrentWindow(string activationKind, bool openLoadDialog)
         {
-            var applicationView = ApplicationView.GetForCurrentView();
-            applicationView.SetDesiredBoundsMode(ApplicationViewBoundsMode.UseCoreWindow);
-            applicationView.IsScreenCaptureEnabled = true;
-            applicationView.TitleBar.ButtonBackgroundColor = Colors.Transparent;
-
-            CoreApplication.GetCurrentView().TitleBar.ExtendViewIntoTitleBar = true;
-            Window.Current.SetTitleBar(AppView.current?.appTitleBar);
+            // Configure title bar
+            MainWindow.ExtendsContentIntoTitleBar = true;
+            MainWindow.SetTitleBar(AppView.current?.appTitleBar);
             AppView.current?.UsingWindows10();
+
+            // Configure close handling
+            MainWindow.Closed += OnWindowClosed;
 
             var telemetry = GetService<ITelemetryService>();
             if (_telemetryInitializationTask == null)
@@ -198,7 +203,6 @@ namespace Storylines
                 ThemeSettings.Initialize();
                 if (openLoadDialog)
                     LoadProjectDialogue.Open();
-                SystemNavigationManagerPreview.GetForCurrentView().CloseRequested += OnCloseRequest;
                 MicrosoftStoreFunctions.InitializeReview();
                 ObserveBackgroundOperation(MicrosoftStoreFunctions.CheckForNewUpdateAvailableAsync(), "Failed to check for updates");
                 _isWindowInitialized = true;
@@ -257,7 +261,7 @@ namespace Storylines
             return Task.CompletedTask;
         }
 
-        private void OnCloseRequest(object sender, SystemNavigationCloseRequestedPreviewEventArgs e)
+        private void OnWindowClosed(object sender, WindowEventArgs e)
         {
             var blockedByUnsavedChanges = TimeTravelSystem.unSavedProgress && SettingsValues.exitDiagEnabled;
             App.TryGetService<ITelemetryService>()?.TrackAppClosingRequested(blockedByUnsavedChanges);
@@ -267,7 +271,7 @@ namespace Storylines
                 e.Handled = true;
                 ObserveBackgroundOperation(ShowUnsavedProgressDialogAsync(), "Failed to display unsaved progress dialog");
             }
-            
+
             NotificationManager.ClearBadgeNotification();
         }
 
@@ -276,49 +280,16 @@ namespace Storylines
             await NotificationManager.DisplayUnsavedProgressDialogue(true);
         }
 
-        private void App_UnhandledException(object sender, Windows.UI.Xaml.UnhandledExceptionEventArgs e)
+        private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
         {
             App.TryGetService<ITelemetryService>()?.TrackUnhandledException(e.Exception, e.Message);
 
             e.Handled = true;
         }
 
-        /// <param name="sender">The Frame which failed navigation</param>
-        /// <param name="e">Details about the navigation failure</param>
         private void OnNavigationFailed(object sender, NavigationFailedEventArgs e)
         {
             throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
-        }
-
-        /// <param name="sender">The source of the suspend request</param>
-        /// <param name="e">Details about the suspend request</param>
-        private async void OnSuspending(object sender, SuspendingEventArgs e)
-        {
-            SuspendingDeferral deferral = e.SuspendingOperation.GetDeferral();
-            RecoveryService.Stop();
-
-            try
-            {
-                if (TimeTravelSystem.unSavedProgress)
-                    await RecoveryService.CacheCurrentStateAsync();
-            }
-            catch (Exception ex)
-            {
-                GetService<Storylines.Services.Interfaces.ILogger>()?.Warning($"Recovery cache on suspend failed: {ex.Message}");
-            }
-            finally
-            {
-                deferral.Complete();
-            }
-        }
-
-        protected override async void OnFileActivated(FileActivatedEventArgs args)
-        {
-            PendingActivatedItem = args.Files.FirstOrDefault();
-
-            var rootFrame = EnsureRootFrame();
-            EnsureShell(rootFrame, string.Empty, "OnFileActivated");
-            await ActivateAsync(args, "file_activation");
         }
 
         private enum RecoveryStartupChoice

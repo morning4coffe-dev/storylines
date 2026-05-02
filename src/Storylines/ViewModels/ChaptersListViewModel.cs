@@ -6,7 +6,7 @@ using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System.Collections.Specialized;
 using System.Collections.ObjectModel;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Storylines.ViewModels
 {

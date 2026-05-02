@@ -58,7 +58,7 @@ namespace Storylines.ViewModels.Settings
                 return;
 
             SelectedAccentIndex = (int)SettingsValues.SelectedAccent.Custom;
-            CustomAccentColor = Microsoft.Toolkit.Uwp.Helpers.ColorHelper.ToColor(hex);
+            CustomAccentColor = CommunityToolkit.WinUI.Helpers.ColorHelper.ToColor(hex);
         }
 
         partial void OnSelectedThemeIndexChanged(int value)

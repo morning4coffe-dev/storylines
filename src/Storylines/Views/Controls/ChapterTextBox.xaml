@@ -425,9 +425,9 @@
                                       LostFocus="OnTextBox_LostFocus"
                                       PointerWheelChanged="OnTextBox_PointerWheelChanged"
                                       Tapped="OnTextBoxRectangle_Tapped">
-                <RichEditBox.HandwritingView>
+                <!--<RichEditBox.HandwritingView>
                     <HandwritingView PlacementAlignment="Auto" />
-                </RichEditBox.HandwritingView>
+                </RichEditBox.HandwritingView>-->
             </components:MyRichEditBox>
         </ScrollViewer>
 

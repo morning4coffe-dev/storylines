@@ -2,12 +2,12 @@ using Microsoft.UI.Xaml.Controls;
 using Storylines.Constants;
 using Storylines.Views.Pages.Settings;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
 
 namespace Storylines.Views.Pages
 {
-    public sealed partial class SettingsPage : Windows.UI.Xaml.Controls.Page
+    public sealed partial class SettingsPage : Microsoft.UI.Xaml.Controls.Page
     {
         private const double MinimalPaneBreakpoint = LayoutConstants.CompactBreakpoint;
         private const double CompactPaneBreakpoint = 1100;
@@ -42,7 +42,7 @@ namespace Storylines.Views.Pages
                 contentFrame.Navigate(pageType, null, new SuppressNavigationTransitionInfo());
         }
 
-        private void OnAboutPageItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void OnAboutPageItem_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
             settingsNavigationView.SelectedItem = aboutPageItem;
         }
@@ -64,9 +64,9 @@ namespace Storylines.Views.Pages
             settingsNavigationView.IsPaneOpen = paneDisplayMode == NavigationViewPaneDisplayMode.Auto;
         }
 
-        private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            var item = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement();
+            var item = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement();
             if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
                 if (item is NavigationViewItem && (item as NavigationViewItem).Tag.ToString() == "About")
                     settingsNavigationView.SelectedItem = aboutPageItem;

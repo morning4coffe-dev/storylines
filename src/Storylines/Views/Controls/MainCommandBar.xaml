@@ -1321,8 +1321,8 @@
             </Grid>
         </NavigationView>
 
-        <MediaElement x:Name="readAloudMediaElement"
+        <!--<MediaElement x:Name="readAloudMediaElement"
                       AudioCategory="Speech"
-                      MediaEnded="OnReadAloudMediaElement_MediaEnded" />
+                      MediaEnded="OnReadAloudMediaElement_MediaEnded" />-->
     </Grid>
 </UserControl>

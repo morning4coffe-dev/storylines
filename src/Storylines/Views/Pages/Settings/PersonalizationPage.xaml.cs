@@ -1,5 +1,5 @@
 using Storylines.ViewModels.Settings;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Pages.Settings
 {

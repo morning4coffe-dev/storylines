@@ -16,7 +16,7 @@ namespace Storylines.Services
             var services = new ServiceCollection();
 
             services.AddSingleton<ILogger, DebugLogger>();
-            services.AddSingleton<IDispatcherService, UwpDispatcherService>();
+            services.AddSingleton<IDispatcherService, WinUIDispatcherService>();
             services.AddSingleton<INotificationService, NotificationService>();
             services.AddSingleton<IUndoRedoService, UndoRedoService>();
             services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();

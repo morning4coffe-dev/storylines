@@ -1,8 +1,8 @@
 using Storylines.Views.Pages;
 using Storylines.Models;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Storylines.Helpers;
 using Storylines.Services;
 
