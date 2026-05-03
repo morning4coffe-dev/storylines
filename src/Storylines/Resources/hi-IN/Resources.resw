@@ -1,0 +1,1147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="about.Content" xml:space="preserve"><value>जानकारी</value></data>
+  <data name="aboutText.Text" xml:space="preserve"><value>जानकारी</value></data>
+  <data name="accessibility.Content" xml:space="preserve"><value>सुगम्यता</value></data>
+  <data name="accessibilityText.Text" xml:space="preserve"><value>सुगम्यता</value></data>
+  <data name="general.Content" xml:space="preserve"><value>सामान्य</value></data>
+  <data name="generalText.Text" xml:space="preserve"><value>सामान्य</value></data>
+  <data name="personalization.Content" xml:space="preserve"><value>अनुकूलन</value></data>
+  <data name="personalizationText.Text" xml:space="preserve"><value>अनुकूलन</value></data>
+  <data name="add.Label" xml:space="preserve"><value>जोड़ें</value></data>
+  <data name="remove.Label" xml:space="preserve"><value>हटाएँ</value></data>
+  <data name="save.Label" xml:space="preserve"><value>सहेजें</value></data>
+  <data name="saveCopy.Label" xml:space="preserve"><value>प्रतिलिपि सहेजें</value></data>
+  <data name="load.Label" xml:space="preserve"><value>खोलें</value></data>
+  <data name="export.Label" xml:space="preserve"><value>निर्यात</value></data>
+  <data name="readAloud.Label" xml:space="preserve"><value>जोर से पढ़ें</value></data>
+  <data name="FocusMode.Label" xml:space="preserve"><value>फोकस मोड</value></data>
+  <data name="feedbackLabel.Label" xml:space="preserve"><value>फ़ीडबैक</value></data>
+  <data name="keyboardShortcutsLabel.Label" xml:space="preserve"><value>कीबोर्ड शॉर्टकट</value></data>
+  <data name="charactersLabel.Label" xml:space="preserve"><value>पात्र</value></data>
+  <data name="textAnalytics.Label" xml:space="preserve"><value>Project Statistics</value></data>
+  <data name="english.Content" xml:space="preserve"><value>अंग्रेज़ी</value></data>
+  <data name="chinese.Content" xml:space="preserve"><value>चीनी</value></data>
+  <data name="russian.Content" xml:space="preserve"><value>रूसी</value></data>
+  <data name="italian.Content" xml:space="preserve"><value>इतालवी</value></data>
+  <data name="czech.Content" xml:space="preserve"><value>चेक</value></data>
+  <data name="hindi.Content" xml:space="preserve"><value>हिंदी</value></data>
+  <data name="polish.Content" xml:space="preserve"><value>पोलिश</value></data>
+  <data name="languageSetting.Text" xml:space="preserve"><value>भाषा</value></data>
+  <data name="languageSettingDesc.Text" xml:space="preserve"><value>ऐप में हर जगह भाषा परिवर्तन लागू करने के लिए कुछ बदलावों के बाद पुनः प्रारंभ करना आवश्यक है।</value></data>
+  <data name="languageRestartText.Text" xml:space="preserve"><value>चुनी गई भाषा को पूरे ऐप में लागू करने के लिए Storylines को पुनः प्रारंभ करें।</value></data>
+  <data name="restartNowButton.Content" xml:space="preserve"><value>अभी पुनः प्रारंभ करें</value></data>
+  <data name="restartLaterButton.Content" xml:space="preserve"><value>बाद में</value></data>
+  <data name="languageRestartFailedInfoBar.Title" xml:space="preserve"><value>अपने-आप पुनः प्रारंभ नहीं हो सका</value></data>
+  <data name="languageRestartFailedInfoBar.Message" xml:space="preserve"><value>नई भाषा लागू करने के लिए Storylines को बंद करके फिर से खोलें।</value></data>
+  <data name="whiteTextBackgroundSetting.Text" xml:space="preserve"><value>सफेद पाठ पृष्ठभूमि</value></data>
+  <data name="whiteTextBackgroundToggle.OffContent" xml:space="preserve"><value>थीम</value></data>
+  <data name="whiteTextBackgroundToggle.OnContent" xml:space="preserve"><value>सफेद</value></data>
+  <data name="readAloudText.Text" xml:space="preserve"><value>जोर से पढ़ें</value></data>
+  <data name="readAloudVoiceSetting.Text" xml:space="preserve"><value>आवाज़</value></data>
+  <data name="readAloudVolumeSetting.Text" xml:space="preserve"><value>आवाज़ की तीव्रता</value></data>
+  <data name="chooseThemeSetting.Text" xml:space="preserve"><value>थीम</value></data>
+  <data name="chooseAccentColorSetting.Text" xml:space="preserve"><value>एक्सेंट रंग</value></data>
+  <data name="newChapterShortcut.Text" xml:space="preserve"><value>शॉर्टकट से नया अध्याय</value></data>
+  <data name="newChapterShortcutDesc.Text" xml:space="preserve"><value>यदि आप अंतिम अध्याय में हैं, तो Ctrl+Page Down दबाने पर नया अध्याय अपने-आप जोड़ा जा सकता है।</value></data>
+  <data name="chapterName" xml:space="preserve"><value>अध्याय {number}</value></data>
+  <data name="chapterNameSetting.Text" xml:space="preserve"><value>अध्याय का नाम</value></data>
+  <data name="chapterNameSettingDesc.Text" xml:space="preserve"><value>अपना नाम निर्धारित करें। क्रमांक की जगह बताने के लिए {number} का उपयोग करें।</value></data>
+  <data name="charactersText1.Text" xml:space="preserve"><value>पात्र:</value></data>
+  <data name="charactersPageCharactersCount.Text" xml:space="preserve"><value>पात्र: </value></data>
+  <data name="storyText.Text" xml:space="preserve"><value>कहानी</value></data>
+  <data name="selectedChapterText.Text" xml:space="preserve"><value>चयनित अध्याय</value></data>
+  <data name="chaptersText1.Text" xml:space="preserve"><value>अध्याय</value></data>
+  <data name="charactersExport.Text" xml:space="preserve"><value>पात्र</value></data>
+  <data name="chapterWithoutName" xml:space="preserve"><value>इस अध्याय का नाम बदलने के लिए इस पाठ या ऊपर वाले तीर पर राइट-क्लिक करें।</value></data>
+  <data name="characterPlaceholderName.PlaceholderText" xml:space="preserve"><value>नाम</value></data>
+  <data name="characterRole.PlaceholderText" xml:space="preserve"><value>भूमिका (जैसे, मुख्य पात्र)</value></data>
+  <data name="characterAge.PlaceholderText" xml:space="preserve"><value>आयु</value></data>
+  <data name="ownDescription.PlaceholderText" xml:space="preserve"><value>"इस पात्र के छोटे भूरे बाल हैं। यह बुद्धिमान और दयालु है..."</value></data>
+  <data name="welcomePanelTitle.Text" xml:space="preserve"><value>Storylines में आपका स्वागत है</value></data>
+  <data name="welcomePanelDescription.Text" xml:space="preserve"><value>लिखना शुरू करने के लिए नया प्रोजेक्ट बनाएँ या कोई मौजूदा प्रोजेक्ट खोलें।</value></data>
+  <data name="welcomePanelNewProject.Text" xml:space="preserve"><value>नया प्रोजेक्ट</value></data>
+  <data name="welcomePanelOpenProject.Text" xml:space="preserve"><value>प्रोजेक्ट खोलें</value></data>
+  <data name="welcomePanelKeyboardShortcuts.Text" xml:space="preserve"><value>कीबोर्ड शॉर्टकट</value></data>
+  <data name="welcomePanelKeyboardShortcutHint.Text" xml:space="preserve"><value>Ctrl+N नया | Ctrl+O खोलें | Ctrl+S सहेजें</value></data>
+  <data name="chapterNotesPaneTitle.Text" xml:space="preserve"><value>अध्याय नोट्स</value></data>
+  <data name="chapterNotesPaneCollapseButton.ToolTipService.ToolTip" xml:space="preserve"><value>नोट्स छिपाएँ</value></data>
+  <data name="chapterNotesPaneTextBox.PlaceholderText" xml:space="preserve"><value>इस अध्याय के लिए नोट्स जोड़ें...</value></data>
+  <data name="notesToggleButton.Label" xml:space="preserve"><value>नोट्स</value></data>
+  <data name="notesToggleButton.ToolTipService.ToolTip" xml:space="preserve"><value>अध्याय नोट्स दिखाएँ या छिपाएँ</value></data>
+  <data name="searchReplaceButton.Label" xml:space="preserve"><value>ढूँढें और बदलें</value></data>
+  <data name="searchReplaceButton.ToolTipService.ToolTip" xml:space="preserve"><value>ढूँढें और बदलें (Ctrl+H)</value></data>
+  <data name="searchReplaceFindLabel.Text" xml:space="preserve"><value>ढूँढें</value></data>
+  <data name="searchReplaceFindBox.PlaceholderText" xml:space="preserve"><value>ढूँढें...</value></data>
+  <data name="matchCaseToggle.Content" xml:space="preserve"><value>अक्षर आकार मिलाएँ</value></data>
+  <data name="matchCaseToggle.ToolTipService.ToolTip" xml:space="preserve"><value>अक्षर आकार मिलाएँ</value></data>
+  <data name="wholeWordToggle.Content" xml:space="preserve"><value>पूरा शब्द</value></data>
+  <data name="wholeWordToggle.ToolTipService.ToolTip" xml:space="preserve"><value>पूरा शब्द</value></data>
+  <data name="prevMatchButton.ToolTipService.ToolTip" xml:space="preserve"><value>पिछला मिलान</value></data>
+  <data name="prevMatchButton.AutomationProperties.Name" xml:space="preserve"><value>पिछला मिलान</value></data>
+  <data name="nextMatchButton.ToolTipService.ToolTip" xml:space="preserve"><value>अगला मिलान</value></data>
+  <data name="nextMatchButton.AutomationProperties.Name" xml:space="preserve"><value>अगला मिलान</value></data>
+  <data name="searchReplaceCloseButton.ToolTipService.ToolTip" xml:space="preserve"><value>बंद करें</value></data>
+  <data name="searchReplaceCloseButton.AutomationProperties.Name" xml:space="preserve"><value>बंद करें</value></data>
+  <data name="searchReplaceReplaceLabel.Text" xml:space="preserve"><value>बदलें</value></data>
+  <data name="searchReplaceBox.PlaceholderText" xml:space="preserve"><value>बदलें...</value></data>
+  <data name="replaceButton.Content" xml:space="preserve"><value>बदलें</value></data>
+  <data name="replaceAllButton.Content" xml:space="preserve"><value>सभी</value></data>
+  <data name="storyInfoDetailedButton.ToolTipService.ToolTip" xml:space="preserve"><value>विस्तृत आँकड़े देखने के लिए क्लिक करें</value></data>
+  <data name="resetZoomButton.ToolTipService.ToolTip" xml:space="preserve"><value>रीसेट करें</value></data>
+  <data name="quickPresets.Text" xml:space="preserve"><value>त्वरित प्रीसेट</value></data>
+  <data name="accentPresetOrange.ToolTipService.ToolTip" xml:space="preserve"><value>Storylines नारंगी</value></data>
+  <data name="accentPresetBlue.ToolTipService.ToolTip" xml:space="preserve"><value>नीला</value></data>
+  <data name="accentPresetGreen.ToolTipService.ToolTip" xml:space="preserve"><value>हरा</value></data>
+  <data name="accentPresetRed.ToolTipService.ToolTip" xml:space="preserve"><value>लाल</value></data>
+  <data name="accentPresetPurple.ToolTipService.ToolTip" xml:space="preserve"><value>बैंगनी</value></data>
+  <data name="accentPresetRust.ToolTipService.ToolTip" xml:space="preserve"><value>जंग रंग</value></data>
+  <data name="openFileButton.ToolTipService.ToolTip" xml:space="preserve"><value>प्रोजेक्ट खोजें</value></data>
+  <data name="createNewProjectButton.ToolTipService.ToolTip" xml:space="preserve"><value>नया प्रोजेक्ट</value></data>
+  <data name="topNavOverflowButton.Content" xml:space="preserve"><value>और</value></data>
+  <data name="highlighterButton.Label" xml:space="preserve"><value>हाइलाइट करें</value></data>
+  <data name="highlighterButton.ToolTipService.ToolTip" xml:space="preserve"><value>हाइलाइट करें (Ctrl+Shift+H, अधिक रंग देखने के लिए राइट-क्लिक करें या दबाकर रखें)</value></data>
+  <data name="highlightYellow.ToolTipService.ToolTip" xml:space="preserve"><value>पीला</value></data>
+  <data name="highlightRed.ToolTipService.ToolTip" xml:space="preserve"><value>लाल</value></data>
+  <data name="highlightGreen.ToolTipService.ToolTip" xml:space="preserve"><value>हरा</value></data>
+  <data name="highlightBlue.ToolTipService.ToolTip" xml:space="preserve"><value>नीला</value></data>
+  <data name="highlightNone.Content" xml:space="preserve"><value>कोई नहीं</value></data>
+  <data name="pinboardConnectLabel.Text" xml:space="preserve">
+    <value>जोड़ें</value>
+  </data>
+  <data name="cancelButtonText" xml:space="preserve">
+    <value>रद्द करें</value>
+  </data>
+  <data name="notesPanePlotDescription.Text" xml:space="preserve">
+    <value>इस अध्याय में कौन-सी कथानक-धाराएँ दिखाई देती हैं? (अल्पविराम से अलग करें)</value>
+  </data>
+  <data name="notesPaneLocationDescription.Text" xml:space="preserve">
+    <value>यह अध्याय कहाँ घटित होता है?</value>
+  </data>
+  <data name="writingPromptsDialogue.Title" xml:space="preserve">
+    <value>लेखन संकेत</value>
+  </data>
+  <data name="relationshipTypePlaceholder" xml:space="preserve">
+    <value>जैसे: प्रतिद्वंद्वी, प्रेम रुचि, मार्गदर्शक...</value>
+  </data>
+  <data name="notesPanePlotBox.PlaceholderText" xml:space="preserve">
+    <value>जैसे: मुख्य कथानक, प्रेम उपकथा, रहस्य...</value>
+  </data>
+  <data name="globalSearchDialogue.Title" xml:space="preserve">
+    <value>सभी अध्यायों में खोजें</value>
+  </data>
+  <data name="addButtonText" xml:space="preserve">
+    <value>जोड़ें</value>
+  </data>
+  <data name="storyCanvasTitle.Text" xml:space="preserve">
+    <value>कहानी कैनवास</value>
+  </data>
+  <data name="noMatchesFound" xml:space="preserve">
+    <value>कोई मेल नहीं मिला</value>
+  </data>
+  <data name="notesPanePlotTab.Header" xml:space="preserve">
+    <value>कथानक</value>
+  </data>
+  <data name="setStatusFlyout.Text" xml:space="preserve">
+    <value>स्थिति सेट करें</value>
+  </data>
+  <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
+    <value>इस अध्याय में क्या होता है, उसका सार लिखें...</value>
+  </data>
+  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
+    <value>सारांश</value>
+  </data>
+  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
+    <value>सभी अध्यायों में खोजने के लिए टाइप करें...</value>
+  </data>
+  <data name="connectionLabelTitle" xml:space="preserve">
+    <value>कनेक्शन लेबल (वैकल्पिक)</value>
+  </data>
+  <data name="skipButtonText" xml:space="preserve">
+    <value>छोड़ें</value>
+  </data>
+  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
+    <value>अध्यायों को यहाँ देखने के लिए उन्हें मुख्य लेखन पृष्ठ से जोड़ें।</value>
+  </data>
+  <data name="relationshipSelectCharacter" xml:space="preserve">
+    <value>पात्र चुनें...</value>
+  </data>
+  <data name="addRelationshipTitle" xml:space="preserve">
+    <value>संबंध जोड़ें</value>
+  </data>
+  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
+    <value>जैसे: पुरानी लाइब्रेरी, शहर की सड़कें...</value>
+  </data>
+  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
+    <value>Suggestions</value>
+  </data>
+  <data name="writingPromptsCategory.Header" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="chapterTagsLabel.Text" xml:space="preserve">
+    <value>Tags</value>
+  </data>
+  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="statusWriting.Text" xml:space="preserve">
+    <value>Writing</value>
+  </data>
+  <data name="editTagsFlyout.Text" xml:space="preserve">
+    <value>Edit Tags...</value>
+  </data>
+  <data name="relationshipTypeLabel" xml:space="preserve">
+    <value>Relationship type:</value>
+  </data>
+  <data name="notesPaneNotesTab.Header" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="statusRevision.Text" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="relationshipCharacterLabel" xml:space="preserve">
+    <value>Character:</value>
+  </data>
+  <data name="writingPromptsDescription.Text" xml:space="preserve">
+    <value>Need inspiration? Here are some prompts to get you writing.</value>
+  </data>
+  <data name="pinboardEmptyTitle.Text" xml:space="preserve">
+    <value>No chapters yet</value>
+  </data>
+  <data name="notesPaneSynopsisDescription.Text" xml:space="preserve">
+    <value>Chapter synopsis - a brief summary for your own reference.</value>
+  </data>
+  <data name="pinboardHelpText.Text" xml:space="preserve">
+    <value>Drag cards to move - Click to open</value>
+  </data>
+  <data name="connectionLabelPlaceholder" xml:space="preserve">
+    <value>e.g. leads to, flashback of...</value>
+  </data>
+  <data name="globalSearchDialogue.PrimaryButtonText" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="globalSearchNoResults.Text" xml:space="preserve">
+    <value>No results found</value>
+  </data>
+  <data name="chapterTagsHeader.Text" xml:space="preserve">
+    <value>Edit Chapter Tags</value>
+  </data>
+  <data name="notesPaneLocationTab.Header" xml:space="preserve">
+    <value>Location</value>
+  </data>
+  <data name="createButtonText" xml:space="preserve">
+    <value>Create</value>
+  </data>
+  <data name="statusFinal.Text" xml:space="preserve">
+    <value>Final</value>
+  </data>
+  <data name="writingPromptsNewPrompt.Text" xml:space="preserve">
+    <value>New Prompt</value>
+  </data>
+  <data name="writingPromptsCategory.PlaceholderText" xml:space="preserve">
+    <value>All categories</value>
+  </data>
+  <data name="allChaptersScopeToggle.Content" xml:space="preserve">
+    <value>All chapters</value>
+  </data>
+  <data name="pinboardTagFilter.PlaceholderText" xml:space="preserve">
+    <value>Filter by tag</value>
+  </data>
+  <data name="statusDraft.Text" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="noPromptsAvailable" xml:space="preserve">
+    <value>No prompts available for this category.</value>
+  </data>
+
+  <data name="addChapter.Label" xml:space="preserve">
+    <value>Add chapter</value>
+  </data>
+  <data name="addDialogue.Label" xml:space="preserve">
+    <value>Insert dialogue</value>
+  </data>
+  <data name="addText.Text" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="all" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="analytics.Text" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
+  <data name="app.Content" xml:space="preserve">
+    <value>App</value>
+  </data>
+  <data name="appHeaderEdited" xml:space="preserve">
+    <value>Edited</value>
+  </data>
+  <data name="applyChanges" xml:space="preserve">
+    <value>Apply changes</value>
+  </data>
+  <data name="aToZ.Text" xml:space="preserve">
+    <value>A-Z</value>
+  </data>
+  <data name="autosave.Label" xml:space="preserve">
+    <value>Autosave</value>
+  </data>
+  <data name="autosave.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Autosave (adjust interval in Settings &gt; General)</value>
+  </data>
+  <data name="autosaveContent.Content" xml:space="preserve">
+    <value>Autosave</value>
+  </data>
+  <data name="autosaveEnable.Text" xml:space="preserve">
+    <value>Enable</value>
+  </data>
+  <data name="autosaveInterval.Text" xml:space="preserve">
+    <value>Interval</value>
+  </data>
+  <data name="autosaveInterval1.Content" xml:space="preserve">
+    <value>30 seconds</value>
+  </data>
+  <data name="autosaveInterval10.Content" xml:space="preserve">
+    <value>10 minutes</value>
+  </data>
+  <data name="autosaveInterval12.Content" xml:space="preserve">
+    <value>12 minutes</value>
+  </data>
+  <data name="autosaveInterval15.Content" xml:space="preserve">
+    <value>15 minutes</value>
+  </data>
+  <data name="autosaveInterval2.Content" xml:space="preserve">
+    <value>2 minutes</value>
+  </data>
+  <data name="autosaveInterval30.Content" xml:space="preserve">
+    <value>30 minutes</value>
+  </data>
+  <data name="autosaveInterval5.Content" xml:space="preserve">
+    <value>5 minutes</value>
+  </data>
+  <data name="autosaveInterval60.Content" xml:space="preserve">
+    <value>1 hour</value>
+  </data>
+  <data name="autosaveText.Text" xml:space="preserve">
+    <value>Autosave</value>
+  </data>
+  <data name="byChapterText.Text" xml:space="preserve">
+    <value>By chapter</value>
+  </data>
+  <data name="cancel.Content" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="cancelText" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="cancelTxt.Text" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="changesCharactersPageDialogueApplyChanges" xml:space="preserve">
+    <value>Apply changes</value>
+  </data>
+  <data name="changesCharactersPageDialogueDescription" xml:space="preserve">
+    <value>Did you want to leave without applying changes?</value>
+  </data>
+  <data name="changesCharactersPageDialogueDontApplyChanges" xml:space="preserve">
+    <value>Don't apply</value>
+  </data>
+  <data name="changesCharactersPageDialogueTitle" xml:space="preserve">
+    <value>Changes weren't applied!</value>
+  </data>
+  <data name="chapterDialogueCreate" xml:space="preserve">
+    <value>Create chapter</value>
+  </data>
+  <data name="chapterDialogueName.Text" xml:space="preserve">
+    <value>Chapter name:</value>
+  </data>
+  <data name="chapterDialogueRename" xml:space="preserve">
+    <value>Rename chapter</value>
+  </data>
+  <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Options</value>
+  </data>
+  <data name="chapters" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="chaptersExport.Text" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="chaptersText" xml:space="preserve">
+    <value>Chapters</value>
+  </data>
+  <data name="chaptersToExport.Text" xml:space="preserve">
+    <value>Chapters to export:</value>
+  </data>
+  <data name="characterAppearance.PlaceholderText" xml:space="preserve">
+    <value>Appearance and visual notes</value>
+  </data>
+  <data name="characterDialoguePreview.Text" xml:space="preserve">
+    <value>Sample lines</value>
+  </data>
+  <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
+    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+  </data>
+  <data name="characterDialogueStatsEmpty" xml:space="preserve">
+    <value>No dialogue lines found yet.</value>
+  </data>
+  <data name="characterDialogueStatsFormat" xml:space="preserve">
+    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+  </data>
+  <data name="characterDialogueUsage.Text" xml:space="preserve">
+    <value>Dialogue usage</value>
+  </data>
+  <data name="characterNotSelected.Text" xml:space="preserve">
+    <value>No character selected.</value>
+  </data>
+  <data name="characters" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="charactersContent.Content" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Search characters</value>
+  </data>
+  <data name="charactersSearchEmpty.Text" xml:space="preserve">
+    <value>No characters match your search.</value>
+  </data>
+  <data name="charactersSText" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="charactersStory" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="charactersText" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="characterTraits.PlaceholderText" xml:space="preserve">
+    <value>Traits (comma separated)</value>
+  </data>
+  <data name="clickHere" xml:space="preserve">
+    <value>Click here</value>
+  </data>
+  <data name="clickHereText.Text" xml:space="preserve">
+    <value>Click here</value>
+  </data>
+  <data name="clickToSeeStoryAnalytics.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Click to view Story Analytics</value>
+  </data>
+  <data name="createNew.Text" xml:space="preserve">
+    <value>Create new</value>
+  </data>
+  <data name="custom.Content" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="dailyWordGoalSetting.Text" xml:space="preserve">
+    <value>Daily word goal</value>
+  </data>
+  <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
+    <value>Track your daily writing progress. Set to 0 to disable.</value>
+  </data>
+  <data name="dark.Content" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="dialogueMode.Label" xml:space="preserve">
+    <value>Dialogue helper</value>
+  </data>
+  <data name="dialoguePickerAll.Text" xml:space="preserve">
+    <value>All characters</value>
+  </data>
+  <data name="dialoguePickerNoResults.Text" xml:space="preserve">
+    <value>No characters match this search.</value>
+  </data>
+  <data name="dialoguePopupHint.Text" xml:space="preserve">
+    <value>↑↓ चुनें · Enter पुष्टि · Esc बंद करें</value>
+  </data>
+  <data name="dialogueTeachingTip.Title" xml:space="preserve">
+    <value>संवाद सहायक</value>
+  </data>
+  <data name="dialogueTeachingTip.Subtitle" xml:space="preserve">
+    <value>लिखते समय Enter दबाकर तुरंत पात्र संवाद पंक्तियाँ जोड़ें। ↑↓ तीरों से पात्र चुनें, फिर Enter से पुष्टि करें। आपके संवाद शाखा संवाद नोड्स में भी बदले जा सकते हैं।</value>
+  </data>
+  <data name="dialoguePickerRecent.Text" xml:space="preserve">
+    <value>Recent</value>
+  </data>
+  <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
+    <value>Find character</value>
+  </data>
+  <data name="dialoguesExport.Text" xml:space="preserve">
+    <value>Dialogues</value>
+  </data>
+  <data name="dialoguesText" xml:space="preserve">
+    <value>Dialogues</value>
+  </data>
+  <data name="dictation.Label" xml:space="preserve">
+    <value>Dictation</value>
+  </data>
+  <data name="done" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="downBarText.Text" xml:space="preserve">
+    <value>Add a chapter to start writing your story.</value>
+  </data>
+  <data name="downBarTextS" xml:space="preserve">
+    <value>Add a chapter to start writing your story.</value>
+  </data>
+  <data name="edit.Label" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="editFlyout.Text" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="editorFontFamilySetting.Text" xml:space="preserve">
+    <value>Font family</value>
+  </data>
+  <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
+    <value>Default font used for new text in the editor.</value>
+  </data>
+  <data name="editorFontSizeSetting.Text" xml:space="preserve">
+    <value>Font size</value>
+  </data>
+  <data name="editText" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="enableMeasureLabel.Content" xml:space="preserve">
+    <value>Enable measure</value>
+  </data>
+  <data name="estimatedPageCount" xml:space="preserve">
+    <value>Estimated page count</value>
+  </data>
+  <data name="estimatedReadTime" xml:space="preserve">
+    <value>Estimated read time</value>
+  </data>
+  <data name="exitWithoutSaveDialogCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="exitWithoutSaveDialogDescription" xml:space="preserve">
+    <value>Unsaved changes will be lost. Are you sure you want to exit without saving?</value>
+  </data>
+  <data name="exitWithoutSaveDialogDontSave" xml:space="preserve">
+    <value>Don't save</value>
+  </data>
+  <data name="exitWithoutSaveDialogSave" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="exitWithoutSaveDialogTitle" xml:space="preserve">
+    <value>Unsaved progress</value>
+  </data>
+  <data name="recoveryRestoreDialogTitle" xml:space="preserve">
+    <value>असहेजे गए बदलाव पुनर्स्थापित करें?</value>
+  </data>
+  <data name="recoveryRestoreDialogDescription" xml:space="preserve">
+    <value>Storylines को पिछले सत्र के असहेजे गए बदलाव मिले हैं। इन्हें पुनर्स्थापित करके इस परियोजना पर काम जारी रखें, या इन्हें त्यागकर अंतिम सहेजा गया संस्करण खोलें।</value>
+  </data>
+  <data name="recoveryRestoreDialogRestore" xml:space="preserve">
+    <value>बदलाव पुनर्स्थापित करें</value>
+  </data>
+  <data name="recoveryRestoreDialogDiscard" xml:space="preserve">
+    <value>बदलाव त्यागें</value>
+  </data>
+  <data name="recoveryRestoreDialogCancel" xml:space="preserve">
+    <value>अभी नहीं</value>
+  </data>
+  <data name="experience.Title" xml:space="preserve">
+    <value>Tell us about your experience</value>
+  </data>
+  <data name="exportContent.Content" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="exportText" xml:space="preserve">
+    <value>Export</value>
+  </data>
+  <data name="file.Content" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="fileDoesNotExist.Text" xml:space="preserve">
+    <value>A file with this name already exists at the chosen location. If you continue, the existing file will be overwritten.</value>
+  </data>
+  <data name="fileLocation.Text" xml:space="preserve">
+    <value>C:\Users\Documents</value>
+  </data>
+  <data name="fileName.Text" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="fileNameExportPlaceh.PlaceholderText" xml:space="preserve">
+    <value>the-queen-of-donuts-export</value>
+  </data>
+  <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
+    <value>the-queen-of-donuts-script</value>
+  </data>
+  <data name="findOne.Text" xml:space="preserve">
+    <value>Find one</value>
+  </data>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
+    <value>You did not finish the goal you set. Do you really want to quit?</value>
+  </data>
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
+    <value>Leave</value>
+  </data>
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
+    <value>Stay and finish</value>
+  </data>
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
+    <value>Leaving so soon?</value>
+  </data>
+  <data name="githubBannerDescription.Text" xml:space="preserve">
+    <value>Click here to give Storylines a Star on GitHub</value>
+  </data>
+  <data name="githubBannerTitle.Text" xml:space="preserve">
+    <value>GitHub Stars Count</value>
+  </data>
+  <data name="githubRepository.Text" xml:space="preserve">
+    <value>GitHub repository</value>
+  </data>
+  <data name="help.Content" xml:space="preserve">
+    <value>Help</value>
+  </data>
+  <data name="highlighterFlyout.Text" xml:space="preserve">
+    <value>Highlighter</value>
+  </data>
+  <data name="includeChapterName.Content" xml:space="preserve">
+    <value>Include chapter name</value>
+  </data>
+  <data name="information.Text" xml:space="preserve">
+    <value>Information</value>
+  </data>
+  <data name="insert.Content" xml:space="preserve">
+    <value>Insert</value>
+  </data>
+  <data name="janeDoe" xml:space="preserve">
+    <value>Jane Doe</value>
+  </data>
+  <data name="johnDoe" xml:space="preserve">
+    <value>John Doe</value>
+  </data>
+  <data name="light.Content" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="links.Text" xml:space="preserve">
+    <value>Links</value>
+  </data>
+  <data name="loadSaveSystemErrorText" xml:space="preserve">
+    <value>An error occurred while loading your file.</value>
+  </data>
+  <data name="location.Text" xml:space="preserve">
+    <value>Location:</value>
+  </data>
+  <data name="min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="modeDialogueFocus.Text" xml:space="preserve">
+    <value>Focus</value>
+  </data>
+  <data name="modeDialogueFullScreen.Content" xml:space="preserve">
+    <value>Full screen</value>
+  </data>
+  <data name="modeDialogueRead.Text" xml:space="preserve">
+    <value>Read</value>
+  </data>
+  <data name="modeDialogueTimer.Content" xml:space="preserve">
+    <value>Timer</value>
+  </data>
+  <data name="modeDialogueTitle.Text" xml:space="preserve">
+    <value>Focus Mode</value>
+  </data>
+  <data name="newChapter.PlaceholderText" xml:space="preserve">
+    <value>Untitled</value>
+  </data>
+  <data name="newCharacterName" xml:space="preserve">
+    <value>New Character</value>
+  </data>
+  <data name="newUpdateAvailable.Text" xml:space="preserve">
+    <value>It seems that there is new update in the store!</value>
+  </data>
+  <data name="newUpdateAvailable2.Text" xml:space="preserve">
+    <value>to download it.</value>
+  </data>
+  <data name="noChapters.Text" xml:space="preserve">
+    <value>There are no chapters yet.</value>
+  </data>
+  <data name="noCharacters.Text" xml:space="preserve">
+    <value>There are no characters yet.</value>
+  </data>
+  <data name="noCharactersDialogueAddNew" xml:space="preserve">
+    <value>Add new character</value>
+  </data>
+  <data name="noCharactersDialogueDescription" xml:space="preserve">
+    <value>You can easily add a new character by clicking the "Add new character" button.</value>
+  </data>
+  <data name="noCharactersDialogueTitle" xml:space="preserve">
+    <value>There are no characters in this project.</value>
+  </data>
+  <data name="noCharactersModes.Message" xml:space="preserve">
+    <value>You will have to leave Focus Mode before you can add a new one.</value>
+  </data>
+  <data name="noCharactersModes.Title" xml:space="preserve">
+    <value>There are no characters in this project.</value>
+  </data>
+  <data name="none" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="noneText.Text" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="nothingHere.Text" xml:space="preserve">
+    <value>There are no projects yet.</value>
+  </data>
+  <data name="or.Text" xml:space="preserve">
+    <value>or</value>
+  </data>
+  <data name="paragraphs" xml:space="preserve">
+    <value>Paragraphs</value>
+  </data>
+  <data name="paragraphsContent.Content" xml:space="preserve">
+    <value>Paragraphs</value>
+  </data>
+  <data name="personalGithub.Text" xml:space="preserve">
+    <value>Morning4coffe's GitHub</value>
+  </data>
+  <data name="personalTwitter.Text" xml:space="preserve">
+    <value>Morning4coffe on X</value>
+  </data>
+  <data name="picturesNotFound" xml:space="preserve">
+    <value>Some images failed to load.</value>
+  </data>
+  <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Auto-arrange</value>
+  </data>
+  <data name="pinboardBackButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="pinboardBackButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Go back</value>
+  </data>
+  <data name="privacyPolicy.Text" xml:space="preserve">
+    <value>Privacy policy</value>
+  </data>
+  <data name="profilePicturesFlyout.Text" xml:space="preserve">
+    <value>Character pictures</value>
+  </data>
+  <data name="projectName.Text" xml:space="preserve">
+    <value>Project name:</value>
+  </data>
+  <data name="projectNamePlaceh.PlaceholderText" xml:space="preserve">
+    <value>About The Queen of Donuts</value>
+  </data>
+  <data name="projectOnStartSetting.Text" xml:space="preserve">
+    <value>Last project on startup</value>
+  </data>
+  <data name="projectOnStartSettingDesc.Text" xml:space="preserve">
+    <value>The app remembers the last project you opened and tries to load it the next time it starts.</value>
+  </data>
+  <data name="projects.Text" xml:space="preserve">
+    <value>Projects</value>
+  </data>
+  <data name="projectSetting.Text" xml:space="preserve">
+    <value>Project</value>
+  </data>
+  <data name="rateAndReview.Text" xml:space="preserve">
+    <value>Rate and review on Microsoft Store</value>
+  </data>
+  <data name="ReadMode.Label" xml:space="preserve">
+    <value>Read mode</value>
+  </data>
+  <data name="recurrentsDescription.Text" xml:space="preserve">
+    <value>Download our New App for Windows Today</value>
+  </data>
+  <data name="recurrentsTitle.Text" xml:space="preserve">
+    <value>Manage Your Subscriptions</value>
+  </data>
+  <data name="removeFlyout.Text" xml:space="preserve">
+    <value>Remove</value>
+  </data>
+  <data name="renameFlyout.Text" xml:space="preserve">
+    <value>Rename</value>
+  </data>
+  <data name="reportABug.Text" xml:space="preserve">
+    <value>Report a bug</value>
+  </data>
+  <data name="reviewDialog.Text" xml:space="preserve">
+    <value>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</value>
+  </data>
+  <data name="reviewDialogOption1.Content" xml:space="preserve">
+    <value>Rate now</value>
+  </data>
+  <data name="reviewDialogOption2.Content" xml:space="preserve">
+    <value>Not now</value>
+  </data>
+  <data name="reviewDialogOption3.Content" xml:space="preserve">
+    <value>Never show again</value>
+  </data>
+  <data name="reviewRequestThankYou.Title" xml:space="preserve">
+    <value>Thank you!</value>
+  </data>
+  <data name="saveContent.Content" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="saveCopyText" xml:space="preserve">
+    <value>Save copy</value>
+  </data>
+  <data name="saveSaveSystemErrorText" xml:space="preserve">
+    <value>An error occurred while saving your file.</value>
+  </data>
+  <data name="saveText" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="searchBox.PlaceholderText" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="selectedCharacters" xml:space="preserve">
+    <value>Selected characters</value>
+  </data>
+  <data name="sort.Label" xml:space="preserve">
+    <value>Sort</value>
+  </data>
+  <data name="submit.Content" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="submitText.Text" xml:space="preserve">
+    <value>Submit</value>
+  </data>
+  <data name="switchContent.Content" xml:space="preserve">
+    <value>Switch</value>
+  </data>
+  <data name="system.Content" xml:space="preserve">
+    <value>System</value>
+  </data>
+  <data name="textEditorSetting.Text" xml:space="preserve">
+    <value>Text Editor</value>
+  </data>
+  <data name="toAddNew.Text" xml:space="preserve">
+    <value>to add new.</value>
+  </data>
+  <data name="unsavedProgressAlert.Text" xml:space="preserve">
+    <value>Unsaved progress alert</value>
+  </data>
+  <data name="updateAvailableTitle.Title" xml:space="preserve">
+    <value>Update available</value>
+  </data>
+  <data name="storeUpdateAvailableMessage" xml:space="preserve">
+    <value>Storylines के लिए एक नया अपडेट इंस्टॉल करने के लिए तैयार है।</value>
+  </data>
+  <data name="storeUpdateMandatoryMessage" xml:space="preserve">
+    <value>इंस्टॉल पूरा होने तक कुछ सुविधाएँ सीमित रह सकती हैं।</value>
+  </data>
+  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+    <value>अभी इंस्टॉल करें</value>
+  </data>
+  <data name="storeUpdateLater.Content" xml:space="preserve">
+    <value>बाद में</value>
+  </data>
+  <data name="storeUpdateInstallingMessage" xml:space="preserve">
+    <value>अपडेट डाउनलोड और इंस्टॉल किया जा रहा है। इंस्टॉलेशन शुरू होने पर Storylines बंद हो सकता है।</value>
+  </data>
+  <data name="storeUpdateInstalledTitle" xml:space="preserve">
+    <value>अपडेट तैयार है</value>
+  </data>
+  <data name="storeUpdateInstalledMessage" xml:space="preserve">
+    <value>Storylines का नवीनतम अपडेट सफलतापूर्वक इंस्टॉल हो गया।</value>
+  </data>
+  <data name="storeUpdateCancelledTitle" xml:space="preserve">
+    <value>अपडेट रद्द किया गया</value>
+  </data>
+  <data name="storeUpdateCancelledMessage" xml:space="preserve">
+    <value>अपडेट इंस्टॉल नहीं हुआ। आप कभी भी फिर से कोशिश कर सकते हैं।</value>
+  </data>
+  <data name="storeUpdateFailedTitle" xml:space="preserve">
+    <value>अपडेट विफल रहा</value>
+  </data>
+  <data name="storeUpdateFailedMessage" xml:space="preserve">
+    <value>Storylines अभी अपडेट इंस्टॉल नहीं कर सका। कृपया बाद में फिर कोशिश करें।</value>
+  </data>
+  <data name="version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="view.Content" xml:space="preserve">
+    <value>View</value>
+  </data>
+  <data name="website.Content" xml:space="preserve">
+    <value>Website</value>
+  </data>
+  <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
+    <value>Recent projects</value>
+  </data>
+  <data name="whatsNextDescription.Text" xml:space="preserve">
+    <value>Read about what's next for Storylines</value>
+  </data>
+  <data name="whatsNextTitle.Text" xml:space="preserve">
+    <value>The way forward</value>
+  </data>
+  <data name="whatToMeasure.Text" xml:space="preserve">
+    <value>Measure value:</value>
+  </data>
+  <data name="withoutSpaces" xml:space="preserve">
+    <value>without spaces</value>
+  </data>
+  <data name="withSpaces" xml:space="preserve">
+    <value>with spaces</value>
+  </data>
+  <data name="words" xml:space="preserve">
+    <value>Words</value>
+  </data>
+  <data name="wordsContent.Content" xml:space="preserve">
+    <value>Words</value>
+  </data>
+  <data name="writingGoalSetting.Text" xml:space="preserve">
+    <value>Writing Goal</value>
+  </data>
+  <data name="yourStory.PlaceholderText" xml:space="preserve">
+    <value>Type your story here.</value>
+  </data>
+  <data name="zoom.Text" xml:space="preserve">
+    <value>Zoom</value>
+  </data>
+  <data name="zToA.Text" xml:space="preserve">
+    <value>Z-A</value>
+  </data>
+
+  <data name="addRelationshipButton.Text" xml:space="preserve">
+    <value>जोड़ें</value>
+  </data>
+  <data name="chapterTagPlaceholder.PlaceholderText" xml:space="preserve">
+    <value>Add a tag…</value>
+  </data>
+  <data name="chapterTagSave.Text" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="noRelationshipsText.Text" xml:space="preserve">
+    <value>No relationships defined</value>
+  </data>
+  <data name="readTimeMinRead" xml:space="preserve">
+    <value>min read</value>
+  </data>
+  <data name="relationshipsTitle.Text" xml:space="preserve">
+    <value>Relationships</value>
+  </data>
+
+  <data name="wordGoalReachedMessage" xml:space="preserve">
+    <value>You've hit your word goal for "{0}". Keep writing!</value>
+  </data>
+  <data name="wordGoalReachedTitle" xml:space="preserve">
+    <value>Chapter goal reached!</value>
+  </data>
+  <data name="readOnlyExitPill.Text" xml:space="preserve">
+    <value>केवल पढ़ने के लिए - संपादित करने हेतु क्लिक करें</value>
+  </data>
+  <data name="ReadOnlyMode.Label" xml:space="preserve">
+    <value>केवल पढ़ने के लिए</value>
+  </data>
+  <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
+    <value>केवल-पठन मोड</value>
+  </data>
+  <data name="modePickerTitle.Text" xml:space="preserve">
+    <value>लेखन मोड चुनें</value>
+  </data>
+  <data name="modeEdit.Text" xml:space="preserve">
+    <value>संपादन</value>
+  </data>
+  <data name="modeEditDescription" xml:space="preserve">
+    <value>सभी उपलब्ध उपकरणों के साथ पूर्ण संपादन अनुभव।</value>
+  </data>
+  <data name="modeFocus.Text" xml:space="preserve">
+    <value>फोकस</value>
+  </data>
+  <data name="modeFocusDescription" xml:space="preserve">
+    <value>वैकल्पिक टाइमर और माप लक्ष्य के साथ बिना व्यवधान का लेखन।</value>
+  </data>
+  <data name="modeReadOnly.Text" xml:space="preserve">
+    <value>केवल पढ़ने के लिए</value>
+  </data>
+  <data name="modeReadOnlyDescription" xml:space="preserve">
+    <value>स्वरूपण सुरक्षित रखते हुए बिना व्यवधान के पढ़ने के लिए संपादक को लॉक करता है।</value>
+  </data>
+  <data name="modeEnterButton.Text" xml:space="preserve">
+    <value>मोड शुरू करें</value>
+  </data>
+  <data name="experimentalSetting.Text" xml:space="preserve">
+    <value>Experimental</value>
+  </data>
+  <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
+    <value>Enable experimental features</value>
+  </data>
+  <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
+    <value>Unlock features still in development, such as branching dialogue.</value>
+  </data>
+  <data name="pinboardButton.Label" xml:space="preserve">
+    <value>कहानी कैनवास</value>
+  </data>
+  <data name="writingPromptsButton.Label" xml:space="preserve">
+    <value>लेखन संकेत</value>
+  </data>
+  <data name="characterDialogueNodeCountFormat" xml:space="preserve">
+    <value>{0} dialogue node(s)</value>
+  </data>
+  <data name="characterViewDialogueNodes.Content" xml:space="preserve">
+    <value>View in dialogue editor</value>
+  </data>
+  <data name="pinboardDialogueIndicator" xml:space="preserve">
+    <value>Has branching dialogue</value>
+  </data>
+  <data name="boldTextButton.Label" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="boldTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Bold</value>
+  </data>
+  <data name="italicTextButton.Label" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="italicTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Italic</value>
+  </data>
+  <data name="underlineTextButton.Label" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="underlineTextButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Underline</value>
+  </data>
+  <data name="strikethroughButton.Label" xml:space="preserve">
+    <value>Strikethrough</value>
+  </data>
+  <data name="strikethroughButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Strikethrough</value>
+  </data>
+  <data name="readOnlyExitPillButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Exit read-only mode</value>
+  </data>
+  <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Exit read-only mode</value>
+  </data>
+  <data name="connectionModeText.Text" xml:space="preserve">
+    <value>Click a target passage to connect</value>
+  </data>
+  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
+    <value>Cancel connection</value>
+  </data>
+  <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Shortcuts</value></data>
+  <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Global</value></data>
+  <data name="shortcutsMainPageExpander.Header" xml:space="preserve"><value>Main Page</value></data>
+  <data name="shortcutsCharactersExpander.Header" xml:space="preserve"><value>Characters Page</value></data>
+  <data name="shortcutSave" xml:space="preserve"><value>Save</value></data>
+  <data name="shortcutSaveCopy" xml:space="preserve"><value>Save copy</value></data>
+  <data name="shortcutExport" xml:space="preserve"><value>Export</value></data>
+  <data name="shortcutUndo" xml:space="preserve"><value>Undo</value></data>
+  <data name="shortcutRedo" xml:space="preserve"><value>Redo</value></data>
+  <data name="shortcutOpenSettings" xml:space="preserve"><value>Open settings</value></data>
+  <data name="shortcutAddChapter" xml:space="preserve"><value>Add chapter</value></data>
+  <data name="shortcutRemoveChapter" xml:space="preserve"><value>Remove chapter</value></data>
+  <data name="shortcutChapterAbove" xml:space="preserve"><value>Chapter above</value></data>
+  <data name="shortcutChapterBelow" xml:space="preserve"><value>Chapter below</value></data>
+  <data name="shortcutReadAloud" xml:space="preserve"><value>Read aloud</value></data>
+  <data name="shortcutSearch" xml:space="preserve"><value>Search</value></data>
+  <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Search and replace</value></data>
+  <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Toggle dialogue mode</value></data>
+  <data name="shortcutBold" xml:space="preserve"><value>Bold</value></data>
+  <data name="shortcutItalic" xml:space="preserve"><value>Italic</value></data>
+  <data name="shortcutUnderline" xml:space="preserve"><value>Underline</value></data>
+  <data name="shortcutStrikethrough" xml:space="preserve"><value>Strikethrough</value></data>
+  <data name="shortcutAddCharacter" xml:space="preserve"><value>Add character</value></data>
+  <data name="shortcutRemoveCharacter" xml:space="preserve"><value>Remove character</value></data>
+  <data name="shortcutToggleEditMode" xml:space="preserve"><value>Toggle edit mode</value></data>
+  <data name="exportTitle" xml:space="preserve"><value>निर्यात</value></data>
+  <data name="exportOptionChapters" xml:space="preserve"><value>अध्याय</value></data>
+  <data name="exportOptionCharacters" xml:space="preserve"><value>पात्र</value></data>
+  <data name="exportOptionDialogues" xml:space="preserve"><value>संवाद</value></data>
+  <data name="exportFileNameCollisionError" xml:space="preserve"><value>यह फ़ाइल नाम चयनित फ़ोल्डर में पहले से उपयोग में है।</value></data>
+  <data name="exportFileName" xml:space="preserve"><value>फ़ाइल नाम</value></data>
+  <data name="exportFileNamePlaceholder" xml:space="preserve"><value>मेरी कहानी</value></data>
+  <data name="exportFileLocation" xml:space="preserve"><value>फ़ाइल स्थान</value></data>
+  <data name="exportFileLocationPlaceholder" xml:space="preserve"><value>एक फ़ोल्डर चुनें</value></data>
+  <data name="exportIncludeChapterName" xml:space="preserve"><value>अध्याय का नाम शामिल करें</value></data>
+  <data name="exportChaptersToExport" xml:space="preserve"><value>निर्यात करने वाले अध्याय</value></data>
+  <data name="exportCharactersToExport" xml:space="preserve"><value>निर्यात करने वाले पात्र</value></data>
+  <data name="exportNone" xml:space="preserve"><value>कोई नहीं</value></data>
+  <data name="exportAll" xml:space="preserve"><value>सभी</value></data>
+  <data name="exportFailedGeneric" xml:space="preserve"><value>निर्यात विफल हुआ।</value></data>
+  <data name="exportNoDialoguesFound" xml:space="preserve"><value>वर्तमान निर्यात चयन से कोई संवाद मेल नहीं खाता।</value></data>
+  <data name="exportSubmit" xml:space="preserve"><value>निर्यात</value></data>
+  <data name="saveTitle" xml:space="preserve"><value>सहेजें</value></data>
+  <data name="saveCopyTitle" xml:space="preserve"><value>प्रतिलिपि सहेजें</value></data>
+  <data name="saveProjectName" xml:space="preserve"><value>परियोजना का नाम</value></data>
+  <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>मेरी कहानी</value></data>
+  <data name="projectStatistics.Text" xml:space="preserve">
+    <value>परियोजना आँकड़े</value>
+  </data>
+  <data name="wordDistribution.Text" xml:space="preserve">
+    <value>शब्द आवृत्ति</value>
+  </data>
+  <data name="projectFileInfoButton.Label" xml:space="preserve">
+    <value>फ़ाइल जानकारी</value>
+  </data>
+  <data name="projectFileNameLabel" xml:space="preserve">
+    <value>File name:</value>
+  </data>
+  <data name="projectFileLocationLabel" xml:space="preserve">
+    <value>Location:</value>
+  </data>
+  <data name="projectStatsWritingLabel" xml:space="preserve">
+    <value>Writing</value>
+  </data>
+  <data name="projectStatsRevisionLabel" xml:space="preserve">
+    <value>Revision</value>
+  </data>
+  <data name="projectStatsDraftLabel" xml:space="preserve">
+    <value>Draft</value>
+  </data>
+  <data name="projectFileInfoText.Text" xml:space="preserve">
+    <value>फ़ाइल जानकारी</value>
+  </data>
+  <data name="projectFileCreatedLabel" xml:space="preserve">
+    <value>बनाया गया:</value>
+  </data>
+  <data name="projectFileModifiedLabel" xml:space="preserve">
+    <value>संशोधित:</value>
+  </data>
+  <data name="projectFileSizeLabel" xml:space="preserve">
+    <value>आकार:</value>
+  </data>
+  <data name="projectFileTypeLabel" xml:space="preserve">
+    <value>प्रकार:</value>
+  </data>
+  <data name="projectFileNotSaved" xml:space="preserve">
+    <value>अभी तक सहेजा नहीं गया</value>
+  </data>
+  <data name="projectFileUnavailable" xml:space="preserve">
+    <value>N/A</value>
+  </data>
+  <data name="duplicateFlyout.Text" xml:space="preserve"><value>डुप्लिकेट करें</value></data>
+  <data name="duplicateChapterNameFormat" xml:space="preserve"><value>{0} (कॉपी)</value></data>
+  <data name="duplicateChapterNameIndexedFormat" xml:space="preserve"><value>{0} (कॉपी {1})</value></data>
+  <data name="writingPromptsCopyPrompt.Content" xml:space="preserve"><value>प्रॉम्प्ट कॉपी करें</value></data>
+  <data name="writingPromptsCreateChapterFromPrompt.Content" xml:space="preserve"><value>अध्याय बनाएँ</value></data>
+  <data name="writingPromptsAllCategories" xml:space="preserve"><value>सभी श्रेणियाँ</value></data>
+  <data name="writingPromptCopiedStatus" xml:space="preserve"><value>प्रॉम्प्ट क्लिपबोर्ड पर कॉपी हो गया।</value></data>
+  <data name="writingPromptCategoryChapterSeedFormat" xml:space="preserve"><value>{0} प्रॉम्प्ट</value></data>
+  <data name="writingPromptDefaultChapterSeed" xml:space="preserve"><value>लेखन प्रॉम्प्ट</value></data>
+  <data name="chapterTagsSavedPresets.Text" xml:space="preserve"><value>सहेजे गए प्रीसेट</value></data>
+  <data name="chapterTagsRemovePresetButton.ToolTipService.ToolTip" xml:space="preserve"><value>प्रीसेट हटाएँ</value></data>
+  <data name="chapterTagsRemovePresetButton.AutomationProperties.Name" xml:space="preserve"><value>प्रीसेट हटाएँ</value></data>
+  <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve"><value>अभी तक कोई सहेजा गया प्रीसेट नहीं है।</value></data>
+  <data name="experimentalBadge.Text" xml:space="preserve">
+    <value>प्रयोगात्मक</value>
+  </data>
+  <data name="checkForUpdatesButton.Content" xml:space="preserve">
+    <value>अपडेट की जाँच करें</value>
+  </data>
+  <data name="searchReplaceTitleText.Text" xml:space="preserve">
+    <value>खोजें और बदलें</value>
+  </data>
+  <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
+    <value>बंद करें</value>
+  </data>
+</root>
+
+
+
+
+
+

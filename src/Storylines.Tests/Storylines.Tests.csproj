@@ -1,0 +1,58 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+    <IsPackable>false</IsPackable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+    <RollForward>LatestMajor</RollForward>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.8.0" />
+    <PackageReference Include="xunit" Version="2.6.6" />
+    <PackageReference Include="xunit.runner.visualstudio" Version="2.5.6">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="coverlet.collector" Version="6.0.0">
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      <PrivateAssets>all</PrivateAssets>
+    </PackageReference>
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
+    <PackageReference Include="CommunityToolkit.Mvvm" Version="8.2.2" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--
+      Link pure C# source files from the main project that have no Windows/WinUI dependencies.
+      This avoids duplicating code while keeping the test project framework-agnostic.
+    -->
+    <Compile Include="..\Storylines\Models\Chapter.cs" Link="LinkedSources\Chapter.cs" />
+    <Compile Include="..\Storylines\Models\ProjectData.cs" Link="LinkedSources\ProjectData.cs" />
+    <Compile Include="..\Storylines\Models\ExportModels.cs" Link="LinkedSources\ExportModels.cs" />
+    <Compile Include="..\Storylines\Services\CommandRegistry.cs" Link="LinkedSources\CommandRegistry.cs" />
+    <Compile Include="..\Storylines\Services\SpeechService.cs" Link="LinkedSources\SpeechService.cs" />
+    <Compile Include="..\Storylines\Services\WritingStatsService.cs" Link="LinkedSources\WritingStatsService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IAppSettingsService.cs" Link="LinkedSources\IAppSettingsService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\ISaveSerializer.cs" Link="LinkedSources\ISaveSerializer.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\ICommandRegistry.cs" Link="LinkedSources\ICommandRegistry.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IDictationService.cs" Link="LinkedSources\IDictationService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IInspectorViewModel.cs" Link="LinkedSources\IInspectorViewModel.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\INotificationService.cs" Link="LinkedSources\INotificationService.cs" />
+    <Compile Include="..\Storylines\Services\Serializers\JsonSaveSerializer.cs" Link="LinkedSources\JsonSaveSerializer.cs" />
+    <Compile Include="..\Storylines\Services\Serializers\LegacySrlSerializer.cs" Link="LinkedSources\LegacySrlSerializer.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\ISpeechService.cs" Link="LinkedSources\ISpeechService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\ITextEditorService.cs" Link="LinkedSources\ITextEditorService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IWritingStatsService.cs" Link="LinkedSources\IWritingStatsService.cs" />
+    <Compile Include="..\Storylines\DataStructures\PartialStack.cs" Link="LinkedSources\PartialStack.cs" />
+    <Compile Include="..\Storylines\Helpers\UndoRedoManager.cs" Link="LinkedSources\UndoRedoManager.cs" />
+    <Compile Include="..\Storylines\Helpers\RecentProjectDeduplicator.cs" Link="LinkedSources\RecentProjectDeduplicator.cs" />
+    <Compile Include="..\Storylines\Helpers\ChapterTextNormalization.cs" Link="LinkedSources\ChapterTextNormalization.cs" />
+    <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
+    <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />
+    <Compile Include="..\Storylines\ViewModels\InspectorViewModel.cs" Link="LinkedSources\InspectorViewModel.cs" />
+    <Compile Include="..\Storylines\ViewModels\SpeechHubViewModel.cs" Link="LinkedSources\SpeechHubViewModel.cs" />
+  </ItemGroup>
+
+</Project>

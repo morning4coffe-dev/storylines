@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
+  <resheader name="version"><value>2.0</value></resheader>
+  <resheader name="reader"><value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <resheader name="writer"><value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value></resheader>
+  <data name="AppDescription" xml:space="preserve"><value>Storylines is a modern text editor for writing stories divided into chapters.
+
+Do you love writing stories? With Storylines and its powerful, yet simple and accessible tools, you can easily write anything you can imagine. From a plain text document to a quick draft or an extensive multi-chapter story with dialogues, Storylines helps you stay focused on writing.
+
+Please note that this app is currently in preview, and you may encounter some issues while using it.</value></data>
+  <data name="AppFeatures" xml:space="preserve"><value>Write stories divided into chapters
+-
+Write dialogues and export them into popular formats like TXT or JSON
+-
+Add characters to your stories
+-
+Create and edit text documents
+-
+Stay focused with Focus Mode while you write
+-
+Write with your keyboard, touch, voice, or a pen</value></data>
+  <data name="AppName" xml:space="preserve"><value>Storylines</value><comment>NOT FOR TRANSLATION</comment></data>
+  <data name="Preview" xml:space="preserve"><value>Wersja zapoznawcza</value></data>
+</root>

@@ -10,6 +10,9 @@
 *.userosscache
 *.sln.docstates
 
+# Local developer override.
+Directory.Build.props
+
 # User-specific files (MonoDevelop/Xamarin Studio)
 *.userprefs
 

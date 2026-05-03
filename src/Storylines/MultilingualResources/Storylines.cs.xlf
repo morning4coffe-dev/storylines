@@ -6,6 +6,50 @@
     </header>
     <body>
       <group id="STORYLINES/RESOURCES/EN/RESOURCES.RESW" datatype="resx">
+        <trans-unit id="storeUpdateAvailableMessage" translate="yes" xml:space="preserve">
+          <source>A Storylines update is ready to install.</source>
+          <target state="translated">Aktualizace Storylines je připravena k instalaci.</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateMandatoryMessage" translate="yes" xml:space="preserve">
+          <source>This update is required and some features may stay limited until it finishes installing.</source>
+          <target state="translated">Tato aktualizace je povinná a některé funkce mohou zůstat omezené, dokud se nedokončí její instalace.</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+          <source>Install now</source>
+          <target state="translated">Instalovat nyní</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+          <source>Later</source>
+          <target state="translated">Později</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstallingMessage" translate="yes" xml:space="preserve">
+          <source>Downloading and installing the update. Storylines may close when the installation begins.</source>
+          <target state="translated">Aktualizace se stahuje a instaluje. Storylines se může při zahájení instalace zavřít.</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstalledTitle" translate="yes" xml:space="preserve">
+          <source>Update ready</source>
+          <target state="translated">Aktualizace je připravena</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateInstalledMessage" translate="yes" xml:space="preserve">
+          <source>The latest Storylines update was installed successfully.</source>
+          <target state="translated">Nejnovější aktualizace Storylines byla úspěšně nainstalována.</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateCancelledTitle" translate="yes" xml:space="preserve">
+          <source>Update cancelled</source>
+          <target state="translated">Aktualizace zrušena</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateCancelledMessage" translate="yes" xml:space="preserve">
+          <source>The update was not installed. You can try again anytime.</source>
+          <target state="translated">Aktualizace nebyla nainstalována. Kdykoli to můžete zkusit znovu.</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateFailedTitle" translate="yes" xml:space="preserve">
+          <source>Update failed</source>
+          <target state="translated">Aktualizace se nezdařila</target>
+        </trans-unit>
+        <trans-unit id="storeUpdateFailedMessage" translate="yes" xml:space="preserve">
+          <source>Storylines couldn't install the update right now. Please try again later.</source>
+          <target state="translated">Storylines teď nemohl aktualizaci nainstalovat. Zkuste to prosím znovu později.</target>
+        </trans-unit>
         <trans-unit id="zoom.Text" translate="yes" xml:space="preserve">
           <source>Zoom</source>
           <target state="translated">Přiblížení</target>
@@ -55,10 +99,14 @@
           <target state="final">Exportovat</target>
         </trans-unit>
         <trans-unit id="load.Label" translate="yes" xml:space="preserve">
-          <source>Load</source>
-          <target state="final">Načíst</target>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Export se nezdařil.</target>
         </trans-unit>
-        <trans-unit id="readAloud.Label" translate="yes" xml:space="preserve">
+        <trans-unit id="exportNoDialoguesFound" translate="yes" xml:space="preserve">
+          <source>No dialogues matched the current export selection.</source>
+          <target state="needs-review-translation">Žádné repliky neodpovídají aktuálnímu výběru exportu.</target>
+        </trans-unit>
           <source>Read aloud</source>
           <target state="translated">Předčítat</target>
         </trans-unit>
@@ -713,10 +761,6 @@ Opravdu chcete odejít bez uložení své práce?</target>
           <source>Edit</source>
           <target state="translated">Upravit</target>
         </trans-unit>
-        <trans-unit id="addSimpleDialogue.Label" translate="yes" xml:space="preserve">
-          <source>Add simple dialogue</source>
-          <target state="translated">Přidat jednoduchou repliku</target>
-        </trans-unit>
         <trans-unit id="appHeaderEdited" translate="yes" xml:space="preserve">
           <source>Edited</source>
           <target state="translated">Upraveno</target>
@@ -1041,6 +1085,10 @@ na tlačítko "Přidat novou postavu".</target>
         <trans-unit id="CharactersToExport" translate="yes" xml:space="preserve">
           <source>Characters to export:</source>
           <target state="translated">Postavy k exportování:</target>
+        </trans-unit>
+        <trans-unit id="exportFailedGeneric" translate="yes" xml:space="preserve">
+          <source>Export failed.</source>
+          <target state="needs-review-translation">Export se nezdařil.</target>
         </trans-unit>
       </group>
     </body>

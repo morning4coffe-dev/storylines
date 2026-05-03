@@ -1,59 +1,84 @@
-## Update 0.7:
-* The Information Dialog is now Story Analysis with an design overhaul and new features (View > Story Analysis)
-* Focus Mode got a much appreciated update with new features and fixes (View > Focus Mode)
-* Characters page got a new update too (View > Characters)
-* Updated localization
-* Design unification across the whole app
-* Improved stability
-* And a plethora of other bugs got fixed
+# Changelog
 
-## Update 0.6.9:
-* All keyboard shortcuts are now visible in the new dialog - You can currently access it by Help > Keyboard shortcuts.
-* Chinese, Russian, Italian translations by the community (please note - there may be some untranslated strings in this build).
-* Continuing on the dialogs updates.
-* Fixed a bug that occurred when changing the translation and then restarting the app would not display in the selected translation.
-* Underlying code improvements.
-* And minor bug fixes.
+All notable changes to Storylines are documented in this file.
 
-## Update 0.6.8:
-* All keyboard shortcuts are now visible in the new dialog - You can currently access it by Help > Keyboard shortcuts
-* Chinese and Russian translation by the community
-* Continuing on the dialogs updates
-* Fixed a bug that occurred when changing the translation and then restarting the app would not display in the selected translation
-* Underlying code improvements
+## Versioning
 
-## Update 0.6.4:
-* Storylines will now let you know if there are no characters in your current project and when you try to adding a dialogue
-* Experiments with a new design of dialogs (currently you can find them in Export dialog)
-* And other minor bugs were fixed
+- Starting with the next release, Storylines uses semantic versioning for user-facing releases: `MAJOR.MINOR.PATCH`.
+- Microsoft Store packages and assembly metadata keep the required four-part format: `MAJOR.MINOR.PATCH.REVISION`.
+- Keep `REVISION` at `0` for normal releases. Only bump it when resubmitting the same release to the Store or rebuilding packaging without user-facing changes.
+- Bump `MINOR` for new features or meaningful UX updates, `PATCH` for fixes, localization, and maintenance, and `MAJOR` when compatibility or expectations change in a significant way.
+- Add new notes under `## [Unreleased]`, then rename that section to the final version when shipping.
 
-## Update 0.6.2:
-* The Voice dictation button has been finally enabled in this version
-* Zoom in on text with Ctrl + Mouse Wheel Scroll is now available
-* To rename chapters or characters you can now double click on them
-* Some labels and other strings were updated
-* And other minor bugs were fixed
+## [Unreleased]
 
-## Update 0.6.1:
-* Progress loss when switching between chapters is now fixed 
-* We fixed an issue in the export dialogue that sometimes caused "This file already exists..." text to display even if a file doesn’t exist yet
-* And we also updated some strings in the app
+- No unreleased changes yet.
 
-## Update 0.6:
-* New design across the whole app
-* Characters now have a new home
-* New settings which is now similar to Windows 11’s settings
-* Redesigned menus like Save, Export with a lot of new features 
-* Focus Mode – focus on things that really matter
-* Read aloud – let the narrator read the content of the currently selected chapter
-* Voice dictation – type with your voice
-* Better pen support
-* “Complex dialogues” – a dialogue with more features (can be easily exported, will support dialogue branching in near future)
-* A proper Undo and Redo (in special cases maybe still a little bit buggy)
-* New notification system
-* Czech localization
-* Set a custom name for a chapter (e. g. Part 1: The new beginning)
-* Custom accent color – you can now customize Storylines with custom accent color
-* More story information
-* Animations across the whole app
-* A lot of other improvements and bug fixes
+The entries below are kept from the previous changelog style. They may describe legacy release trains rather than every individual Store submission.
+
+## [0.7] (legacy)
+
+- The Information Dialog is now Story Analysis with a design overhaul and new features (View > Story Analysis).
+- Focus Mode received new features and fixes (View > Focus Mode).
+- The Characters page was updated as well (View > Characters).
+- Updated localization.
+- Unified design across the app.
+- Improved stability.
+- Additional bug fixes.
+
+## [0.6.9] (legacy)
+
+- All keyboard shortcuts are now visible in the new dialog, which you can access from Help > Keyboard shortcuts.
+- Chinese, Russian, and Italian translations were added by the community (some strings may still be untranslated in this build).
+- Continued dialog updates.
+- Fixed a bug where changing the translation and then restarting the app would not display the selected language.
+- Underlying code improvements.
+- Minor bug fixes.
+
+## [0.6.8] (legacy)
+
+- All keyboard shortcuts are now visible in the new dialog, which you can access from Help > Keyboard shortcuts.
+- Chinese and Russian translations were added by the community.
+- Continued dialog updates.
+- Fixed a bug where changing the translation and then restarting the app would not display the selected language.
+- Underlying code improvements.
+
+## [0.6.4] (legacy)
+
+- Storylines now warns you when there are no characters in the current project and you try to add a dialogue.
+- Experimented with a new dialog design, currently visible in the Export dialog.
+- Minor bug fixes.
+
+## [0.6.2] (legacy)
+
+- The voice dictation button has been enabled in this version.
+- Zoom in on text with Ctrl + Mouse Wheel Scroll.
+- Chapters and characters can now be renamed with a double-click.
+- Updated labels and other strings.
+- Minor bug fixes.
+
+## [0.6.1] (legacy)
+
+- Fixed progress loss when switching between chapters.
+- Fixed an issue in the Export dialog where "This file already exists..." sometimes appeared even when the file did not exist.
+- Updated strings across the app.
+
+## [0.6] (legacy)
+
+- New design across the whole app.
+- Characters now have a new home.
+- New Settings experience inspired by Windows 11.
+- Redesigned menus such as Save and Export with many new features.
+- Focus Mode for staying on what matters most.
+- Read aloud for narrating the content of the currently selected chapter.
+- Voice dictation for typing with your voice.
+- Better pen support.
+- “Complex dialogues” with more features, easier export, and future support for dialogue branching.
+- A proper Undo and Redo system (still a little buggy in special cases).
+- New notification system.
+- Czech localization.
+- Custom chapter names, for example `Part 1: The new beginning`.
+- Custom accent color support.
+- More story information.
+- Animations across the whole app.
+- Many other improvements and bug fixes.
