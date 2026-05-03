@@ -9,6 +9,8 @@ namespace Storylines.ViewModels
 {
     public partial class AppViewModel : ObservableObject
     {
+        public string SearchText { get; }
+
         [ObservableProperty]
         private string _titleText;
 
@@ -19,7 +21,10 @@ namespace Storylines.ViewModels
         private Visibility _unsavedIndicatorVisibility = Visibility.Collapsed;
 
         [ObservableProperty]
-        private Visibility _backButtonVisibility = Visibility.Collapsed;
+        private bool _isBackButtonVisible;
+
+        [ObservableProperty]
+        private bool _isBackButtonEnabled;
 
         [ObservableProperty]
         private AppPages _currentPage;
@@ -32,9 +37,11 @@ namespace Storylines.ViewModels
 
         public AppViewModel(EventAggregator events, IProjectPersistenceService persistence, IUndoRedoService undoRedo)
         {
+            var resources = ResourceLoader.GetForViewIndependentUse();
             _persistence = persistence;
             _undoRedo = undoRedo;
-            _editedString = ResourceLoader.GetForViewIndependentUse().GetString("appHeaderEdited");
+            _editedString = resources.GetString("appHeaderEdited");
+            SearchText = resources.GetString("shortcutSearch");
             events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
             UpdateTitleBar();
         }
@@ -55,7 +62,7 @@ namespace Storylines.ViewModels
                 TitleText = name ?? Package.Current.DisplayName;
             }
 
-            UnsavedIndicatorText = $" {_editedString}";
+            UnsavedIndicatorText = _undoRedo.IsDirty ? _editedString : string.Empty;
             UnsavedIndicatorVisibility = _undoRedo.IsDirty ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -71,9 +78,11 @@ namespace Storylines.ViewModels
             return null;
         }
 
-        public void UpdateBackButtonVisibility(bool canGoBack, bool hasModeActive)
+        public void UpdateBackButtonState(bool canGoBack, bool hasModeActive)
         {
-            BackButtonVisibility = (canGoBack || hasModeActive) ? Visibility.Visible : Visibility.Collapsed;
+            bool canUseBack = canGoBack || hasModeActive;
+            IsBackButtonVisible = canUseBack;
+            IsBackButtonEnabled = canUseBack;
         }
     }
 }

@@ -1172,6 +1172,15 @@
   <data name="globalSearchNoResults.Text" xml:space="preserve">
     <value>No results found</value>
   </data>
+  <data name="shellStoryNavigation.Content" xml:space="preserve">
+    <value>Story</value>
+  </data>
+  <data name="shellCharactersNavigation.Content" xml:space="preserve">
+    <value>Characters</value>
+  </data>
+  <data name="shellSettingsNavigation.Content" xml:space="preserve">
+    <value>Settings</value>
+  </data>
   <!-- ChapterTagsDialogue -->
   <data name="chapterTagsHeader.Text" xml:space="preserve">
     <value>Edit Chapter Tags</value>
@@ -1369,12 +1378,6 @@
   </data>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>Exit read-only mode</value>
-  </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>Click a target passage to connect</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Cancel connection</value>
   </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve">
     <value>Shortcuts</value>

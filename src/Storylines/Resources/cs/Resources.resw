@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1237,12 +1237,6 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>Ukončit režim pouze pro čtení</value>
-  </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>Klikněte na cílový úsek pro propojení</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Zrušit propojení</value>
   </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Zkratky</value></data>
   <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Globální</value></data>

@@ -1,6 +1,8 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using WinUIEx;
+using System;
+using System.IO;
 
 namespace Storylines.Services
 {
@@ -29,9 +31,23 @@ namespace Storylines.Services
             Content = rootFrame;
 
             rootFrame.NavigationFailed += (_, e) =>
-                throw new System.Exception("Failed to load Page " + e.SourcePageType.FullName);
+                throw new Exception("Failed to load Page " + e.SourcePageType.FullName);
 
             rootFrame.Navigate(typeof(AppView));
+
+            try
+            {
+                string iconFileName = "Storylines-icon.ico";
+                string iconPath = Path.Combine(AppContext.BaseDirectory, "Assets", iconFileName);
+                if (File.Exists(iconPath))
+                {
+                    this.AppWindow?.SetIcon(iconPath);
+                }
+            }
+            catch (Exception ex)
+            {
+                App.GetService<Interfaces.ILogger>()?.Warning($"Failed to set window icon: {ex.Message}");
+            }
         }
     }
 }

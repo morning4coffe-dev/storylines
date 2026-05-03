@@ -1,0 +1,32 @@
+<ResourceDictionary
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!--
+        Feature-specific icon aliases live here so app-owned surfaces do not depend on scattered
+        codepoints. When the custom icon font is ready, replace AppFeatureIconFontFamily with the
+        packaged font URI and keep the glyph keys stable.
+    -->
+    <FontFamily x:Key="AppFeatureIconFontFamily">Segoe Fluent Icons</FontFamily>
+
+    <Style x:Key="AppFeatureIconStyle"
+           TargetType="FontIcon"
+           BasedOn="{StaticResource AppSymbolIconStyle}">
+        <Setter Property="FontFamily" Value="{StaticResource AppFeatureIconFontFamily}" />
+    </Style>
+
+    <x:String x:Key="AppIconGlyphBranchingDialogue">&#xE7C1;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingAddPassage">&#xE710;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingImportChapterText">&#xE8B5;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingSyncChapterText">&#xE8C8;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingValidateGraph">&#xE9D5;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingTogglePanel">&#xE8CB;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingTransfer">&#xEDE1;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingAutoArrange">&#xE8A9;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingZoomIn">&#xE8A3;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingZoomOut">&#xE71F;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingZoomToFit">&#xE9A6;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingConnect">&#xE71B;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingEmptyState">&#xE945;</x:String>
+    <x:String x:Key="AppIconGlyphBranchingBack">&#xE830;</x:String>
+</ResourceDictionary>

@@ -44,7 +44,7 @@ namespace Storylines
                 throw new InvalidOperationException("Application services have not been configured.");
 
             var scopedServices = Current.Services.GetService<IWindowManager>()?.Current?.Services;
-            if (scopedServices?.GetService<T>() is T scopedService)
+            if (scopedServices != null && scopedServices.GetService<T>() is T scopedService)
                 return scopedService;
 
             return Current.Services.GetRequiredService<T>();
@@ -106,7 +106,7 @@ namespace Storylines
             _isAppActivationSubscribed = true;
         }
 
-        private void OnAppActivated(AppInstance sender, AppActivationArguments args)
+        private void OnAppActivated(object sender, AppActivationArguments args)
         {
             var pendingItem = GetActivatedStorageItem(args);
             if (pendingItem == null)
@@ -154,8 +154,7 @@ namespace Storylines
         private static async Task<RecoveryStartupChoice> ShowRecoveryRestoreDialogAsync()
         {
             var resources = ResourceLoader.GetForViewIndependentUse();
-            var windowContext = GetService<WindowContext>();
-            var recoveryDialog = new ContentDialog
+            switch (await GetService<IDialogService>().ShowMessageAsync(new DialogDefinition
             {
                 Title = resources.GetString("recoveryRestoreDialogTitle"),
                 Content = resources.GetString("recoveryRestoreDialogDescription"),
@@ -163,27 +162,14 @@ namespace Storylines
                 SecondaryButtonText = resources.GetString("recoveryRestoreDialogDiscard"),
                 CloseButtonText = resources.GetString("recoveryRestoreDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = windowContext.AppView?.ActualTheme ?? ElementTheme.Default,
-                XamlRoot = windowContext.XamlRoot,
-            };
-
-            windowContext.CurrentDialog = recoveryDialog;
-
-            try
+            }))
             {
-                switch (await recoveryDialog.ShowAsync())
-                {
-                    case ContentDialogResult.Primary:
-                        return RecoveryStartupChoice.Restore;
-                    case ContentDialogResult.Secondary:
-                        return RecoveryStartupChoice.Discard;
-                    default:
-                        return RecoveryStartupChoice.Cancel;
-                }
-            }
-            finally
-            {
-                windowContext.CurrentDialog = null;
+                case ContentDialogResult.Primary:
+                    return RecoveryStartupChoice.Restore;
+                case ContentDialogResult.Secondary:
+                    return RecoveryStartupChoice.Discard;
+                default:
+                    return RecoveryStartupChoice.Cancel;
             }
         }
 

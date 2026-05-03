@@ -4,6 +4,7 @@ using Storylines.Views.Pages.Settings;
 using System;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Media.Animation;
+using Storylines.Services;
 
 namespace Storylines.Views.Pages
 {

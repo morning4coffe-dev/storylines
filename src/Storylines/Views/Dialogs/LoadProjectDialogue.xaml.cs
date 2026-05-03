@@ -8,15 +8,15 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using System;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class LoadProjectDialogue : ContentDialog
+    public sealed partial class LoadProjectDialogue : StorylinesContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
         private static WindowContext WindowContext => App.GetService<WindowContext>();
 
-        public static LoadProjectDialogue loadFile;
         public bool isEscape = true;
 
         public static Thickness osMargin = new Thickness(-11, 4, -19, 4); /*new Thickness(-15, 4, -15, 4);*/
@@ -25,27 +25,36 @@ namespace Storylines.Views.Dialogs
         public LoadProjectDialogue()
         {
             InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
-            loadFile = this;
-
-            AppView.currentlyOpenedDialogue = loadFile;
             projectsHolder.ItemsSource = null;
         }
 
         public static void Open(XamlRoot root)
-        {
-            if (!TimeTravelSystem.unSavedProgress)
-            {
-                if (AppView.currentlyOpenedDialogue != null)
-                    AppView.currentlyOpenedDialogue.Hide();
-               var loadDialogue = new LoadProjectDialogue();
-                loadDialogue.XamlRoot = root;
-                _ = loadDialogue.ShowAsync();
+            => _ = OpenAsync(root);
 
-                loadDialogue.RequestedTheme = WindowContext.AppView.ActualTheme;
-            }
-            else
+        public static async Task<ContentDialogResult> OpenAsync(XamlRoot root)
+        {
+            if (TimeTravelSystem.unSavedProgress)
+            {
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
+                return ContentDialogResult.None;
+            }
+
+            var loadDialogue = new LoadProjectDialogue();
+
+            try
+            {
+                return await App.GetService<IDialogService>().ShowAsync(
+                    loadDialogue,
+                    new DialogShowOptions
+                    {
+                        XamlRootOverride = root,
+                    });
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to open load dialog: {ex.Message}");
+                return ContentDialogResult.None;
+            }
         }
         public async Task LoadAllProjectsAsync()
         {
@@ -150,7 +159,6 @@ namespace Storylines.Views.Dialogs
             if (!isEscape)
             {
                 ProjectFile.projectFiles.Clear();
-                AppView.currentlyOpenedDialogue = null;
             }
         }
 

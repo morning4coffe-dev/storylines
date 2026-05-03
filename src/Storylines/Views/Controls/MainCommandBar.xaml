@@ -922,6 +922,18 @@
                         </AppBarButton.Icon>
                     </AppBarButton>
 
+                    <AppBarButton x:Name="branchingDialogueButton"
+                                  x:Uid="branchingDialogue"
+                                  x:FieldModifier="public"
+                                  CornerRadius="4"
+                                  Visibility="Collapsed"
+                                  Click="OnBranchingDialogueButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="{StaticResource AppIconGlyphBranchingDialogue}"
+                                      Style="{StaticResource AppFeatureIconStyle}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
                     <AppBarSeparator />
 
                     <AppBarToggleButton x:Name="mainBoldButton"

@@ -1,17 +1,17 @@
-using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
 using Storylines.Services.Modes.Impl;
 using Storylines.ViewModels.Modes;
 using System;
+using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ModePickerDialogue : ContentDialog
+    public sealed partial class ModePickerDialogue : StorylinesContentDialog
     {
         private enum SelectedMode { Edit, Focus, ReadOnly }
         private SelectedMode _selectedMode = SelectedMode.Focus;
@@ -19,9 +19,6 @@ namespace Storylines.Views.Dialogs
         public ModePickerDialogue(string preselect = "focus")
         {
             InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
-            RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
-            AppView.currentlyOpenedDialogue = this;
 
             timePicker.Time = new TimeSpan(0, 20, 0);
 
@@ -41,7 +38,12 @@ namespace Storylines.Views.Dialogs
 
         public static void Open(string preselect = "focus")
         {
-            _ = new ModePickerDialogue(preselect).ShowAsync();
+            _ = OpenAsync(preselect);
+        }
+
+        public static Task<ContentDialogResult> OpenAsync(string preselect = "focus")
+        {
+            return App.GetService<IDialogService>().ShowAsync(new ModePickerDialogue(preselect));
         }
 
         // ── card selection ────────────────────────────────────────────────────
@@ -139,12 +141,5 @@ namespace Storylines.Views.Dialogs
             measureValueNumBox.Value = 0;
             measureStack.Visibility = (bool)measureCheckBox.IsChecked ? Visibility.Visible : Visibility.Collapsed;
         }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-            => AppView.currentlyOpenedDialogue = null;
-
-        bool isFlyoutOpen = false;
-        private void OnToMeasureComboBox_DropDownOpened(object sender, object e) => isFlyoutOpen = true;
-        private void OnToMeasureComboBox_DropDownClosed(object sender, object e) => isFlyoutOpen = false;
     }
 }

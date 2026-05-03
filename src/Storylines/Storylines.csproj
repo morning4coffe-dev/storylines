@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
@@ -31,6 +31,11 @@
     <Version>0.8.0.0</Version>
     <AssemblyVersion>0.7.5.0</AssemblyVersion>
     <FileVersion>0.7.5.0</FileVersion>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <StorylinesPluginSearchRoot Condition="'$(StorylinesPluginSearchRoot)' == ''">$([System.IO.Path]::GetFullPath('$(MSBuildProjectDirectory)\..\..\..'))</StorylinesPluginSearchRoot>
+    <StorylinesPluginImportPattern Condition="'$(StorylinesPluginImportPattern)' == ''">$(StorylinesPluginSearchRoot)\storylines-*\Build\Storylines.Plugin.props</StorylinesPluginImportPattern>
   </PropertyGroup>
 
   <PropertyGroup Label="MultilingualAppToolkit">
@@ -67,11 +72,10 @@
     <XliffResource Include="MultilingualResources\Storylines.zh-CN.xlf" />
   </ItemGroup>
 
-  <!-- Optional paid/private dialogue plugin integration -->
-  <Import Project="$(DialoguePluginRoot)Build\Storylines.DialoguePlugin.props"
-          Condition="'$(PrivatePlugins)' == 'true'
-                     AND '$(DialoguePluginRoot)' != ''
-                     AND Exists('$(DialoguePluginRoot)Build\Storylines.DialoguePlugin.props')" />
+    <Import Project="$(StorylinesPluginImportPattern)"
+      Condition="'$(EnableLocalStorylinesPlugins)' != 'false'
+           AND '$(StorylinesPluginImportPattern)' != ''
+           AND Exists('$(StorylinesPluginSearchRoot)')" />
 
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets"
           Label="MultilingualAppToolkit"

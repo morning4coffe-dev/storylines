@@ -5,27 +5,22 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
-using Storylines.Helpers;
+using Storylines.Services;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ExportDialogue : ContentDialog
+    public sealed partial class ExportDialogue : StorylinesContentDialog
     {
         public ExportDialogViewModel ViewModel { get; }
 
         public ExportDialogue(ExportTarget initialTarget = ExportTarget.None)
         {
             InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
 
             ViewModel = App.GetService<ExportDialogViewModel>();
             DataContext = ViewModel;
 
-            InitializeClickOutToClose();
-
-            RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
-
-            AppView.currentlyOpenedDialogue = this;
+            CloseOnOutsideTap = true;
             ViewModel.Initialize(initialTarget);
 
             if (initialTarget != ExportTarget.None)
@@ -39,7 +34,7 @@ namespace Storylines.Views.Dialogs
         {
             try
             {
-                await new ExportDialogue(target).ShowAsync();
+                await App.GetService<IDialogService>().ShowAsync(new ExportDialogue(target));
             }
             catch (Exception ex)
             {
@@ -79,12 +74,6 @@ namespace Storylines.Views.Dialogs
             ViewModel.DismissError();
         }
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-        }
-
         private void ContentDialog_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter && ViewModel.CanSubmit)
@@ -96,19 +85,9 @@ namespace Storylines.Views.Dialogs
 
         private void Flyout_Closed(object sender, object e) => isFlyoutOpen = false;
 
-        bool isHide = true;
-        private void InitializeClickOutToClose()
+        protected override bool CanCloseOnOutsideTap()
         {
-            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(object sender, Microsoft.UI.Xaml.Input.PointerRoutedEventArgs e)
-        {
-            if (isHide && !isFlyoutOpen)
-                Hide();
+            return !isFlyoutOpen;
         }
     }
 }

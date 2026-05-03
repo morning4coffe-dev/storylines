@@ -78,6 +78,25 @@ namespace Storylines.Views.Controls
 
         private void UpdateExperimentalFeaturesVisibility()
         {
+            bool showBranching = false;
+
+#if PRIVATE_PLUGINS
+            try
+            {
+                showBranching = SettingsValues.experimentalFeaturesEnabled
+                                && App.TryGetService<Storylines.Services.Interfaces.IBranchingDialogueService>() != null;
+            }
+            catch
+            {
+                showBranching = false;
+            }
+#else
+            showBranching = false;
+#endif
+
+            // Ensure the button exists in XAML and set its visibility
+            if (branchingDialogueButton != null)
+                branchingDialogueButton.Visibility = showBranching ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #region TEMP - NavigationView
@@ -133,6 +152,13 @@ namespace Storylines.Views.Controls
         private void OnDialoguesAddButton_Click(object sender, RoutedEventArgs e)
         {
             MainPage.ChapterText.AddDialogue();
+        }
+
+        private void OnBranchingDialogueButton_Click(object sender, RoutedEventArgs e)
+        {
+    #if PRIVATE_PLUGINS
+            _navigation?.NavigateTo(Storylines.Services.Interfaces.NavigationTarget.BranchingDialogue);
+    #endif
         }
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)

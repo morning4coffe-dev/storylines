@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -1015,12 +1015,6 @@
   </data>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>Exit read-only mode</value>
-  </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>Click a target passage to connect</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Cancel connection</value>
   </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Shortcuts</value></data>
   <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Global</value></data>

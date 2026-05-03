@@ -47,73 +47,36 @@
           DragOver="OnGrid_DragOver"
           Drop="OnGrid_Drop">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="4,0"
-              VerticalAlignment="Center"
-              Background="Transparent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="backButton"
-                          x:FieldModifier="public"
-                          Icon="Back"
-                          Width="40"
-                          Height="40"
-                          Foreground="{ThemeResource AppTitleColor}"
-                          Margin="4,0,-4,0"
-                          CornerRadius="6"
-                          Visibility="{x:Bind ViewModel.BackButtonVisibility, Mode=OneWay}"
-                          Click="OnBackButton_Click" />
-
-            <StackPanel VerticalAlignment="Center"
-                        Grid.Column="1"
-                        Orientation="Horizontal"
-                        Margin="8,0,0,0"
-                        Spacing="10">
-                <Image HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Source="Assets/Square44x44Logo.png"
-                       Width="24"
-                       Height="24"
-                       Visibility="Visible" />
-                <TextBlock x:Name="appHeader"
-                           Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"
-                           FontSize="12.5"
-                           Foreground="{ThemeResource AppTitleColor}"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CaptionTextBlockStyle}" />
-                <TextBlock x:Name="appHeaderSave"
-                           Text="{x:Bind ViewModel.UnsavedIndicatorText, Mode=OneWay}"
-                           Visibility="{x:Bind ViewModel.UnsavedIndicatorVisibility, Mode=OneWay}"
-                           FontSize="12.5"
-                           Opacity=".75"
-                           Margin="-5,0,0,0"
-                           Foreground="{ThemeResource AppTitleColor}"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CaptionTextBlockStyle}">
-                     <animations:Implicit.ShowAnimations>
-                        <animations:TranslationAnimation Duration="0:0:0.2"
-                                                         From="0, 8, 0"
-                                                         To="0"
-                                                         EasingMode="EaseOut"
-                                                         EasingType="Back" />
-                        <animations:OpacityAnimation Duration="0:0:0.121"
-                                                     From="0"
-                                                     To="1.0" />
-                    </animations:Implicit.ShowAnimations>
-                </TextBlock>
-            </StackPanel>
-            <Grid x:Name="appTitleBar"
+        <TitleBar x:Name="appTitleBar"
                   x:FieldModifier="public"
-                  IsHitTestVisible="True"
-                  Height="48"
-                  HorizontalAlignment="Stretch"
                   Background="Transparent"
-                  Grid.Column="1" />
-        </Grid>
+                  Title="{x:Bind ViewModel.TitleText, Mode=OneWay}"
+                  Subtitle="{x:Bind ViewModel.UnsavedIndicatorText, Mode=OneWay}"
+                  IsPaneToggleButtonVisible="False"
+                  IsBackButtonVisible="{x:Bind ViewModel.IsBackButtonVisible, Mode=OneWay}"
+                  IsBackButtonEnabled="{x:Bind ViewModel.IsBackButtonEnabled, Mode=OneWay}"
+                  BackRequested="OnAppTitleBar_BackRequested">
+            <TitleBar.IconSource>
+                <ImageIconSource ImageSource="Assets/StoreLogo.png" />
+            </TitleBar.IconSource>
+
+            <TitleBar.Content>
+                <AutoSuggestBox x:Name="titleBarSearchBox"
+                                Width="320"
+                                MinWidth="220"
+                                MaxWidth="420"
+                                QueryIcon="Find"
+                                PlaceholderText="{x:Bind ViewModel.SearchText, Mode=OneWay}"
+                                QuerySubmitted="OnTitleBarSearchBox_QuerySubmitted" />
+            </TitleBar.Content>
+
+            <!--<TitleBar.RightHeader>
+                <PersonPicture Initials="DT" Height="32"/>
+            </TitleBar.RightHeader>-->
+        </TitleBar>
 
         <Grid x:Name="mainGrid"
               Grid.Row="1"

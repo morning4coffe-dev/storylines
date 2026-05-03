@@ -7,31 +7,22 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
-using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectRenamerDialogue : ContentDialog
+    public sealed partial class ProjectRenamerDialogue : StorylinesContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
-
-        public static ProjectRenamerDialogue projectRenamer;
 
         public ProjectRenamerDialogue()
         {
             this.InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
-            projectRenamer = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = projectRenamer;
-            projectRenamer.RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
+            CloseOnOutsideTap = true;
         }
 
         public static async System.Threading.Tasks.Task Open()
         {
-            await new ProjectRenamerDialogue().ShowAsync();
+            await App.GetService<IDialogService>().ShowAsync(new ProjectRenamerDialogue());
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
@@ -50,43 +41,19 @@ namespace Storylines.Views.Dialogs
                 Persistence.CurrentProject.projectName = chapterNameBox.Text;
             App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 
-            projectRenamer.Hide();
+            Hide();
             //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
-            projectRenamer.Hide();
+            Hide();
         }
 
         private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
                 OnSubmitButton_Click(sender, new RoutedEventArgs());
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-
-            if (ReferenceEquals(projectRenamer, this))
-                projectRenamer = null;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (isHide)
-                Hide();
         }
     }
 }

@@ -18,6 +18,7 @@ namespace Storylines.Helpers
         public enum InAppNotificationType { None, NewUpdate, Review, ThankYou };
         public static InAppNotificationType currentInAppNotification = InAppNotificationType.None;
 
+        private static IDialogService Dialogs => App.GetService<IDialogService>();
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
         private static WindowContext WindowContext => App.GetService<WindowContext>();
         private static AppView Shell => WindowContext.AppView ?? AppView.current;
@@ -167,22 +168,9 @@ namespace Storylines.Helpers
             ClearBadgeNotification();
         }
 
-        private static void CheckForOpenDialogueAndClose()
-        {
-            if (AppView.currentlyOpenedDialogue != null)
-            {
-                if (AppView.currentlyOpenedDialogue == LoadProjectDialogue.loadFile)
-                    LoadProjectDialogue.loadFile.isEscape = false;
-
-                AppView.currentlyOpenedDialogue.Hide();
-            }
-        }
-
         public static async Task DisplayUnsavedProgressDialogue(bool appClosing)
         {
-            CheckForOpenDialogueAndClose();
-
-            ContentDialog exitDialog = new ContentDialog
+            ContentDialogResult result = await Dialogs.ShowMessageAsync(new DialogDefinition
             {
                 Title = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogTitle"),
                 Content = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogDescription"),
@@ -190,20 +178,11 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogDontSave"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = Main.RequestedTheme,
-                XamlRoot = WindowContext.XamlRoot,
-                //PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"]
-            };
-            AppView.currentlyOpenedDialogue = exitDialog;
-            exitDialog.RequestedTheme = Shell.ActualTheme;
-
-            ContentDialogResult result = await exitDialog.ShowAsync();
+            });
 
             switch (result)
             {
                 case ContentDialogResult.Primary:
-                    exitDialog.Hide();
-                    AppView.currentlyOpenedDialogue = null;
                     Persistence.SaveAndExitOrClearAll(appClosing);
                     break;
                 case ContentDialogResult.Secondary:
@@ -221,49 +200,34 @@ namespace Storylines.Helpers
                         Shell.ClearEverything();
                         TimeTravelSystem.unSavedProgress = false;
 
-                        LoadProjectDialogue.Open(WindowContext.XamlRoot);
-                        exitDialog.Hide();
+                        Dialogs.OpenLoadDialogue();
                     }
                     break;
             }
-            AppView.currentlyOpenedDialogue = null;
         }
 
         public static async Task DisplayNotFinishedInFocusModeDialogue()
         {
-            CheckForOpenDialogueAndClose();
-
-            ContentDialog leaveDialog = new ContentDialog
+            ContentDialogResult result = await Dialogs.ShowMessageAsync(new DialogDefinition
             {
                 Title = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueTitle"),
                 Content = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueDescription"),
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueStay"),
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = Shell.ActualTheme,
-                XamlRoot = WindowContext.XamlRoot,
-            };
-            AppView.currentlyOpenedDialogue = leaveDialog;
-
-            ContentDialogResult result = await leaveDialog.ShowAsync();
+            });
 
             switch (result)
             {
-                case ContentDialogResult.Primary:
-                    leaveDialog.Hide();
-                    break;
                 case ContentDialogResult.Secondary:
                     App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Deactivate();
                     break;
             }
-            AppView.currentlyOpenedDialogue = null;
         }
 
         public static async Task DisplayNotAppliedChangesCharactersPageDialogue(bool appClosing)
         {
-            CheckForOpenDialogueAndClose();
-
-            ContentDialog leaveDialog = new ContentDialog
+            ContentDialogResult result = await Dialogs.ShowMessageAsync(new DialogDefinition
             {
                 Title = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueTitle"),
                 Content = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDescription"),
@@ -271,12 +235,7 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDontApplyChanges"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = Shell.ActualTheme,
-                XamlRoot = WindowContext.XamlRoot,
-            };
-            AppView.currentlyOpenedDialogue = leaveDialog;
-
-            ContentDialogResult result = await leaveDialog.ShowAsync();
+            });
 
             switch (result)
             {
@@ -291,26 +250,18 @@ namespace Storylines.Helpers
                     Shell.GoBack();
                     break;
             }
-            AppView.currentlyOpenedDialogue = null;
         }
 
         public static async Task DisplayNoCharactersInProjectDialogue()
         {
-            CheckForOpenDialogueAndClose();
-
-            ContentDialog noCharactersDialog = new ContentDialog
+            ContentDialogResult result = await Dialogs.ShowMessageAsync(new DialogDefinition
             {
                 Title = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueTitle"),
                 Content = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueDescription"),
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueAddNew"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = Shell.ActualTheme,
-                XamlRoot = WindowContext.XamlRoot,
-            };
-            AppView.currentlyOpenedDialogue = noCharactersDialog;
-
-            ContentDialogResult result = await noCharactersDialog.ShowAsync();
+            });
 
             switch (result)
             {
@@ -319,7 +270,6 @@ namespace Storylines.Helpers
                     WindowContext.CharactersPage.Add();
                     break;
             }
-            AppView.currentlyOpenedDialogue = null;
         }
     }
 }

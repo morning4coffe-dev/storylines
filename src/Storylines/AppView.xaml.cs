@@ -23,17 +23,6 @@ namespace Storylines
     {
         public static AppView current { get; private set; }
 
-        public static ContentDialog currentlyOpenedDialogue
-        {
-            get => App.TryGetService<WindowContext>()?.CurrentDialog;
-            set
-            {
-                var context = App.TryGetService<WindowContext>();
-                if (context != null)
-                    context.CurrentDialog = value;
-            }
-        }
-
         private readonly WindowContext _windowContext;
         private readonly AppViewModel _viewModel;
         private readonly EventAggregator _events;
@@ -61,6 +50,7 @@ namespace Storylines
 
             // Wire NavigationService to the Frame
             _navigation.Initialize(pagesView);
+            _navigation.Navigated += OnNavigationTargetChanged;
 
             ViewModel.UpdateTitleBar();
 
@@ -143,7 +133,7 @@ namespace Storylines
         private void OnCommandPaletteAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
-            // Placeholder: will open command palette overlay when Phase 6 UI ships.
+            OpenGlobalSearch(titleBarSearchBox.Text);
         }
 
         private void OnFocusModeAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
@@ -259,7 +249,6 @@ namespace Storylines
         public void ChangePage(Pages currentPage)
         {
             App.GetService<IWindowManager>().SetCurrent(_windowContext);
-            current.backButton.Visibility = Visibility.Visible;
 
             // Use NavigationService for consistent navigation
             switch (currentPage)
@@ -273,24 +262,24 @@ namespace Storylines
                 case Pages.MainPage:
                     _navigation.NavigateTo(NavigationTarget.MainPage);
                     break;
+#if PRIVATE_PLUGINS
+                case Pages.BranchingDialogue:
+                    _navigation.NavigateTo(NavigationTarget.BranchingDialogue);
+                    break;
+#endif
             }
-
-            page = currentPage;
-
-            UpdateTitleBar();
-            BackButtonCheck();
         }
 
         public void BackButtonCheck()
         {
             var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
-            bool hasModeActive = modeService?.Current.Id != "edit";
-            ViewModel.UpdateBackButtonVisibility(pagesView.CanGoBack, hasModeActive);
+            bool hasModeActive = modeService?.Current != null && modeService.Current.Id != "edit";
+            ViewModel.UpdateBackButtonState(_navigation.CanGoBack, hasModeActive);
         }
 
         public void GoBack()
         {
-            if (pagesView.CanGoBack)
+            if (_navigation.CanGoBack)
             {
                 if (CharactersPage.current != null && CharactersPage.current.unappliedChanges)
                 {
@@ -298,7 +287,8 @@ namespace Storylines
                     return;
                 }
 
-                pagesView.GoBack(new DrillInNavigationTransitionInfo());
+                _navigation.GoBack();
+                return;
             }
             else
             {
@@ -323,14 +313,38 @@ namespace Storylines
             BackButtonCheck();
         }
 
-        private void OnBackButton_Click(object sender, RoutedEventArgs e)
+        private void OnNavigationTargetChanged(NavigationTarget target)
+        {
+            page = target switch
+            {
+                NavigationTarget.Settings => Pages.Settings,
+                NavigationTarget.Characters => Pages.Characters,
+                _ => Pages.MainPage,
+            };
+
+            UpdateTitleBar();
+            BackButtonCheck();
+        }
+
+        private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
+        {
+            OpenGlobalSearch(titleBarSearchBox.Text);
+        }
+
+        private void OnTitleBarSearchBox_QuerySubmitted(AutoSuggestBox sender, AutoSuggestBoxQuerySubmittedEventArgs args)
+        {
+            OpenGlobalSearch(args.QueryText);
+        }
+
+        private void OnAppTitleBar_BackRequested(TitleBar sender, object args)
         {
             GoBack();
         }
 
-        private void System_BackRequested(object sender, RoutedEventArgs e)
+        private void OpenGlobalSearch(string initialQuery)
         {
-            OnBackButton_Click(sender, new RoutedEventArgs());
+            _ = GlobalSearchDialogue.OpenAsync(initialQuery);
+            titleBarSearchBox.Text = string.Empty;
         }
         #endregion
 

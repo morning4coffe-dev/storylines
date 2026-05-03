@@ -766,20 +766,16 @@ namespace Storylines.Views.Pages
             {
                 // Prompt for an optional label
                 var inputBox = new TextBox { PlaceholderText = _resources.GetString("connectionLabelPlaceholder"), AcceptsReturn = false };
-                var dialog = new ContentDialog
+                var result = await App.GetService<IDialogService>().ShowMessageAsync(new DialogDefinition
                 {
                     Title = _resources.GetString("connectionLabelTitle"),
                     Content = inputBox,
                     PrimaryButtonText = _resources.GetString("createButtonText"),
                     CloseButtonText = _resources.GetString("skipButtonText"),
-                    DefaultButton = ContentDialogButton.Primary
-                };
-
-                var windowContext = App.GetService<WindowContext>();
-                dialog.XamlRoot = windowContext.XamlRoot;
+                    DefaultButton = ContentDialogButton.Primary,
+                });
 
                 string label = null;
-                var result = await dialog.ShowAsync();
                 if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
                     label = inputBox.Text.Trim();
 

@@ -8,6 +8,9 @@ namespace Storylines.Services.Interfaces
     {
         ContentDialog CurrentDialog { get; }
         Task<ContentDialogResult> ShowAsync(ContentDialog dialog, bool closeCurrentDialog = true);
+        Task<ContentDialogResult> ShowAsync(ContentDialog dialog, DialogShowOptions options);
+        Task<ContentDialogResult> ShowMessageAsync(DialogDefinition definition, DialogShowOptions options = null);
+        void HideCurrentDialog();
         void OpenSaveDialogue();
         void OpenSaveCopyDialogue();
         void OpenLoadDialogue();

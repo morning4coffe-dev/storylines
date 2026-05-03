@@ -5,14 +5,13 @@ using System.Threading.Tasks;
 using Storylines.Models;
 using Windows.ApplicationModel.DataTransfer;
 using Storylines.Services.Interfaces;
-using Storylines.Helpers;
 using Windows.ApplicationModel.Resources;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class WritingPromptsDialogue : ContentDialog
+    public sealed partial class WritingPromptsDialogue : StorylinesContentDialog
     {
         private static readonly Random _rng = new Random();
         private readonly IChapterWorkflowService _chapterWorkflow;
@@ -76,7 +75,6 @@ namespace Storylines.Views.Dialogs
         public WritingPromptsDialogue()
         {
             InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
 
             _chapterWorkflow = App.GetService<IChapterWorkflowService>();
             _navigation = App.GetService<INavigationService>();
@@ -95,8 +93,7 @@ namespace Storylines.Views.Dialogs
         {
             try
             {
-                var dialog = new WritingPromptsDialogue();
-                await dialog.ShowAsync();
+                await App.GetService<IDialogService>().ShowAsync(new WritingPromptsDialogue());
             }
             catch (Exception ex)
             {

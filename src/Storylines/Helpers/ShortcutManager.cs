@@ -144,14 +144,14 @@ namespace Storylines.Helpers
                             switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.Q:
-                                    if (MainPage.ChapterList.canAdd && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.ChapterList.canAdd && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.TryGetService<IChapterWorkflowService>()?.OpenCreateChapterDialog(); break;
                                 case Windows.System.VirtualKey.Delete:
-                                    if (MainPage.ChapterList.listView.SelectedItem is Chapter selectedChapter && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.ChapterList.listView.SelectedItem is Chapter selectedChapter && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.TryGetService<IChapterWorkflowService>()?.DeleteChapter(selectedChapter.Token); break;
 
                                 case Windows.System.VirtualKey.E:
-                                    if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.CommandBar.exportButton.IsEnabled && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.GetService<IDialogService>().OpenExportDialogue(); break;
                                 case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
                                 case Windows.System.VirtualKey.F: MainPage.ChapterText.OpenSearchAndReplace(); break;

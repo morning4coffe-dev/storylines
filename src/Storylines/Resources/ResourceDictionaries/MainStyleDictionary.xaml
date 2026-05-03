@@ -1,6 +1,7 @@
 ﻿<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="using:Storylines.Views.Dialogs">
     
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
@@ -83,6 +84,11 @@
         <Setter Property="FontSize" Value="20"/>
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Grid.ColumnSpan" Value="2"/>
+    </Style>
+
+    <Style TargetType="dialogs:StorylinesContentDialog">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{ThemeResource DialogueAcrylicBackground}" />
     </Style>
     
     <Style x:Key="CharactersTextBoxesStyle" TargetType="TextBox">

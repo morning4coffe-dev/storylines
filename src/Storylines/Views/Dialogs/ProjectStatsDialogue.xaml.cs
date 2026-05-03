@@ -1,7 +1,6 @@
 using Newtonsoft.Json.Linq;
 using Storylines.Views.Controls;
 using Storylines.Views.Pages;
-using Storylines.Helpers;
 using Storylines.Models;
 using System;
 using System.Linq;
@@ -20,32 +19,28 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectStatsDialogue : ContentDialog
+    public sealed partial class ProjectStatsDialogue : StorylinesContentDialog
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
-
-        public static ProjectStatsDialogue textBoxStats;
 
         public ProjectStatsDialogue()
         {
             InitializeComponent();
-            DialogHelper.EnsureXamlRoot(this);
-            textBoxStats = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = textBoxStats;
-            textBoxStats.RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
+            CloseOnOutsideTap = true;
         }
 
         public static void Open(bool fromDownBar)
         {
+            _ = OpenAsync(fromDownBar);
+        }
+
+        public static async System.Threading.Tasks.Task<ContentDialogResult> OpenAsync(bool fromDownBar)
+        {
             var dialog = new ProjectStatsDialogue();
-
-            _ = dialog.ShowAsync();
-
             App.TryGetService<ITelemetryService>()?.TrackProjectStatsOpened(fromDownBar);
+            var showTask = App.GetService<IDialogService>().ShowAsync(dialog);
             dialog.DisplayStats();
+            return await showTask;
         }
 
         public void DisplayStats()
@@ -195,30 +190,9 @@ namespace Storylines.Views.Dialogs
             return storyCharacterCount;
         }
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-        }
-
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (isHide)
-                Hide();
         }
     }
 }

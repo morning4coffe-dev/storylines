@@ -800,18 +800,14 @@ namespace Storylines.Views.Pages
             panel.Children.Add(new TextBlock { Text = resourceLoader.GetString("relationshipTypeLabel") });
             panel.Children.Add(typeBox);
 
-            var dialog = new ContentDialog
+            var result = await App.GetService<IDialogService>().ShowMessageAsync(new DialogDefinition
             {
                 Title = resourceLoader.GetString("addRelationshipTitle"),
                 Content = panel,
                 PrimaryButtonText = resourceLoader.GetString("addButtonText"),
                 CloseButtonText = resourceLoader.GetString("cancelButtonText"),
-                DefaultButton = ContentDialogButton.Primary
-            };
-
-            dialog.XamlRoot = _windowContext.XamlRoot;
-
-            var result = await dialog.ShowAsync();
+                DefaultButton = ContentDialogButton.Primary,
+            });
             if (result == ContentDialogResult.Primary && targetCombo.SelectedIndex >= 0)
             {
                 var target = otherCharacters[targetCombo.SelectedIndex];

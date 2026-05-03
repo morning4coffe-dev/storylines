@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
+<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1235,12 +1235,6 @@
   </data>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>退出只读模式</value>
-  </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>点击目标段落进行连接</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>取消连接</value>
   </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>快捷键</value></data>
   <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>全局</value></data>
