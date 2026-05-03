@@ -10,6 +10,13 @@ namespace Storylines.Services
 {
     public class FilePickerService : IFilePickerService
     {
+        private readonly WindowContext _windowContext;
+
+        public FilePickerService(WindowContext windowContext)
+        {
+            _windowContext = windowContext;
+        }
+
         public async Task<StorageFolder> PickFolderAsync()
         {
             var picker = new FolderPicker
@@ -19,8 +26,7 @@ namespace Storylines.Services
             };
             picker.FileTypeFilter.Add("*");
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
             return await picker.PickSingleFolderAsync();
         }
@@ -42,8 +48,7 @@ namespace Storylines.Services
 
             picker.FileTypeChoices.Add(displayTypeName, request.FileExtensions.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
             return await picker.PickSaveFileAsync();
         }
@@ -62,8 +67,7 @@ namespace Storylines.Services
             foreach (var extension in fileExtensions.Where(extension => !string.IsNullOrWhiteSpace(extension)).Distinct(StringComparer.OrdinalIgnoreCase))
                 picker.FileTypeFilter.Add(extension);
 
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
             return await picker.PickSingleFileAsync();
         }

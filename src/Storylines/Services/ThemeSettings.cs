@@ -22,7 +22,8 @@ namespace Storylines.Services
         {
             get
             {
-                if (App.MainWindow.Content is FrameworkElement rootElement)
+                var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+                if (ctx?.Window?.Content is FrameworkElement rootElement)
                 {
                     return rootElement.RequestedTheme;
                 }
@@ -31,7 +32,8 @@ namespace Storylines.Services
             }
             set
             {
-                if (App.MainWindow.Content is FrameworkElement rootElement)
+                var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+                if (ctx?.Window?.Content is FrameworkElement rootElement)
                 {
                     rootElement.RequestedTheme = value;
                 }
@@ -163,7 +165,9 @@ namespace Storylines.Services
 
         private static void ApplyThemeForTitleBar(Color color, ElementTheme theme)
         {
-            var titleBar = App.MainWindow.AppWindow.TitleBar;
+            var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+            if (ctx?.Window == null) return;
+            var titleBar = ctx.Window.AppWindow.TitleBar;
 
             if (theme == ElementTheme.Dark)
             {

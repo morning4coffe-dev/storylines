@@ -28,6 +28,7 @@ namespace Storylines.Views.Controls
         private readonly CommandBarViewModel _viewModel;
         private readonly SpeechHubViewModel _speechHub;
         private readonly ISpeechService _speechService;
+        private readonly WindowContext _windowContext;
 
         public CommandBarViewModel ViewModel => _viewModel;
         public SpeechHubViewModel SpeechHub => _speechHub;
@@ -35,6 +36,7 @@ namespace Storylines.Views.Controls
         public MainCommandBar()
         {
             this.InitializeComponent();
+            _windowContext = App.GetService<WindowContext>();
             _chaptersListViewModel = App.GetService<ChaptersListViewModel>();
             _chapterWorkflow = App.GetService<IChapterWorkflowService>();
             _navigation = App.GetService<INavigationService>();
@@ -46,7 +48,10 @@ namespace Storylines.Views.Controls
 
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
                || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
+            {
+                _windowContext.CommandBar = this;
                 MainPage.CommandBar = this;
+            }
 
             UpdateExperimentalFeaturesVisibility();
             var events = App.GetService<EventAggregator>();
@@ -102,7 +107,7 @@ namespace Storylines.Views.Controls
                 }
             }
             else
-                AppView.current.ChangePage(AppView.Pages.Settings);
+                _windowContext.AppView.ChangePage(AppView.Pages.Settings);
         }
         #endregion
 

@@ -9,6 +9,13 @@ namespace Storylines.Services
 {
     public class FileService : IFileService
     {
+        private readonly IFilePickerService _filePicker;
+
+        public FileService(IFilePickerService filePicker)
+        {
+            _filePicker = filePicker;
+        }
+
         public async Task WriteAsync(StorageFile file, string content)
         {
             if (file == null)
@@ -24,27 +31,12 @@ namespace Storylines.Services
 
         public async Task<StorageFile> PickFileForOpenAsync()
         {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add(".srl");
-            picker.FileTypeFilter.Add(".txt");
-
-            return await picker.PickSingleFileAsync();
+            return await _filePicker.PickOpenFileAsync(new[] { ".srl", ".txt" });
         }
 
         public async Task<StorageFolder> PickFolderForSaveAsync()
         {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
-            };
-            picker.FileTypeFilter.Add("*");
-
-            return await picker.PickSingleFolderAsync();
+            return await _filePicker.PickFolderAsync();
         }
 
         public async Task<StorageFile> CreateFileAsync(StorageFolder folder, string fileName)

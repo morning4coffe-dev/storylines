@@ -29,7 +29,7 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = textBoxStats;
-            textBoxStats.RequestedTheme = AppView.current.ActualTheme;
+            textBoxStats.RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
         }
 
         public static void Open()
@@ -39,7 +39,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
 
             if (ReferenceEquals(textBoxStats, this))
@@ -54,7 +54,7 @@ namespace Storylines.Views.Dialogs
         bool isHide = true;
         private void InitializeClickOutToClose()
         {
-            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;

@@ -26,7 +26,7 @@ namespace Storylines.Views.Dialogs
             InitializeClickOutToClose();
 
             AppView.currentlyOpenedDialogue = fileInfoDialogue;
-            fileInfoDialogue.RequestedTheme = AppView.current.ActualTheme;
+            fileInfoDialogue.RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
         }
 
         public static void Open()
@@ -116,7 +116,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
         }
 
@@ -129,7 +129,7 @@ namespace Storylines.Views.Dialogs
 
         private void InitializeClickOutToClose()
         {
-            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;

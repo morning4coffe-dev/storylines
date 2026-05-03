@@ -19,6 +19,9 @@ namespace Storylines.Helpers
         public static InAppNotificationType currentInAppNotification = InAppNotificationType.None;
 
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+        private static WindowContext WindowContext => App.GetService<WindowContext>();
+        private static AppView Shell => WindowContext.AppView ?? AppView.current;
+        private static MainPage Main => WindowContext.MainPage ?? MainPage.Current;
 
         public static void DisplayBadgeNotification(string badgeGlyphValue)
         {
@@ -40,8 +43,8 @@ namespace Storylines.Helpers
 
         public static void DisplayMainProgressBar(bool isIndeterminate)
         { 
-            MainPage.Current.mainProgressBar.Visibility = Visibility.Visible;
-            MainPage.Current.mainProgressBar.IsIndeterminate = isIndeterminate;
+            Main.mainProgressBar.Visibility = Visibility.Visible;
+            Main.mainProgressBar.IsIndeterminate = isIndeterminate;
 
             UpdateMainProgressBar(0, ProgressState.Normal);
         }
@@ -49,36 +52,36 @@ namespace Storylines.Helpers
         public enum ProgressState { Normal, Paused, Error };
         public static void UpdateMainProgressBar(int value, ProgressState state)
         {
-            MainPage.Current.mainProgressBar.Value = value;
+            Main.mainProgressBar.Value = value;
 
             switch (state)
             {
                 case ProgressState.Paused:
-                    MainPage.Current.mainProgressBar.ShowPaused = true;
-                    MainPage.Current.mainProgressBar.ShowError = false;
+                    Main.mainProgressBar.ShowPaused = true;
+                    Main.mainProgressBar.ShowError = false;
                     break;
                 case ProgressState.Error:
-                    MainPage.Current.mainProgressBar.ShowPaused = false;
-                    MainPage.Current.mainProgressBar.ShowError = true;
+                    Main.mainProgressBar.ShowPaused = false;
+                    Main.mainProgressBar.ShowError = true;
                     break;
                 default:
-                    MainPage.Current.mainProgressBar.ShowPaused = false;
-                    MainPage.Current.mainProgressBar.ShowError = false;
+                    Main.mainProgressBar.ShowPaused = false;
+                    Main.mainProgressBar.ShowError = false;
                     break;
             }
         }
 
         public static void HideMainProgressBar()
         {
-            MainPage.Current.mainProgressBar.Visibility = Visibility.Collapsed;
+            Main.mainProgressBar.Visibility = Visibility.Collapsed;
         }
 
         public static void DisplayNewUpdateAvailable()
         {
             currentInAppNotification = InAppNotificationType.NewUpdate;
-            AppView.current.updateAvailableInfoBar.RequestedTheme = AppView.current.ActualTheme;
-            AppView.current.updateAvailableInfoBar.IsOpen = true;
-            AppView.current.updateAvailableInfoBar.Visibility = Visibility.Visible;
+            Shell.updateAvailableInfoBar.RequestedTheme = Shell.ActualTheme;
+            Shell.updateAvailableInfoBar.IsOpen = true;
+            Shell.updateAvailableInfoBar.Visibility = Visibility.Visible;
 
             DisplayBadgeNotification("attention");
         }
@@ -86,46 +89,46 @@ namespace Storylines.Helpers
         public static void NewUpdateAvailable_Close()
         {
             currentInAppNotification = InAppNotificationType.None;
-            AppView.current.updateAvailableInfoBar.IsOpen = false;
-            AppView.current.updateAvailableInfoBar.Visibility = Visibility.Collapsed;
+            Shell.updateAvailableInfoBar.IsOpen = false;
+            Shell.updateAvailableInfoBar.Visibility = Visibility.Collapsed;
             ClearBadgeNotification();
         }
 
         public static void DisplayReviewPrompt()
         {
             App.TryGetService<ITelemetryService>()?.TrackReviewPromptDisplayed("review_timer");
-            AppView.current.reviewRequestInfoBar.IsOpen = true;
-            AppView.current.reviewRequestInfoBar.Visibility = Visibility.Visible;
-            AppView.current.reviewRequestInfoBar.RequestedTheme = AppView.current.ActualTheme;
+            Shell.reviewRequestInfoBar.IsOpen = true;
+            Shell.reviewRequestInfoBar.Visibility = Visibility.Visible;
+            Shell.reviewRequestInfoBar.RequestedTheme = Shell.ActualTheme;
 
             DisplayBadgeNotification("attention");
         }
 
         public static void DisplayThankYou()
         {
-            AppView.current.reviewRequestThankYouInfoBar.IsOpen = true;
-            AppView.current.reviewRequestThankYouInfoBar.Visibility = Visibility.Visible;
-            AppView.current.reviewRequestThankYouInfoBar.RequestedTheme = AppView.current.ActualTheme;
+            Shell.reviewRequestThankYouInfoBar.IsOpen = true;
+            Shell.reviewRequestThankYouInfoBar.Visibility = Visibility.Visible;
+            Shell.reviewRequestThankYouInfoBar.RequestedTheme = Shell.ActualTheme;
         }
 
         private static DispatcherTimer InAppNotificationTimer;
 
         public static void DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity severity, string text, string longText)
         {
-            AppView.current.alertNotificationInfoBar.IsOpen = true;
-            AppView.current.alertNotificationInfoBar.Visibility = Visibility.Visible;
+            Shell.alertNotificationInfoBar.IsOpen = true;
+            Shell.alertNotificationInfoBar.Visibility = Visibility.Visible;
 
-            AppView.current.alertNotificationInfoBar.Severity = severity;
-            AppView.current.alertNotificationInfoBar.Title = text;
+            Shell.alertNotificationInfoBar.Severity = severity;
+            Shell.alertNotificationInfoBar.Title = text;
 
-            AppView.current.alertNotificationInfoBar.RequestedTheme = AppView.current.ActualTheme;
+            Shell.alertNotificationInfoBar.RequestedTheme = Shell.ActualTheme;
 
             if (longText.Length < 1)
-                AppView.current.alertNotificationInfoBarTextStack.Visibility = Visibility.Collapsed;
+                Shell.alertNotificationInfoBarTextStack.Visibility = Visibility.Collapsed;
             else
             {
-                AppView.current.alertNotificationInfoBarTextStack.Visibility = Visibility.Visible;
-                AppView.current.alertNotificationInfoBarText.Text = longText;
+                Shell.alertNotificationInfoBarTextStack.Visibility = Visibility.Visible;
+                Shell.alertNotificationInfoBarText.Text = longText;
             }
 
             if (InAppNotificationTimer != null)
@@ -149,8 +152,8 @@ namespace Storylines.Helpers
 
             if (InAppNotificationTimer != null)
             {
-                AppView.current.alertNotificationInfoBar.Visibility = Visibility.Collapsed;
-                AppView.current.alertNotificationInfoBar.IsOpen = false;
+                Shell.alertNotificationInfoBar.Visibility = Visibility.Collapsed;
+                Shell.alertNotificationInfoBar.IsOpen = false;
 
                 InAppNotification_Close();
             }
@@ -187,12 +190,12 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogDontSave"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = MainPage.Current.RequestedTheme,
-                XamlRoot = App.MainWindow.Content.XamlRoot,
+                RequestedTheme = Main.RequestedTheme,
+                XamlRoot = WindowContext.XamlRoot,
                 //PrimaryButtonStyle = (Style)Application.Current.Resources["AccentButtonStyle"]
             };
             AppView.currentlyOpenedDialogue = exitDialog;
-            exitDialog.RequestedTheme = AppView.current.ActualTheme;
+            exitDialog.RequestedTheme = Shell.ActualTheme;
 
             ContentDialogResult result = await exitDialog.ShowAsync();
 
@@ -207,15 +210,18 @@ namespace Storylines.Helpers
                     await RecoveryService.ClearRecoveryDataAsync();
 
                     if (appClosing)
-                        App.Current.Exit();
+                    {
+                        App.GetService<IUndoRedoService>().MarkClean();
+                        App.GetService<IWindowManager>().Close(WindowContext);
+                    }
                     else
                     {
                         if (Persistence.CurrentProject != null)
                             Persistence.CurrentProject.file = null;
-                        AppView.current.ClearEverything();
+                        Shell.ClearEverything();
                         TimeTravelSystem.unSavedProgress = false;
 
-                        LoadProjectDialogue.Open(AppView.current.XamlRoot);
+                        LoadProjectDialogue.Open(WindowContext.XamlRoot);
                         exitDialog.Hide();
                     }
                     break;
@@ -234,8 +240,8 @@ namespace Storylines.Helpers
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueStay"),
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("FocusModeLeaveDialogueLeave"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = AppView.current.ActualTheme,
-                XamlRoot = App.MainWindow.Content.XamlRoot,
+                RequestedTheme = Shell.ActualTheme,
+                XamlRoot = WindowContext.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
 
@@ -265,8 +271,8 @@ namespace Storylines.Helpers
                 SecondaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("changesCharactersPageDialogueDontApplyChanges"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = AppView.current.ActualTheme,
-                XamlRoot = App.MainWindow.Content.XamlRoot,
+                RequestedTheme = Shell.ActualTheme,
+                XamlRoot = WindowContext.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = leaveDialog;
 
@@ -275,14 +281,14 @@ namespace Storylines.Helpers
             switch (result)
             {
                 case ContentDialogResult.Primary:
-                    CharactersPage.current.ApplyChanges();
+                    WindowContext.CharactersPage.ApplyChanges();
 
-                    AppView.current.GoBack();
+                    Shell.GoBack();
                     break;
                 case ContentDialogResult.Secondary:
-                    CharactersPage.current.CancelEdit();
+                    WindowContext.CharactersPage.CancelEdit();
 
-                    AppView.current.GoBack();
+                    Shell.GoBack();
                     break;
             }
             AppView.currentlyOpenedDialogue = null;
@@ -299,8 +305,8 @@ namespace Storylines.Helpers
                 PrimaryButtonText = ResourceLoader.GetForViewIndependentUse().GetString("noCharactersDialogueAddNew"),
                 CloseButtonText = ResourceLoader.GetForViewIndependentUse().GetString("exitWithoutSaveDialogCancel"),
                 DefaultButton = ContentDialogButton.Primary,
-                RequestedTheme = AppView.current.ActualTheme,
-                XamlRoot = App.MainWindow.Content.XamlRoot,
+                RequestedTheme = Shell.ActualTheme,
+                XamlRoot = WindowContext.XamlRoot,
             };
             AppView.currentlyOpenedDialogue = noCharactersDialog;
 
@@ -309,8 +315,8 @@ namespace Storylines.Helpers
             switch (result)
             {
                 case ContentDialogResult.Primary:
-                    AppView.current.ChangePage(AppView.Pages.Characters);
-                    CharactersPage.current.Add();
+                    Shell.ChangePage(AppView.Pages.Characters);
+                    WindowContext.CharactersPage.Add();
                     break;
             }
             AppView.currentlyOpenedDialogue = null;

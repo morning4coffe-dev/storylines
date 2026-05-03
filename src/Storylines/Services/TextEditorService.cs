@@ -17,10 +17,12 @@ namespace Storylines.Services
     public class TextEditorService : ITextEditorService
     {
         private readonly ProjectState _projectState;
+        private readonly WindowContext _windowContext;
 
-        public TextEditorService(ProjectState projectState)
+        public TextEditorService(ProjectState projectState, WindowContext windowContext)
         {
             _projectState = projectState;
+            _windowContext = windowContext;
         }
 
         private int _programmaticChangeDepth;
@@ -29,7 +31,7 @@ namespace Storylines.Services
 
         public string GetText(TextFormat format)
         {
-            var textBox = MainPage.ChapterText?.textBox;
+            var textBox = _windowContext.ChapterText?.textBox;
             if (textBox == null) return string.Empty;
 
             var options = format == TextFormat.Rtf
@@ -42,7 +44,7 @@ namespace Storylines.Services
 
         public void SetText(TextFormat format, string text)
         {
-            var chapterText = MainPage.ChapterText;
+            var chapterText = _windowContext.ChapterText;
             var textBox = chapterText?.textBox;
             if (textBox == null) return;
 
@@ -60,30 +62,30 @@ namespace Storylines.Services
 
         public void Undo()
         {
-            MainPage.ChapterText?.textBox?.Document?.Undo();
+            _windowContext.ChapterText?.textBox?.Document?.Undo();
         }
 
         public void Redo()
         {
-            MainPage.ChapterText?.textBox?.Document?.Redo();
+            _windowContext.ChapterText?.textBox?.Document?.Redo();
         }
 
         public int SelectedChapterIndex
         {
-            get => MainPage.ChapterList?.ViewModel?.SelectedIndex
-                ?? MainPage.ChapterList?.listView?.SelectedIndex
+            get => _windowContext.ChapterList?.ViewModel?.SelectedIndex
+                ?? _windowContext.ChapterList?.listView?.SelectedIndex
                 ?? -1;
             set
             {
-                if (MainPage.ChapterList?.ViewModel != null)
-                    MainPage.ChapterList.ViewModel.SelectedIndex = value;
-                else if (MainPage.ChapterList?.listView != null)
-                    MainPage.ChapterList.listView.SelectedIndex = value;
+                if (_windowContext.ChapterList?.ViewModel != null)
+                    _windowContext.ChapterList.ViewModel.SelectedIndex = value;
+                else if (_windowContext.ChapterList?.listView != null)
+                    _windowContext.ChapterList.listView.SelectedIndex = value;
             }
         }
 
         public int SelectedTextLength =>
-            MainPage.ChapterText?.textBox?.Document?.Selection?.Text?.Length ?? 0;
+            _windowContext.ChapterText?.textBox?.Document?.Selection?.Text?.Length ?? 0;
 
         public void SetText(string rtfText)
         {
@@ -92,14 +94,14 @@ namespace Storylines.Services
 
         public void Focus()
         {
-            MainPage.ChapterText?.textBox?.Focus(Microsoft.UI.Xaml.FocusState.Keyboard);
+            _windowContext.ChapterText?.textBox?.Focus(Microsoft.UI.Xaml.FocusState.Keyboard);
         }
 
         public void LoadChapterContent(Chapter chapter)
         {
             if (chapter == null) return;
 
-            var chapterText = MainPage.ChapterText;
+            var chapterText = _windowContext.ChapterText;
             var textBox = chapterText?.textBox;
             if (textBox == null) return;
 
@@ -198,7 +200,7 @@ namespace Storylines.Services
         {
             if (chapter == null) return;
 
-            var textBox = MainPage.ChapterText?.textBox;
+            var textBox = _windowContext.ChapterText?.textBox;
             if (textBox == null) return;
 
             textBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.FormatRtf, out string rtf);
@@ -210,7 +212,7 @@ namespace Storylines.Services
             if (string.IsNullOrEmpty(text))
                 return;
 
-            var textBox = MainPage.ChapterText?.textBox;
+            var textBox = _windowContext.ChapterText?.textBox;
             if (textBox == null) return;
 
             var selection = textBox.Document.Selection;

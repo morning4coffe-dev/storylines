@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+      xmlns:constants="using:Storylines.Constants"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -66,7 +67,7 @@
                 </VisualState>
                 <VisualState x:Name="WideLayout">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="1400" />
+                    <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
                 </VisualState.StateTriggers>
                 <VisualState.Setters>
                     <Setter Target="generalPage.Margin"
@@ -405,12 +406,6 @@
                               IsOn="{x:Bind ViewModel.ExperimentalFeaturesEnabled, Mode=TwoWay}" />
             </Grid>
 
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromVerticalOffset="50" />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </Page>

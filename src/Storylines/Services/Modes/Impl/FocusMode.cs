@@ -17,11 +17,13 @@ namespace Storylines.Services.Modes.Impl
     {
         private readonly EventAggregator _events;
         private readonly INotificationService _notifications;
+        private readonly WindowContext _windowContext;
 
-        public FocusMode(EventAggregator events, INotificationService notifications)
+        public FocusMode(EventAggregator events, INotificationService notifications, WindowContext windowContext)
         {
             _events = events;
             _notifications = notifications;
+            _windowContext = windowContext;
         }
 
         // ── options set by the mode picker before Activate ────────────────────
@@ -60,7 +62,7 @@ namespace Storylines.Services.Modes.Impl
 
             if (FullScreen)
             {
-                App.MainWindow.AppWindow.SetPresenter(AppWindowPresenterKind.FullScreen);
+                _windowContext.Window?.AppWindow?.SetPresenter(AppWindowPresenterKind.FullScreen);
             }
 
             _vm.Initialize(Time, MeasureTarget, Metric);
@@ -73,7 +75,7 @@ namespace Storylines.Services.Modes.Impl
 
             if (FullScreen)
             {
-                App.MainWindow.AppWindow.SetPresenter(AppWindowPresenterKind.Default);
+                _windowContext.Window?.AppWindow?.SetPresenter(AppWindowPresenterKind.Default);
             }
 
             _overlay = null;

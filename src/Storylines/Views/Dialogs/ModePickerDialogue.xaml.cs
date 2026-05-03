@@ -20,7 +20,7 @@ namespace Storylines.Views.Dialogs
         {
             InitializeComponent();
             DialogHelper.EnsureXamlRoot(this);
-            RequestedTheme = AppView.current.ActualTheme;
+            RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
             AppView.currentlyOpenedDialogue = this;
 
             timePicker.Time = new TimeSpan(0, 20, 0);
@@ -89,7 +89,8 @@ namespace Storylines.Views.Dialogs
 
                     var focusMode = new FocusMode(
                         App.GetService<EventAggregator>(),
-                        App.GetService<INotificationService>())
+                        App.GetService<INotificationService>(),
+                        App.GetService<WindowContext>())
                     {
                         FullScreen    = (bool)fullScreenCheckBox.IsChecked,
                         Time          = timePicker.Time,

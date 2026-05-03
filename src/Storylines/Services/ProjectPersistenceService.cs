@@ -28,6 +28,8 @@ namespace Storylines.Services
         private readonly ITextEditorService _textEditor;
         private readonly IUndoRedoService _undoRedo;
         private readonly INotificationService _notifications;
+        private readonly WindowContext _windowContext;
+        private readonly IWindowManager _windowManager;
         private readonly Dictionary<string, DocumentPersistenceHandlerBase> _handlers;
         private readonly SemaphoreSlim _operationLock = new SemaphoreSlim(1, 1);
 
@@ -51,7 +53,9 @@ namespace Storylines.Services
             ProjectState projectState,
             ITextEditorService textEditor,
             IUndoRedoService undoRedo,
-            INotificationService notifications)
+            INotificationService notifications,
+            WindowContext windowContext,
+            IWindowManager windowManager)
         {
             _events = events;
             _dialogs = dialogs;
@@ -63,6 +67,8 @@ namespace Storylines.Services
             _logger = logger;
             _projectState = projectState;
             _textEditor = textEditor;
+            _windowContext = windowContext;
+            _windowManager = windowManager;
 
             _handlers = new Dictionary<string, DocumentPersistenceHandlerBase>(StringComparer.OrdinalIgnoreCase)
             {
@@ -495,7 +501,7 @@ namespace Storylines.Services
                     _dialogs.OpenLoadDialogue();
                     break;
                 case AfterSaveAction.Exit:
-                    App.Current.Exit();
+                    _windowManager.Close(_windowContext);
                     break;
             }
 

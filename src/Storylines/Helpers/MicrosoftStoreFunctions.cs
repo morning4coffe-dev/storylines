@@ -282,9 +282,10 @@ namespace Storylines.Helpers
 
         private static void EnsureStoreContextInitialized()
         {
-            if (!_storeContextInitialized && App.MainWindow != null)
+            var windowCtx = App.TryGetService<IWindowManager>()?.PrimaryWindow;
+            if (!_storeContextInitialized && windowCtx?.Window != null)
             {
-                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
+                var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(windowCtx.Window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_storeContext, hwnd);
                 _storeContextInitialized = true;
             }

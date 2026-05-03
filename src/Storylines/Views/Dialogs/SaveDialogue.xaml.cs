@@ -17,6 +17,8 @@ namespace Storylines.Views.Dialogs
         private readonly ILogger _logger;
         private readonly IProjectPersistenceService _persistence;
         private readonly ProjectState _projectState;
+        private readonly IFilePickerService _filePicker;
+        private readonly WindowContext _windowContext;
 
         public static SaveDialogue saveDialogue;
         public StorageFolder saveFolder;
@@ -37,10 +39,12 @@ namespace Storylines.Views.Dialogs
             _logger = App.GetService<ILogger>();
             _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
+            _filePicker = App.GetService<IFilePickerService>();
+            _windowContext = App.GetService<WindowContext>();
 
             InitializeClickOutToClose();
 
-            saveDialogue.RequestedTheme = AppView.current.ActualTheme;
+            saveDialogue.RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
             AppView.currentlyOpenedDialogue = saveDialogue;
 
             extensions.Add(".srl");
@@ -70,17 +74,7 @@ namespace Storylines.Views.Dialogs
 
         public async Task ChooseFileToSaveAsync()
         {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add("*");
-
-            var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(App.MainWindow);
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, hwnd);
-
-            StorageFolder folder = await picker.PickSingleFolderAsync();
+            StorageFolder folder = await _filePicker.PickFolderAsync();
 
             if (folder != null)
             {
@@ -163,7 +157,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
+            _windowContext.RootElement.PointerPressed -= OnWindowPointerPressed;
 
             if (!_submitted)
                 _persistence.CancelPendingAfterSaveAction();
@@ -190,7 +184,7 @@ namespace Storylines.Views.Dialogs
         bool isHide = true;
         private void InitializeClickOutToClose()
         {
-            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
+            _windowContext.RootElement.PointerPressed += OnWindowPointerPressed;
 
             PointerExited += (s, e) => isHide = true;
             PointerEntered += (s, e) => isHide = false;

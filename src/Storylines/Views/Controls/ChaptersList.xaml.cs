@@ -1,5 +1,6 @@
 using Storylines.Views.Pages;
 using Storylines.Models;
+using Storylines.Services;
 using Storylines.ViewModels;
 using System;
 using Microsoft.UI.Xaml;
@@ -11,6 +12,7 @@ namespace Storylines.Views.Controls
     public sealed partial class ChaptersList : UserControl
     {
         private readonly ChaptersListViewModel _viewModel;
+        private readonly WindowContext _windowContext;
 
         public ChaptersListViewModel ViewModel => _viewModel;
 
@@ -30,8 +32,10 @@ namespace Storylines.Views.Controls
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _viewModel = App.GetService<ChaptersListViewModel>();
 
+            _windowContext.ChapterList = this;
             MainPage.ChapterList = this;
         }
 

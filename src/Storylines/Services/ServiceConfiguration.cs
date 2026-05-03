@@ -16,43 +16,54 @@ namespace Storylines.Services
             var services = new ServiceCollection();
 
             services.AddSingleton<ILogger, DebugLogger>();
-            services.AddSingleton<IDispatcherService, WinUIDispatcherService>();
-            services.AddSingleton<INotificationService, NotificationService>();
-            services.AddSingleton<IUndoRedoService, UndoRedoService>();
+            services.AddSingleton<IWindowManager, WindowManager>();
             services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
-            services.AddSingleton<ITelemetryService, TelemetryService>();
-            services.AddSingleton<IFileService, FileService>();
-            services.AddSingleton<IFilePickerService, FilePickerService>();
-            services.AddSingleton<IExportService, ExportService>();
-            services.AddSingleton<IAppSettingsService, AppSettingsService>();
             services.AddSingleton<JsonSaveSerializer>();
             services.AddSingleton<LegacySrlSerializer>();
-            services.AddSingleton<ProjectState>();
-            services.AddSingleton<EventAggregator>();
-            services.AddSingleton<IProjectPersistenceService, ProjectPersistenceService>();
-            services.AddSingleton<ITextEditorService, TextEditorService>();
-            services.AddSingleton<INavigationService, NavigationService>();
-            services.AddSingleton<IDialogService, DialogService>();
-            services.AddSingleton<IChapterWorkflowService, ChapterWorkflowService>();
-            services.AddSingleton<IDictationService, DictationService>();
-            services.AddSingleton<ISpeechService, SpeechService>();
-            services.AddSingleton<IWritingStatsService, WritingStatsService>();
-            services.AddSingleton<IThemeService, ThemeService>();
-            services.AddSingleton<ICommandRegistry, CommandRegistry>();
-            services.AddSingleton<IInspectorViewModel, ViewModels.InspectorViewModel>();
-            services.AddSingleton<ISnapshotService, SnapshotService>();
-            services.AddSingleton<EditorModeService>();
 
-            services.AddSingleton<AppViewModel>();
-            services.AddSingleton<MainPageViewModel>();
-            services.AddSingleton<ChaptersListViewModel>();
-            services.AddSingleton<CommandBarViewModel>();
-            services.AddSingleton<SpeechHubViewModel>();
+            services.AddScoped<WindowContext>();
+            services.AddScoped<IDispatcherService, WinUIDispatcherService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<IUndoRedoService, UndoRedoService>();
+            services.AddScoped<ITelemetryService, TelemetryService>();
+            services.AddScoped<IFileService, FileService>();
+            services.AddScoped<IFilePickerService, FilePickerService>();
+            services.AddScoped<IExportService, ExportService>();
+            services.AddScoped<IAppSettingsService, AppSettingsService>();
+            services.AddScoped<ProjectState>();
+            services.AddScoped<EventAggregator>();
+            services.AddScoped<IProjectPersistenceService, ProjectPersistenceService>();
+            services.AddScoped<ITextEditorService, TextEditorService>();
+            services.AddScoped<INavigationService, NavigationService>();
+            services.AddScoped<IDialogService, DialogService>();
+            services.AddScoped<IShellService, ShellService>();
+            services.AddScoped<IChapterWorkflowService, ChapterWorkflowService>();
+            services.AddScoped<IDictationService, DictationService>();
+            services.AddScoped<ISpeechService, SpeechService>();
+            services.AddScoped<IWritingStatsService, WritingStatsService>();
+            services.AddScoped<IThemeService, ThemeService>();
+            services.AddScoped<ICommandRegistry, CommandRegistry>();
+            services.AddScoped<IInspectorViewModel, ViewModels.InspectorViewModel>();
+            services.AddScoped<ISnapshotService, SnapshotService>();
+            services.AddScoped<EditorModeService>();
+
+            services.AddScoped<AppViewModel>();
+            services.AddScoped<MainPageViewModel>();
+            services.AddScoped<ChaptersListViewModel>();
+            services.AddScoped<CommandBarViewModel>();
+            services.AddScoped<SpeechHubViewModel>();
             services.AddTransient<ExportDialogViewModel>();
             services.AddTransient<CharactersPageViewModel>();
             services.AddTransient<ViewModels.Settings.GeneralSettingsViewModel>();
             services.AddTransient<ViewModels.Settings.PersonalizationSettingsViewModel>();
             services.AddTransient<ViewModels.Settings.AccessibilitySettingsViewModel>();
+
+#if PRIVATE_PLUGINS
+            services.AddScoped<Interfaces.IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();
+            services.AddScoped<Interfaces.IBranchingDialogueEventPublisher, BranchingDialogueEventPublisher>();
+            services.AddScoped<Interfaces.IBranchingDialogueService, BranchingDialogueService>();
+            services.AddTransient<ViewModels.BranchingDialogueViewModel>();
+#endif
 
             return services.BuildServiceProvider();
         }

@@ -26,6 +26,7 @@ namespace Storylines.Views.Pages
         private readonly EventAggregator _events;
         private readonly INavigationService _navigation;
         private readonly ProjectState _projectState;
+        private readonly WindowContext _windowContext;
         private string _pendingSelectedCharacterToken;
 
         public bool isEditModeEnabled { set; get; } = false;
@@ -50,14 +51,16 @@ namespace Storylines.Views.Pages
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _events = App.GetService<EventAggregator>();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             ViewModel = App.GetService<CharactersPageViewModel>();
 
             current = this;
+            _windowContext.CharactersPage = this;
 
-            AppView.current.page = AppView.Pages.Characters;
+            _windowContext.AppView.page = AppView.Pages.Characters;
 
             TimeTravelCharacter.ClearUndoAndRedo();
 
@@ -604,6 +607,8 @@ namespace Storylines.Views.Pages
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".gif");
 
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+
             StorageFile file = await picker.PickSingleFileAsync();
 
             if (file != null)
@@ -804,9 +809,7 @@ namespace Storylines.Views.Pages
                 DefaultButton = ContentDialogButton.Primary
             };
 
-            var root = App.MainWindow?.Content as FrameworkElement;
-            if (root?.XamlRoot != null)
-                dialog.XamlRoot = root.XamlRoot;
+            dialog.XamlRoot = _windowContext.XamlRoot;
 
             var result = await dialog.ShowAsync();
             if (result == ContentDialogResult.Primary && targetCombo.SelectedIndex >= 0)

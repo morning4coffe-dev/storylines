@@ -23,8 +23,18 @@ namespace Storylines
     {
         public static AppView current { get; private set; }
 
-        public static ContentDialog currentlyOpenedDialogue;
+        public static ContentDialog currentlyOpenedDialogue
+        {
+            get => App.TryGetService<WindowContext>()?.CurrentDialog;
+            set
+            {
+                var context = App.TryGetService<WindowContext>();
+                if (context != null)
+                    context.CurrentDialog = value;
+            }
+        }
 
+        private readonly WindowContext _windowContext;
         private readonly AppViewModel _viewModel;
         private readonly EventAggregator _events;
         private readonly INavigationService _navigation;
@@ -37,6 +47,9 @@ namespace Storylines
         public AppView()
         {
             InitializeComponent();
+            _windowContext = App.GetService<WindowContext>();
+            _windowContext.AppView = this;
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
             current = this;
 
             _viewModel = App.GetService<AppViewModel>();
@@ -85,7 +98,7 @@ namespace Storylines
 
             RecoveryService.Start();
 
-            App.MainWindow.Content.KeyDown += Window_KeyDown;
+            _windowContext.RootElement.KeyDown += Window_KeyDown;
             Loaded += delegate { _ = Focus(FocusState.Programmatic); };
         }
 
@@ -245,6 +258,7 @@ namespace Storylines
 
         public void ChangePage(Pages currentPage)
         {
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
             current.backButton.Visibility = Visibility.Visible;
 
             // Use NavigationService for consistent navigation
@@ -322,6 +336,7 @@ namespace Storylines
 
         private void Window_KeyDown(object sender, KeyRoutedEventArgs e)
         {
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
             ShortcutManager.Check(e);
         }
 

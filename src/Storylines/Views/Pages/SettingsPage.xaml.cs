@@ -9,14 +9,15 @@ namespace Storylines.Views.Pages
 {
     public sealed partial class SettingsPage : Microsoft.UI.Xaml.Controls.Page
     {
-        private const double MinimalPaneBreakpoint = LayoutConstants.CompactBreakpoint;
-        private const double CompactPaneBreakpoint = 1100;
+        private const double MinimalPaneBreakpoint = LayoutConstants.SettingsMinimalPaneBreakpoint;
+        private const double CompactPaneBreakpoint = LayoutConstants.SettingsCompactPaneBreakpoint;
+        private NavigationViewPaneDisplayMode? _lastPaneDisplayMode;
 
         public SettingsPage()
         {
             InitializeComponent();
 
-            AppView.current.page = AppView.Pages.MainPage;
+            App.GetService<WindowContext>().AppView.page = AppView.Pages.Settings;
 
             UpdateSize();
         }
@@ -60,6 +61,10 @@ namespace Storylines.Views.Pages
                     ? NavigationViewPaneDisplayMode.LeftCompact
                     : NavigationViewPaneDisplayMode.Auto;
 
+            if (_lastPaneDisplayMode == paneDisplayMode)
+                return;
+
+            _lastPaneDisplayMode = paneDisplayMode;
             settingsNavigationView.PaneDisplayMode = paneDisplayMode;
             settingsNavigationView.IsPaneOpen = paneDisplayMode == NavigationViewPaneDisplayMode.Auto;
         }

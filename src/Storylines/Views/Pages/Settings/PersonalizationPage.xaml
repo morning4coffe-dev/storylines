@@ -3,6 +3,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:constants="using:Storylines.Constants"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -89,7 +90,7 @@
                 </VisualState>
                 <VisualState x:Name="WideLayout">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="1400" />
+                    <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
                 </VisualState.StateTriggers>
                 <VisualState.Setters>
                     <Setter Target="personalizationPage.Margin"
@@ -480,12 +481,6 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromVerticalOffset="50" />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -28,6 +28,7 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ResourceLoader _resources;
         private readonly ITextEditorService _textEditor;
+        private readonly WindowContext _windowContext;
 
         private readonly ObservableCollection<Character> _dialoguePopupCharacters = new ObservableCollection<Character>();
         private readonly ObservableCollection<string> _recentDialogueCharacterTokens = new ObservableCollection<string>();
@@ -136,6 +137,7 @@ namespace Storylines.Views.Controls
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _events = App.GetService<EventAggregator>();
             _projectState = App.GetService<ProjectState>();
             _resources = ResourceLoader.GetForViewIndependentUse();
@@ -143,6 +145,7 @@ namespace Storylines.Views.Controls
 
             dialoguePopupList.ItemsSource = _dialoguePopupCharacters;
 
+            _windowContext.ChapterText = this;
             MainPage.ChapterText = this;
 
             _events.Subscribe<SettingChangedEvent>(OnSettingChanged);

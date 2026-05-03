@@ -22,7 +22,7 @@ namespace Storylines.Views.Dialogs
             InitializeComponent();
             DialogHelper.EnsureXamlRoot(this);
             current = this;
-            RequestedTheme = AppView.current.ActualTheme;
+            RequestedTheme = App.GetService<WindowContext>().AppView.ActualTheme;
             AppView.currentlyOpenedDialogue = this;
             InitializeClickOutToClose();
         }
@@ -55,7 +55,7 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            App.MainWindow.Content.PointerPressed -= OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed -= OnWindowPointerPressed;
             AppView.currentlyOpenedDialogue = null;
             current = null;
         }
@@ -168,7 +168,7 @@ namespace Storylines.Views.Dialogs
 
         private void InitializeClickOutToClose()
         {
-            App.MainWindow.Content.PointerPressed += OnWindowPointerPressed;
+            App.GetService<WindowContext>().RootElement.PointerPressed += OnWindowPointerPressed;
             PointerExited += (s, e) => _isHide = true;
             PointerEntered += (s, e) => _isHide = false;
         }

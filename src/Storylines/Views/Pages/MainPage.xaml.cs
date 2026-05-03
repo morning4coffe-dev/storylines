@@ -25,6 +25,7 @@ namespace Storylines.Views.Pages
 
         private readonly EventAggregator _events;
         private readonly MainPageViewModel _viewModel;
+        private readonly WindowContext _windowContext;
         private string _pendingChapterToken;
 
         private DispatcherTimer _sessionTimer;
@@ -35,12 +36,15 @@ namespace Storylines.Views.Pages
         public MainPage()
         {
             InitializeComponent();
+            _windowContext = App.GetService<WindowContext>();
+            _windowContext.MainPage = this;
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
             Current = this;
 
             _events = App.GetService<EventAggregator>();
             _viewModel = App.GetService<MainPageViewModel>();
 
-            AppView.current.page = AppView.Pages.MainPage;
+            _windowContext.AppView.page = AppView.Pages.MainPage;
 
             _events.Subscribe<ChapterToolsStateEvent>(e => OnChapterToolsStateChanged(e.Enabled));
             _events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
@@ -66,10 +70,13 @@ namespace Storylines.Views.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (App.PendingActivatedItem != null)
+            var pendingActivatedItem = _windowContext.PendingActivatedItem ?? App.PendingActivatedItem;
+            if (pendingActivatedItem != null)
             {
-                Persistence.DefaultLaunch(App.PendingActivatedItem);
-                App.PendingActivatedItem = null;
+                Persistence.DefaultLaunch(pendingActivatedItem);
+                _windowContext.PendingActivatedItem = null;
+                if (ReferenceEquals(App.PendingActivatedItem, pendingActivatedItem))
+                    App.PendingActivatedItem = null;
             }
 
             var selectedChapterIndex = ChapterList.ViewModel.SelectedIndex;
@@ -113,7 +120,7 @@ namespace Storylines.Views.Pages
             }
             else
             {
-                AppView.current.Focus(FocusState.Keyboard);
+                _windowContext.AppView.Focus(FocusState.Keyboard);
                 ChapterText.textBoxRectangle.Visibility = Visibility.Visible;
             }
         }

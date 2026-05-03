@@ -16,17 +16,14 @@ namespace Storylines.Services
         private bool _canRedoChapters;
         private bool _canUndoCharacters;
         private bool _canRedoCharacters;
+        private bool _isDirty;
 
         public UndoRedoService(EventAggregator events)
         {
             events.Subscribe<UndoRedoStateChangedEvent>(OnStateChanged);
         }
 
-        public bool IsDirty
-        {
-            get => TimeTravelSystem.unSavedProgress;
-            private set => TimeTravelSystem.unSavedProgress = value;
-        }
+        public bool IsDirty => _isDirty;
 
         public event Action<string> StateChanged;
 
@@ -74,9 +71,9 @@ namespace Storylines.Services
             }
         }
 
-        public void MarkClean() => IsDirty = false;
+        public void MarkClean() => _isDirty = false;
 
-        public void MarkDirty() => IsDirty = true;
+        public void MarkDirty() => _isDirty = true;
 
         private void OnStateChanged(UndoRedoStateChangedEvent e)
         {

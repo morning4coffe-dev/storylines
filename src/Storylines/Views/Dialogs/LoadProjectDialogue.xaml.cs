@@ -14,6 +14,7 @@ namespace Storylines.Views.Dialogs
     public sealed partial class LoadProjectDialogue : ContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+        private static WindowContext WindowContext => App.GetService<WindowContext>();
 
         public static LoadProjectDialogue loadFile;
         public bool isEscape = true;
@@ -41,7 +42,7 @@ namespace Storylines.Views.Dialogs
                 loadDialogue.XamlRoot = root;
                 _ = loadDialogue.ShowAsync();
 
-                loadDialogue.RequestedTheme = AppView.current.ActualTheme;
+                loadDialogue.RequestedTheme = WindowContext.AppView.ActualTheme;
             }
             else
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
@@ -74,7 +75,7 @@ namespace Storylines.Views.Dialogs
             Persistence.CurrentProject.projectName = "Project with no name";
 
             Pages.MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
-            AppView.current.ClearEverything();
+            WindowContext.AppView.ClearEverything();
             TimeTravelSystem.unSavedProgress = false;
         }
 

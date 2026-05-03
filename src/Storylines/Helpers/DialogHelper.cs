@@ -1,5 +1,6 @@
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Storylines.Services;
 
 namespace Storylines.Helpers
 {
@@ -11,9 +12,9 @@ namespace Storylines.Helpers
             {
                 if (dialog == null) return;
                 if (dialog.XamlRoot != null) return;
-                var root = App.MainWindow?.Content as FrameworkElement;
-                if (root?.XamlRoot != null)
-                    dialog.XamlRoot = root.XamlRoot;
+                var windowContext = App.TryGetService<WindowContext>();
+                if (windowContext?.XamlRoot != null)
+                    dialog.XamlRoot = windowContext.XamlRoot;
             }
             catch
             {

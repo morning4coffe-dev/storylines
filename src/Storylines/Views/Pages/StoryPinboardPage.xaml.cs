@@ -775,9 +775,8 @@ namespace Storylines.Views.Pages
                     DefaultButton = ContentDialogButton.Primary
                 };
 
-                var root = App.MainWindow?.Content as FrameworkElement;
-                if (root?.XamlRoot != null)
-                    dialog.XamlRoot = root.XamlRoot;
+                var windowContext = App.GetService<WindowContext>();
+                dialog.XamlRoot = windowContext.XamlRoot;
 
                 string label = null;
                 var result = await dialog.ShowAsync();
