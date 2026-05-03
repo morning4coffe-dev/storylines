@@ -6,6 +6,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -23,6 +24,7 @@ namespace Storylines.Views.Dialogs
         public ChapterCreatorOrRenamer()
         {
             this.InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             chapterCreator = this;
 
             InitializeClickOutToClose();

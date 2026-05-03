@@ -202,7 +202,7 @@ namespace Storylines
                 SettingsValues.LoadSettings();
                 ThemeSettings.Initialize();
                 if (openLoadDialog)
-                    LoadProjectDialogue.Open();
+                    LoadProjectDialogue.Open(AppView.current.XamlRoot);
                 MicrosoftStoreFunctions.InitializeReview();
                 ObserveBackgroundOperation(MicrosoftStoreFunctions.CheckForNewUpdateAvailableAsync(), "Failed to check for updates");
                 _isWindowInitialized = true;

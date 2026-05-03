@@ -23,6 +23,7 @@ namespace Storylines.Views.Dialogs
             CharactersPageShortcuts = ShortcutManager.GetShortcuts(ShortcutScope.CharactersPage).ToList();
 
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             textBoxStats = this;
 
             InitializeClickOutToClose();

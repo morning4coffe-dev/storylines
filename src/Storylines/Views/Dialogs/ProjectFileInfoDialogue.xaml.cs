@@ -7,6 +7,7 @@ using Windows.Storage;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -19,6 +20,7 @@ namespace Storylines.Views.Dialogs
         public ProjectFileInfoDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             fileInfoDialogue = this;
 
             InitializeClickOutToClose();

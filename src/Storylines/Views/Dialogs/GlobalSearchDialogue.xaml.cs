@@ -8,6 +8,7 @@ using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Services.Interfaces;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -19,6 +20,7 @@ namespace Storylines.Views.Dialogs
         public GlobalSearchDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
         }
 
         public static async Task OpenAsync()

@@ -29,6 +29,7 @@ namespace Storylines.Views.Dialogs
         public ProjectStatsDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             textBoxStats = this;
 
             InitializeClickOutToClose();

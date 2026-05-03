@@ -20,6 +20,7 @@ namespace Storylines.Views.Dialogs
         public ChapterTagsDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             current = this;
             RequestedTheme = AppView.current.ActualTheme;
             AppView.currentlyOpenedDialogue = this;

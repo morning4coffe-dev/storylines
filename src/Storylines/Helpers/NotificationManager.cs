@@ -215,7 +215,7 @@ namespace Storylines.Helpers
                         AppView.current.ClearEverything();
                         TimeTravelSystem.unSavedProgress = false;
 
-                        LoadProjectDialogue.Open();
+                        LoadProjectDialogue.Open(AppView.current.XamlRoot);
                         exitDialog.Hide();
                     }
                     break;

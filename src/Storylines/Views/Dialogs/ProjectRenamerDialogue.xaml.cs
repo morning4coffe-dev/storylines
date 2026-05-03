@@ -7,6 +7,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -19,6 +20,7 @@ namespace Storylines.Views.Dialogs
         public ProjectRenamerDialogue()
         {
             this.InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             projectRenamer = this;
 
             InitializeClickOutToClose();

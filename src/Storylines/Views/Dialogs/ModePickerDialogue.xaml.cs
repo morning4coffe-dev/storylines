@@ -19,6 +19,7 @@ namespace Storylines.Views.Dialogs
         public ModePickerDialogue(string preselect = "focus")
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             RequestedTheme = AppView.current.ActualTheme;
             AppView.currentlyOpenedDialogue = this;
 

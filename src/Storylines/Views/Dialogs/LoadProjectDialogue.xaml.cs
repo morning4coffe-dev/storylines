@@ -24,20 +24,21 @@ namespace Storylines.Views.Dialogs
         public LoadProjectDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             loadFile = this;
 
             AppView.currentlyOpenedDialogue = loadFile;
             projectsHolder.ItemsSource = null;
         }
 
-        public static void Open()
+        public static void Open(XamlRoot root)
         {
             if (!TimeTravelSystem.unSavedProgress)
             {
                 if (AppView.currentlyOpenedDialogue != null)
                     AppView.currentlyOpenedDialogue.Hide();
-
-                var loadDialogue = new LoadProjectDialogue();
+               var loadDialogue = new LoadProjectDialogue();
+                loadDialogue.XamlRoot = root;
                 _ = loadDialogue.ShowAsync();
 
                 loadDialogue.RequestedTheme = AppView.current.ActualTheme;

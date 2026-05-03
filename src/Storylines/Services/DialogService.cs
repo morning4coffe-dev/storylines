@@ -13,7 +13,7 @@ namespace Storylines.Services
 
         public void OpenLoadDialogue()
         {
-            LoadProjectDialogue.Open();
+            LoadProjectDialogue.Open(AppView.current.XamlRoot);
         }
 
         public void OpenExportDialogue(ExportTarget target = ExportTarget.None) => ExportDialogue.Open(target);

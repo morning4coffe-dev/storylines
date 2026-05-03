@@ -5,6 +5,7 @@ using System;
 using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -15,6 +16,7 @@ namespace Storylines.Views.Dialogs
         public ExportDialogue(ExportTarget initialTarget = ExportTarget.None)
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
 
             ViewModel = App.GetService<ExportDialogViewModel>();
             DataContext = ViewModel;

@@ -5,6 +5,7 @@ using System;
 using System.Collections.ObjectModel;
 using Windows.Storage;
 using Microsoft.UI.Xaml;
+using Storylines.Helpers;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using System.Threading.Tasks;
@@ -30,6 +31,7 @@ namespace Storylines.Views.Dialogs
         public SaveDialogue()
         {
             InitializeComponent();
+            DialogHelper.EnsureXamlRoot(this);
             saveDialogue = this;
 
             _logger = App.GetService<ILogger>();
