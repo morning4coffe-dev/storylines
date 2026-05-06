@@ -11,57 +11,153 @@
         CommandBarViewModel so we never reparent any AppBarButton instances.
         The overlay root is NOT hit-test transparent (the bar must receive input).
     -->
-    <Grid Background="Transparent">
-        <!-- Mini command bar (top of overlay, col-span over both writing area and chapter list column) -->
-        <CommandBar x:Name="focusMiniBar"
-                    HorizontalAlignment="Stretch"
-                    VerticalAlignment="Top"
-                    Height="48"
-                    DefaultLabelPosition="Right"
-                    Background="{ThemeResource LayerFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource ElementBorderColor}"
-                    BorderThickness="{ThemeResource ElementBorderThickness}"
-                    CornerRadius="8"
-                    Margin="8,0">
+    <Grid Margin="16,0,16,0">
+        <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="12"
+                Padding="8,6"
+                HorizontalAlignment="Stretch"
+                VerticalAlignment="Top">
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
 
-            <AppBarButton Icon="Undo"
-                          CornerRadius="4"
-                          IsEnabled="{x:Bind _cmdBarVm.CanUndo, Mode=OneWay}"
-                          Command="{x:Bind _cmdBarVm.UndoCommand}" />
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
 
-            <AppBarButton Icon="Redo"
-                          CornerRadius="4"
-                          IsEnabled="{x:Bind _cmdBarVm.CanRedo, Mode=OneWay}"
-                          Command="{x:Bind _cmdBarVm.RedoCommand}" />
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalAlignment="Center">
+                    <Border Width="28"
+                            Height="28"
+                            CornerRadius="14"
+                            Background="{ThemeResource AccentFillColorSecondaryBrush}">
+                        <FontIcon Glyph="&#xE1D5;"
+                                  FontSize="14"
+                                  HorizontalAlignment="Center"
+                                  VerticalAlignment="Center"
+                                  Foreground="{ThemeResource TextOnAccentFillColorPrimaryBrush}" />
+                    </Border>
+                    <TextBlock x:Name="modeTitleText"
+                               VerticalAlignment="Center"
+                               FontSize="13"
+                               FontWeight="SemiBold" />
+                </StackPanel>
 
-            <AppBarSeparator />
+                <!-- Mini command bar (top of overlay, col-span over both writing area and chapter list column) -->
+                <CommandBar x:Name="focusMiniBar"
+                            Grid.Column="1"
+                            HorizontalAlignment="Stretch"
+                            VerticalAlignment="Top"
+                            Height="48"
+                            DefaultLabelPosition="Right"
+                            Background="Transparent"
+                            BorderThickness="0"
+                            CornerRadius="8">
 
-            <AppBarButton x:Uid="save"
-                          Icon="Save"
-                          CornerRadius="4"
-                          LabelPosition="Default"
-                          IsEnabled="{x:Bind _cmdBarVm.IsSaveEnabled, Mode=OneWay}"
-                          Command="{x:Bind _cmdBarVm.SaveCommand}" />
+                    <AppBarButton Icon="Undo"
+                                  CornerRadius="4"
+                                  IsEnabled="{x:Bind _cmdBarVm.CanUndo, Mode=OneWay}"
+                                  Command="{x:Bind _cmdBarVm.UndoCommand}" />
 
-            <AppBarToggleButton x:Uid="autosave"
-                                CornerRadius="4"
-                                IsChecked="{x:Bind _cmdBarVm.IsAutosaveChecked, Mode=TwoWay}"
-                                Click="OnAutosaveToggle_Click">
-                <AppBarToggleButton.Icon>
-                    <SymbolIcon Symbol="Sync" />
-                </AppBarToggleButton.Icon>
-            </AppBarToggleButton>
+                    <AppBarButton Icon="Redo"
+                                  CornerRadius="4"
+                                  IsEnabled="{x:Bind _cmdBarVm.CanRedo, Mode=OneWay}"
+                                  Command="{x:Bind _cmdBarVm.RedoCommand}" />
 
-            <AppBarSeparator />
+                    <AppBarSeparator />
 
-            <AppBarButton x:Uid="readAloud"
-                          CornerRadius="4"
-                          Click="OnReadAloudButton_Click">
-                <AppBarButton.Icon>
-                    <FontIcon Glyph="&#xE720;" />
-                </AppBarButton.Icon>
-            </AppBarButton>
+                    <AppBarButton x:Uid="save"
+                                  Icon="Save"
+                                  CornerRadius="4"
+                                  LabelPosition="Default"
+                                  IsEnabled="{x:Bind _cmdBarVm.IsSaveEnabled, Mode=OneWay}"
+                                  Command="{x:Bind _cmdBarVm.SaveCommand}" />
 
-        </CommandBar>
+                    <AppBarToggleButton x:Uid="autosave"
+                                        CornerRadius="4"
+                                        IsChecked="{x:Bind _cmdBarVm.IsAutosaveChecked, Mode=TwoWay}"
+                                        Click="OnAutosaveToggle_Click">
+                        <AppBarToggleButton.Icon>
+                            <SymbolIcon Symbol="Sync" />
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
+
+                    <AppBarSeparator />
+
+                    <AppBarButton x:Uid="readAloud"
+                                  CornerRadius="4"
+                                  Click="OnReadAloudButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="&#xE720;" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                </CommandBar>
+
+                <Button x:Name="leaveFocusModeButton"
+                        Grid.Column="2"
+                        Width="32"
+                        Height="32"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Right"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        CornerRadius="16"
+                        Click="OnLeaveFocusModeButton_Click">
+                    <FontIcon Glyph="&#xE711;"
+                              Style="{StaticResource AppSymbolIconStyle}"
+                              FontSize="12"
+                              Opacity="0.72" />
+                </Button>
+            </Grid>
+        </Border>
+
+        <Border MaxWidth="420"
+                Margin="0,92,0,24"
+                Padding="24"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                Background="{ThemeResource LayerFillColorDefaultBrush}"
+                BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
+                BorderThickness="1"
+                CornerRadius="16"
+                Visibility="{x:Bind _chaptersVm.NoChaptersPlaceholderVisibility, Mode=OneWay}">
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
+
+            <StackPanel Spacing="16">
+                <FontIcon Glyph="&#xE1A5;"
+                          FontSize="30"
+                          HorizontalAlignment="Center"
+                          Opacity="0.45" />
+
+                <RichTextBlock FontSize="13"
+                               TextAlignment="Center"
+                               Opacity="0.8"
+                               IsTextSelectionEnabled="False">
+                    <Paragraph>
+                        <Run x:Uid="noChapters" />
+                        <LineBreak />
+                        <Hyperlink Click="OnCreateChapterHyperlink_Click">
+                            <Run x:Uid="clickHereText" />
+                        </Hyperlink>
+                        <Run x:Uid="toAddNew" />
+                    </Paragraph>
+                </RichTextBlock>
+
+                <AppBarButton x:Uid="addChapter"
+                              HorizontalAlignment="Center"
+                              IsEnabled="{x:Bind _chaptersVm.IsAddButtonEnabled, Mode=OneWay}"
+                              Command="{x:Bind _chaptersVm.OpenCreateChapterDialogCommand}" />
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

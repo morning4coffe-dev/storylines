@@ -69,6 +69,7 @@
                                 MinWidth="220"
                                 MaxWidth="420"
                                 QueryIcon="Find"
+                                Visibility="{x:Bind ViewModel.TitleBarSearchVisibility, Mode=OneWay}"
                                 PlaceholderText="{x:Bind ViewModel.SearchText, Mode=OneWay}"
                                 QuerySubmitted="OnTitleBarSearchBox_QuerySubmitted" />
             </TitleBar.Content>

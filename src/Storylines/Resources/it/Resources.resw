@@ -1018,49 +1018,49 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>By chapter</value>
   </data>
   <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Close</value>
+    <value>Chiudi</value>
   </data>
   <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Options</value>
+    <value>Opzioni</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>Aspetto e note visive</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>Battute di esempio</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>Nessuna anteprima del dialogo per ora. Aggiungi qualche battuta in un capitolo e apparirà qui.</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>Nessuna battuta di dialogo trovata.</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>Compare in {0} capitolo/i e ha {1} battuta/e di dialogo.</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>Uso dei dialoghi</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>Cerca personaggi</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>Nessun personaggio corrisponde alla tua ricerca.</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>Tratti (separati da virgole)</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>Obiettivo giornaliero di parole</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>Tieni traccia dei tuoi progressi di scrittura giornalieri. Imposta 0 per disattivare.</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>Tutti i personaggi</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>Nessun personaggio corrisponde a questa ricerca.</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ per selezionare · Invio per confermare · Esc per chiudere</value>
@@ -1072,34 +1072,34 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>Premi Invio durante la scrittura per inserire rapidamente battute di dialogo. Usa ↑↓ per scegliere un personaggio, poi Invio per confermare. I dialoghi possono anche essere convertiti in nodi di dialogo ramificato.</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>Recenti</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>Trova personaggio</value>
   </data>
   <data name="editorFontFamilySetting.Text" xml:space="preserve">
-    <value>Font family</value>
+    <value>Famiglia di caratteri</value>
   </data>
   <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
-    <value>Default font used for new text in the editor.</value>
+    <value>Carattere predefinito usato per il nuovo testo nell'editor.</value>
   </data>
   <data name="editorFontSizeSetting.Text" xml:space="preserve">
-    <value>Font size</value>
+    <value>Dimensione del carattere</value>
   </data>
   <data name="githubBannerDescription.Text" xml:space="preserve">
-    <value>Click here to give Storylines a Star on GitHub</value>
+    <value>Fai clic qui per lasciare una stella a Storylines su GitHub</value>
   </data>
   <data name="githubBannerTitle.Text" xml:space="preserve">
-    <value>GitHub Stars Count</value>
+    <value>Numero di stelle su GitHub</value>
   </data>
   <data name="min" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>Untitled</value>
+    <value>Senza titolo</value>
   </data>
   <data name="newCharacterName" xml:space="preserve">
-    <value>New Character</value>
+    <value>Nuovo personaggio</value>
   </data>
   <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
     <value>Auto-arrange</value>
@@ -1120,7 +1120,7 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>Text Editor</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>Progetti recenti</value>
   </data>
   <data name="writingGoalSetting.Text" xml:space="preserve">
     <value>Writing Goal</value>
@@ -1185,13 +1185,13 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>Attiva modalità</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>Sperimentale</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>Abilita le funzionalità sperimentali</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Sblocca le funzionalità ancora in sviluppo, come la ricerca globale nella barra del titolo e i dialoghi ramificati.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Tavola della storia</value>
@@ -1200,13 +1200,13 @@ il pulsante "Aggiungi nuovo personaggio".</value>
     <value>Spunti di scrittura</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} nodo/i di dialogo</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>Apri nell'editor dei dialoghi</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>Contiene un dialogo ramificato</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>Grassetto</value>
@@ -1285,10 +1285,10 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   <data name="saveProjectName" xml:space="preserve"><value>Nome progetto:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"About The Queen of Donuts"</value></data>
   <data name="projectStatistics.Text" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Statistiche del progetto</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
-    <value>Word frequency</value>
+    <value>Frequenza delle parole</value>
   </data>
   <data name="projectFileInfoButton.Label" xml:space="preserve">
     <value>Informazioni sul file</value>

@@ -152,50 +152,50 @@
   <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
     <value>Podsumuj, co dzieje się w tym rozdziale...</value>
   </data>
-  <data name="notesPaneSynopsisTab.Header" xml:space="preserve">
-    <value>Streszczenie</value>
+  <data name="findOne.Text" xml:space="preserve">
+    <value>Znajdź jedną</value>
   </data>
-  <data name="globalSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Wpisz, aby przeszukać wszystkie rozdziały...</value>
+  <data name="focus.Text" xml:space="preserve">
+    <value>Skupienie</value>
   </data>
-  <data name="connectionLabelTitle" xml:space="preserve">
-    <value>Etykieta połączenia (opcjonalnie)</value>
+  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
+    <value>Nie udało Ci się ukończyć wyznaczonego celu. Czy na pewno chcesz wyjść?</value>
   </data>
-  <data name="skipButtonText" xml:space="preserve">
-    <value>Pomiń</value>
+  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
+    <value>Opuść</value>
   </data>
-  <data name="pinboardEmptyDescription.Text" xml:space="preserve">
-    <value>Dodaj rozdziały ze strony głównej, aby zobaczyć je tutaj.</value>
+  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
+    <value>Zostań i dokończ</value>
   </data>
-  <data name="relationshipSelectCharacter" xml:space="preserve">
-    <value>Wybierz postać...</value>
+  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
+    <value>Tak szybko odchodzisz?</value>
   </data>
-  <data name="addRelationshipTitle" xml:space="preserve">
-    <value>Dodaj relację</value>
+  <data name="githubBannerDescription.Text" xml:space="preserve">
+    <value>Kliknij tutaj, aby dać Storylines gwiazdkę w GitHubie</value>
   </data>
-  <data name="notesPaneLocationBox.PlaceholderText" xml:space="preserve">
-    <value>np. Stara biblioteka, ulice śródmieścia...</value>
+  <data name="githubBannerTitle.Text" xml:space="preserve">
+    <value>Liczba gwiazdek na GitHubie</value>
   </data>
-  <data name="chapterTagsSuggestions.Text" xml:space="preserve">
-    <value>Sugestie</value>
+  <data name="githubRepository.Text" xml:space="preserve">
+    <value>Repozytorium GitHub</value>
   </data>
-  <data name="writingPromptsCategory.Header" xml:space="preserve">
-    <value>Kategoria</value>
+  <data name="help.Content" xml:space="preserve">
+    <value>Pomoc</value>
   </data>
-  <data name="chapterTagsLabel.Text" xml:space="preserve">
-    <value>Tagi</value>
+  <data name="highlighterFlyout.Text" xml:space="preserve">
+    <value>Zakreślacz</value>
   </data>
-  <data name="writingPromptsDialogue.CloseButtonText" xml:space="preserve">
-    <value>Zamknij</value>
+  <data name="includeChapterName.Content" xml:space="preserve">
+    <value>Uwzględnij nazwę rozdziału</value>
   </data>
-  <data name="statusWriting.Text" xml:space="preserve">
-    <value>Pisanie</value>
+  <data name="information.Text" xml:space="preserve">
+    <value>Informacje</value>
   </data>
-  <data name="editTagsFlyout.Text" xml:space="preserve">
-    <value>Edytuj tagi...</value>
+  <data name="insert.Content" xml:space="preserve">
+    <value>Wstaw</value>
   </data>
-  <data name="relationshipTypeLabel" xml:space="preserve">
-    <value>Typ relacji:</value>
+  <data name="janeDoe" xml:space="preserve">
+    <value>Jane Doe</value>
   </data>
   <data name="notesPaneNotesTab.Header" xml:space="preserve">
     <value>Notatki</value>
@@ -379,22 +379,22 @@
     <value>Chapters to export:</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>Wygląd i notatki wizualne</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>Przykładowe kwestie</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>Podgląd dialogów nie jest jeszcze dostępny. Dodaj kilka kwestii w rozdziale, a pojawią się tutaj.</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>Nie znaleziono jeszcze żadnych kwestii dialogowych.</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>Pojawia się w {0} rozdziałach i ma {1} linii dialogowych.</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>Użycie dialogów</value>
   </data>
   <data name="characterNotSelected.Text" xml:space="preserve">
     <value>No character selected.</value>
@@ -406,10 +406,10 @@
     <value>Characters</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>Szukaj postaci</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>Żadne postacie nie pasują do wyszukiwania.</value>
   </data>
   <data name="charactersSText" xml:space="preserve">
     <value>Characters</value>
@@ -421,7 +421,7 @@
     <value>Characters</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>Cechy (oddzielone przecinkami)</value>
   </data>
   <data name="clickHere" xml:space="preserve">
     <value>Click here</value>
@@ -439,10 +439,10 @@
     <value>Custom</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>Dzienny cel słów</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>Śledź swoje dzienne postępy w pisaniu. Ustaw 0, aby wyłączyć.</value>
   </data>
   <data name="dark.Content" xml:space="preserve">
     <value>Dark</value>
@@ -451,10 +451,10 @@
     <value>Dialogue helper</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>Wszystkie postacie</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>Żadne postacie nie pasują do tego wyszukiwania.</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ wybierz · Enter potwierdź · Esc zamknij</value>
@@ -466,10 +466,10 @@
     <value>Naciśnij Enter podczas pisania, aby szybko wstawić kwestie dialogowe postaci. Strzałkami ↑↓ wybierz postać, a Enter potwierdź. Dialogi mogą być też zamienione na węzły dialogów rozgałęzionych.</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>Ostatnie</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>Znajdź postać</value>
   </data>
   <data name="dialoguesExport.Text" xml:space="preserve">
     <value>Dialogues</value>
@@ -572,51 +572,6 @@
   </data>
   <data name="fileNamePlaceh.PlaceholderText" xml:space="preserve">
     <value>the-queen-of-donuts-script</value>
-  </data>
-  <data name="findOne.Text" xml:space="preserve">
-    <value>Find one</value>
-  </data>
-  <data name="focus.Text" xml:space="preserve">
-    <value>Focus</value>
-  </data>
-  <data name="FocusModeLeaveDialogueDescription" xml:space="preserve">
-    <value>You did not finish the goal you set. Do you really want to quit?</value>
-  </data>
-  <data name="FocusModeLeaveDialogueLeave" xml:space="preserve">
-    <value>Leave</value>
-  </data>
-  <data name="FocusModeLeaveDialogueStay" xml:space="preserve">
-    <value>Stay and finish</value>
-  </data>
-  <data name="FocusModeLeaveDialogueTitle" xml:space="preserve">
-    <value>Leaving so soon?</value>
-  </data>
-  <data name="githubBannerDescription.Text" xml:space="preserve">
-    <value>Click here to give Storylines a Star on GitHub</value>
-  </data>
-  <data name="githubBannerTitle.Text" xml:space="preserve">
-    <value>GitHub Stars Count</value>
-  </data>
-  <data name="githubRepository.Text" xml:space="preserve">
-    <value>GitHub repository</value>
-  </data>
-  <data name="help.Content" xml:space="preserve">
-    <value>Help</value>
-  </data>
-  <data name="highlighterFlyout.Text" xml:space="preserve">
-    <value>Highlighter</value>
-  </data>
-  <data name="includeChapterName.Content" xml:space="preserve">
-    <value>Include chapter name</value>
-  </data>
-  <data name="information.Text" xml:space="preserve">
-    <value>Information</value>
-  </data>
-  <data name="insert.Content" xml:space="preserve">
-    <value>Insert</value>
-  </data>
-  <data name="janeDoe" xml:space="preserve">
-    <value>Jane Doe</value>
   </data>
   <data name="johnDoe" xml:space="preserve">
     <value>John Doe</value>
@@ -868,7 +823,7 @@
     <value>Website</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>Ostatnie projekty</value>
   </data>
   <data name="whatsNextDescription.Text" xml:space="preserve">
     <value>Read about what's next for Storylines</value>
@@ -964,13 +919,13 @@
     <value>Włącz tryb</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>Eksperymentalne</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>Włącz funkcje eksperymentalne</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Odblokowuje funkcje, które są wciąż w fazie rozwoju, takie jak globalne wyszukiwanie na pasku tytułu i dialogi rozgałęzione.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Płótno historii</value>
@@ -979,13 +934,13 @@
     <value>Podpowiedzi do pisania</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} węzłów dialogowych</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>Otwórz w edytorze dialogów</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>Zawiera rozgałęziony dialog</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>Pogrubienie</value>
@@ -1064,19 +1019,19 @@
   <data name="saveProjectName" xml:space="preserve"><value>Nazwa projektu:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O królowej pączków"</value></data>
   <data name="projectStatistics.Text" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Statystyki projektu</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
-    <value>Word frequency</value>
+    <value>Częstotliwość słów</value>
   </data>
   <data name="projectFileInfoButton.Label" xml:space="preserve">
     <value>Informacje o pliku</value>
   </data>
   <data name="projectFileNameLabel" xml:space="preserve">
-    <value>File name:</value>
+    <value>Nazwa pliku:</value>
   </data>
   <data name="projectFileLocationLabel" xml:space="preserve">
-    <value>Location:</value>
+    <value>Lokalizacja:</value>
   </data>
   <data name="projectStatsWritingLabel" xml:space="preserve">
     <value>Pisanie</value>

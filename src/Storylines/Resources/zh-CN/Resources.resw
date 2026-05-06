@@ -621,14 +621,11 @@
   <data name="storyCanvasTitle.Text" xml:space="preserve">
     <value>故事画布</value>
   </data>
-  <data name="noMatchesFound" xml:space="preserve">
-    <value>未找到匹配项</value>
-  </data>
   <data name="notesPanePlotTab.Header" xml:space="preserve">
     <value>情节</value>
   </data>
-  <data name="setStatusFlyout.Text" xml:space="preserve">
-    <value>设置状态</value>
+  <data name="shellSettingsNavigation.Content" xml:space="preserve">
+    <value>设置</value>
   </data>
   <data name="notesPaneSynopsisBox.PlaceholderText" xml:space="preserve">
     <value>概述本章发生的内容...</value>
@@ -794,34 +791,34 @@
     <value>Chapters to export:</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>外观和视觉备注</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>示例台词</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>暂无对话预览。在章节中添加一些台词后，它们会显示在这里。</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>尚未找到任何对话台词。</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>出现在 {0} 个章节中，并有 {1} 条对话台词。</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>对话使用情况</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>搜索角色</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>没有角色与您的搜索匹配。</value>
   </data>
   <data name="charactersSText" xml:space="preserve">
     <value>Characters</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>特征（用逗号分隔）</value>
   </data>
   <data name="chinese.Content" xml:space="preserve">
     <value>Chinese</value>
@@ -839,19 +836,19 @@
     <value>Czech</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>每日字数目标</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>跟踪您的每日写作进度。设置为 0 可禁用。</value>
   </data>
   <data name="dialogueMode.Label" xml:space="preserve">
     <value>Dialogue helper</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>所有角色</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>没有角色与此次搜索匹配。</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ 选择 · Enter 确认 · Esc 关闭</value>
@@ -863,10 +860,10 @@
     <value>写作时按 Enter 快速插入角色对话行。用 ↑↓ 箭头选择角色，然后按 Enter 确认。您的对话也可以转换为分支对话节点。</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>最近</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>查找角色</value>
   </data>
   <data name="dialoguesExport.Text" xml:space="preserve">
     <value>Dialogues</value>
@@ -1103,7 +1100,7 @@
     <value>Website</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>最近的项目</value>
   </data>
   <data name="whatsNextDescription.Text" xml:space="preserve">
     <value>Read about what's next for Storylines</value>
@@ -1183,13 +1180,13 @@
     <value>进入模式</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>实验性</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>启用实验性功能</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>解锁仍在开发中的功能，例如标题栏全局搜索和分支对话。</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>故事画布</value>
@@ -1198,13 +1195,13 @@
     <value>写作提示</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} 个对话节点</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>在对话编辑器中查看</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>含有分支对话</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>加粗</value>
@@ -1316,13 +1313,13 @@
     <value>修改时间：</value>
   </data>
   <data name="projectFileSizeLabel" xml:space="preserve">
-    <value>大小：</value>
+    <value>文件名：</value>
   </data>
   <data name="projectFileTypeLabel" xml:space="preserve">
-    <value>类型：</value>
+    <value>写作</value>
   </data>
   <data name="projectFileNotSaved" xml:space="preserve">
-    <value>尚未保存</value>
+    <value>修订</value>
   </data>
   <data name="projectFileUnavailable" xml:space="preserve">
     <value>N/A</value>

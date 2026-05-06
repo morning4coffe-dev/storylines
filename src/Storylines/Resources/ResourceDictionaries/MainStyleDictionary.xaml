@@ -71,6 +71,10 @@
     <Color x:Key="SystemAccentColorLight2">#BE5A00</Color>
     <Color x:Key="SystemAccentColorLight3">#BE5A00</Color>
 
+    <!-- WinUI 3 defaults to variable fonts; restore the crisper UWP-era family app-wide. -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
+    <FontFamily x:Key="TextControlThemeFontFamily">Segoe UI</FontFamily>
+
     <x:Double x:Key="AppCaptionFontSize">12</x:Double>
 
     <Style x:Key="AppSymbolIconStyle" TargetType="FontIcon">
@@ -333,7 +337,7 @@
     </Style>
 
     <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="XamlAutoFontFamily"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextTrimming" Value="None"/>

@@ -19,12 +19,14 @@ namespace Storylines.Views.Dialogs
         private readonly ProjectState _projectState;
         private readonly List<GlobalSearchResult> _quickActions;
         private readonly string _initialQuery;
+        private readonly WindowContext _windowContext;
 
         public GlobalSearchDialogue(string initialQuery = null)
         {
             InitializeComponent();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
+            _windowContext = App.GetService<WindowContext>();
             _initialQuery = initialQuery?.Trim();
 
             var resources = ResourceLoader.GetForViewIndependentUse();
@@ -170,14 +172,14 @@ namespace Storylines.Views.Dialogs
             Hide();
 
             var chapter = _projectState.Chapters[index];
-            if (AppView.current?.pagesView?.Content is Pages.MainPage && Pages.MainPage.ChapterList?.ViewModel != null)
+            if (_windowContext?.AppView?.pagesView?.Content is Pages.MainPage && _windowContext.ChapterList?.ViewModel != null)
             {
                 var textEditor = App.GetService<ITextEditorService>();
                 textEditor.SelectedChapterIndex = index;
-                Pages.MainPage.ChapterList.ViewModel.SelectedIndex = index;
+                _windowContext.ChapterList.ViewModel.SelectedIndex = index;
 
-                if (Pages.MainPage.ChapterList.listView != null)
-                    Pages.MainPage.ChapterList.listView.SelectedIndex = index;
+                if (_windowContext.ChapterList.listView != null)
+                    _windowContext.ChapterList.listView.SelectedIndex = index;
 
                 return;
             }

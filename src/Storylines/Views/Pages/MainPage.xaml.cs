@@ -10,6 +10,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Controls.Primitives;
 using Microsoft.UI.Xaml.Navigation;
 using Storylines.Models;
+using Storylines.Services.Modes;
 
 namespace Storylines.Views.Pages
 {
@@ -25,6 +26,7 @@ namespace Storylines.Views.Pages
 
         private readonly EventAggregator _events;
         private readonly MainPageViewModel _viewModel;
+        private readonly EditorModeService _modeService;
         private readonly WindowContext _windowContext;
         private string _pendingChapterToken;
 
@@ -43,6 +45,7 @@ namespace Storylines.Views.Pages
 
             _events = App.GetService<EventAggregator>();
             _viewModel = App.GetService<MainPageViewModel>();
+            _modeService = App.GetService<EditorModeService>();
 
             _windowContext.AppView.page = AppView.Pages.MainPage;
 
@@ -50,6 +53,7 @@ namespace Storylines.Views.Pages
             _events.Subscribe<ToggleChapterListEvent>(e => OpenOrCloseChapterList(e.Open, e.Manually));
             _events.Subscribe<RefreshNotesPaneEvent>(_ => RefreshNotesPane());
             _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+            _modeService.ModeChanged += ApplyModeSurfaceLayout;
 
             SizeChanged();
         }
@@ -92,6 +96,7 @@ namespace Storylines.Views.Pages
             ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
 
             LoadTextBoxZoom();
+            ApplyModeSurfaceLayout(_modeService.Current);
             RefreshFormattingCommandAvailability();
 
             if (Persistence.CurrentProject?.file != null)
@@ -182,11 +187,41 @@ namespace Storylines.Views.Pages
 
         public new void SizeChanged()
         {
-            OpenOrCloseChapterList(ActualWidth >= 800, false);
-            UpdateTextBoxZoom(textBoxZoomSlider.Value);
+            ApplyModeSurfaceLayout(_modeService.Current);
         }
 
-        public void OpenOrCloseChapterList(bool open, bool manually)
+        private void ApplyModeSurfaceLayout(IEditorMode mode)
+        {
+            ApplyChapterListLayout(mode);
+            ApplyEditorMargin(mode);
+        }
+
+        private void ApplyChapterListLayout(IEditorMode mode)
+        {
+            bool showChapterList = mode?.Chrome.ShowChapterList ?? true;
+            closeOpenChapterListComponent.Visibility = showChapterList ? Visibility.Visible : Visibility.Collapsed;
+
+            if (!showChapterList)
+            {
+                SetChapterListLayout(false);
+                return;
+            }
+
+            OpenOrCloseChapterList(ActualWidth >= 800, false);
+        }
+
+        private void ApplyEditorMargin(IEditorMode mode)
+        {
+            double edgeInset = ActualWidth >= 800 ? 20 : 8;
+            double topInset = edgeInset;
+
+            if (mode?.Chrome.OverlayContent != null)
+                topInset += mode.Id == "focus" ? 68 : 12;
+
+            chapterTextBoxMainPage.Margin = new Thickness(edgeInset, topInset, edgeInset, edgeInset);
+        }
+
+        private void SetChapterListLayout(bool open)
         {
             if (!open)
             {
@@ -194,21 +229,33 @@ namespace Storylines.Views.Pages
                 mainGrid.ColumnDefinitions[1].Width = new GridLength(0, GridUnitType.Pixel);
                 mainGrid.ColumnDefinitions[1].MinWidth = 0;
                 closeOpenChapterListComponentIcon.Symbol = Symbol.ClosePane;
+            }
+            else
+            {
+                chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
+                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
+                mainGrid.ColumnDefinitions[1].MinWidth = 220;
+                closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
+            }
+
+            UpdateTextBoxZoom(textBoxZoomSlider.Value);
+        }
+
+        public void OpenOrCloseChapterList(bool open, bool manually)
+        {
+            if (!open)
+            {
+                SetChapterListLayout(false);
 
                 if (!ChapterList.closedManually)
                     ChapterList.closedManually = manually;
             }
             else if (!ChapterList.closedManually || manually)
             {
-                chapterTextBoxMainPage.SetValue(Grid.ColumnSpanProperty, 1);
-                mainGrid.ColumnDefinitions[1].Width = new GridLength(1, GridUnitType.Star);
-                mainGrid.ColumnDefinitions[1].MinWidth = 220;
-                closeOpenChapterListComponentIcon.Symbol = Symbol.OpenPane;
+                SetChapterListLayout(true);
 
                 ChapterList.closedManually = false;
             }
-
-            UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 
         #region DownBar

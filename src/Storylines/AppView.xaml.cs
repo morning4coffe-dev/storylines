@@ -143,7 +143,7 @@ namespace Storylines
             if (modeSvc == null) return;
             // F11: toggle — leave focus if active, otherwise open mode picker
             if (modeSvc.IsInMode("focus"))
-                modeSvc.TryLeave();
+                TryExitActiveMode();
             else
                 App.GetService<Services.Interfaces.IDialogService>().OpenFocusMode();
         }
@@ -292,25 +292,36 @@ namespace Storylines
             }
             else
             {
-                var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
-                if (modeService != null && modeService.Current.Id != "edit")
-                {
-                    bool wasFinal = modeService.Current.CanLeave;
-                    if (wasFinal)
-                    {
-                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(true);
-                        modeService.Deactivate();
-                    }
-                    else
-                    {
-                        App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(false);
-                        _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
-                    }
-                }
+                TryExitActiveMode();
             }
 
             UpdateTitleBar();
             BackButtonCheck();
+        }
+
+        public bool TryExitActiveMode()
+        {
+            var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
+            if (modeService == null || modeService.Current.Id == "edit")
+                return true;
+
+            bool isFocusMode = modeService.IsInMode("focus");
+            if (modeService.Current.CanLeave)
+            {
+                if (isFocusMode)
+                    App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(true);
+
+                modeService.Deactivate();
+                UpdateTitleBar();
+                BackButtonCheck();
+                return true;
+            }
+
+            if (isFocusMode)
+                App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(false);
+
+            _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
+            return false;
         }
 
         private void OnNavigationTargetChanged(NavigationTarget target)

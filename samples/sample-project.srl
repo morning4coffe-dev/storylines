@@ -2,53 +2,68 @@
   "format": "json-v1",
   "version": "0.8.0.0",
   "name": "The Shattered Crown",
-  "lastOpenedChapter": 2,
+  "lastOpenedChapter": 0,
   "chapters": [
     {
       "id": "ch-prologue",
       "name": "Prologue – Embers",
-      "text": "The palace burned for three days. By the time the smoke cleared, the king was dead, the crown was missing, and the only witness was a girl who refused to speak.",
+      "text": "{\\rtf1\\fbidis\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil Segoe UI Variable;}}\r\n{\\colortbl ;\\red255\\green255\\blue255;}\r\n{\\*\\generator Riched20 3.2.0000}\\viewkind4\\uc1 \r\n\\pard\\tx720\\cf1\\f0\\fs21 The palace burned for three days. By the time the smoke cleared, the king was dead, the crown was missing, and the only witness was a girl who refused to speak.\\par\r\n}\r\n\u0000",
       "notes": "Establish the inciting event without over-explaining. Reader should feel dread, not know facts yet. Revisit pacing — might be too slow in the middle paragraph.",
       "synopsis": "The royal palace burns. King Aldric is found dead. His daughter Mira disappears from the scene and won't speak of what she saw.",
       "wordCountGoal": 800,
-      "tags": ["inciting-event", "flashback", "mystery"],
+      "tags": [
+        "inciting-event",
+        "flashback",
+        "mystery"
+      ],
       "pinboardX": 60.0,
       "pinboardY": 180.0,
-      "status": "Done",
       "location": "Caer Aldric – Throne Room",
-      "plotThreads": ["succession-crisis", "mira-arc"]
+      "plotThreads": [
+        "succession-crisis",
+        "mira-arc"
+      ]
     },
     {
       "id": "ch-001",
       "name": "Chapter 1 – The Courier",
       "text": "Sable had delivered bad news before, but never to a queen regent still holding a funeral wreath.",
+      "lastCaretPosition": 1842,
+      "lastVerticalOffset": 430.0,
       "notes": "Introduce Sable's voice early — dry, observational, slightly cynical. The wreath detail is good, keep it. Need a stronger beat at the end of the scene.",
       "synopsis": "Courier Sable arrives at the regency court with a sealed letter that implicates the High Steward in the king's death. Queen Regent Lena refuses to open it publicly.",
       "wordCountGoal": 2500,
-      "tags": ["introduction", "political-intrigue"],
-      "pinboardX": 220.0,
-      "pinboardY": 100.0,
-      "status": "Done",
+      "tags": [
+        "introduction",
+        "political-intrigue"
+      ],
+      "pinboardX": 338.0,
+      "pinboardY": 37.0,
       "location": "Caer Aldric – Audience Hall",
-      "plotThreads": ["succession-crisis", "sable-arc"],
-      "lastCaretPosition": 1842,
-      "lastVerticalOffset": 430.0
+      "plotThreads": [
+        "succession-crisis",
+        "sable-arc"
+      ]
     },
     {
       "id": "ch-002",
       "name": "Chapter 2 – Salt and Stone",
-      "text": "The tunnels beneath the city hadn't appeared on any official map since the Interregnum. Mira had memorised them anyway.",
+      "text": "{\\rtf1\\fbidis\\ansi\\ansicpg1252\\deff0\\nouicompat\\deflang2057{\\fonttbl{\\f0\\fnil Segoe UI;}}\r\n{\\colortbl ;\\red255\\green255\\blue255;}\r\n{\\*\\generator Riched20 3.2.0000}\\viewkind4\\uc1 \r\n\\pard\\tx720\\cf1\\f0\\fs21 The tunnels beneath the city hadn't appeared on any official map since the Interregnum. Mira had memorised them anyway.\\par\r\n}\r\n\u0000",
       "notes": "This chapter carries a lot of world-building weight — trim the history exposition in the second section. The Mira/Sable first meeting should feel accidental and tense, not convenient.",
       "synopsis": "Mira, hiding in the undercity, intercepts Sable after the audience-hall meeting. She reveals she witnessed the murder and names a suspect Sable doesn't believe.",
       "wordCountGoal": 3000,
-      "tags": ["world-building", "alliance-forming"],
-      "pinboardX": 380.0,
-      "pinboardY": 180.0,
-      "status": "InProgress",
+      "tags": [
+        "world-building",
+        "alliance-forming"
+      ],
+      "pinboardX": 620.0,
+      "pinboardY": 68.0,
       "location": "Caer Aldric – Undercity",
-      "plotThreads": ["succession-crisis", "mira-arc", "sable-arc"],
-      "lastCaretPosition": 412,
-      "lastVerticalOffset": 90.0
+      "plotThreads": [
+        "succession-crisis",
+        "mira-arc",
+        "sable-arc"
+      ]
     },
     {
       "id": "ch-003",
@@ -57,12 +72,17 @@
       "notes": "Sable confronts the High Steward indirectly — through a proxy, a social call. The reader should know what's really happening before Sable says anything explicit. Consider making the steward likeable here so the later reveal lands harder.",
       "synopsis": "Sable attends a reception hosted by High Steward Draven, probing for a reaction. Draven is charming and seemingly unthreatened, which unnerves Sable more than guilt would.",
       "wordCountGoal": 2200,
-      "tags": ["tension", "character-study"],
-      "pinboardX": 540.0,
-      "pinboardY": 100.0,
-      "status": "Draft",
+      "tags": [
+        "tension",
+        "character-study"
+      ],
+      "pinboardX": 905.0,
+      "pinboardY": 43.0,
       "location": "Draven's Estate – Garden Terrace",
-      "plotThreads": ["succession-crisis", "sable-arc"]
+      "plotThreads": [
+        "succession-crisis",
+        "sable-arc"
+      ]
     },
     {
       "id": "ch-004",
@@ -71,12 +91,17 @@
       "notes": "Placeholder — this is where the second act pivot lives. Mira must make a public choice. Don't resolve the tension; complicate it.",
       "synopsis": "TBD — Mira is pressured to appear at the coronation rehearsal to legitimise Lena's regency. She agrees, planning to use the moment to expose Draven. Things go wrong.",
       "wordCountGoal": 3500,
-      "tags": ["set-piece", "turning-point"],
-      "pinboardX": 540.0,
-      "pinboardY": 310.0,
-      "status": "Draft",
+      "tags": [
+        "set-piece",
+        "turning-point"
+      ],
+      "pinboardX": 784.0,
+      "pinboardY": 396.0,
       "location": "Caer Aldric – Great Hall",
-      "plotThreads": ["succession-crisis", "mira-arc"]
+      "plotThreads": [
+        "succession-crisis",
+        "mira-arc"
+      ]
     }
   ],
   "characters": [
@@ -87,10 +112,21 @@
       "role": "Protagonist",
       "age": "31",
       "appearance": "Lean, dark-complexioned, with close-cropped hair and a scar across the left eyebrow from a job that went badly three years ago. Dresses for utility, not fashion.",
-      "traits": ["resourceful", "sardonic", "loyal under pressure", "distrustful of institutions"],
+      "traits": [
+        "resourceful",
+        "sardonic",
+        "loyal under pressure",
+        "distrustful of institutions"
+      ],
       "relationships": [
-        { "targetName": "Mira Aldric", "type": "Reluctant ally" },
-        { "targetName": "Draven", "type": "Suspect / adversary" }
+        {
+          "targetName": "Mira Aldric",
+          "type": "Reluctant ally"
+        },
+        {
+          "targetName": "Draven",
+          "type": "Suspect / adversary"
+        }
       ]
     },
     {
@@ -100,10 +136,21 @@
       "role": "Deuteragonist",
       "age": "17",
       "appearance": "Small for her age, with her father's grey eyes. Prefers dark, plain clothing that lets her go unnoticed. Always has ash under her fingernails — old habit from hiding near the palace furnaces as a child.",
-      "traits": ["observant", "guarded", "quietly determined", "prone to catastrophising"],
+      "traits": [
+        "observant",
+        "guarded",
+        "quietly determined",
+        "prone to catastrophising"
+      ],
       "relationships": [
-        { "targetName": "Sable Vane", "type": "Reluctant ally" },
-        { "targetName": "Draven", "type": "Witness against / feared by" }
+        {
+          "targetName": "Sable Vane",
+          "type": "Reluctant ally"
+        },
+        {
+          "targetName": "Draven",
+          "type": "Witness against / feared by"
+        }
       ]
     },
     {
@@ -113,19 +160,50 @@
       "role": "Antagonist",
       "age": "54",
       "appearance": "Tall, silver-haired, immaculately dressed. Has the kind of face that looks trustworthy in portraits. Warm handshake. Never raises his voice.",
-      "traits": ["methodical", "politically brilliant", "charming", "ruthless when necessary"],
+      "traits": [
+        "methodical",
+        "politically brilliant",
+        "charming",
+        "ruthless when necessary"
+      ],
       "relationships": [
-        { "targetName": "Sable Vane", "type": "Unaware threat" },
-        { "targetName": "Mira Aldric", "type": "Loose end to be managed" }
+        {
+          "targetName": "Sable Vane",
+          "type": "Unaware threat"
+        },
+        {
+          "targetName": "Mira Aldric",
+          "type": "Loose end to be managed"
+        }
       ]
     }
   ],
   "pinboardConnections": [
-    { "from": 0, "to": 1, "label": "sets stakes" },
-    { "from": 1, "to": 2, "label": "leads directly to" },
-    { "from": 2, "to": 3, "label": "Sable follows up" },
-    { "from": 2, "to": 4, "label": "Mira forced into the open" },
-    { "from": 0, "to": 4, "label": "prologue mystery resolved here" }
+    {
+      "from": 0,
+      "to": 1,
+      "label": "sets stakes"
+    },
+    {
+      "from": 1,
+      "to": 2,
+      "label": "leads directly to"
+    },
+    {
+      "from": 2,
+      "to": 3,
+      "label": "Sable follows up"
+    },
+    {
+      "from": 2,
+      "to": 4,
+      "label": "Mira forced into the open"
+    },
+    {
+      "from": 0,
+      "to": 4,
+      "label": "prologue mystery resolved here"
+    }
   ],
   "plotThreads": [
     "succession-crisis",

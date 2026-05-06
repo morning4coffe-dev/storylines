@@ -19,7 +19,7 @@
         <StackPanel x:Name="generalPage"
                 Margin="16,16,16,24"
                 Spacing="10"
-                    HorizontalAlignment="Stretch"
+                    HorizontalAlignment="Center"
                     MaxWidth="1000">
             <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>

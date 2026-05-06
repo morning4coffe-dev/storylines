@@ -1332,7 +1332,7 @@
     <value>Enable experimental features</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Unlock features still in development, such as title bar global search and branching dialogue.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Story Canvas</value>

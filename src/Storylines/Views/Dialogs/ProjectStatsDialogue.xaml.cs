@@ -22,6 +22,7 @@ namespace Storylines.Views.Dialogs
     public sealed partial class ProjectStatsDialogue : StorylinesContentDialog
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
+        private static WindowContext WindowContext => App.GetService<WindowContext>();
 
         public ProjectStatsDialogue()
         {
@@ -47,7 +48,9 @@ namespace Storylines.Views.Dialogs
         {
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
 
-            RichEditBox textBox = MainPage.ChapterText.textBox;
+            var textBox = WindowContext.ChapterText?.textBox;
+            if (textBox == null)
+                return;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
 

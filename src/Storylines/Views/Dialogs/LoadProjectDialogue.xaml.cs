@@ -83,8 +83,8 @@ namespace Storylines.Views.Dialogs
             Persistence.CurrentProject = new ProjectFile();
             Persistence.CurrentProject.projectName = "Project with no name";
 
-            Pages.MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
-            WindowContext.AppView.ClearEverything();
+            WindowContext.MainPage?.EnableOrDisableToolsForStorylinesDocuments(true);
+            WindowContext.AppView?.ClearEverything();
             TimeTravelSystem.unSavedProgress = false;
         }
 

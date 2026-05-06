@@ -25,8 +25,11 @@ namespace Storylines.Views.Pages
 
         private void OnSettingsNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            var item = args.SelectedItem as NavigationViewItem;
-            SwitchPage(item.Tag.ToString());
+            if (args.SelectedItemContainer is not NavigationViewItem item || item.Tag is not string tag)
+                return;
+
+            aboutPageItem.IsSelected = false;
+            SwitchPage(tag);
         }
 
         public void SwitchPage(string tag)
@@ -46,7 +49,20 @@ namespace Storylines.Views.Pages
 
         private void OnAboutPageItem_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            settingsNavigationView.SelectedItem = aboutPageItem;
+            SelectAboutPage();
+        }
+
+        private void SelectAboutPage()
+        {
+            if (contentFrame.CurrentSourcePageType == typeof(AboutPage) && aboutPageItem.IsSelected)
+                return;
+
+            foreach (var menuItem in settingsNavigationView.MenuItems)
+                if (menuItem is NavigationViewItem navigationViewItem)
+                    navigationViewItem.IsSelected = false;
+
+            aboutPageItem.IsSelected = true;
+            SwitchPage("About");
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -75,7 +91,7 @@ namespace Storylines.Views.Pages
             var item = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement();
             if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
                 if (item is NavigationViewItem && (item as NavigationViewItem).Tag.ToString() == "About")
-                    settingsNavigationView.SelectedItem = aboutPageItem;
+                    SelectAboutPage();
         }
     }
 }

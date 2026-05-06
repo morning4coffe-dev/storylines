@@ -1082,14 +1082,14 @@
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton x:Name="readOnlyModeButton"
-                                  x:Uid="ReadOnlyMode"
-                                  CornerRadius="4"
-                                  Command="{x:Bind ViewModel.OpenReadOnlyModeCommand}">
-                        <AppBarButton.Icon>
+                    <AppBarToggleButton x:Name="readOnlyModeButton"
+                                        x:Uid="ReadOnlyMode"
+                                        CornerRadius="4"
+                                        Click="OnReadOnlyModeButton_Click">
+                        <AppBarToggleButton.Icon>
                             <FontIcon Glyph="&#xE8A5;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
 
                     <AppBarToggleButton x:Name="typewriterModeButton"
                                         x:Uid="typewriterModeButton"

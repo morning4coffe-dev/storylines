@@ -23,6 +23,7 @@ namespace Storylines.Views.Pages
         private INavigationService Navigation => App.GetService<INavigationService>();
         private ProjectState ProjectState => App.GetService<ProjectState>();
         private ITextEditorService TextEditor => App.GetService<ITextEditorService>();
+        private readonly WindowContext _windowContext;
 
         private const double CardWidth = 200;
         private const double CardHeight = 180;
@@ -49,12 +50,14 @@ namespace Storylines.Views.Pages
 
         public StoryPinboardPage()
         {
+            _windowContext = App.GetService<WindowContext>();
             InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            AppView.current.page = AppView.Pages.MainPage;
+            if (_windowContext?.AppView != null)
+                _windowContext.AppView.page = AppView.Pages.MainPage;
 
             _allChapters = ProjectState.Chapters;
             _activeTagFilter = null;
@@ -698,8 +701,8 @@ namespace Storylines.Views.Pages
             Navigation.GoBack();
             TextEditor.SelectedChapterIndex = index;
 
-            if (MainPage.ChapterList?.listView != null)
-                MainPage.ChapterList.listView.SelectedIndex = index;
+            if (_windowContext?.ChapterList?.listView != null)
+                _windowContext.ChapterList.listView.SelectedIndex = index;
         }
 
         // ─── Connect mode ─────────────────────────────────────────────
@@ -845,13 +848,6 @@ namespace Storylines.Views.Pages
 
             TimeTravelSystem.SomethingChanged();
             RebuildCanvas();
-        }
-
-        // ─── Back navigation ──────────────────────────────────────────
-
-        private void OnBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.GoBack();
         }
     }
 }

@@ -19,10 +19,10 @@
     <AppxAutoIncrementPackageRevision>False</AppxAutoIncrementPackageRevision>
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm64</AppxBundlePlatforms>
-    <AppxPackageSigningEnabled>True</AppxPackageSigningEnabled>
-    <PackageCertificateThumbprint>D4EBFFDC03CE9332A9F186870CEDE6DAFE74FBE8</PackageCertificateThumbprint>
+    <AppxSymbolPackageEnabled>False</AppxSymbolPackageEnabled>
+    <AppxPackageSigningEnabled>False</AppxPackageSigningEnabled>
     <AppxPackageSigningTimestampDigestAlgorithm>SHA256</AppxPackageSigningTimestampDigestAlgorithm>
-    <GenerateTemporaryStoreCertificate>True</GenerateTemporaryStoreCertificate>
+    <GenerateTemporaryStoreCertificate>False</GenerateTemporaryStoreCertificate>
     <AppxPackageDir>bin\AppPackages\</AppxPackageDir>
     <GenerateAssemblyInfo>true</GenerateAssemblyInfo>
     <Company>Morning4coffe</Company>
@@ -43,6 +43,8 @@
     <MultilingualFallbackLanguage>en</MultilingualFallbackLanguage>
     <TranslationReport Condition="'$(Configuration)' == 'Release'">true</TranslationReport>
     <SuppressPseudoWarning Condition="'$(Configuration)' == 'Debug'">true</SuppressPseudoWarning>
+    <GenerateTestArtifacts>True</GenerateTestArtifacts>
+    <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
   </PropertyGroup>
 
   <ItemGroup>
@@ -62,7 +64,6 @@
 
   <ItemGroup>
     <Content Include="Assets\**" />
-    <None Include="Package.StoreAssociation.xml" />
   </ItemGroup>
 
   <ItemGroup>
@@ -72,18 +73,11 @@
     <XliffResource Include="MultilingualResources\Storylines.zh-CN.xlf" />
   </ItemGroup>
 
-    <Import Project="$(StorylinesPluginImportPattern)"
-      Condition="'$(EnableLocalStorylinesPlugins)' != 'false'
-           AND '$(StorylinesPluginImportPattern)' != ''
-           AND Exists('$(StorylinesPluginSearchRoot)')" />
+    <Import Project="$(StorylinesPluginImportPattern)" Condition="'$(EnableLocalStorylinesPlugins)' != 'false'&#xD;&#xA;           AND '$(StorylinesPluginImportPattern)' != ''&#xD;&#xA;           AND Exists('$(StorylinesPluginSearchRoot)')" />
 
-  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets"
-          Label="MultilingualAppToolkit"
-          Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
 
-  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild"
-          Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets')"
-          Label="MultilingualAppToolkit">
+  <Target Name="MATPrerequisite" BeforeTargets="PrepareForBuild" Condition="!Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets')" Label="MultilingualAppToolkit">
     <Warning Text="$(MSBuildProjectFile) is Multilingual build enabled, but the Multilingual App Toolkit is unavailable during the build." />
   </Target>
 

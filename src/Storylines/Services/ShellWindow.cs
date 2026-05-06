@@ -27,6 +27,7 @@ namespace Storylines.Services
         public void Initialize()
         {
             var rootFrame = new Frame();
+            rootFrame.UseLayoutRounding = true;
             _context.RootElement = rootFrame;
             Content = rootFrame;
 

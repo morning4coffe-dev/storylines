@@ -2,10 +2,11 @@
 
 ## Architecture
 
-**Platform**: UWP (Universal Windows Platform) — `TargetPlatformVersion` 10.0.26100.0, min 10.0.18362.0  
+**Platform**: WinUI 3 on Windows App SDK — `TargetFramework` `net9.0-windows10.0.22621.0`, min Windows 10 1903 (`10.0.18362.0`)  
 **Pattern**: MVVM with `CommunityToolkit.Mvvm` (`ObservableObject`, `RelayCommand`)  
 **Inter-component communication**: `EventAggregator` (publish/subscribe, not direct references)  
-**Service wiring**: Static `ServiceLocator` (see `Services/ServiceLocator.cs`)  
+**Service wiring**: Dependency injection via `ServiceConfiguration.Configure()` with singleton/scoped lifetimes  
+**Windowing**: `IWindowManager` + `WindowContext` for multi-window state; prefer `WindowContext` in view/control code  
 **Serialization**: JSON (primary) with legacy `.srl` fallback via `ISaveSerializer`
 
 ### Key folders
@@ -13,16 +14,17 @@
 | Folder | Purpose |
 |--------|---------|
 | `Models/` | Data models — `Chapter`, `Character`, `ProjectData`, `ProjectState`, `ProjectFile` |
-| `ViewModels/` | MVVM ViewModels bound to pages/controls |
+| `ViewModels/` | MVVM ViewModels bound to pages/controls, plus `Settings/` and `Modes/` subfolders |
 | `Views/Pages/` | Top-level navigation pages |
 | `Views/Pages/Settings/` | Settings sub-pages |
 | `Views/Controls/` | Reusable XAML UserControls |
 | `Views/Dialogs/` | ContentDialog windows |
-| `Services/` | Services — `SaveSystem`, `EventAggregator`, `FileService`, `NavigationService`, `ExportSystem` |
+| `Services/` | App and window-scoped services — `ProjectPersistenceService`, `DialogService`, `NavigationService`, `ShellService`, `WindowManager` |
 | `Services/Interfaces/` | Service interfaces |
+| `Services/Modes/` | Editor mode orchestration and mode implementations |
+| `Services/Persistence/` | Document/project persistence handlers |
 | `Services/Serializers/` | Save file serializers (`JsonSaveSerializer`, `LegacySrlSerializer`) |
 | `Helpers/` | Stateless helpers — `TimeTravelSystem`, `TextHighlighter`, `ShortcutManager` |
-| `Helpers/Modes/` | UI modes — `FocusMode`, `ReadMode` |
 | `DataStructures/` | Generic data structures — `PartialStack<T>` |
 | `Constants/` | Named constants (`LayoutConstants`) |
 | `Converters/` | XAML value converters |
@@ -39,7 +41,9 @@ msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug
 dotnet test src/Storylines.Tests/Storylines.Tests.csproj --platform x64
 ```
 
-Requires **Visual Studio 2019+** with the **Universal Windows Platform development** workload.
+If you are working in the multi-repo private-plugin workspace, prefer `../storylines-dialogue-plugin/scripts/Invoke-StorylinesBuild.ps1` because it resolves `MSBuild.exe` explicitly.
+
+Requires **Visual Studio 2022+** with the **.NET desktop development** and **Windows application development** workloads. The command-line flow also expects the .NET 9 SDK from `global.json`.
 
 ## Code Style
 
@@ -48,8 +52,9 @@ Requires **Visual Studio 2019+** with the **Universal Windows Platform developme
 - `private readonly` fields — `_camelCase` prefix
 - Constants in `LayoutConstants` or as `const` members — never magic numbers in XAML code-behind
 - ViewModels inherit `ObservableObject`; use `[ObservableProperty]` or `SetProperty()`
+- In view/control code, use `WindowContext` or `IWindowManager` for per-window state instead of static page singletons
 - No `async void` except event handlers
-- Log errors via `ServiceLocator.Logger.Error(message, exception)`
+- Log errors via injected `ILogger`; fall back to `App.GetService<ILogger>()` only when constructor injection is not practical
 
 ## Localization
 
@@ -117,8 +122,8 @@ Follow the [WinUI / Fluent Design System](https://learn.microsoft.com/en-us/wind
 ## Adding a New Feature
 
 1. **Model** → Add/modify classes in `Models/`
-2. **Service** → Add interface in `Services/Interfaces/`, implement in `Services/`, register in `ServiceLocator.Initialize()`
-3. **ViewModel** → Add/modify in `ViewModels/`, register in `ServiceLocator` if shared
-4. **View** → XAML in `Views/Pages/`, `Views/Controls/`, or `Views/Dialogs/`, bind to ViewModel via `DataContext`
+2. **Service** → Add interface in `Services/Interfaces/`, implement in `Services/`, register in `ServiceConfiguration.Configure()`
+3. **ViewModel** → Add/modify in `ViewModels/`, register with the appropriate lifetime in `ServiceConfiguration.Configure()` when needed
+4. **View** → XAML in `Views/Pages/`, `Views/Controls/`, or `Views/Dialogs/`, bind to ViewModel via `DataContext`, and use `WindowContext` for window-scoped access
 5. **Localize** → Add all strings via `x:Uid` + `.resw` entries (see Localization section)
 6. **Test** → Add unit tests in `Storylines.Tests/`

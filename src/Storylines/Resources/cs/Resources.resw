@@ -1015,49 +1015,49 @@ na tlačítko "Přidat novou postavu".</value>
     <value>A-Z</value>
   </data>
   <data name="autosave.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Autosave (adjust interval in Settings &gt; General)</value>
+    <value>Automatické ukládání (interval upravíte v Nastavení &gt; Obecné)</value>
   </data>
   <data name="byChapterText.Text" xml:space="preserve">
-    <value>By chapter</value>
+    <value>Podle kapitoly</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>Vzhled a vizuální poznámky</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>Ukázkové repliky</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>Náhled dialogů zatím není k dispozici. Přidejte do kapitoly několik replik a zobrazí se zde.</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>Zatím nebyly nalezeny žádné dialogové repliky.</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>Objevuje se v {0} kapitolách a má {1} dialogových replik.</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>Využití v dialozích</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>Hledat postavy</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>Žádné postavy neodpovídají vašemu hledání.</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>Vlastnosti (oddělené čárkou)</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>Denní cíl slov</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>Sledujte svůj denní postup v psaní. Nastavte 0 pro vypnutí.</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>Všechny postavy</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>Žádné postavy neodpovídají tomuto hledání.</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ k výběru · Enter k potvrzení · Esc k zavření</value>
@@ -1069,31 +1069,31 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Stiskněte Enter při psaní pro rychlé vložení dialogových řádků postav. Šipkami ↑↓ vyberte postavu a potvrďte klávesou Enter. Dialogy lze také převést na větvené uzly.</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>Nedávné</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>Najít postavu</value>
   </data>
   <data name="editorFontFamilySetting.Text" xml:space="preserve">
-    <value>Font family</value>
+    <value>Rodina písma</value>
   </data>
   <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
-    <value>Default font used for new text in the editor.</value>
+    <value>Výchozí písmo použité pro nový text v editoru.</value>
   </data>
   <data name="editorFontSizeSetting.Text" xml:space="preserve">
-    <value>Font size</value>
+    <value>Velikost písma</value>
   </data>
   <data name="githubBannerDescription.Text" xml:space="preserve">
-    <value>Click here to give Storylines a Star on GitHub</value>
+    <value>To se počítá! Klikněte sem a dejte Storylines hvězdu na GitHubu</value>
   </data>
   <data name="githubBannerTitle.Text" xml:space="preserve">
-    <value>GitHub Stars Count</value>
+    <value>Počet oblíbení na GitHubu</value>
   </data>
   <data name="min" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>Untitled</value>
+    <value>Bez názvu</value>
   </data>
   <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
     <value>Auto-arrange</value>
@@ -1114,13 +1114,13 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Manage Your Subscriptions</value>
   </data>
   <data name="textEditorSetting.Text" xml:space="preserve">
-    <value>Text Editor</value>
+    <value>Textový editor</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>Nedávné projekty</value>
   </data>
   <data name="writingGoalSetting.Text" xml:space="preserve">
-    <value>Writing Goal</value>
+    <value>Cíl psaní</value>
   </data>
   <data name="zToA.Text" xml:space="preserve">
     <value>Z-A</value>
@@ -1185,13 +1185,13 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Spustit režim</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>Experimentální</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>Povolit experimentální funkce</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Odemkne funkce, které jsou stále ve vývoji, například globální hledání v záhlaví a větvené dialogy.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Příběhové plátno</value>
@@ -1200,13 +1200,13 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Psací podněty</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} dialogových uzlů</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>Zobrazit v editoru dialogů</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>Obsahuje větvený dialog</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>Tučné</value>
@@ -1285,10 +1285,10 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="saveProjectName" xml:space="preserve"><value>Název projektu:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O královně koblih"</value></data>
   <data name="projectStatistics.Text" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Statistiky projektu</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
-    <value>Word frequency</value>
+    <value>Frekvence slov</value>
   </data>
   <data name="projectFileInfoButton.Label" xml:space="preserve">
     <value>Informace o souboru</value>

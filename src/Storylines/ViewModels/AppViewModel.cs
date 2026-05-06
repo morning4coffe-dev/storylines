@@ -27,6 +27,9 @@ namespace Storylines.ViewModels
         private bool _isBackButtonEnabled;
 
         [ObservableProperty]
+        private Visibility _titleBarSearchVisibility = Visibility.Collapsed;
+
+        [ObservableProperty]
         private AppPages _currentPage;
 
         public enum AppPages { Settings, Characters, MainPage }
@@ -43,7 +46,23 @@ namespace Storylines.ViewModels
             _editedString = resources.GetString("appHeaderEdited");
             SearchText = resources.GetString("shortcutSearch");
             events.Subscribe<TitleBarUpdateEvent>(_ => UpdateTitleBar());
+            events.Subscribe<SettingChangedEvent>(OnSettingChanged);
+
+            UpdateExperimentalVisibility();
             UpdateTitleBar();
+        }
+
+        private void OnSettingChanged(SettingChangedEvent e)
+        {
+            if (e.SettingKey == SettingsValueStrings.ExperimentalFeaturesEnabled)
+                UpdateExperimentalVisibility();
+        }
+
+        private void UpdateExperimentalVisibility()
+        {
+            TitleBarSearchVisibility = SettingsValues.experimentalFeaturesEnabled
+                ? Visibility.Visible
+                : Visibility.Collapsed;
         }
 
         public void UpdateTitleBar()

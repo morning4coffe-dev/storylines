@@ -15,6 +15,7 @@ using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Storylines.Views.Dialogs;
+using Storylines.Services.Modes;
 
 namespace Storylines.Views.Controls
 {
@@ -26,12 +27,17 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
         private readonly CommandBarViewModel _viewModel;
+        private readonly EditorModeService _modeService;
         private readonly SpeechHubViewModel _speechHub;
         private readonly ISpeechService _speechService;
         private readonly WindowContext _windowContext;
 
         public CommandBarViewModel ViewModel => _viewModel;
         public SpeechHubViewModel SpeechHub => _speechHub;
+
+        private MainPage CurrentMainPage => _windowContext?.MainPage;
+
+        private ChapterTextBox CurrentChapterText => _windowContext?.ChapterText;
 
         public MainCommandBar()
         {
@@ -43,6 +49,7 @@ namespace Storylines.Views.Controls
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
             _viewModel = App.GetService<CommandBarViewModel>();
+            _modeService = App.TryGetService<EditorModeService>();
             _speechHub = App.GetService<SpeechHubViewModel>();
             _speechService = App.GetService<ISpeechService>();
 
@@ -57,6 +64,12 @@ namespace Storylines.Views.Controls
             var events = App.GetService<EventAggregator>();
             events.Subscribe<SettingChangedEvent>(OnSettingChanged);
             events.Subscribe<TextFormattingStateChangedEvent>(OnTextFormattingStateChanged);
+
+            if (_modeService != null)
+            {
+                _modeService.ModeChanged += UpdateModeButtonStates;
+                UpdateModeButtonStates(_modeService.Current);
+            }
 
             // Restore persisted dialogue mode state
             dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
@@ -74,6 +87,12 @@ namespace Storylines.Views.Controls
             mainItalicButton.IsChecked = e.IsItalic;
             mainUnderlineButton.IsChecked = e.IsUnderlined;
             mainStrikethroughButton.IsChecked = e.IsStrikethrough;
+        }
+
+        private void UpdateModeButtonStates(IEditorMode mode)
+        {
+            if (readOnlyModeButton != null)
+                readOnlyModeButton.IsChecked = mode?.Id == "readonly";
         }
 
         private void UpdateExperimentalFeaturesVisibility()
@@ -146,12 +165,12 @@ namespace Storylines.Views.Controls
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
+            CurrentChapterText?.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
         }
 
         private void OnDialoguesAddButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.AddDialogue();
+            CurrentChapterText?.AddDialogue();
         }
 
         private void OnBranchingDialogueButton_Click(object sender, RoutedEventArgs e)
@@ -181,22 +200,25 @@ namespace Storylines.Views.Controls
         #region FORMAT
         private void OnFormatterButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentChapterText == null)
+                return;
+
             switch ((sender as Control).Tag?.ToString())
             {
                 case "Bold":
-                    MainPage.ChapterText.BoldChapterTextBox();
+                    CurrentChapterText.BoldChapterTextBox();
                     break;
                 case "Italic":
-                    MainPage.ChapterText.ItalicChapterTextBox();
+                    CurrentChapterText.ItalicChapterTextBox();
                     break;
                 case "Underline":
-                    MainPage.ChapterText.UnderlineChapterTextBox();
+                    CurrentChapterText.UnderlineChapterTextBox();
                     break;
                 case "Strikethrough":
-                    MainPage.ChapterText.StrikethroughChapterTextBox();
+                    CurrentChapterText.StrikethroughChapterTextBox();
                     break;
                 case "Highlighter":
-                    MainPage.ChapterText.MarkTextBackground();
+                    CurrentChapterText.MarkTextBackground();
                     break;
             }
         }
@@ -212,7 +234,7 @@ namespace Storylines.Views.Controls
         private void OnHighlighterColorButton_Click(object sender, RoutedEventArgs e)
         {
             TextHighlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
-            MainPage.ChapterText.MarkTextBackground();
+            CurrentChapterText?.MarkTextBackground();
             mainHighlighterFlyout.Hide();
         }
 
@@ -248,19 +270,19 @@ namespace Storylines.Views.Controls
         }
 
         private void OnFormattingSurface_GotFocus(object sender, RoutedEventArgs e)
-            => MainPage.Current?.SetTextFormattingContextActive(true);
+            => CurrentMainPage?.SetTextFormattingContextActive(true);
 
         private void OnFormattingSurface_LostFocus(object sender, RoutedEventArgs e)
         {
             var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
             if (IsFormattingContextElement(focused)
-                || (MainPage.ChapterText?.IsFormattingContextElement(focused) ?? false))
+                || (CurrentChapterText?.IsFormattingContextElement(focused) ?? false))
             {
-                MainPage.Current?.SetTextFormattingContextActive(true);
+                CurrentMainPage?.SetTextFormattingContextActive(true);
                 return;
             }
 
-            MainPage.Current?.SetTextFormattingContextActive(false);
+            CurrentMainPage?.SetTextFormattingContextActive(false);
         }
 
         private static bool IsChildOf(DependencyObject child, DependencyObject parent)
@@ -281,25 +303,36 @@ namespace Storylines.Views.Controls
         #region VIEW
         private void OnTypewriterModeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
+            if (CurrentChapterText != null)
+                CurrentChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
 
             if (_textEditor.SelectedChapterIndex >= 0)
                 _textEditor.Focus();
         }
 
         private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
-            => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);
+            => CurrentMainPage?.ToggleNotesPane(notesToggleButton.IsChecked == true);
 
         private void OnSearchReplaceButton_Click(object sender, RoutedEventArgs e)
         {
             if (searchReplaceButton.IsChecked == true)
-                MainPage.ChapterText.OpenSearchAndReplace();
+                CurrentChapterText?.OpenSearchAndReplace();
             else
-                MainPage.ChapterText.CloseSearchAndReplace();
+                CurrentChapterText?.CloseSearchAndReplace();
         }
 
         private void OnPinboardButton_Click(object sender, RoutedEventArgs e)
             => _navigation.NavigateTo(Services.Interfaces.NavigationTarget.Pinboard);
+
+        private void OnReadOnlyModeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_modeService?.IsInMode("readonly") == true)
+                _windowContext.AppView?.TryExitActiveMode();
+            else
+                ViewModel.OpenReadOnlyModeCommand.Execute(null);
+
+            UpdateModeButtonStates(_modeService?.Current);
+        }
 
         private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
             => _ = GlobalSearchDialogue.OpenAsync();
@@ -310,7 +343,6 @@ namespace Storylines.Views.Controls
 
         #region HELP
         #region ReadAloud
-        private DispatcherTimer timer;
         private CancellationTokenSource _readAloudCts;
         private List<string> _paragraphs;
         private int _currentParagraphIndex;
@@ -318,6 +350,7 @@ namespace Storylines.Views.Controls
 
         private void OnReadAloudButton_Click(object sender, RoutedEventArgs e)
         {
+            //TODO 
             //var speechText = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
             //if (string.IsNullOrWhiteSpace(speechText))
             //    return;

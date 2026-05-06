@@ -141,6 +141,9 @@ Write your stories with either your keyboard, touch, voice, or a pen</value>
     <value>Storylines</value>
     <comment>NOT FOR TRANSLATION</comment>
   </data>
+  <data name="PageTitle" xml:space="preserve">
+    <value>Storylines</value>
+  </data>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>

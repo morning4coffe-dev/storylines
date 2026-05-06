@@ -214,6 +214,18 @@ namespace Storylines.ViewModels
         {
             if (_textEditor == null) return;
 
+            var selectedIndex = _textEditor.SelectedChapterIndex;
+            if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
+            {
+                DownBarWordsText = string.Empty;
+                DownBarCharsText = string.Empty;
+                DownBarReadTimeText = string.Empty;
+                DownBarChapterName = string.Empty;
+                DownBarSeparatorsVisibility = Visibility.Collapsed;
+                DownBarText = _resources.GetString("downBarTextS");
+                return;
+            }
+
             string text = _textEditor.GetText(TextFormat.PlainText);
             int charCount = text.Length > 0 ? text.Length - 1 : 0;
             int wordCount = text.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
@@ -227,9 +239,7 @@ namespace Storylines.ViewModels
             DownBarCharsText = $"{_resources.GetString("charactersStory")}: {selectedPrefix}{charCount}";
             DownBarReadTimeText = $"~{readMinutes} {_resources.GetString("readTimeMinRead")}";
 
-            var selectedIndex = _textEditor.SelectedChapterIndex;
-            if (selectedIndex >= 0 && selectedIndex < _projectState.Chapters.Count)
-                DownBarChapterName = _projectState.Chapters[selectedIndex].Name;
+            DownBarChapterName = _projectState.Chapters[selectedIndex].Name;
 
             int paragraphCount = Regex.Matches(text,
                 @"[^\r\n]*[^ \r\n]+[^\r\n]*((\r|\n|\r\n)[^\r\n]*[^ \r\n]+[^\r\n]*)*").Count;
