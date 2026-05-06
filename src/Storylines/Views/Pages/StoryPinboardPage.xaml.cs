@@ -1,3 +1,4 @@
+using Microsoft.UI;
 using Storylines.Services;
 using Storylines.Models;
 using System;
@@ -7,11 +8,11 @@ using System.Linq;
 using Windows.Foundation;
 using Windows.ApplicationModel.Resources;
 using Windows.UI;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
-using Windows.UI.Xaml.Shapes;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
+using Microsoft.UI.Xaml.Shapes;
 using Storylines.Helpers;
 using Storylines.Services.Interfaces;
 
@@ -22,6 +23,7 @@ namespace Storylines.Views.Pages
         private INavigationService Navigation => App.GetService<INavigationService>();
         private ProjectState ProjectState => App.GetService<ProjectState>();
         private ITextEditorService TextEditor => App.GetService<ITextEditorService>();
+        private readonly WindowContext _windowContext;
 
         private const double CardWidth = 200;
         private const double CardHeight = 180;
@@ -48,12 +50,14 @@ namespace Storylines.Views.Pages
 
         public StoryPinboardPage()
         {
+            _windowContext = App.GetService<WindowContext>();
             InitializeComponent();
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            AppView.current.page = AppView.Pages.MainPage;
+            if (_windowContext?.AppView != null)
+                _windowContext.AppView.page = AppView.Pages.MainPage;
 
             _allChapters = ProjectState.Chapters;
             _activeTagFilter = null;
@@ -243,7 +247,7 @@ namespace Storylines.Views.Pages
                 {
                     Text = chapterNumber.ToString(),
                     FontSize = 11,
-                    FontWeight = Windows.UI.Text.FontWeights.SemiBold,
+                    FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                     Foreground = new SolidColorBrush(Colors.White),
                     HorizontalAlignment = HorizontalAlignment.Center,
                     VerticalAlignment = VerticalAlignment.Center
@@ -255,7 +259,7 @@ namespace Storylines.Views.Pages
             var nameText = new TextBlock
             {
                 Text = chapter.Name ?? "",
-                FontWeight = Windows.UI.Text.FontWeights.SemiBold,
+                FontWeight = Microsoft.UI.Text.FontWeights.SemiBold,
                 FontSize = 13,
                 TextWrapping = TextWrapping.Wrap,
                 MaxLines = 2,
@@ -328,7 +332,7 @@ namespace Storylines.Views.Pages
                         {
                             Text = initials,
                             FontSize = 8,
-                            FontWeight = Windows.UI.Text.FontWeights.Bold,
+                            FontWeight = Microsoft.UI.Text.FontWeights.Bold,
                             Foreground = new SolidColorBrush(Colors.White),
                             HorizontalAlignment = HorizontalAlignment.Center,
                             VerticalAlignment = VerticalAlignment.Center
@@ -697,8 +701,8 @@ namespace Storylines.Views.Pages
             Navigation.GoBack();
             TextEditor.SelectedChapterIndex = index;
 
-            if (MainPage.ChapterList?.listView != null)
-                MainPage.ChapterList.listView.SelectedIndex = index;
+            if (_windowContext?.ChapterList?.listView != null)
+                _windowContext.ChapterList.listView.SelectedIndex = index;
         }
 
         // ─── Connect mode ─────────────────────────────────────────────
@@ -765,17 +769,16 @@ namespace Storylines.Views.Pages
             {
                 // Prompt for an optional label
                 var inputBox = new TextBox { PlaceholderText = _resources.GetString("connectionLabelPlaceholder"), AcceptsReturn = false };
-                var dialog = new ContentDialog
+                var result = await App.GetService<IDialogService>().ShowMessageAsync(new DialogDefinition
                 {
                     Title = _resources.GetString("connectionLabelTitle"),
                     Content = inputBox,
                     PrimaryButtonText = _resources.GetString("createButtonText"),
                     CloseButtonText = _resources.GetString("skipButtonText"),
-                    DefaultButton = ContentDialogButton.Primary
-                };
+                    DefaultButton = ContentDialogButton.Primary,
+                });
 
                 string label = null;
-                var result = await dialog.ShowAsync();
                 if (result == ContentDialogResult.Primary && !string.IsNullOrWhiteSpace(inputBox.Text))
                     label = inputBox.Text.Trim();
 
@@ -845,13 +848,6 @@ namespace Storylines.Views.Pages
 
             TimeTravelSystem.SomethingChanged();
             RebuildCanvas();
-        }
-
-        // ─── Back navigation ──────────────────────────────────────────
-
-        private void OnBackButton_Click(object sender, RoutedEventArgs e)
-        {
-            Navigation.GoBack();
         }
     }
 }

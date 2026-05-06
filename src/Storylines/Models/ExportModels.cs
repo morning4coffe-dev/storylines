@@ -9,7 +9,10 @@ namespace Storylines.Models
         None,
         Chapters,
         Dialogues,
-        Characters
+        Characters,
+#if PRIVATE_PLUGINS
+        BranchingDialogue,
+#endif
     }
 
     public enum ExportFormatId

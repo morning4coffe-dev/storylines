@@ -1,7 +1,6 @@
 using Newtonsoft.Json.Linq;
 using Storylines.Views.Controls;
 using Storylines.Views.Pages;
-using Storylines.Helpers;
 using Storylines.Models;
 using System;
 using System.Linq;
@@ -9,48 +8,49 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml.Linq;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 using static System.Net.Mime.MediaTypeNames;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectStatsDialogue : ContentDialog
+    public sealed partial class ProjectStatsDialogue : StorylinesContentDialog
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
-
-        public static ProjectStatsDialogue textBoxStats;
+        private static WindowContext WindowContext => App.GetService<WindowContext>();
 
         public ProjectStatsDialogue()
         {
             InitializeComponent();
-            textBoxStats = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = textBoxStats;
-            textBoxStats.RequestedTheme = AppView.current.ActualTheme;
+            CloseOnOutsideTap = true;
         }
 
         public static void Open(bool fromDownBar)
         {
+            _ = OpenAsync(fromDownBar);
+        }
+
+        public static async System.Threading.Tasks.Task<ContentDialogResult> OpenAsync(bool fromDownBar)
+        {
             var dialog = new ProjectStatsDialogue();
-
-            _ = dialog.ShowAsync();
-
             App.TryGetService<ITelemetryService>()?.TrackProjectStatsOpened(fromDownBar);
+            var showTask = App.GetService<IDialogService>().ShowAsync(dialog);
             dialog.DisplayStats();
+            return await showTask;
         }
 
         public void DisplayStats()
         {
-            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var resourceLoader = ResourceLoader.GetForViewIndependentUse();
 
-            RichEditBox textBox = MainPage.ChapterText.textBox;
+            var textBox = WindowContext.ChapterText?.textBox;
+            if (textBox == null)
+                return;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
 
@@ -114,8 +114,8 @@ namespace Storylines.Views.Dialogs
             foreach (var chapter in chapters)
             {
                 var rb = new RichEditBox();
-                rb.Document.SetText(Windows.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
-                rb.Document.GetText(Windows.UI.Text.TextGetOptions.None, out string plain);
+                rb.Document.SetText(Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
+                rb.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string plain);
                 int words = plain.Split(new char[] { ' ', (char)13 }, StringSplitOptions.RemoveEmptyEntries).Length;
                 stats.Add((chapter.Name, words));
                 if (words > maxWords) maxWords = words;
@@ -127,7 +127,7 @@ namespace Storylines.Views.Dialogs
             const double chartWidth = 300;
             double y = 0;
 
-            var accentBrush = new SolidColorBrush((Windows.UI.Color)Windows.UI.Xaml.Application.Current.Resources["SystemAccentColor"]);
+            var accentBrush = new SolidColorBrush((Windows.UI.Color)Microsoft.UI.Xaml.Application.Current.Resources["SystemAccentColor"]);
 
             foreach (var (name, words) in stats)
             {
@@ -139,7 +139,7 @@ namespace Storylines.Views.Dialogs
                     Text = name,
                     FontSize = 11,
                     Opacity = 0.8,
-                    TextTrimming = Windows.UI.Xaml.TextTrimming.CharacterEllipsis,
+                    TextTrimming = Microsoft.UI.Xaml.TextTrimming.CharacterEllipsis,
                     MaxWidth = labelWidth - 8,
                     VerticalAlignment = VerticalAlignment.Center
                 };
@@ -148,7 +148,7 @@ namespace Storylines.Views.Dialogs
                 chapterChartCanvas.Children.Add(label);
 
                 // Bar
-                var bar = new Windows.UI.Xaml.Shapes.Rectangle
+                var bar = new Microsoft.UI.Xaml.Shapes.Rectangle
                 {
                     Width = barWidth,
                     Height = barHeight - 6,
@@ -193,30 +193,9 @@ namespace Storylines.Views.Dialogs
             return storyCharacterCount;
         }
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-        }
-
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide)
-                Hide();
         }
     }
 }

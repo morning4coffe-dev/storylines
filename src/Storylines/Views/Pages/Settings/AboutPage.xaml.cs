@@ -1,8 +1,8 @@
 using Storylines.Helpers;
 using Windows.ApplicationModel;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 
 namespace Storylines.Views.Pages.Settings
@@ -18,7 +18,7 @@ namespace Storylines.Views.Pages.Settings
 
             appName = Package.Current.DisplayName;
             var v = Package.Current.Id.Version;
-            appVersion = $"{ResourceLoader.GetForCurrentView().GetString("version")}: {v.Major}.{v.Minor}.{v.Build}";
+            appVersion = $"{ResourceLoader.GetForViewIndependentUse().GetString("version")}: {v.Major}.{v.Minor}.{v.Build}";
         }
 
         private void OnReviewAndRateHyperlinkButton_Click(object sender, RoutedEventArgs e)

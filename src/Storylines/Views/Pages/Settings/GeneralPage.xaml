@@ -3,8 +3,8 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+      xmlns:constants="using:Storylines.Constants"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -19,7 +19,7 @@
         <StackPanel x:Name="generalPage"
                 Margin="16,16,16,24"
                 Spacing="10"
-                    HorizontalAlignment="Stretch"
+                    HorizontalAlignment="Center"
                     MaxWidth="1000">
             <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -67,7 +67,7 @@
                 </VisualState>
                 <VisualState x:Name="WideLayout">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="1400" />
+                    <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
                 </VisualState.StateTriggers>
                 <VisualState.Setters>
                     <Setter Target="generalPage.Margin"
@@ -352,7 +352,7 @@
                                TextWrapping="Wrap"
                                Margin="0,0,10,0" />
                 </StackPanel>
-                <muxc:NumberBox x:Name="dailyWordGoalNumBox"
+                <NumberBox x:Name="dailyWordGoalNumBox"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Minimum="0"
@@ -406,12 +406,6 @@
                               IsOn="{x:Bind ViewModel.ExperimentalFeaturesEnabled, Mode=TwoWay}" />
             </Grid>
 
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromVerticalOffset="50" />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </Page>

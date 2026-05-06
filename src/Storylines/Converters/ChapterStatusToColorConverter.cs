@@ -1,7 +1,7 @@
 using Storylines.Models;
 using System;
 using Windows.UI;
-using Windows.UI.Xaml.Data;
+using Microsoft.UI.Xaml.Data;
 
 namespace Storylines.Converters
 {

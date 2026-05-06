@@ -1,37 +1,37 @@
-using Microsoft.Toolkit.Uwp.UI.Controls;
+using CommunityToolkit.WinUI.Controls;
 using Storylines.Services;
 using Storylines.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Storylines.Helpers;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ChapterTagsDialogue : ContentDialog
+    public sealed partial class ChapterTagsDialogue : StorylinesContentDialog
     {
-        public static ChapterTagsDialogue current;
+        private readonly Chapter _chapter;
 
-        private Chapter _chapter;
-
-        public ChapterTagsDialogue()
+        public ChapterTagsDialogue(Chapter chapter)
         {
             InitializeComponent();
-            current = this;
-            RequestedTheme = AppView.current.ActualTheme;
-            AppView.currentlyOpenedDialogue = this;
-            InitializeClickOutToClose();
+            CloseOnOutsideTap = true;
+            _chapter = chapter;
         }
 
         public static void Open(Chapter chapter)
         {
-            AppView.currentlyOpenedDialogue?.Hide();
+            _ = OpenAsync(chapter);
+        }
 
-            var dlg = new ChapterTagsDialogue();
-            dlg._chapter = chapter;
-            _ = dlg.ShowAsync();
+        public static Task<ContentDialogResult> OpenAsync(Chapter chapter)
+        {
+            return App.GetService<IDialogService>().ShowAsync(new ChapterTagsDialogue(chapter));
         }
 
         // ─── Lifecycle ────────────────────────────────────────────────
@@ -49,13 +49,6 @@ namespace Storylines.Views.Dialogs
             // Populate suggestion pills — presets minus already-added tags
             RefreshSuggestions();
             RefreshSavedPresets();
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-            current = null;
         }
 
         // ─── Suggestions ──────────────────────────────────────────────
@@ -159,22 +152,5 @@ namespace Storylines.Views.Dialogs
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
-
-        // ─── Click-outside-to-close ───────────────────────────────────
-
-        private bool _isHide = true;
-
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-            PointerExited += (s, e) => _isHide = true;
-            PointerEntered += (s, e) => _isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (_isHide)
-                Hide();
-        }
     }
 }

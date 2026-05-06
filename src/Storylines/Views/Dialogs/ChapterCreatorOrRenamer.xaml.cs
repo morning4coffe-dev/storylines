@@ -1,60 +1,53 @@
 using Storylines.Views.Pages;
 using Storylines.Models;
 using System;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
+using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ChapterCreatorOrRenamer : ContentDialog
+    public sealed partial class ChapterCreatorOrRenamer : StorylinesContentDialog
     {
-        public static ChapterCreatorOrRenamer chapterCreator;
+        public enum DialogTask { Create, Rename }
 
-        public enum Task { Create, Rename };
-        public static Task currentTask = Task.Create;
+        private readonly Chapter _chapterToRename;
+        private readonly bool _doubleTapped;
+        private readonly DialogTask _currentTask;
 
-        public static Chapter chapterToRename;
-
-        private static bool doubleTapped;
-
-        public ChapterCreatorOrRenamer()
+        public ChapterCreatorOrRenamer(Chapter chapterToRename, bool doubleTapped)
         {
             this.InitializeComponent();
-            chapterCreator = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = chapterCreator;
-            chapterCreator.RequestedTheme = AppView.current.ActualTheme;
+            CloseOnOutsideTap = true;
+            _chapterToRename = chapterToRename;
+            _doubleTapped = doubleTapped;
+            _currentTask = chapterToRename == null ? DialogTask.Create : DialogTask.Rename;
         }
 
         public static void Open(Chapter chapter, bool doubleTap)
         {
-            if (chapter != null)
-            {
-                currentTask = Task.Rename;
-                chapterToRename = chapter;
-            }
-            else
-                currentTask = Task.Create;
+            _ = OpenAsync(chapter, doubleTap);
+        }
 
-            doubleTapped = doubleTap;
-            _ = new ChapterCreatorOrRenamer().ShowAsync();
+        public static Task<ContentDialogResult> OpenAsync(Chapter chapter, bool doubleTap)
+        {
+            return App.GetService<IDialogService>().ShowAsync(new ChapterCreatorOrRenamer(chapter, doubleTap));
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            switch (currentTask)
+            switch (_currentTask)
             {
-                case Task.Create:
-                    titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueCreate");
+                case DialogTask.Create:
+                    titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueCreate");
                     break;
-                case Task.Rename:
-                    titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
-                    chapterNameBox.Text = chapterToRename.Name;
+                case DialogTask.Rename:
+                    titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueRename");
+                    chapterNameBox.Text = _chapterToRename.Name;
                     break;
             }
         }
@@ -63,21 +56,21 @@ namespace Storylines.Views.Dialogs
         {
             var chapterWorkflow = App.GetService<Storylines.Services.Interfaces.IChapterWorkflowService>();
 
-            switch (currentTask)
+            switch (_currentTask)
             {
-                case Task.Create:
+                case DialogTask.Create:
                     chapterWorkflow.CreateChapterFromInput(chapterNameBox.Text);
                     break;
-                case Task.Rename:
-                    chapterWorkflow.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
+                case DialogTask.Rename:
+                    chapterWorkflow.RenameChapter(_chapterToRename.Token, chapterNameBox.Text);
                     break;
             }
-            chapterCreator.Hide();
+            Hide();
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
-            chapterCreator.Hide();
+            Hide();
         }
 
         private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -86,28 +79,9 @@ namespace Storylines.Views.Dialogs
                 OnSubmitButton_Click(sender, new RoutedEventArgs());
         }
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+        protected override bool CanCloseOnOutsideTap()
         {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-
-            if (ReferenceEquals(chapterCreator, this))
-                chapterCreator = null;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide && !doubleTapped)
-                Hide();
+            return !_doubleTapped;
         }
     }
 }

@@ -6,8 +6,8 @@ using Storylines.Services.Interfaces;
 using Storylines.Models;
 using System.Collections.ObjectModel;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Imaging;
 
 namespace Storylines.ViewModels
 {

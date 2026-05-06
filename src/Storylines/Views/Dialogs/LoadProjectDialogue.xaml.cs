@@ -5,17 +5,18 @@ using Storylines.Services.Interfaces;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using System;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class LoadProjectDialogue : ContentDialog
+    public sealed partial class LoadProjectDialogue : StorylinesContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+        private static WindowContext WindowContext => App.GetService<WindowContext>();
 
-        public static LoadProjectDialogue loadFile;
         public bool isEscape = true;
 
         public static Thickness osMargin = new Thickness(-11, 4, -19, 4); /*new Thickness(-15, 4, -15, 4);*/
@@ -24,26 +25,36 @@ namespace Storylines.Views.Dialogs
         public LoadProjectDialogue()
         {
             InitializeComponent();
-            loadFile = this;
-
-            AppView.currentlyOpenedDialogue = loadFile;
             projectsHolder.ItemsSource = null;
         }
 
-        public static void Open()
+        public static void Open(XamlRoot root)
+            => _ = OpenAsync(root);
+
+        public static async Task<ContentDialogResult> OpenAsync(XamlRoot root)
         {
-            if (!TimeTravelSystem.unSavedProgress)
+            if (TimeTravelSystem.unSavedProgress)
             {
-                if (AppView.currentlyOpenedDialogue != null)
-                    AppView.currentlyOpenedDialogue.Hide();
-
-                var loadDialogue = new LoadProjectDialogue();
-                _ = loadDialogue.ShowAsync();
-
-                loadDialogue.RequestedTheme = AppView.current.ActualTheme;
-            }
-            else
                 _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
+                return ContentDialogResult.None;
+            }
+
+            var loadDialogue = new LoadProjectDialogue();
+
+            try
+            {
+                return await App.GetService<IDialogService>().ShowAsync(
+                    loadDialogue,
+                    new DialogShowOptions
+                    {
+                        XamlRootOverride = root,
+                    });
+            }
+            catch (Exception ex)
+            {
+                App.TryGetService<ILogger>()?.Warning($"Failed to open load dialog: {ex.Message}");
+                return ContentDialogResult.None;
+            }
         }
         public async Task LoadAllProjectsAsync()
         {
@@ -72,8 +83,8 @@ namespace Storylines.Views.Dialogs
             Persistence.CurrentProject = new ProjectFile();
             Persistence.CurrentProject.projectName = "Project with no name";
 
-            Pages.MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(true);
-            AppView.current.ClearEverything();
+            WindowContext.MainPage?.EnableOrDisableToolsForStorylinesDocuments(true);
+            WindowContext.AppView?.ClearEverything();
             TimeTravelSystem.unSavedProgress = false;
         }
 
@@ -148,7 +159,6 @@ namespace Storylines.Views.Dialogs
             if (!isEscape)
             {
                 ProjectFile.projectFiles.Clear();
-                AppView.currentlyOpenedDialogue = null;
             }
         }
 

@@ -3,13 +3,13 @@ using Storylines.Models;
 using Storylines.ViewModels;
 using System;
 using System.Threading.Tasks;
-using Windows.UI.Core;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Storylines.Services;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ExportDialogue : ContentDialog
+    public sealed partial class ExportDialogue : StorylinesContentDialog
     {
         public ExportDialogViewModel ViewModel { get; }
 
@@ -20,11 +20,7 @@ namespace Storylines.Views.Dialogs
             ViewModel = App.GetService<ExportDialogViewModel>();
             DataContext = ViewModel;
 
-            InitializeClickOutToClose();
-
-            RequestedTheme = AppView.current.ActualTheme;
-
-            AppView.currentlyOpenedDialogue = this;
+            CloseOnOutsideTap = true;
             ViewModel.Initialize(initialTarget);
 
             if (initialTarget != ExportTarget.None)
@@ -38,7 +34,7 @@ namespace Storylines.Views.Dialogs
         {
             try
             {
-                await new ExportDialogue(target).ShowAsync();
+                await App.GetService<IDialogService>().ShowAsync(new ExportDialogue(target));
             }
             catch (Exception ex)
             {
@@ -69,7 +65,7 @@ namespace Storylines.Views.Dialogs
 
         private async void OnExportToLocationButton_Click(object sender, RoutedEventArgs e) => await ViewModel.PickFolderAsync();
 
-        private async void OnExportLocationFrame_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e) => await ViewModel.PickFolderAsync();
+        private async void OnExportLocationFrame_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e) => await ViewModel.PickFolderAsync();
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
@@ -78,13 +74,7 @@ namespace Storylines.Views.Dialogs
             ViewModel.DismissError();
         }
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-        }
-
-        private void ContentDialog_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void ContentDialog_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter && ViewModel.CanSubmit)
                 OnExportButton_Click(sender, new RoutedEventArgs());
@@ -95,19 +85,9 @@ namespace Storylines.Views.Dialogs
 
         private void Flyout_Closed(object sender, object e) => isFlyoutOpen = false;
 
-        bool isHide = true;
-        private void InitializeClickOutToClose()
+        protected override bool CanCloseOnOutsideTap()
         {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(CoreWindow sender, PointerEventArgs args)
-        {
-            if (isHide && !isFlyoutOpen)
-                Hide();
+            return !isFlyoutOpen;
         }
     }
 }

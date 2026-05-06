@@ -1,6 +1,7 @@
 using Storylines.Models;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
+using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 
@@ -10,11 +11,25 @@ namespace Storylines.Helpers
     {
         private static EventAggregator Events => App.GetService<EventAggregator>();
 
-        public static bool unSavedProgress = false;
+        public static bool unSavedProgress
+        {
+            get => App.TryGetService<IUndoRedoService>()?.IsDirty ?? false;
+            set
+            {
+                var undoRedo = App.TryGetService<IUndoRedoService>();
+                if (undoRedo == null)
+                    return;
+
+                if (value)
+                    undoRedo.MarkDirty();
+                else
+                    undoRedo.MarkClean();
+            }
+        }
 
         public static void SomethingChanged()
         {
-            unSavedProgress = true;
+            App.TryGetService<IUndoRedoService>()?.MarkDirty();
             Events.Publish(new TitleBarUpdateEvent());
         }
     }
@@ -25,67 +40,66 @@ namespace Storylines.Helpers
 
     public static class TimeTravelChapter
     {
-        private static readonly UndoRedoManager _manager = new UndoRedoManager(100);
+        private static readonly Dictionary<Guid, UndoRedoManager> _managers = new Dictionary<Guid, UndoRedoManager>();
 
         private static ProjectState State => App.GetService<ProjectState>();
         private static ITextEditorService TextEditor => App.GetService<ITextEditorService>();
-        private static EventAggregator Events => App.GetService<EventAggregator>();
-
-        static TimeTravelChapter()
-        {
-            _manager.StateChanged += PublishState;
-        }
+        private static UndoRedoManager Manager => GetManager();
 
         public enum Changed { Added, Name, Text, Reordered, Removed }
 
         /// <summary>True while an undo or redo operation is executing.</summary>
-        public static bool IsExecuting => _manager.IsExecuting;
+        public static bool IsExecuting => Manager.IsExecuting;
 
         /// <summary>
         /// Suppresses undo recording for the duration of the returned scope.
         /// Also breaks the merge chain so edits after the scope don't merge
         /// with edits before it.
         /// </summary>
-        public static IDisposable SuppressRecording() => _manager.Suppress();
+        public static IDisposable SuppressRecording() => Manager.Suppress();
 
         // ── Recording ─────────────────────────────────────────────────
 
         /// <summary>Record that a chapter was added. Call AFTER the chapter is in the collection.</summary>
         public static void RecordAdded(Chapter chapter, int position)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyChapter(chapter.Token);
-            _manager.Record(new ChapterAddedAction(snapshot, position));
+            manager.Record(new ChapterAddedAction(snapshot, position));
         }
 
         /// <summary>Record that a chapter is about to be renamed. Call BEFORE the rename.</summary>
         public static void RecordRename(Chapter chapter, string newName)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
-            _manager.Record(new ChapterRenamedAction(chapter.Token, chapter.Name, newName));
+            manager.Record(new ChapterRenamedAction(chapter.Token, chapter.Name, newName));
         }
 
         /// <summary>Record that a chapter is about to be removed. Call BEFORE the removal.</summary>
         public static void RecordRemoved(Chapter chapter, int position)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyChapter(chapter.Token);
-            _manager.Record(new ChapterRemovedAction(snapshot, position));
+            manager.Record(new ChapterRemovedAction(snapshot, position));
         }
 
         /// <summary>Record that a chapter is about to be reordered. Call BEFORE the move.</summary>
         public static void RecordReorder(string chapterToken, int oldPosition, int newPosition)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
-            _manager.Record(new ChapterReorderedAction(chapterToken, oldPosition, newPosition));
+            manager.Record(new ChapterReorderedAction(chapterToken, oldPosition, newPosition));
         }
 
         /// <summary>
@@ -95,27 +109,50 @@ namespace Storylines.Helpers
         /// </summary>
         public static void RecordTextChange(string chapterToken, string oldText, string newText)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             if (oldText == newText) return;
             TimeTravelSystem.SomethingChanged();
 
-            _manager.Record(new ChapterTextChangedAction(chapterToken, oldText, newText));
+            manager.Record(new ChapterTextChangedAction(chapterToken, oldText, newText));
         }
 
-        public static void Undo() => _manager.Undo();
-        public static void Redo() => _manager.Redo();
-        public static void ClearUndoAndRedo() => _manager.Clear();
+        public static void Undo() => Manager.Undo();
+        public static void Redo() => Manager.Redo();
+        public static void ClearUndoAndRedo() => Manager.Clear();
 
         // ── State publishing ──────────────────────────────────────────
 
-        private static void PublishState()
+        private static UndoRedoManager GetManager()
         {
-            Events.Publish(new UndoRedoStateChangedEvent
+            var contextId = App.TryGetService<WindowContext>()?.Id ?? Guid.Empty;
+
+            lock (_managers)
             {
-                CanUndo = _manager.CanUndo,
-                CanRedo = _manager.CanRedo,
+                if (_managers.TryGetValue(contextId, out var manager))
+                    return manager;
+
+                manager = new UndoRedoManager(100);
+                manager.StateChanged += () => PublishState(contextId, manager);
+                _managers[contextId] = manager;
+                return manager;
+            }
+        }
+
+        private static void PublishState(Guid contextId, UndoRedoManager manager)
+        {
+            GetEvents(contextId)?.Publish(new UndoRedoStateChangedEvent
+            {
+                CanUndo = manager.CanUndo,
+                CanRedo = manager.CanRedo,
                 Context = "chapters"
             });
+        }
+
+        private static EventAggregator GetEvents(Guid contextId)
+        {
+            var context = App.Current?.Services?.GetService<IWindowManager>()?.GetContext(contextId);
+            return context?.Services?.GetService<EventAggregator>() ?? App.TryGetService<EventAggregator>();
         }
 
         // ── Action classes ────────────────────────────────────────────
@@ -284,37 +321,35 @@ namespace Storylines.Helpers
 
     public static class TimeTravelCharacter
     {
-        private static readonly UndoRedoManager _manager = new UndoRedoManager(100);
+        private static readonly Dictionary<Guid, UndoRedoManager> _managers = new Dictionary<Guid, UndoRedoManager>();
 
         private static ProjectState State => App.GetService<ProjectState>();
-        private static EventAggregator Events => App.GetService<EventAggregator>();
         private static ILogger Logger => App.GetService<ILogger>();
-
-        static TimeTravelCharacter()
-        {
-            _manager.StateChanged += PublishState;
-        }
+        private static EventAggregator Events => App.GetService<EventAggregator>();
+        private static UndoRedoManager Manager => GetManager();
 
         public enum Changed { Added, Changed, Removed }
 
         /// <summary>Record that a character was added. Call AFTER the character is in the collection.</summary>
         public static void RecordAdded(Character character)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyCharacter(character.Token);
-            _manager.Record(new CharacterAddedAction(snapshot));
+            manager.Record(new CharacterAddedAction(snapshot));
         }
 
         /// <summary>Record that a character is about to be removed. Call BEFORE the removal.</summary>
         public static void RecordRemoved(Character character)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
             var snapshot = State.CopyCharacter(character.Token);
-            _manager.Record(new CharacterRemovedAction(snapshot));
+            manager.Record(new CharacterRemovedAction(snapshot));
         }
 
         /// <summary>
@@ -325,26 +360,49 @@ namespace Storylines.Helpers
         /// </summary>
         public static void RecordChanged(Character beforeSnapshot)
         {
-            if (_manager.IsExecuting || _manager.IsSuppressed) return;
+            var manager = Manager;
+            if (manager.IsExecuting || manager.IsSuppressed) return;
             TimeTravelSystem.SomethingChanged();
 
-            _manager.Record(new CharacterChangedAction(beforeSnapshot));
+            manager.Record(new CharacterChangedAction(beforeSnapshot));
         }
 
-        public static void Undo() => _manager.Undo();
-        public static void Redo() => _manager.Redo();
-        public static void ClearUndoAndRedo() => _manager.Clear();
+        public static void Undo() => Manager.Undo();
+        public static void Redo() => Manager.Redo();
+        public static void ClearUndoAndRedo() => Manager.Clear();
 
         // ── State publishing ──────────────────────────────────────────
 
-        private static void PublishState()
+        private static UndoRedoManager GetManager()
         {
-            Events.Publish(new UndoRedoStateChangedEvent
+            var contextId = App.TryGetService<WindowContext>()?.Id ?? Guid.Empty;
+
+            lock (_managers)
             {
-                CanUndo = _manager.CanUndo,
-                CanRedo = _manager.CanRedo,
+                if (_managers.TryGetValue(contextId, out var manager))
+                    return manager;
+
+                manager = new UndoRedoManager(100);
+                manager.StateChanged += () => PublishState(contextId, manager);
+                _managers[contextId] = manager;
+                return manager;
+            }
+        }
+
+        private static void PublishState(Guid contextId, UndoRedoManager manager)
+        {
+            GetEvents(contextId)?.Publish(new UndoRedoStateChangedEvent
+            {
+                CanUndo = manager.CanUndo,
+                CanRedo = manager.CanRedo,
                 Context = "characters"
             });
+        }
+
+        private static EventAggregator GetEvents(Guid contextId)
+        {
+            var context = App.Current?.Services?.GetService<IWindowManager>()?.GetContext(contextId);
+            return context?.Services?.GetService<EventAggregator>() ?? App.TryGetService<EventAggregator>();
         }
 
         // ── Action classes ────────────────────────────────────────────

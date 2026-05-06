@@ -4,39 +4,39 @@ using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectFileInfoDialogue : ContentDialog
+    public sealed partial class ProjectFileInfoDialogue : StorylinesContentDialog
     {
         private static IProjectPersistenceService ProjectPersistence => App.TryGetService<IProjectPersistenceService>();
-
-        public static ProjectFileInfoDialogue fileInfoDialogue;
 
         public ProjectFileInfoDialogue()
         {
             InitializeComponent();
-            fileInfoDialogue = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = fileInfoDialogue;
-            fileInfoDialogue.RequestedTheme = AppView.current.ActualTheme;
+            CloseOnOutsideTap = true;
         }
 
         public static void Open()
         {
+            _ = OpenAsync();
+        }
+
+        public static async Task<ContentDialogResult> OpenAsync()
+        {
             var dialog = new ProjectFileInfoDialogue();
 
-            _ = dialog.ShowAsync();
+            var showTask = App.GetService<IDialogService>().ShowAsync(dialog);
             _ = dialog.DisplayFileInfoAsync();
+            return await showTask;
         }
 
         public async Task DisplayFileInfoAsync()
         {
-            var resourceLoader = ResourceLoader.GetForCurrentView();
+            var resourceLoader = ResourceLoader.GetForViewIndependentUse();
             var project = ProjectPersistence?.CurrentProject;
             StorageFile file = project?.file;
 
@@ -86,7 +86,7 @@ namespace Storylines.Views.Dialogs
         {
             return date == default
                 ? fallback
-                : date.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture);
+                : date.ToString("g", System.Globalization.CultureInfo.CurrentCulture);
         }
 
         private static string FormatFileSize(ulong size)
@@ -105,37 +105,15 @@ namespace Storylines.Views.Dialogs
             }
 
             string formattedValue = value >= 10 || unitIndex == 0
-                ? value.ToString("0", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture)
-                : value.ToString("0.#", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture);
+                ? value.ToString("0", System.Globalization.CultureInfo.CurrentCulture)
+                : value.ToString("0.#", System.Globalization.CultureInfo.CurrentCulture);
 
             return $"{formattedValue} {units[unitIndex]}";
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
         }
 
         private void OnCloseButton_Click(object sender, RoutedEventArgs e)
         {
             Hide();
-        }
-
-        private bool isHide = true;
-
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide)
-                Hide();
         }
     }
 }

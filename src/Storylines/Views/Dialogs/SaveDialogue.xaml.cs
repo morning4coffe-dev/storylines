@@ -4,20 +4,22 @@ using Storylines.Models;
 using System;
 using System.Collections.ObjectModel;
 using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using System.Threading.Tasks;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class SaveDialogue : ContentDialog
+    public sealed partial class SaveDialogue : StorylinesContentDialog
     {
         private readonly ILogger _logger;
         private readonly IProjectPersistenceService _persistence;
         private readonly ProjectState _projectState;
+        private readonly IFilePickerService _filePicker;
+        private readonly WindowContext _windowContext;
+        private readonly Type _dialogType;
 
-        public static SaveDialogue saveDialogue;
         public StorageFolder saveFolder;
 
         public ObservableCollection<string> extensions { get; private set; } = new ObservableCollection<string>();
@@ -25,21 +27,19 @@ namespace Storylines.Views.Dialogs
         private int _collisionCheckVersion;
 
         public enum Type { Save, SaveCopy }
-        private static Type type;
 
-        public SaveDialogue()
+        public SaveDialogue(Type dialogType)
         {
             InitializeComponent();
-            saveDialogue = this;
 
             _logger = App.GetService<ILogger>();
             _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
+            _filePicker = App.GetService<IFilePickerService>();
+            _windowContext = App.GetService<WindowContext>();
+            _dialogType = dialogType;
 
-            InitializeClickOutToClose();
-
-            saveDialogue.RequestedTheme = AppView.current.ActualTheme;
-            AppView.currentlyOpenedDialogue = saveDialogue;
+            CloseOnOutsideTap = true;
 
             extensions.Add(".srl");
 
@@ -50,32 +50,22 @@ namespace Storylines.Views.Dialogs
 
             extensionComboBox.SelectedIndex = 0;
 
-            title.Text = Storylines.Resources.SaveDialogue.Title(type);
+            title.Text = Storylines.Resources.SaveDialogue.Title(_dialogType);
         }
 
         public static void Open(Type type)
         {
-            var currentDialog = AppView.currentlyOpenedDialogue;
-            if (currentDialog == LoadProjectDialogue.loadFile)
-                LoadProjectDialogue.loadFile.isEscape = false;
+            _ = OpenAsync(type);
+        }
 
-            AppView.currentlyOpenedDialogue = null;
-            currentDialog?.Hide();
-
-            SaveDialogue.type = type;
-            _ = new SaveDialogue().ShowAsync();
+        public static Task<ContentDialogResult> OpenAsync(Type type)
+        {
+            return App.GetService<IDialogService>().ShowAsync(new SaveDialogue(type));
         }
 
         public async Task ChooseFileToSaveAsync()
         {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add("*");
-
-            StorageFolder folder = await picker.PickSingleFolderAsync();
+            StorageFolder folder = await _filePicker.PickFolderAsync();
 
             if (folder != null)
             {
@@ -127,7 +117,7 @@ namespace Storylines.Views.Dialogs
             _persistence.CurrentProject.projectName = nameText.Text;
             await _persistence.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
             _submitted = true;
-            saveDialogue.Hide();
+            Hide();
         }
 
         private void OnSaveToLocationButton_Click(object sender, RoutedEventArgs e)
@@ -147,7 +137,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
-            saveDialogue.Hide();
+            Hide();
         }
 
         private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
@@ -158,12 +148,8 @@ namespace Storylines.Views.Dialogs
 
         private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-
             if (!_submitted)
                 _persistence.CancelPendingAfterSaveAction();
-
-            AppView.currentlyOpenedDialogue = null;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -182,19 +168,9 @@ namespace Storylines.Views.Dialogs
             isFlyoutOpen = false;
         }
 
-        bool isHide = true;
-        private void InitializeClickOutToClose()
+        protected override bool CanCloseOnOutsideTap()
         {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide && !isFlyoutOpen)
-                Hide();
+            return !isFlyoutOpen;
         }
     }
 }

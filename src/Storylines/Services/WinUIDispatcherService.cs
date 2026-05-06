@@ -1,33 +1,38 @@
+using Microsoft.UI.Dispatching;
 using Storylines.Services.Interfaces;
 using System;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Core;
-using Windows.UI.Core;
 
 namespace Storylines.Services
 {
     /// <summary>
-    /// UWP / WinUI 2 implementation of <see cref="IDispatcherService"/>. Wraps the application's
-    /// main-view <see cref="CoreDispatcher"/> so callers do not need to reference UWP threading
+    /// WinUI 3 implementation of <see cref="IDispatcherService"/>. Wraps the application's
+    /// <see cref="DispatcherQueue"/> so callers do not need to reference WinUI threading
     /// types directly.
     /// </summary>
-    internal sealed class UwpDispatcherService : IDispatcherService
+    internal sealed class WinUIDispatcherService : IDispatcherService
     {
-        public bool HasThreadAccess => GetDispatcher()?.HasThreadAccess ?? false;
+        private readonly DispatcherQueue _dispatcherQueue;
+
+        public WinUIDispatcherService()
+        {
+            _dispatcherQueue = DispatcherQueue.GetForCurrentThread();
+        }
+
+        public bool HasThreadAccess => _dispatcherQueue?.HasThreadAccess ?? false;
 
         public Task RunOnUIAsync(Action action)
         {
             if (action is null) throw new ArgumentNullException(nameof(action));
 
-            var dispatcher = GetDispatcher();
-            if (dispatcher == null || dispatcher.HasThreadAccess)
+            if (_dispatcherQueue == null || _dispatcherQueue.HasThreadAccess)
             {
                 action();
                 return Task.CompletedTask;
             }
 
             var tcs = new TaskCompletionSource<object>();
-            _ = dispatcher.RunAsync(CoreDispatcherPriority.Normal, () =>
+            _dispatcherQueue.TryEnqueue(() =>
             {
                 try
                 {
@@ -46,12 +51,11 @@ namespace Storylines.Services
         {
             if (asyncAction is null) throw new ArgumentNullException(nameof(asyncAction));
 
-            var dispatcher = GetDispatcher();
-            if (dispatcher == null || dispatcher.HasThreadAccess)
+            if (_dispatcherQueue == null || _dispatcherQueue.HasThreadAccess)
                 return asyncAction();
 
             var tcs = new TaskCompletionSource<object>();
-            _ = dispatcher.RunAsync(CoreDispatcherPriority.Normal, async () =>
+            _dispatcherQueue.TryEnqueue(async () =>
             {
                 try
                 {
@@ -65,8 +69,5 @@ namespace Storylines.Services
             });
             return tcs.Task;
         }
-
-        private static CoreDispatcher GetDispatcher()
-            => CoreApplication.MainView?.CoreWindow?.Dispatcher;
     }
 }

@@ -3,7 +3,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:constants="using:Storylines.Constants"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -18,7 +18,7 @@
         <StackPanel x:Name="aboutPage"
                     Margin="16,16,16,24"
                     Spacing="10"
-                    HorizontalAlignment="Stretch"
+                    HorizontalAlignment="Center"
                     MaxWidth="1000">
             <VisualStateManager.VisualStateGroups>
                 <VisualStateGroup>
@@ -34,7 +34,7 @@
                     </VisualState>
                     <VisualState x:Name="WideLayout">
                         <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="1400" />
+                            <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
                         </VisualState.StateTriggers>
                         <VisualState.Setters>
                             <Setter Target="aboutPage.Margin"
@@ -87,14 +87,14 @@
                         Click="OnCheckForUpdatesButton_Click" />
             </Grid>
 
-            <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
+            <Expander Style="{StaticResource CustomExpanderStyle}"
                            BorderBrush="{ThemeResource LayerFillColorDefaultBrush}"
                            BorderThickness="{ThemeResource ElementBorderThickness}"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"
                            HorizontalContentAlignment="Left"
                            IsExpanded="True">
-                <muxc:Expander.Header>
+                <Expander.Header>
                     <Grid Padding="-15,20,-12,20">
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="56" />
@@ -108,7 +108,7 @@
                                    TextWrapping="Wrap"
                                    Grid.Column="1" />
                     </Grid>
-                </muxc:Expander.Header>
+                </Expander.Header>
                 <StackPanel x:Name="linksStack"
                             Orientation="Horizontal"
                             Spacing="120"
@@ -181,14 +181,8 @@
                         </HyperlinkButton>
                     </StackPanel>
                 </StackPanel>
-            </muxc:Expander>
+            </Expander>
 
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromVerticalOffset="50" />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </Page>

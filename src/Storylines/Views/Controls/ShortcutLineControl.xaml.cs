@@ -1,5 +1,5 @@
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 // Dokumentaci k šabloně položky Uživatelský ovládací prvek najdete na adrese https://go.microsoft.com/fwlink/?LinkId=234236.
 

@@ -8,8 +8,7 @@ using Storylines.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Core;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Helpers
 {
@@ -81,17 +80,17 @@ namespace Storylines.Helpers
 
         private static bool IsCtrlKeyPressed()
         {
-            var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.Control);
-            return (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var ctrlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Control);
+            return (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
         }
 
         private static bool IsShiftKeyPressed()
         {
-            var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(Windows.System.VirtualKey.Shift);
-            return (ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var ctrlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(Windows.System.VirtualKey.Shift);
+            return (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
         }
 
-        public static void Check(KeyEventArgs e)
+        public static void Check(KeyRoutedEventArgs e)
         {
             if (IsCtrlKeyPressed())
             {
@@ -100,7 +99,7 @@ namespace Storylines.Helpers
                     switch (AppView.current.page)
                     {
                         case AppView.Pages.MainPage:
-                            switch (e.VirtualKey)
+                            switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.D: MainPage.ChapterText.DialoguesOnOff(!(bool)MainPage.CommandBar.dialoguesEnableButton.IsChecked); break;
                                 case Windows.System.VirtualKey.W:
@@ -132,7 +131,7 @@ namespace Storylines.Helpers
                             break;
                     }
 
-                    switch (e.VirtualKey)
+                    switch (e.Key)
                     {
                         case Windows.System.VirtualKey.S: App.GetService<IProjectPersistenceService>().SaveCopy(); break;
                     }
@@ -142,17 +141,17 @@ namespace Storylines.Helpers
                     switch (AppView.current.page)
                     {
                         case AppView.Pages.MainPage:
-                            switch (e.VirtualKey)
+                            switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.Q:
-                                    if (MainPage.ChapterList.canAdd && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.ChapterList.canAdd && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.TryGetService<IChapterWorkflowService>()?.OpenCreateChapterDialog(); break;
                                 case Windows.System.VirtualKey.Delete:
-                                    if (MainPage.ChapterList.listView.SelectedItem is Chapter selectedChapter && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.ChapterList.listView.SelectedItem is Chapter selectedChapter && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.TryGetService<IChapterWorkflowService>()?.DeleteChapter(selectedChapter.Token); break;
 
                                 case Windows.System.VirtualKey.E:
-                                    if (MainPage.CommandBar.exportButton.IsEnabled && AppView.currentlyOpenedDialogue == null)
+                                    if (MainPage.CommandBar.exportButton.IsEnabled && App.GetService<IDialogService>().CurrentDialog == null)
                                         App.GetService<IDialogService>().OpenExportDialogue(); break;
                                 case Windows.System.VirtualKey.R: MainPage.CommandBar.ReadAloud(); break;
                                 case Windows.System.VirtualKey.F: MainPage.ChapterText.OpenSearchAndReplace(); break;
@@ -189,7 +188,7 @@ namespace Storylines.Helpers
                             }
                             break;
                         case AppView.Pages.Characters:
-                            switch (e.VirtualKey)
+                            switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.Q:
                                     if (CharactersPage.current.isAddEnabled)
@@ -224,7 +223,7 @@ namespace Storylines.Helpers
                             break;
                     }
 
-                    switch (e.VirtualKey)
+                    switch (e.Key)
                     {
                         case Windows.System.VirtualKey.S: App.GetService<IProjectPersistenceService>().Save(); break;
                         case Windows.System.VirtualKey.I:

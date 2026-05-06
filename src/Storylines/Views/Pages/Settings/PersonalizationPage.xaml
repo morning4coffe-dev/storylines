@@ -3,7 +3,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:constants="using:Storylines.Constants"
     mc:Ignorable="d">
     <Page.Resources>
         <ResourceDictionary>
@@ -18,7 +18,7 @@
         <StackPanel x:Name="personalizationPage"
                 Margin="16,16,16,24"
                 Spacing="10"
-                    HorizontalAlignment="Stretch"
+                    HorizontalAlignment="Center"
                     MaxWidth="1000">
             <VisualStateManager.VisualStateGroups>
             <VisualStateGroup>
@@ -90,7 +90,7 @@
                 </VisualState>
                 <VisualState x:Name="WideLayout">
                 <VisualState.StateTriggers>
-                    <AdaptiveTrigger MinWindowWidth="1400" />
+                    <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
                 </VisualState.StateTriggers>
                 <VisualState.Setters>
                     <Setter Target="personalizationPage.Margin"
@@ -204,14 +204,14 @@
                 </ComboBox>
             </Grid>
 
-            <muxc:Expander Style="{StaticResource CustomExpanderStyle}"
+            <Expander Style="{StaticResource CustomExpanderStyle}"
                            BorderBrush="{ThemeResource LayerFillColorDefaultBrush}"
                            BorderThickness="{ThemeResource ElementBorderThickness}"
                            HorizontalAlignment="Stretch"
                            VerticalAlignment="Top"
                            HorizontalContentAlignment="Left"
                            IsExpanded="True">
-                <muxc:Expander.Header>
+                <Expander.Header>
                     <Grid Padding="-15,20,-12,20">
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto" />
@@ -247,8 +247,8 @@
                             </ComboBox.Items>
                         </ComboBox>
                     </Grid>
-                </muxc:Expander.Header>
-                <muxc:Expander.Content>
+                </Expander.Header>
+                <Expander.Content>
                     <StackPanel Spacing="12"
                                 Margin="16,12">
                         <TextBlock x:Uid="quickPresets"
@@ -304,8 +304,8 @@
                                      IsEnabled="{x:Bind ViewModel.IsCustomAccentSelected, Mode=OneWay}"
                                      Color="{x:Bind ViewModel.CustomAccentColor, Mode=TwoWay}" />
                     </StackPanel>
-                </muxc:Expander.Content>
-            </muxc:Expander>
+                </Expander.Content>
+            </Expander>
 
             <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
                   BorderBrush="{ThemeResource ElementBorderColor}"
@@ -422,7 +422,7 @@
                            VerticalAlignment="Center"
                            TextWrapping="Wrap"
                            Grid.Column="1" />
-                <muxc:NumberBox x:Name="fontSizeNumBox"
+                <NumberBox x:Name="fontSizeNumBox"
                                 HorizontalAlignment="Right"
                                 VerticalAlignment="Center"
                                 Minimum="8"
@@ -464,7 +464,7 @@
                             VerticalAlignment="Center"
                             HorizontalAlignment="Right"
                             Grid.Column="2">
-                    <muxc:NumberBox x:Name="editorZoomNumBox"
+                    <NumberBox x:Name="editorZoomNumBox"
                                     HorizontalAlignment="Right"
                                     VerticalAlignment="Center"
                                     Minimum="52"
@@ -481,12 +481,6 @@
                 </StackPanel>
             </Grid>
 
-            <StackPanel.ChildrenTransitions>
-                <TransitionCollection>
-                    <EntranceThemeTransition IsStaggeringEnabled="True"
-                                             FromVerticalOffset="50" />
-                </TransitionCollection>
-            </StackPanel.ChildrenTransitions>
         </StackPanel>
     </ScrollViewer>
 </Page>

@@ -1,16 +1,18 @@
 using Storylines.Views.Pages;
 using Storylines.Models;
+using Storylines.Services;
 using Storylines.ViewModels;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Views.Controls
 {
     public sealed partial class ChaptersList : UserControl
     {
         private readonly ChaptersListViewModel _viewModel;
+        private readonly WindowContext _windowContext;
 
         public ChaptersListViewModel ViewModel => _viewModel;
 
@@ -30,8 +32,10 @@ namespace Storylines.Views.Controls
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _viewModel = App.GetService<ChaptersListViewModel>();
 
+            _windowContext.ChapterList = this;
             MainPage.ChapterList = this;
         }
 
@@ -126,7 +130,7 @@ namespace Storylines.Views.Controls
         }
         #endregion
 
-        private void OnHyperlink_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        private void OnHyperlink_Click(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
             ViewModel.OpenCreateChapterDialogCommand.Execute(null);
         }

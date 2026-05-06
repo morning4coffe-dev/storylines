@@ -1,11 +1,13 @@
-using Microsoft.Toolkit.Uwp.UI.Helpers;
+using CommunityToolkit.WinUI.Helpers;
+using Microsoft.UI;
 using Storylines.Views.Pages;
 using Storylines.Services.Interfaces;
 using System;
 using Windows.Storage;
 using Windows.UI;
 using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
+using Microsoft.UI.Windowing;
+using Microsoft.UI.Xaml;
 using static Storylines.Services.SettingsValues;
 
 namespace Storylines.Services
@@ -20,7 +22,8 @@ namespace Storylines.Services
         {
             get
             {
-                if (Window.Current.Content is FrameworkElement rootElement)
+                var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+                if (ctx?.Window?.Content is FrameworkElement rootElement)
                 {
                     return rootElement.RequestedTheme;
                 }
@@ -29,7 +32,8 @@ namespace Storylines.Services
             }
             set
             {
-                if (Window.Current.Content is FrameworkElement rootElement)
+                var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+                if (ctx?.Window?.Content is FrameworkElement rootElement)
                 {
                     rootElement.RequestedTheme = value;
                 }
@@ -159,8 +163,12 @@ namespace Storylines.Services
             }
         }
 
-        private static void ApplyThemeForTitleBar(ApplicationViewTitleBar titleBar, Color color, ElementTheme theme)
+        private static void ApplyThemeForTitleBar(Color color, ElementTheme theme)
         {
+            var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
+            if (ctx?.Window == null) return;
+            var titleBar = ctx.Window.AppWindow.TitleBar;
+
             if (theme == ElementTheme.Dark)
             {
                 // Set active window colors
@@ -205,21 +213,21 @@ namespace Storylines.Services
 
         private static void UpdateAccentColor(Color color)
         {
-            _ = AppView.current.Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-              {
-                  Application.Current.Resources["SystemAccentColor"] = color; 
-                  Application.Current.Resources["SystemAccentColorDark1"] = ChangeColorBrightness(color, -0.05f);
-                  Application.Current.Resources["SystemAccentColorDark2"] = ChangeColorBrightness(color, -0.10f);
-                  Application.Current.Resources["SystemAccentColorDark3"] = ChangeColorBrightness(color, -0.15f);
-                  Application.Current.Resources["SystemAccentColorLight1"] = ChangeColorBrightness(color, 0.20f);
-                  Application.Current.Resources["SystemAccentColorLight2"] = ChangeColorBrightness(color, 0.30f);
-                  Application.Current.Resources["SystemAccentColorLight3"] = ChangeColorBrightness(color, 0.40f);
+            AppView.current.DispatcherQueue.TryEnqueue(() =>
+            {
+                Application.Current.Resources["SystemAccentColor"] = color; 
+                Application.Current.Resources["SystemAccentColorDark1"] = ChangeColorBrightness(color, -0.05f);
+                Application.Current.Resources["SystemAccentColorDark2"] = ChangeColorBrightness(color, -0.10f);
+                Application.Current.Resources["SystemAccentColorDark3"] = ChangeColorBrightness(color, -0.15f);
+                Application.Current.Resources["SystemAccentColorLight1"] = ChangeColorBrightness(color, 0.20f);
+                Application.Current.Resources["SystemAccentColorLight2"] = ChangeColorBrightness(color, 0.30f);
+                Application.Current.Resources["SystemAccentColorLight3"] = ChangeColorBrightness(color, 0.40f);
 
-                  ApplyThemeForTitleBar(ApplicationView.GetForCurrentView().TitleBar, color, AppView.current.RequestedTheme);
+                ApplyThemeForTitleBar(color, AppView.current.RequestedTheme);
 
-                  AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
-                  AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
-              });
+                AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+                AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+            });
         }
 
         public static Color ChangeColorBrightness(Color color, float correctionFactor)

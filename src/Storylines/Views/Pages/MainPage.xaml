@@ -4,7 +4,6 @@
       xmlns:components="using:Storylines.Views.Controls"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       xmlns:vm="using:Storylines.ViewModels"
       Loaded="Page_Loaded"
       SizeChanged="OnPage_SizeChanged"
@@ -121,7 +120,7 @@
                 <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="40" />
             </Grid.ColumnDefinitions>
-            <muxc:ProgressBar x:Name="mainProgressBar"
+            <ProgressBar x:Name="mainProgressBar"
                               Grid.ColumnSpan="3"
                               Margin="0,-1,0,3"
                               VerticalAlignment="Top"
@@ -141,41 +140,47 @@
                         Background="Transparent"
                         BorderThickness="0"
                         CornerRadius="4"
-                        Command="{x:Bind ViewModel.ShowProjectStatsCommand}"
-                        ToolTipService.ToolTip="Click for detailed stats">
+                        Command="{x:Bind ViewModel.ShowProjectStatsCommand}">
                     <StackPanel Orientation="Horizontal" Spacing="8">
-                        <TextBlock x:Name="downBarWordsText"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"
-                                   Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.8"
-                                   Text="{x:Bind ViewModel.DownBarWordsText, Mode=OneWay}" />
-                        <TextBlock x:Name="downBarSep1"
-                                   Text="|"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"
-                                   Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.5"
-                                   Visibility="{x:Bind ViewModel.DownBarSeparatorsVisibility, Mode=OneWay}" />
-                        <TextBlock x:Name="downBarCharsText"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"
-                                   Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.8"
-                                   Text="{x:Bind ViewModel.DownBarCharsText, Mode=OneWay}" />
-                        <TextBlock x:Name="downBarSep2"
-                                   Text="|"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"
-                                   Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.5"
-                                   Visibility="{x:Bind ViewModel.DownBarSeparatorsVisibility, Mode=OneWay}" />
-                        <TextBlock x:Name="downBarReadTimeText"
-                                   VerticalAlignment="Center"
-                                   FontSize="12"
-                                   Foreground="{ThemeResource TextForeground}"
-                                   Opacity="0.8"
-                                   Text="{x:Bind ViewModel.DownBarReadTimeText, Mode=OneWay}" />
+                        <FontIcon Glyph=""
+                                  VerticalAlignment="Center"
+                                  FontSize="12"
+                                  Foreground="{ThemeResource TextForeground}"
+                                  Opacity="0.7" />
+                        <StackPanel Orientation="Horizontal" Spacing="8">
+                            <TextBlock x:Name="downBarWordsText"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{ThemeResource TextForeground}"
+                                       Opacity="0.8"
+                                       Text="{x:Bind ViewModel.DownBarWordsText, Mode=OneWay}" />
+                            <TextBlock x:Name="downBarSep1"
+                                       Text="|"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{ThemeResource TextForeground}"
+                                       Opacity="0.5"
+                                       Visibility="{x:Bind ViewModel.DownBarSeparatorsVisibility, Mode=OneWay}" />
+                            <TextBlock x:Name="downBarCharsText"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{ThemeResource TextForeground}"
+                                       Opacity="0.8"
+                                       Text="{x:Bind ViewModel.DownBarCharsText, Mode=OneWay}" />
+                            <TextBlock x:Name="downBarSep2"
+                                       Text="|"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{ThemeResource TextForeground}"
+                                       Opacity="0.5"
+                                       Visibility="{x:Bind ViewModel.DownBarSeparatorsVisibility, Mode=OneWay}" />
+                            <TextBlock x:Name="downBarReadTimeText"
+                                       VerticalAlignment="Center"
+                                       FontSize="12"
+                                       Foreground="{ThemeResource TextForeground}"
+                                       Opacity="0.8"
+                                       Text="{x:Bind ViewModel.DownBarReadTimeText, Mode=OneWay}" />
+                        </StackPanel>
                     </StackPanel>
                 </Button>
 
@@ -226,6 +231,7 @@
 
                 <TextBlock x:Name="downBarFocusText"
                            VerticalAlignment="Center"
+                           Margin="12,0,0,0"
                            x:FieldModifier="public"
                            Text="{x:Bind ViewModel.DownBarFocusText, Mode=OneWay}"
                            Foreground="{ThemeResource TextForeground}"
@@ -324,7 +330,7 @@
                                             </AppBarButton.Icon>
                                         </AppBarButton>
                                     </Grid>
-                                    <muxc:NumberBox x:Name="textBoxZoomTextFlyoutTextBox"
+                                    <NumberBox x:Name="textBoxZoomTextFlyoutTextBox"
                                                     Width="180"
                                                     Height="38"
                                                     Padding="10,8"

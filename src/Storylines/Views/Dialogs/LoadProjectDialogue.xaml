@@ -1,9 +1,9 @@
-<ContentDialog x:Class="Storylines.Views.Dialogs.LoadProjectDialogue"
+<dialogs:StorylinesContentDialog x:Class="Storylines.Views.Dialogs.LoadProjectDialogue"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+               xmlns:dialogs="using:Storylines.Views.Dialogs"
                xmlns:models="using:Storylines.Models"
                xmlns:customcontrols="using:Storylines.Views.Controls" xmlns:variables1="using:Storylines.Models"
                mc:Ignorable="d"
@@ -146,7 +146,7 @@
             </MenuFlyout>
         </ListView>
 
-        <muxc:ProgressRing x:Name="progressRing"
+        <ProgressRing x:Name="progressRing"
                            IsIndeterminate="True"
                            Grid.Row="2"
                            IsActive="True" />
@@ -170,4 +170,4 @@
             </Paragraph>
         </RichTextBlock>
     </Grid>
-</ContentDialog>
+</dialogs:StorylinesContentDialog>

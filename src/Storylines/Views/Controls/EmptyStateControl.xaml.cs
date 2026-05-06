@@ -1,13 +1,13 @@
 using System.Windows.Input;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Controls
 {
     /// <summary>
     /// Reusable empty-state UserControl: large glyph, headline, description and an optional CTA.
     /// Drop into any list/grid host so empty / loading / error states share a single visual shape
-    /// across chapters, characters, pinboard, branching dialogue, and recent projects lists.
+    /// across chapters, characters, pinboard, and recent projects lists.
     /// </summary>
     public sealed partial class EmptyStateControl : UserControl
     {

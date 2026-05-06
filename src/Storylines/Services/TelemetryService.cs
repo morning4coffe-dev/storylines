@@ -1,12 +1,14 @@
-using Microsoft.Toolkit.Uwp.Helpers;
 using Storylines.Models;
 using Storylines.Services.Interfaces;
 using Storylines.Services.Modes;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
 using System.Threading.Tasks;
+using Windows.ApplicationModel;
+using Windows.System.Profile;
 
 namespace Storylines.Services
 {
@@ -18,6 +20,48 @@ namespace Storylines.Services
         private readonly ILogger _logger;
         private readonly IUndoRedoService _undoRedo;
         private readonly string _sessionId = Guid.NewGuid().ToString("N");
+        private static readonly DateTime _processStartTime = Process.GetCurrentProcess().StartTime;
+
+        private static TimeSpan AppUptime => DateTime.Now - _processStartTime;
+
+        private static bool IsFirstRun
+        {
+            get
+            {
+                var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                if (settings.Values.ContainsKey("_hasLaunchedBefore"))
+                    return false;
+                settings.Values["_hasLaunchedBefore"] = true;
+                return true;
+            }
+        }
+
+        private static int TotalLaunchCount
+        {
+            get
+            {
+                var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
+                int count = settings.Values.ContainsKey("_totalLaunchCount")
+                    ? (int)settings.Values["_totalLaunchCount"]
+                    : 0;
+                count++;
+                settings.Values["_totalLaunchCount"] = count;
+                return count;
+            }
+        }
+
+        private static string ApplicationVersionString
+        {
+            get
+            {
+                var v = Package.Current.Id.Version;
+                return $"{v.Major}.{v.Minor}.{v.Build}.{v.Revision}";
+            }
+        }
+
+        private static string DeviceFamily => AnalyticsInfo.VersionInfo.DeviceFamily;
+
+        private static double AvailableMemoryMB => GC.GetGCMemoryInfo().TotalAvailableMemoryBytes / (1024.0 * 1024.0);
 
         public TelemetryService(ITelemetryProvider provider, ProjectState projectState, EditorModeService editorModeService, ILogger logger, IUndoRedoService undoRedo)
         {
@@ -36,8 +80,8 @@ namespace Storylines.Services
                 "app_start",
                 TelemetryEventPropertyBuilder.Create(
                     ("activation_kind", activationKind),
-                    ("first_run", SystemInformation.Instance.IsFirstRun.ToString()),
-                    ("launch_count", FormatNumber(SystemInformation.Instance.TotalLaunchCount)),
+                    ("first_run", IsFirstRun.ToString()),
+                    ("launch_count", FormatNumber(TotalLaunchCount)),
                     ("autosave_enabled", SettingsValues.autosaveEnabled.ToString()),
                     ("autosave_interval_minutes", FormatNumber(SettingsValues.autosaveInterval)),
                     ("exit_dialog_enabled", SettingsValues.exitDiagEnabled.ToString()),
@@ -54,7 +98,7 @@ namespace Storylines.Services
                 CreateFullProjectSummaryProperties(),
                 TelemetryEventPropertyBuilder.Create(
                     ("blocked_by_unsaved_changes", blockedByUnsavedChanges.ToString()),
-                    ("uptime_minutes", FormatNumber(SystemInformation.Instance.AppUptime.TotalMinutes)),
+                    ("uptime_minutes", FormatNumber(AppUptime.TotalMinutes)),
                     ("unsaved_progress", _undoRedo.IsDirty.ToString())));
 
             TrackProviderEvent("app_close_requested", properties);
@@ -67,7 +111,7 @@ namespace Storylines.Services
                 TelemetryEventPropertyBuilder.Create(
                     ("source", source),
                     ("review_prompt_state", GetReviewPromptState()),
-                    ("launch_count", FormatNumber(SystemInformation.Instance.TotalLaunchCount))));
+                    ("launch_count", FormatNumber(TotalLaunchCount))));
         }
 
         public void TrackReviewInteraction(string source, string action, string status = null)
@@ -112,7 +156,7 @@ namespace Storylines.Services
                 "focus_mode_left",
                 TelemetryEventPropertyBuilder.Create(
                     ("finished", finished.ToString()),
-                    ("uptime_minutes", FormatNumber(SystemInformation.Instance.AppUptime.TotalMinutes)),
+                    ("uptime_minutes", FormatNumber(AppUptime.TotalMinutes)),
                     ("can_leave", _editorModeService.Current.CanLeave.ToString())));
         }
 
@@ -144,8 +188,8 @@ namespace Storylines.Services
                     ("message", message ?? exception?.Message ?? "Unknown"),
                     ("has_inner_exception", (exception?.InnerException != null).ToString()),
                     ("inner_exception_type", exception?.InnerException?.GetType().Name),
-                    ("available_memory", FormatNumber(SystemInformation.Instance.AvailableMemory)),
-                    ("uptime_minutes", FormatNumber(SystemInformation.Instance.AppUptime.TotalMinutes)),
+                    ("available_memory", FormatNumber(AvailableMemoryMB)),
+                    ("uptime_minutes", FormatNumber(AppUptime.TotalMinutes)),
                     ("unsaved_progress", _undoRedo.IsDirty.ToString())));
 
             TrackProviderEvent("app_unhandled_exception", eventProperties);
@@ -175,10 +219,10 @@ namespace Storylines.Services
             return TelemetryEventPropertyBuilder.Create(
                 ("session_id", _sessionId),
                 ("telemetry_provider", _provider.ProviderName),
-                ("app_version", SystemInformation.Instance.ApplicationVersion.ToFormattedString()),
+                ("app_version", ApplicationVersionString),
                 ("os_version", GetOperatingSystemVersion()),
-                ("device_family", SystemInformation.Instance.DeviceFamily),
-                //TODO ("device_architecture", SystemInformation.Instance.OperatingSystemArchitecture),
+                ("device_family", DeviceFamily),
+                //TODO ("device_architecture", ...),
                 ("app_language", GetApplicationLanguage()),
                 ("ui_theme", SettingsValues.selectedTheme.ToString()),
                 ("editor_mode", _editorModeService.Current.Id));
@@ -228,13 +272,13 @@ namespace Storylines.Services
         private static string GetApplicationLanguage()
         {
             return string.IsNullOrWhiteSpace(SettingsValues.language)
-                ? SystemInformation.Instance.Culture.Name
+                ? CultureInfo.CurrentCulture.Name
                 : SettingsValues.language;
         }
 
         private static string GetOperatingSystemVersion()
         {
-            var version = SystemInformation.Instance.OperatingSystemVersion;
+            var version = Environment.OSVersion.Version;
             return $"{version.Major}.{version.Minor}.{version.Build}.{version.Revision}";
         }
 

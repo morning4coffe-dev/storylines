@@ -11,10 +11,11 @@ using System.Threading.Tasks;
 using Windows.Media.SpeechSynthesis;
 using Windows.Storage;
 using Windows.System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media;
 using Storylines.Views.Dialogs;
+using Storylines.Services.Modes;
 
 namespace Storylines.Views.Controls
 {
@@ -26,32 +27,49 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ITextEditorService _textEditor;
         private readonly CommandBarViewModel _viewModel;
+        private readonly EditorModeService _modeService;
         private readonly SpeechHubViewModel _speechHub;
         private readonly ISpeechService _speechService;
+        private readonly WindowContext _windowContext;
 
         public CommandBarViewModel ViewModel => _viewModel;
         public SpeechHubViewModel SpeechHub => _speechHub;
 
+        private MainPage CurrentMainPage => _windowContext?.MainPage;
+
+        private ChapterTextBox CurrentChapterText => _windowContext?.ChapterText;
+
         public MainCommandBar()
         {
             this.InitializeComponent();
+            _windowContext = App.GetService<WindowContext>();
             _chaptersListViewModel = App.GetService<ChaptersListViewModel>();
             _chapterWorkflow = App.GetService<IChapterWorkflowService>();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
             _viewModel = App.GetService<CommandBarViewModel>();
+            _modeService = App.TryGetService<EditorModeService>();
             _speechHub = App.GetService<SpeechHubViewModel>();
             _speechService = App.GetService<ISpeechService>();
 
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
                || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
+            {
+                _windowContext.CommandBar = this;
                 MainPage.CommandBar = this;
+            }
 
             UpdateExperimentalFeaturesVisibility();
             var events = App.GetService<EventAggregator>();
             events.Subscribe<SettingChangedEvent>(OnSettingChanged);
             events.Subscribe<TextFormattingStateChangedEvent>(OnTextFormattingStateChanged);
+
+            if (_modeService != null)
+            {
+                _modeService.ModeChanged += UpdateModeButtonStates;
+                UpdateModeButtonStates(_modeService.Current);
+            }
 
             // Restore persisted dialogue mode state
             dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
@@ -71,8 +89,33 @@ namespace Storylines.Views.Controls
             mainStrikethroughButton.IsChecked = e.IsStrikethrough;
         }
 
+        private void UpdateModeButtonStates(IEditorMode mode)
+        {
+            if (readOnlyModeButton != null)
+                readOnlyModeButton.IsChecked = mode?.Id == "readonly";
+        }
+
         private void UpdateExperimentalFeaturesVisibility()
         {
+            bool showBranching = false;
+
+#if PRIVATE_PLUGINS
+            try
+            {
+                showBranching = SettingsValues.experimentalFeaturesEnabled
+                                && App.TryGetService<Storylines.Services.Interfaces.IBranchingDialogueService>() != null;
+            }
+            catch
+            {
+                showBranching = false;
+            }
+#else
+            showBranching = false;
+#endif
+
+            // Ensure the button exists in XAML and set its visibility
+            if (branchingDialogueButton != null)
+                branchingDialogueButton.Visibility = showBranching ? Visibility.Visible : Visibility.Collapsed;
         }
 
         #region TEMP - NavigationView
@@ -102,7 +145,7 @@ namespace Storylines.Views.Controls
                 }
             }
             else
-                AppView.current.ChangePage(AppView.Pages.Settings);
+                _windowContext.AppView.ChangePage(AppView.Pages.Settings);
         }
         #endregion
 
@@ -122,12 +165,19 @@ namespace Storylines.Views.Controls
 
         private void OnDialoguesEnableButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
+            CurrentChapterText?.DialoguesOnOff((bool)dialoguesEnableButton.IsChecked);
         }
 
         private void OnDialoguesAddButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.AddDialogue();
+            CurrentChapterText?.AddDialogue();
+        }
+
+        private void OnBranchingDialogueButton_Click(object sender, RoutedEventArgs e)
+        {
+    #if PRIVATE_PLUGINS
+            _navigation?.NavigateTo(Storylines.Services.Interfaces.NavigationTarget.BranchingDialogue);
+    #endif
         }
 
         private void OnDictationButton_Click(object sender, RoutedEventArgs e)
@@ -150,27 +200,30 @@ namespace Storylines.Views.Controls
         #region FORMAT
         private void OnFormatterButton_Click(object sender, RoutedEventArgs e)
         {
+            if (CurrentChapterText == null)
+                return;
+
             switch ((sender as Control).Tag?.ToString())
             {
                 case "Bold":
-                    MainPage.ChapterText.BoldChapterTextBox();
+                    CurrentChapterText.BoldChapterTextBox();
                     break;
                 case "Italic":
-                    MainPage.ChapterText.ItalicChapterTextBox();
+                    CurrentChapterText.ItalicChapterTextBox();
                     break;
                 case "Underline":
-                    MainPage.ChapterText.UnderlineChapterTextBox();
+                    CurrentChapterText.UnderlineChapterTextBox();
                     break;
                 case "Strikethrough":
-                    MainPage.ChapterText.StrikethroughChapterTextBox();
+                    CurrentChapterText.StrikethroughChapterTextBox();
                     break;
                 case "Highlighter":
-                    MainPage.ChapterText.MarkTextBackground();
+                    CurrentChapterText.MarkTextBackground();
                     break;
             }
         }
 
-        private void OnMainHighlighterButton_RightTapped(object sender, Windows.UI.Xaml.Input.RightTappedRoutedEventArgs e)
+        private void OnMainHighlighterButton_RightTapped(object sender, Microsoft.UI.Xaml.Input.RightTappedRoutedEventArgs e)
         {
             if (!mainHighlighterFlyout.IsOpen)
                 mainHighlighterFlyout.ShowAt(mainHighlighterButton);
@@ -181,7 +234,7 @@ namespace Storylines.Views.Controls
         private void OnHighlighterColorButton_Click(object sender, RoutedEventArgs e)
         {
             TextHighlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
-            MainPage.ChapterText.MarkTextBackground();
+            CurrentChapterText?.MarkTextBackground();
             mainHighlighterFlyout.Hide();
         }
 
@@ -217,19 +270,19 @@ namespace Storylines.Views.Controls
         }
 
         private void OnFormattingSurface_GotFocus(object sender, RoutedEventArgs e)
-            => MainPage.Current?.SetTextFormattingContextActive(true);
+            => CurrentMainPage?.SetTextFormattingContextActive(true);
 
         private void OnFormattingSurface_LostFocus(object sender, RoutedEventArgs e)
         {
-            var focused = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
+            var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
             if (IsFormattingContextElement(focused)
-                || (MainPage.ChapterText?.IsFormattingContextElement(focused) ?? false))
+                || (CurrentChapterText?.IsFormattingContextElement(focused) ?? false))
             {
-                MainPage.Current?.SetTextFormattingContextActive(true);
+                CurrentMainPage?.SetTextFormattingContextActive(true);
                 return;
             }
 
-            MainPage.Current?.SetTextFormattingContextActive(false);
+            CurrentMainPage?.SetTextFormattingContextActive(false);
         }
 
         private static bool IsChildOf(DependencyObject child, DependencyObject parent)
@@ -250,25 +303,36 @@ namespace Storylines.Views.Controls
         #region VIEW
         private void OnTypewriterModeButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.ChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
+            if (CurrentChapterText != null)
+                CurrentChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
 
             if (_textEditor.SelectedChapterIndex >= 0)
                 _textEditor.Focus();
         }
 
         private void OnNotesToggleButton_Click(object sender, RoutedEventArgs e)
-            => MainPage.Current.ToggleNotesPane(notesToggleButton.IsChecked == true);
+            => CurrentMainPage?.ToggleNotesPane(notesToggleButton.IsChecked == true);
 
         private void OnSearchReplaceButton_Click(object sender, RoutedEventArgs e)
         {
             if (searchReplaceButton.IsChecked == true)
-                MainPage.ChapterText.OpenSearchAndReplace();
+                CurrentChapterText?.OpenSearchAndReplace();
             else
-                MainPage.ChapterText.CloseSearchAndReplace();
+                CurrentChapterText?.CloseSearchAndReplace();
         }
 
         private void OnPinboardButton_Click(object sender, RoutedEventArgs e)
             => _navigation.NavigateTo(Services.Interfaces.NavigationTarget.Pinboard);
+
+        private void OnReadOnlyModeButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (_modeService?.IsInMode("readonly") == true)
+                _windowContext.AppView?.TryExitActiveMode();
+            else
+                ViewModel.OpenReadOnlyModeCommand.Execute(null);
+
+            UpdateModeButtonStates(_modeService?.Current);
+        }
 
         private void OnGlobalSearchButton_Click(object sender, RoutedEventArgs e)
             => _ = GlobalSearchDialogue.OpenAsync();
@@ -279,7 +343,6 @@ namespace Storylines.Views.Controls
 
         #region HELP
         #region ReadAloud
-        private DispatcherTimer timer;
         private CancellationTokenSource _readAloudCts;
         private List<string> _paragraphs;
         private int _currentParagraphIndex;
@@ -287,21 +350,22 @@ namespace Storylines.Views.Controls
 
         private void OnReadAloudButton_Click(object sender, RoutedEventArgs e)
         {
-            var speechText = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
-            if (string.IsNullOrWhiteSpace(speechText))
-                return;
+            //TODO 
+            //var speechText = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
+            //if (string.IsNullOrWhiteSpace(speechText))
+            //    return;
 
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Stopped || readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Closed)
-                ReadAloud();
+            //if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Stopped || readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Closed)
+            //    ReadAloud();
         }
 
         private void OnReadAloudTimer_Tick(object sender, object e)
         {
-            if (readAloudMediaElement.NaturalDuration.HasTimeSpan)
-            {
-                readAloudProgressBar.Maximum = readAloudMediaElement.NaturalDuration.TimeSpan.TotalSeconds;
-                readAloudProgressBar.Value = readAloudMediaElement.Position.TotalSeconds;
-            }
+            //if (readAloudMediaElement.NaturalDuration.HasTimeSpan)
+            //{
+            //    readAloudProgressBar.Maximum = readAloudMediaElement.NaturalDuration.TimeSpan.TotalSeconds;
+            //    readAloudProgressBar.Value = readAloudMediaElement.Position.TotalSeconds;
+            //}
         }
 
         public void ReadAloud()
@@ -329,73 +393,74 @@ namespace Storylines.Views.Controls
 
         private void PlayCurrentParagraph()
         {
-            if (_paragraphs == null || _currentParagraphIndex >= _paragraphs.Count)
-            {
-                // Try to advance to next chapter
-                if (TryAdvanceToNextChapter())
-                    return;
+            //if (_paragraphs == null || _currentParagraphIndex >= _paragraphs.Count)
+            //{
+            //    // Try to advance to next chapter
+            //    if (TryAdvanceToNextChapter())
+            //        return;
 
-                StopReadAloud();
-                return;
-            }
+            //    StopReadAloud();
+            //    return;
+            //}
 
-            var text = _paragraphs[_currentParagraphIndex];
-            _ = SpeakTextAsync(text);
+            //var text = _paragraphs[_currentParagraphIndex];
+            //_ = SpeakTextAsync(text);
 
-            timer?.Stop();
-            timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
-            timer.Tick += OnReadAloudTimer_Tick;
-            timer.Start();
+            //timer?.Stop();
+            //timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
+            //timer.Tick += OnReadAloudTimer_Tick;
+            //timer.Start();
 
-            readAloudProgressBar.ShowPaused = false;
-            readAloudControllHolder.Visibility = Visibility.Visible;
-            pauseReadAloud.IsEnabled = true;
-            playReadAloud.IsEnabled = false;
-            readAloudProgressBar.Value = 0;
+            //readAloudProgressBar.ShowPaused = false;
+            //readAloudControllHolder.Visibility = Visibility.Visible;
+            //pauseReadAloud.IsEnabled = true;
+            //playReadAloud.IsEnabled = false;
+            //readAloudProgressBar.Value = 0;
 
-            _speechService?.NotifyReadingStarted();
-            NotificationManager.DisplayBadgeNotification("playing");
+            //_speechService?.NotifyReadingStarted();
+            //NotificationManager.DisplayBadgeNotification("playing");
         }
 
         private bool TryAdvanceToNextChapter()
         {
-            var nextIndex = _currentReadChapterIndex + 1;
-            if (nextIndex >= _projectState.Chapters.Count)
-                return false;
+            return false;
+            //var nextIndex = _currentReadChapterIndex + 1;
+            //if (nextIndex >= _projectState.Chapters.Count)
+            //    return false;
 
-            _currentReadChapterIndex = nextIndex;
+            //_currentReadChapterIndex = nextIndex;
 
-            // Select the next chapter in the UI
-            _ = Dispatcher.RunAsync(Windows.UI.Core.CoreDispatcherPriority.Normal, () =>
-            {
-                if (MainPage.ChapterList?.listView != null && nextIndex < MainPage.ChapterList.listView.Items.Count)
-                    MainPage.ChapterList.listView.SelectedIndex = nextIndex;
-            });
+            //// Select the next chapter in the UI
+            //DispatcherQueue.TryEnqueue(() =>
+            //{
+            //    if (MainPage.ChapterList?.listView != null && nextIndex < MainPage.ChapterList.listView.Items.Count)
+            //        MainPage.ChapterList.listView.SelectedIndex = nextIndex;
+            //});
 
-            // Small delay for chapter load, then start reading
-            var delayTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(300) };
-            delayTimer.Tick += (s, args) =>
-            {
-                delayTimer.Stop();
-                var text = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
-                if (string.IsNullOrWhiteSpace(text))
-                {
-                    StopReadAloud();
-                    return;
-                }
+            //// Small delay for chapter load, then start reading
+            //var delayTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(300) };
+            //delayTimer.Tick += (s, args) =>
+            //{
+            //    delayTimer.Stop();
+            //    var text = _textEditor.GetText(Services.Interfaces.TextFormat.PlainText);
+            //    if (string.IsNullOrWhiteSpace(text))
+            //    {
+            //        StopReadAloud();
+            //        return;
+            //    }
 
-                _paragraphs = new List<string>();
-                foreach (var p in text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
-                {
-                    var trimmed = p.Trim();
-                    if (!string.IsNullOrEmpty(trimmed))
-                        _paragraphs.Add(trimmed);
-                }
-                _currentParagraphIndex = 0;
-                PlayCurrentParagraph();
-            };
-            delayTimer.Start();
-            return true;
+            //    _paragraphs = new List<string>();
+            //    foreach (var p in text.Split(new[] { '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries))
+            //    {
+            //        var trimmed = p.Trim();
+            //        if (!string.IsNullOrEmpty(trimmed))
+            //            _paragraphs.Add(trimmed);
+            //    }
+            //    _currentParagraphIndex = 0;
+            //    PlayCurrentParagraph();
+            //};
+            //delayTimer.Start();
+            //return true;
         }
 
         public async Task SpeakTextAsync(string speechText)
@@ -411,28 +476,28 @@ namespace Storylines.Views.Controls
             {
                 var synth = new SpeechSynthesizer();
 
-                foreach (var voice in SpeechSynthesizer.AllVoices)
-                {
-                    if (voice.Id == (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice] == null ?
-                        SpeechSynthesizer.DefaultVoice.Id : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice].ToString()))
-                        synth.Voice = voice;
-                }
+                //foreach (var voice in SpeechSynthesizer.AllVoices)
+                //{
+                //    if (voice.Id == (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice] == null ?
+                //        SpeechSynthesizer.DefaultVoice.Id : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice].ToString()))
+                //        synth.Voice = voice;
+                //}
 
-                if (token.IsCancellationRequested) return;
+                //if (token.IsCancellationRequested) return;
 
-                var speechStream = await synth.SynthesizeTextToStreamAsync(speechText);
+                //var speechStream = await synth.SynthesizeTextToStreamAsync(speechText);
 
-                if (token.IsCancellationRequested)
-                {
-                    speechStream?.Dispose();
-                    return;
-                }
+                //if (token.IsCancellationRequested)
+                //{
+                //    speechStream?.Dispose();
+                //    return;
+                //}
 
-                readAloudMediaElement.SetSource(speechStream, speechStream.ContentType);
-                var vol = Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVolume] ?? 75);
-                if (vol > 0) vol /= 100;
-                readAloudMediaElement.Volume = vol;
-                readAloudMediaElement.Play();
+                //readAloudMediaElement.SetSource(speechStream, speechStream.ContentType);
+                //var vol = Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVolume] ?? 75);
+                //if (vol > 0) vol /= 100;
+                //readAloudMediaElement.Volume = vol;
+                //readAloudMediaElement.Play();
             }
             catch (OperationCanceledException) { }
             catch (Exception ex)
@@ -443,19 +508,19 @@ namespace Storylines.Views.Controls
 
         private void StopReadAloud()
         {
-            _readAloudCts?.Cancel();
-            _readAloudCts = null;
+            //_readAloudCts?.Cancel();
+            //_readAloudCts = null;
 
-            if (readAloudMediaElement.CurrentState != Windows.UI.Xaml.Media.MediaElementState.Stopped)
-                readAloudMediaElement.Stop();
+            //if (readAloudMediaElement.CurrentState != Microsoft.UI.Xaml.Media.MediaElementState.Stopped)
+            //    readAloudMediaElement.Stop();
 
-            timer?.Stop();
-            timer = null;
-            _paragraphs = null;
+            //timer?.Stop();
+            //timer = null;
+            //_paragraphs = null;
 
-            readAloudControllHolder.Visibility = Visibility.Collapsed;
-            _speechService?.NotifyReadingStopped();
-            NotificationManager.ClearBadgeNotification();
+            //readAloudControllHolder.Visibility = Visibility.Collapsed;
+            //_speechService?.NotifyReadingStopped();
+            //NotificationManager.ClearBadgeNotification();
         }
 
         private void OnStopButton_Click(object sender, RoutedEventArgs e)
@@ -465,39 +530,39 @@ namespace Storylines.Views.Controls
 
         private void OnPlayButton_Click(object sender, RoutedEventArgs e)
         {
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Paused)
-            {
-                readAloudMediaElement.Play();
-                readAloudProgressBar.ShowPaused = false;
-                pauseReadAloud.IsEnabled = true;
-                playReadAloud.IsEnabled = false;
+            //if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Paused)
+            //{
+            //    readAloudMediaElement.Play();
+            //    readAloudProgressBar.ShowPaused = false;
+            //    pauseReadAloud.IsEnabled = true;
+            //    playReadAloud.IsEnabled = false;
 
-                NotificationManager.DisplayBadgeNotification("playing");
-            }
+            //    NotificationManager.DisplayBadgeNotification("playing");
+            //}
         }
 
         private void OnPauseButton_Click(object sender, RoutedEventArgs e)
         {
-            if (readAloudMediaElement.CurrentState == Windows.UI.Xaml.Media.MediaElementState.Playing)
-            {
-                readAloudMediaElement.Pause();
-                readAloudProgressBar.ShowPaused = true;
-                pauseReadAloud.IsEnabled = false;
-                playReadAloud.IsEnabled = true;
+            //if (readAloudMediaElement.CurrentState == Microsoft.UI.Xaml.Media.MediaElementState.Playing)
+            //{
+            //    readAloudMediaElement.Pause();
+            //    readAloudProgressBar.ShowPaused = true;
+            //    pauseReadAloud.IsEnabled = false;
+            //    playReadAloud.IsEnabled = true;
 
-                NotificationManager.DisplayBadgeNotification("paused");
-            }
+            //    NotificationManager.DisplayBadgeNotification("paused");
+            //}
         }
 
         private void OnNextParagraphButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_paragraphs == null) return;
+            //if (_paragraphs == null) return;
 
-            _readAloudCts?.Cancel();
-            readAloudMediaElement.Stop();
+            //_readAloudCts?.Cancel();
+            //readAloudMediaElement.Stop();
 
-            _currentParagraphIndex++;
-            PlayCurrentParagraph();
+            //_currentParagraphIndex++;
+            //PlayCurrentParagraph();
         }
 
         private void OnReadAloudMediaElement_MediaEnded(object sender, RoutedEventArgs e)

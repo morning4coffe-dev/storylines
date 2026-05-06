@@ -3,21 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Storylines.Models;
+using Storylines.Services;
 using Windows.ApplicationModel.DataTransfer;
 using Storylines.Services.Interfaces;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class WritingPromptsDialogue : ContentDialog
+    public sealed partial class WritingPromptsDialogue : StorylinesContentDialog
     {
         private static readonly Random _rng = new Random();
         private readonly IChapterWorkflowService _chapterWorkflow;
         private readonly INavigationService _navigation;
         private readonly ProjectState _projectState;
         private readonly ResourceLoader _resources;
+        private readonly WindowContext _windowContext;
         private string _selectedCategory;
 
         private static readonly Dictionary<string, List<string>> Prompts = new Dictionary<string, List<string>>
@@ -80,6 +82,7 @@ namespace Storylines.Views.Dialogs
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             _resources = ResourceLoader.GetForViewIndependentUse();
+            _windowContext = App.GetService<WindowContext>();
 
             categoryComboBox.Items.Add(_resources.GetString("writingPromptsAllCategories") ?? "All categories");
             foreach (var cat in Prompts.Keys)
@@ -93,8 +96,7 @@ namespace Storylines.Views.Dialogs
         {
             try
             {
-                var dialog = new WritingPromptsDialogue();
-                await dialog.ShowAsync();
+                await App.GetService<IDialogService>().ShowAsync(new WritingPromptsDialogue());
             }
             catch (Exception ex)
             {
@@ -161,7 +163,7 @@ namespace Storylines.Views.Dialogs
                 ? _projectState.Chapters[beforeCount]
                 : _projectState.Chapters.LastOrDefault();
 
-            if (createdChapter != null && AppView.current?.page != AppView.Pages.MainPage)
+            if (createdChapter != null && _windowContext?.AppView?.page != AppView.Pages.MainPage)
                 _navigation?.NavigateTo(NavigationTarget.MainPage, createdChapter.Token);
 
             Hide();

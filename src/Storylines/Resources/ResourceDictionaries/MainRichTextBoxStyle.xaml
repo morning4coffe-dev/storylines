@@ -4,8 +4,8 @@
     <Style x:Key="MainRichTextBoxStyle" TargetType="RichEditBox">
         <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
         <Setter Property="Background" Value="{ThemeResource TextControlBackground}"/>
-        <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}"/>
-        <Setter Property="ContentLinkBackgroundColor" Value="{ThemeResource ContentLinkBackgroundColor}"/>
+        <!--TODO <Setter Property="ContentLinkForegroundColor" Value="{ThemeResource ContentLinkForegroundColor}"/>
+        <Setter Property="ContentLinkBackgroundColor" Value="{ThemeResource ContentLinkBackgroundColor}"/>-->
         <Setter Property="SelectionHighlightColor" Value="{ThemeResource TextControlSelectionHighlightColor}"/>
         <Setter Property="BorderBrush" Value="{ThemeResource TextControlBorderBrush}"/>
         <Setter Property="BorderThickness" Value="{ThemeResource TextControlBorderThemeThickness}"/>

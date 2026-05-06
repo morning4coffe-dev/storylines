@@ -4,7 +4,6 @@
       xmlns:animatedvisuals="using:Microsoft.UI.Xaml.Controls.AnimatedVisuals"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
       d:DesignHeight="800"
       d:DesignWidth="1000"
       KeyDown="Page_KeyDown"
@@ -12,7 +11,7 @@
       mc:Ignorable="d">
 
     <Grid>
-        <muxc:NavigationView x:Name="settingsNavigationView"
+        <NavigationView x:Name="settingsNavigationView"
                              HorizontalAlignment="Stretch"
                              x:FieldModifier="public"
                              IsBackButtonVisible="Collapsed"
@@ -21,54 +20,54 @@
                              OpenPaneLength="264"
                              PaneDisplayMode="Auto"
                              SelectionChanged="OnSettingsNavigationView_SelectionChanged">
-            <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItem x:Uid="general"
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="general"
                                          CornerRadius="4"
                                          IsSelected="True"
                                          Tag="General">
-                    <muxc:NavigationViewItem.Icon>
-                        <muxc:AnimatedIcon>
-                            <muxc:AnimatedIcon.Source>
+                    <NavigationViewItem.Icon>
+                        <AnimatedIcon>
+                            <AnimatedIcon.Source>
                                 <animatedvisuals:AnimatedSettingsVisualSource />
-                            </muxc:AnimatedIcon.Source>
-                            <muxc:AnimatedIcon.FallbackIconSource>
-                                <muxc:FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}"
+                            </AnimatedIcon.Source>
+                            <AnimatedIcon.FallbackIconSource>
+                                <FontIconSource FontFamily="{ThemeResource SymbolThemeFontFamily}"
                                                      Glyph="&#xE713;" />
-                            </muxc:AnimatedIcon.FallbackIconSource>
-                        </muxc:AnimatedIcon>
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                            </AnimatedIcon.FallbackIconSource>
+                        </AnimatedIcon>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                <muxc:NavigationViewItem x:Uid="personalization"
+                <NavigationViewItem x:Uid="personalization"
                                          CornerRadius="4"
                                          Tag="Personalize">
-                    <muxc:NavigationViewItem.Icon>
+                    <NavigationViewItem.Icon>
                         <FontIcon Glyph=""
                                   Style="{StaticResource AppSymbolIconStyle}" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
 
-                <muxc:NavigationViewItem x:Uid="accessibility"
+                <NavigationViewItem x:Uid="accessibility"
                                          Tag="Accessibility"
                                          Visibility="Visible">
-                    <muxc:NavigationViewItem.Icon>
+                    <NavigationViewItem.Icon>
                         <FontIcon Glyph=""
                                   Style="{StaticResource AppSymbolIconStyle}" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-            </muxc:NavigationView.MenuItems>
-            <muxc:NavigationView.PaneFooter>
-                <muxc:NavigationViewItem x:Name="aboutPageItem"
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.MenuItems>
+            <NavigationView.PaneFooter>
+                <NavigationViewItem x:Name="aboutPageItem"
                                          x:Uid="about"
                                          Tag="About"
                                          Tapped="OnAboutPageItem_Tapped">
-                    <muxc:NavigationViewItem.Icon>
+                    <NavigationViewItem.Icon>
                         <FontIcon Glyph=""
                                   Style="{StaticResource AppSymbolIconStyle}" />
-                    </muxc:NavigationViewItem.Icon>
-                </muxc:NavigationViewItem>
-            </muxc:NavigationView.PaneFooter>
+                    </NavigationViewItem.Icon>
+                </NavigationViewItem>
+            </NavigationView.PaneFooter>
             <Frame x:Name="contentFrame" />
-        </muxc:NavigationView>
+        </NavigationView>
     </Grid>
 </Page>

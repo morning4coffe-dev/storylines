@@ -1,17 +1,16 @@
-<ContentDialog x:Class="Storylines.Views.Dialogs.ExportDialogue"
+<dialogs:StorylinesContentDialog x:Class="Storylines.Views.Dialogs.ExportDialogue"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+               xmlns:dialogs="using:Storylines.Views.Dialogs"
+               xmlns:animations="using:CommunityToolkit.WinUI.Animations"
                xmlns:customcontrols="using:Storylines.Views.Controls"
                xmlns:resources="using:Storylines.Resources"
                xmlns:viewModels="using:Storylines.ViewModels"
                mc:Ignorable="d"
                CornerRadius="8"
                KeyDown="ContentDialog_KeyDown"
-               Closed="ContentDialog_Closed"
                Background="{ThemeResource DialogueAcrylicBackground}"
                x:DefaultBindMode="OneTime">
 
@@ -118,7 +117,7 @@
                                FontSize="12"
                                TextWrapping="WrapWholeWords"
                                          Visibility="{x:Bind ViewModel.NameCollisionVisibility, Mode=OneWay}" />
-                    <muxc:InfoBar IsClosable="True"
+                    <InfoBar IsClosable="True"
                                   IsOpen="{x:Bind ViewModel.IsErrorOpen, Mode=OneWay}"
                                   Severity="{x:Bind ViewModel.ErrorSeverity, Mode=OneWay}"
                                   Title="{x:Bind ViewModel.ErrorMessage, Mode=OneWay}"
@@ -263,4 +262,4 @@
             </animations:Implicit.ShowAnimations>
         </Grid>
     </StackPanel>
-</ContentDialog>
+</dialogs:StorylinesContentDialog>

@@ -4,8 +4,8 @@ using Storylines.Services.Interfaces;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Text;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Services
 {

@@ -6,7 +6,7 @@ using Storylines.Views.Dialogs;
 using System;
 using System.Text.RegularExpressions;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
+using Microsoft.UI.Xaml;
 
 namespace Storylines.ViewModels.Modes
 {

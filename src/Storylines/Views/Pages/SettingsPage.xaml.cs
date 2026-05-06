@@ -2,29 +2,34 @@ using Microsoft.UI.Xaml.Controls;
 using Storylines.Constants;
 using Storylines.Views.Pages.Settings;
 using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Media.Animation;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Media.Animation;
+using Storylines.Services;
 
 namespace Storylines.Views.Pages
 {
-    public sealed partial class SettingsPage : Windows.UI.Xaml.Controls.Page
+    public sealed partial class SettingsPage : Microsoft.UI.Xaml.Controls.Page
     {
-        private const double MinimalPaneBreakpoint = LayoutConstants.CompactBreakpoint;
-        private const double CompactPaneBreakpoint = 1100;
+        private const double MinimalPaneBreakpoint = LayoutConstants.SettingsMinimalPaneBreakpoint;
+        private const double CompactPaneBreakpoint = LayoutConstants.SettingsCompactPaneBreakpoint;
+        private NavigationViewPaneDisplayMode? _lastPaneDisplayMode;
 
         public SettingsPage()
         {
             InitializeComponent();
 
-            AppView.current.page = AppView.Pages.MainPage;
+            App.GetService<WindowContext>().AppView.page = AppView.Pages.Settings;
 
             UpdateSize();
         }
 
         private void OnSettingsNavigationView_SelectionChanged(NavigationView sender, NavigationViewSelectionChangedEventArgs args)
         {
-            var item = args.SelectedItem as NavigationViewItem;
-            SwitchPage(item.Tag.ToString());
+            if (args.SelectedItemContainer is not NavigationViewItem item || item.Tag is not string tag)
+                return;
+
+            aboutPageItem.IsSelected = false;
+            SwitchPage(tag);
         }
 
         public void SwitchPage(string tag)
@@ -42,9 +47,22 @@ namespace Storylines.Views.Pages
                 contentFrame.Navigate(pageType, null, new SuppressNavigationTransitionInfo());
         }
 
-        private void OnAboutPageItem_Tapped(object sender, Windows.UI.Xaml.Input.TappedRoutedEventArgs e)
+        private void OnAboutPageItem_Tapped(object sender, Microsoft.UI.Xaml.Input.TappedRoutedEventArgs e)
         {
-            settingsNavigationView.SelectedItem = aboutPageItem;
+            SelectAboutPage();
+        }
+
+        private void SelectAboutPage()
+        {
+            if (contentFrame.CurrentSourcePageType == typeof(AboutPage) && aboutPageItem.IsSelected)
+                return;
+
+            foreach (var menuItem in settingsNavigationView.MenuItems)
+                if (menuItem is NavigationViewItem navigationViewItem)
+                    navigationViewItem.IsSelected = false;
+
+            aboutPageItem.IsSelected = true;
+            SwitchPage("About");
         }
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -60,16 +78,20 @@ namespace Storylines.Views.Pages
                     ? NavigationViewPaneDisplayMode.LeftCompact
                     : NavigationViewPaneDisplayMode.Auto;
 
+            if (_lastPaneDisplayMode == paneDisplayMode)
+                return;
+
+            _lastPaneDisplayMode = paneDisplayMode;
             settingsNavigationView.PaneDisplayMode = paneDisplayMode;
             settingsNavigationView.IsPaneOpen = paneDisplayMode == NavigationViewPaneDisplayMode.Auto;
         }
 
-        private void Page_KeyDown(object sender, Windows.UI.Xaml.Input.KeyRoutedEventArgs e)
+        private void Page_KeyDown(object sender, Microsoft.UI.Xaml.Input.KeyRoutedEventArgs e)
         {
-            var item = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement();
+            var item = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement();
             if (e.Key == Windows.System.VirtualKey.Enter || e.Key == Windows.System.VirtualKey.Space)
                 if (item is NavigationViewItem && (item as NavigationViewItem).Tag.ToString() == "About")
-                    settingsNavigationView.SelectedItem = aboutPageItem;
+                    SelectAboutPage();
         }
     }
 }

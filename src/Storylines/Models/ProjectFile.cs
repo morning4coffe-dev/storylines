@@ -37,7 +37,7 @@ namespace Storylines.Models
         public string LastEditedFormatted { get; private set; }
         public DateTimeOffset LastEdited { get; private set; }
 
-        public Windows.UI.Xaml.Thickness osMargin { get; private set; } = LoadProjectDialogue.osMargin;
+        public Microsoft.UI.Xaml.Thickness osMargin { get; private set; } = LoadProjectDialogue.osMargin;
         public double osWidth { get; private set; } = LoadProjectDialogue.osWidth;
 
         public static ObservableCollection<ProjectFile> projectFiles = new ObservableCollection<ProjectFile>();
@@ -58,7 +58,7 @@ namespace Storylines.Models
                 File = file,
                 Icon = new Uri(file.FileType == ".txt" ? "ms-appx:/Assets/Icons/Text-document-icon.png" : "ms-appx:/Assets/Icons/Storylines-document-icon.png"),
                 ShortPath = file.Path.Replace(@"\" + file.Name, string.Empty).Replace(@"\", "/"),
-                LastEditedFormatted = basicProperties.DateModified.ToString("g", Microsoft.Toolkit.Uwp.Helpers.SystemInformation.Instance.Culture),
+                LastEditedFormatted = basicProperties.DateModified.ToString("g", System.Globalization.CultureInfo.CurrentCulture),
                 LastEdited = basicProperties.DateModified
             };
         }

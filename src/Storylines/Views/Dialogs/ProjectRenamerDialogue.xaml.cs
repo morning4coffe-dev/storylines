@@ -2,42 +2,35 @@ using Storylines.Views.Pages;
 using Storylines.Models;
 using System;
 using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectRenamerDialogue : ContentDialog
+    public sealed partial class ProjectRenamerDialogue : StorylinesContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
-
-        public static ProjectRenamerDialogue projectRenamer;
 
         public ProjectRenamerDialogue()
         {
             this.InitializeComponent();
-            projectRenamer = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = projectRenamer;
-            projectRenamer.RequestedTheme = AppView.current.ActualTheme;
+            CloseOnOutsideTap = true;
         }
 
         public static async System.Threading.Tasks.Task Open()
         {
-            await new ProjectRenamerDialogue().ShowAsync();
+            await App.GetService<IDialogService>().ShowAsync(new ProjectRenamerDialogue());
         }
 
         private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
             if (string.IsNullOrEmpty(Persistence.CurrentProject?.projectName))
-                titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueCreate");
+                titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueCreate");
             else
-                titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
+                titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueRename");
 
             chapterNameBox.Text = Persistence.CurrentProject?.projectName;
         }
@@ -48,43 +41,19 @@ namespace Storylines.Views.Dialogs
                 Persistence.CurrentProject.projectName = chapterNameBox.Text;
             App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 
-            projectRenamer.Hide();
+            Hide();
             //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
         }
 
         private void OnCancelButton_Click(object sender, RoutedEventArgs e)
         {
-            projectRenamer.Hide();
+            Hide();
         }
 
         private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
         {
             if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
                 OnSubmitButton_Click(sender, new RoutedEventArgs());
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-
-            if (ReferenceEquals(projectRenamer, this))
-                projectRenamer = null;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide)
-                Hide();
         }
     }
 }

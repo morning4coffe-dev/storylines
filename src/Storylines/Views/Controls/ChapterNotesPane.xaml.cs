@@ -1,8 +1,8 @@
 using Storylines.Views.Pages;
 using Storylines.Models;
 using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
 using Storylines.Helpers;
 using Storylines.Services;
 
@@ -10,18 +10,24 @@ namespace Storylines.Views.Controls
 {
     public sealed partial class ChapterNotesPane : UserControl
     {
+        private readonly WindowContext _windowContext;
         private bool _isUpdating;
+
+        private ChaptersList CurrentChapterList => _windowContext?.ChapterList;
+
+        private MainPage CurrentMainPage => _windowContext?.MainPage;
 
         public ChapterNotesPane()
         {
             InitializeComponent();
+            _windowContext = App.GetService<WindowContext>();
         }
 
         public void LoadNotes()
         {
             _isUpdating = true;
 
-            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 notesTextBox.Text = chapter.Notes ?? string.Empty;
                 notesTextBox.IsEnabled = true;
@@ -57,7 +63,7 @@ namespace Storylines.Views.Controls
         {
             if (_isUpdating) return;
 
-            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.Notes = notesTextBox.Text;
                 TimeTravelSystem.SomethingChanged();
@@ -68,7 +74,7 @@ namespace Storylines.Views.Controls
         {
             if (_isUpdating) return;
 
-            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.Synopsis = synopsisTextBox.Text;
                 TimeTravelSystem.SomethingChanged();
@@ -79,7 +85,7 @@ namespace Storylines.Views.Controls
         {
             if (_isUpdating) return;
 
-            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.Location = locationTextBox.Text;
                 TimeTravelSystem.SomethingChanged();
@@ -90,7 +96,7 @@ namespace Storylines.Views.Controls
         {
             if (_isUpdating) return;
 
-            if (MainPage.ChapterList?.listView?.SelectedItem is Chapter chapter)
+            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
             {
                 chapter.PlotThreads = (plotThreadsTextBox.Text ?? string.Empty)
                     .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
@@ -112,7 +118,7 @@ namespace Storylines.Views.Controls
 
         private void OnCollapseButton_Click(object sender, RoutedEventArgs e)
         {
-            MainPage.Current.ToggleNotesPane(false);
+            CurrentMainPage?.ToggleNotesPane(false);
         }
     }
 }

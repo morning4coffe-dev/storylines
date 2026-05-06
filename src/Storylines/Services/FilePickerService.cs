@@ -10,6 +10,13 @@ namespace Storylines.Services
 {
     public class FilePickerService : IFilePickerService
     {
+        private readonly WindowContext _windowContext;
+
+        public FilePickerService(WindowContext windowContext)
+        {
+            _windowContext = windowContext;
+        }
+
         public async Task<StorageFolder> PickFolderAsync()
         {
             var picker = new FolderPicker
@@ -18,6 +25,8 @@ namespace Storylines.Services
                 SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
             };
             picker.FileTypeFilter.Add("*");
+
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
             return await picker.PickSingleFolderAsync();
         }
@@ -39,6 +48,8 @@ namespace Storylines.Services
 
             picker.FileTypeChoices.Add(displayTypeName, request.FileExtensions.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
 
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+
             return await picker.PickSaveFileAsync();
         }
 
@@ -55,6 +66,8 @@ namespace Storylines.Services
 
             foreach (var extension in fileExtensions.Where(extension => !string.IsNullOrWhiteSpace(extension)).Distinct(StringComparer.OrdinalIgnoreCase))
                 picker.FileTypeFilter.Add(extension);
+
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
             return await picker.PickSingleFileAsync();
         }

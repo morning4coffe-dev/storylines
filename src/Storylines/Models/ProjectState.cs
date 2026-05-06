@@ -15,6 +15,28 @@ namespace Storylines.Models
         public ObservableCollection<Character> Characters { get; set; } = new ObservableCollection<Character>();
         public List<PinboardConnectionData> PinboardConnections { get; set; } = new List<PinboardConnectionData>();
         public List<string> PlotThreads { get; set; } = new List<string>();
+
+#if PRIVATE_PLUGINS
+        public List<BranchingDialogueGraphData> BranchingDialogues { get; set; } = new List<BranchingDialogueGraphData>();
+
+        public BranchingDialogueGraphData GetOrCreateBranchingDialogueForChapter(string chapterId)
+        {
+            var existing = BranchingDialogues.FirstOrDefault(g => g.ChapterId == chapterId);
+            if (existing != null)
+                return existing;
+
+            var graph = new BranchingDialogueGraphData
+            {
+                Id = Guid.NewGuid().ToString(),
+                ChapterId = chapterId,
+                Nodes = new List<BranchingDialogueNodeData>()
+            };
+            graph.EnsureValid();
+            BranchingDialogues.Add(graph);
+            return graph;
+        }
+#endif
+
         #region Chapter Operations
 
         public void AddChapter(string name)

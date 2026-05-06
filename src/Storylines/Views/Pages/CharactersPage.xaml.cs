@@ -12,12 +12,12 @@ using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Windows.UI.Text;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media.Imaging;
-using Windows.UI.Xaml.Navigation;
+using Microsoft.UI.Text;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media.Imaging;
+using Microsoft.UI.Xaml.Navigation;
 
 namespace Storylines.Views.Pages
 {
@@ -26,6 +26,7 @@ namespace Storylines.Views.Pages
         private readonly EventAggregator _events;
         private readonly INavigationService _navigation;
         private readonly ProjectState _projectState;
+        private readonly WindowContext _windowContext;
         private string _pendingSelectedCharacterToken;
 
         public bool isEditModeEnabled { set; get; } = false;
@@ -35,7 +36,7 @@ namespace Storylines.Views.Pages
         public ObservableCollection<Character> Characters => _projectState.Characters;
         public ObservableCollection<Character> FilteredCharacters { get; } = new ObservableCollection<Character>();
         public CharactersPageViewModel ViewModel { get; }
-        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForCurrentView();
+        private readonly ResourceLoader resourceLoader = ResourceLoader.GetForViewIndependentUse();
 
         private bool selectionChanged = false;
         public bool unappliedChanges
@@ -50,14 +51,16 @@ namespace Storylines.Views.Pages
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _events = App.GetService<EventAggregator>();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             ViewModel = App.GetService<CharactersPageViewModel>();
 
             current = this;
+            _windowContext.CharactersPage = this;
 
-            AppView.current.page = AppView.Pages.Characters;
+            _windowContext.AppView.page = AppView.Pages.Characters;
 
             TimeTravelCharacter.ClearUndoAndRedo();
 
@@ -180,21 +183,21 @@ namespace Storylines.Views.Pages
             {
                 case EditButton.Edit:
                     cancelButton.Visibility = Visibility.Collapsed;
-                    editButton.Label = ResourceLoader.GetForCurrentView().GetString("editText");
+                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("editText");
                     editButtonIcon.Glyph = "";
 
                     unappliedChanges = false;
                     break;
                 case EditButton.ApplyChanges:
                     cancelButton.Visibility = Visibility.Visible;
-                    editButton.Label = ResourceLoader.GetForCurrentView().GetString("applyChanges");
+                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("applyChanges");
                     editButtonIcon.Glyph = "";
 
                     unappliedChanges = true;
                     break;
                 case EditButton.Cancel:
                     cancelButton.Visibility = Visibility.Collapsed;
-                    editButton.Label = ResourceLoader.GetForCurrentView().GetString("cancelText");
+                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("cancelText");
                     editButtonIcon.Glyph = "";
 
                     unappliedChanges = false;
@@ -292,7 +295,7 @@ namespace Storylines.Views.Pages
             Random rn = new Random();
             int value = rn.Next(0, 2);
 
-            listView.SelectedItem = _projectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForCurrentView().GetString("johnDoe") : ResourceLoader.GetForCurrentView().GetString("janeDoe"), "");
+            listView.SelectedItem = _projectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForViewIndependentUse().GetString("johnDoe") : ResourceLoader.GetForViewIndependentUse().GetString("janeDoe"), "");
             RefreshCharacterList((listView.SelectedItem as Character)?.Token);
             EnableEditMode(true);
 
@@ -420,21 +423,21 @@ namespace Storylines.Views.Pages
             return string.Join(", ", parts);
         }
 
-        private void OnTraitsTokenItem_Added(Microsoft.Toolkit.Uwp.UI.Controls.TokenizingTextBox sender, object args)
+        private void OnTraitsTokenItem_Added(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, object args)
         {
             if (!selectionChanged && DidSomethingChange())
                 IsEditEnabled(EditButton.ApplyChanges);
         }
 
-        private void OnTraitsTokenItem_Removing(Microsoft.Toolkit.Uwp.UI.Controls.TokenizingTextBox sender, Microsoft.Toolkit.Uwp.UI.Controls.TokenItemRemovingEventArgs args)
+        private void OnTraitsTokenItem_Removing(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemRemovingEventArgs args)
         {
             if (!selectionChanged && DidSomethingChange())
                 IsEditEnabled(EditButton.ApplyChanges);
         }
 
-        private void OnTraitsBox_TextChanged(Windows.UI.Xaml.Controls.AutoSuggestBox sender, Windows.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
+        private void OnTraitsBox_TextChanged(Microsoft.UI.Xaml.Controls.AutoSuggestBox sender, Microsoft.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
         {
-            if (args.Reason == Windows.UI.Xaml.Controls.AutoSuggestionBoxTextChangeReason.UserInput)
+            if (args.Reason == Microsoft.UI.Xaml.Controls.AutoSuggestionBoxTextChangeReason.UserInput)
             {
                 // Provide all unique traits from existing characters as suggestions
                 var allTraits = new System.Collections.Generic.HashSet<string>(System.StringComparer.CurrentCultureIgnoreCase);
@@ -604,6 +607,8 @@ namespace Storylines.Views.Pages
             picker.FileTypeFilter.Add(".jpeg");
             picker.FileTypeFilter.Add(".gif");
 
+            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+
             StorageFile file = await picker.PickSingleFileAsync();
 
             if (file != null)
@@ -632,7 +637,7 @@ namespace Storylines.Views.Pages
             _ = OpenFilePickerAsync();
         }
 
-        private void OnHyperlinkButton_Click(Windows.UI.Xaml.Documents.Hyperlink sender, Windows.UI.Xaml.Documents.HyperlinkClickEventArgs args)
+        private void OnHyperlinkButton_Click(Microsoft.UI.Xaml.Documents.Hyperlink sender, Microsoft.UI.Xaml.Documents.HyperlinkClickEventArgs args)
         {
             OnAddButton_Click(sender, new RoutedEventArgs());
         }
@@ -795,16 +800,14 @@ namespace Storylines.Views.Pages
             panel.Children.Add(new TextBlock { Text = resourceLoader.GetString("relationshipTypeLabel") });
             panel.Children.Add(typeBox);
 
-            var dialog = new ContentDialog
+            var result = await App.GetService<IDialogService>().ShowMessageAsync(new DialogDefinition
             {
                 Title = resourceLoader.GetString("addRelationshipTitle"),
                 Content = panel,
                 PrimaryButtonText = resourceLoader.GetString("addButtonText"),
                 CloseButtonText = resourceLoader.GetString("cancelButtonText"),
-                DefaultButton = ContentDialogButton.Primary
-            };
-
-            var result = await dialog.ShowAsync();
+                DefaultButton = ContentDialogButton.Primary,
+            });
             if (result == ContentDialogResult.Primary && targetCombo.SelectedIndex >= 0)
             {
                 var target = otherCharacters[targetCombo.SelectedIndex];
@@ -871,6 +874,15 @@ namespace Storylines.Views.Pages
         {
             if (!string.IsNullOrWhiteSpace(chapterToken))
                 _navigation?.NavigateTo(NavigationTarget.MainPage, chapterToken);
+        }
+
+        /// <summary>
+        /// Refreshes branching dialogue insights for the given character.
+        /// Only available when the dialogue plugin is compiled in.
+        /// </summary>
+        private void UpdateDialogueInsights(Character character)
+        {
+            // No-op when the dialogue plugin is not available.
         }
     }
 

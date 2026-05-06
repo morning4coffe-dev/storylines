@@ -1,3 +1,5 @@
+using Microsoft.UI;
+using Storylines.Constants;
 using Storylines.Helpers;
 using Storylines.Views.Pages;
 using Storylines.Services;
@@ -12,13 +14,12 @@ using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
 using Windows.System;
 using Windows.UI;
-using Windows.UI.Core;
-using Windows.UI.Text;
-using Windows.UI.ViewManagement;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Windows.UI.Xaml.Media;
+using Microsoft.UI.Text;
+
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Input;
+using Microsoft.UI.Xaml.Media;
 
 namespace Storylines.Views.Controls
 {
@@ -28,6 +29,7 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ResourceLoader _resources;
         private readonly ITextEditorService _textEditor;
+        private readonly WindowContext _windowContext;
 
         private readonly ObservableCollection<Character> _dialoguePopupCharacters = new ObservableCollection<Character>();
         private readonly ObservableCollection<string> _recentDialogueCharacterTokens = new ObservableCollection<string>();
@@ -84,7 +86,7 @@ namespace Storylines.Views.Controls
             gridCommandBarHolder.Visibility = !readOnly && FormattingBarVisibility == Visibility.Visible
                 ? Visibility.Visible
                 : Visibility.Collapsed;
-            MainPage.Current?.RefreshFormattingCommandAvailability();
+            CurrentMainPage?.RefreshFormattingCommandAvailability();
         }
 
         private bool selectedTextIsBold = false;
@@ -111,7 +113,7 @@ namespace Storylines.Views.Controls
                 }
 
                 if (value)
-                    _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
+                    DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, CenterCaretInViewport);
             }
         }
 
@@ -132,10 +134,29 @@ namespace Storylines.Views.Controls
             textBoxScrollViewer.ChangeView(null, targetOffset, null, disableAnimation: true);
         }
 
+        private MainPage CurrentMainPage => _windowContext?.MainPage;
+
+        private MainCommandBar CurrentCommandBar => _windowContext?.CommandBar;
+
+        private double CurrentShellWidth
+        {
+            get
+            {
+                var shellWidth = _windowContext?.AppView?.ActualWidth ?? 0;
+                if (shellWidth > 0)
+                    return shellWidth;
+
+                return ActualWidth > 0 ? ActualWidth : LayoutConstants.DefaultWindowWidth;
+            }
+        }
+
+        private bool IsCompactSearchLayout => CurrentShellWidth < LayoutConstants.SearchBarBreakpoint;
+
         public ChapterTextBox()
         {
             InitializeComponent();
 
+            _windowContext = App.GetService<WindowContext>();
             _events = App.GetService<EventAggregator>();
             _projectState = App.GetService<ProjectState>();
             _resources = ResourceLoader.GetForViewIndependentUse();
@@ -143,6 +164,7 @@ namespace Storylines.Views.Controls
 
             dialoguePopupList.ItemsSource = _dialoguePopupCharacters;
 
+            _windowContext.ChapterText = this;
             MainPage.ChapterText = this;
 
             _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
@@ -160,10 +182,10 @@ namespace Storylines.Views.Controls
                 TextBoxWhiteBackground((bool)e.Value);
             else if (e.SettingKey == SettingsValueStrings.EditorFontFamily)
             {
-                var fontFamily = new Windows.UI.Xaml.Media.FontFamily((string)e.Value);
+                var fontFamily = new Microsoft.UI.Xaml.Media.FontFamily((string)e.Value);
                 textBox.FontFamily = fontFamily;
                 // Apply to existing text in the document
-                var range = textBox.Document.GetRange(0, Windows.UI.Text.TextConstants.MaxUnitCount);
+                var range = textBox.Document.GetRange(0, Microsoft.UI.Text.TextConstants.MaxUnitCount);
                 range.CharacterFormat.Name = (string)e.Value;
             }
             else if (e.SettingKey == SettingsValueStrings.EditorFontSize)
@@ -171,7 +193,7 @@ namespace Storylines.Views.Controls
                 var size = (double)e.Value;
                 textBox.FontSize = size;
                 // Apply to existing text in the document
-                var range = textBox.Document.GetRange(0, Windows.UI.Text.TextConstants.MaxUnitCount);
+                var range = textBox.Document.GetRange(0, Microsoft.UI.Text.TextConstants.MaxUnitCount);
                 range.CharacterFormat.Size = (float)size;
             }
         }
@@ -197,10 +219,10 @@ namespace Storylines.Views.Controls
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
             TextHighlighter.SelectedTool = TextHighlighter.Tool.Yellow;
-            MarkTextBackground();
+            UpdateHighlighterButtonColor();
 
             // Apply saved font preferences
-            textBox.FontFamily = new Windows.UI.Xaml.Media.FontFamily(SettingsValues.editorFontFamily);
+            textBox.FontFamily = new Microsoft.UI.Xaml.Media.FontFamily(SettingsValues.editorFontFamily);
             textBox.FontSize = SettingsValues.editorFontSize;
 
             ApplyChromeState();
@@ -225,14 +247,14 @@ namespace Storylines.Views.Controls
                 {
                     chapter.Text = txt;
 
-                    MainPage.Current.UpdateDownBar();
+                    CurrentMainPage?.UpdateDownBar();
                     TimeTravelChapter.RecordTextChange(chapter.Token, oldText, txt);
 
                     App.TryGetService<EditorModeService>()?.Current.OnTextChanged();
 
                     // Start session timer on first edit; update word count goal bar
-                    MainPage.Current.StartSessionTimer();
-                    MainPage.Current.ViewModel.UpdateWordGoalBar();
+                    CurrentMainPage?.StartSessionTimer();
+                    CurrentMainPage?.ViewModel.UpdateWordGoalBar();
 
                     // Record words for streak tracking
                     textBox.Document.GetText(TextGetOptions.None, out var plain);
@@ -248,14 +270,14 @@ namespace Storylines.Views.Controls
         {
             if (GetLoadedChapter() != null)
             {
-                MainPage.Current.UpdateDownBar();
+                CurrentMainPage?.UpdateDownBar();
 
                 CheckForFormatting();
                 QueueChapterLocationCapture();
             }
 
             if (_isTypewriterModeActive)
-                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, CenterCaretInViewport);
         }
 
         private void OnTextBoxScrollViewer_ViewChanged(object sender, ScrollViewerViewChangedEventArgs e)
@@ -270,7 +292,7 @@ namespace Storylines.Views.Controls
             CacheCurrentChapterLocation();
 
             if (_isTypewriterModeActive && !(_textEditor?.IsProgrammaticChangeInProgress == true))
-                _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CenterCaretInViewport);
+                DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, CenterCaretInViewport);
         }
 
         private void OnTextBox_PreviewKeyDown(object sender, KeyRoutedEventArgs e)
@@ -324,7 +346,7 @@ namespace Storylines.Views.Controls
             if (_textEditor.SelectedChapterIndex >= 0 && dialoguesOn && e.Key == VirtualKey.Enter)
             {
                 // Shift+Enter: plain newline only, skip dialogue mode
-                var shiftDown = (Windows.UI.Core.CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Shift)
+                var shiftDown = (Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Shift)
                     & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
                 if (shiftDown)
                     return;
@@ -341,8 +363,8 @@ namespace Storylines.Views.Controls
             if (!_isTypewriterModeActive || textBox?.Document?.Selection == null)
                 return false;
 
-            var controlState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
-            bool controlDown = (controlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down;
+            var controlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
+            bool controlDown = (controlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down;
 
             if (e.Key == VirtualKey.Back || e.Key == VirtualKey.Delete)
                 return true;
@@ -372,13 +394,13 @@ namespace Storylines.Views.Controls
             {
                 textBox.RequestedTheme = ElementTheme.Light;
                 textBoxScrollViewer.RequestedTheme = ElementTheme.Light;
-                textBoxScrollViewer.Background = new Windows.UI.Xaml.Media.SolidColorBrush(Windows.UI.Colors.White);
+                textBoxScrollViewer.Background = new Microsoft.UI.Xaml.Media.SolidColorBrush(Microsoft.UI.Colors.White);
             }
             else
             {
-                textBox.RequestedTheme = MainPage.Current.RequestedTheme;
-                textBoxScrollViewer.RequestedTheme = MainPage.Current.RequestedTheme;
-                textBoxScrollViewer.Background = (Windows.UI.Xaml.Media.Brush)Application.Current.Resources["LayerFillColorDefaultBrush"];
+                textBox.RequestedTheme = CurrentMainPage?.RequestedTheme ?? ElementTheme.Default;
+                textBoxScrollViewer.RequestedTheme = CurrentMainPage?.RequestedTheme ?? ElementTheme.Default;
+                textBoxScrollViewer.Background = (Microsoft.UI.Xaml.Media.Brush)Application.Current.Resources["LayerFillColorDefaultBrush"];
             }
         }
 
@@ -402,10 +424,8 @@ namespace Storylines.Views.Controls
 
         private void SelectMenu_Opening(object sender, object e)
         {
-            if (UIViewSettings.GetForCurrentView().UserInteractionMode == UserInteractionMode.Mouse)
-                (sender as Microsoft.UI.Xaml.Controls.TextCommandBarFlyout).Hide();
-            else
-                Menu_Opening(sender, e);
+            // WinUI 3 desktop apps always use mouse interaction
+            (sender as Microsoft.UI.Xaml.Controls.TextCommandBarFlyout).Hide();
         }
 
         private bool isFlyoutOpen = false;
@@ -418,7 +438,7 @@ namespace Storylines.Views.Controls
             textBox.SelectionFlyout.Closing += Menu_Closing;
         }
 
-        private void Menu_Closing(Windows.UI.Xaml.Controls.Primitives.FlyoutBase sender, Windows.UI.Xaml.Controls.Primitives.FlyoutBaseClosingEventArgs args)
+        private void Menu_Closing(Microsoft.UI.Xaml.Controls.Primitives.FlyoutBase sender, Microsoft.UI.Xaml.Controls.Primitives.FlyoutBaseClosingEventArgs args)
         {
             isFlyoutOpen = false;
         }
@@ -512,10 +532,10 @@ namespace Storylines.Views.Controls
 
             SearchBoxHighlightMatches(searchTextBox.Text);
 
-            if (AppView.current.ActualWidth < 950)
+            if (IsCompactSearchLayout)
                 chapterTextCommandBar.Visibility = Visibility.Collapsed;
 
-            searchTextBox.Width = AppView.current.ActualWidth < 950 ? ActualWidth - 15 : 320;
+            searchTextBox.Width = IsCompactSearchLayout ? ActualWidth - 15 : 320;
 
             if (searchTextBox.Visibility == Visibility.Collapsed)
             {
@@ -543,8 +563,8 @@ namespace Storylines.Views.Controls
             UpdateReplaceAllButtonContent();
 
             // Sync toggle button in MainCommandBar
-            if (MainPage.CommandBar != null)
-                MainPage.CommandBar.searchReplaceButton.IsChecked = true;
+            if (CurrentCommandBar != null)
+                CurrentCommandBar.searchReplaceButton.IsChecked = true;
 
             if (textBox.Document.Selection.Length > 0)
                 searchReplaceFindBox.Text = textBox.Document.Selection.Text;
@@ -822,7 +842,7 @@ namespace Storylines.Views.Controls
             }
             else
             {
-                searchMatchCount.Text = Windows.ApplicationModel.Resources.ResourceLoader.GetForCurrentView().GetString("noMatchesFound");
+                searchMatchCount.Text = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse().GetString("noMatchesFound");
             }
 
             SearchReplaceHighlight();
@@ -845,8 +865,8 @@ namespace Storylines.Views.Controls
             searchReplacePanel.Visibility = Visibility.Collapsed;
 
             // Sync toggle button in MainCommandBar
-            if (MainPage.CommandBar != null)
-                MainPage.CommandBar.searchReplaceButton.IsChecked = false;
+            if (CurrentCommandBar != null)
+                CurrentCommandBar.searchReplaceButton.IsChecked = false;
         }
 
         private void UpdateReplaceAllButtonContent()
@@ -998,7 +1018,9 @@ namespace Storylines.Views.Controls
 
         public void DialoguesOnOff(bool enabled)
         {
-            MainPage.CommandBar.dialoguesEnableButton.IsChecked = enabled;
+            if (CurrentCommandBar != null)
+                CurrentCommandBar.dialoguesEnableButton.IsChecked = enabled;
+
             dialoguesOn = enabled;
 
             // Persist the setting
@@ -1007,9 +1029,12 @@ namespace Storylines.Views.Controls
             // Show teaching tip on first activation
             if (enabled && !SettingsValues.dialogueTeachingTipShown)
             {
-                dialogueTeachingTip.Target = MainPage.CommandBar.dialoguesEnableButton;
-                dialogueTeachingTip.IsOpen = true;
-                Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] = true;
+                if (CurrentCommandBar != null)
+                {
+                    dialogueTeachingTip.Target = CurrentCommandBar.dialoguesEnableButton;
+                    dialogueTeachingTip.IsOpen = true;
+                    Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] = true;
+                }
             }
         }
 
@@ -1030,7 +1055,22 @@ namespace Storylines.Views.Controls
         #region Format
         public void CheckForFormatting()
         {
-            var format = textBox.Document.Selection.CharacterFormat;
+            if (!TryGetSelection(out var selection))
+            {
+                selectedTextIsBold = false;
+                selectedTextIsItalic = false;
+                selectedTextIsUnderlined = false;
+                selectedTextIsStriked = false;
+
+                boldTextButton.IsChecked = false;
+                italicTextButton.IsChecked = false;
+                underlineTextButton.IsChecked = false;
+                strikethroughButton.IsChecked = false;
+                PublishFormattingState();
+                return;
+            }
+
+            var format = selection.CharacterFormat;
 
             selectedTextIsBold = format.Bold == FormatEffect.On;
             selectedTextIsItalic = format.Italic == FormatEffect.On;
@@ -1061,7 +1101,8 @@ namespace Storylines.Views.Controls
             if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
             {
                 bool isBold = textBox.Document.Selection.CharacterFormat.Bold == FormatEffect.On;
-                textBox.Document.Selection.CharacterFormat.Bold = isBold ? FormatEffect.Off : FormatEffect.On;
+                ApplyChromeState();
+                CurrentMainPage?.RefreshFormattingCommandAvailability();
                 selectedTextIsBold = !isBold;
 
                 boldTextButton.IsChecked = selectedTextIsBold;
@@ -1110,12 +1151,42 @@ namespace Storylines.Views.Controls
 
         public void MarkTextBackground()
         {
-            if (TextHighlighter.SelectedTool != TextHighlighter.Tool.None)
-            {
-                highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.SelectedTool));
+            UpdateHighlighterButtonColor();
 
-                if (textBox.Document.Selection != null && _textEditor.SelectedChapterIndex >= 0)
-                    textBox.Document.Selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.SelectedTool);
+            if (TextHighlighter.SelectedTool == TextHighlighter.Tool.None
+                || IsReadOnly
+                || _textEditor.SelectedChapterIndex < 0
+                || !TryGetSelection(out var selection))
+            {
+                return;
+            }
+
+            selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.SelectedTool);
+        }
+
+        private void UpdateHighlighterButtonColor()
+        {
+            if (TextHighlighter.SelectedTool == TextHighlighter.Tool.None)
+                return;
+
+            highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.SelectedTool));
+        }
+
+        private bool TryGetSelection(out ITextSelection selection)
+        {
+            selection = null;
+
+            if (textBox?.Document == null)
+                return false;
+
+            try
+            {
+                selection = textBox.Document.Selection;
+                return selection != null;
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return false;
             }
         }
 
@@ -1169,7 +1240,7 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_GotFocus(object sender, RoutedEventArgs e)
         {
-            MainPage.Current?.SetTextFormattingContextActive(true);
+            CurrentMainPage?.SetTextFormattingContextActive(true);
             CheckForFormatting();
         }
 
@@ -1181,14 +1252,14 @@ namespace Storylines.Views.Controls
             // When focus moves to a formatting button in the command bar,
             // don't reset the selection or button states — the user is applying
             // formatting and the state needs to be preserved.
-            var focused = Windows.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
+            var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
             if (focused != null && (IsChildOf(focused, gridCommandBarHolder)
-                || (MainPage.CommandBar?.IsFormattingContextElement(focused) ?? false)))
+                || (CurrentCommandBar?.IsFormattingContextElement(focused) ?? false)))
                 return;
 
             CacheCurrentChapterLocation();
 
-            MainPage.Current?.SetTextFormattingContextActive(false);
+            CurrentMainPage?.SetTextFormattingContextActive(false);
 
             SuppressChapterLocationCaptureForPendingUiCycle();
             textBox.Document.Selection.SetRange(0, 0);
@@ -1198,7 +1269,7 @@ namespace Storylines.Views.Controls
             underlineTextButton.IsChecked = false;
             strikethroughButton.IsChecked = false;
 
-            MainPage.CommandBar?.ClearFormattingCommandState();
+            CurrentCommandBar?.ClearFormattingCommandState();
         }
 
         public bool IsFormattingContextElement(DependencyObject element)
@@ -1230,7 +1301,7 @@ namespace Storylines.Views.Controls
             if (IsChapterLocationCaptureSuppressed)
                 return;
 
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, CacheCurrentChapterLocation);
+            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, CacheCurrentChapterLocation);
         }
 
         private void CacheCurrentChapterLocation()
@@ -1253,7 +1324,7 @@ namespace Storylines.Views.Controls
         private void SuppressChapterLocationCaptureForPendingUiCycle()
         {
             _chapterLocationCaptureSuppressionDepth++;
-            _ = Dispatcher.RunAsync(CoreDispatcherPriority.Low, () =>
+            DispatcherQueue.TryEnqueue(Microsoft.UI.Dispatching.DispatcherQueuePriority.Low, () =>
             {
                 if (_chapterLocationCaptureSuppressionDepth > 0)
                     _chapterLocationCaptureSuppressionDepth--;
@@ -1275,33 +1346,35 @@ namespace Storylines.Views.Controls
 
         private void UserControl_SizeChanged(object sender, SizeChangedEventArgs e)
         {
-            Grid.SetColumn(searchTextBox, AppView.current.ActualWidth < 950 ? 0 : 1);
-            chapterTextCommandBar.Visibility = searchTextBox.Visibility == Visibility.Visible && AppView.current.ActualWidth < 950 ? Visibility.Collapsed : Visibility.Visible;
-            searchTextBox.Width = searchTextBox.Visibility == Visibility.Visible && AppView.current.ActualWidth < 950 ? ActualWidth - 15 : 320;
+            Grid.SetColumn(searchTextBox, IsCompactSearchLayout ? 0 : 1);
+            chapterTextCommandBar.Visibility = searchTextBox.Visibility == Visibility.Visible && IsCompactSearchLayout ? Visibility.Collapsed : Visibility.Visible;
+            searchTextBox.Width = searchTextBox.Visibility == Visibility.Visible && IsCompactSearchLayout ? ActualWidth - 15 : 320;
 
             highlighterButtonMoreColors.Visibility = ActualWidth < 465 ? Visibility.Collapsed : Visibility.Visible;
         }
 
         private void OnTextBox_PointerWheelChanged(object sender, PointerRoutedEventArgs e)
         {
-            var ctrlState = CoreWindow.GetForCurrentThread().GetKeyState(VirtualKey.Control);
+            var ctrlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
 
-            if (_isTypewriterModeActive && (ctrlState & CoreVirtualKeyStates.Down) != CoreVirtualKeyStates.Down)
+            if (_isTypewriterModeActive && (ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) != Windows.UI.Core.CoreVirtualKeyStates.Down)
             {
                 e.Handled = true;
                 return;
             }
 
-            if ((ctrlState & CoreVirtualKeyStates.Down) == CoreVirtualKeyStates.Down)
+            if ((ctrlState & Windows.UI.Core.CoreVirtualKeyStates.Down) == Windows.UI.Core.CoreVirtualKeyStates.Down)
             {
                 int localScrollValue = e.GetCurrentPoint((UIElement)sender).Properties.MouseWheelDelta / 24;
 
-                int scrollValue = (int)(double)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? MainPage.Current.ViewModel.ZoomLevel);
+                int fallbackZoomValue = Convert.ToInt32(CurrentMainPage?.ViewModel?.ZoomLevel ?? LayoutConstants.ZoomDefault);
+                int scrollValue = Convert.ToInt32(
+                    Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? fallbackZoomValue);
 
                 if (scrollValue + localScrollValue >= 13 && scrollValue + localScrollValue <= 100)
                 {
                     scrollValue += localScrollValue;
-                    MainPage.Current.SetZoomValue(scrollValue);
+                    CurrentMainPage?.SetZoomValue(scrollValue);
                 }
             }
         }
@@ -1323,9 +1396,9 @@ namespace Storylines.Views.Controls
     {
         protected override void OnKeyDown(KeyRoutedEventArgs e)
         {
-            var ctrl = Window.Current.CoreWindow.GetKeyState(VirtualKey.Control);
+            var ctrl = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
 
-            if (ctrl.HasFlag(CoreVirtualKeyStates.Down))
+            if (ctrl.HasFlag(Windows.UI.Core.CoreVirtualKeyStates.Down))
             {
                 if (e.Key == VirtualKey.R || e.Key == VirtualKey.Z || e.Key == VirtualKey.Y || e.Key == VirtualKey.I || e.Key == VirtualKey.B)
                     return;

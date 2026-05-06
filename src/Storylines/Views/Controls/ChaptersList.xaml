@@ -5,8 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:variables="using:Storylines.Models"
              xmlns:converters="using:Storylines.Converters"
-             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:animations="using:CommunityToolkit.WinUI.Animations"
              mc:Ignorable="d"
              d:DesignHeight="600"
              d:DesignWidth="400">
@@ -160,16 +159,16 @@
                             </StackPanel>
 
                             <!-- Tag pills: visible only when chapter has tags -->
-                            <muxc:ItemsRepeater Grid.Row="2"
+                            <ItemsRepeater Grid.Row="2"
                                        Grid.Column="1"
                                        ItemsSource="{Binding Tags}"
                                        Margin="0,3,0,0"
                                        Visibility="{Binding TagsText, Converter={StaticResource EmptyStringToCollapsedConverter}}">
-                                <muxc:ItemsRepeater.Layout>
-                                    <muxc:StackLayout Orientation="Horizontal"
+                                <ItemsRepeater.Layout>
+                                    <StackLayout Orientation="Horizontal"
                                              Spacing="3" />
-                                </muxc:ItemsRepeater.Layout>
-                                <muxc:ItemsRepeater.ItemTemplate>
+                                </ItemsRepeater.Layout>
+                                <ItemsRepeater.ItemTemplate>
                                     <DataTemplate x:DataType="x:String">
                                         <Border CornerRadius="3"
                                             Padding="5,1"
@@ -181,8 +180,8 @@
                                                    VerticalAlignment="Center" />
                                         </Border>
                                     </DataTemplate>
-                                </muxc:ItemsRepeater.ItemTemplate>
-                            </muxc:ItemsRepeater>
+                                </ItemsRepeater.ItemTemplate>
+                            </ItemsRepeater>
                         </StackPanel>
                     </Grid>
                 </DataTemplate>
