@@ -73,7 +73,7 @@
     <XliffResource Include="MultilingualResources\Storylines.zh-CN.xlf" />
   </ItemGroup>
 
-    <Import Project="$(StorylinesPluginImportPattern)" Condition="'$(EnableLocalStorylinesPlugins)' != 'false'&#xD;&#xA;           AND '$(StorylinesPluginImportPattern)' != ''&#xD;&#xA;           AND Exists('$(StorylinesPluginSearchRoot)')" />
+  <Import Project="$(StorylinesPluginImportPattern)" Condition="'$(EnableLocalStorylinesPlugins)' != 'false'&#xD;&#xA; AND '$(StorylinesPluginImportPattern)' != ''&#xD;&#xA; AND Exists('$(StorylinesPluginSearchRoot)')" />
 
   <Import Project="$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\Microsoft.Multilingual.PriResources.targets" Label="MultilingualAppToolkit" Condition="Exists('$(MSBuildExtensionsPath)\Microsoft\Multilingual App Toolkit\v$(MultilingualAppToolkitVersion)\Microsoft.Multilingual.PriResources.targets')" />
 
