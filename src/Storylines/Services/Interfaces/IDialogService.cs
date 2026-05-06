@@ -1,9 +1,16 @@
 using Storylines.Models;
+using System.Threading.Tasks;
+using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Services.Interfaces
 {
     public interface IDialogService
     {
+        ContentDialog CurrentDialog { get; }
+        Task<ContentDialogResult> ShowAsync(ContentDialog dialog, bool closeCurrentDialog = true);
+        Task<ContentDialogResult> ShowAsync(ContentDialog dialog, DialogShowOptions options);
+        Task<ContentDialogResult> ShowMessageAsync(DialogDefinition definition, DialogShowOptions options = null);
+        void HideCurrentDialog();
         void OpenSaveDialogue();
         void OpenSaveCopyDialogue();
         void OpenLoadDialogue();
