@@ -9,6 +9,8 @@ Storylines is an open-source Windows writing app for building stories chapter by
 
 Storylines is designed for writers who want more structure than a plain text file without jumping into a heavyweight tool. Draft chapters, keep track of characters, work with dialogue-focused scenes, review story information, and stay in flow with Focus Mode, keyboard shortcuts, and recovery features.
 
+The app is built as a WinUI 3 desktop application on Windows App SDK with DI-backed window scoping for multi-window workflows.
+
 <img src="./Logo and Screenshots/0-6/Storylines-0-6-image-1.png" width="760" alt="Storylines editor screenshot" />
 
 ## Highlights
@@ -31,7 +33,8 @@ Storylines is designed for writers who want more structure than a plain text fil
 ### Requirements
 
 - Windows 10 version 1903 or later, or Windows 11
-- Visual Studio 2019 or later with the Universal Windows Platform development workload
+- Visual Studio 2022 or later with the .NET desktop development and Windows application development workloads
+- .NET 9 SDK if you want to use the command line
 
 ### Command line
 

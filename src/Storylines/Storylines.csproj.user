@@ -7,7 +7,7 @@
   <PropertyGroup>
     <UapAppxPackageBuildMode>StoreAndSideload</UapAppxPackageBuildMode>
     <AppxShowAllApps>True</AppxShowAllApps>
-    <AppxBuildConfigurationSelection>x86|x64|arm|arm64</AppxBuildConfigurationSelection>
+    <AppxBuildConfigurationSelection>x86|x64|arm64</AppxBuildConfigurationSelection>
     <PackageOptionalProjectsInIdeBuilds>False</PackageOptionalProjectsInIdeBuilds>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|ARM'">
