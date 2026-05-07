@@ -294,6 +294,21 @@
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Hlasitost</value>
   </data>
+  <data name="readAloudRateSetting.Text" xml:space="preserve">
+    <value>Rychlost čtení</value>
+  </data>
+  <data name="readAloudPitchSetting.Text" xml:space="preserve">
+    <value>Výška hlasu</value>
+  </data>
+  <data name="readAloudTestVoiceSetting.Text" xml:space="preserve">
+    <value>Vyzkoušet hlas</value>
+  </data>
+  <data name="readAloudTestVoiceButton.Content" xml:space="preserve">
+    <value>Přehrát ukázku</value>
+  </data>
+  <data name="dictationLanguageSetting.Text" xml:space="preserve">
+    <value>Jazyk diktování</value>
+  </data>
   <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
     <value>Bílé pozadí hlavního textu</value>
   </data>
@@ -1256,6 +1271,7 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="shortcutSearch" xml:space="preserve"><value>Vyhledat v textu</value></data>
   <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Najít a nahradit</value></data>
   <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Přepnout režim dialogů</value></data>
+  <data name="shortcutToggleDictation" xml:space="preserve"><value>Přepnout diktování</value></data>
   <data name="shortcutBold" xml:space="preserve"><value>Tučně</value></data>
   <data name="shortcutItalic" xml:space="preserve"><value>Kurzíva</value></data>
   <data name="shortcutUnderline" xml:space="preserve"><value>Podtržení textu</value></data>

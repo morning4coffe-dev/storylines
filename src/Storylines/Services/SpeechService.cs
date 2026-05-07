@@ -5,22 +5,25 @@ namespace Storylines.Services
 {
     /// <summary>
     /// Coordinates the read-aloud (TTS) and dictation (STT) capabilities so they never run
-    /// concurrently. The actual TTS work currently lives in the command-bar code-behind; this
-    /// service tracks lifecycle for the UI and exposes the unified <see cref="ISpeechService.Mode"/>
-    /// state. As Phase 6 lands, the TTS path will move behind an <c>IReadAloudService</c> and be
-    /// driven through this same coordinator.
+    /// concurrently. Listens to lifecycle events from both sub-services and exposes a unified
+    /// <see cref="ISpeechService.Mode"/> for the UI to bind against.
     /// </summary>
     internal sealed class SpeechService : ISpeechService
     {
         private SpeechMode _mode = SpeechMode.Idle;
 
-        public SpeechService(IDictationService dictation)
+        public SpeechService(IDictationService dictation, IReadAloudService readAloud)
         {
             Dictation = dictation;
+            ReadAloud = readAloud;
+
             dictation.StateChanged += OnDictationStateChanged;
+            readAloud.StateChanged += OnReadAloudStateChanged;
         }
 
         public IDictationService Dictation { get; }
+
+        public IReadAloudService ReadAloud { get; }
 
         public SpeechMode Mode
         {
@@ -35,14 +38,6 @@ namespace Storylines.Services
 
         public event Action<SpeechMode> ModeChanged;
 
-        public void NotifyReadingStarted() => Mode = SpeechMode.Reading;
-
-        public void NotifyReadingStopped()
-        {
-            if (Mode == SpeechMode.Reading)
-                Mode = SpeechMode.Idle;
-        }
-
         private void OnDictationStateChanged(DictationStateChange change)
         {
             switch (change.State)
@@ -55,6 +50,22 @@ namespace Storylines.Services
                 case DictationState.Unsupported:
                 case DictationState.Error:
                     if (Mode == SpeechMode.Dictating)
+                        Mode = SpeechMode.Idle;
+                    break;
+            }
+        }
+
+        private void OnReadAloudStateChanged(ReadAloudState state)
+        {
+            switch (state)
+            {
+                case ReadAloudState.Loading:
+                case ReadAloudState.Playing:
+                case ReadAloudState.Paused:
+                    Mode = SpeechMode.Reading;
+                    break;
+                case ReadAloudState.Idle:
+                    if (Mode == SpeechMode.Reading)
                         Mode = SpeechMode.Idle;
                     break;
             }

@@ -30,6 +30,9 @@ namespace Storylines.Services.Interfaces
         /// <summary>Gets the length of the currently selected text, or 0 if nothing is selected.</summary>
         int SelectedTextLength { get; }
 
+        /// <summary>Returns the currently selected plain-text, or empty string if nothing is selected.</summary>
+        string GetSelectedText();
+
         /// <summary>Sets keyboard focus to the text editor.</summary>
         void Focus();
 

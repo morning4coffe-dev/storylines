@@ -9,6 +9,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Windows.AppLifecycle;
 using Windows.Globalization;
+using Windows.Media.SpeechRecognition;
 using Windows.Media.SpeechSynthesis;
 using Microsoft.UI.Xaml;
 using Windows.ApplicationModel.Core;
@@ -17,8 +18,10 @@ namespace Storylines.ViewModels.Settings
 {
     public partial class AccessibilitySettingsViewModel : ObservableObject
     {
+        private const string FollowAppLanguageTag = "";
 
         private readonly IAppSettingsService _settings;
+        private readonly ISpeechService _speech;
         private readonly string _loadedLanguageTag;
         private bool _isInitializing;
 
@@ -40,21 +43,39 @@ namespace Storylines.ViewModels.Settings
         [ObservableProperty]
         private string _selectedVoiceId;
 
+        [ObservableProperty]
+        private double _readAloudRate;
+
+        [ObservableProperty]
+        private double _readAloudPitch;
+
+        [ObservableProperty]
+        private string _selectedDictationLanguageTag;
+
         public ObservableCollection<VoiceOption> Voices { get; } = new ObservableCollection<VoiceOption>();
+
+        public ObservableCollection<DictationLanguageOption> DictationLanguages { get; } = new ObservableCollection<DictationLanguageOption>();
 
         public string ReadAloudVolumeText => Math.Round(ReadAloudVolume).ToString(CultureInfo.CurrentCulture);
 
         public string ReadAloudVolumeGlyph => GetVolumeGlyph(ReadAloudVolume);
 
-        public AccessibilitySettingsViewModel(IAppSettingsService settings)
+        public string ReadAloudRateText => $"{ReadAloudRate:0.0}x";
+
+        public string ReadAloudPitchText => ReadAloudPitch.ToString("0.0", CultureInfo.CurrentCulture);
+
+        public AccessibilitySettingsViewModel(IAppSettingsService settings, ISpeechService speech)
         {
             _settings = settings;
+            _speech = speech;
 
             _isInitializing = true;
             _loadedLanguageTag = ResolveSupportedLanguageTag(GetCurrentLanguageTag());
             _selectedLanguageTag = _loadedLanguageTag;
             _textBoxSolidBackground = _settings.TextBoxSolidBackground;
             _readAloudVolume = _settings.ReadAloudVolume;
+            _readAloudRate = _settings.ReadAloudRate;
+            _readAloudPitch = _settings.ReadAloudPitch;
 
             foreach (var voice in SpeechSynthesizer.AllVoices)
                 Voices.Add(new VoiceOption(voice.DisplayName, voice.Id));
@@ -62,6 +83,12 @@ namespace Storylines.ViewModels.Settings
             _selectedVoiceId = Voices.Any(v => v.Id == _settings.ReadAloudVoiceId)
                 ? _settings.ReadAloudVoiceId
                 : SpeechSynthesizer.DefaultVoice.Id;
+
+            PopulateDictationLanguages();
+            _selectedDictationLanguageTag = string.IsNullOrWhiteSpace(_settings.DictationLanguage)
+                ? FollowAppLanguageTag
+                : _settings.DictationLanguage;
+
             _isInitializing = false;
         }
 
@@ -71,7 +98,6 @@ namespace Storylines.ViewModels.Settings
             try
             {
                 AppInstance.Restart(string.Empty);
-                // If Restart returns without throwing, the restart is pending
                 LanguageRestartFailed = false;
             }
             catch (Exception)
@@ -93,6 +119,9 @@ namespace Storylines.ViewModels.Settings
         {
             ReadAloudVolume = ReadAloudVolume > 0 ? 0 : 100;
         }
+
+        [RelayCommand]
+        private Task TestVoiceAsync() => _speech.ReadAloud.SpeakSampleAsync();
 
         partial void OnSelectedLanguageTagChanged(string value)
         {
@@ -130,6 +159,49 @@ namespace Storylines.ViewModels.Settings
                 return;
 
             _settings.ReadAloudVoiceId = value;
+        }
+
+        partial void OnReadAloudRateChanged(double value)
+        {
+            if (_isInitializing || double.IsNaN(value))
+                return;
+
+            _settings.ReadAloudRate = value;
+            OnPropertyChanged(nameof(ReadAloudRateText));
+        }
+
+        partial void OnReadAloudPitchChanged(double value)
+        {
+            if (_isInitializing || double.IsNaN(value))
+                return;
+
+            _settings.ReadAloudPitch = value;
+            OnPropertyChanged(nameof(ReadAloudPitchText));
+        }
+
+        partial void OnSelectedDictationLanguageTagChanged(string value)
+        {
+            if (_isInitializing) return;
+            _settings.DictationLanguage = value ?? string.Empty;
+        }
+
+        private void PopulateDictationLanguages()
+        {
+            DictationLanguages.Add(new DictationLanguageOption(FollowAppLanguageTag, "Follow app language"));
+
+            try
+            {
+                foreach (var language in SpeechRecognizer.SupportedTopicLanguages
+                             .Select(l => new DictationLanguageOption(l.LanguageTag, l.DisplayName))
+                             .OrderBy(o => o.DisplayName, StringComparer.CurrentCulture))
+                {
+                    DictationLanguages.Add(language);
+                }
+            }
+            catch
+            {
+                // SpeechRecognizer may be unavailable on some SKUs; "follow app language" stays as the fallback.
+            }
         }
 
         private string GetCurrentLanguageTag()
@@ -178,6 +250,19 @@ namespace Storylines.ViewModels.Settings
             public string DisplayName { get; }
 
             public string Id { get; }
+        }
+
+        public sealed class DictationLanguageOption
+        {
+            public DictationLanguageOption(string tag, string displayName)
+            {
+                Tag = tag;
+                DisplayName = displayName;
+            }
+
+            public string Tag { get; }
+
+            public string DisplayName { get; }
         }
     }
 }

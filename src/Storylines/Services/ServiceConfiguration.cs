@@ -40,6 +40,7 @@ namespace Storylines.Services
             services.AddScoped<IShellService, ShellService>();
             services.AddScoped<IChapterWorkflowService, ChapterWorkflowService>();
             services.AddScoped<IDictationService, DictationService>();
+            services.AddScoped<IReadAloudService, ReadAloudService>();
             services.AddScoped<ISpeechService, SpeechService>();
             services.AddScoped<IWritingSessionService, WritingSessionService>();
             services.AddScoped<IWritingStatsService, WritingStatsService>();

@@ -87,6 +87,12 @@ namespace Storylines.Services
         public int SelectedTextLength =>
             _windowContext.ChapterText?.textBox?.Document?.Selection?.Text?.Length ?? 0;
 
+        public string GetSelectedText()
+        {
+            var selection = _windowContext.ChapterText?.textBox?.Document?.Selection?.Text;
+            return string.IsNullOrEmpty(selection) ? string.Empty : selection;
+        }
+
         public void SetText(string rtfText)
         {
             SetText(TextFormat.Rtf, rtfText);

@@ -67,6 +67,7 @@ namespace Storylines.Helpers
             new("shortcutSearch", ShortcutScope.MainPage, "F"),
             new("shortcutSearchAndReplace", ShortcutScope.MainPage, "H"),
             new("shortcutToggleDialogueMode", ShortcutScope.MainPage, "D", useShift: true),
+            new("shortcutToggleDictation", ShortcutScope.MainPage, "M", useShift: true),
             new("shortcutTypewriterMode", ShortcutScope.MainPage, "W", useShift: true),
             new("shortcutBold", ShortcutScope.MainPage, "B", useShift: true),
             new("shortcutItalic", ShortcutScope.MainPage, "I", useShift: true),
@@ -105,6 +106,9 @@ namespace Storylines.Helpers
                             switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.D: WindowContext.ChapterText.DialoguesOnOff(!(bool)WindowContext.CommandBar.dialoguesEnableButton.IsChecked); break;
+                                case Windows.System.VirtualKey.M:
+                                    App.GetService<Storylines.ViewModels.SpeechHubViewModel>().ToggleDictationCommand.Execute(null);
+                                    break;
                                 case Windows.System.VirtualKey.W:
                                     bool tw = !(WindowContext.CommandBar.typewriterModeButton.IsChecked == true);
                                     WindowContext.CommandBar.typewriterModeButton.IsChecked = tw;
@@ -156,7 +160,9 @@ namespace Storylines.Helpers
                                 case Windows.System.VirtualKey.E:
                                     if (WindowContext.CommandBar.exportButton.IsEnabled && App.GetService<IDialogService>().CurrentDialog is null)
                                         App.GetService<IDialogService>().OpenExportDialogue(); break;
-                                case Windows.System.VirtualKey.R: WindowContext.CommandBar.ReadAloud(); break;
+                                case Windows.System.VirtualKey.R:
+                                    App.GetService<Storylines.ViewModels.SpeechHubViewModel>().StartReadAloudCommand.Execute(null);
+                                    break;
                                 case Windows.System.VirtualKey.F: WindowContext.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.H: WindowContext.ChapterText.OpenSearchAndReplace(); break;
                                 case Windows.System.VirtualKey.PageUp:

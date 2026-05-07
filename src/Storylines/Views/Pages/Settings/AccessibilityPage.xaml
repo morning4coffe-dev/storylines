@@ -326,6 +326,126 @@
                           SelectedValue="{x:Bind ViewModel.SelectedVoiceId, Mode=TwoWay}" />
             </Grid>
 
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="16,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph=""
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="readAloudRateSetting"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalAlignment="Center"
+                            Grid.Column="2">
+                    <TextBlock Text="{x:Bind ViewModel.ReadAloudRateText, Mode=OneWay}"
+                               VerticalAlignment="Center"
+                               Width="40"
+                               TextAlignment="Right"
+                               Opacity="0.8" />
+                    <Slider Width="150"
+                            Minimum="0.5"
+                            Maximum="2.0"
+                            StepFrequency="0.1"
+                            TickFrequency="0.5"
+                            Value="{x:Bind ViewModel.ReadAloudRate, Mode=TwoWay}" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="16,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph=""
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="readAloudPitchSetting"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           TextWrapping="Wrap" />
+                <StackPanel Orientation="Horizontal"
+                            Spacing="10"
+                            VerticalAlignment="Center"
+                            Grid.Column="2">
+                    <TextBlock Text="{x:Bind ViewModel.ReadAloudPitchText, Mode=OneWay}"
+                               VerticalAlignment="Center"
+                               Width="40"
+                               TextAlignment="Right"
+                               Opacity="0.8" />
+                    <Slider Width="150"
+                            Minimum="0.0"
+                            Maximum="2.0"
+                            StepFrequency="0.1"
+                            TickFrequency="0.5"
+                            Value="{x:Bind ViewModel.ReadAloudPitch, Mode=TwoWay}" />
+                </StackPanel>
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="16,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph=""
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="readAloudTestVoiceSetting"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           TextWrapping="Wrap" />
+                <Button x:Uid="readAloudTestVoiceButton"
+                        Grid.Column="2"
+                        HorizontalAlignment="Right"
+                        Command="{x:Bind ViewModel.TestVoiceCommand}" />
+            </Grid>
+
+            <Grid Background="{ThemeResource LayerFillColorDefaultBrush}"
+                  BorderBrush="{ThemeResource ElementBorderColor}"
+                  BorderThickness="{ThemeResource ElementBorderThickness}"
+                  CornerRadius="4"
+                  Padding="16,20">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="56" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <FontIcon Glyph=""
+                          VerticalAlignment="Center"
+                          HorizontalAlignment="Center" />
+                <TextBlock x:Uid="dictationLanguageSetting"
+                           VerticalAlignment="Center"
+                           Grid.Column="1"
+                           TextWrapping="Wrap" />
+                <ComboBox Width="220"
+                          MinWidth="220"
+                          Grid.Column="2"
+                          HorizontalAlignment="Right"
+                          ItemsSource="{x:Bind ViewModel.DictationLanguages, Mode=OneWay}"
+                          DisplayMemberPath="DisplayName"
+                          SelectedValuePath="Tag"
+                          SelectedValue="{x:Bind ViewModel.SelectedDictationLanguageTag, Mode=TwoWay}" />
+            </Grid>
+
         </StackPanel>
     </ScrollViewer>
 </Page>

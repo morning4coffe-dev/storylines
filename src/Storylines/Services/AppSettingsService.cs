@@ -188,6 +188,24 @@ namespace Storylines.Services
             set => _preferences.Set(SettingsValueStrings.ReadAloudVoice, value);
         }
 
+        public double ReadAloudRate
+        {
+            get => _preferences.Get(SettingsValueStrings.ReadAloudRate, 1.0d);
+            set => _preferences.Set(SettingsValueStrings.ReadAloudRate, Clamp(value, 0.5, 2.0));
+        }
+
+        public double ReadAloudPitch
+        {
+            get => _preferences.Get(SettingsValueStrings.ReadAloudPitch, 1.0d);
+            set => _preferences.Set(SettingsValueStrings.ReadAloudPitch, Clamp(value, 0.0, 2.0));
+        }
+
+        public string DictationLanguage
+        {
+            get => _preferences.Get<string>(SettingsValueStrings.DictationLanguage) ?? string.Empty;
+            set => _preferences.Set(SettingsValueStrings.DictationLanguage, value ?? string.Empty);
+        }
+
         public bool TextBoxSolidBackground
         {
             get => SettingsValues.whiteTextBackground;

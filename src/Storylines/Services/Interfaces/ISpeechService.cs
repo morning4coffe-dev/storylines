@@ -25,14 +25,9 @@ namespace Storylines.Services.Interfaces
         IDictationService Dictation { get; }
 
         /// <summary>
-        /// Notify the hub that read-aloud (TTS) has started. Stops any active dictation session.
+        /// Underlying read-aloud (text-to-speech) capability.
         /// </summary>
-        void NotifyReadingStarted();
-
-        /// <summary>
-        /// Notify the hub that read-aloud has stopped (cancelled or completed naturally).
-        /// </summary>
-        void NotifyReadingStopped();
+        IReadAloudService ReadAloud { get; }
     }
 
     /// <summary>

@@ -1208,7 +1208,7 @@
                                   x:Uid="readAloud"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnReadAloudButton_Click">
+                                  Command="{x:Bind SpeechHub.StartReadAloudCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -1228,7 +1228,7 @@
 
                     <AppBarElementContainer x:Name="readAloudControllHolder"
                                             x:FieldModifier="public"
-                                            Visibility="Collapsed"
+                                            Visibility="{x:Bind SpeechHub.ReadAloudControlsVisibility, Mode=OneWay}"
                                             VerticalContentAlignment="Center"
                                             Margin="4,0,0,0">
                         <Grid CornerRadius="4"
@@ -1245,7 +1245,7 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  Click="OnStopButton_Click">
+                                                  Command="{x:Bind SpeechHub.StopReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1260,8 +1260,8 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  IsEnabled="False"
-                                                  Click="OnPlayButton_Click">
+                                                  IsEnabled="{x:Bind SpeechHub.IsReadAloudPaused, Mode=OneWay}"
+                                                  Command="{x:Bind SpeechHub.ResumeReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1276,7 +1276,8 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  Click="OnPauseButton_Click">
+                                                  IsEnabled="{x:Bind SpeechHub.IsReadAloudPlaying, Mode=OneWay}"
+                                                  Command="{x:Bind SpeechHub.PauseReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1293,7 +1294,7 @@
                                                   Width="44"
                                                   ToolTipService.ToolTip="Next paragraph"
                                                   AutomationProperties.Name="Next paragraph"
-                                                  Click="OnNextParagraphButton_Click">
+                                                  Command="{x:Bind SpeechHub.NextParagraphCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph="&#xE893;"
                                                       RenderTransformOrigin="0.5,-1">
@@ -1308,7 +1309,9 @@
                                 <ProgressBar x:Name="readAloudProgressBar"
                                                   Width="180"
                                                   HorizontalAlignment="Left"
-                                                  Value="0" />
+                                                  Minimum="0"
+                                                  Maximum="1"
+                                                  Value="{x:Bind SpeechHub.ReadAloudProgress, Mode=OneWay}" />
                             </StackPanel>
                             <animations:Implicit.ShowAnimations>
                                 <animations:SizeAnimation Duration="0:0:0.4"
@@ -1333,8 +1336,5 @@
             </Grid>
         </NavigationView>
 
-        <!--<MediaElement x:Name="readAloudMediaElement"
-                      AudioCategory="Speech"
-                      MediaEnded="OnReadAloudMediaElement_MediaEnded" />-->
     </Grid>
 </UserControl>

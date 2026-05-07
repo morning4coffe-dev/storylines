@@ -161,6 +161,9 @@ namespace Storylines.Services
 
         public static string ReadAloudVolume { get; } = "ReadAloudVolume";
         public static string ReadAloudVoice { get; } = "ReadAloudVoiceId";
+        public static string ReadAloudRate { get; } = "ReadAloudRate";
+        public static string ReadAloudPitch { get; } = "ReadAloudPitch";
+        public static string DictationLanguage { get; } = "DictationLanguage";
         public static string TextBoxSolidBackground { get; } = "SolidBackground";
         public static string OnPageDownNewChapterEnabled { get; } = "OnPageDownNewChapterEnabled";
 

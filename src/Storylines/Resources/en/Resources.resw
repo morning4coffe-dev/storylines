@@ -675,6 +675,21 @@
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Volume</value>
   </data>
+  <data name="readAloudRateSetting.Text" xml:space="preserve">
+    <value>Speaking rate</value>
+  </data>
+  <data name="readAloudPitchSetting.Text" xml:space="preserve">
+    <value>Pitch</value>
+  </data>
+  <data name="readAloudTestVoiceSetting.Text" xml:space="preserve">
+    <value>Test voice</value>
+  </data>
+  <data name="readAloudTestVoiceButton.Content" xml:space="preserve">
+    <value>Play sample</value>
+  </data>
+  <data name="dictationLanguageSetting.Text" xml:space="preserve">
+    <value>Dictation language</value>
+  </data>
   <data name="ReadMode.Label" xml:space="preserve">
     <value>Read mode</value>
   </data>
@@ -1432,6 +1447,9 @@
   </data>
   <data name="shortcutToggleDialogueMode" xml:space="preserve">
     <value>Toggle dialogue mode</value>
+  </data>
+  <data name="shortcutToggleDictation" xml:space="preserve">
+    <value>Toggle dictation</value>
   </data>
   <data name="shortcutTypewriterMode" xml:space="preserve">
     <value>Toggle typewriter mode</value>

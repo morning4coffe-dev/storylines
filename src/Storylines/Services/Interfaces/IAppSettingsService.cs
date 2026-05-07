@@ -26,6 +26,9 @@ namespace Storylines.Services.Interfaces
         string UserLanguage { get; set; }
         double ReadAloudVolume { get; set; }
         string ReadAloudVoiceId { get; set; }
+        double ReadAloudRate { get; set; }
+        double ReadAloudPitch { get; set; }
+        string DictationLanguage { get; set; }
         bool TextBoxSolidBackground { get; set; }
         bool DialogueModeEnabled { get; set; }
 

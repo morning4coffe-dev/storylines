@@ -1,7 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Microsoft.UI.Xaml;
+using Storylines.Helpers;
 using Storylines.Services.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Storylines.ViewModels
@@ -10,10 +13,12 @@ namespace Storylines.ViewModels
     /// Drives the unified Speech Hub toolbar group: a single mic + speaker pair that toggles
     /// dictation and read-aloud through <see cref="ISpeechService"/>. Inserts recognised speech
     /// into the editor via <see cref="ITextEditorService"/> so views never touch the recognizer
-    /// directly.
+    /// or media player directly.
     /// </summary>
     public partial class SpeechHubViewModel : ObservableObject
     {
+        private const double LowConfidenceThreshold = 0.3;
+
         private readonly ISpeechService _speech;
         private readonly ITextEditorService _textEditor;
         private readonly IAppSettingsService _settings;
@@ -28,6 +33,12 @@ namespace Storylines.ViewModels
         [ObservableProperty]
         private bool _isPermissionDenied;
 
+        [ObservableProperty]
+        private ReadAloudState _readAloudState;
+
+        [ObservableProperty]
+        private double _readAloudProgress;
+
         public SpeechHubViewModel(
             ISpeechService speech,
             ITextEditorService textEditor,
@@ -40,14 +51,24 @@ namespace Storylines.ViewModels
             _notifications = notifications;
 
             _mode = _speech.Mode;
+            _readAloudState = _speech.ReadAloud.State;
+
             _speech.ModeChanged += HandleModeChanged;
             _speech.Dictation.ResultRecognized += OnDictationResult;
             _speech.Dictation.StateChanged += OnDictationStateChanged;
+            _speech.ReadAloud.StateChanged += HandleReadAloudStateChanged;
+            _speech.ReadAloud.ProgressChanged += HandleReadAloudProgressChanged;
         }
 
         public bool IsDictating => Mode == SpeechMode.Dictating;
         public bool IsReading => Mode == SpeechMode.Reading;
         public bool IsIdle => Mode == SpeechMode.Idle;
+
+        public bool CanShowReadAloudControls => ReadAloudState is ReadAloudState.Loading or ReadAloudState.Playing or ReadAloudState.Paused;
+        public bool IsReadAloudPaused => ReadAloudState == ReadAloudState.Paused;
+        public bool IsReadAloudPlaying => ReadAloudState == ReadAloudState.Playing;
+
+        public Visibility ReadAloudControlsVisibility => CanShowReadAloudControls ? Visibility.Visible : Visibility.Collapsed;
 
         [RelayCommand]
         private async Task ToggleDictationAsync()
@@ -58,17 +79,68 @@ namespace Storylines.ViewModels
                 return;
             }
 
-            // Mutual-exclusion: stop reading first if it is active. The current TTS path lives
-            // in the command-bar code-behind and listens to ISpeechService mode changes there.
+            // Mutual-exclusion: stop reading first if it is active.
             if (_speech.Mode == SpeechMode.Reading)
-                _speech.NotifyReadingStopped();
+                _speech.ReadAloud.Stop();
 
             IsPermissionDenied = false;
-            var languageTag = string.IsNullOrWhiteSpace(_settings.UserLanguage)
+            var languageTag = ResolveDictationLanguageTag();
+            await _speech.Dictation.StartAsync(languageTag).ConfigureAwait(false);
+        }
+
+        [RelayCommand]
+        private async Task StartReadAloudAsync()
+        {
+            // If a session is already active, treat the toolbar button as a stop toggle.
+            if (CanShowReadAloudControls)
+            {
+                _speech.ReadAloud.Stop();
+                return;
+            }
+
+            var paragraphs = ResolveTextToRead();
+            if (paragraphs.Count == 0)
+                return;
+
+            await _speech.ReadAloud.SpeakParagraphsAsync(paragraphs).ConfigureAwait(false);
+        }
+
+        [RelayCommand]
+        private void PauseReadAloud() => _speech.ReadAloud.Pause();
+
+        [RelayCommand]
+        private void ResumeReadAloud() => _speech.ReadAloud.Resume();
+
+        [RelayCommand]
+        private void StopReadAloud() => _speech.ReadAloud.Stop();
+
+        [RelayCommand]
+        private Task NextParagraphAsync() => _speech.ReadAloud.NextParagraphAsync();
+
+        [RelayCommand]
+        private Task PreviousParagraphAsync() => _speech.ReadAloud.PreviousParagraphAsync();
+
+        private IReadOnlyList<string> ResolveTextToRead()
+        {
+            var selection = _textEditor.GetSelectedText();
+            var source = string.IsNullOrWhiteSpace(selection)
+                ? _textEditor.GetText(TextFormat.PlainText)
+                : selection;
+
+            if (string.IsNullOrWhiteSpace(source))
+                return Array.Empty<string>();
+
+            return new[] { source };
+        }
+
+        private string ResolveDictationLanguageTag()
+        {
+            if (!string.IsNullOrWhiteSpace(_settings.DictationLanguage))
+                return _settings.DictationLanguage;
+
+            return string.IsNullOrWhiteSpace(_settings.UserLanguage)
                 ? null
                 : _settings.UserLanguage;
-
-            await _speech.Dictation.StartAsync(languageTag).ConfigureAwait(false);
         }
 
         private void HandleModeChanged(SpeechMode mode)
@@ -84,6 +156,10 @@ namespace Storylines.ViewModels
             if (result is null || string.IsNullOrEmpty(result.Text))
                 return;
 
+            // Drop low-confidence hypotheses so background noise does not pollute the editor.
+            if (result.Confidence < LowConfidenceThreshold)
+                return;
+
             // Append a trailing space so consecutive utterances do not run together.
             _textEditor.InsertTextAtCaret(result.Text + " ");
         }
@@ -95,6 +171,7 @@ namespace Storylines.ViewModels
                 case DictationState.PermissionDenied:
                     IsPermissionDenied = true;
                     StatusMessage = "Microphone access denied.";
+                    NotificationManager.ClearBadgeNotification();
                     _notifications?.ShowNotification(
                         Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
                         "Microphone access denied",
@@ -102,19 +179,45 @@ namespace Storylines.ViewModels
                     break;
                 case DictationState.Unsupported:
                     StatusMessage = "Dictation is not available on this device.";
+                    NotificationManager.ClearBadgeNotification();
                     break;
                 case DictationState.Error:
                     StatusMessage = string.IsNullOrWhiteSpace(change.Message)
                         ? "Dictation error."
                         : change.Message;
+                    NotificationManager.ClearBadgeNotification();
                     break;
                 case DictationState.Listening:
                     StatusMessage = "Listening…";
+                    SafeDisplayBadge("alert");
                     break;
                 case DictationState.Stopped:
                     StatusMessage = string.Empty;
+                    NotificationManager.ClearBadgeNotification();
                     break;
             }
+        }
+
+        private void HandleReadAloudStateChanged(ReadAloudState state)
+        {
+            ReadAloudState = state;
+            OnPropertyChanged(nameof(CanShowReadAloudControls));
+            OnPropertyChanged(nameof(IsReadAloudPaused));
+            OnPropertyChanged(nameof(IsReadAloudPlaying));
+            OnPropertyChanged(nameof(ReadAloudControlsVisibility));
+
+            if (state == ReadAloudState.Playing)
+                SafeDisplayBadge("playing");
+            else if (state == ReadAloudState.Idle)
+                NotificationManager.ClearBadgeNotification();
+        }
+
+        private void HandleReadAloudProgressChanged(double value) => ReadAloudProgress = value;
+
+        private static void SafeDisplayBadge(string glyph)
+        {
+            try { NotificationManager.DisplayBadgeNotification(glyph); }
+            catch { /* unpackaged or no notifications API */ }
         }
     }
 }
