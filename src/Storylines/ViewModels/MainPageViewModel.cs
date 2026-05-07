@@ -20,6 +20,7 @@ namespace Storylines.ViewModels
         private readonly ITextEditorService _textEditor;
         private readonly ResourceLoader _resources;
         private readonly INotificationService _notifications;
+        private readonly IWritingSessionService _writingSession;
 
         // ── Chapter state ──
 
@@ -139,12 +140,14 @@ namespace Storylines.ViewModels
             EventAggregator events,
             EditorModeService modeService,
             ITextEditorService textEditor,
-            INotificationService notifications)
+            INotificationService notifications,
+            IWritingSessionService writingSession)
         {
             _projectState = projectState;
             _dialogs = dialogs;
             _textEditor = textEditor;
             _notifications = notifications;
+            _writingSession = writingSession;
             _resources = ResourceLoader.GetForViewIndependentUse();
 
             DownBarGuidanceText = _resources.GetString("downBarTextS");
@@ -212,7 +215,7 @@ namespace Storylines.ViewModels
 
         public void UpdateDownBar()
         {
-            if (_textEditor == null) return;
+            if (_textEditor is null) return;
 
             var selectedIndex = _textEditor.SelectedChapterIndex;
             if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
@@ -250,7 +253,7 @@ namespace Storylines.ViewModels
 
         public void UpdateWordGoalBar()
         {
-            if (_textEditor == null) return;
+            if (_textEditor is null) return;
 
             var selectedIndex = _textEditor.SelectedChapterIndex;
             if (selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
@@ -260,7 +263,7 @@ namespace Storylines.ViewModels
             }
 
             var chapter = _projectState.Chapters[selectedIndex];
-            if (chapter.WordCountGoal == null || chapter.WordCountGoal <= 0)
+            if (chapter.WordCountGoal is null || chapter.WordCountGoal <= 0)
             {
                 WordGoalVisibility = Visibility.Collapsed;
                 return;
@@ -291,8 +294,8 @@ namespace Storylines.ViewModels
 
         public void UpdateStreakBadge()
         {
-            int streak = WritingSessionService.GetCurrentStreak();
-            int today = WritingSessionService.GetTodayWords();
+            int streak = _writingSession.GetCurrentStreak();
+            int today = _writingSession.GetTodayWords();
             StreakText = streak > 0 ? $"🔥 {streak}d · {today}w today" : $"{today}w today";
         }
 
@@ -308,7 +311,7 @@ namespace Storylines.ViewModels
             _sessionStart = DateTimeOffset.Now;
             SessionStreakVisibility = Visibility.Visible;
 
-            WritingSessionService.OnSessionStart(totalProjectWordCount);
+            _writingSession.OnSessionStart(totalProjectWordCount);
             UpdateStreakBadge();
             return true;
         }

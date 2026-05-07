@@ -54,10 +54,10 @@ namespace Storylines.Helpers
             if (_isUpdateInstallInProgress)
                 return;
 
-            if (_availableUpdates == null || _availableUpdates.Count < 1)
+            if (_availableUpdates is null || _availableUpdates.Count < 1)
             {
                 await CheckForNewUpdateAvailableAsync();
-                if (_availableUpdates == null || _availableUpdates.Count < 1)
+                if (_availableUpdates is null || _availableUpdates.Count < 1)
                     return;
             }
 
@@ -97,7 +97,7 @@ namespace Storylines.Helpers
 
         public static void InitializeReview()
         {
-            SettingsValues.ReviewPrompt reviewState = (SettingsValues.ReviewPrompt)(Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] ?? 2);
+            SettingsValues.ReviewPrompt reviewState = (SettingsValues.ReviewPrompt)App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get(SettingsValueStrings.ReviewPrompt, 2);
             if (reviewState != SettingsValues.ReviewPrompt.NotYet)
                 return;
 
@@ -126,11 +126,12 @@ namespace Storylines.Helpers
                 case StoreRateAndReviewStatus.Succeeded:
                     telemetry?.TrackReviewInteraction(source, "completed", "succeeded");
 
-                    AppView.current.reviewRequestInfoBar.IsOpen = false;
-                    AppView.current.reviewRequestInfoBar.Visibility = Visibility.Collapsed;
+                    var appView = App.GetService<WindowContext>().AppView;
+                    appView.reviewRequestInfoBar.IsOpen = false;
+                    appView.reviewRequestInfoBar.Visibility = Visibility.Collapsed;
                     NotificationManager.DisplayThankYou();
 
-                    Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.SuccessfullyRated;
+                    App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.SuccessfullyRated);
 
                     _closeThanksInterval.Tick -= CloseThanksInterval_Tick;
                     _closeThanksInterval.Tick += CloseThanksInterval_Tick;
@@ -154,8 +155,9 @@ namespace Storylines.Helpers
 
         private static void CloseThanksInterval_Tick(object sender, object e)
         {
-            AppView.current.reviewRequestThankYouInfoBar.IsOpen = false;
-            AppView.current.reviewRequestThankYouInfoBar.Visibility = Visibility.Collapsed;
+            var appView = App.GetService<WindowContext>().AppView;
+            appView.reviewRequestThankYouInfoBar.IsOpen = false;
+            appView.reviewRequestThankYouInfoBar.Visibility = Visibility.Collapsed;
 
             _closeThanksInterval.Stop();
             _closeThanksInterval.Tick -= CloseThanksInterval_Tick;
@@ -167,11 +169,12 @@ namespace Storylines.Helpers
 
             await RunOnUiThreadAsync(() =>
             {
-                if (AppView.current?.updateAvailableProgressBar == null)
+                var appView = App.GetService<WindowContext>()?.AppView;
+                if (appView?.updateAvailableProgressBar is null)
                     return;
 
-                AppView.current.updateAvailableProgressBar.IsIndeterminate = false;
-                AppView.current.updateAvailableProgressBar.Value = progressValue;
+                appView.updateAvailableProgressBar.IsIndeterminate = false;
+                appView.updateAvailableProgressBar.Value = progressValue;
             });
         }
 
@@ -254,28 +257,29 @@ namespace Storylines.Helpers
             bool showProgressBar,
             bool isProgressIndeterminate)
         {
-            if (AppView.current == null)
+            var appView = App.GetService<WindowContext>()?.AppView;
+            if (appView is null)
                 return;
 
-            AppView.current.updateAvailableInfoBar.Title = title;
-            AppView.current.updateAvailableInfoBar.Severity = severity;
-            AppView.current.updateAvailableInfoBar.RequestedTheme = AppView.current.ActualTheme;
-            AppView.current.updateAvailableInfoBar.IsClosable = !_isUpdateInstallInProgress;
+            appView.updateAvailableInfoBar.Title = title;
+            appView.updateAvailableInfoBar.Severity = severity;
+            appView.updateAvailableInfoBar.RequestedTheme = appView.ActualTheme;
+            appView.updateAvailableInfoBar.IsClosable = !_isUpdateInstallInProgress;
 
-            AppView.current.updateAvailableInfoBarText.Text = message;
-            AppView.current.updateAvailableInfoBarDetailText.Text = detail;
-            AppView.current.updateAvailableInfoBarDetailText.Visibility =
+            appView.updateAvailableInfoBarText.Text = message;
+            appView.updateAvailableInfoBarDetailText.Text = detail;
+            appView.updateAvailableInfoBarDetailText.Visibility =
                 string.IsNullOrWhiteSpace(detail) ? Visibility.Collapsed : Visibility.Visible;
 
-            AppView.current.updateAvailableProgressBar.Value = 0;
-            AppView.current.updateAvailableProgressBar.IsIndeterminate = isProgressIndeterminate;
-            AppView.current.updateAvailableProgressBar.Visibility =
+            appView.updateAvailableProgressBar.Value = 0;
+            appView.updateAvailableProgressBar.IsIndeterminate = isProgressIndeterminate;
+            appView.updateAvailableProgressBar.Visibility =
                 showProgressBar ? Visibility.Visible : Visibility.Collapsed;
 
-            AppView.current.updateAvailableActionsPanel.Visibility =
+            appView.updateAvailableActionsPanel.Visibility =
                 showActions ? Visibility.Visible : Visibility.Collapsed;
-            AppView.current.updateAvailablePrimaryButton.IsEnabled = !_isUpdateInstallInProgress;
-            AppView.current.updateAvailableSecondaryButton.IsEnabled = !_isUpdateInstallInProgress;
+            appView.updateAvailablePrimaryButton.IsEnabled = !_isUpdateInstallInProgress;
+            appView.updateAvailableSecondaryButton.IsEnabled = !_isUpdateInstallInProgress;
 
             NotificationManager.DisplayNewUpdateAvailable();
         }
@@ -283,7 +287,7 @@ namespace Storylines.Helpers
         private static void EnsureStoreContextInitialized()
         {
             var windowCtx = App.TryGetService<IWindowManager>()?.PrimaryWindow;
-            if (!_storeContextInitialized && windowCtx?.Window != null)
+            if (!_storeContextInitialized && windowCtx?.Window is not null)
             {
                 var hwnd = WinRT.Interop.WindowNative.GetWindowHandle(windowCtx.Window);
                 WinRT.Interop.InitializeWithWindow.Initialize(_storeContext, hwnd);
@@ -293,11 +297,12 @@ namespace Storylines.Helpers
 
         private static Task RunOnUiThreadAsync(Action action)
         {
-            if (AppView.current?.DispatcherQueue == null)
+            var appView = App.GetService<WindowContext>()?.AppView;
+            if (appView?.DispatcherQueue is null)
                 return Task.CompletedTask;
 
             var tcs = new TaskCompletionSource<object>();
-            AppView.current.DispatcherQueue.TryEnqueue(() =>
+            appView.DispatcherQueue.TryEnqueue(() =>
             {
                 action();
                 tcs.SetResult(null);

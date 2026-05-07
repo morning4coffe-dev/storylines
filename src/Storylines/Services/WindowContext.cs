@@ -1,4 +1,5 @@
 using Microsoft.Extensions.DependencyInjection;
+using Storylines.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Views.Controls;
@@ -24,11 +25,12 @@ namespace Storylines.Services
         public ChaptersList ChapterList { get; internal set; }
         public MainCommandBar CommandBar { get; internal set; }
         public ChapterTextBox ChapterText { get; internal set; }
+        public TextHighlighter Highlighter { get; } = new TextHighlighter();
         internal bool IsInitialized { get; set; }
 
         public XamlRoot XamlRoot => RootElement?.XamlRoot ?? AppView?.XamlRoot;
 
-        public IntPtr Hwnd => Window == null
+        public IntPtr Hwnd => Window is null
             ? IntPtr.Zero
             : WinRT.Interop.WindowNative.GetWindowHandle(Window);
 

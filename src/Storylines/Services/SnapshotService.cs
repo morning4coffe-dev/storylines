@@ -54,7 +54,7 @@ namespace Storylines.Services
             try
             {
                 var data = _persistence.CollectProjectData();
-                if (data == null)
+                if (data is null)
                     return Task.CompletedTask;
 
                 var json = _serializer.Serialize(data);
@@ -89,13 +89,13 @@ namespace Storylines.Services
             {
                 match = _snapshots.FirstOrDefault(s => s.Entry.Id == snapshotId);
             }
-            if (match == null)
+            if (match is null)
                 return Task.FromResult(false);
 
             try
             {
                 var data = _serializer.Deserialize(match.SerializedJson);
-                if (data == null)
+                if (data is null)
                     return Task.FromResult(false);
 
                 ApplyToProjectState(data);
@@ -116,7 +116,7 @@ namespace Storylines.Services
             lock (_gate)
             {
                 var node = _snapshots.First;
-                while (node != null)
+                while (node is not null)
                 {
                     if (node.Value.Entry.Id == snapshotId)
                     {
@@ -139,11 +139,11 @@ namespace Storylines.Services
         {
             _projectState.Clear();
 
-            if (data.Chapters != null)
+            if (data.Chapters is not null)
             {
                 foreach (var chapterData in data.Chapters)
                 {
-                    if (chapterData == null) continue;
+                    if (chapterData is null) continue;
                     _projectState.AddExistingChapter(
                         chapterData.Name ?? string.Empty,
                         chapterData.Id ?? Guid.NewGuid().ToString(),
@@ -162,10 +162,10 @@ namespace Storylines.Services
                 }
             }
 
-            if (data.PinboardConnections != null)
+            if (data.PinboardConnections is not null)
                 _projectState.PinboardConnections = data.PinboardConnections.ToList();
 
-            if (data.PlotThreads != null)
+            if (data.PlotThreads is not null)
                 _projectState.PlotThreads = data.PlotThreads.ToList();
         }
 

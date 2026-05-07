@@ -57,7 +57,7 @@ namespace Storylines.Helpers
         /// </summary>
         public void Record(IUndoableAction action)
         {
-            if (action == null) return;
+            if (action is null) return;
             if (IsExecuting || IsSuppressed) return;
 
             // Try to merge with the current top (unless the chain was broken)

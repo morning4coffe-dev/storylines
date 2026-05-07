@@ -112,7 +112,7 @@ namespace Storylines.ViewModels.Modes
         // ── cleanup ───────────────────────────────────────────────────────────
         public void Stop()
         {
-            if (_timer != null)
+            if (_timer is not null)
             {
                 _timer.Tick -= OnTimerTick;
                 _timer.Stop();

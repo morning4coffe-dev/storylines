@@ -56,7 +56,7 @@ namespace Storylines.Views.Pages
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
-            if (_windowContext?.AppView != null)
+            if (_windowContext?.AppView is not null)
                 _windowContext.AppView.page = AppView.Pages.MainPage;
 
             _allChapters = ProjectState.Chapters;
@@ -71,7 +71,7 @@ namespace Storylines.Views.Pages
         private void PopulateTagFilter()
         {
             var allTags = _allChapters
-                .Where(c => c.Tags != null)
+                .Where(c => c.Tags is not null)
                 .SelectMany(c => c.Tags)
                 .Distinct(StringComparer.CurrentCultureIgnoreCase)
                 .OrderBy(t => t, StringComparer.CurrentCultureIgnoreCase)
@@ -103,7 +103,7 @@ namespace Storylines.Views.Pages
             if (!string.IsNullOrEmpty(_activeTagFilter))
             {
                 source = _allChapters.Where(c =>
-                    c.Tags != null &&
+                    c.Tags is not null &&
                     c.Tags.Any(t => string.Equals(t, _activeTagFilter, StringComparison.CurrentCultureIgnoreCase)));
             }
 
@@ -353,7 +353,7 @@ namespace Storylines.Views.Pages
             var bottomPanel = new StackPanel { Orientation = Orientation.Horizontal, Spacing = 3, Margin = new Thickness(0, 6, 0, 0) };
             bool hasBottom = false;
 
-            if (chapter.Tags != null && chapter.Tags.Count > 0)
+            if (chapter.Tags is not null && chapter.Tags.Count > 0)
             {
                 foreach (var tag in chapter.Tags.Take(2))
                 {
@@ -369,7 +369,7 @@ namespace Storylines.Views.Pages
                 hasBottom = true;
             }
 
-            if (chapter.PlotThreads != null && chapter.PlotThreads.Count > 0)
+            if (chapter.PlotThreads is not null && chapter.PlotThreads.Count > 0)
             {
                 foreach (var thread in chapter.PlotThreads.Take(2))
                 {
@@ -404,7 +404,7 @@ namespace Storylines.Views.Pages
         private List<string> DetectCharactersInChapter(Chapter chapter)
         {
             var characters = ProjectState.Characters;
-            if (characters == null || characters.Count == 0 || string.IsNullOrEmpty(chapter.Text))
+            if (characters is null || characters.Count == 0 || string.IsNullOrEmpty(chapter.Text))
                 return new List<string>();
 
             var found = new List<string>();
@@ -422,7 +422,7 @@ namespace Storylines.Views.Pages
         private void DrawConnections()
         {
             var connections = ProjectState.PinboardConnections;
-            if (connections == null) return;
+            if (connections is null) return;
 
             // Build a set of visible chapter indices for filtering
             var visibleTokens = new HashSet<string>(_filteredView.Select(c => c.Token));
@@ -478,7 +478,7 @@ namespace Storylines.Views.Pages
 
         private CanvasConnectionRect GetChapterBounds(Chapter chapter)
         {
-            if (chapter != null && !string.IsNullOrWhiteSpace(chapter.Token) && _cardElements.TryGetValue(chapter.Token, out var card))
+            if (chapter is not null && !string.IsNullOrWhiteSpace(chapter.Token) && _cardElements.TryGetValue(chapter.Token, out var card))
             {
                 var height = Math.Max(card.ActualHeight, card.DesiredSize.Height);
                 if (height > 0)
@@ -580,7 +580,7 @@ namespace Storylines.Views.Pages
             {
                 var token = card.Tag as string;
                 _draggingChapter = _filteredView.FirstOrDefault(c => c.Token == token);
-                if (_draggingChapter == null) return;
+                if (_draggingChapter is null) return;
 
                 _draggingCard = card;
                 _dragMoved = false;
@@ -609,7 +609,7 @@ namespace Storylines.Views.Pages
 
         private void Card_PointerMoved(object sender, PointerRoutedEventArgs e)
         {
-            if (!_isDragging || _draggingCard == null) return;
+            if (!_isDragging || _draggingCard is null) return;
 
             var pos = e.GetCurrentPoint(pinboardCanvas).Position;
 
@@ -639,14 +639,14 @@ namespace Storylines.Views.Pages
 
         private void Card_PointerReleased(object sender, PointerRoutedEventArgs e)
         {
-            if (_isDragging && _draggingCard != null)
+            if (_isDragging && _draggingCard is not null)
             {
                 _draggingCard.ReleasePointerCapture(e.Pointer);
                 Canvas.SetZIndex(_draggingCard, 0);
                 _draggingCard.Opacity = 1.0;
             }
 
-            if (connectModeToggle.IsChecked == true && _draggingChapter != null)
+            if (connectModeToggle.IsChecked == true && _draggingChapter is not null)
             {
                 HandleCardClick(_draggingChapter);
             }
@@ -670,7 +670,7 @@ namespace Storylines.Views.Pages
 
         private void Card_PointerCanceled(object sender, PointerRoutedEventArgs e)
         {
-            if (_isDragging && _draggingCard != null)
+            if (_isDragging && _draggingCard is not null)
             {
                 Canvas.SetZIndex(_draggingCard, 0);
                 _draggingCard.Opacity = 1.0;
@@ -686,7 +686,7 @@ namespace Storylines.Views.Pages
 
         private void HandleCardClick(Chapter chapter)
         {
-            if (chapter == null) return;
+            if (chapter is null) return;
 
             if (connectModeToggle.IsChecked == true)
             {
@@ -701,7 +701,7 @@ namespace Storylines.Views.Pages
             Navigation.GoBack();
             TextEditor.SelectedChapterIndex = index;
 
-            if (_windowContext?.ChapterList?.listView != null)
+            if (_windowContext?.ChapterList?.listView is not null)
                 _windowContext.ChapterList.listView.SelectedIndex = index;
         }
 
@@ -709,7 +709,7 @@ namespace Storylines.Views.Pages
 
         private void HandleConnectClick(Chapter chapter)
         {
-            if (_connectSource == null)
+            if (_connectSource is null)
             {
                 // First click: highlight source
                 _connectSource = chapter;
@@ -738,7 +738,7 @@ namespace Storylines.Views.Pages
 
         private void ClearPendingConnectionSelection()
         {
-            if (_connectSource != null)
+            if (_connectSource is not null)
                 HighlightCard(_connectSource.Token, false);
 
             _connectSource = null;

@@ -17,18 +17,18 @@ namespace Storylines.Services
 
         public void Initialize(Frame frame)
         {
-            if (_frame != null)
+            if (_frame is not null)
                 _frame.Navigated -= OnFrameNavigated;
 
             _frame = frame;
 
-            if (_frame != null)
+            if (_frame is not null)
                 _frame.Navigated += OnFrameNavigated;
         }
 
         public void NavigateTo(NavigationTarget target, object parameter = null)
         {
-            if (_frame == null)
+            if (_frame is null)
                 return;
 
             switch (target)
@@ -63,7 +63,7 @@ namespace Storylines.Services
 
         public void ClearFrame()
         {
-            if (_frame != null)
+            if (_frame is not null)
                 _frame.Navigated -= OnFrameNavigated;
 
             _frame = null;

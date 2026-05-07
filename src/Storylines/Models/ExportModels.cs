@@ -50,7 +50,7 @@ namespace Storylines.Models
                 defaultExtension
             };
 
-            if (extensions != null)
+            if (extensions is not null)
             {
                 foreach (var extension in extensions)
                 {
@@ -83,7 +83,7 @@ namespace Storylines.Models
             bool showsSecondaryCharacterFilter,
             IEnumerable<ExportFormatDefinition> formats)
         {
-            if (formats == null)
+            if (formats is null)
                 throw new ArgumentNullException(nameof(formats));
 
             Target = target;
@@ -146,11 +146,11 @@ namespace Storylines.Models
             IEnumerable<ExportSelectionState> secondarySelections = null)
         {
             var primary = (primarySelections ?? Array.Empty<ExportSelectionState>())
-                .Where(item => item != null && item.IsSelected)
+                .Where(item => item is not null && item.IsSelected)
                 .ToArray();
 
             var secondary = (secondarySelections ?? Array.Empty<ExportSelectionState>())
-                .Where(item => item != null && item.IsSelected)
+                .Where(item => item is not null && item.IsSelected)
                 .ToArray();
 
             return target switch

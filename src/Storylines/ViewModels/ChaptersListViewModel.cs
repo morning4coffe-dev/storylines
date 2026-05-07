@@ -67,7 +67,7 @@ namespace Storylines.ViewModels
 
         partial void OnSelectedChapterChanged(Chapter value)
         {
-            var selectedIndex = value != null ? _projectState.Chapters.IndexOf(value) : -1;
+            var selectedIndex = value is not null ? _projectState.Chapters.IndexOf(value) : -1;
             if (SelectedIndex != selectedIndex)
                 SelectedIndex = selectedIndex;
         }
@@ -128,7 +128,7 @@ namespace Storylines.ViewModels
 
         private void ApplyChapterSelection(Chapter chapter, int selectedIndex)
         {
-            if (chapter != null)
+            if (chapter is not null)
             {
                 using (TimeTravelChapter.SuppressRecording())
                 {

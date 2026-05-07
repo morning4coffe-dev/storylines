@@ -163,7 +163,7 @@ namespace Storylines.Views.Dialogs
                 ? _projectState.Chapters[beforeCount]
                 : _projectState.Chapters.LastOrDefault();
 
-            if (createdChapter != null && _windowContext?.AppView?.page != AppView.Pages.MainPage)
+            if (createdChapter is not null && _windowContext?.AppView?.page != AppView.Pages.MainPage)
                 _navigation?.NavigateTo(NavigationTarget.MainPage, createdChapter.Token);
 
             Hide();

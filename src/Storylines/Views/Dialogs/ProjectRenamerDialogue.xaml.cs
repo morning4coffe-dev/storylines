@@ -37,7 +37,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (Persistence.CurrentProject != null)
+            if (Persistence.CurrentProject is not null)
                 Persistence.CurrentProject.projectName = chapterNameBox.Text;
             App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 

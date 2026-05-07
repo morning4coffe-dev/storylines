@@ -10,7 +10,7 @@ namespace Storylines.Services
     /// <see cref="TimeTravelSystem"/>. Callers should migrate to the interface over time; the
     /// statics can remain as internal implementation detail until each call site is updated.
     /// </summary>
-    internal sealed class UndoRedoService : IUndoRedoService
+    internal sealed class UndoRedoService : IUndoRedoService, IDisposable
     {
         private bool _canUndoChapters;
         private bool _canRedoChapters;
@@ -89,6 +89,16 @@ namespace Storylines.Services
                     break;
             }
             StateChanged?.Invoke(e.Context);
+        }
+
+        public void Dispose()
+        {
+            var contextId = App.TryGetService<WindowContext>()?.Id ?? Guid.Empty;
+            if (contextId != Guid.Empty)
+            {
+                TimeTravelChapter.Cleanup(contextId);
+                TimeTravelCharacter.Cleanup(contextId);
+            }
         }
     }
 }

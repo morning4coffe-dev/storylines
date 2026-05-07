@@ -108,16 +108,18 @@ namespace Storylines.Services
 
         public static void ChangeTheme(int id, ElementTheme currentSystemTheme)
         {
+            var appView = App.GetService<WindowContext>()?.AppView;
+
             switch (id)
             {
                 case 0:
                     RootTheme = ElementTheme.Light;
-                    AppView.current.RequestedTheme = ElementTheme.Light;
+                    if (appView is not null) appView.RequestedTheme = ElementTheme.Light;
                     selectedTheme = SelectedTheme.Light;
                     break;
                 case 1:
                     RootTheme = ElementTheme.Dark;
-                    AppView.current.RequestedTheme = ElementTheme.Dark;
+                    if (appView is not null) appView.RequestedTheme = ElementTheme.Dark;
                     selectedTheme = SelectedTheme.Dark;
                     break;
                 case 2:
@@ -127,18 +129,22 @@ namespace Storylines.Services
                     {
                         case ElementTheme.Light:
                             RootTheme = ElementTheme.Light;
-                            AppView.current.RequestedTheme = ElementTheme.Light;
+                            if (appView is not null) appView.RequestedTheme = ElementTheme.Light;
                             break;
                         case ElementTheme.Dark:
                             RootTheme = ElementTheme.Dark;
-                            AppView.current.RequestedTheme = ElementTheme.Dark;
+                            if (appView is not null) appView.RequestedTheme = ElementTheme.Dark;
                             break;
                     }
                     break;
             }
             try
             {
-                MainPage.ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+                var chapterText = App.GetService<WindowContext>()?.ChapterText;
+                if (chapterText is not null)
+                {
+                    chapterText.TextBoxWhiteBackground(App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get(SettingsValueStrings.TextBoxSolidBackground, false));
+                }
             }
             catch (Exception ex)
             {
@@ -147,7 +153,7 @@ namespace Storylines.Services
 
             UpdateAccentColor((Color)Application.Current.Resources["SystemAccentColor"]);
 
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppTheme] = id;
+            App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Set(SettingsValueStrings.AppTheme, id);
         }
 
         public static ElementTheme ToElementTheme(this ApplicationTheme theme)
@@ -166,7 +172,7 @@ namespace Storylines.Services
         private static void ApplyThemeForTitleBar(Color color, ElementTheme theme)
         {
             var ctx = App.TryGetService<Interfaces.IWindowManager>()?.Current;
-            if (ctx?.Window == null) return;
+            if (ctx?.Window is null) return;
             var titleBar = ctx.Window.AppWindow.TitleBar;
 
             if (theme == ElementTheme.Dark)
@@ -213,7 +219,10 @@ namespace Storylines.Services
 
         private static void UpdateAccentColor(Color color)
         {
-            AppView.current.DispatcherQueue.TryEnqueue(() =>
+            var appView = App.GetService<WindowContext>()?.AppView;
+            if (appView is null) return;
+
+            appView.DispatcherQueue.TryEnqueue(() =>
             {
                 Application.Current.Resources["SystemAccentColor"] = color; 
                 Application.Current.Resources["SystemAccentColorDark1"] = ChangeColorBrightness(color, -0.05f);
@@ -223,10 +232,10 @@ namespace Storylines.Services
                 Application.Current.Resources["SystemAccentColorLight2"] = ChangeColorBrightness(color, 0.30f);
                 Application.Current.Resources["SystemAccentColorLight3"] = ChangeColorBrightness(color, 0.40f);
 
-                ApplyThemeForTitleBar(color, AppView.current.RequestedTheme);
+                ApplyThemeForTitleBar(color, appView.RequestedTheme);
 
-                AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
-                AppView.current.RequestedTheme = AppView.current.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+                appView.RequestedTheme = appView.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
+                appView.RequestedTheme = appView.RequestedTheme == ElementTheme.Light ? ElementTheme.Dark : ElementTheme.Light;
             });
         }
 

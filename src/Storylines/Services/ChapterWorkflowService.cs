@@ -32,7 +32,7 @@ namespace Storylines.Services
         public void OpenRenameChapterDialog(string chapterToken, bool doubleTap = false)
         {
             var chapter = FindChapter(chapterToken);
-            if (chapter != null)
+            if (chapter is not null)
                 _dialogs.OpenChapterRenamer(chapter, doubleTap);
         }
 
@@ -53,19 +53,19 @@ namespace Storylines.Services
                 ? _projectState.Chapters[nextIndex]
                 : null;
 
-            if (createdChapter != null && !string.IsNullOrWhiteSpace(initialText))
+            if (createdChapter is not null && !string.IsNullOrWhiteSpace(initialText))
                 createdChapter.Text = ConvertPlainTextToRtf(initialText);
 
             SelectChapter(nextIndex);
 
-            if (_textEditor != null && createdChapter != null)
+            if (_textEditor is not null && createdChapter is not null)
                 _textEditor.LoadChapterContent(createdChapter);
         }
 
         public void RenameChapter(string chapterToken, string newName)
         {
             var chapter = FindChapter(chapterToken);
-            if (chapter != null)
+            if (chapter is not null)
                 _projectState.RenameChapter(chapter.Token, newName);
         }
 
@@ -78,11 +78,11 @@ namespace Storylines.Services
         public void DuplicateChapter(string chapterToken)
         {
             var chapter = FindChapter(chapterToken);
-            if (chapter == null)
+            if (chapter is null)
                 return;
 
             var duplicate = _projectState.DuplicateChapter(chapter.Token, BuildDuplicateChapterName(chapter.Name));
-            if (duplicate == null)
+            if (duplicate is null)
                 return;
 
             SelectChapter(_projectState.FindChapterID(duplicate.Token));
@@ -91,14 +91,14 @@ namespace Storylines.Services
         public void OpenChapterTagsDialog(string chapterToken)
         {
             var chapter = FindChapter(chapterToken);
-            if (chapter != null)
+            if (chapter is not null)
                 _dialogs.OpenChapterTags(chapter);
         }
 
         public void SetChapterStatus(string chapterToken, ChapterStatus status)
         {
             var chapter = FindChapter(chapterToken);
-            if (chapter == null || chapter.Status == status)
+            if (chapter is null || chapter.Status == status)
                 return;
 
             chapter.Status = status;
@@ -120,7 +120,7 @@ namespace Storylines.Services
 
         private void SelectChapter(int chapterIndex)
         {
-            if (_textEditor != null)
+            if (_textEditor is not null)
                 _textEditor.SelectedChapterIndex = chapterIndex;
         }
 

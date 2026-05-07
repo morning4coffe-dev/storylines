@@ -29,6 +29,7 @@ namespace Storylines.Services
             services.AddScoped<IFileService, FileService>();
             services.AddScoped<IFilePickerService, FilePickerService>();
             services.AddScoped<IExportService, ExportService>();
+            services.AddScoped<IPreferencesService, PreferencesService>();
             services.AddScoped<IAppSettingsService, AppSettingsService>();
             services.AddScoped<ProjectState>();
             services.AddScoped<EventAggregator>();
@@ -40,6 +41,7 @@ namespace Storylines.Services
             services.AddScoped<IChapterWorkflowService, ChapterWorkflowService>();
             services.AddScoped<IDictationService, DictationService>();
             services.AddScoped<ISpeechService, SpeechService>();
+            services.AddScoped<IWritingSessionService, WritingSessionService>();
             services.AddScoped<IWritingStatsService, WritingStatsService>();
             services.AddScoped<IThemeService, ThemeService>();
             services.AddScoped<ICommandRegistry, CommandRegistry>();

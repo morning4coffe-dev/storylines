@@ -17,7 +17,7 @@ namespace Storylines.Helpers
             set
             {
                 var undoRedo = App.TryGetService<IUndoRedoService>();
-                if (undoRedo == null)
+                if (undoRedo is null)
                     return;
 
                 if (value)
@@ -121,6 +121,18 @@ namespace Storylines.Helpers
         public static void Redo() => Manager.Redo();
         public static void ClearUndoAndRedo() => Manager.Clear();
 
+        public static void Cleanup(Guid contextId)
+        {
+            lock (_managers)
+            {
+                if (_managers.TryGetValue(contextId, out var manager))
+                {
+                    manager.Clear();
+                    _managers.Remove(contextId);
+                }
+            }
+        }
+
         // ── State publishing ──────────────────────────────────────────
 
         private static UndoRedoManager GetManager()
@@ -220,7 +232,7 @@ namespace Storylines.Helpers
             private void SetName(string name)
             {
                 var chapter = State.FindChapter(_token);
-                if (chapter != null)
+                if (chapter is not null)
                     chapter.Name = name;
             }
 
@@ -246,7 +258,7 @@ namespace Storylines.Helpers
             private void MoveChapter(int targetPosition)
             {
                 var chapter = State.FindChapter(_token);
-                if (chapter == null) return;
+                if (chapter is null) return;
 
                 State.Chapters.Remove(chapter);
                 int insertAt = Math.Min(targetPosition, State.Chapters.Count);
@@ -275,7 +287,7 @@ namespace Storylines.Helpers
             private void ApplyText(string text)
             {
                 var chapter = State.FindChapter(_token);
-                if (chapter == null) return;
+                if (chapter is null) return;
 
                 chapter.Text = text;
 
@@ -370,6 +382,18 @@ namespace Storylines.Helpers
         public static void Undo() => Manager.Undo();
         public static void Redo() => Manager.Redo();
         public static void ClearUndoAndRedo() => Manager.Clear();
+
+        public static void Cleanup(Guid contextId)
+        {
+            lock (_managers)
+            {
+                if (_managers.TryGetValue(contextId, out var manager))
+                {
+                    manager.Clear();
+                    _managers.Remove(contextId);
+                }
+            }
+        }
 
         // ── State publishing ──────────────────────────────────────────
 
@@ -473,7 +497,7 @@ namespace Storylines.Helpers
             private void Swap()
             {
                 var chapter = State.FindCharacter(_snapshot.Token);
-                if (chapter == null) return;
+                if (chapter is null) return;
 
                 int idx = State.FindCharacterID(_snapshot.Token);
                 var current = State.CopyCharacter(_snapshot.Token);

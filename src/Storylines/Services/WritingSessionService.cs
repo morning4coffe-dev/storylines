@@ -1,7 +1,6 @@
 using Newtonsoft.Json;
 using System;
 using Storylines.Services.Interfaces;
-using Windows.Storage;
 
 namespace Storylines.Services
 {
@@ -10,19 +9,30 @@ namespace Storylines.Services
     /// Call <see cref="OnSessionStart"/> once when the user opens a project, then
     /// <see cref="RecordWords"/> after each text-change event.
     /// </summary>
-    public static class WritingSessionService
+    public class WritingSessionService : IWritingSessionService
     {
         private const string SettingsKey = "WritingSession";
 
-        private static int _sessionBaselineWords;
-        private static bool _sessionStarted;
+        private int _sessionBaselineWords;
+        private bool _sessionStarted;
+        private readonly IPreferencesService _prefs;
+        private readonly EventAggregator _events;
+        private readonly ILogger _logger;
 
-        public static WritingSessionData Current { get; private set; } = Load();
+        public WritingSessionData Current { get; private set; }
+
+        public WritingSessionService(IPreferencesService prefs, EventAggregator events, ILogger logger)
+        {
+            _prefs = prefs;
+            _events = events;
+            _logger = logger;
+            Current = Load();
+        }
 
         // ─── Public API ───────────────────────────────────────────────
 
         /// <summary>Call once when a project is opened / app becomes active.</summary>
-        public static void OnSessionStart(int currentProjectWordCount)
+        public void OnSessionStart(int currentProjectWordCount)
         {
             Current = Load();
 
@@ -63,7 +73,7 @@ namespace Storylines.Services
         /// Call with the new total project word count after each text change.
         /// Calculates delta from the session baseline and accumulates.
         /// </summary>
-        public static void RecordWords(int currentProjectWordCount)
+        public void RecordWords(int currentProjectWordCount)
         {
             if (!_sessionStarted)
                 return;
@@ -83,7 +93,7 @@ namespace Storylines.Services
             Current.LastSessionDate = today;
 
             Save();
-            App.GetService<EventAggregator>().Publish(new SessionStatsUpdatedEvent
+            _events.Publish(new SessionStatsUpdatedEvent
             {
                 TodayWords = Current.TodayWords,
                 StreakDays = Current.StreakDays
@@ -91,51 +101,51 @@ namespace Storylines.Services
         }
 
         /// <summary>Called when the user completes a writing day — bumps streak.</summary>
-        public static void OnDayCompleted()
+        public void OnDayCompleted()
         {
             Current.StreakDays++;
             Current.LastSessionDate = Today();
             Save();
         }
 
-        public static int GetCurrentStreak() => Current.StreakDays;
+        public int GetCurrentStreak() => Current.StreakDays;
 
-        public static int GetTodayWords() => Current.TodayWords;
+        public int GetTodayWords() => Current.TodayWords;
 
         // ─── Persistence ─────────────────────────────────────────────
 
-        private static WritingSessionData Load()
+        private WritingSessionData Load()
         {
             try
             {
-                var raw = ApplicationData.Current.LocalSettings.Values[SettingsKey]?.ToString();
+                var raw = _prefs.Get<string>(SettingsKey);
                 if (!string.IsNullOrWhiteSpace(raw))
                     return JsonConvert.DeserializeObject<WritingSessionData>(raw) ?? new WritingSessionData();
             }
             catch (Exception ex)
             {
-                App.TryGetService<ILogger>()?.Warning($"Failed to load writing session data: {ex.Message}");
+                _logger?.Warning($"Failed to load writing session data: {ex.Message}");
             }
 
             return new WritingSessionData();
         }
 
-        private static void Save()
+        private void Save()
         {
             try
             {
-                ApplicationData.Current.LocalSettings.Values[SettingsKey] = JsonConvert.SerializeObject(Current);
+                _prefs.Set(SettingsKey, JsonConvert.SerializeObject(Current));
             }
             catch (Exception ex)
             {
-                App.TryGetService<ILogger>()?.Warning($"Failed to save writing session data: {ex.Message}");
+                _logger?.Warning($"Failed to save writing session data: {ex.Message}");
             }
         }
 
         // ─── Helpers ─────────────────────────────────────────────────
 
-        private static string Today() => DateTime.Now.ToString("yyyy-MM-dd");
-        private static string Yesterday() => DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
+        private string Today() => DateTime.Now.ToString("yyyy-MM-dd");
+        private string Yesterday() => DateTime.Now.AddDays(-1).ToString("yyyy-MM-dd");
     }
 
     public class WritingSessionData

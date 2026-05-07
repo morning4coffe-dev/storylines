@@ -49,11 +49,11 @@ namespace Storylines.Services
         public static async Task ExportAsync(StorageFolder folder, string fileName, string selectedExtension, List<int> chapterOrCharacterNumbers, List<Character> dialogueCharacters, bool withChapterName)
         {
             var service = App.TryGetService<IExportService>();
-            if (service == null)
+            if (service is null)
                 return;
 
             var target = MapLegacyTarget(export);
-            if (folder == null || target == ExportTarget.None)
+            if (folder is null || target == ExportTarget.None)
                 return;
 
             var request = new ExportRequest
@@ -87,7 +87,7 @@ namespace Storylines.Services
 
         public async Task<ExportOperationResult> ExportAsync(ExportRequest request)
         {
-            if (request == null || request.Target == ExportTarget.None)
+            if (request is null || request.Target == ExportTarget.None)
                 return ExportOperationResult.Failure("exportFailedGeneric");
 
             switch (request.Target)
@@ -96,7 +96,7 @@ namespace Storylines.Services
                     try
                     {
                         var chapterFile = await CreateDestinationFileAsync(request);
-                        if (chapterFile == null)
+                        if (chapterFile is null)
                             return ExportOperationResult.Failure("exportFailedGeneric");
 
                         await ExportChaptersAsync(chapterFile, request.FormatId, request.ChapterIndexes, request.IncludeChapterName);
@@ -116,7 +116,7 @@ namespace Storylines.Services
                             return buildResult;
 
                         var dialogueFile = await CreateDestinationFileAsync(request);
-                        if (dialogueFile == null)
+                        if (dialogueFile is null)
                             return ExportOperationResult.Failure("exportFailedGeneric");
 
                         await _fileService.WriteAsync(dialogueFile, dialogueContent);
@@ -132,7 +132,7 @@ namespace Storylines.Services
                     try
                     {
                         var characterFile = await CreateDestinationFileAsync(request);
-                        if (characterFile == null)
+                        if (characterFile is null)
                             return ExportOperationResult.Failure("exportFailedGeneric");
 
                         await ExportCharactersAsync(characterFile, request.FormatId, request.CharacterTokens);
@@ -219,7 +219,7 @@ namespace Storylines.Services
 
             for (int i = 1; i < chapterIndexes.Count; i++)
             {
-                if (txts[i] != null)
+                if (txts[i] is not null)
                 {
                     ITextRange range = box.Document.GetRange(0, txts[i - 1].Length);
                     range.Collapse(false);
@@ -312,15 +312,15 @@ namespace Storylines.Services
 
         private async Task<StorageFile> CreateDestinationFileAsync(ExportRequest request)
         {
-            if (request.File != null)
+            if (request.File is not null)
                 return request.File;
 
-            if (request.Folder == null || string.IsNullOrWhiteSpace(request.FileName))
+            if (request.Folder is null || string.IsNullOrWhiteSpace(request.FileName))
                 return null;
 
             var capability = GetCapability(request.Target);
             var format = capability?.Formats.FirstOrDefault(option => option.Id == request.FormatId);
-            if (format == null)
+            if (format is null)
                 return null;
 
             return await request.Folder.CreateFileAsync(

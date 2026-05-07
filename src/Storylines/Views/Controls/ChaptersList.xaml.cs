@@ -36,7 +36,6 @@ namespace Storylines.Views.Controls
             _viewModel = App.GetService<ChaptersListViewModel>();
 
             _windowContext.ChapterList = this;
-            MainPage.ChapterList = this;
         }
 
         #region Flyout
@@ -56,7 +55,7 @@ namespace Storylines.Views.Controls
 
         private void OnFlyoutDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFlyout(ViewModel.SelectedChapter?.Token ?? string.Empty, ViewModel.SelectedChapter != null);
+            OpenFlyout(ViewModel.SelectedChapter?.Token ?? string.Empty, ViewModel.SelectedChapter is not null);
             chaptersListViewFlyout.ShowAt((Button)sender);
         }
 
@@ -83,7 +82,7 @@ namespace Storylines.Views.Controls
 
         private void OnChaptersListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (chapterItemFlyoutedToken == null && listView.IsEnabled)
+            if (chapterItemFlyoutedToken is null && listView.IsEnabled)
             {
                 chaptersListViewFlyout.ShowAt((Grid)sender, e.GetPosition((Grid)sender));
                 OpenFlyout("", false);
@@ -122,7 +121,7 @@ namespace Storylines.Views.Controls
 
         private void OnSetStatus_Click(object sender, RoutedEventArgs e)
         {
-            if (chapterItemFlyoutedToken != null && sender is MenuFlyoutItem item)
+            if (chapterItemFlyoutedToken is not null && sender is MenuFlyoutItem item)
             {
                 if (System.Enum.TryParse<ChapterStatus>(item.Tag?.ToString(), out var status))
                     ViewModel.SetChapterStatus(chapterItemFlyoutedToken, status);

@@ -28,10 +28,10 @@ namespace Storylines.Services
         {
             get
             {
-                var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                if (settings.Values.ContainsKey("_hasLaunchedBefore"))
+                var prefs = App.GetService<Storylines.Services.Interfaces.IPreferencesService>();
+                if (prefs.Contains("_hasLaunchedBefore"))
                     return false;
-                settings.Values["_hasLaunchedBefore"] = true;
+                prefs.Set("_hasLaunchedBefore", true);
                 return true;
             }
         }
@@ -40,12 +40,10 @@ namespace Storylines.Services
         {
             get
             {
-                var settings = Windows.Storage.ApplicationData.Current.LocalSettings;
-                int count = settings.Values.ContainsKey("_totalLaunchCount")
-                    ? (int)settings.Values["_totalLaunchCount"]
-                    : 0;
+                var prefs = App.GetService<Storylines.Services.Interfaces.IPreferencesService>();
+                int count = prefs.Get<int>("_totalLaunchCount", 0);
                 count++;
-                settings.Values["_totalLaunchCount"] = count;
+                prefs.Set("_totalLaunchCount", count);
                 return count;
             }
         }
@@ -186,7 +184,7 @@ namespace Storylines.Services
                 TelemetryEventPropertyBuilder.Create(
                     ("exception_type", exception?.GetType().Name ?? "Unknown"),
                     ("message", message ?? exception?.Message ?? "Unknown"),
-                    ("has_inner_exception", (exception?.InnerException != null).ToString()),
+                    ("has_inner_exception", (exception?.InnerException is not null).ToString()),
                     ("inner_exception_type", exception?.InnerException?.GetType().Name),
                     ("available_memory", FormatNumber(AvailableMemoryMB)),
                     ("uptime_minutes", FormatNumber(AppUptime.TotalMinutes)),
@@ -284,7 +282,7 @@ namespace Storylines.Services
 
         private static string GetReviewPromptState()
         {
-            var storedValue = Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] ?? (int)SettingsValues.ReviewPrompt.NotYet;
+            var storedValue = App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<int>(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NotYet);
             return ((SettingsValues.ReviewPrompt)storedValue).ToString();
         }
 

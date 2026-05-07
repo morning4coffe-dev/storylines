@@ -18,11 +18,9 @@ namespace Storylines.Views.Pages
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
 
-        public static MainPage Current { get; private set; }
-
-        public static ChaptersList ChapterList;
-        public static MainCommandBar CommandBar;
-        public static ChapterTextBox ChapterText;
+        private ChaptersList ChapterList => _windowContext.ChapterList;
+        private MainCommandBar CommandBar => _windowContext.CommandBar;
+        private ChapterTextBox ChapterText => _windowContext.ChapterText;
 
         private readonly EventAggregator _events;
         private readonly MainPageViewModel _viewModel;
@@ -41,7 +39,6 @@ namespace Storylines.Views.Pages
             _windowContext = App.GetService<WindowContext>();
             _windowContext.MainPage = this;
             App.GetService<IWindowManager>().SetCurrent(_windowContext);
-            Current = this;
 
             _events = App.GetService<EventAggregator>();
             _viewModel = App.GetService<MainPageViewModel>();
@@ -68,14 +65,14 @@ namespace Storylines.Views.Pages
 
         private void OnSettingChanged(SettingChangedEvent e)
         {
-            if (e.SettingKey == SettingsValueStrings.ZoomValue && ChapterText != null)
+            if (e.SettingKey == SettingsValueStrings.ZoomValue && ChapterText is not null)
                 SetZoomValue(Convert.ToInt32(e.Value));
         }
 
         private void Page_Loaded(object sender, RoutedEventArgs e)
         {
             var pendingActivatedItem = _windowContext.PendingActivatedItem ?? App.PendingActivatedItem;
-            if (pendingActivatedItem != null)
+            if (pendingActivatedItem is not null)
             {
                 Persistence.DefaultLaunch(pendingActivatedItem);
                 _windowContext.PendingActivatedItem = null;
@@ -93,13 +90,13 @@ namespace Storylines.Views.Pages
 
             TrySelectPendingChapter();
 
-            ChapterText.TextBoxWhiteBackground(Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false));
+            ChapterText.TextBoxWhiteBackground(App.GetService<IPreferencesService>().Get(SettingsValueStrings.TextBoxSolidBackground, false));
 
             LoadTextBoxZoom();
             ApplyModeSurfaceLayout(_modeService.Current);
             RefreshFormattingCommandAvailability();
 
-            if (Persistence.CurrentProject?.file != null)
+            if (Persistence.CurrentProject?.file is not null)
                 EnableOrDisableToolsForStorylinesDocuments(Persistence.CurrentProject.file.FileType.Contains(".srl"));
         }
 
@@ -147,18 +144,18 @@ namespace Storylines.Views.Pages
 
         private void TrySelectPendingChapter()
         {
-            if (string.IsNullOrWhiteSpace(_pendingChapterToken) || ChapterList?.ViewModel == null)
+            if (string.IsNullOrWhiteSpace(_pendingChapterToken) || ChapterList?.ViewModel is null)
                 return;
 
             var projectState = App.TryGetService<ProjectState>();
             var chapter = projectState?.FindChapter(_pendingChapterToken);
-            if (chapter == null)
+            if (chapter is null)
                 return;
 
             var chapterIndex = projectState.FindChapterID(_pendingChapterToken);
             ChapterList.ViewModel.SelectedIndex = chapterIndex;
 
-            if (ChapterList.listView != null
+            if (ChapterList.listView is not null
                 && chapterIndex >= 0
                 && chapterIndex < ChapterList.listView.Items.Count)
             {
@@ -170,7 +167,7 @@ namespace Storylines.Views.Pages
 
         public void RefreshFormattingCommandAvailability()
         {
-            if (CommandBar == null)
+            if (CommandBar is null)
                 return;
 
             var enableFormatting = ViewModel.IsChapterSelected
@@ -215,7 +212,7 @@ namespace Storylines.Views.Pages
             double edgeInset = ActualWidth >= 800 ? 20 : 8;
             double topInset = edgeInset;
 
-            if (mode?.Chrome.OverlayContent != null)
+            if (mode?.Chrome.OverlayContent is not null)
                 topInset += mode.Id == "focus" ? 68 : 12;
 
             chapterTextBoxMainPage.Margin = new Thickness(edgeInset, topInset, edgeInset, edgeInset);
@@ -268,7 +265,7 @@ namespace Storylines.Views.Pages
         #region Session Timer
         public void StartSessionTimer()
         {
-            int wordCount = GetTotalProjectWordCount();
+            int wordCount = RtfHelper.GetTotalWordCount(App.GetService<ProjectState>().Chapters);
             if (!ViewModel.StartSession(wordCount)) return;
 
             _sessionTimer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(1) };
@@ -276,22 +273,6 @@ namespace Storylines.Views.Pages
             _sessionTimer.Start();
         }
 
-        private int GetTotalProjectWordCount()
-        {
-            var projectState = App.GetService<ProjectState>();
-            string all = string.Empty;
-            foreach (var chapter in projectState.Chapters)
-            {
-                if (!string.IsNullOrEmpty(chapter.Text))
-                {
-                    var box = new RichEditBox();
-                    box.Document.SetText(Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text);
-                    box.Document.GetText(Microsoft.UI.Text.TextGetOptions.None, out string txt);
-                    all += txt;
-                }
-            }
-            return all.Split(new char[] { ' ', '\r', '\n' }, StringSplitOptions.RemoveEmptyEntries).Length;
-        }
         #endregion
 
         #region Notes
@@ -328,10 +309,10 @@ namespace Storylines.Views.Pages
 
         private void OnTextBoxZoomSlider_ValueChanged(object sender, RangeBaseValueChangedEventArgs e)
         {
-            if (ChapterList.listView.SelectedItem != null)
+            if (ChapterList.listView.SelectedItem is not null)
             {
                 UpdateTextBoxZoom(textBoxZoomSlider.Value);
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] = textBoxZoomSlider.Value;
+                App.GetService<IPreferencesService>().Set(SettingsValueStrings.ZoomValue, textBoxZoomSlider.Value);
             }
         }
 
@@ -352,7 +333,7 @@ namespace Storylines.Views.Pages
 
         public void LoadTextBoxZoom()
         {
-            textBoxZoomSlider.Value = Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? 25);
+            textBoxZoomSlider.Value = App.GetService<IPreferencesService>().Get<double>(SettingsValueStrings.ZoomValue, 25);
             UpdateTextBoxZoom(textBoxZoomSlider.Value);
         }
 

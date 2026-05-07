@@ -54,10 +54,9 @@ namespace Storylines.Views.Controls
             _speechService = App.GetService<ISpeechService>();
 
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
-               || App.TryGetService<Storylines.Services.Modes.EditorModeService>() == null)
+               || App.TryGetService<Storylines.Services.Modes.EditorModeService>() is null)
             {
                 _windowContext.CommandBar = this;
-                MainPage.CommandBar = this;
             }
 
             UpdateExperimentalFeaturesVisibility();
@@ -65,11 +64,13 @@ namespace Storylines.Views.Controls
             events.Subscribe<SettingChangedEvent>(OnSettingChanged);
             events.Subscribe<TextFormattingStateChangedEvent>(OnTextFormattingStateChanged);
 
-            if (_modeService != null)
+            if (_modeService is not null)
             {
                 _modeService.ModeChanged += UpdateModeButtonStates;
                 UpdateModeButtonStates(_modeService.Current);
             }
+
+            Unloaded += OnUnloaded;
 
             // Restore persisted dialogue mode state
             dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
@@ -89,9 +90,15 @@ namespace Storylines.Views.Controls
             mainStrikethroughButton.IsChecked = e.IsStrikethrough;
         }
 
+        private void OnUnloaded(object sender, RoutedEventArgs e)
+        {
+            if (_modeService is not null)
+                _modeService.ModeChanged -= UpdateModeButtonStates;
+        }
+
         private void UpdateModeButtonStates(IEditorMode mode)
         {
-            if (readOnlyModeButton != null)
+            if (readOnlyModeButton is not null)
                 readOnlyModeButton.IsChecked = mode?.Id == "readonly";
         }
 
@@ -103,7 +110,7 @@ namespace Storylines.Views.Controls
             try
             {
                 showBranching = SettingsValues.experimentalFeaturesEnabled
-                                && App.TryGetService<Storylines.Services.Interfaces.IBranchingDialogueService>() != null;
+                                && App.TryGetService<Storylines.Services.Interfaces.IBranchingDialogueService>() is not null;
             }
             catch
             {
@@ -114,7 +121,7 @@ namespace Storylines.Views.Controls
 #endif
 
             // Ensure the button exists in XAML and set its visibility
-            if (branchingDialogueButton != null)
+            if (branchingDialogueButton is not null)
                 branchingDialogueButton.Visibility = showBranching ? Visibility.Visible : Visibility.Collapsed;
         }
 
@@ -200,7 +207,7 @@ namespace Storylines.Views.Controls
         #region FORMAT
         private void OnFormatterButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentChapterText == null)
+            if (CurrentChapterText is null)
                 return;
 
             switch ((sender as Control).Tag?.ToString())
@@ -233,7 +240,7 @@ namespace Storylines.Views.Controls
 
         private void OnHighlighterColorButton_Click(object sender, RoutedEventArgs e)
         {
-            TextHighlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
+            _windowContext.Highlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
             CurrentChapterText?.MarkTextBackground();
             mainHighlighterFlyout.Hide();
         }
@@ -257,7 +264,7 @@ namespace Storylines.Views.Controls
 
         public bool IsFormattingContextElement(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
                 return false;
 
             return IsChildOf(element, mainBoldButton)
@@ -288,7 +295,7 @@ namespace Storylines.Views.Controls
         private static bool IsChildOf(DependencyObject child, DependencyObject parent)
         {
             var current = child;
-            while (current != null)
+            while (current is not null)
             {
                 if (current == parent)
                     return true;
@@ -303,7 +310,7 @@ namespace Storylines.Views.Controls
         #region VIEW
         private void OnTypewriterModeButton_Click(object sender, RoutedEventArgs e)
         {
-            if (CurrentChapterText != null)
+            if (CurrentChapterText is not null)
                 CurrentChapterText.IsTypewriterModeActive = typewriterModeButton.IsChecked == true;
 
             if (_textEditor.SelectedChapterIndex >= 0)
@@ -478,8 +485,7 @@ namespace Storylines.Views.Controls
 
                 //foreach (var voice in SpeechSynthesizer.AllVoices)
                 //{
-                //    if (voice.Id == (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice] == null ?
-                //        SpeechSynthesizer.DefaultVoice.Id : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVoice].ToString()))
+                //    if (voice.Id == App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(SettingsValueStrings.ReadAloudVoice) ?? SpeechSynthesizer.DefaultVoice.Id)
                 //        synth.Voice = voice;
                 //}
 
@@ -494,7 +500,7 @@ namespace Storylines.Views.Controls
                 //}
 
                 //readAloudMediaElement.SetSource(speechStream, speechStream.ContentType);
-                //var vol = Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReadAloudVolume] ?? 75);
+                //var vol = App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<double>(SettingsValueStrings.ReadAloudVolume, 75);
                 //if (vol > 0) vol /= 100;
                 //readAloudMediaElement.Volume = vol;
                 //readAloudMediaElement.Play();
@@ -568,7 +574,7 @@ namespace Storylines.Views.Controls
         private void OnReadAloudMediaElement_MediaEnded(object sender, RoutedEventArgs e)
         {
             // Auto-advance to next paragraph
-            if (_paragraphs != null)
+            if (_paragraphs is not null)
             {
                 _currentParagraphIndex++;
                 PlayCurrentParagraph();

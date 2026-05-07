@@ -30,7 +30,7 @@ namespace Storylines.Services.Modes
 
         public void Activate(IEditorMode mode)
         {
-            if (mode == null) throw new ArgumentNullException(nameof(mode));
+            if (mode is null) throw new ArgumentNullException(nameof(mode));
             if (ReferenceEquals(mode, Current)) return;
 
             Current.Leave();

@@ -67,7 +67,7 @@ namespace Storylines.Views.Dialogs
         {
             StorageFolder folder = await _filePicker.PickFolderAsync();
 
-            if (folder != null)
+            if (folder is not null)
             {
                 saveFolder = folder;
                 locationText.Text = folder.Path;
@@ -80,9 +80,9 @@ namespace Storylines.Views.Dialogs
 
         private async Task SomethingChangedAsync(bool nameOrLocation)
         {
-            submitButton.IsEnabled = saveFolder != null && SettingsValues.IsStringSaveable(fileNameText.Text);
+            submitButton.IsEnabled = saveFolder is not null && SettingsValues.IsStringSaveable(fileNameText.Text);
 
-            if (!nameOrLocation || saveFolder == null || string.IsNullOrEmpty(fileNameText.Text))
+            if (!nameOrLocation || saveFolder is null || string.IsNullOrEmpty(fileNameText.Text))
             {
                 nameCollisionWarning.Visibility = Visibility.Collapsed;
                 return;
@@ -98,7 +98,7 @@ namespace Storylines.Views.Dialogs
                 if (collisionCheckVersion != _collisionCheckVersion)
                     return;
 
-                nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
+                nameCollisionWarning.Visibility = file is not null ? Visibility.Visible : Visibility.Collapsed;
             }
             catch (Exception ex)
             {
@@ -111,7 +111,7 @@ namespace Storylines.Views.Dialogs
 
         private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_persistence.CurrentProject == null)
+            if (_persistence.CurrentProject is null)
                 _persistence.CurrentProject = new ProjectFile();
 
             _persistence.CurrentProject.projectName = nameText.Text;

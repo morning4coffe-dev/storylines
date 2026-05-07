@@ -21,7 +21,7 @@ namespace Storylines
 {
     public sealed partial class AppView : Page
     {
-        public static AppView current { get; private set; }
+
 
         private readonly WindowContext _windowContext;
         private readonly AppViewModel _viewModel;
@@ -39,7 +39,6 @@ namespace Storylines
             _windowContext = App.GetService<WindowContext>();
             _windowContext.AppView = this;
             App.GetService<IWindowManager>().SetCurrent(_windowContext);
-            current = this;
 
             _viewModel = App.GetService<AppViewModel>();
             _events = App.GetService<EventAggregator>();
@@ -61,26 +60,30 @@ namespace Storylines
             // Subscribe to tools state changes published by the persistence service.
             _events.Subscribe<ToolsStateChangedEvent>(e =>
             {
-                if (MainPage.Current != null)
-                    MainPage.Current.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
+                if (_windowContext.MainPage is not null)
+                    _windowContext.MainPage.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
             });
 
             // Route INotificationService events to UI — decouples service from AppView.current refs.
             _events.Subscribe<InAppNotificationEvent>(e =>
-                NotificationManager.DisplayInAppNotification(e.Severity, e.Title, e.LongText));
+                DisplayInAppNotification(e.Severity, e.Title, e.LongText));
 
             _events.Subscribe<ProgressBarEvent>(e =>
             {
+                var mainPage = _windowContext?.MainPage;
+                if (mainPage?.mainProgressBar is null) return;
+
                 if (!e.Show)
                 {
-                    NotificationManager.HideMainProgressBar();
+                    mainPage.mainProgressBar.Visibility = Visibility.Collapsed;
                     return;
                 }
-                NotificationManager.DisplayMainProgressBar(e.IsIndeterminate);
-                if (e.Value > 0)
-                    NotificationManager.UpdateMainProgressBar(
-                        e.Value,
-                        (NotificationManager.ProgressState)(int)e.State);
+
+                mainPage.mainProgressBar.Visibility = Visibility.Visible;
+                mainPage.mainProgressBar.IsIndeterminate = e.IsIndeterminate;
+                mainPage.mainProgressBar.Value = e.Value;
+                mainPage.mainProgressBar.ShowPaused = e.State == ProgressBarEvent.ProgressState.Paused;
+                mainPage.mainProgressBar.ShowError = e.State == ProgressBarEvent.ProgressState.Error;
             });
 
             if (SettingsValues.autosaveEnabled)
@@ -96,6 +99,52 @@ namespace Storylines
         {
             ViewModel.CurrentPage = (AppViewModel.AppPages)(int)page;
             ViewModel.UpdateTitleBar();
+        }
+
+        private DispatcherTimer _inAppNotificationTimer;
+
+        private void DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity severity, string text, string longText)
+        {
+            alertNotificationInfoBar.IsOpen = true;
+            alertNotificationInfoBar.Visibility = Visibility.Visible;
+            alertNotificationInfoBar.Severity = severity;
+            alertNotificationInfoBar.Title = text;
+            alertNotificationInfoBar.RequestedTheme = ActualTheme;
+
+            if (string.IsNullOrWhiteSpace(longText))
+                alertNotificationInfoBarTextStack.Visibility = Visibility.Collapsed;
+            else
+            {
+                alertNotificationInfoBarTextStack.Visibility = Visibility.Visible;
+                alertNotificationInfoBarText.Text = longText;
+            }
+
+            if (_inAppNotificationTimer is not null)
+            {
+                _inAppNotificationTimer.Tick -= InAppNotificationTimer_Tick;
+                _inAppNotificationTimer.Stop();
+            }
+
+            _inAppNotificationTimer = new DispatcherTimer();
+            _inAppNotificationTimer.Tick += InAppNotificationTimer_Tick;
+            _inAppNotificationTimer.Interval = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds);
+            _inAppNotificationTimer.Start();
+
+            NotificationManager.DisplayBadgeNotification("attention");
+        }
+
+        private void InAppNotificationTimer_Tick(object sender, object e)
+        {
+            if (_inAppNotificationTimer is not null)
+            {
+                _inAppNotificationTimer.Stop();
+                _inAppNotificationTimer.Tick -= InAppNotificationTimer_Tick;
+                _inAppNotificationTimer = null;
+            }
+
+            alertNotificationInfoBar.Visibility = Visibility.Collapsed;
+            alertNotificationInfoBar.IsOpen = false;
+            NotificationManager.ClearBadgeNotification();
         }
 
         // ── Global keyboard accelerator handlers ──────────────────────────────
@@ -140,7 +189,7 @@ namespace Storylines
         {
             args.Handled = true;
             var modeSvc = App.TryGetService<Services.Modes.EditorModeService>();
-            if (modeSvc == null) return;
+            if (modeSvc is null) return;
             // F11: toggle — leave focus if active, otherwise open mode picker
             if (modeSvc.IsInMode("focus"))
                 TryExitActiveMode();
@@ -192,7 +241,7 @@ namespace Storylines
         private void OnRateNotNow_Click(object sender, RoutedEventArgs e)
         {
             App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NotYet);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
             NotificationManager.ClearBadgeNotification();
@@ -201,7 +250,7 @@ namespace Storylines
         private void OnRateNeverShowAgain_Click(object sender, RoutedEventArgs e)
         {
             App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "never_show_again");
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NeverShowAgain;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NeverShowAgain);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
             NotificationManager.ClearBadgeNotification();
@@ -210,7 +259,7 @@ namespace Storylines
         private void OnRateNotNow_CloseButtonClick(InfoBar sender, object args)
         {
             App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ReviewPrompt] = (int)SettingsValues.ReviewPrompt.NotYet;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NotYet);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
             NotificationManager.ClearBadgeNotification();
@@ -218,8 +267,7 @@ namespace Storylines
        
         private void OnAlertNotificationInfoBar_CloseButtonClick(InfoBar sender, object args)
         {
-            NotificationManager.InAppNotification_Close();
-            AppView.current.alertNotificationInfoBar.Visibility = Visibility.Collapsed;
+            alertNotificationInfoBar.Visibility = Visibility.Collapsed;
         }
 
         private void OnUpdateAvailablePrimaryButton_Click(object sender, RoutedEventArgs e)
@@ -273,7 +321,7 @@ namespace Storylines
         public void BackButtonCheck()
         {
             var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
-            bool hasModeActive = modeService?.Current != null && modeService.Current.Id != "edit";
+            bool hasModeActive = modeService?.Current is not null && modeService.Current.Id != "edit";
             ViewModel.UpdateBackButtonState(_navigation.CanGoBack, hasModeActive);
         }
 
@@ -281,9 +329,9 @@ namespace Storylines
         {
             if (_navigation.CanGoBack)
             {
-                if (CharactersPage.current != null && CharactersPage.current.unappliedChanges)
+                if (_windowContext.CharactersPage is not null && _windowContext.CharactersPage.unappliedChanges)
                 {
-                    _ = NotificationManager.DisplayNotAppliedChangesCharactersPageDialogue(false);
+                    _ = App.GetService<IDialogService>().ShowUnappliedCharacterChangesDialogueAsync();
                     return;
                 }
 
@@ -302,7 +350,7 @@ namespace Storylines
         public bool TryExitActiveMode()
         {
             var modeService = App.TryGetService<Storylines.Services.Modes.EditorModeService>();
-            if (modeService == null || modeService.Current.Id == "edit")
+            if (modeService is null || modeService.Current.Id == "edit")
                 return true;
 
             bool isFocusMode = modeService.IsInMode("focus");
@@ -320,7 +368,7 @@ namespace Storylines
             if (isFocusMode)
                 App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackFocusModeLeft(false);
 
-            _ = NotificationManager.DisplayNotFinishedInFocusModeDialogue();
+            _ = App.GetService<IDialogService>().ShowFocusModeLeaveDialogueAsync();
             return false;
         }
 
@@ -400,7 +448,7 @@ namespace Storylines
                 return;
 
             if (TimeTravelSystem.unSavedProgress)
-                _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
+                _ = App.GetService<IDialogService>().ShowUnsavedProgressDialogueAsync(false);
             else
                 _persistence.DefaultLaunch(file);
         }

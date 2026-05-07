@@ -34,7 +34,7 @@ namespace Storylines.ViewModels
         private string _editButtonLabel;
 
         [ObservableProperty]
-        private string _editButtonGlyph = "\uE70F";
+        private string _editButtonGlyph = "\uE104";
 
         [ObservableProperty]
         private Visibility _cancelButtonVisibility = Visibility.Collapsed;
@@ -67,6 +67,9 @@ namespace Storylines.ViewModels
         private BitmapImage _profilePicture;
 
         private CharacterPicture _pictureData;
+
+        [ObservableProperty]
+        private bool _isCharacterSelected;
 
         [ObservableProperty]
         private bool _canUndo;
@@ -104,7 +107,8 @@ namespace Storylines.ViewModels
 
         partial void OnSelectedCharacterChanged(Character value)
         {
-            if (value != null)
+            IsCharacterSelected = value is not null;
+            if (value is not null)
             {
                 NameText = value.Name ?? string.Empty;
                 DescriptionText = value.Description ?? string.Empty;
@@ -129,7 +133,7 @@ namespace Storylines.ViewModels
             if (IsEditMode)
             {
                 // Leaving edit mode - apply changes if something changed
-                if (SelectedCharacter != null && DidSomethingChange())
+                if (SelectedCharacter is not null && DidSomethingChange())
                 {
                     ApplyChanges();
                     SortCharacters();
@@ -144,7 +148,7 @@ namespace Storylines.ViewModels
 
         public void EnterEditMode()
         {
-            if (SelectedCharacter == null) return;
+            if (SelectedCharacter is null) return;
 
             IsEditMode = true;
             IsFieldsEnabled = true;
@@ -154,7 +158,7 @@ namespace Storylines.ViewModels
 
             CancelButtonVisibility = Visibility.Collapsed;
             EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("cancelText");
-            EditButtonGlyph = "\uE711";
+            EditButtonGlyph = "\uE10A";
             UnappliedChanges = false;
         }
 
@@ -166,13 +170,29 @@ namespace Storylines.ViewModels
 
             CancelButtonVisibility = Visibility.Collapsed;
             EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("editText");
-            EditButtonGlyph = "\uE70F"; 
+            EditButtonGlyph = "\uE104";
             UnappliedChanges = false;
+        }
+
+        public void MarkUnappliedChanges()
+        {
+            UnappliedChanges = true;
+            CancelButtonVisibility = Visibility.Visible;
+            EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("applyChanges");
+            EditButtonGlyph = "\uE081";
+        }
+
+        public void MarkCleanEditMode()
+        {
+            UnappliedChanges = false;
+            CancelButtonVisibility = Visibility.Collapsed;
+            EditButtonLabel = ResourceLoader.GetForViewIndependentUse().GetString("cancelText");
+            EditButtonGlyph = "\uE10A";
         }
 
         public void ApplyChanges()
         {
-            if (SelectedCharacter != null && _characterBeforeChange != null)
+            if (SelectedCharacter is not null && _characterBeforeChange is not null)
             {
                 TimeTravelCharacter.RecordChanged(_characterBeforeChange);
                 UnappliedChanges = false;
@@ -183,7 +203,7 @@ namespace Storylines.ViewModels
                 SelectedCharacter.Age = AgeText;
                 SelectedCharacter.TraitsText = TraitsText;
                 SelectedCharacter.Appearance = AppearanceText;
-                if (_pictureData != null)
+                if (_pictureData is not null)
                     SelectedCharacter.Picture = _pictureData;
             }
         }
@@ -191,7 +211,7 @@ namespace Storylines.ViewModels
         [RelayCommand]
         public void CancelEdit()
         {
-            if (_characterBeforeChange != null)
+            if (_characterBeforeChange is not null)
             {
                 NameText = _characterBeforeChange.Name;
                 DescriptionText = _characterBeforeChange.Description;
@@ -217,7 +237,7 @@ namespace Storylines.ViewModels
         [RelayCommand]
         private void RemoveCharacter()
         {
-            if (SelectedCharacter != null)
+            if (SelectedCharacter is not null)
             {
                 _projectState.RemoveCharacter(SelectedCharacter.Token);
             }
@@ -237,7 +257,7 @@ namespace Storylines.ViewModels
 
         public bool DidSomethingChange()
         {
-            if (SelectedCharacter == null) return false;
+            if (SelectedCharacter is null) return false;
             return SelectedCharacter.Name != NameText
                 || SelectedCharacter.Description != DescriptionText
                 || SelectedCharacter.Role != (string.IsNullOrEmpty(RoleText) ? null : RoleText)

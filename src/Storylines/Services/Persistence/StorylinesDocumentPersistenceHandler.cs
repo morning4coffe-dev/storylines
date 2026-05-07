@@ -158,7 +158,7 @@ namespace Storylines.Services.Persistence
             for (var charIndex = 0; charIndex < projectData.Characters.Count && charIndex < ProjectState.Characters.Count; charIndex++)
             {
                 var charData = projectData.Characters[charIndex];
-                if (charData.Relationships == null)
+                if (charData.Relationships is null)
                     continue;
 
                 var character = ProjectState.Characters[charIndex];
@@ -168,11 +168,11 @@ namespace Storylines.Services.Persistence
                         var target = ProjectState.Characters.FirstOrDefault(existing =>
                             string.Equals(existing.Name, relationship.TargetName, StringComparison.CurrentCultureIgnoreCase));
 
-                        return target != null
+                        return target is not null
                             ? new CharacterRelationship { TargetCharacterToken = target.Token, Type = relationship.Type }
                             : null;
                     })
-                    .Where(relationship => relationship != null)
+                    .Where(relationship => relationship is not null)
                     .ToList();
             }
 

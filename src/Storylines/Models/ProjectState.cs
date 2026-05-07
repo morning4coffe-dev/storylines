@@ -22,7 +22,7 @@ namespace Storylines.Models
         public BranchingDialogueGraphData GetOrCreateBranchingDialogueForChapter(string chapterId)
         {
             var existing = BranchingDialogues.FirstOrDefault(g => g.ChapterId == chapterId);
-            if (existing != null)
+            if (existing is not null)
                 return existing;
 
             var graph = new BranchingDialogueGraphData
@@ -87,7 +87,7 @@ namespace Storylines.Models
 
         public Chapter InsertExistingChapter(Chapter chapter, int position)
         {
-            if (chapter == null)
+            if (chapter is null)
                 return null;
 
             return InsertExistingChapter(
@@ -98,12 +98,12 @@ namespace Storylines.Models
                 chapter.Notes,
                 chapter.Synopsis,
                 chapter.WordCountGoal,
-                chapter.Tags != null ? new List<string>(chapter.Tags) : null,
+                chapter.Tags is not null ? new List<string>(chapter.Tags) : null,
                 chapter.PinboardX,
                 chapter.PinboardY,
                 chapter.Status,
                 chapter.Location,
-                chapter.PlotThreads != null ? new List<string>(chapter.PlotThreads) : null,
+                chapter.PlotThreads is not null ? new List<string>(chapter.PlotThreads) : null,
                 chapter.LastCaretPosition,
                 chapter.LastVerticalOffset);
         }
@@ -146,7 +146,7 @@ namespace Storylines.Models
         public Chapter CopyChapter(string token)
         {
             var original = FindChapter(token);
-            if (original == null)
+            if (original is null)
                 return null;
 
             var copy = new Chapter()
@@ -156,12 +156,12 @@ namespace Storylines.Models
                 Notes = original.Notes,
                 Synopsis = original.Synopsis,
                 WordCountGoal = original.WordCountGoal,
-                Tags = original.Tags != null ? new List<string>(original.Tags) : new List<string>(),
+                Tags = original.Tags is not null ? new List<string>(original.Tags) : new List<string>(),
                 PinboardX = original.PinboardX,
                 PinboardY = original.PinboardY,
                 Status = original.Status,
                 Location = original.Location,
-                PlotThreads = original.PlotThreads != null ? new List<string>(original.PlotThreads) : new List<string>(),
+                PlotThreads = original.PlotThreads is not null ? new List<string>(original.PlotThreads) : new List<string>(),
                 LastCaretPosition = original.LastCaretPosition,
                 LastVerticalOffset = original.LastVerticalOffset
             };
@@ -172,7 +172,7 @@ namespace Storylines.Models
         public Chapter DuplicateChapter(string token, string duplicateName)
         {
             var original = FindChapter(token);
-            if (original == null)
+            if (original is null)
                 return null;
 
             var duplicate = CopyChapter(token);
@@ -235,8 +235,8 @@ namespace Storylines.Models
 
             ch.SetToken(token);
 
-            if (picture != null)
-                if (picture.FileName != null && picture.FileName.Length > 0)
+            if (picture is not null)
+                if (picture.FileName is not null && picture.FileName.Length > 0)
                     ch.Picture = new CharacterPicture() { FileName = picture.FileName, Image = await Character.LoadProfilePictureAsync(picture) };
                 else
                     ch.Picture = new CharacterPicture();
@@ -289,7 +289,7 @@ namespace Storylines.Models
         public Character CopyCharacter(string token)
         {
             var character = FindCharacter(token);
-            if (character == null)
+            if (character is null)
                 return null;
 
             return new Character()
@@ -299,7 +299,7 @@ namespace Storylines.Models
                 Role = character.Role,
                 Age = character.Age,
                 Appearance = character.Appearance,
-                Picture = character.Picture == null
+                Picture = character.Picture is null
                     ? null
                     : new CharacterPicture()
                     {
@@ -314,9 +314,12 @@ namespace Storylines.Models
         public void SortCharacters()
         {
             var sorted = Characters.OrderBy(o => o.Name).ToList();
-            Characters.Clear();
-            foreach (var character in sorted)
-                Characters.Add(character);
+            for (int i = 0; i < sorted.Count; i++)
+            {
+                int from = Characters.IndexOf(sorted[i]);
+                if (from != i)
+                    Characters.Move(from, i);
+            }
         }
 
         #endregion

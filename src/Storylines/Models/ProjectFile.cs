@@ -76,7 +76,7 @@ namespace Storylines.Models
 
         private static async Task<string> RememberAsync(StorageFile file)
         {
-            if (file == null)
+            if (file is null)
                 throw new ArgumentNullException(nameof(file));
 
             await _futureAccessListLock.WaitAsync();
@@ -117,7 +117,7 @@ namespace Storylines.Models
                 {
                     using var timeout = new CancellationTokenSource(LayoutConstants.ProjectFileLoadTimeoutMs);
                     var existingFile = await GetProjectFromTokenAsync(entry.Token, timeout.Token);
-                    if (existingFile != null)
+                    if (existingFile is not null)
                         rememberedProjects.Add(new RecentProjectReference(entry.Token, existingFile.Path));
                 }
                 catch (OperationCanceledException)
@@ -155,7 +155,7 @@ namespace Storylines.Models
                 {
                     using var timeout = new CancellationTokenSource(LayoutConstants.ProjectFileLoadTimeoutMs);
                     var file = await GetProjectFromTokenAsync(token.Token, timeout.Token);
-                    if (file != null)
+                    if (file is not null)
                         loadedProjects.Add(await LoadExistingAsync(file, token.Token));
                 }
                 catch (OperationCanceledException)

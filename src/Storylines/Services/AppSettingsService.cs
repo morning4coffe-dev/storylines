@@ -11,14 +11,14 @@ namespace Storylines.Services
     {
         private readonly EventAggregator _events;
         private readonly IProjectPersistenceService _persistence;
-        private readonly ApplicationDataContainer _localSettings;
+        private readonly IPreferencesService _preferences;
         private readonly ResourceLoader _resources;
 
-        public AppSettingsService(EventAggregator events, IProjectPersistenceService persistence)
+        public AppSettingsService(EventAggregator events, IProjectPersistenceService persistence, IPreferencesService preferences)
         {
             _events = events;
             _persistence = persistence;
-            _localSettings = ApplicationData.Current.LocalSettings;
+            _preferences = preferences;
             _resources = ResourceLoader.GetForViewIndependentUse();
         }
 
@@ -51,7 +51,7 @@ namespace Storylines.Services
         public string ChapterName
         {
             get => SettingsValues.chapterName;
-            set => _localSettings.Values[SettingsValueStrings.ChapterName] = value ?? DefaultChapterName;
+            set => _preferences.Set(SettingsValueStrings.ChapterName, value ?? DefaultChapterName);
         }
 
         public string DefaultChapterName => _resources.GetString("chapterName");
@@ -59,15 +59,19 @@ namespace Storylines.Services
         public bool ExitDialogueEnabled
         {
             get => SettingsValues.exitDiagEnabled;
-            set => _localSettings.Values[SettingsValueStrings.ExitDialogueOn] = value;
+            set => _preferences.Set(SettingsValueStrings.ExitDialogueOn, value);
         }
 
         public bool LoadLastProjectOnStart
         {
-            get => _localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] != null;
-            set => _localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = value
-                ? _persistence.CurrentProject?.Token
-                : null;
+            get => _preferences.Contains(SettingsValueStrings.LoadLastProjectOnStart);
+            set
+            {
+                if (value)
+                    _preferences.Set(SettingsValueStrings.LoadLastProjectOnStart, _persistence.CurrentProject?.Token);
+                else
+                    _preferences.Remove(SettingsValueStrings.LoadLastProjectOnStart);
+            }
         }
 
         public bool AutosaveEnabled
@@ -81,7 +85,7 @@ namespace Storylines.Services
                     return;
                 }
 
-                if (_persistence.CurrentProject?.file == null)
+                if (_persistence.CurrentProject?.file is null)
                     return;
 
                 _persistence.EnableAutosave();
@@ -93,7 +97,7 @@ namespace Storylines.Services
             get => SettingsValues.autosaveInterval;
             set
             {
-                _localSettings.Values[SettingsValueStrings.AutosaveInterval] = value;
+                _preferences.Set(SettingsValueStrings.AutosaveInterval, value);
 
                 if (AutosaveEnabled)
                     _persistence.RefreshAutosave();
@@ -103,13 +107,13 @@ namespace Storylines.Services
         public int DailyWordGoal
         {
             get => SettingsValues.dailyWordGoal;
-            set => _localSettings.Values[SettingsValueStrings.DailyWordGoal] = Math.Max(0, value);
+            set => _preferences.Set(SettingsValueStrings.DailyWordGoal, Math.Max(0, value));
         }
 
         public int WritingStreakDays
         {
-            get => Convert.ToInt32(_localSettings.Values[SettingsValueStrings.WritingStreakDays] ?? 0);
-            set => _localSettings.Values[SettingsValueStrings.WritingStreakDays] = Math.Max(0, value);
+            get => _preferences.Get(SettingsValueStrings.WritingStreakDays, 0);
+            set => _preferences.Set(SettingsValueStrings.WritingStreakDays, Math.Max(0, value));
         }
 
         public bool ExperimentalFeaturesEnabled
@@ -117,7 +121,7 @@ namespace Storylines.Services
             get => SettingsValues.experimentalFeaturesEnabled;
             set
             {
-                _localSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] = value;
+                _preferences.Set(SettingsValueStrings.ExperimentalFeaturesEnabled, value);
                 Publish(SettingsValueStrings.ExperimentalFeaturesEnabled, value);
             }
         }
@@ -125,7 +129,7 @@ namespace Storylines.Services
         public bool AddChapterOnPageDownEnabled
         {
             get => SettingsValues.newChapterShortcut;
-            set => _localSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] = value;
+            set => _preferences.Set(SettingsValueStrings.OnPageDownNewChapterEnabled, value);
         }
 
         public string EditorFontFamily
@@ -134,7 +138,7 @@ namespace Storylines.Services
             set
             {
                 string fontFamily = string.IsNullOrWhiteSpace(value) ? "Segoe UI" : value;
-                _localSettings.Values[SettingsValueStrings.EditorFontFamily] = fontFamily;
+                _preferences.Set(SettingsValueStrings.EditorFontFamily, fontFamily);
                 Publish(SettingsValueStrings.EditorFontFamily, fontFamily);
             }
         }
@@ -145,18 +149,18 @@ namespace Storylines.Services
             set
             {
                 double size = Clamp(value, 8, 24);
-                _localSettings.Values[SettingsValueStrings.EditorFontSize] = size;
+                _preferences.Set(SettingsValueStrings.EditorFontSize, size);
                 Publish(SettingsValueStrings.EditorFontSize, size);
             }
         }
 
         public double EditorZoom
         {
-            get => Convert.ToDouble(_localSettings.Values[SettingsValueStrings.ZoomValue] ?? 25d);
+            get => _preferences.Get(SettingsValueStrings.ZoomValue, 25d);
             set
             {
                 double zoom = Clamp(value, 13, 100);
-                _localSettings.Values[SettingsValueStrings.ZoomValue] = zoom;
+                _preferences.Set(SettingsValueStrings.ZoomValue, zoom);
                 Publish(SettingsValueStrings.ZoomValue, zoom);
             }
         }
@@ -168,20 +172,20 @@ namespace Storylines.Services
             {
                 string languageTag = value ?? string.Empty;
                 ApplicationLanguages.PrimaryLanguageOverride = languageTag;
-                _localSettings.Values[SettingsValueStrings.UserLanguage] = languageTag;
+                _preferences.Set(SettingsValueStrings.UserLanguage, languageTag);
             }
         }
 
         public double ReadAloudVolume
         {
-            get => Convert.ToDouble(_localSettings.Values[SettingsValueStrings.ReadAloudVolume] ?? 75d);
-            set => _localSettings.Values[SettingsValueStrings.ReadAloudVolume] = Clamp(value, 0, 100);
+            get => _preferences.Get(SettingsValueStrings.ReadAloudVolume, 75d);
+            set => _preferences.Set(SettingsValueStrings.ReadAloudVolume, Clamp(value, 0, 100));
         }
 
         public string ReadAloudVoiceId
         {
-            get => _localSettings.Values[SettingsValueStrings.ReadAloudVoice]?.ToString();
-            set => _localSettings.Values[SettingsValueStrings.ReadAloudVoice] = value;
+            get => _preferences.Get<string>(SettingsValueStrings.ReadAloudVoice);
+            set => _preferences.Set(SettingsValueStrings.ReadAloudVoice, value);
         }
 
         public bool TextBoxSolidBackground
@@ -189,7 +193,7 @@ namespace Storylines.Services
             get => SettingsValues.whiteTextBackground;
             set
             {
-                _localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] = value;
+                _preferences.Set(SettingsValueStrings.TextBoxSolidBackground, value);
                 Publish(SettingsValueStrings.TextBoxSolidBackground, value);
             }
         }
@@ -197,7 +201,7 @@ namespace Storylines.Services
         public bool DialogueModeEnabled
         {
             get => SettingsValues.dialogueModeEnabled;
-            set => _localSettings.Values[SettingsValueStrings.DialogueModeEnabled] = value;
+            set => _preferences.Set(SettingsValueStrings.DialogueModeEnabled, value);
         }
 
         public void ResetChapterName()

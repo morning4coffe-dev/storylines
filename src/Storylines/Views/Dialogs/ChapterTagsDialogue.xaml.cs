@@ -42,7 +42,7 @@ namespace Storylines.Views.Dialogs
 
             // Populate existing tags
             tagsTokenBox.Items.Clear();
-            if (_chapter?.Tags != null)
+            if (_chapter?.Tags is not null)
                 foreach (var tag in _chapter.Tags)
                     tagsTokenBox.Items.Add(tag);
 
@@ -138,7 +138,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnSaveButton_Click(object sender, RoutedEventArgs e)
         {
-            if (_chapter == null) return;
+            if (_chapter is null) return;
 
             var newTags = GetCurrentTags()
                 .Where(t => !string.IsNullOrWhiteSpace(t))

@@ -100,7 +100,7 @@ namespace Storylines.Services
             await _gate.WaitAsync().ConfigureAwait(false);
             try
             {
-                if (!IsListening || _recognizer == null)
+                if (!IsListening || _recognizer is null)
                     return;
 
                 try
@@ -178,7 +178,7 @@ namespace Storylines.Services
 
         private void OnResultGenerated(SpeechContinuousRecognitionSession sender, SpeechContinuousRecognitionResultGeneratedEventArgs args)
         {
-            if (args?.Result == null || string.IsNullOrEmpty(args.Result.Text))
+            if (args?.Result is null || string.IsNullOrEmpty(args.Result.Text))
                 return;
 
             ResultRecognized?.Invoke(new DictationResult(args.Result.Text, args.Result.RawConfidence));
@@ -194,7 +194,7 @@ namespace Storylines.Services
         {
             var recognizer = _recognizer;
             _recognizer = null;
-            if (recognizer == null) return;
+            if (recognizer is null) return;
 
             try
             {

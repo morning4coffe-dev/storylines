@@ -34,7 +34,7 @@ namespace Storylines.Services
         public int CurrentStreakDays { get; private set; }
         public int SessionWords { get; private set; }
         public TimeSpan SessionDuration => _sessionStopwatch?.Elapsed ?? TimeSpan.Zero;
-        public bool IsSessionActive => _sessionStopwatch != null;
+        public bool IsSessionActive => _sessionStopwatch is not null;
 
         public event Action StatsChanged;
 
@@ -74,7 +74,7 @@ namespace Storylines.Services
 
         public void EndSession()
         {
-            if (_sessionStopwatch != null)
+            if (_sessionStopwatch is not null)
             {
                 _sessionStopwatch.Stop();
                 _sessionStopwatch = null;

@@ -199,7 +199,7 @@ namespace Storylines.Services
         public async Task OpenFileExplorerSaveAsync(string fileName)
         {
             var folder = await _fileService.PickFolderForSaveAsync();
-            if (folder == null)
+            if (folder is null)
                 return;
 
             await NewFileAsync(folder, $"{fileName}.srl");
@@ -207,7 +207,7 @@ namespace Storylines.Services
 
         public async Task NewFileAsync(StorageFolder folder, string fullFileName)
         {
-            if (folder == null)
+            if (folder is null)
                 throw new ArgumentNullException(nameof(folder));
 
             var file = await folder.CreateFileAsync(fullFileName, CreationCollisionOption.OpenIfExists);
@@ -226,13 +226,13 @@ namespace Storylines.Services
 
         public async Task LoadAsync(ProjectFile project)
         {
-            if (project == null)
+            if (project is null)
                 throw new ArgumentNullException(nameof(project));
 
-            if (project.file == null)
+            if (project.file is null)
             {
                 project.file = await OpenFileExplorerLoadAsync();
-                if (project.file == null)
+                if (project.file is null)
                     return;
             }
 
@@ -242,8 +242,8 @@ namespace Storylines.Services
             {
                 CurrentProject = project;
 
-                if (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] != null)
-                    ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = project.Token;
+                if (App.GetService<IPreferencesService>().Contains(SettingsValueStrings.LoadLastProjectOnStart))
+                    App.GetService<IPreferencesService>().Set(SettingsValueStrings.LoadLastProjectOnStart, project.Token);
 
                 _notifications.ShowProgressBar(true);
 
@@ -289,7 +289,7 @@ namespace Storylines.Services
                 if (string.Equals(documentType, ".txt", StringComparison.OrdinalIgnoreCase))
                 {
                     var plainTextHandler = _handlers[".txt"] as PlainTextDocumentPersistenceHandler;
-                    if (plainTextHandler == null)
+                    if (plainTextHandler is null)
                         throw new InvalidOperationException("Plain text recovery handler is not available.");
 
                     await plainTextHandler.LoadTextAsync(CurrentProject, GetRecoveredPlainText(projectData));
@@ -297,7 +297,7 @@ namespace Storylines.Services
                 else
                 {
                     var storylinesHandler = _handlers[".srl"] as StorylinesDocumentPersistenceHandler;
-                    if (storylinesHandler == null)
+                    if (storylinesHandler is null)
                         throw new InvalidOperationException("Storylines recovery handler is not available.");
 
                     await storylinesHandler.LoadProjectDataAsync(CurrentProject, projectData);
@@ -323,7 +323,7 @@ namespace Storylines.Services
         public void DefaultLaunch(IStorageItem storageItem)
         {
             var file = storageItem as StorageFile;
-            if (file == null)
+            if (file is null)
                 return;
 
             Load(new ProjectFile { file = file });
@@ -336,7 +336,7 @@ namespace Storylines.Services
         {
             StopAutosaveTimer();
 
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = true;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, true);
 
             _autosaveTimer = new DispatcherTimer
             {
@@ -352,7 +352,7 @@ namespace Storylines.Services
         public void DisableAutosave()
         {
             StopAutosaveTimer();
-            ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] = false;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, false);
         }
 
         public void RefreshAutosave()
@@ -365,7 +365,7 @@ namespace Storylines.Services
         {
             _afterSaveAction = afterSaveAction;
 
-            if (EnsureCurrentProject().file == null)
+            if (EnsureCurrentProject().file is null)
             {
                 _dialogs.OpenSaveDialogue();
                 return;
@@ -381,7 +381,7 @@ namespace Storylines.Services
             try
             {
                 var project = EnsureCurrentProject();
-                if (project.file == null)
+                if (project.file is null)
                 {
                     _dialogs.OpenSaveDialogue();
                     return;
@@ -431,7 +431,7 @@ namespace Storylines.Services
             try
             {
                 var file = await ProjectFile.GetProjectFromTokenAsync(token);
-                if (file == null)
+                if (file is null)
                     return CreateTransientRecoveredProject(projectData);
 
                 var project = await ProjectFile.LoadExistingAsync(file, token);
@@ -468,13 +468,13 @@ namespace Storylines.Services
         private bool TryResolveHandler(StorageFile file, out DocumentPersistenceHandlerBase handler)
         {
             handler = null;
-            return file != null && _handlers.TryGetValue(file.FileType, out handler);
+            return file is not null && _handlers.TryGetValue(file.FileType, out handler);
         }
 
         private async Task<StorageFile> OpenFileExplorerLoadAsync()
         {
             var file = await _fileService.PickFileForOpenAsync();
-            if (file == null)
+            if (file is null)
                 return null;
 
             if (!ProjectFile.CheckIfProjectExists(file))
@@ -531,7 +531,7 @@ namespace Storylines.Services
 
         private async Task TryAutosaveAsync()
         {
-            if (!SettingsValues.autosaveEnabled || !_undoRedo.IsDirty || CurrentProject?.file == null || _afterSaveAction != AfterSaveAction.None)
+            if (!SettingsValues.autosaveEnabled || !_undoRedo.IsDirty || CurrentProject?.file is null || _afterSaveAction != AfterSaveAction.None)
                 return;
 
             try
@@ -546,7 +546,7 @@ namespace Storylines.Services
 
         private void StopAutosaveTimer()
         {
-            if (_autosaveTimer == null)
+            if (_autosaveTimer is null)
                 return;
 
             _autosaveTimer.Tick -= OnAutosaveTimerTick;
@@ -587,7 +587,7 @@ namespace Storylines.Services
             var chapterIds = new HashSet<string>();
             foreach (var chapter in projectData.Chapters)
             {
-                if (chapter == null)
+                if (chapter is null)
                     continue;
 
                 chapter.Id = EnsureUniqueId(chapter.Id, chapterIds);

@@ -8,11 +8,9 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Storage;
-using Microsoft.UI.Text;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -29,9 +27,6 @@ namespace Storylines.Views.Pages
         private readonly WindowContext _windowContext;
         private string _pendingSelectedCharacterToken;
 
-        public bool isEditModeEnabled { set; get; } = false;
-        public bool isAddEnabled { set; get; } = true;
-        public bool isRemoveEnabled { set; get; } = true;
 
         public ObservableCollection<Character> Characters => _projectState.Characters;
         public ObservableCollection<Character> FilteredCharacters { get; } = new ObservableCollection<Character>();
@@ -45,7 +40,7 @@ namespace Storylines.Views.Pages
             set => ViewModel.UnappliedChanges = value;
         }
 
-        public static CharactersPage current { get; private set; }
+
 
         public CharactersPage()
         {
@@ -57,7 +52,6 @@ namespace Storylines.Views.Pages
             _projectState = App.GetService<ProjectState>();
             ViewModel = App.GetService<CharactersPageViewModel>();
 
-            current = this;
             _windowContext.CharactersPage = this;
 
             _windowContext.AppView.page = AppView.Pages.Characters;
@@ -99,38 +93,16 @@ namespace Storylines.Views.Pages
             }
         }
 
-        Character characterBeforeChange;
-
         public void EnableEditMode(bool enable)
         {
-            isEditModeEnabled = enable;
-
-            nameBox.IsEnabled = enable;
-            descriptionBox.IsEnabled = enable;
-            roleBox.IsEnabled = enable;
-            ageBox.IsEnabled = enable;
-            traitsBox.IsEnabled = enable;
-            appearanceBox.IsEnabled = enable;
-            profilePicture.IsTapEnabled = enable;
-
-            editButton.IsChecked = enable;
-
-            if (enable && listView.SelectedItem != null)
+            if (enable && listView.SelectedItem is not null)
             {
-                var ch = listView.SelectedItem as Character;
-                ViewModel.SelectedCharacter = ch;
+                ViewModel.SelectedCharacter = listView.SelectedItem as Character;
                 ViewModel.EnterEditMode();
-                characterBeforeChange = _projectState.CopyCharacter(ch.Token);
-
-                listView.IsEnabled = false;
-
-                IsEditEnabled(EditButton.Cancel);
             }
             else
             {
-                listView.IsEnabled = true;
-
-                IsEditEnabled(EditButton.Edit);
+                ViewModel.ExitEditMode();
             }
 
             if (!enable && !selectionChanged)
@@ -144,11 +116,9 @@ namespace Storylines.Views.Pages
         public void ApplyChanges()
         {
             var character = listView.SelectedItem as Character;
-            if (character != null && characterBeforeChange != null)
+            if (character is not null && ViewModel.SelectedCharacter is not null)
             {
-                // Sync traits and appearance from UI to ViewModel before applying
                 ViewModel.TraitsText = GetTraitsFromTokenBox();
-                ViewModel.AppearanceText = appearanceBox.Text;
 
                 ViewModel.ApplyChanges();
 
@@ -159,65 +129,17 @@ namespace Storylines.Views.Pages
 
         public void CancelEdit()
         {
-            IsEditEnabled(EditButton.Edit);
-
-            // Restore UI from ViewModel (which restores from backup)
             ViewModel.CancelEdit();
-
-            nameBox.Text = ViewModel.NameText;
-            descriptionBox.Text = ViewModel.DescriptionText;
-            roleBox.Text = ViewModel.RoleText;
-            ageBox.Text = ViewModel.AgeText;
             LoadTraitsIntoTokenBox(ViewModel.TraitsText);
-            appearanceBox.Text = ViewModel.AppearanceText;
-            profilePicture.ProfilePicture = ViewModel.ProfilePicture;
             _picture = null;
 
             EnableEditMode(false);
         }
 
-        private enum EditButton { Edit, ApplyChanges, Cancel }
-        private void IsEditEnabled(EditButton edit)
-        {
-            switch (edit)
-            {
-                case EditButton.Edit:
-                    cancelButton.Visibility = Visibility.Collapsed;
-                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("editText");
-                    editButtonIcon.Glyph = "";
-
-                    unappliedChanges = false;
-                    break;
-                case EditButton.ApplyChanges:
-                    cancelButton.Visibility = Visibility.Visible;
-                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("applyChanges");
-                    editButtonIcon.Glyph = "";
-
-                    unappliedChanges = true;
-                    break;
-                case EditButton.Cancel:
-                    cancelButton.Visibility = Visibility.Collapsed;
-                    editButton.Label = ResourceLoader.GetForViewIndependentUse().GetString("cancelText");
-                    editButtonIcon.Glyph = "";
-
-                    unappliedChanges = false;
-                    break;
-            }
-        }
-
         public bool DidSomethingChange()
         {
-            var character = listView.SelectedItem as Character;
-            if (character == null) return false;
-
-            // Sync current UI state to ViewModel for comparison
-            ViewModel.NameText = nameBox.Text;
-            ViewModel.DescriptionText = descriptionBox.Text;
-            ViewModel.RoleText = roleBox.Text;
-            ViewModel.AgeText = ageBox.Text;
+            if (ViewModel.SelectedCharacter is null) return false;
             ViewModel.TraitsText = GetTraitsFromTokenBox();
-            ViewModel.AppearanceText = appearanceBox.Text;
-
             return ViewModel.DidSomethingChange();
         }
 
@@ -227,7 +149,7 @@ namespace Storylines.Views.Pages
         {
             characterItemFlyoutedToken = token;
 
-            addFlyout.IsEnabled = isAddEnabled;
+            addFlyout.IsEnabled = true;
 
             editFlyout.IsEnabled = enabled;
             removeFlyout.IsEnabled = enabled;
@@ -235,7 +157,7 @@ namespace Storylines.Views.Pages
 
         private void OnFlyoutDisplayButton_Click(object sender, RoutedEventArgs e)
         {
-            OpenFlyout(listView.SelectedItem == null ? "" : (listView.SelectedItem as Character).Token, true);
+            OpenFlyout(listView.SelectedItem is null ? "" : (listView.SelectedItem as Character).Token, true);
             chaptersListViewFlyout.ShowAt((Button)sender);
         }
 
@@ -256,7 +178,7 @@ namespace Storylines.Views.Pages
 
         private void OnChaptersListView_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if (characterItemFlyoutedToken == null && listView.IsEnabled)
+            if (characterItemFlyoutedToken is null && listView.IsEnabled)
             {
                 chaptersListViewFlyout.ShowAt((Grid)sender, e.GetPosition((Grid)sender));
                 OpenFlyout("", false);
@@ -292,8 +214,7 @@ namespace Storylines.Views.Pages
 
         public void Add()
         {
-            Random rn = new Random();
-            int value = rn.Next(0, 2);
+            int value = Random.Shared.Next(0, 2);
 
             listView.SelectedItem = _projectState.CreateNewCharacter(value == 1 ? ResourceLoader.GetForViewIndependentUse().GetString("johnDoe") : ResourceLoader.GetForViewIndependentUse().GetString("janeDoe"), "");
             RefreshCharacterList((listView.SelectedItem as Character)?.Token);
@@ -304,7 +225,7 @@ namespace Storylines.Views.Pages
 
         public void Remove()
         {
-            if (listView.SelectedItem != null)
+            if (listView.SelectedItem is not null)
                 _projectState.RemoveCharacter((listView.SelectedItem as Character).Token);
 
             RefreshCharacterList();
@@ -327,29 +248,19 @@ namespace Storylines.Views.Pages
             var character = listView.SelectedItem as Character;
             ViewModel.SelectedCharacter = character;
 
-            if (character != null)
+            if (character is not null)
             {
                 selectedCharactersNullText.Visibility = Visibility.Collapsed;
                 characterValuesPanel.Visibility = Visibility.Visible;
 
-                nameBox.Text = character.Name;
-                descriptionBox.Text = character.Description;
-                roleBox.Text = character.Role ?? "";
-                ageBox.Text = character.Age ?? "";
                 LoadTraitsIntoTokenBox(character.TraitsText);
-                appearanceBox.Text = character.Appearance ?? "";
-                profilePicture.ProfilePicture = character.Picture?.Image;
                 LoadRelationships(character);
-
-                editButton.IsEnabled = true;
             }
             else
             {
                 selectedCharactersNullText.Visibility = Visibility.Visible;
                 characterValuesPanel.Visibility = Visibility.Collapsed;
                 LoadRelationships(null);
-
-                editButton.IsEnabled = false;
             }
 
             profilePictureFlyout.IsOpen = false;
@@ -426,13 +337,13 @@ namespace Storylines.Views.Pages
         private void OnTraitsTokenItem_Added(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, object args)
         {
             if (!selectionChanged && DidSomethingChange())
-                IsEditEnabled(EditButton.ApplyChanges);
+                ViewModel.MarkUnappliedChanges();
         }
 
         private void OnTraitsTokenItem_Removing(CommunityToolkit.WinUI.Controls.TokenizingTextBox sender, CommunityToolkit.WinUI.Controls.TokenItemRemovingEventArgs args)
         {
             if (!selectionChanged && DidSomethingChange())
-                IsEditEnabled(EditButton.ApplyChanges);
+                ViewModel.MarkUnappliedChanges();
         }
 
         private void OnTraitsBox_TextChanged(Microsoft.UI.Xaml.Controls.AutoSuggestBox sender, Microsoft.UI.Xaml.Controls.AutoSuggestBoxTextChangedEventArgs args)
@@ -455,16 +366,15 @@ namespace Storylines.Views.Pages
         private void Box_TextChanged(object sender, TextChangedEventArgs e)
         {
             if (!selectionChanged)
-                if (DidSomethingChange())
-                    IsEditEnabled(EditButton.ApplyChanges);
-                else
-                    if (unappliedChanges)
-                        IsEditEnabled(EditButton.Cancel);
+                if (ViewModel.DidSomethingChange())
+                    ViewModel.MarkUnappliedChanges();
+                else if (ViewModel.UnappliedChanges)
+                    ViewModel.MarkCleanEditMode();
         }
 
         private void OnProfilePicture_Tapped(object sender, TappedRoutedEventArgs e)
         {
-            if (isEditModeEnabled)
+            if (ViewModel.IsEditMode)
             {
                 _ = InitializeProfilePictures();
                 profilePictureFlyout.IsOpen = true;
@@ -536,7 +446,7 @@ namespace Storylines.Views.Pages
 
         private async Task RemovePicture(CharacterPicture cp)
         {
-            if (cp == null || string.IsNullOrWhiteSpace(cp.FileName))
+            if (cp is null || string.IsNullOrWhiteSpace(cp.FileName))
                 return;
 
             try
@@ -558,6 +468,13 @@ namespace Storylines.Views.Pages
             {
                 var p = (sender as Button).Tag as CharacterPicture;
                 var bmp = await Character.LoadProfilePictureAsync(p);
+                if (bmp is null)
+                {
+                    App.TryGetService<INotificationService>()?.ShowNotification(
+                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                        Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"));
+                    return;
+                }
                 profilePicture.ProfilePicture = bmp;
                 profilePictureFlyout.IsOpen = false;
 
@@ -571,10 +488,9 @@ namespace Storylines.Views.Pages
             ViewModel.SetPicture(picture, picture?.Image);
 
             if (DidSomethingChange())
-                IsEditEnabled(EditButton.ApplyChanges);
-            else
-            if (unappliedChanges)
-                IsEditEnabled(EditButton.Cancel);
+                ViewModel.MarkUnappliedChanges();
+            else if (ViewModel.UnappliedChanges)
+                ViewModel.MarkCleanEditMode();
         }
 
         public async Task<List<CharacterPicture>> GetImagesAsync()
@@ -611,7 +527,7 @@ namespace Storylines.Views.Pages
 
             StorageFile file = await picker.PickSingleFileAsync();
 
-            if (file != null)
+            if (file is not null)
             {
                 StorageFolder folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
                 StorageFile newFile = await file.CopyAsync(folder, file.Name, NameCollisionOption.ReplaceExisting);
@@ -676,8 +592,6 @@ namespace Storylines.Views.Pages
             RefreshCharacterList();
             TrySelectPendingCharacter();
             CheckForNullCharacter();
-
-            IsEditEnabled(EditButton.Edit);
         }
 
         private void Page_SizeChanged(object sender, SizeChangedEventArgs e)
@@ -732,34 +646,13 @@ namespace Storylines.Views.Pages
             return searchTarget?.IndexOf(query, StringComparison.CurrentCultureIgnoreCase) >= 0;
         }
 
-        private static string ConvertToPlainText(string chapterText)
-        {
-            if (string.IsNullOrWhiteSpace(chapterText))
-                return string.Empty;
-
-            var box = new RichEditBox();
-            box.Document.SetText(TextSetOptions.FormatRtf, chapterText);
-            box.Document.GetText(TextGetOptions.None, out string plainText);
-            return plainText ?? string.Empty;
-        }
-
-        private static string BuildDialoguePreview(string text)
-        {
-            var preview = Regex.Replace(text ?? string.Empty, "\\s+", " ").Trim();
-
-            if (preview.Length > 140)
-                return preview.Substring(0, 137) + "...";
-
-            return preview;
-        }
-
-        // ─── Relationships ──────────────────────────────────────────── 
+        // ─── Relationships ────────────────────────────────────────────
 
         public void LoadRelationships(Character character)
         {
             var items = new List<RelationshipDisplayItem>();
 
-            if (character?.Relationships != null)
+            if (character?.Relationships is not null)
             {
                 foreach (var rel in character.Relationships)
                 {
@@ -775,13 +668,13 @@ namespace Storylines.Views.Pages
 
             relationshipsListView.ItemsSource = items;
             noRelationshipsText.Visibility = items.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-            addRelationshipButton.IsEnabled = character != null;
+            addRelationshipButton.IsEnabled = character is not null;
         }
 
         private async void OnAddRelationship_Click(object sender, RoutedEventArgs e)
         {
             var character = listView.SelectedItem as Character;
-            if (character == null) return;
+            if (character is null) return;
 
             var otherCharacters = Characters.Where(c => c.Token != character.Token).ToList();
             if (otherCharacters.Count == 0) return;
@@ -824,13 +717,13 @@ namespace Storylines.Views.Pages
         private void OnRemoveRelationship_Click(object sender, RoutedEventArgs e)
         {
             var character = listView.SelectedItem as Character;
-            if (character == null) return;
+            if (character is null) return;
 
             var targetToken = (sender as Button)?.Tag?.ToString();
             if (!string.IsNullOrEmpty(targetToken))
             {
                 var rel = character.Relationships.FirstOrDefault(r => r.TargetCharacterToken == targetToken);
-                if (rel != null)
+                if (rel is not null)
                 {
                     character.Relationships.Remove(rel);
                     TimeTravelSystem.SomethingChanged();

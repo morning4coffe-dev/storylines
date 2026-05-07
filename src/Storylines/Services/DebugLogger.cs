@@ -28,7 +28,7 @@ namespace Storylines.Services
         public void Error(string message, Exception ex = null)
         {
             var entry = $"[ERROR] {DateTime.Now:HH:mm:ss} {message}";
-            if (ex != null)
+            if (ex is not null)
                 entry += $"\n  Exception: {ex.GetType().Name}: {ex.Message}\n  {ex.StackTrace}";
             Debug.WriteLine(entry);
             AddEntry(entry);

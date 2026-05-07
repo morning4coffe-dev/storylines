@@ -53,7 +53,7 @@ namespace Storylines.Services.Modes.Impl
             allowsSettingsShortcut: false,
             overlayContent: _overlay);
 
-        public bool CanLeave => _vm == null || _vm.Final;
+        public bool CanLeave => _vm is null || _vm.Final;
 
         public void Enter()
         {

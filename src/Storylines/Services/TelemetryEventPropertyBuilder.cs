@@ -20,7 +20,7 @@ namespace Storylines.Services
 
         public static IEnumerable<KeyValuePair<string, string>> Create(params (string? Key, string? Value)[]? properties)
         {
-            if (properties == null)
+            if (properties is null)
                 return Enumerable.Empty<KeyValuePair<string, string>>();
 
             return CreateIterator(properties);

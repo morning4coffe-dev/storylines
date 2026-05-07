@@ -1,12 +1,10 @@
 using CommunityToolkit.Mvvm.ComponentModel;
-using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Constants;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 using Windows.Storage;
 using Microsoft.UI.Xaml.Media.Imaging;
 
@@ -53,7 +51,7 @@ namespace Storylines.Models
 
         public string TraitsText
         {
-            get => Traits == null || Traits.Count == 0 ? string.Empty : string.Join(", ", Traits);
+            get => Traits is null || Traits.Count == 0 ? string.Empty : string.Join(", ", Traits);
             set
             {
                 Traits = (value ?? string.Empty)
@@ -78,7 +76,7 @@ namespace Storylines.Models
                 if (!string.IsNullOrWhiteSpace(Age))
                     details.Add(Age);
 
-                if (Traits != null && Traits.Count > 0)
+                if (Traits is not null && Traits.Count > 0)
                     details.Add(string.Join(", ", Traits.Take(2)) + (Traits.Count > 2 ? "…" : string.Empty));
 
                 if (details.Count > 0)
@@ -109,7 +107,7 @@ namespace Storylines.Models
                 var folder = await ApplicationData.Current.LocalFolder.CreateFolderAsync("ProfilePictures", CreationCollisionOption.OpenIfExists);
                 var file = await folder.TryGetItemAsync(cp.FileName);
 
-                if (file != null)
+                if (file is not null)
                     return new BitmapImage(new Uri(file.Path)) { DecodePixelHeight = LayoutConstants.ProfilePictureDecodeSize, DecodePixelWidth = LayoutConstants.ProfilePictureDecodeSize };
             }
             catch (Exception ex)
@@ -117,7 +115,6 @@ namespace Storylines.Models
                 App.GetService<Services.Interfaces.ILogger>().Error($"Failed to load profile picture: {cp.FileName}", ex);
             }
 
-            NotificationManager.DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error, ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"), "");
             return null;
         }
     }

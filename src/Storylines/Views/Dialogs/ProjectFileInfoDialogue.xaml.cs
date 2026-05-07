@@ -49,14 +49,14 @@ namespace Storylines.Views.Dialogs
 
             string location = file?.Path;
             if (string.IsNullOrWhiteSpace(location))
-                location = !string.IsNullOrWhiteSpace(project?.Path) ? project.Path : project == null ? unavailable : notSaved;
+                location = !string.IsNullOrWhiteSpace(project?.Path) ? project.Path : project is null ? unavailable : notSaved;
 
             string created = unavailable;
             string modified = unavailable;
             string size = unavailable;
             string type = unavailable;
 
-            if (file != null)
+            if (file is not null)
             {
                 try
                 {

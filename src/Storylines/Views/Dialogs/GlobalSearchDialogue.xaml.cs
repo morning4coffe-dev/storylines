@@ -1,3 +1,4 @@
+using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Models;
 using System;
@@ -101,7 +102,7 @@ namespace Storylines.Views.Dialogs
             {
                 var chapter = _projectState.Chapters[i];
                 string chapterTitle = BuildChapterTitle(i, chapter.Name);
-                string plainText = ConvertToPlainText(chapter.Text);
+                string plainText = RtfHelper.ConvertToPlainText(chapter.Text);
 
                 int matchIndex = plainText.IndexOf(query, StringComparison.CurrentCultureIgnoreCase);
                 if (matchIndex >= 0)
@@ -172,13 +173,13 @@ namespace Storylines.Views.Dialogs
             Hide();
 
             var chapter = _projectState.Chapters[index];
-            if (_windowContext?.AppView?.pagesView?.Content is Pages.MainPage && _windowContext.ChapterList?.ViewModel != null)
+            if (_windowContext?.AppView?.pagesView?.Content is Pages.MainPage && _windowContext.ChapterList?.ViewModel is not null)
             {
                 var textEditor = App.GetService<ITextEditorService>();
                 textEditor.SelectedChapterIndex = index;
                 _windowContext.ChapterList.ViewModel.SelectedIndex = index;
 
-                if (_windowContext.ChapterList.listView != null)
+                if (_windowContext.ChapterList.listView is not null)
                     _windowContext.ChapterList.listView.SelectedIndex = index;
 
                 return;
@@ -187,16 +188,6 @@ namespace Storylines.Views.Dialogs
             _navigation.NavigateTo(NavigationTarget.MainPage, chapter.Token);
         }
 
-        private static string ConvertToPlainText(string chapterText)
-        {
-            if (string.IsNullOrWhiteSpace(chapterText))
-                return string.Empty;
-
-            var box = new RichEditBox();
-            box.Document.SetText(TextSetOptions.FormatRtf, chapterText);
-            box.Document.GetText(TextGetOptions.None, out string plainText);
-            return plainText ?? string.Empty;
-        }
     }
 
     public sealed class GlobalSearchResult
@@ -216,7 +207,7 @@ namespace Storylines.Views.Dialogs
 
         public Visibility DescriptionVisibility => string.IsNullOrWhiteSpace(Description) ? Visibility.Collapsed : Visibility.Visible;
 
-        public double RowOpacity => Execute == null ? 0.68 : 1.0;
+        public double RowOpacity => Execute is null ? 0.68 : 1.0;
 
         public bool Matches(string query)
         {

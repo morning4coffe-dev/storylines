@@ -26,7 +26,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnManagedDialogOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
-            if (!CloseOnOutsideTap || _outsideTapSubscribed || _windowContext?.RootElement == null)
+            if (!CloseOnOutsideTap || _outsideTapSubscribed || _windowContext?.RootElement is null)
                 return;
 
             _windowContext.RootElement.PointerPressed += OnRootPointerPressed;
@@ -35,7 +35,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnManagedDialogClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
         {
-            if (!_outsideTapSubscribed || _windowContext?.RootElement == null)
+            if (!_outsideTapSubscribed || _windowContext?.RootElement is null)
                 return;
 
             _windowContext.RootElement.PointerPressed -= OnRootPointerPressed;

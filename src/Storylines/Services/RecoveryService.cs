@@ -42,7 +42,7 @@ namespace Storylines.Services
 
         public static void Stop()
         {
-            if (_cacheTimer != null)
+            if (_cacheTimer is not null)
             {
                 _cacheTimer.Tick -= OnCacheTimer_Tick;
                 _cacheTimer.Stop();
@@ -68,15 +68,15 @@ namespace Storylines.Services
             try
             {
                 var projectState = App.TryGetService<ProjectState>();
-                if (projectState == null || projectState.Chapters.Count == 0 || !TimeTravelSystem.unSavedProgress)
+                if (projectState is null || projectState.Chapters.Count == 0 || !TimeTravelSystem.unSavedProgress)
                     return;
 
                 var serializer = App.TryGetService<JsonSaveSerializer>();
-                if (serializer == null)
+                if (serializer is null)
                     return;
 
                 var persistence = App.TryGetService<IProjectPersistenceService>();
-                if (persistence == null)
+                if (persistence is null)
                     return;
 
                 var projectData = persistence.CollectProjectData();
@@ -88,16 +88,17 @@ namespace Storylines.Services
 
                 await FileIO.WriteTextAsync(file, json);
 
-                var settings = ApplicationData.Current.LocalSettings;
-                settings.Values[RecoveryCacheTimestampKey] = DateTimeOffset.UtcNow.ToString("o");
-
+                var prefs = App.GetService<IPreferencesService>();
                 var currentProject = persistence.CurrentProject;
-                if (!string.IsNullOrWhiteSpace(currentProject?.Token))
-                    settings.Values[RecoveryProjectTokenKey] = currentProject.Token;
-                else
-                    settings.Values.Remove(RecoveryProjectTokenKey);
 
-                settings.Values[RecoveryDocumentTypeKey] = currentProject?.file?.FileType ?? ".srl";
+                prefs.Set(RecoveryCacheTimestampKey, DateTimeOffset.UtcNow.ToString("O"));
+                
+                if (!string.IsNullOrWhiteSpace(currentProject?.Token))
+                    prefs.Set(RecoveryProjectTokenKey, currentProject.Token);
+                else
+                    prefs.Remove(RecoveryProjectTokenKey);
+
+                prefs.Set(RecoveryDocumentTypeKey, currentProject?.file?.FileType ?? ".srl");
             }
             catch (Exception ex)
             {
@@ -111,7 +112,7 @@ namespace Storylines.Services
 
         public static bool HasRecoveryData()
         {
-            return ApplicationData.Current.LocalSettings.Values.ContainsKey(RecoveryCacheTimestampKey);
+            return App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Contains(RecoveryCacheTimestampKey);
         }
 
         public static async Task<string> GetRecoveryJsonAsync()
@@ -129,7 +130,7 @@ namespace Storylines.Services
 
         public static DateTimeOffset? GetRecoveryTimestamp()
         {
-            if (ApplicationData.Current.LocalSettings.Values[RecoveryCacheTimestampKey] is string ts
+            if (App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(RecoveryCacheTimestampKey) is string ts
                 && DateTimeOffset.TryParse(ts, out var result))
                 return result;
             return null;
@@ -137,12 +138,12 @@ namespace Storylines.Services
 
         public static string GetRecoveryProjectToken()
         {
-            return ApplicationData.Current.LocalSettings.Values[RecoveryProjectTokenKey] as string;
+            return App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(RecoveryProjectTokenKey);
         }
 
         public static string GetRecoveryDocumentType()
         {
-            return ApplicationData.Current.LocalSettings.Values[RecoveryDocumentTypeKey] as string ?? ".srl";
+            return App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(RecoveryDocumentTypeKey) ?? ".srl";
         }
 
         public static void ClearRecoveryData()
@@ -156,12 +157,13 @@ namespace Storylines.Services
 
             try
             {
-                ApplicationData.Current.LocalSettings.Values.Remove(RecoveryCacheTimestampKey);
-                ApplicationData.Current.LocalSettings.Values.Remove(RecoveryProjectTokenKey);
-                ApplicationData.Current.LocalSettings.Values.Remove(RecoveryDocumentTypeKey);
+                var prefs = App.GetService<Storylines.Services.Interfaces.IPreferencesService>();
+                prefs.Remove(RecoveryCacheTimestampKey);
+                prefs.Remove(RecoveryProjectTokenKey);
+                prefs.Remove(RecoveryDocumentTypeKey);
 
                 var existingFile = await ApplicationData.Current.LocalFolder.TryGetItemAsync(RecoveryCacheFileName);
-                if (existingFile != null)
+                if (existingFile is not null)
                     await existingFile.DeleteAsync();
             }
             catch (Exception ex)

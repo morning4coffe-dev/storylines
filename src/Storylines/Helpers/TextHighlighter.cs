@@ -5,11 +5,9 @@ namespace Storylines.Helpers
     class TextHighlighter
     {
         public enum Tool { None, White, Yellow, Red, Green, Blue }
-        public static Tool SelectedTool;
+        public Tool SelectedTool;
+        public Tool LastTool = Tool.Yellow;
 
-        public static Tool LastTool = Tool.Yellow;
-
-        // Highlight palette
         private static readonly Color HighlightWhite = Color.FromArgb(255, 255, 255, 255);
         private static readonly Color HighlightYellow = Color.FromArgb(255, 229, 193, 38);
         private static readonly Color HighlightRed = Color.FromArgb(255, 214, 21, 21);
@@ -17,7 +15,7 @@ namespace Storylines.Helpers
         private static readonly Color HighlightBlue = Color.FromArgb(255, 26, 65, 246);
         private static readonly Color HighlightTransparent = Color.FromArgb(0, 0, 0, 0);
 
-        public static Color ChangeColor(Tool tool)
+        public Color ChangeColor(Tool tool)
         {
             SelectedTool = tool;
             switch (tool)

@@ -29,5 +29,17 @@ namespace Storylines.Services.Interfaces
 
         /// <summary>Dismisses the load-project dialogue if it is open.</summary>
         void DismissLoadDialogue();
+
+        /// <summary>Shows the "unsaved progress" dialog and handles Save/Don't-Save/Cancel.</summary>
+        Task ShowUnsavedProgressDialogueAsync(bool appClosing);
+
+        /// <summary>Shows a confirmation dialog when leaving focus mode before the goal is met.</summary>
+        Task ShowFocusModeLeaveDialogueAsync();
+
+        /// <summary>Shows the "unapplied character changes" dialog and handles Apply/Discard/Cancel.</summary>
+        Task ShowUnappliedCharacterChangesDialogueAsync();
+
+        /// <summary>Shows the "no characters" dialog and navigates to add one if confirmed.</summary>
+        Task ShowNoCharactersDialogueAsync();
     }
 }

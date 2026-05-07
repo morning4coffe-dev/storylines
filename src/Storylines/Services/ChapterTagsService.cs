@@ -23,7 +23,7 @@ namespace Storylines.Services
         {
             try
             {
-                var raw = ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterTagPresets]?.ToString();
+                var raw = App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(SettingsValueStrings.ChapterTagPresets);
                 if (!string.IsNullOrWhiteSpace(raw))
                     return JsonConvert.DeserializeObject<List<string>>(raw) ?? new List<string>(DefaultPresets);
             }
@@ -61,8 +61,7 @@ namespace Storylines.Services
         {
             try
             {
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterTagPresets] =
-                    JsonConvert.SerializeObject(presets ?? new List<string>());
+                App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Set(SettingsValueStrings.ChapterTagPresets, JsonConvert.SerializeObject(presets ?? new List<string>()));
             }
             catch (Exception ex)
             {

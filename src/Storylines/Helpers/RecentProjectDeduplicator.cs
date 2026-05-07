@@ -20,10 +20,10 @@ namespace Storylines.Helpers
     {
         public static IEnumerable<T> DistinctByPath<T>(IEnumerable<T> items, Func<T, string> pathSelector)
         {
-            if (items == null)
+            if (items is null)
                 throw new ArgumentNullException(nameof(items));
 
-            if (pathSelector == null)
+            if (pathSelector is null)
                 throw new ArgumentNullException(nameof(pathSelector));
 
             var seenPaths = new HashSet<string>(StringComparer.OrdinalIgnoreCase);
@@ -38,7 +38,7 @@ namespace Storylines.Helpers
 
         public static string FindExistingToken(IEnumerable<RecentProjectReference> references, string path)
         {
-            if (references == null)
+            if (references is null)
                 throw new ArgumentNullException(nameof(references));
 
             var normalizedPath = NormalizePath(path);

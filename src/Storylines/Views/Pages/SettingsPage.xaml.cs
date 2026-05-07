@@ -43,7 +43,7 @@ namespace Storylines.Views.Pages
                 _ => null
             };
 
-            if (pageType != null)
+            if (pageType is not null)
                 contentFrame.Navigate(pageType, null, new SuppressNavigationTransitionInfo());
         }
 

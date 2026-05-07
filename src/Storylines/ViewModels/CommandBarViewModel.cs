@@ -108,7 +108,7 @@ namespace Storylines.ViewModels
         private void ShowProjectFileInfo() => _dialogs.OpenProjectFileInfo();
 
         [RelayCommand]
-        private void NavigateToCharacters() => AppView.current.ChangePage(AppView.Pages.Characters);
+        private void NavigateToCharacters() => _navigation.NavigateTo(NavigationTarget.Characters);
 
         [RelayCommand]
         private void ShowShortcuts() => _dialogs.OpenShortcuts();

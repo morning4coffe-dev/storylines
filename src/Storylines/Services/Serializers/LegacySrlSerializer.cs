@@ -93,7 +93,7 @@ namespace Storylines.Services.Serializers
 
         private static string SanitizeText(string text)
         {
-            if (text == null) return string.Empty;
+            if (text is null) return string.Empty;
             return text
                 .Replace(PropertyDelimiter, "")
                 .Replace(KeyValueSeparator, "")

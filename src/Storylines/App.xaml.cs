@@ -44,7 +44,7 @@ namespace Storylines
                 throw new InvalidOperationException("Application services have not been configured.");
 
             var scopedServices = Current.Services.GetService<IWindowManager>()?.Current?.Services;
-            if (scopedServices != null && scopedServices.GetService<T>() is T scopedService)
+            if (scopedServices is not null && scopedServices.GetService<T>() is T scopedService)
                 return scopedService;
 
             return Current.Services.GetRequiredService<T>();
@@ -67,7 +67,7 @@ namespace Storylines
 
             await windowManager.RunAsync(context, async () =>
             {
-                await ActivateAsync(context, "launch", !hasRecoveryData && pendingItem == null);
+                await ActivateAsync(context, "launch", !hasRecoveryData && pendingItem is null);
 
                 if (hasRecoveryData)
                 {
@@ -77,7 +77,7 @@ namespace Storylines
                     return;
                 }
 
-                if (pendingItem == null)
+                if (pendingItem is null)
                     _ = LoadLastProjectAsync();
             });
         }
@@ -109,7 +109,7 @@ namespace Storylines
         private void OnAppActivated(object sender, AppActivationArguments args)
         {
             var pendingItem = GetActivatedStorageItem(args);
-            if (pendingItem == null)
+            if (pendingItem is null)
                 return;
 
             var windowManager = Services.GetRequiredService<IWindowManager>();
@@ -181,7 +181,7 @@ namespace Storylines
             context.AppView?.UsingWindows10();
 
             var telemetry = GetService<ITelemetryService>();
-            if (_telemetryInitializationTask == null)
+            if (_telemetryInitializationTask is null)
             {
                 _telemetryInitializationTask = telemetry.InitializeAsync();
                 ObserveBackgroundOperation(_telemetryInitializationTask, "Failed to initialize telemetry");
@@ -220,14 +220,14 @@ namespace Storylines
 
         private async Task<bool> LoadLastProjectAsync()
         {
-            var fileToken = Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.LoadLastProjectOnStart]?.ToString();
+            var fileToken = App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get<string>(SettingsValueStrings.LoadLastProjectOnStart);
             if (string.IsNullOrWhiteSpace(fileToken))
                 return false;
 
             try
             {
                 var file = await ProjectFile.GetProjectFromTokenAsync(fileToken);
-                if (file == null)
+                if (file is null)
                     return false;
 
                 GetService<IProjectPersistenceService>().Load(await ProjectFile.LoadExistingAsync(file, fileToken));
@@ -243,7 +243,7 @@ namespace Storylines
         private Task TryProcessPendingActivationItemAsync(WindowContext context)
         {
             var pendingActivatedItem = context.PendingActivatedItem ?? PendingActivatedItem;
-            if (pendingActivatedItem == null || context.MainPage == null)
+            if (pendingActivatedItem is null || context.MainPage is null)
                 return Task.CompletedTask;
 
             context.PendingActivatedItem = null;
@@ -276,7 +276,7 @@ namespace Storylines
 
         private static async Task ShowUnsavedProgressDialogAsync()
         {
-            await NotificationManager.DisplayUnsavedProgressDialogue(true);
+            await App.GetService<IDialogService>().ShowUnsavedProgressDialogueAsync(true);
         }
 
         private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)

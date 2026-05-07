@@ -74,7 +74,7 @@ namespace Storylines.Views.Controls
         {
             if (d is EmptyStateControl control)
             {
-                var hasAction = control.ActionCommand != null && !string.IsNullOrWhiteSpace(control.ActionText);
+                var hasAction = control.ActionCommand is not null && !string.IsNullOrWhiteSpace(control.ActionText);
                 control.ActionVisibility = hasAction ? Visibility.Visible : Visibility.Collapsed;
             }
         }

@@ -18,7 +18,7 @@ namespace Storylines.Services
 
         public async Task WriteAsync(StorageFile file, string content)
         {
-            if (file == null)
+            if (file is null)
                 throw new ArgumentNullException(nameof(file));
 
             await FileIO.WriteTextAsync(file, content ?? string.Empty);

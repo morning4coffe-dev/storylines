@@ -29,6 +29,7 @@ namespace Storylines.Views.Controls
         private readonly ProjectState _projectState;
         private readonly ResourceLoader _resources;
         private readonly ITextEditorService _textEditor;
+        private readonly IWritingSessionService _writingSession;
         private readonly WindowContext _windowContext;
 
         private readonly ObservableCollection<Character> _dialoguePopupCharacters = new ObservableCollection<Character>();
@@ -79,7 +80,7 @@ namespace Storylines.Views.Controls
         private void ApplyChromeState()
         {
             // Can fire before InitializeComponent wires up the named children.
-            if (textBox == null || gridCommandBarHolder == null) return;
+            if (textBox is null || gridCommandBarHolder is null) return;
 
             bool readOnly = IsReadOnly;
             textBox.IsReadOnly = readOnly;
@@ -119,7 +120,7 @@ namespace Storylines.Views.Controls
 
         private void CenterCaretInViewport()
         {
-            if (!_isTypewriterModeActive || textBoxScrollViewer == null || textBox == null)
+            if (!_isTypewriterModeActive || textBoxScrollViewer is null || textBox is null)
                 return;
 
             textBox.Document.Selection.GetRect(PointOptions.ClientCoordinates, out Rect caretRect, out _);
@@ -161,11 +162,11 @@ namespace Storylines.Views.Controls
             _projectState = App.GetService<ProjectState>();
             _resources = ResourceLoader.GetForViewIndependentUse();
             _textEditor = App.GetService<ITextEditorService>();
+            _writingSession = App.GetService<IWritingSessionService>();
 
             dialoguePopupList.ItemsSource = _dialoguePopupCharacters;
 
             _windowContext.ChapterText = this;
-            MainPage.ChapterText = this;
 
             _events.Subscribe<SettingChangedEvent>(OnSettingChanged);
             _events.Subscribe<ChapterSelectedEvent>(OnChapterSelected);
@@ -218,7 +219,7 @@ namespace Storylines.Views.Controls
 
         private void UserControl_Loaded(object sender, RoutedEventArgs e)
         {
-            TextHighlighter.SelectedTool = TextHighlighter.Tool.Yellow;
+            _windowContext.Highlighter.SelectedTool = TextHighlighter.Tool.Yellow;
             UpdateHighlighterButtonColor();
 
             // Apply saved font preferences
@@ -238,7 +239,7 @@ namespace Storylines.Views.Controls
             if (_textEditor?.IsProgrammaticChangeInProgress == true) return;
 
             var chapter = GetLoadedChapter();
-            if (chapter != null)
+            if (chapter is not null)
             {
                 textBox.Document.GetText(TextGetOptions.FormatRtf, out var txt);
                 var oldText = chapter.Text;
@@ -259,7 +260,7 @@ namespace Storylines.Views.Controls
                     // Record words for streak tracking
                     textBox.Document.GetText(TextGetOptions.None, out var plain);
                     int words = plain.Split(new char[] { ' ', '\r', '\n' }, System.StringSplitOptions.RemoveEmptyEntries).Length;
-                    WritingSessionService.RecordWords(words);
+                    _writingSession.RecordWords(words);
 
                     QueueChapterLocationCapture();
                 }
@@ -268,7 +269,7 @@ namespace Storylines.Views.Controls
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
         {
-            if (GetLoadedChapter() != null)
+            if (GetLoadedChapter() is not null)
             {
                 CurrentMainPage?.UpdateDownBar();
 
@@ -360,7 +361,7 @@ namespace Storylines.Views.Controls
 
         private bool ShouldBlockTypewriterDeletion(KeyRoutedEventArgs e)
         {
-            if (!_isTypewriterModeActive || textBox?.Document?.Selection == null)
+            if (!_isTypewriterModeActive || textBox?.Document?.Selection is null)
                 return false;
 
             var controlState = Microsoft.UI.Input.InputKeyboardSource.GetKeyStateForCurrentThread(VirtualKey.Control);
@@ -480,7 +481,7 @@ namespace Storylines.Views.Controls
         {
             Color accentColor = ThemeSettings.GetCurrentAccentColor();
             SolidColorBrush defaultBrush = textBox.Foreground as SolidColorBrush;
-            if (defaultBrush == null) return;
+            if (defaultBrush is null) return;
             Color defaultColor = defaultBrush.Color;
 
             // Walk through the document and only reset ranges whose foreground
@@ -563,7 +564,7 @@ namespace Storylines.Views.Controls
             UpdateReplaceAllButtonContent();
 
             // Sync toggle button in MainCommandBar
-            if (CurrentCommandBar != null)
+            if (CurrentCommandBar is not null)
                 CurrentCommandBar.searchReplaceButton.IsChecked = true;
 
             if (textBox.Document.Selection.Length > 0)
@@ -723,7 +724,7 @@ namespace Storylines.Views.Controls
             if (string.IsNullOrEmpty(textToFind)) return;
             // Guard against infinite loop: if the replacement contains the search term
             // the loop would never terminate.
-            if (replaceWith != null && ContainsWithOptions(replaceWith, textToFind, GetFindOptions()))
+            if (replaceWith is not null && ContainsWithOptions(replaceWith, textToFind, GetFindOptions()))
             {
                 ReplaceAllSafe(textToFind, replaceWith, GetFindOptions());
                 return;
@@ -787,7 +788,7 @@ namespace Storylines.Views.Controls
             if (string.IsNullOrEmpty(textToFind)) return;
 
             var findOptions = GetFindOptions();
-            bool needsSafeReplace = replaceWith != null && ContainsWithOptions(replaceWith, textToFind, findOptions);
+            bool needsSafeReplace = replaceWith is not null && ContainsWithOptions(replaceWith, textToFind, findOptions);
 
             int replacements = 0;
             int selectedIndex = _textEditor.SelectedChapterIndex;
@@ -865,13 +866,13 @@ namespace Storylines.Views.Controls
             searchReplacePanel.Visibility = Visibility.Collapsed;
 
             // Sync toggle button in MainCommandBar
-            if (CurrentCommandBar != null)
+            if (CurrentCommandBar is not null)
                 CurrentCommandBar.searchReplaceButton.IsChecked = false;
         }
 
         private void UpdateReplaceAllButtonContent()
         {
-            if (replaceAllButton == null)
+            if (replaceAllButton is null)
                 return;
 
             var replaceAllText = _resources.GetString("replaceAllButton.Content");
@@ -927,7 +928,7 @@ namespace Storylines.Views.Controls
             foreach (var token in _recentDialogueCharacterTokens)
             {
                 var character = _projectState.Characters.FirstOrDefault(c => c.Token == token);
-                if (character != null)
+                if (character is not null)
                     _dialoguePopupCharacters.Add(character);
             }
 
@@ -1005,7 +1006,7 @@ namespace Storylines.Views.Controls
 
         private void RememberRecentCharacter(Character character)
         {
-            if (character == null) return;
+            if (character is null) return;
 
             if (_recentDialogueCharacterTokens.Contains(character.Token))
                 _recentDialogueCharacterTokens.Remove(character.Token);
@@ -1018,22 +1019,22 @@ namespace Storylines.Views.Controls
 
         public void DialoguesOnOff(bool enabled)
         {
-            if (CurrentCommandBar != null)
+            if (CurrentCommandBar is not null)
                 CurrentCommandBar.dialoguesEnableButton.IsChecked = enabled;
 
             dialoguesOn = enabled;
 
             // Persist the setting
-            Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueModeEnabled] = enabled;
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.DialogueModeEnabled, enabled);
 
             // Show teaching tip on first activation
             if (enabled && !SettingsValues.dialogueTeachingTipShown)
             {
-                if (CurrentCommandBar != null)
+                if (CurrentCommandBar is not null)
                 {
                     dialogueTeachingTip.Target = CurrentCommandBar.dialoguesEnableButton;
                     dialogueTeachingTip.IsOpen = true;
-                    Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] = true;
+                    App.GetService<IPreferencesService>().Set(SettingsValueStrings.DialogueTeachingTipShown, true);
                 }
             }
         }
@@ -1048,7 +1049,7 @@ namespace Storylines.Views.Controls
 
         private void NoCharactersYet()
         {
-            _ = NotificationManager.DisplayNoCharactersInProjectDialogue();
+            _ = App.GetService<IDialogService>().ShowNoCharactersDialogueAsync();
         }
         #endregion
 
@@ -1098,7 +1099,7 @@ namespace Storylines.Views.Controls
 
         public void BoldChapterTextBox()
         {
-            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection is not null)
             {
                 bool isBold = textBox.Document.Selection.CharacterFormat.Bold == FormatEffect.On;
                 ApplyChromeState();
@@ -1112,7 +1113,7 @@ namespace Storylines.Views.Controls
 
         public void ItalicChapterTextBox()
         {
-            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection is not null)
             {
                 bool isItalic = textBox.Document.Selection.CharacterFormat.Italic == FormatEffect.On;
                 textBox.Document.Selection.CharacterFormat.Italic = isItalic ? FormatEffect.Off : FormatEffect.On;
@@ -1125,7 +1126,7 @@ namespace Storylines.Views.Controls
 
         public void UnderlineChapterTextBox()
         {
-            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection is not null)
             {
                 bool isUnderlined = textBox.Document.Selection.CharacterFormat.Underline != UnderlineType.None;
                 textBox.Document.Selection.CharacterFormat.Underline = isUnderlined ? UnderlineType.None : UnderlineType.Thin;
@@ -1138,7 +1139,7 @@ namespace Storylines.Views.Controls
 
         public void StrikethroughChapterTextBox()
         {
-            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection != null)
+            if (_textEditor.SelectedChapterIndex >= 0 && textBox.Document.Selection is not null)
             {
                 bool isStriked = textBox.Document.Selection.CharacterFormat.Strikethrough == FormatEffect.On;
                 textBox.Document.Selection.CharacterFormat.Strikethrough = isStriked ? FormatEffect.Off : FormatEffect.On;
@@ -1153,7 +1154,7 @@ namespace Storylines.Views.Controls
         {
             UpdateHighlighterButtonColor();
 
-            if (TextHighlighter.SelectedTool == TextHighlighter.Tool.None
+            if (_windowContext.Highlighter.SelectedTool == TextHighlighter.Tool.None
                 || IsReadOnly
                 || _textEditor.SelectedChapterIndex < 0
                 || !TryGetSelection(out var selection))
@@ -1161,28 +1162,28 @@ namespace Storylines.Views.Controls
                 return;
             }
 
-            selection.CharacterFormat.BackgroundColor = TextHighlighter.ChangeColor(TextHighlighter.SelectedTool);
+            selection.CharacterFormat.BackgroundColor = _windowContext.Highlighter.ChangeColor(_windowContext.Highlighter.SelectedTool);
         }
 
         private void UpdateHighlighterButtonColor()
         {
-            if (TextHighlighter.SelectedTool == TextHighlighter.Tool.None)
+            if (_windowContext.Highlighter.SelectedTool == TextHighlighter.Tool.None)
                 return;
 
-            highlighterButtonColor.Background = new SolidColorBrush(TextHighlighter.ChangeColor(TextHighlighter.SelectedTool));
+            highlighterButtonColor.Background = new SolidColorBrush(_windowContext.Highlighter.ChangeColor(_windowContext.Highlighter.SelectedTool));
         }
 
         private bool TryGetSelection(out ITextSelection selection)
         {
             selection = null;
 
-            if (textBox?.Document == null)
+            if (textBox?.Document is null)
                 return false;
 
             try
             {
                 selection = textBox.Document.Selection;
-                return selection != null;
+                return selection is not null;
             }
             catch (UnauthorizedAccessException)
             {
@@ -1232,7 +1233,7 @@ namespace Storylines.Views.Controls
 
         private void OnHighlighterColorButton_Click(object sender, RoutedEventArgs e)
         {
-            TextHighlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
+            _windowContext.Highlighter.SelectedTool = (TextHighlighter.Tool)Enum.Parse(typeof(TextHighlighter.Tool), (sender as Button).Tag.ToString());
 
             MarkTextBackground();
             highlighterButtonFlyout.Hide();
@@ -1253,7 +1254,7 @@ namespace Storylines.Views.Controls
             // don't reset the selection or button states — the user is applying
             // formatting and the state needs to be preserved.
             var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
-            if (focused != null && (IsChildOf(focused, gridCommandBarHolder)
+            if (focused is not null && (IsChildOf(focused, gridCommandBarHolder)
                 || (CurrentCommandBar?.IsFormattingContextElement(focused) ?? false)))
                 return;
 
@@ -1274,7 +1275,7 @@ namespace Storylines.Views.Controls
 
         public bool IsFormattingContextElement(DependencyObject element)
         {
-            if (element == null)
+            if (element is null)
                 return false;
 
             return IsChildOf(element, textBox)
@@ -1288,7 +1289,7 @@ namespace Storylines.Views.Controls
         private static bool IsChildOf(DependencyObject child, DependencyObject parent)
         {
             var current = child;
-            while (current != null)
+            while (current is not null)
             {
                 if (current == parent) return true;
                 current = VisualTreeHelper.GetParent(current);
@@ -1310,11 +1311,11 @@ namespace Storylines.Views.Controls
                 return;
 
             var chapter = GetLoadedChapter();
-            if (chapter == null)
+            if (chapter is null)
                 return;
 
             var selection = textBox?.Document?.Selection;
-            if (selection == null)
+            if (selection is null)
                 return;
 
             chapter.LastCaretPosition = Math.Max(0, selection.StartPosition);
@@ -1368,8 +1369,7 @@ namespace Storylines.Views.Controls
                 int localScrollValue = e.GetCurrentPoint((UIElement)sender).Properties.MouseWheelDelta / 24;
 
                 int fallbackZoomValue = Convert.ToInt32(CurrentMainPage?.ViewModel?.ZoomLevel ?? LayoutConstants.ZoomDefault);
-                int scrollValue = Convert.ToInt32(
-                    Windows.Storage.ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ZoomValue] ?? fallbackZoomValue);
+                int scrollValue = App.GetService<IPreferencesService>().Get<int>(SettingsValueStrings.ZoomValue, fallbackZoomValue);
 
                 if (scrollValue + localScrollValue >= 13 && scrollValue + localScrollValue <= 100)
                 {
@@ -1405,7 +1405,7 @@ namespace Storylines.Views.Controls
 
                 if (e.Key == VirtualKey.V)
                 {
-                    HandlePaste();
+                    _ = HandlePasteAsync();
                     e.Handled = true;
                     return;
                 }
@@ -1414,7 +1414,7 @@ namespace Storylines.Views.Controls
             base.OnKeyDown(e);
         }
 
-        private async void HandlePaste()
+        private async Task HandlePasteAsync()
         {
             try
             {

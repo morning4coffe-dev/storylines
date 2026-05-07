@@ -87,7 +87,7 @@ namespace Storylines.ViewModels
 
         public string GetProjectName()
         {
-            if (_persistence?.CurrentProject != null)
+            if (_persistence?.CurrentProject is not null)
             {
                 if (!string.IsNullOrEmpty(_persistence.CurrentProject.projectName))
                     return _persistence.CurrentProject.projectName;

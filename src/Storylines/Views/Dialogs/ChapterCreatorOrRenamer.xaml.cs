@@ -25,7 +25,7 @@ namespace Storylines.Views.Dialogs
             CloseOnOutsideTap = true;
             _chapterToRename = chapterToRename;
             _doubleTapped = doubleTapped;
-            _currentTask = chapterToRename == null ? DialogTask.Create : DialogTask.Rename;
+            _currentTask = chapterToRename is null ? DialogTask.Create : DialogTask.Rename;
         }
 
         public static void Open(Chapter chapter, bool doubleTap)

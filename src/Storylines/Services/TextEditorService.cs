@@ -32,7 +32,7 @@ namespace Storylines.Services
         public string GetText(TextFormat format)
         {
             var textBox = _windowContext.ChapterText?.textBox;
-            if (textBox == null) return string.Empty;
+            if (textBox is null) return string.Empty;
 
             var options = format == TextFormat.Rtf
                 ? Microsoft.UI.Text.TextGetOptions.FormatRtf
@@ -46,7 +46,7 @@ namespace Storylines.Services
         {
             var chapterText = _windowContext.ChapterText;
             var textBox = chapterText?.textBox;
-            if (textBox == null) return;
+            if (textBox is null) return;
 
             var options = format == TextFormat.Rtf
                 ? Microsoft.UI.Text.TextSetOptions.FormatRtf
@@ -77,9 +77,9 @@ namespace Storylines.Services
                 ?? -1;
             set
             {
-                if (_windowContext.ChapterList?.ViewModel != null)
+                if (_windowContext.ChapterList?.ViewModel is not null)
                     _windowContext.ChapterList.ViewModel.SelectedIndex = value;
-                else if (_windowContext.ChapterList?.listView != null)
+                else if (_windowContext.ChapterList?.listView is not null)
                     _windowContext.ChapterList.listView.SelectedIndex = value;
             }
         }
@@ -99,11 +99,11 @@ namespace Storylines.Services
 
         public void LoadChapterContent(Chapter chapter)
         {
-            if (chapter == null) return;
+            if (chapter is null) return;
 
             var chapterText = _windowContext.ChapterText;
             var textBox = chapterText?.textBox;
-            if (textBox == null) return;
+            if (textBox is null) return;
 
             ApplyEditorText(chapterText, chapter, Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text ?? string.Empty, restoreChapterLocation: true);
         }
@@ -111,7 +111,7 @@ namespace Storylines.Services
         private void ApplyEditorText(ChapterTextBox chapterText, Chapter chapter, TextSetOptions options, string sourceText, bool restoreChapterLocation)
         {
             var textBox = chapterText?.textBox;
-            if (textBox == null)
+            if (textBox is null)
                 return;
 
             Interlocked.Increment(ref _programmaticChangeDepth);
@@ -137,7 +137,7 @@ namespace Storylines.Services
 
         private static void SyncLoadedChapterText(Chapter chapter, MyRichEditBox textBox, string sourceText)
         {
-            if (chapter == null || textBox == null)
+            if (chapter is null || textBox is null)
                 return;
 
             // RichEditBox normalizes paragraph markers as it loads content.
@@ -170,7 +170,7 @@ namespace Storylines.Services
         {
             var selectedIndex = SelectedChapterIndex;
 
-            if (_projectState?.Chapters == null || selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
+            if (_projectState?.Chapters is null || selectedIndex < 0 || selectedIndex >= _projectState.Chapters.Count)
                 return null;
 
             return _projectState.Chapters[selectedIndex];
@@ -179,7 +179,7 @@ namespace Storylines.Services
         private static void RestoreChapterLocation(ChapterTextBox chapterText, Chapter chapter)
         {
             var textBox = chapterText?.textBox;
-            if (textBox == null || chapter == null)
+            if (textBox is null || chapter is null)
                 return;
 
             var range = textBox.Document.GetRange(0, TextConstants.MaxUnitCount);
@@ -187,7 +187,7 @@ namespace Storylines.Services
             textBox.Document.Selection.SetRange(caretPosition, caretPosition);
 
             var scrollViewer = chapterText.textBoxScrollViewer;
-            if (scrollViewer == null)
+            if (scrollViewer is null)
                 return;
 
             scrollViewer.UpdateLayout();
@@ -198,10 +198,10 @@ namespace Storylines.Services
 
         public void SaveChapterContent(Chapter chapter)
         {
-            if (chapter == null) return;
+            if (chapter is null) return;
 
             var textBox = _windowContext.ChapterText?.textBox;
-            if (textBox == null) return;
+            if (textBox is null) return;
 
             textBox.Document.GetText(Microsoft.UI.Text.TextGetOptions.FormatRtf, out string rtf);
             chapter.Text = rtf;
@@ -213,10 +213,10 @@ namespace Storylines.Services
                 return;
 
             var textBox = _windowContext.ChapterText?.textBox;
-            if (textBox == null) return;
+            if (textBox is null) return;
 
             var selection = textBox.Document.Selection;
-            if (selection == null) return;
+            if (selection is null) return;
 
             // Replace the current selection (or insert at caret if collapsed) with the new text.
             selection.SetText(Microsoft.UI.Text.TextSetOptions.None, text);

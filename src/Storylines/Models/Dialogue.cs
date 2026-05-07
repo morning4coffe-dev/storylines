@@ -115,7 +115,7 @@ namespace Storylines.Models
         {
             var dialogues = new List<Dialogue>();
 
-            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+            if (string.IsNullOrWhiteSpace(txt) || characterNames is null || characterNames.Count == 0)
                 return dialogues;
 
             var normalizedText = (txt ?? string.Empty).Replace("\r\n", "\n");
@@ -176,7 +176,7 @@ namespace Storylines.Models
         {
             var dialogues = new List<Dialogue>();
 
-            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+            if (string.IsNullOrWhiteSpace(txt) || characterNames is null || characterNames.Count == 0)
                 return dialogues;
 
             var nameLookup = characterNames.ToDictionary(name => name.ToUpperInvariant(), name => name, StringComparer.OrdinalIgnoreCase);

@@ -35,7 +35,7 @@ namespace Storylines.Views.Dialogs
         {
             if (TimeTravelSystem.unSavedProgress)
             {
-                _ = NotificationManager.DisplayUnsavedProgressDialogue(false);
+                _ = App.GetService<IDialogService>().ShowUnsavedProgressDialogueAsync(false);
                 return ContentDialogResult.None;
             }
 
@@ -120,7 +120,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnOpenRecentProject_RightTapped(object sender, RightTappedRoutedEventArgs e)
         {
-            if ((sender as Button) != null)
+            if ((sender as Button) is not null)
             {
                 projectsHolderFlyout.ShowAt((Button)sender, e.GetPosition((Button)sender));
                 projectToRemove = (Button)sender;
@@ -134,7 +134,7 @@ namespace Storylines.Views.Dialogs
 
         private void OnProjectRemove_Click(object sender, RoutedEventArgs e)
         {
-            if (projectToRemove != null)
+            if (projectToRemove is not null)
             {
                 ProjectFile.Remove(projectToRemove.Tag.ToString());
 

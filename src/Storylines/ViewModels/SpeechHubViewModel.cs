@@ -81,7 +81,7 @@ namespace Storylines.ViewModels
 
         private void OnDictationResult(DictationResult result)
         {
-            if (result == null || string.IsNullOrEmpty(result.Text))
+            if (result is null || string.IsNullOrEmpty(result.Text))
                 return;
 
             // Append a trailing space so consecutive utterances do not run together.

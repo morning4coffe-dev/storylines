@@ -67,7 +67,7 @@ namespace Storylines.Models
 
         public string TagsText
         {
-            get => _tags == null || _tags.Count == 0 ? string.Empty : string.Join(", ", _tags);
+            get => _tags is null || _tags.Count == 0 ? string.Empty : string.Join(", ", _tags);
             set
             {
                 Tags = (value ?? string.Empty)

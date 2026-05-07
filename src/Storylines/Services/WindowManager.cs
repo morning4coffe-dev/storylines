@@ -53,7 +53,7 @@ namespace Storylines.Services
         public IDisposable Enter(WindowContext context)
         {
             var previous = _ambientContext.Value;
-            if (context != null)
+            if (context is not null)
                 SetCurrent(context);
             _ambientContext.Value = context;
             return new ContextScope(this, previous);
@@ -61,7 +61,7 @@ namespace Storylines.Services
 
         public async Task RunAsync(WindowContext context, Func<Task> action)
         {
-            if (action == null)
+            if (action is null)
                 return;
 
             using (Enter(context))
@@ -72,13 +72,13 @@ namespace Storylines.Services
 
         public void SetCurrent(WindowContext context)
         {
-            if (context != null)
+            if (context is not null)
                 _current = context;
         }
 
         public void Close(WindowContext context)
         {
-            if (context?.Window == null)
+            if (context?.Window is null)
                 return;
 
             using (Enter(context))
@@ -89,7 +89,7 @@ namespace Storylines.Services
 
         internal void Remove(WindowContext context)
         {
-            if (context == null)
+            if (context is null)
                 return;
 
             _windows.Remove(context);

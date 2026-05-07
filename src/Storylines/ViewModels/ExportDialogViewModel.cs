@@ -165,7 +165,7 @@ namespace Storylines.ViewModels
             }
 
             var capability = _exportService?.GetCapability(target);
-            if (capability == null)
+            if (capability is null)
             {
                 ResetTargetState();
                 return;
@@ -206,7 +206,7 @@ namespace Storylines.ViewModels
             try
             {
                 var folder = await _filePickerService.PickFolderAsync();
-                if (folder == null)
+                if (folder is null)
                     return;
 
                 _selectedFolder = folder;
@@ -227,7 +227,7 @@ namespace Storylines.ViewModels
 
         public async Task<bool> SubmitAsync()
         {
-            if (!CanSubmit || SelectedFormat == null)
+            if (!CanSubmit || SelectedFormat is null)
                 return false;
 
             IsSubmitting = true;
@@ -395,8 +395,8 @@ namespace Storylines.ViewModels
         private void RecalculateState()
         {
             var hasValidName = !string.IsNullOrWhiteSpace(FileName) && SettingsValues.IsStringSaveable(FileName);
-            var hasFolder = _selectedFolder != null;
-            var hasFormat = SelectedFormat != null;
+            var hasFolder = _selectedFolder is not null;
+            var hasFormat = SelectedFormat is not null;
             var hasTarget = SelectedTarget != ExportTarget.None;
             var hasPrimarySelection = PrimarySelectionVisibility != Visibility.Visible || PrimarySelections.Any(item => item.IsSelected);
             var hasDialogueCharacterSelection = DialogueCharacterSelectionVisibility != Visibility.Visible || DialogueCharacterSelections.Any(item => item.IsSelected);
@@ -417,7 +417,7 @@ namespace Storylines.ViewModels
             var fileName = FileName;
             var extension = SelectedFormat?.Definition?.DefaultExtension;
 
-            if (folder == null || string.IsNullOrWhiteSpace(fileName) || string.IsNullOrWhiteSpace(extension))
+            if (folder is null || string.IsNullOrWhiteSpace(fileName) || string.IsNullOrWhiteSpace(extension))
             {
                 NameCollisionVisibility = Visibility.Collapsed;
                 return;
@@ -429,7 +429,7 @@ namespace Storylines.ViewModels
                 if (requestVersion != _nameCollisionCheckVersion)
                     return;
 
-                NameCollisionVisibility = file != null ? Visibility.Visible : Visibility.Collapsed;
+                NameCollisionVisibility = file is not null ? Visibility.Visible : Visibility.Collapsed;
             }
             catch (Exception ex)
             {
@@ -470,7 +470,7 @@ namespace Storylines.ViewModels
 
         private string BuildDefaultFileName()
         {
-            var projectDisplayName = _persistence?.CurrentProject?.file != null
+            var projectDisplayName = _persistence?.CurrentProject?.file is not null
                 ? _persistence.CurrentProject.file.DisplayName
                 : "my-story";
 

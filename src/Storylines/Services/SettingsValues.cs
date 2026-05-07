@@ -1,15 +1,17 @@
 using CommunityToolkit.WinUI.Helpers;
+using Storylines.Services.Interfaces;
 using System;
 using System.Linq;
 using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
-using Windows.Storage;
 using Windows.UI;
 
 namespace Storylines.Services
 {
     public static class SettingsValues
     {
+        private static IPreferencesService Preferences => App.GetService<IPreferencesService>();
+
         public enum SelectedTheme { Light, Dark, System };
         public static SelectedTheme selectedTheme = SelectedTheme.System;
 
@@ -20,7 +22,7 @@ namespace Storylines.Services
             set
             {
                 _selectedAccent = value;
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppAccent] = (int)selectedAccent;
+                Preferences.Set(SettingsValueStrings.AppAccent, (int)selectedAccent);
             }
             get
             {
@@ -35,7 +37,7 @@ namespace Storylines.Services
             set
             {
                 _customAccentColor = value;
-                ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppCustomAccent] = customAccentColor.ToHex();
+                Preferences.Set(SettingsValueStrings.AppCustomAccent, customAccentColor.ToHex());
             }
             get
             {
@@ -49,45 +51,43 @@ namespace Storylines.Services
         {
             get
             {
-                var ch = ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName] == null
+                var ch = Preferences.Contains(SettingsValueStrings.ChapterName) == false
                     ? ResourceLoader.GetForViewIndependentUse().GetString("chapterName")
-                    : ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ChapterName].ToString();
+                    : Preferences.Get<string>(SettingsValueStrings.ChapterName);
                 return ch;
             }
         }
 
-        public static bool exitDiagEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ExitDialogueOn] ?? true);
+        public static bool exitDiagEnabled => Preferences.Get(SettingsValueStrings.ExitDialogueOn, true);
 
-        public static bool autosaveEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveEnabled] ?? false);
+        public static bool autosaveEnabled => Preferences.Get(SettingsValueStrings.AutosaveEnabled, false);
 
-        public static double autosaveInterval => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AutosaveInterval] ?? 2);
+        public static double autosaveInterval => Preferences.Get(SettingsValueStrings.AutosaveInterval, 2.0);
 
-        public static bool whiteTextBackground => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false);
-        public static bool newChapterShortcut => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] ?? true);
-        public static string language => string.IsNullOrEmpty((string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage]) ? "" : (string)ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.UserLanguage];
+        public static bool whiteTextBackground => Preferences.Get(SettingsValueStrings.TextBoxSolidBackground, false);
+        public static bool newChapterShortcut => Preferences.Get(SettingsValueStrings.OnPageDownNewChapterEnabled, true);
+        public static string language => Preferences.Get<string>(SettingsValueStrings.UserLanguage) ?? "";
 
-        public static int dailyWordGoal => Convert.ToInt32(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DailyWordGoal] ?? 500);
+        public static int dailyWordGoal => Preferences.Get(SettingsValueStrings.DailyWordGoal, 500);
 
-        public static string editorFontFamily => (ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontFamily] as string) ?? "Segoe UI";
-        public static double editorFontSize => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorFontSize] ?? 14.0);
-        public static double editorLineSpacing => Convert.ToDouble(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.EditorLineSpacing] ?? 1.2);
+        public static string editorFontFamily => Preferences.Get(SettingsValueStrings.EditorFontFamily, "Segoe UI");
+        public static double editorFontSize => Preferences.Get(SettingsValueStrings.EditorFontSize, 14.0);
+        public static double editorLineSpacing => Preferences.Get(SettingsValueStrings.EditorLineSpacing, 1.2);
 
-        public static bool experimentalFeaturesEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] ?? false);
+        public static bool experimentalFeaturesEnabled => Preferences.Get(SettingsValueStrings.ExperimentalFeaturesEnabled, false);
 
-        public static bool dialogueModeEnabled => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueModeEnabled] ?? false);
-        public static bool dialogueTeachingTipShown => Convert.ToBoolean(ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.DialogueTeachingTipShown] ?? false);
+        public static bool dialogueModeEnabled => Preferences.Get(SettingsValueStrings.DialogueModeEnabled, false);
+        public static bool dialogueTeachingTipShown => Preferences.Get(SettingsValueStrings.DialogueTeachingTipShown, false);
 
         public static void LoadSettings()
         {
-            ApplicationDataContainer localSettings = ApplicationData.Current.LocalSettings;
-
-            ThemeSettings.ChangeTheme(Convert.ToInt32(localSettings.Values[SettingsValueStrings.AppTheme] ?? 2), ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
-            selectedAccent = (SelectedAccent)(localSettings.Values[SettingsValueStrings.AppAccent] ?? 1);
-            customAccentColor = CommunityToolkit.WinUI.Helpers.ColorHelper.ToColor((ApplicationData.Current.LocalSettings.Values[SettingsValueStrings.AppCustomAccent] ?? appAccentColor.ToHex()).ToString());
+            ThemeSettings.ChangeTheme(Preferences.Get(SettingsValueStrings.AppTheme, 2), ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
+            selectedAccent = (SelectedAccent)Preferences.Get(SettingsValueStrings.AppAccent, 1);
+            customAccentColor = CommunityToolkit.WinUI.Helpers.ColorHelper.ToColor(Preferences.Get(SettingsValueStrings.AppCustomAccent, appAccentColor.ToHex()));
             App.GetService<EventAggregator>().Publish(new SettingChangedEvent
             {
                 SettingKey = SettingsValueStrings.TextBoxSolidBackground,
-                Value = Convert.ToBoolean(localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] ?? false)
+                Value = Preferences.Get(SettingsValueStrings.TextBoxSolidBackground, false)
             });
         }
 
@@ -187,4 +187,3 @@ namespace Storylines.Services
         public static string DialogueTeachingTipShown { get; } = "DialogueTeachingTipShown";
     }
 }
-

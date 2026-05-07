@@ -33,7 +33,7 @@ namespace Storylines.Services
 
         public async Task<StorageFile> PickSaveFileAsync(SaveFilePickerRequest request)
         {
-            if (request?.FileExtensions == null || request.FileExtensions.Count == 0)
+            if (request?.FileExtensions is null || request.FileExtensions.Count == 0)
                 return null;
 
             var picker = new FileSavePicker
@@ -55,7 +55,7 @@ namespace Storylines.Services
 
         public async Task<StorageFile> PickOpenFileAsync(IReadOnlyList<string> fileExtensions)
         {
-            if (fileExtensions == null || fileExtensions.Count == 0)
+            if (fileExtensions is null || fileExtensions.Count == 0)
                 return null;
 
             var picker = new FileOpenPicker

@@ -49,7 +49,7 @@ namespace Storylines.Views.Dialogs
             var resourceLoader = ResourceLoader.GetForViewIndependentUse();
 
             var textBox = WindowContext.ChapterText?.textBox;
-            if (textBox == null)
+            if (textBox is null)
                 return;
 
             textBox.Document.GetText(TextGetOptions.None, out string txt);
@@ -88,7 +88,7 @@ namespace Storylines.Views.Dialogs
                 .ThenBy(m => m.Key);
             foreach (IGrouping<string, Match> item in wordFrequency)
             {
-                if (item != null)
+                if (item is not null)
                 {
                     stringBuilder.AppendLine($"{item.Key}: {item.Count()}");
                 }
@@ -105,7 +105,7 @@ namespace Storylines.Views.Dialogs
             chapterChartCanvas.Children.Clear();
 
             var chapters = ProjectState.Chapters;
-            if (chapters == null || chapters.Count == 0)
+            if (chapters is null || chapters.Count == 0)
                 return;
 
             // Calculate word counts per chapter

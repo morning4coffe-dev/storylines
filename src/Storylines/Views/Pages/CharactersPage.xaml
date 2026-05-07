@@ -179,6 +179,7 @@
                       Grid.Row="3"
                       Margin="-5,0"
                       x:FieldModifier="public"
+                      IsEnabled="{x:Bind ViewModel.IsListEnabled, Mode=OneWay}"
                       ItemsSource="{x:Bind FilteredCharacters, Mode=OneWay}"
                       SelectionChanged="OnListDetailsView_SelectionChanged">
                 <ListView.ItemTemplate>
@@ -348,10 +349,12 @@
             <AppBarToggleButton x:Name="editButton"
                                 x:FieldModifier="public"
                                 Click="OnEditButton_Click"
-                                IsChecked="{Binding isEditModeEnabled}"
-                                IsEnabled="False">
+                                IsChecked="{x:Bind ViewModel.IsEditMode, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsCharacterSelected, Mode=OneWay}"
+                                Label="{x:Bind ViewModel.EditButtonLabel, Mode=OneWay}">
                 <AppBarToggleButton.Icon>
-                    <FontIcon x:Name="editButtonIcon" />
+                    <FontIcon x:Name="editButtonIcon"
+                              Glyph="{x:Bind ViewModel.EditButtonGlyph, Mode=OneWay}" />
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
             <AppBarElementContainer x:Name="cancelButton"
@@ -396,8 +399,9 @@
                     </Grid.ColumnDefinitions>
                     <PersonPicture x:Name="profilePicture"
                                    Height="60"
-                                   DisplayName="{Binding ElementName=nameBox, Path=Text}"
-                                   IsTapEnabled="False"
+                                   DisplayName="{x:Bind ViewModel.NameText, Mode=OneWay}"
+                                   IsTapEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                                   ProfilePicture="{x:Bind ViewModel.ProfilePicture, Mode=OneWay}"
                                    Tapped="OnProfilePicture_Tapped" />
                     <Button Width="60"
                             Height="60"
@@ -461,7 +465,8 @@
                              Padding="12,7"
                              HorizontalAlignment="Stretch"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.NameText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -476,7 +481,8 @@
                              Height="38"
                              Padding="12,7"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.RoleText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                     <TextBox x:Name="ageBox"
@@ -485,7 +491,8 @@
                              Height="38"
                              Padding="12,7"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.AgeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -494,7 +501,7 @@
                          MinHeight="38"
                          Padding="4,4"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
                          TokenDelimiter=","
                          TokenItemAdded="OnTraitsTokenItem_Added"
                          TokenItemRemoving="OnTraitsTokenItem_Removing"
@@ -503,7 +510,8 @@
                          x:Uid="characterAppearance"
                          MinHeight="90"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                         Text="{x:Bind ViewModel.AppearanceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged"
                          TextWrapping="Wrap" />
@@ -511,7 +519,8 @@
                          x:Uid="ownDescription"
                          MinHeight="150"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                         Text="{x:Bind ViewModel.DescriptionText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged"
                          TextWrapping="Wrap" />
@@ -527,7 +536,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="4"
-                                IsEnabled="False"
+                                IsEnabled="{x:Bind ViewModel.IsCharacterSelected, Mode=OneWay}"
                                 Click="OnAddRelationship_Click">
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <FontIcon Glyph="&#xE710;" FontSize="12" />

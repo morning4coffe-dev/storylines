@@ -25,7 +25,7 @@ namespace Storylines.Services
         {
             if (action is null) throw new ArgumentNullException(nameof(action));
 
-            if (_dispatcherQueue == null || _dispatcherQueue.HasThreadAccess)
+            if (_dispatcherQueue is null || _dispatcherQueue.HasThreadAccess)
             {
                 action();
                 return Task.CompletedTask;
@@ -51,7 +51,7 @@ namespace Storylines.Services
         {
             if (asyncAction is null) throw new ArgumentNullException(nameof(asyncAction));
 
-            if (_dispatcherQueue == null || _dispatcherQueue.HasThreadAccess)
+            if (_dispatcherQueue is null || _dispatcherQueue.HasThreadAccess)
                 return asyncAction();
 
             var tcs = new TaskCompletionSource<object>();
