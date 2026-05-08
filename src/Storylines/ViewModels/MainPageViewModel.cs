@@ -1,5 +1,6 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
+using Storylines.Constants;
 using Storylines.Helpers;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
@@ -15,6 +16,8 @@ namespace Storylines.ViewModels
 {
     public partial class MainPageViewModel : ObservableObject
     {
+        private static readonly TimeSpan WordGoalNotificationDuration = TimeSpan.FromSeconds(LayoutConstants.NotificationDismissSeconds - 4);
+
         private readonly ProjectState _projectState;
         private readonly IDialogService _dialogs;
         private readonly ITextEditorService _textEditor;
@@ -279,10 +282,13 @@ namespace Storylines.ViewModels
             if (progress >= 100 && !WordGoalCelebrated)
             {
                 WordGoalCelebrated = true;
-                _notifications.ShowNotification(
-                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
-                    _resources.GetString("wordGoalReachedTitle"),
-                    string.Format(_resources.GetString("wordGoalReachedMessage"), chapter.Name));
+                _notifications.ShowNotification(new NotificationRequest
+                {
+                    Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Success,
+                    Title = _resources.GetString("wordGoalReachedTitle"),
+                    Message = string.Format(_resources.GetString("wordGoalReachedMessage"), chapter.Name),
+                    Duration = WordGoalNotificationDuration
+                });
             }
             else if (progress < 100)
             {

@@ -72,6 +72,24 @@
   <data name="dictation.Label" xml:space="preserve">
     <value>Голосовой ввод</value>
   </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>Доступ к микрофону запрещен.</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>Доступ к микрофону запрещен</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>Разрешите доступ к микрофону в параметрах Windows, чтобы использовать диктовку.</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>Диктовка недоступна на этом устройстве.</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>Ошибка диктовки.</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>Слушаю…</value>
+  </data>
   <data name="edit.Label" xml:space="preserve">
     <value>Изменить</value>
   </data>
@@ -656,7 +674,7 @@
     <value>Расчетное время чтения</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Статистика проекта</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Аналитика</value>
@@ -1159,6 +1177,12 @@
   <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Режим только чтения</value>
   </data>
+  <data name="typewriterModeButton.Label" xml:space="preserve">
+    <value>Печатная машинка</value>
+  </data>
+  <data name="typewriterModeButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Режим машинки - курсор остается по центру (Ctrl+Shift+W)</value>
+  </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Выберите режим письма</value>
   </data>
@@ -1353,6 +1377,8 @@
   <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
     <value>Закрыть</value>
   </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>Нечего читать вслух</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>Сначала введите или выделите текст.</value></data>
 </root>
 
 

@@ -30,10 +30,10 @@ namespace Storylines.Views.Controls
 
         public ChaptersList()
         {
-            InitializeComponent();
-
             _windowContext = App.GetService<WindowContext>();
             _viewModel = App.GetService<ChaptersListViewModel>();
+
+            InitializeComponent();
 
             _windowContext.ChapterList = this;
         }

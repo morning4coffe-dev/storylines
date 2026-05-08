@@ -200,17 +200,21 @@ namespace Storylines.Helpers
                             switch (e.Key)
                             {
                                 case Windows.System.VirtualKey.Q:
-                                    if (CharactersPage.isAddEnabled)
-                                        CharactersPage.Add(); break;
+                                    if (CharactersPage?.listView?.IsEnabled == true)
+                                        CharactersPage.Add();
+                                    break;
                                 case Windows.System.VirtualKey.Delete:
-                                    if (CharactersPage.isRemoveEnabled)
-                                        CharactersPage.Remove(); break;
+                                    if (CharactersPage?.listView?.SelectedItem is not null)
+                                        CharactersPage.Remove();
+                                    break;
                                 case Windows.System.VirtualKey.E:
-                                    if (CharactersPage.exportButton.IsEnabled)
-                                        App.GetService<IDialogService>().OpenExportDialogue(ExportTarget.Characters); break;
+                                    if (CharactersPage?.exportButton?.IsEnabled == true)
+                                        App.GetService<IDialogService>().OpenExportDialogue(ExportTarget.Characters);
+                                    break;
                                 case Windows.System.VirtualKey.N:
-                                    if (CharactersPage.editButton.IsEnabled)
-                                        CharactersPage.EnableEditMode(!(bool)CharactersPage.editButton.IsChecked); break;
+                                    if (CharactersPage?.editButton?.IsEnabled == true)
+                                        CharactersPage.EnableEditMode(CharactersPage.editButton.IsChecked != true);
+                                    break;
 
                                 case Windows.System.VirtualKey.Z:
                                 {

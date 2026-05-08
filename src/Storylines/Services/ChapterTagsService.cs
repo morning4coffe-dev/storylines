@@ -42,12 +42,11 @@ namespace Storylines.Services
             if (string.IsNullOrWhiteSpace(tag))
                 return;
 
+            var normalizedTag = tag.Trim();
             var presets = GetPresets();
-            if (!presets.Contains(tag, StringComparer.CurrentCultureIgnoreCase))
-            {
-                presets.Add(tag.Trim());
-                SavePresets(presets);
-            }
+            presets.RemoveAll(preset => string.Equals(preset, normalizedTag, StringComparison.CurrentCultureIgnoreCase));
+            presets.Insert(0, normalizedTag);
+            SavePresets(presets);
         }
 
         public static void RemovePreset(string tag)

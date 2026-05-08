@@ -90,9 +90,16 @@
         <Setter Property="Grid.ColumnSpan" Value="2"/>
     </Style>
 
+    <Style x:Key="DialogButtonStyle" TargetType="Button">
+        <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+
     <Style TargetType="dialogs:StorylinesContentDialog">
         <Setter Property="CornerRadius" Value="8" />
         <Setter Property="Background" Value="{ThemeResource DialogueAcrylicBackground}" />
+        <Setter Property="PrimaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="SecondaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="CloseButtonStyle" Value="{StaticResource DialogButtonStyle}" />
     </Style>
     
     <Style x:Key="CharactersTextBoxesStyle" TargetType="TextBox">

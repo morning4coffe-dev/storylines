@@ -35,17 +35,18 @@ namespace Storylines
 
         public AppView()
         {
-            InitializeComponent();
             _windowContext = App.GetService<WindowContext>();
-            _windowContext.AppView = this;
-            App.GetService<IWindowManager>().SetCurrent(_windowContext);
-
             _viewModel = App.GetService<AppViewModel>();
             _events = App.GetService<EventAggregator>();
             _navigation = App.GetService<INavigationService>();
             _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
             _textEditor = App.GetService<ITextEditorService>();
+
+            InitializeComponent();
+
+            _windowContext.AppView = this;
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
 
             // Wire NavigationService to the Frame
             _navigation.Initialize(pagesView);
@@ -66,7 +67,7 @@ namespace Storylines
 
             // Route INotificationService events to UI — decouples service from AppView.current refs.
             _events.Subscribe<InAppNotificationEvent>(e =>
-                DisplayInAppNotification(e.Severity, e.Title, e.LongText));
+                DisplayInAppNotification(e.Severity, e.Title, e.Message, e.Duration));
 
             _events.Subscribe<ProgressBarEvent>(e =>
             {
@@ -101,50 +102,13 @@ namespace Storylines
             ViewModel.UpdateTitleBar();
         }
 
-        private DispatcherTimer _inAppNotificationTimer;
-
-        private void DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity severity, string text, string longText)
+        private void DisplayInAppNotification(Microsoft.UI.Xaml.Controls.InfoBarSeverity severity, string text, string message, TimeSpan? duration)
         {
-            alertNotificationInfoBar.IsOpen = true;
-            alertNotificationInfoBar.Visibility = Visibility.Visible;
-            alertNotificationInfoBar.Severity = severity;
-            alertNotificationInfoBar.Title = text;
-            alertNotificationInfoBar.RequestedTheme = ActualTheme;
-
-            if (string.IsNullOrWhiteSpace(longText))
-                alertNotificationInfoBarTextStack.Visibility = Visibility.Collapsed;
-            else
-            {
-                alertNotificationInfoBarTextStack.Visibility = Visibility.Visible;
-                alertNotificationInfoBarText.Text = longText;
-            }
-
-            if (_inAppNotificationTimer is not null)
-            {
-                _inAppNotificationTimer.Tick -= InAppNotificationTimer_Tick;
-                _inAppNotificationTimer.Stop();
-            }
-
-            _inAppNotificationTimer = new DispatcherTimer();
-            _inAppNotificationTimer.Tick += InAppNotificationTimer_Tick;
-            _inAppNotificationTimer.Interval = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds);
-            _inAppNotificationTimer.Start();
-
-            NotificationManager.DisplayBadgeNotification("attention");
-        }
-
-        private void InAppNotificationTimer_Tick(object sender, object e)
-        {
-            if (_inAppNotificationTimer is not null)
-            {
-                _inAppNotificationTimer.Stop();
-                _inAppNotificationTimer.Tick -= InAppNotificationTimer_Tick;
-                _inAppNotificationTimer = null;
-            }
-
-            alertNotificationInfoBar.Visibility = Visibility.Collapsed;
-            alertNotificationInfoBar.IsOpen = false;
-            NotificationManager.ClearBadgeNotification();
+            notificationHost.ShowNotification(
+                severity,
+                text,
+                message,
+                duration ?? TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds));
         }
 
         // ── Global keyboard accelerator handlers ──────────────────────────────
@@ -200,7 +164,9 @@ namespace Storylines
         private void OnReadAloudAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
         {
             args.Handled = true;
-            Views.Pages.MainPage.CommandBar.ReadAloud();
+            var speechHub = App.GetService<SpeechHubViewModel>();
+            if (speechHub.StartReadAloudCommand.CanExecute(null))
+                speechHub.StartReadAloudCommand.Execute(null);
         }
 
         private void OnDictationAccelerator(Microsoft.UI.Xaml.Input.KeyboardAccelerator sender, Microsoft.UI.Xaml.Input.KeyboardAcceleratorInvokedEventArgs args)
@@ -241,10 +207,11 @@ namespace Storylines
         private void OnRateNotNow_Click(object sender, RoutedEventArgs e)
         {
             App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
-            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NotYet);
+            var prefs = App.GetService<IPreferencesService>();
+            prefs.Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
-            NotificationManager.ClearBadgeNotification();
+            MicrosoftStoreFunctions.StopReviewTimer();
         }
 
         private void OnRateNeverShowAgain_Click(object sender, RoutedEventArgs e)
@@ -253,23 +220,18 @@ namespace Storylines
             App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NeverShowAgain);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
-            NotificationManager.ClearBadgeNotification();
         }
 
         private void OnRateNotNow_CloseButtonClick(InfoBar sender, object args)
         {
             App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
-            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NotYet);
+            var prefs = App.GetService<IPreferencesService>();
+            prefs.Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
             reviewRequestInfoBar.Visibility = Visibility.Collapsed;
             reviewRequestInfoBar.IsOpen = false;
-            NotificationManager.ClearBadgeNotification();
+            MicrosoftStoreFunctions.StopReviewTimer();
         }
        
-        private void OnAlertNotificationInfoBar_CloseButtonClick(InfoBar sender, object args)
-        {
-            alertNotificationInfoBar.Visibility = Visibility.Collapsed;
-        }
-
         private void OnUpdateAvailablePrimaryButton_Click(object sender, RoutedEventArgs e)
         {
             _ = MicrosoftStoreFunctions.InstallAvailableUpdatesAsync();
@@ -378,6 +340,9 @@ namespace Storylines
             {
                 NavigationTarget.Settings => Pages.Settings,
                 NavigationTarget.Characters => Pages.Characters,
+#if PRIVATE_PLUGINS
+                NavigationTarget.BranchingDialogue => Pages.BranchingDialogue,
+#endif
                 _ => Pages.MainPage,
             };
 

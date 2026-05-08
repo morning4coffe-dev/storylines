@@ -1,5 +1,6 @@
 using Storylines.Models;
 using Storylines.Services.Interfaces;
+using System;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 
@@ -39,9 +40,12 @@ namespace Storylines.Services.Persistence
 
         protected void ShowLoadErrorNotification()
         {
-            Notifications.ShowNotification(
-                Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"));
+            Notifications.ShowNotification(new NotificationRequest
+            {
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
+                Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
+            });
         }
     }
 }

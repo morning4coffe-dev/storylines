@@ -24,11 +24,12 @@ namespace Storylines.Views.Dialogs
 
         public GlobalSearchDialogue(string initialQuery = null)
         {
-            InitializeComponent();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             _windowContext = App.GetService<WindowContext>();
             _initialQuery = initialQuery?.Trim();
+
+            InitializeComponent();
 
             var resources = ResourceLoader.GetForViewIndependentUse();
             Title = resources.GetString("shortcutSearch");

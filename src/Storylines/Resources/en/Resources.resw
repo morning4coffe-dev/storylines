@@ -690,6 +690,24 @@
   <data name="dictationLanguageSetting.Text" xml:space="preserve">
     <value>Dictation language</value>
   </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>Microphone access denied.</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>Microphone access denied</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>Grant microphone access in Windows Settings to use dictation.</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>Dictation is not available on this device.</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>Dictation error.</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>Listening…</value>
+  </data>
   <data name="ReadMode.Label" xml:space="preserve">
     <value>Read mode</value>
   </data>
@@ -1619,4 +1637,6 @@
   <data name="chapterTagsSavedPresetsEmpty.Text" xml:space="preserve">
     <value>No saved presets yet.</value>
   </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>Nothing to read aloud</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>Write or select some text first.</value></data>
 </root>

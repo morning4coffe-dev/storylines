@@ -134,6 +134,30 @@
           <source>Dictation</source>
           <target state="translated">Diktování</target>
         </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">Přístup k mikrofonu byl odepřen.</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">Přístup k mikrofonu byl odepřen</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">Povolte přístup k mikrofonu v Nastavení Windows, chcete-li používat diktování.</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">Diktování není na tomto zařízení k dispozici.</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">Chyba diktování.</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">Poslouchám…</target>
+        </trans-unit>
         <trans-unit id="edit.Label" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="final">Upravit</target>

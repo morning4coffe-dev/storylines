@@ -65,7 +65,8 @@ namespace Storylines.Services
     {
         public Microsoft.UI.Xaml.Controls.InfoBarSeverity Severity { get; set; }
         public string Title { get; set; }
-        public string LongText { get; set; }
+        public string Message { get; set; }
+        public TimeSpan? Duration { get; set; }
     }
 
     public class UndoRedoStateChangedEvent

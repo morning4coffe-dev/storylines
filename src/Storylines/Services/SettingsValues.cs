@@ -152,6 +152,9 @@ namespace Storylines.Services
         public static string AppCustomAccent { get; } = "AppCustomAccentColor";
 
         public static string ReviewPrompt { get; } = "ReviewPrompt";
+        public static string ReviewAccumulatedMinutes { get; } = "ReviewAccumulatedMinutes";
+        public static string ReviewSessionCount { get; } = "ReviewSessionCount";
+        public static string ReviewDeferredUntil { get; } = "ReviewDeferredUntil";
 
         public static string ChapterName { get; } = "ChapterName";
         public static string ExitDialogueOn { get; } = "ExitDialogue";

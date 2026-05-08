@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+            xmlns:controls="using:Storylines.Views.Controls"
       xmlns:vm="using:Storylines.ViewModels"
       KeyboardAcceleratorPlacementMode="Hidden"
       mc:Ignorable="d"
@@ -112,7 +113,7 @@
                       Margin="0, 80"
                       Closed="OnUpdateAvailableInfoBar_Closed">
             <InfoBar.Content>
-                <StackPanel Margin="0,-4,0,0"
+                <StackPanel Margin="0,12,0,0"
                             Spacing="10">
                     <TextBlock x:Name="updateAvailableInfoBarText"
                                x:FieldModifier="public"
@@ -270,54 +271,10 @@
             </animations:Implicit.HideAnimations>
         </InfoBar>
 
-        <InfoBar x:Name="alertNotificationInfoBar"
-                      x:FieldModifier="public"
-                      IsOpen="False"
-                      Visibility="Collapsed"
-                      Severity="Error"
-                      Title="N/A"
-                      Width="400"
-                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
-                      BorderBrush="{ThemeResource ElementBorderColor}"
-                      BorderThickness="{ThemeResource ElementBorderThickness}"
-                      Grid.Row="1"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Center"
-                      Margin="0, 80"
-                      CloseButtonClick="OnAlertNotificationInfoBar_CloseButtonClick">
-            <InfoBar.Content>
-                <StackPanel Margin="0,-4,0,0"
-                            x:Name="alertNotificationInfoBarTextStack"
-                            x:FieldModifier="public">
-                    <RichTextBlock IsTextSelectionEnabled="False">
-                        <Paragraph>
-                            <Run x:Name="alertNotificationInfoBarText"
-                                 x:FieldModifier="public">N/A</Run>
-                            <LineBreak />
-                        </Paragraph>
-                    </RichTextBlock>
-                </StackPanel>
-            </InfoBar.Content>
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0, 35, 0"
-                                                 To="0"
-                                                 EasingMode="EaseOut"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="0"
-                                             To="1.0" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0"
-                                                 To="0, 35, 0"
-                                                 EasingMode="EaseIn"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="1.0"
-                                             To="0" />
-            </animations:Implicit.HideAnimations>
-        </InfoBar>
+        <controls:NotificationHost x:Name="notificationHost"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Margin="0, 80" />
     </Grid>
 </Page>

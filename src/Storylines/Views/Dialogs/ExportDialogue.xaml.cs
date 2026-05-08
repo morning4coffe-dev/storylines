@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Services;
+using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
@@ -45,7 +46,10 @@ namespace Storylines.Views.Dialogs
         private async void OnExportButton_Click(object sender, RoutedEventArgs e)
         {
             if (await ViewModel.SubmitAsync())
+            {
                 Hide();
+                MicrosoftStoreFunctions.OnExportCompleted();
+            }
         }
 
         private void OnChooseExportChaptersButton_Click(object sender, RoutedEventArgs e)

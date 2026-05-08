@@ -23,7 +23,7 @@
   <data name="feedbackLabel.Label" xml:space="preserve"><value>Opinie</value></data>
   <data name="keyboardShortcutsLabel.Label" xml:space="preserve"><value>Skróty klawiaturowe</value></data>
   <data name="charactersLabel.Label" xml:space="preserve"><value>Postacie</value></data>
-  <data name="textAnalytics.Label" xml:space="preserve"><value>Project Statistics</value></data>
+  <data name="textAnalytics.Label" xml:space="preserve"><value>Statystyki projektu</value></data>
   <data name="english.Content" xml:space="preserve"><value>Angielski</value></data>
   <data name="chinese.Content" xml:space="preserve"><value>Chiński</value></data>
   <data name="russian.Content" xml:space="preserve"><value>Rosyjski</value></data>
@@ -480,6 +480,24 @@
   <data name="dictation.Label" xml:space="preserve">
     <value>Dictation</value>
   </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>Odmowa dostępu do mikrofonu.</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>Odmowa dostępu do mikrofonu</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>Zezwól na dostęp do mikrofonu w Ustawieniach systemu Windows, aby używać dyktowania.</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>Dyktowanie nie jest dostępne na tym urządzeniu.</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>Błąd dyktowania.</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>Nasłuchiwanie…</value>
+  </data>
   <data name="done" xml:space="preserve">
     <value>Done</value>
   </data>
@@ -894,6 +912,12 @@
   <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Tryb tylko do odczytu</value>
   </data>
+  <data name="typewriterModeButton.Label" xml:space="preserve">
+    <value>Maszyna do pisania</value>
+  </data>
+  <data name="typewriterModeButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Tryb maszyny do pisania - kursor pozostaje wyśrodkowany (Ctrl+Shift+W)</value>
+  </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Wybierz tryb pisania</value>
   </data>
@@ -1088,6 +1112,8 @@
   <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
     <value>Zamknij</value>
   </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>Brak tekstu do odczytania</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>Najpierw napisz lub zaznacz jakiś tekst.</value></data>
 </root>
 
 

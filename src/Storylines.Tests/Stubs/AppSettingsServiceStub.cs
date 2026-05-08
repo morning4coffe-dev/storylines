@@ -28,7 +28,10 @@ internal sealed class AppSettingsServiceStub : IAppSettingsService
     public double EditorZoom { get; set; } = 25;
     public string UserLanguage { get; set; } = "";
     public double ReadAloudVolume { get; set; } = 75;
-    public string ReadAloudVoiceId { get; set; }
+    public string ReadAloudVoiceId { get; set; } = string.Empty;
+    public double ReadAloudRate { get; set; } = 1;
+    public double ReadAloudPitch { get; set; }
+    public string DictationLanguage { get; set; } = string.Empty;
     public bool TextBoxSolidBackground { get; set; }
     public bool DialogueModeEnabled { get; set; }
 

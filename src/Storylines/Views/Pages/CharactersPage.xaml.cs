@@ -44,13 +44,13 @@ namespace Storylines.Views.Pages
 
         public CharactersPage()
         {
-            InitializeComponent();
-
             _windowContext = App.GetService<WindowContext>();
             _events = App.GetService<EventAggregator>();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             ViewModel = App.GetService<CharactersPageViewModel>();
+
+            InitializeComponent();
 
             _windowContext.CharactersPage = this;
 
@@ -470,9 +470,12 @@ namespace Storylines.Views.Pages
                 var bmp = await Character.LoadProfilePictureAsync(p);
                 if (bmp is null)
                 {
-                    App.TryGetService<INotificationService>()?.ShowNotification(
-                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                        Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"));
+                    App.TryGetService<INotificationService>()?.ShowNotification(new NotificationRequest
+                    {
+                        Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                        Title = Windows.ApplicationModel.Resources.ResourceLoader.GetForViewIndependentUse().GetString("picturesNotFound"),
+                        Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 2)
+                    });
                     return;
                 }
                 profilePicture.ProfilePicture = bmp;

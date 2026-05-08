@@ -76,13 +76,13 @@ namespace Storylines.Views.Dialogs
 
         public WritingPromptsDialogue()
         {
-            InitializeComponent();
-
             _chapterWorkflow = App.GetService<IChapterWorkflowService>();
             _navigation = App.GetService<INavigationService>();
             _projectState = App.GetService<ProjectState>();
             _resources = ResourceLoader.GetForViewIndependentUse();
             _windowContext = App.GetService<WindowContext>();
+
+            InitializeComponent();
 
             categoryComboBox.Items.Add(_resources.GetString("writingPromptsAllCategories") ?? "All categories");
             foreach (var cat in Prompts.Keys)

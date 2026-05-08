@@ -9,6 +9,7 @@ using Storylines.Services.Interfaces;
 using System;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.ApplicationModel.DataTransfer;
 using Windows.Foundation;
@@ -227,6 +228,7 @@ namespace Storylines.Views.Controls
             textBox.FontSize = SettingsValues.editorFontSize;
 
             ApplyChromeState();
+            CurrentCommandBar?.RefreshSpeechCommandAvailability();
         }
 
         #region TextBox
@@ -235,8 +237,17 @@ namespace Storylines.Views.Controls
             // During undo/redo the action manages model state directly.
             // Skip to avoid RTF round-trip differences from creating
             // ghost entries or corrupting the snapshot chain.
-            if (TimeTravelChapter.IsExecuting) return;
-            if (_textEditor?.IsProgrammaticChangeInProgress == true) return;
+            if (TimeTravelChapter.IsExecuting)
+            {
+                CurrentCommandBar?.RefreshSpeechCommandAvailability();
+                return;
+            }
+
+            if (_textEditor?.IsProgrammaticChangeInProgress == true)
+            {
+                CurrentCommandBar?.RefreshSpeechCommandAvailability();
+                return;
+            }
 
             var chapter = GetLoadedChapter();
             if (chapter is not null)
@@ -265,6 +276,8 @@ namespace Storylines.Views.Controls
                     QueueChapterLocationCapture();
                 }
             }
+
+            CurrentCommandBar?.RefreshSpeechCommandAvailability();
         }
 
         private void OnTextBox_SelectionChanging(RichEditBox sender, RichEditBoxSelectionChangingEventArgs args)
@@ -1243,6 +1256,7 @@ namespace Storylines.Views.Controls
         {
             CurrentMainPage?.SetTextFormattingContextActive(true);
             CheckForFormatting();
+            CurrentCommandBar?.RefreshSpeechCommandAvailability();
         }
 
         private void OnTextBox_LostFocus(object sender, RoutedEventArgs e)
@@ -1256,11 +1270,15 @@ namespace Storylines.Views.Controls
             var focused = Microsoft.UI.Xaml.Input.FocusManager.GetFocusedElement() as DependencyObject;
             if (focused is not null && (IsChildOf(focused, gridCommandBarHolder)
                 || (CurrentCommandBar?.IsFormattingContextElement(focused) ?? false)))
+            {
+                CurrentCommandBar?.RefreshSpeechCommandAvailability();
                 return;
+            }
 
             CacheCurrentChapterLocation();
 
             CurrentMainPage?.SetTextFormattingContextActive(false);
+            CurrentCommandBar?.RefreshSpeechCommandAvailability();
 
             SuppressChapterLocationCaptureForPendingUiCycle();
             textBox.Document.Selection.SetRange(0, 0);
@@ -1271,6 +1289,7 @@ namespace Storylines.Views.Controls
             strikethroughButton.IsChecked = false;
 
             CurrentCommandBar?.ClearFormattingCommandState();
+            CurrentCommandBar?.RefreshSpeechCommandAvailability();
         }
 
         public bool IsFormattingContextElement(DependencyObject element)

@@ -51,14 +51,12 @@ namespace Storylines.Helpers
             ClearBadgeNotification();
         }
 
-        public static void DisplayReviewPrompt()
+        public static void DisplayReviewPrompt(string source = "unknown")
         {
-            App.TryGetService<ITelemetryService>()?.TrackReviewPromptDisplayed("review_timer");
+            App.TryGetService<ITelemetryService>()?.TrackReviewPromptDisplayed(source);
             Shell.reviewRequestInfoBar.IsOpen = true;
             Shell.reviewRequestInfoBar.Visibility = Visibility.Visible;
             Shell.reviewRequestInfoBar.RequestedTheme = Shell.ActualTheme;
-
-            DisplayBadgeNotification("attention");
         }
 
         public static void DisplayThankYou()

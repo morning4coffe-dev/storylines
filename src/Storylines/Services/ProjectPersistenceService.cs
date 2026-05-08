@@ -337,6 +337,11 @@ namespace Storylines.Services
             StopAutosaveTimer();
 
             App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, true);
+            _events.Publish(new SettingChangedEvent
+            {
+                SettingKey = SettingsValueStrings.AutosaveEnabled,
+                Value = true
+            });
 
             _autosaveTimer = new DispatcherTimer
             {
@@ -353,6 +358,11 @@ namespace Storylines.Services
         {
             StopAutosaveTimer();
             App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, false);
+            _events.Publish(new SettingChangedEvent
+            {
+                SettingKey = SettingsValueStrings.AutosaveEnabled,
+                Value = false
+            });
         }
 
         public void RefreshAutosave()
@@ -564,16 +574,22 @@ namespace Storylines.Services
 
         private void ShowSaveErrorNotification()
         {
-            _notifications.ShowNotification(
-                Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"));
+            _notifications.ShowNotification(new NotificationRequest
+            {
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"),
+                Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
+            });
         }
 
         private void ShowLoadErrorNotification()
         {
-            _notifications.ShowNotification(
-                Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"));
+            _notifications.ShowNotification(new NotificationRequest
+            {
+                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+                Title = ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
+                Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
+            });
         }
 
         private static ProjectData NormalizeProjectData(ProjectData projectData)

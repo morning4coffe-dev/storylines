@@ -334,6 +334,30 @@
           <source>Dictation</source>
           <target state="translated">Dettatura</target>
         </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">Accesso al microfono negato.</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">Accesso al microfono negato</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">Consenti l'accesso al microfono nelle Impostazioni di Windows per usare la dettatura.</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">La dettatura non è disponibile su questo dispositivo.</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">Errore di dettatura.</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">In ascolto…</target>
+        </trans-unit>
         <trans-unit id="done" translate="yes" xml:space="preserve">
           <source>Done</source>
           <target state="translated">Fatto</target>

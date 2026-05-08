@@ -40,8 +40,9 @@ namespace Storylines.Views.Controls.Modes
 
         private void OnReadAloudButton_Click(object sender, RoutedEventArgs e)
         {
-            // Delegate to the main command bar which owns the MediaElement.
-            _windowContext?.CommandBar?.ReadAloud();
+            var speechHub = App.GetService<SpeechHubViewModel>();
+            if (speechHub.StartReadAloudCommand.CanExecute(null))
+                speechHub.StartReadAloudCommand.Execute(null);
         }
 
         private void OnLeaveFocusModeButton_Click(object sender, RoutedEventArgs e)

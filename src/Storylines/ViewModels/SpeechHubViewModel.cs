@@ -1,11 +1,14 @@
 using CommunityToolkit.Mvvm.ComponentModel;
 using CommunityToolkit.Mvvm.Input;
 using Microsoft.UI.Xaml;
+using Storylines.Constants;
 using Storylines.Helpers;
+using Storylines.Resources;
 using Storylines.Services.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Windows.ApplicationModel.Resources;
 
 namespace Storylines.ViewModels
 {
@@ -18,11 +21,13 @@ namespace Storylines.ViewModels
     public partial class SpeechHubViewModel : ObservableObject
     {
         private const double LowConfidenceThreshold = 0.3;
+        private static readonly TimeSpan PermissionDeniedNotificationDuration = TimeSpan.FromSeconds(LayoutConstants.NotificationDismissSeconds + 4);
 
         private readonly ISpeechService _speech;
         private readonly ITextEditorService _textEditor;
         private readonly IAppSettingsService _settings;
         private readonly INotificationService _notifications;
+        private readonly ResourceLoader _resources;
 
         [ObservableProperty]
         private SpeechMode _mode;
@@ -49,6 +54,7 @@ namespace Storylines.ViewModels
             _textEditor = textEditor;
             _settings = settings;
             _notifications = notifications;
+            _resources = ResourceLoader.GetForViewIndependentUse();
 
             _mode = _speech.Mode;
             _readAloudState = _speech.ReadAloud.State;
@@ -100,7 +106,17 @@ namespace Storylines.ViewModels
 
             var paragraphs = ResolveTextToRead();
             if (paragraphs.Count == 0)
+            {
+                string title = _resources.GetString("speechReadAloudNoTextTitle");
+                string message = _resources.GetString("speechReadAloudNoTextMessage");
+
+                StatusMessage = message;
+                _notifications?.ShowNotification(
+                    Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
+                    title,
+                    message);
                 return;
+            }
 
             await _speech.ReadAloud.SpeakParagraphsAsync(paragraphs).ConfigureAwait(false);
         }
@@ -170,25 +186,28 @@ namespace Storylines.ViewModels
             {
                 case DictationState.PermissionDenied:
                     IsPermissionDenied = true;
-                    StatusMessage = "Microphone access denied.";
+                    StatusMessage = SpeechHubStrings.DictationPermissionDeniedStatus;
                     NotificationManager.ClearBadgeNotification();
-                    _notifications?.ShowNotification(
-                        Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
-                        "Microphone access denied",
-                        "Grant microphone access in Windows Settings to use dictation.");
+                    _notifications?.ShowNotification(new NotificationRequest
+                    {
+                        Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Warning,
+                        Title = SpeechHubStrings.DictationPermissionDeniedTitle,
+                        Message = SpeechHubStrings.DictationPermissionDeniedMessage,
+                        Duration = PermissionDeniedNotificationDuration
+                    });
                     break;
                 case DictationState.Unsupported:
-                    StatusMessage = "Dictation is not available on this device.";
+                    StatusMessage = SpeechHubStrings.DictationUnsupportedStatus;
                     NotificationManager.ClearBadgeNotification();
                     break;
                 case DictationState.Error:
                     StatusMessage = string.IsNullOrWhiteSpace(change.Message)
-                        ? "Dictation error."
+                        ? SpeechHubStrings.DictationErrorStatus
                         : change.Message;
                     NotificationManager.ClearBadgeNotification();
                     break;
                 case DictationState.Listening:
-                    StatusMessage = "Listening…";
+                    StatusMessage = SpeechHubStrings.DictationListeningStatus;
                     SafeDisplayBadge("alert");
                     break;
                 case DictationState.Stopped:

@@ -318,6 +318,30 @@
           <source>Dictation</source>
           <target state="translated">语音输入</target>
         </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">麦克风访问被拒绝。</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">麦克风访问被拒绝</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">请在 Windows 设置中允许麦克风访问，以使用语音输入。</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">此设备不支持语音输入。</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">语音输入出错。</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">正在聆听…</target>
+        </trans-unit>
         <trans-unit id="done" translate="yes" xml:space="preserve">
           <source>Done</source>
           <target state="new">Done</target>

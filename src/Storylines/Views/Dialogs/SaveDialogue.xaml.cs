@@ -30,14 +30,14 @@ namespace Storylines.Views.Dialogs
 
         public SaveDialogue(Type dialogType)
         {
-            InitializeComponent();
-
             _logger = App.GetService<ILogger>();
             _persistence = App.GetService<IProjectPersistenceService>();
             _projectState = App.GetService<ProjectState>();
             _filePicker = App.GetService<IFilePickerService>();
             _windowContext = App.GetService<WindowContext>();
             _dialogType = dialogType;
+
+            InitializeComponent();
 
             CloseOnOutsideTap = true;
 

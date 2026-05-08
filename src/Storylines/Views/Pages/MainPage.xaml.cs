@@ -32,17 +32,19 @@ namespace Storylines.Views.Pages
         private bool _textFormattingContextActive;
 
         public MainPageViewModel ViewModel => _viewModel;
+        public bool IsEditorCommandContextActive => _textFormattingContextActive && ViewModel.IsChapterSelected && !ViewModel.IsChapterTextReadOnly;
 
         public MainPage()
         {
-            InitializeComponent();
             _windowContext = App.GetService<WindowContext>();
-            _windowContext.MainPage = this;
-            App.GetService<IWindowManager>().SetCurrent(_windowContext);
-
             _events = App.GetService<EventAggregator>();
             _viewModel = App.GetService<MainPageViewModel>();
             _modeService = App.GetService<EditorModeService>();
+
+            InitializeComponent();
+
+            _windowContext.MainPage = this;
+            App.GetService<IWindowManager>().SetCurrent(_windowContext);
 
             _windowContext.AppView.page = AppView.Pages.MainPage;
 
@@ -140,6 +142,7 @@ namespace Storylines.Views.Pages
         {
             _textFormattingContextActive = active;
             RefreshFormattingCommandAvailability();
+            CommandBar?.RefreshSpeechCommandAvailability();
         }
 
         private void TrySelectPendingChapter()
@@ -278,6 +281,8 @@ namespace Storylines.Views.Pages
         #region Notes
         public void ToggleNotesPane(bool show)
         {
+            ViewModel.NotesPaneVisible = show;
+
             if (show)
             {
                 notesRow.Height = new GridLength(220);
@@ -289,6 +294,9 @@ namespace Storylines.Views.Pages
                 notesRow.Height = new GridLength(0);
                 chapterNotesPane.Visibility = Visibility.Collapsed;
             }
+
+            if (CommandBar?.notesToggleButton is not null && CommandBar.notesToggleButton.IsChecked != show)
+                CommandBar.notesToggleButton.IsChecked = show;
         }
 
         public void RefreshNotesPane()

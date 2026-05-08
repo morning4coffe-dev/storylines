@@ -138,6 +138,30 @@
           <source>Dictation</source>
           <target state="translated">Голосовой ввод</target>
         </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">Доступ к микрофону запрещен.</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">Доступ к микрофону запрещен</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">Разрешите доступ к микрофону в параметрах Windows, чтобы использовать диктовку.</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">Диктовка недоступна на этом устройстве.</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">Ошибка диктовки.</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">Слушаю…</target>
+        </trans-unit>
         <trans-unit id="edit.Label" translate="yes" xml:space="preserve">
           <source>Edit</source>
           <target state="translated">Изменить</target>

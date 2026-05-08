@@ -258,8 +258,18 @@ namespace Storylines
             var windowManager = Services.GetRequiredService<IWindowManager>();
             using (windowManager.Enter(context))
             {
-                var blockedByUnsavedChanges = GetService<IUndoRedoService>().IsDirty && SettingsValues.exitDiagEnabled;
+                var undoRedo = GetService<IUndoRedoService>();
+                var hasUnsavedChanges = undoRedo.IsDirty;
+                var shouldAutosaveOnClose = hasUnsavedChanges && SettingsValues.autosaveEnabled;
+                var blockedByUnsavedChanges = hasUnsavedChanges && !shouldAutosaveOnClose && SettingsValues.exitDiagEnabled;
                 App.TryGetService<ITelemetryService>()?.TrackAppClosingRequested(blockedByUnsavedChanges);
+
+                if (shouldAutosaveOnClose)
+                {
+                    e.Handled = true;
+                    GetService<IProjectPersistenceService>().SaveAndExitOrClearAll(true);
+                    return;
+                }
 
                 if (blockedByUnsavedChanges)
                 {

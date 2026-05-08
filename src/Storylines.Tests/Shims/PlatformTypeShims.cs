@@ -31,3 +31,33 @@ namespace Microsoft.UI.Xaml.Controls
         Error,
     }
 }
+
+namespace Microsoft.UI.Xaml
+{
+    public enum Visibility
+    {
+        Visible,
+        Collapsed,
+    }
+}
+
+namespace Windows.ApplicationModel.Resources
+{
+    public sealed class ResourceLoader
+    {
+        public static ResourceLoader GetForViewIndependentUse()
+            => new ResourceLoader();
+
+        public string GetString(string resource)
+            => resource switch
+            {
+                "dictationPermissionDeniedStatus" => "Microphone access denied.",
+                "dictationPermissionDeniedTitle" => "Microphone access denied",
+                "dictationPermissionDeniedMessage" => "Grant microphone access in Windows Settings to use dictation.",
+                "dictationUnsupportedStatus" => "Dictation is not available on this device.",
+                "dictationErrorStatus" => "Dictation error.",
+                "dictationListeningStatus" => "Listening…",
+                _ => resource,
+            };
+    }
+}

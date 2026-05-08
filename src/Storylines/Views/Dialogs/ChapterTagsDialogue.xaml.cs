@@ -69,7 +69,6 @@ namespace Storylines.Views.Dialogs
         {
             var presets = ChapterTagsService
                 .GetPresets()
-                .OrderBy(preset => preset, StringComparer.CurrentCultureIgnoreCase)
                 .ToList();
 
             savedPresetsList.ItemsSource = presets;
@@ -111,10 +110,6 @@ namespace Storylines.Views.Dialogs
 
         private void OnTokenItem_Added(TokenizingTextBox sender, object args)
         {
-            // Persist new tags to presets
-            if (args is string tag && !string.IsNullOrWhiteSpace(tag))
-                ChapterTagsService.AddPreset(tag.Trim());
-
             RefreshSuggestions();
             RefreshSavedPresets();
         }
@@ -146,6 +141,10 @@ namespace Storylines.Views.Dialogs
                 .ToList();
 
             _chapter.Tags = newTags;
+
+            foreach (var tag in Enumerable.Reverse(newTags))
+                ChapterTagsService.AddPreset(tag);
+
             TimeTravelSystem.SomethingChanged();
 
             Hide();

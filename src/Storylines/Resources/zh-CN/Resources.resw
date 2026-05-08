@@ -153,6 +153,24 @@
   <data name="dictation.Label" xml:space="preserve">
     <value>语音输入</value>
   </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>麦克风访问被拒绝。</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>麦克风访问被拒绝</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>请在 Windows 设置中允许麦克风访问，以使用语音输入。</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>此设备不支持语音输入。</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>语音输入出错。</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>正在聆听…</value>
+  </data>
   <data name="downBarText.Text" xml:space="preserve">
     <value>添加一个新章节，然后开始输入。</value>
   </data>
@@ -1055,7 +1073,7 @@
     <value>Submit</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>项目统计</value>
   </data>
   <data name="textEditorSetting.Text" xml:space="preserve">
     <value>Text Editor</value>
@@ -1154,6 +1172,12 @@
   </data>
   <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>只读模式</value>
+  </data>
+  <data name="typewriterModeButton.Label" xml:space="preserve">
+    <value>打字机</value>
+  </data>
+  <data name="typewriterModeButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>打字机模式 - 光标保持居中 (Ctrl+Shift+W)</value>
   </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>选择写作模式</value>
@@ -1349,6 +1373,8 @@
   <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
     <value>关闭</value>
   </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>没有可朗读的文本</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>请先输入或选择一些文本。</value></data>
 </root>
 
 

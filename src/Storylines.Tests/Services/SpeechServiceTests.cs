@@ -7,18 +7,24 @@ namespace Storylines.Tests.Services;
 
 public class SpeechServiceTests
 {
+    private static SpeechService CreateService(out DictationServiceStub dictation, out ReadAloudServiceStub readAloud)
+    {
+        dictation = new DictationServiceStub();
+        readAloud = new ReadAloudServiceStub();
+        return new SpeechService(dictation, readAloud);
+    }
+
     [Fact]
     public void InitialState_IsIdle()
     {
-        var service = new SpeechService(new DictationServiceStub());
+        var service = CreateService(out _, out _);
         Assert.Equal(SpeechMode.Idle, service.Mode);
     }
 
     [Fact]
     public void DictationStart_TransitionsModeToDictating()
     {
-        var dictation = new DictationServiceStub();
-        var service = new SpeechService(dictation);
+        var service = CreateService(out var dictation, out _);
 
         dictation.EmitStateChange(new DictationStateChange(DictationState.Listening));
 
@@ -28,8 +34,7 @@ public class SpeechServiceTests
     [Fact]
     public void DictationStop_TransitionsModeBackToIdle()
     {
-        var dictation = new DictationServiceStub();
-        var service = new SpeechService(dictation);
+        var service = CreateService(out var dictation, out _);
 
         dictation.EmitStateChange(new DictationStateChange(DictationState.Listening));
         dictation.EmitStateChange(new DictationStateChange(DictationState.Stopped));
@@ -38,20 +43,21 @@ public class SpeechServiceTests
     }
 
     [Fact]
-    public void NotifyReadingStarted_SetsModeToReading()
+    public void ReadAloudPlaying_TransitionsModeToReading()
     {
-        var service = new SpeechService(new DictationServiceStub());
-        service.NotifyReadingStarted();
+        var service = CreateService(out _, out var readAloud);
+        readAloud.EmitStateChange(ReadAloudState.Playing);
+
         Assert.Equal(SpeechMode.Reading, service.Mode);
     }
 
     [Fact]
-    public void NotifyReadingStopped_TransitionsBackToIdle()
+    public void ReadAloudIdle_TransitionsBackToIdle()
     {
-        var service = new SpeechService(new DictationServiceStub());
+        var service = CreateService(out _, out var readAloud);
 
-        service.NotifyReadingStarted();
-        service.NotifyReadingStopped();
+        readAloud.EmitStateChange(ReadAloudState.Playing);
+        readAloud.EmitStateChange(ReadAloudState.Idle);
 
         Assert.Equal(SpeechMode.Idle, service.Mode);
     }
@@ -59,13 +65,12 @@ public class SpeechServiceTests
     [Fact]
     public void ModeChanged_FiresOnEachTransition()
     {
-        var dictation = new DictationServiceStub();
-        var service = new SpeechService(dictation);
+        var service = CreateService(out var dictation, out var readAloud);
         int events = 0;
         service.ModeChanged += _ => events++;
 
-        service.NotifyReadingStarted();
-        service.NotifyReadingStopped();
+        readAloud.EmitStateChange(ReadAloudState.Playing);
+        readAloud.EmitStateChange(ReadAloudState.Idle);
         dictation.EmitStateChange(new DictationStateChange(DictationState.Listening));
 
         Assert.Equal(3, events);
@@ -74,8 +79,7 @@ public class SpeechServiceTests
     [Fact]
     public void PermissionDenied_DoesNotEnterDictatingMode()
     {
-        var dictation = new DictationServiceStub();
-        var service = new SpeechService(dictation);
+        var service = CreateService(out var dictation, out _);
 
         dictation.EmitStateChange(new DictationStateChange(DictationState.PermissionDenied, "denied"));
 

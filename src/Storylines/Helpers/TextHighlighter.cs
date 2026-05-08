@@ -2,7 +2,7 @@ using Windows.UI;
 
 namespace Storylines.Helpers
 {
-    class TextHighlighter
+    public class TextHighlighter
     {
         public enum Tool { None, White, Yellow, Red, Green, Blue }
         public Tool SelectedTool;

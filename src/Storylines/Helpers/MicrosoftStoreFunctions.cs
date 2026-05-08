@@ -18,7 +18,7 @@ namespace Storylines.Helpers
         private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
         private static IReadOnlyList<StorePackageUpdate> _availableUpdates = Array.Empty<StorePackageUpdate>();
 
-        private static DispatcherTimer _reviewTimer;
+        private static DispatcherTimer _accumulatorTimer;
         private static bool _hasMandatoryUpdate;
         private static bool _isUpdateInstallInProgress;
 
@@ -97,29 +97,72 @@ namespace Storylines.Helpers
 
         public static void InitializeReview()
         {
-            SettingsValues.ReviewPrompt reviewState = (SettingsValues.ReviewPrompt)App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Get(SettingsValueStrings.ReviewPrompt, 2);
-            if (reviewState != SettingsValues.ReviewPrompt.NotYet)
+            var prefs = App.GetService<IPreferencesService>();
+            var reviewState = (SettingsValues.ReviewPrompt)prefs.Get(SettingsValueStrings.ReviewPrompt, 2);
+
+            if (reviewState == SettingsValues.ReviewPrompt.SuccessfullyRated ||
+                reviewState == SettingsValues.ReviewPrompt.NeverShowAgain)
                 return;
 
-            _reviewTimer ??= new DispatcherTimer();
-            _reviewTimer.Stop();
-            _reviewTimer.Interval = TimeSpan.FromMinutes(35);
-            _reviewTimer.Tick -= ReviewTimer_Tick;
-            _reviewTimer.Tick += ReviewTimer_Tick;
-            _reviewTimer.Start();
+            long deferredUntilTicks = prefs.Get<long>(SettingsValueStrings.ReviewDeferredUntil, 0L);
+            if (deferredUntilTicks > 0 && DateTime.UtcNow.Ticks < deferredUntilTicks)
+                return;
+
+            int sessionCount = prefs.Get<int>(SettingsValueStrings.ReviewSessionCount, 0) + 1;
+            prefs.Set(SettingsValueStrings.ReviewSessionCount, sessionCount);
+
+            _accumulatorTimer ??= new DispatcherTimer();
+            _accumulatorTimer.Stop();
+            _accumulatorTimer.Interval = TimeSpan.FromMinutes(1);
+            _accumulatorTimer.Tick -= OnAccumulatorTimerTick;
+            _accumulatorTimer.Tick += OnAccumulatorTimerTick;
+            _accumulatorTimer.Start();
         }
 
-        private static void ReviewTimer_Tick(object sender, object e)
+        private static void OnAccumulatorTimerTick(object sender, object e)
         {
-            _reviewTimer?.Stop();
-            NotificationManager.DisplayReviewPrompt();
+            var prefs = App.GetService<IPreferencesService>();
+
+            int accumulated = prefs.Get<int>(SettingsValueStrings.ReviewAccumulatedMinutes, 0) + 1;
+            prefs.Set(SettingsValueStrings.ReviewAccumulatedMinutes, accumulated);
+
+            int sessionCount = prefs.Get<int>(SettingsValueStrings.ReviewSessionCount, 0);
+            if (accumulated >= 60 && sessionCount >= 3)
+                TryShowReviewPrompt("cumulative_time");
+        }
+
+        public static void OnExportCompleted()
+        {
+            TryShowReviewPrompt("export_milestone");
+        }
+
+        public static void StopReviewTimer()
+        {
+            _accumulatorTimer?.Stop();
+        }
+
+        private static void TryShowReviewPrompt(string source)
+        {
+            var prefs = App.GetService<IPreferencesService>();
+            var reviewState = (SettingsValues.ReviewPrompt)prefs.Get(SettingsValueStrings.ReviewPrompt, 2);
+
+            if (reviewState == SettingsValues.ReviewPrompt.SuccessfullyRated ||
+                reviewState == SettingsValues.ReviewPrompt.NeverShowAgain)
+                return;
+
+            long deferredUntilTicks = prefs.Get<long>(SettingsValueStrings.ReviewDeferredUntil, 0L);
+            if (deferredUntilTicks > 0 && DateTime.UtcNow.Ticks < deferredUntilTicks)
+                return;
+
+            _accumulatorTimer?.Stop();
+
+            NotificationManager.DisplayReviewPrompt(source);
         }
 
         public static async Task PromptUserToRateAppAsync(string source = "unknown")
         {
             var telemetry = App.TryGetService<ITelemetryService>();
             StoreRateAndReviewResult result = await _storeContext.RequestRateAndReviewAppAsync();
-            NotificationManager.ClearBadgeNotification();
 
             switch (result.Status)
             {

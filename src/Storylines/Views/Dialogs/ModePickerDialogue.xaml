@@ -20,11 +20,12 @@
         <!-- Mode cards -->
         <StackPanel Orientation="Horizontal"
                     Spacing="8"
+                    XYFocusKeyboardNavigation="Enabled"
                     HorizontalAlignment="Center">
 
             <!-- Edit card -->
             <Button x:Name="editCard"
-                    Width="100"
+                    Width="110"
                     Height="120"
                     CornerRadius="8"
                     Padding="0"
@@ -47,7 +48,7 @@
 
             <!-- Focus card -->
             <Button x:Name="focusCard"
-                    Width="100"
+                    Width="110"
                     Height="120"
                     CornerRadius="8"
                     Padding="0"
@@ -70,7 +71,7 @@
 
             <!-- Read-only card -->
             <Button x:Name="readOnlyCard"
-                    Width="100"
+                    Width="110"
                     Height="120"
                     CornerRadius="8"
                     Padding="0"
@@ -116,7 +117,6 @@
                       IsChecked="True"
                       Click="OnTimeCheckBox_Click" />
             <TimePicker x:Name="timePicker"
-                        Width="300"
                         ClockIdentifier="24HourClock"
                         HorizontalAlignment="Stretch" />
             <CheckBox x:Name="measureCheckBox"

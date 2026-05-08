@@ -12,6 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
 using Storylines.Views.Dialogs;
 using Storylines.Services.Modes;
+using System.ComponentModel;
 
 namespace Storylines.Views.Controls
 {
@@ -36,7 +37,6 @@ namespace Storylines.Views.Controls
 
         public MainCommandBar()
         {
-            this.InitializeComponent();
             _windowContext = App.GetService<WindowContext>();
             _chaptersListViewModel = App.GetService<ChaptersListViewModel>();
             _chapterWorkflow = App.GetService<IChapterWorkflowService>();
@@ -46,6 +46,8 @@ namespace Storylines.Views.Controls
             _viewModel = App.GetService<CommandBarViewModel>();
             _modeService = App.TryGetService<EditorModeService>();
             _speechHub = App.GetService<SpeechHubViewModel>();
+
+            this.InitializeComponent();
 
             if(App.TryGetService<Storylines.Services.Modes.EditorModeService>()?.Current.Id == "edit"
                || App.TryGetService<Storylines.Services.Modes.EditorModeService>() is null)
@@ -65,9 +67,11 @@ namespace Storylines.Views.Controls
             }
 
             Unloaded += OnUnloaded;
+            _speechHub.PropertyChanged += OnSpeechHubPropertyChanged;
 
             // Restore persisted dialogue mode state
             dialoguesEnableButton.IsChecked = SettingsValues.dialogueModeEnabled;
+            RefreshSpeechCommandAvailability();
         }
 
         private void OnSettingChanged(SettingChangedEvent e)
@@ -88,6 +92,19 @@ namespace Storylines.Views.Controls
         {
             if (_modeService is not null)
                 _modeService.ModeChanged -= UpdateModeButtonStates;
+
+            _speechHub.PropertyChanged -= OnSpeechHubPropertyChanged;
+        }
+
+        private void OnSpeechHubPropertyChanged(object sender, PropertyChangedEventArgs e)
+        {
+            if (string.IsNullOrEmpty(e.PropertyName)
+                || e.PropertyName == nameof(SpeechHubViewModel.IsDictating)
+                || e.PropertyName == nameof(SpeechHubViewModel.ReadAloudState)
+                || e.PropertyName == nameof(SpeechHubViewModel.CanShowReadAloudControls))
+            {
+                RefreshSpeechCommandAvailability();
+            }
         }
 
         private void UpdateModeButtonStates(IEditorMode mode)
@@ -267,7 +284,27 @@ namespace Storylines.Views.Controls
                 || IsChildOf(element, mainStrikethroughButton)
                 || IsChildOf(element, mainHighlighterButton)
                 || IsChildOf(element, typewriterModeButton)
+                || IsChildOf(element, readAloudButton)
+                || IsChildOf(element, dictationButton)
                 || IsChildOf(element, mainHighlighterFlyout.Content as DependencyObject);
+        }
+
+        public void RefreshSpeechCommandAvailability()
+        {
+            if (readAloudButton is not null)
+                readAloudButton.IsEnabled = _speechHub.CanShowReadAloudControls || HasReadableText();
+
+            if (dictationButton is not null)
+                dictationButton.IsEnabled = _speechHub.IsDictating || (CurrentMainPage?.IsEditorCommandContextActive ?? false);
+        }
+
+        private bool HasReadableText()
+        {
+            var selectedText = _textEditor.GetSelectedText();
+            if (!string.IsNullOrWhiteSpace(selectedText))
+                return true;
+
+            return !string.IsNullOrWhiteSpace(_textEditor.GetText(TextFormat.PlainText));
         }
 
         private void OnFormattingSurface_GotFocus(object sender, RoutedEventArgs e)

@@ -57,6 +57,7 @@ namespace Storylines.ViewModels
             IsAutosaveChecked = SettingsValues.autosaveEnabled;
 
             events.Subscribe<UndoRedoStateChangedEvent>(OnUndoRedoStateChanged);
+            events.Subscribe<SettingChangedEvent>(OnSettingChanged);
         }
 
         private void OnUndoRedoStateChanged(UndoRedoStateChangedEvent e)
@@ -66,6 +67,12 @@ namespace Storylines.ViewModels
                 CanUndo = e.CanUndo;
                 CanRedo = e.CanRedo;
             }
+        }
+
+        private void OnSettingChanged(SettingChangedEvent e)
+        {
+            if (e.SettingKey == SettingsValueStrings.AutosaveEnabled)
+                IsAutosaveChecked = e.Value is bool value ? value : SettingsValues.autosaveEnabled;
         }
 
         [RelayCommand]

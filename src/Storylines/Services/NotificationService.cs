@@ -18,13 +18,27 @@ namespace Storylines.Services
             _events = events;
         }
 
-        public void ShowNotification(InfoBarSeverity severity, string text, string longText = "")
+        public void ShowNotification(NotificationRequest notification)
         {
+            if (notification is null)
+                return;
+
             _events.Publish(new InAppNotificationEvent
             {
+                Severity = notification.Severity,
+                Title = notification.Title ?? string.Empty,
+                Message = notification.Message ?? string.Empty,
+                Duration = notification.Duration
+            });
+        }
+
+        public void ShowNotification(InfoBarSeverity severity, string title, string message = "")
+        {
+            ShowNotification(new NotificationRequest
+            {
                 Severity = severity,
-                Title = text,
-                LongText = longText ?? string.Empty
+                Title = title,
+                Message = message ?? string.Empty
             });
         }
 
