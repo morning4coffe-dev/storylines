@@ -17,6 +17,14 @@ namespace Storylines.Models
         public List<string> PlotThreads { get; set; } = new List<string>();
 
 #if PRIVATE_PLUGINS
+        // TODO (deferred — future phase): Migration of existing projects with JSON-stored BranchingDialogues.
+        //   With the DialogueScript text-as-source-of-truth model (Phase 1+3), graph data lives in
+        //   chapter text via DialogueScriptParser/Formatter and BranchingDialogueSyncService.
+        //   This list remains for backward-compat with already-saved projects; on first load,
+        //   migrate each entry into its chapter's text and then clear it.
+        //   Steps: (1) detect non-empty BranchingDialogues at load; (2) for each graph, format via
+        //   DialogueScriptFormatter and write to Chapter.Text if Chapter has no node headers yet;
+        //   (3) clear the list and persist; (4) emit a one-shot migration notification.
         public List<BranchingDialogueGraphData> BranchingDialogues { get; set; } = new List<BranchingDialogueGraphData>();
 
         public BranchingDialogueGraphData GetOrCreateBranchingDialogueForChapter(string chapterId)

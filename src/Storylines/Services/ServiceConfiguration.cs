@@ -65,6 +65,8 @@ namespace Storylines.Services
             services.AddScoped<Interfaces.IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();
             services.AddScoped<Interfaces.IBranchingDialogueEventPublisher, BranchingDialogueEventPublisher>();
             services.AddScoped<Interfaces.IBranchingDialogueService, BranchingDialogueService>();
+            services.AddScoped<Interfaces.IBranchingDialogueSyncService, BranchingDialogueSyncService>();
+            services.AddScoped<BranchingDialogueSyncCoordinator>();
             services.AddTransient<ViewModels.BranchingDialogueViewModel>();
 #endif
 

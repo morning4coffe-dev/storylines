@@ -52,6 +52,7 @@
     <Compile Include="..\Storylines\Helpers\RecentProjectDeduplicator.cs" Link="LinkedSources\RecentProjectDeduplicator.cs" />
     <Compile Include="..\Storylines\Helpers\ChapterTextNormalization.cs" Link="LinkedSources\ChapterTextNormalization.cs" />
     <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
+    <Compile Include="..\Storylines\Models\DialogueScript\SuggestionPopupManager.cs" Link="LinkedSources\SuggestionPopupManager.cs" />
     <Compile Include="..\Storylines\Resources\SpeechHubStrings.cs" Link="LinkedSources\SpeechHubStrings.cs" />
     <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />
     <Compile Include="..\Storylines\ViewModels\InspectorViewModel.cs" Link="LinkedSources\InspectorViewModel.cs" />

@@ -1,0 +1,44 @@
+<UserControl x:Class="Storylines.Views.Controls.DialogueTextEditor.DialogueTextEditor"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d">
+
+    <!--
+        DialogueTextEditor: a TextBox-only dialogue script editor with a suggestion popup.
+        Uses PART_-named template children so the code-behind can locate them
+        (mirroring the RichSuggestBox pattern) but stays a UserControl for project consistency.
+
+        Uno compatibility: TextBox APIs used are limited to AcceptsReturn, TextWrapping,
+        SelectionStart, SelectionLength, Text.
+
+        TODO (Phase 4): Accessibility — AutomationProperties for popup items, keyboard nav announcements.
+    -->
+    <Grid>
+        <TextBox x:Name="PART_TextBox"
+                 AcceptsReturn="True"
+                 TextWrapping="Wrap"
+                 FontFamily="Cascadia Code, Consolas, Courier New, monospace"
+                 VerticalAlignment="Stretch"
+                 HorizontalAlignment="Stretch"
+                 ScrollViewer.VerticalScrollBarVisibility="Auto"
+                 ScrollViewer.HorizontalScrollBarVisibility="Auto" />
+
+        <Popup x:Name="PART_Popup"
+               IsLightDismissEnabled="True">
+            <Border Background="{ThemeResource SystemControlAcrylicWindowBrush}"
+                    BorderBrush="{ThemeResource SystemControlForegroundBaseLowBrush}"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Padding="2"
+                    MinWidth="180"
+                    MaxWidth="320"
+                    MaxHeight="240">
+                <ListView x:Name="PART_SuggestionList"
+                          SelectionMode="Single"
+                          ItemsSource="{Binding}" />
+            </Border>
+        </Popup>
+    </Grid>
+</UserControl>

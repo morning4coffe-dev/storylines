@@ -179,6 +179,40 @@ namespace Storylines.Services.Persistence
             _loadVariables(projectData);
             _onLoaded();
             Events.Publish(new ToolsStateChangedEvent { IsStorylinesDocument = true });
+
+#if PRIVATE_PLUGINS
+            // Populate in-memory branching-dialogue graphs from each chapter's text.
+            // Replaces the older "JSON migration" path: there is no on-disk JSON for graphs —
+            // text is the source of truth, so we re-parse on load.
+            PopulateBranchingDialogueGraphsFromText();
+#endif
         }
+
+#if PRIVATE_PLUGINS
+        private void PopulateBranchingDialogueGraphsFromText()
+        {
+            try
+            {
+                var sync = App.GetService<Interfaces.IBranchingDialogueSyncService>();
+                if (sync == null) return;
+
+                foreach (var chapter in ProjectState.Chapters)
+                {
+                    if (string.IsNullOrWhiteSpace(chapter?.Text)) continue;
+                    // Skip chapters that have no node headers — Dialogue.cs prose chapters parse to empty.
+                    if (chapter.Text.IndexOf("\n:: ", System.StringComparison.Ordinal) < 0
+                        && !chapter.Text.StartsWith(":: ", System.StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+                    sync.SyncTextToGraph(chapter.Token, chapter.Text);
+                }
+            }
+            catch (System.Exception ex)
+            {
+                Logger.Error("Failed to populate branching dialogue graphs from chapter text", ex);
+            }
+        }
+#endif
     }
 }
