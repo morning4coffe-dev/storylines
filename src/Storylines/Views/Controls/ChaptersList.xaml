@@ -84,6 +84,7 @@
 
         <ListView x:Name="listView"
                   x:FieldModifier="public"
+                  AutomationProperties.AutomationId="ChaptersList"
                   ItemsSource="{x:Bind ViewModel.Chapters, Mode=OneWay}"
                   SelectedIndex="{x:Bind ViewModel.SelectedIndex, Mode=TwoWay}"
                   CanReorderItems="True"

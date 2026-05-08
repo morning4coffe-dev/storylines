@@ -763,23 +763,28 @@
 
     <Grid>
         <NavigationView Style="{StaticResource NavigationViewStyle}"
+                             AutomationProperties.AutomationId="MainCommandBar"
                              PaneDisplayMode="Top"
                              IsBackEnabled="False"
                              IsBackButtonVisible="Collapsed"
                              SelectionChanged="NavigationView_SelectionChanged">
             <NavigationView.MenuItems>
                 <NavigationViewItem x:Uid="file"
+                                         AutomationProperties.AutomationId="NavItem_File"
                                          Tag="0"
                                          IsSelected="True" />
                 <NavigationViewItem x:Uid="insert"
+                                         AutomationProperties.AutomationId="NavItem_Insert"
                                          Tag="1" />
                 <NavigationViewItem x:Uid="view"
+                                         AutomationProperties.AutomationId="NavItem_View"
                                          Tag="2">
                     <!--<NavigationViewItem.InfoBadge>
                         <InfoBadge x:Name="infoBadge1"/>
                     </NavigationViewItem.InfoBadge>-->
                 </NavigationViewItem>
                 <NavigationViewItem x:Uid="help"
+                                         AutomationProperties.AutomationId="NavItem_Help"
                                          Tag="3" />
             </NavigationView.MenuItems>
 
@@ -800,12 +805,14 @@
                             Visibility="Collapsed">
                     <AppBarButton x:Name="undoButton"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="UndoButton"
                                   Icon="Undo"
                                   CornerRadius="4"
                                   IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}"
                                   Command="{x:Bind ViewModel.UndoCommand}" />
                     <AppBarButton x:Name="redoButton"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="RedoButton"
                                   Icon="Redo"
                                   CornerRadius="4"
                                   IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}"
@@ -814,6 +821,7 @@
                     <AppBarButton x:Name="saveButton"
                                   x:Uid="save"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="SaveButton"
                                   Icon="Save"
                                   IsEnabled="{x:Bind ViewModel.IsSaveEnabled, Mode=OneWay}"
                                   CornerRadius="4"
@@ -833,6 +841,7 @@
 
                     <AppBarButton x:Name="loadButton"
                                   x:Uid="load"
+                                  AutomationProperties.AutomationId="LoadButton"
                                   CornerRadius="4"
                                   Command="{x:Bind ViewModel.LoadCommand}">
                         <AppBarButton.Icon>

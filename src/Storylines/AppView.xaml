@@ -53,6 +53,7 @@
         </Grid.RowDefinitions>
         <TitleBar x:Name="appTitleBar"
                   x:FieldModifier="public"
+                  AutomationProperties.AutomationId="AppTitleBar"
                   Background="Transparent"
                   Title="{x:Bind ViewModel.TitleText, Mode=OneWay}"
                   Subtitle="{x:Bind ViewModel.UnsavedIndicatorText, Mode=OneWay}"
@@ -84,7 +85,8 @@
               Grid.Row="1"
               x:FieldModifier="public">
             <Frame x:Name="pagesView"
-                   x:FieldModifier="public">
+                   x:FieldModifier="public"
+                   AutomationProperties.AutomationId="MainFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition>

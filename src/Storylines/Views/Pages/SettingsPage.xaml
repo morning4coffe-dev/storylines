@@ -13,8 +13,8 @@
     <Grid>
         <NavigationView x:Name="settingsNavigationView"
                              HorizontalAlignment="Stretch"
-                             x:FieldModifier="public"
-                             IsBackButtonVisible="Collapsed"
+                             x:FieldModifier="public"                            
+                             AutomationProperties.AutomationId="SettingsNavigationView"                             IsBackButtonVisible="Collapsed"
                              IsSettingsVisible="False"
                              CompactPaneLength="48"
                              OpenPaneLength="264"
