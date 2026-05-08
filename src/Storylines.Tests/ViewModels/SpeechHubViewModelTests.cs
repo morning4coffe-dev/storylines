@@ -124,5 +124,17 @@ public class SpeechHubViewModelTests
         public void HideProgressBar()
         {
         }
+
+        public void ShowPersistentNotification(PersistentNotificationRequest request)
+        {
+        }
+
+        public void UpdatePersistentNotificationProgress(double value, bool isIndeterminate = false)
+        {
+        }
+
+        public void DismissPersistentNotification()
+        {
+        }
     }
 }

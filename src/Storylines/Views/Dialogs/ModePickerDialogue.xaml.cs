@@ -8,17 +8,23 @@ using System.Threading.Tasks;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media;
+using Windows.ApplicationModel.Resources;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ModePickerDialogue : StorylinesContentDialog
+    public sealed partial class ModePickerDialogue : StorylinesShellDialog
     {
+        private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
         private enum SelectedMode { Edit, Focus, ReadOnly }
         private SelectedMode _selectedMode = SelectedMode.Focus;
 
         public ModePickerDialogue(string preselect = "focus")
         {
             InitializeComponent();
+
+            DialogTitle = _resources.GetString("modePickerTitle.Text");
+            PrimaryActionText = _resources.GetString("modeEnterButton.Text");
+            PrimaryActionGlyph = "\uE70F";
 
             timePicker.Time = new TimeSpan(0, 20, 0);
 
@@ -72,8 +78,7 @@ namespace Storylines.Views.Dialogs
         private void OnFocusCard_Click(object sender, RoutedEventArgs e)   => SelectCard(SelectedMode.Focus);
         private void OnReadOnlyCard_Click(object sender, RoutedEventArgs e)=> SelectCard(SelectedMode.ReadOnly);
 
-        // ── enter ─────────────────────────────────────────────────────────────
-        private void OnEnterButton_Click(object sender, RoutedEventArgs e)
+        protected override Task<bool> ExecutePrimaryActionAsync()
         {
             var modeService = App.GetService<EditorModeService>();
 
@@ -114,10 +119,8 @@ namespace Storylines.Views.Dialogs
                     break;
             }
 
-            Hide();
+            return Task.FromResult(true);
         }
-
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
         // ── focus options helpers ─────────────────────────────────────────────
         private void OnAutosaveCheckBox_Click(object sender, RoutedEventArgs e)

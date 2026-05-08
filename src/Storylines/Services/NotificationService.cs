@@ -5,9 +5,10 @@ namespace Storylines.Services
 {
     /// <summary>
     /// Event-based implementation of <see cref="INotificationService"/> that publishes
-    /// <see cref="InAppNotificationEvent"/> and <see cref="ProgressBarEvent"/> through the
-    /// <see cref="EventAggregator"/> so the view layer can subscribe and handle UI updates
-    /// without the service needing a direct reference to <c>AppView.current</c> or any page.
+    /// <see cref="InAppNotificationEvent"/>, <see cref="ProgressBarEvent"/>, and
+    /// <see cref="PersistentNotificationEvent"/> through the <see cref="EventAggregator"/>
+    /// so the view layer can subscribe and handle UI updates without the service needing a
+    /// direct reference to <c>AppView.current</c> or any page.
     /// </summary>
     internal sealed class NotificationService : INotificationService
     {
@@ -67,6 +68,42 @@ namespace Storylines.Services
         public void HideProgressBar()
         {
             _events.Publish(new ProgressBarEvent { Show = false });
+        }
+
+        public void ShowPersistentNotification(PersistentNotificationRequest request)
+        {
+            if (request is null)
+                return;
+
+            _events.Publish(new PersistentNotificationEvent
+            {
+                Severity = request.Severity,
+                Title = request.Title ?? string.Empty,
+                Message = request.Message ?? string.Empty,
+                Detail = request.Detail ?? string.Empty,
+                IconSource = request.IconSource,
+                IsClosable = request.IsClosable,
+                OnClosed = request.OnClosed,
+                Buttons = request.Buttons,
+                HasProgressBar = request.HasProgressBar,
+                IsProgressIndeterminate = request.IsProgressIndeterminate,
+                ProgressValue = request.ProgressValue,
+                Width = request.Width,
+            });
+        }
+
+        public void UpdatePersistentNotificationProgress(double value, bool isIndeterminate = false)
+        {
+            _events.Publish(new UpdatePersistentProgressEvent
+            {
+                Value = value,
+                IsIndeterminate = isIndeterminate,
+            });
+        }
+
+        public void DismissPersistentNotification()
+        {
+            _events.Publish(new DismissPersistentNotificationEvent());
         }
     }
 }

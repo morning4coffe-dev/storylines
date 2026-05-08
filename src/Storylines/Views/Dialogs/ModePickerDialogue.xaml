@@ -1,174 +1,127 @@
-<dialogs:StorylinesContentDialog x:Class="Storylines.Views.Dialogs.ModePickerDialogue"
-               xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-               xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-               xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-               xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:dialogs="using:Storylines.Views.Dialogs"
-               xmlns:controls="using:Microsoft.UI.Xaml.Controls"
-               xmlns:customcontrols="using:Storylines.Views.Controls"
-               mc:Ignorable="d"
-               CornerRadius="8">
+<dialogs:StorylinesShellDialog x:Class="Storylines.Views.Dialogs.ModePickerDialogue"
+                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+                xmlns:dialogs="using:Storylines.Views.Dialogs"
+                xmlns:controls="using:Microsoft.UI.Xaml.Controls"
+                mc:Ignorable="d"
+                DialogMinWidth="360">
 
-    <StackPanel Spacing="16"
-                MinWidth="340"
-                Margin="4"
-                Orientation="Vertical">
+    <dialogs:StorylinesShellDialog.DialogBody>
+        <StackPanel Spacing="16"
+                    Orientation="Vertical">
 
-        <TextBlock x:Uid="modePickerTitle"
-                   Style="{StaticResource DialogueWindowHeaderStyle}" />
+            <StackPanel Orientation="Horizontal"
+                        Spacing="8"
+                        XYFocusKeyboardNavigation="Enabled"
+                        HorizontalAlignment="Center">
+                <Button x:Name="editCard"
+                        Style="{StaticResource DialogSelectionCardStyle}"
+                        Click="OnEditCard_Click">
+                    <StackPanel Spacing="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE70F;"
+                                  FontSize="28"
+                                  HorizontalAlignment="Center" />
+                        <TextBlock x:Uid="modeEdit"
+                                   Text="Edit"
+                                   FontSize="13"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
 
-        <!-- Mode cards -->
-        <StackPanel Orientation="Horizontal"
-                    Spacing="8"
-                    XYFocusKeyboardNavigation="Enabled"
-                    HorizontalAlignment="Center">
+                <Button x:Name="focusCard"
+                        Style="{StaticResource DialogSelectionCardStyle}"
+                        Click="OnFocusCard_Click">
+                    <StackPanel Spacing="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE1D5;"
+                                  FontSize="28"
+                                  HorizontalAlignment="Center" />
+                        <TextBlock x:Uid="modeFocus"
+                                   Text="Focus"
+                                   FontSize="13"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
 
-            <!-- Edit card -->
-            <Button x:Name="editCard"
-                    Width="110"
-                    Height="120"
-                    CornerRadius="8"
-                    Padding="0"
-                    Background="{ThemeResource LayerFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    Click="OnEditCard_Click">
-                <StackPanel Spacing="6"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                    <FontIcon Glyph="&#xE70F;"
-                              FontSize="28"
-                              HorizontalAlignment="Center" />
-                    <TextBlock x:Uid="modeEdit"
-                               Text="Edit"
-                               FontSize="13"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-            </Button>
+                <Button x:Name="readOnlyCard"
+                        Style="{StaticResource DialogSelectionCardStyle}"
+                        Click="OnReadOnlyCard_Click">
+                    <StackPanel Spacing="6"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
+                        <FontIcon Glyph="&#xE8A5;"
+                                  FontSize="28"
+                                  HorizontalAlignment="Center" />
+                        <TextBlock x:Uid="modeReadOnly"
+                                   Text="Read-only"
+                                   FontSize="13"
+                                   HorizontalAlignment="Center" />
+                    </StackPanel>
+                </Button>
+            </StackPanel>
 
-            <!-- Focus card -->
-            <Button x:Name="focusCard"
-                    Width="110"
-                    Height="120"
-                    CornerRadius="8"
-                    Padding="0"
-                    Background="{ThemeResource LayerFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    Click="OnFocusCard_Click">
-                <StackPanel Spacing="6"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                    <FontIcon Glyph="&#xE1D5;"
-                              FontSize="28"
-                              HorizontalAlignment="Center" />
-                    <TextBlock x:Uid="modeFocus"
-                               Text="Focus"
-                               FontSize="13"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-            </Button>
-
-            <!-- Read-only card -->
-            <Button x:Name="readOnlyCard"
-                    Width="110"
-                    Height="120"
-                    CornerRadius="8"
-                    Padding="0"
-                    Background="{ThemeResource LayerFillColorDefaultBrush}"
-                    BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
-                    BorderThickness="1"
-                    Click="OnReadOnlyCard_Click">
-                <StackPanel Spacing="6"
-                            VerticalAlignment="Center"
-                            HorizontalAlignment="Center">
-                    <FontIcon Glyph="&#xE8A5;"
-                              FontSize="28"
-                              HorizontalAlignment="Center" />
-                    <TextBlock x:Uid="modeReadOnly"
-                               Text="Read-only"
-                               FontSize="13"
-                               HorizontalAlignment="Center" />
-                </StackPanel>
-            </Button>
-        </StackPanel>
-
-        <!-- Focus options (visible only when Focus card selected) -->
-        <StackPanel x:Name="focusOptions"
-                    Spacing="8"
-                    Visibility="Collapsed">
-            <CheckBox x:Name="fullScreenCheckBox"
-                      x:Uid="modeDialogueFullScreen"
-                      IsChecked="False" />
-            <CheckBox x:Name="autosaveCheckBox"
-                      x:Uid="autosaveContent"
-                      IsChecked="True"
-                      Click="OnAutosaveCheckBox_Click" />
-            <controls:TeachingTip x:Name="autosaveTip"
-                                  Target="{x:Bind autosaveCheckBox}"
-                                  Title="Autosave is off"
-                                  Subtitle="Your progress won&#x2019;t be saved automatically during Focus Mode. It&#x2019;s recommended to keep autosave enabled."
-                                  ActionButtonContent="Enable autosave"
-                                  ActionButtonClick="OnAutosaveTipActionButton_Click"
-                                  CloseButtonContent="Continue anyway"
-                                  IsLightDismissEnabled="False" />
-            <CheckBox x:Name="timeCheckBox"
-                      x:Uid="modeDialogueTimer"
-                      IsChecked="True"
-                      Click="OnTimeCheckBox_Click" />
-            <TimePicker x:Name="timePicker"
-                        ClockIdentifier="24HourClock"
-                        HorizontalAlignment="Stretch" />
-            <CheckBox x:Name="measureCheckBox"
-                      x:Uid="enableMeasureLabel"
-                      IsChecked="True"
-                      Click="OnMeasureCheckBox_Click" />
-            <StackPanel x:Name="measureStack"
-                        Spacing="8">
-                <TextBlock x:Uid="whatToMeasure" />
-                <StackPanel Spacing="8"
-                            Orientation="Horizontal">
-                    <controls:NumberBox x:Name="measureValueNumBox"
-                                        Padding="10,8"
-                                        Value="50"
-                                        Minimum="0"
-                                        SpinButtonPlacementMode="Compact"
-                                        SmallChange="5"
-                                        LargeChange="100"
-                                        Width="120"
-                                        Height="38" />
-                    <ComboBox x:Name="toMeasureComboBox"
-                              SelectedIndex="0"
-                              Height="38"
-                              CornerRadius="4"
-                              Width="172"
-                              VerticalAlignment="Bottom"
-                              HorizontalAlignment="Right">
-                        <ComboBoxItem x:Uid="charactersContent" />
-                        <ComboBoxItem x:Uid="wordsContent" />
-                        <ComboBoxItem x:Uid="paragraphsContent" />
-                    </ComboBox>
+            <StackPanel x:Name="focusOptions"
+                        Spacing="8"
+                        Visibility="Collapsed">
+                <CheckBox x:Name="fullScreenCheckBox"
+                          x:Uid="modeDialogueFullScreen"
+                          IsChecked="False" />
+                <CheckBox x:Name="autosaveCheckBox"
+                          x:Uid="autosaveContent"
+                          IsChecked="True"
+                          Click="OnAutosaveCheckBox_Click" />
+                <controls:TeachingTip x:Name="autosaveTip"
+                                      Target="{x:Bind autosaveCheckBox}"
+                                      Title="Autosave is off"
+                                      Subtitle="Your progress won&#x2019;t be saved automatically during Focus Mode. It&#x2019;s recommended to keep autosave enabled."
+                                      ActionButtonContent="Enable autosave"
+                                      ActionButtonClick="OnAutosaveTipActionButton_Click"
+                                      CloseButtonContent="Continue anyway"
+                                      IsLightDismissEnabled="False" />
+                <CheckBox x:Name="timeCheckBox"
+                          x:Uid="modeDialogueTimer"
+                          IsChecked="True"
+                          Click="OnTimeCheckBox_Click" />
+                <TimePicker x:Name="timePicker"
+                            ClockIdentifier="24HourClock"
+                            HorizontalAlignment="Stretch" />
+                <CheckBox x:Name="measureCheckBox"
+                          x:Uid="enableMeasureLabel"
+                          IsChecked="True"
+                          Click="OnMeasureCheckBox_Click" />
+                <StackPanel x:Name="measureStack"
+                            Spacing="8">
+                    <TextBlock x:Uid="whatToMeasure" />
+                    <StackPanel Spacing="8"
+                                Orientation="Horizontal">
+                        <controls:NumberBox x:Name="measureValueNumBox"
+                                            Padding="10,8"
+                                            Value="50"
+                                            Minimum="0"
+                                            SpinButtonPlacementMode="Compact"
+                                            SmallChange="5"
+                                            LargeChange="100"
+                                            Width="120"
+                                            Height="38" />
+                        <ComboBox x:Name="toMeasureComboBox"
+                                  SelectedIndex="0"
+                                  Height="38"
+                                  CornerRadius="4"
+                                  Width="172"
+                                  VerticalAlignment="Bottom"
+                                  HorizontalAlignment="Right">
+                            <ComboBoxItem x:Uid="charactersContent" />
+                            <ComboBoxItem x:Uid="wordsContent" />
+                            <ComboBoxItem x:Uid="paragraphsContent" />
+                        </ComboBox>
+                    </StackPanel>
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-
-        <!-- Footer -->
-        <Grid Margin="0,4,0,0">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition />
-                <ColumnDefinition Width="8" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <customcontrols:SymbolButton x:Name="enterButton"
-                                         x:Uid="modeEnterButton"
-                                         Glyph="&#xE70F;"
-                                         IsPrimary="True"
-                                         HorizontalAlignment="Stretch"
-                                         Click="OnEnterButton_Click" />
-            <customcontrols:SymbolButton IsCancel="True"
-                                         Grid.Column="2"
-                                         HorizontalAlignment="Stretch"
-                                         Click="OnCancelButton_Click" />
-        </Grid>
-    </StackPanel>
-</dialogs:StorylinesContentDialog>
+    </dialogs:StorylinesShellDialog.DialogBody>
+</dialogs:StorylinesShellDialog>

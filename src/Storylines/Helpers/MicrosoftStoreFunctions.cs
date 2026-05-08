@@ -1,3 +1,4 @@
+using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Storylines.Services;
 using Storylines.Services.Interfaces;
@@ -6,7 +7,6 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Windows.ApplicationModel.Resources;
 using Windows.Services.Store;
-using Microsoft.UI.Xaml;
 
 namespace Storylines.Helpers
 {
@@ -14,7 +14,6 @@ namespace Storylines.Helpers
     {
         private static readonly StoreContext _storeContext = StoreContext.GetDefault();
         private static bool _storeContextInitialized;
-        private static readonly DispatcherTimer _closeThanksInterval = new DispatcherTimer();
         private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
         private static IReadOnlyList<StorePackageUpdate> _availableUpdates = Array.Empty<StorePackageUpdate>();
 
@@ -156,7 +155,69 @@ namespace Storylines.Helpers
 
             _accumulatorTimer?.Stop();
 
-            NotificationManager.DisplayReviewPrompt(source);
+            DisplayReviewPrompt(source);
+        }
+
+        private static void DisplayReviewPrompt(string source)
+        {
+            App.TryGetService<ITelemetryService>()?.TrackReviewPromptDisplayed(source);
+
+            var notifications = App.GetService<INotificationService>();
+            notifications.ShowPersistentNotification(new PersistentNotificationRequest
+            {
+                Severity = InfoBarSeverity.Informational,
+                Title = _resources.GetString("experience"),
+                Message = _resources.GetString("reviewDialog"),
+                IconSource = new FontIconSource { Glyph = "\uE734" },
+                IsClosable = true,
+                OnClosed = OnReviewDismissed,
+                Width = 420,
+                Buttons = new[]
+                {
+                    new NotificationButton
+                    {
+                        Label = _resources.GetString("reviewDialogOption1"),
+                        OnClick = () => _ = PromptUserToRateAppAsync("review_infobar"),
+                    },
+                    new NotificationButton
+                    {
+                        Label = _resources.GetString("reviewDialogOption2"),
+                        OnClick = OnReviewNotNow,
+                    },
+                    new NotificationButton
+                    {
+                        Label = _resources.GetString("reviewDialogOption3"),
+                        OnClick = OnReviewNeverShowAgain,
+                    },
+                },
+            });
+        }
+
+        internal static void ShowReviewPromptPreview()
+        {
+            DisplayReviewPrompt("developer_tools");
+        }
+
+        private static void OnReviewDismissed()
+        {
+            App.TryGetService<ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
+            StopReviewTimer();
+        }
+
+        private static void OnReviewNotNow()
+        {
+            App.TryGetService<ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
+            App.GetService<INotificationService>().DismissPersistentNotification();
+            StopReviewTimer();
+        }
+
+        private static void OnReviewNeverShowAgain()
+        {
+            App.TryGetService<ITelemetryService>()?.TrackReviewInteraction("review_infobar", "never_show_again");
+            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NeverShowAgain);
+            App.GetService<INotificationService>().DismissPersistentNotification();
         }
 
         public static async Task PromptUserToRateAppAsync(string source = "unknown")
@@ -169,17 +230,15 @@ namespace Storylines.Helpers
                 case StoreRateAndReviewStatus.Succeeded:
                     telemetry?.TrackReviewInteraction(source, "completed", "succeeded");
 
-                    var appView = App.GetService<WindowContext>().AppView;
-                    appView.reviewRequestInfoBar.IsOpen = false;
-                    appView.reviewRequestInfoBar.Visibility = Visibility.Collapsed;
-                    NotificationManager.DisplayThankYou();
+                    App.GetService<INotificationService>().DismissPersistentNotification();
+                    App.GetService<INotificationService>().ShowNotification(new NotificationRequest
+                    {
+                        Severity = InfoBarSeverity.Success,
+                        Title = _resources.GetString("reviewRequestThankYou.Title"),
+                        Duration = TimeSpan.FromSeconds(8),
+                    });
 
-                    App.GetService<Storylines.Services.Interfaces.IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.SuccessfullyRated);
-
-                    _closeThanksInterval.Tick -= CloseThanksInterval_Tick;
-                    _closeThanksInterval.Tick += CloseThanksInterval_Tick;
-                    _closeThanksInterval.Interval = TimeSpan.FromSeconds(8);
-                    _closeThanksInterval.Start();
+                    App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.SuccessfullyRated);
                     break;
 
                 case StoreRateAndReviewStatus.CanceledByUser:
@@ -196,29 +255,12 @@ namespace Storylines.Helpers
             }
         }
 
-        private static void CloseThanksInterval_Tick(object sender, object e)
-        {
-            var appView = App.GetService<WindowContext>().AppView;
-            appView.reviewRequestThankYouInfoBar.IsOpen = false;
-            appView.reviewRequestThankYouInfoBar.Visibility = Visibility.Collapsed;
-
-            _closeThanksInterval.Stop();
-            _closeThanksInterval.Tick -= CloseThanksInterval_Tick;
-        }
-
         private static async Task UpdateInstallProgressAsync(StorePackageUpdateStatus progress)
         {
             double progressValue = Math.Max(0, Math.Min(100, progress.PackageDownloadProgress * 100));
 
             await RunOnUiThreadAsync(() =>
-            {
-                var appView = App.GetService<WindowContext>()?.AppView;
-                if (appView?.updateAvailableProgressBar is null)
-                    return;
-
-                appView.updateAvailableProgressBar.IsIndeterminate = false;
-                appView.updateAvailableProgressBar.Value = progressValue;
-            });
+                App.GetService<INotificationService>().UpdatePersistentNotificationProgress(progressValue));
         }
 
         private static void HandleInstallResult(StorePackageUpdateResult result)
@@ -230,11 +272,11 @@ namespace Storylines.Helpers
                 case StorePackageUpdateState.Completed:
                     _availableUpdates = Array.Empty<StorePackageUpdate>();
                     _hasMandatoryUpdate = false;
-                    ShowUpdateInfoBar(
+                    ShowUpdateNotification(
                         _resources.GetString("storeUpdateInstalledTitle"),
                         InfoBarSeverity.Success,
                         _resources.GetString("storeUpdateInstalledMessage"),
-                        string.Empty,
+                        detail: string.Empty,
                         showActions: false,
                         showProgressBar: false,
                         isProgressIndeterminate: false);
@@ -257,7 +299,7 @@ namespace Storylines.Helpers
 
         private static void ShowAvailableUpdateState()
         {
-            ShowUpdateInfoBar(
+            ShowUpdateNotification(
                 _resources.GetString("updateAvailableTitle.Title"),
                 _hasMandatoryUpdate ? InfoBarSeverity.Warning : InfoBarSeverity.Informational,
                 _resources.GetString("storeUpdateAvailableMessage"),
@@ -269,7 +311,7 @@ namespace Storylines.Helpers
 
         private static void ShowAvailableUpdateState(string title, InfoBarSeverity severity, string message)
         {
-            ShowUpdateInfoBar(
+            ShowUpdateNotification(
                 title,
                 severity,
                 message,
@@ -281,17 +323,17 @@ namespace Storylines.Helpers
 
         private static void ShowInstallingUpdateState(bool useSilentInstall)
         {
-            ShowUpdateInfoBar(
+            ShowUpdateNotification(
                 _resources.GetString("updateAvailableTitle.Title"),
                 InfoBarSeverity.Informational,
                 _resources.GetString("storeUpdateInstallingMessage"),
-                string.Empty,
+                detail: string.Empty,
                 showActions: false,
                 showProgressBar: true,
                 isProgressIndeterminate: useSilentInstall);
         }
 
-        private static void ShowUpdateInfoBar(
+        private static void ShowUpdateNotification(
             string title,
             InfoBarSeverity severity,
             string message,
@@ -300,31 +342,38 @@ namespace Storylines.Helpers
             bool showProgressBar,
             bool isProgressIndeterminate)
         {
-            var appView = App.GetService<WindowContext>()?.AppView;
-            if (appView is null)
-                return;
+            IReadOnlyList<NotificationButton> buttons = showActions
+                ? new[]
+                  {
+                      new NotificationButton
+                      {
+                          Label = _resources.GetString("storeUpdateInstallNow"),
+                          OnClick = () => _ = InstallAvailableUpdatesAsync(),
+                      },
+                      new NotificationButton
+                      {
+                          Label = _resources.GetString("storeUpdateLater"),
+                          OnClick = NotificationManager.NewUpdateAvailable_Close,
+                      },
+                  }
+                : null;
 
-            appView.updateAvailableInfoBar.Title = title;
-            appView.updateAvailableInfoBar.Severity = severity;
-            appView.updateAvailableInfoBar.RequestedTheme = appView.ActualTheme;
-            appView.updateAvailableInfoBar.IsClosable = !_isUpdateInstallInProgress;
+            App.GetService<INotificationService>().ShowPersistentNotification(new PersistentNotificationRequest
+            {
+                Title = title,
+                Severity = severity,
+                Message = message,
+                Detail = detail,
+                IconSource = new FontIconSource { Glyph = "\uE896" },
+                IsClosable = !_isUpdateInstallInProgress,
+                OnClosed = NotificationManager.NewUpdateAvailable_Close,
+                Buttons = buttons,
+                HasProgressBar = showProgressBar,
+                IsProgressIndeterminate = isProgressIndeterminate,
+                Width = 440,
+            });
 
-            appView.updateAvailableInfoBarText.Text = message;
-            appView.updateAvailableInfoBarDetailText.Text = detail;
-            appView.updateAvailableInfoBarDetailText.Visibility =
-                string.IsNullOrWhiteSpace(detail) ? Visibility.Collapsed : Visibility.Visible;
-
-            appView.updateAvailableProgressBar.Value = 0;
-            appView.updateAvailableProgressBar.IsIndeterminate = isProgressIndeterminate;
-            appView.updateAvailableProgressBar.Visibility =
-                showProgressBar ? Visibility.Visible : Visibility.Collapsed;
-
-            appView.updateAvailableActionsPanel.Visibility =
-                showActions ? Visibility.Visible : Visibility.Collapsed;
-            appView.updateAvailablePrimaryButton.IsEnabled = !_isUpdateInstallInProgress;
-            appView.updateAvailableSecondaryButton.IsEnabled = !_isUpdateInstallInProgress;
-
-            NotificationManager.DisplayNewUpdateAvailable();
+            NotificationManager.DisplayBadgeNotification("attention");
         }
 
         private static void EnsureStoreContextInitialized()

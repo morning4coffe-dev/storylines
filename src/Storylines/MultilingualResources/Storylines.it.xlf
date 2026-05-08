@@ -14,11 +14,11 @@
           <source>This update is required and some features may stay limited until it finishes installing.</source>
           <target state="translated">Questo aggiornamento è obbligatorio e alcune funzionalità potrebbero restare limitate finché l'installazione non sarà completata.</target>
         </trans-unit>
-        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateInstallNow" translate="yes" xml:space="preserve">
           <source>Install now</source>
           <target state="translated">Installa ora</target>
         </trans-unit>
-        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateLater" translate="yes" xml:space="preserve">
           <source>Later</source>
           <target state="translated">Più tardi</target>
         </trans-unit>
@@ -412,7 +412,7 @@ Volevi uscire senza salvare i tuoi progressi?</target>
           <source>Unsaved progress</source>
           <target state="translated">Progressi non salvati</target>
         </trans-unit>
-        <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
+        <trans-unit id="experience" translate="yes" xml:space="preserve">
           <source>Tell us about your experience</source>
           <target state="translated">Dicci cosa ne pensi</target>
         </trans-unit>
@@ -743,19 +743,19 @@ il pulsante "Aggiungi nuovo personaggio".</target>
           <source>Report a bug</source>
           <target state="needs-review-translation">Segnala un bug</target>
         </trans-unit>
-        <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialog" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
           <target state="needs-review-translation">Vi piace questa applicazione? Lasciate una recensione su Microsoft Store.</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption1" translate="yes" xml:space="preserve">
           <source>Rate now</source>
           <target state="translated">Valuta adesso</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption2.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption2" translate="yes" xml:space="preserve">
           <source>Not now</source>
           <target state="translated">Non ora</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption3" translate="yes" xml:space="preserve">
           <source>Never show again</source>
           <target state="translated">Non mostrare più</target>
         </trans-unit>

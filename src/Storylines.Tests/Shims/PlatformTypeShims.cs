@@ -30,6 +30,12 @@ namespace Microsoft.UI.Xaml.Controls
         Warning,
         Error,
     }
+
+    public abstract class IconSource { }
+    public sealed class FontIconSource : IconSource
+    {
+        public string Glyph { get; set; }
+    }
 }
 
 namespace Microsoft.UI.Xaml

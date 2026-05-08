@@ -69,6 +69,15 @@ namespace Storylines
             _events.Subscribe<InAppNotificationEvent>(e =>
                 DisplayInAppNotification(e.Severity, e.Title, e.Message, e.Duration));
 
+            _events.Subscribe<PersistentNotificationEvent>(e =>
+                notificationHost.ShowPersistentNotification(e));
+
+            _events.Subscribe<UpdatePersistentProgressEvent>(e =>
+                notificationHost.UpdatePersistentProgress(e.Value, e.IsIndeterminate));
+
+            _events.Subscribe<DismissPersistentNotificationEvent>(_ =>
+                notificationHost.DismissPersistentNotification());
+
             _events.Subscribe<ProgressBarEvent>(e =>
             {
                 var mainPage = _windowContext?.MainPage;
@@ -193,60 +202,6 @@ namespace Storylines
             // No need for BackdropMaterial attached property.
             Background = new SolidColorBrush(Colors.Transparent);
         }
-
-        #region Review and Notifications
-        private void OnRateNowButton_Click(object sender, RoutedEventArgs e)
-        {
-            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "rate_now");
-
-            reviewRequestInfoBar.Visibility = Visibility.Collapsed;
-            reviewRequestInfoBar.IsOpen = false;
-            _ = MicrosoftStoreFunctions.PromptUserToRateAppAsync("review_infobar");
-        }
-
-        private void OnRateNotNow_Click(object sender, RoutedEventArgs e)
-        {
-            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "not_now");
-            var prefs = App.GetService<IPreferencesService>();
-            prefs.Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
-            reviewRequestInfoBar.Visibility = Visibility.Collapsed;
-            reviewRequestInfoBar.IsOpen = false;
-            MicrosoftStoreFunctions.StopReviewTimer();
-        }
-
-        private void OnRateNeverShowAgain_Click(object sender, RoutedEventArgs e)
-        {
-            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "never_show_again");
-            App.GetService<IPreferencesService>().Set(SettingsValueStrings.ReviewPrompt, (int)SettingsValues.ReviewPrompt.NeverShowAgain);
-            reviewRequestInfoBar.Visibility = Visibility.Collapsed;
-            reviewRequestInfoBar.IsOpen = false;
-        }
-
-        private void OnRateNotNow_CloseButtonClick(InfoBar sender, object args)
-        {
-            App.TryGetService<Storylines.Services.Interfaces.ITelemetryService>()?.TrackReviewInteraction("review_infobar", "dismissed");
-            var prefs = App.GetService<IPreferencesService>();
-            prefs.Set(SettingsValueStrings.ReviewDeferredUntil, DateTime.UtcNow.AddDays(14).Ticks);
-            reviewRequestInfoBar.Visibility = Visibility.Collapsed;
-            reviewRequestInfoBar.IsOpen = false;
-            MicrosoftStoreFunctions.StopReviewTimer();
-        }
-       
-        private void OnUpdateAvailablePrimaryButton_Click(object sender, RoutedEventArgs e)
-        {
-            _ = MicrosoftStoreFunctions.InstallAvailableUpdatesAsync();
-        }
-
-        private void OnUpdateAvailableSecondaryButton_Click(object sender, RoutedEventArgs e)
-        {
-            NotificationManager.NewUpdateAvailable_Close();
-        }
-
-        private void OnUpdateAvailableInfoBar_Closed(InfoBar sender, InfoBarClosedEventArgs args)
-        {
-            NotificationManager.NewUpdateAvailable_Close();
-        }
-        #endregion
 
         #region Pages
         public enum Pages { Settings, Characters, MainPage,

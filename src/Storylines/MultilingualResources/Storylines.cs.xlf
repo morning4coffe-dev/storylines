@@ -14,11 +14,11 @@
           <source>This update is required and some features may stay limited until it finishes installing.</source>
           <target state="translated">Tato aktualizace je povinná a některé funkce mohou zůstat omezené, dokud se nedokončí její instalace.</target>
         </trans-unit>
-        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateInstallNow" translate="yes" xml:space="preserve">
           <source>Install now</source>
           <target state="translated">Instalovat nyní</target>
         </trans-unit>
-        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateLater" translate="yes" xml:space="preserve">
           <source>Later</source>
           <target state="translated">Později</target>
         </trans-unit>
@@ -70,19 +70,19 @@
           <source>to download it.</source>
           <target state="translated">pro stažení.</target>
         </trans-unit>
-        <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialog" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
           <target state="translated">Líbí se vám tato aplikace? Pokud ano, byli bychom rádi, kdybyste ji zvážil/a ohodnotit na Microsoft Store.</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption1" translate="yes" xml:space="preserve">
           <source>Rate now</source>
           <target state="translated">Ohodnotit</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption2.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption2" translate="yes" xml:space="preserve">
           <source>Not now</source>
           <target state="translated">Později</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption3" translate="yes" xml:space="preserve">
           <source>Never show again</source>
           <target state="translated">Znovu nezobrazovat</target>
         </trans-unit>
@@ -641,7 +641,7 @@ Opravdu chcete odejít bez uložení své práce?</target>
           <source>Find one</source>
           <target state="translated">Najít</target>
         </trans-unit>
-        <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
+        <trans-unit id="experience" translate="yes" xml:space="preserve">
           <source>Tell us about your experience</source>
           <target state="translated">Podělte se o svojí zkušenosti</target>
         </trans-unit>

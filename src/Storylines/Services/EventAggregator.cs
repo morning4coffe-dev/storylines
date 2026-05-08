@@ -69,6 +69,36 @@ namespace Storylines.Services
         public TimeSpan? Duration { get; set; }
     }
 
+    /// <summary>
+    /// Published by <see cref="INotificationService.ShowPersistentNotification"/> to display a
+    /// persistent notification with optional action buttons, detail text, and an inline progress bar.
+    /// </summary>
+    public class PersistentNotificationEvent
+    {
+        public Microsoft.UI.Xaml.Controls.InfoBarSeverity Severity { get; set; }
+        public string Title { get; set; }
+        public string Message { get; set; }
+        public string Detail { get; set; }
+        public Microsoft.UI.Xaml.Controls.IconSource IconSource { get; set; }
+        public bool IsClosable { get; set; } = true;
+        public Action OnClosed { get; set; }
+        public IReadOnlyList<Storylines.Services.Interfaces.NotificationButton> Buttons { get; set; }
+        public bool HasProgressBar { get; set; }
+        public bool IsProgressIndeterminate { get; set; }
+        public double ProgressValue { get; set; }
+        public int Width { get; set; } = 440;
+    }
+
+    /// <summary>Published to update the progress bar in the current persistent notification.</summary>
+    public class UpdatePersistentProgressEvent
+    {
+        public double Value { get; set; }
+        public bool IsIndeterminate { get; set; }
+    }
+
+    /// <summary>Published to programmatically close the persistent notification (no OnClosed callback).</summary>
+    public class DismissPersistentNotificationEvent { }
+
     public class UndoRedoStateChangedEvent
     {
         public bool CanUndo { get; set; }

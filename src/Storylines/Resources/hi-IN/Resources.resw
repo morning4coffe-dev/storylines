@@ -564,7 +564,7 @@
   <data name="recoveryRestoreDialogCancel" xml:space="preserve">
     <value>अभी नहीं</value>
   </data>
-  <data name="experience.Title" xml:space="preserve">
+  <data name="experience" xml:space="preserve">
     <value>Tell us about your experience</value>
   </data>
   <data name="exportContent.Content" xml:space="preserve">
@@ -738,16 +738,16 @@
   <data name="reportABug.Text" xml:space="preserve">
     <value>Report a bug</value>
   </data>
-  <data name="reviewDialog.Text" xml:space="preserve">
+  <data name="reviewDialog" xml:space="preserve">
     <value>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</value>
   </data>
-  <data name="reviewDialogOption1.Content" xml:space="preserve">
+  <data name="reviewDialogOption1" xml:space="preserve">
     <value>Rate now</value>
   </data>
-  <data name="reviewDialogOption2.Content" xml:space="preserve">
+  <data name="reviewDialogOption2" xml:space="preserve">
     <value>Not now</value>
   </data>
-  <data name="reviewDialogOption3.Content" xml:space="preserve">
+  <data name="reviewDialogOption3" xml:space="preserve">
     <value>Never show again</value>
   </data>
   <data name="reviewRequestThankYou.Title" xml:space="preserve">
@@ -804,10 +804,10 @@
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
     <value>इंस्टॉल पूरा होने तक कुछ सुविधाएँ सीमित रह सकती हैं।</value>
   </data>
-  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+  <data name="storeUpdateInstallNow" xml:space="preserve">
     <value>अभी इंस्टॉल करें</value>
   </data>
-  <data name="storeUpdateLater.Content" xml:space="preserve">
+  <data name="storeUpdateLater" xml:space="preserve">
     <value>बाद में</value>
   </data>
   <data name="storeUpdateInstallingMessage" xml:space="preserve">
@@ -1113,6 +1113,35 @@
   </data>
   <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>जोर से पढ़ने के लिए कोई पाठ नहीं है</value></data>
   <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>पहले कुछ पाठ लिखें या चुनें।</value></data>
+  <data name="developer.Content" xml:space="preserve"><value>डेवलपर</value></data>
+  <data name="developerText.Text" xml:space="preserve"><value>डेवलपर</value></data>
+  <data name="developerRuntimeSection.Text" xml:space="preserve"><value>रनटाइम डायग्नोस्टिक्स</value></data>
+  <data name="developerCurrentPageLabel.Text" xml:space="preserve"><value>वर्तमान पृष्ठ</value></data>
+  <data name="developerCurrentThemeLabel.Text" xml:space="preserve"><value>वर्तमान थीम</value></data>
+  <data name="developerWindowSizeLabel.Text" xml:space="preserve"><value>विंडो आकार</value></data>
+  <data name="developerCurrentDialogLabel.Text" xml:space="preserve"><value>वर्तमान डायलॉग</value></data>
+  <data name="developerHiddenControlsSection.Text" xml:space="preserve"><value>अदृश्य नियंत्रण</value></data>
+  <data name="developerHiddenControlsDescription.Text" xml:space="preserve"><value>सक्रिय दृश्य वृक्ष से वर्तमान में छिपे नियंत्रण देखें।</value></data>
+  <data name="developerRefreshSnapshotButton.Content" xml:space="preserve"><value>स्नैपशॉट ताज़ा करें</value></data>
+  <data name="developerHiddenControlsCountLabel.Text" xml:space="preserve"><value>मिलान वाले नियंत्रण</value></data>
+  <data name="developerAttachedBehaviorsSection.Text" xml:space="preserve"><value>अदृश्य व्यवहार</value></data>
+  <data name="developerAttachedBehaviorsDescription.Text" xml:space="preserve"><value>ऐसे संलग्न व्यवहार देखें जो अपना स्वयं का UI रेंडर नहीं करते।</value></data>
+  <data name="developerAttachedBehaviorsCountLabel.Text" xml:space="preserve"><value>संलग्न व्यवहार</value></data>
+  <data name="developerNotificationsSection.Text" xml:space="preserve"><value>सूचनाएं</value></data>
+  <data name="developerNotificationsDescription.Text" xml:space="preserve"><value>रेटिंग अनुरोध सहित सूचना सतहों का पूर्वावलोकन करें।</value></data>
+  <data name="developerShowTransientNotificationButton.Content" xml:space="preserve"><value>अस्थायी सूचना दिखाएं</value></data>
+  <data name="developerShowReviewPromptButton.Content" xml:space="preserve"><value>रेटिंग अनुरोध दिखाएं</value></data>
+  <data name="developerDismissPersistentNotificationButton.Content" xml:space="preserve"><value>स्थायी सूचना बंद करें</value></data>
+  <data name="developerDialogsSection.Text" xml:space="preserve"><value>डायलॉग</value></data>
+  <data name="developerDialogsDescription.Text" xml:space="preserve"><value>साझा डायलॉग सेवा के माध्यम से मौजूदा ऐप डायलॉग खोलें।</value></data>
+  <data name="developerOpenLoadDialogButton.Content" xml:space="preserve"><value>प्रोजेक्ट लोड डायलॉग खोलें</value></data>
+  <data name="developerOpenShortcutsDialogButton.Content" xml:space="preserve"><value>शॉर्टकट्स डायलॉग खोलें</value></data>
+  <data name="developerOpenModePickerDialogButton.Content" xml:space="preserve"><value>मोड पिकर डायलॉग खोलें</value></data>
+  <data name="developerOpenProjectInfoDialogButton.Content" xml:space="preserve"><value>प्रोजेक्ट जानकारी डायलॉग खोलें</value></data>
+  <data name="developerTransientNotificationTitle" xml:space="preserve"><value>डेवलपर पूर्वावलोकन</value></data>
+  <data name="developerTransientNotificationMessage" xml:space="preserve"><value>यह केवल डिबग के लिए सूचना पूर्वावलोकन है।</value></data>
+  <data name="developerNoDialogOpen" xml:space="preserve"><value>कोई डायलॉग खुला नहीं है</value></data>
+  <data name="developerUnknownValue" xml:space="preserve"><value>अज्ञात</value></data>
 </root>
 
 

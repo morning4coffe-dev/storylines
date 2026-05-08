@@ -101,7 +101,37 @@
         <Setter Property="SecondaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
         <Setter Property="CloseButtonStyle" Value="{StaticResource DialogButtonStyle}" />
     </Style>
-    
+
+    <Style TargetType="dialogs:StorylinesShellDialog">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{ThemeResource DialogueAcrylicBackground}" />
+        <Setter Property="PrimaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="SecondaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="CloseButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+    </Style>
+
+    <Style x:Key="DialogSelectionCardStyle"
+           TargetType="Button">
+        <Setter Property="Width"
+                Value="110" />
+        <Setter Property="Height"
+                Value="120" />
+        <Setter Property="CornerRadius"
+                Value="8" />
+        <Setter Property="Padding"
+                Value="12" />
+        <Setter Property="Background"
+                Value="{ThemeResource LayerFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush"
+                Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+    </Style>
+     
     <Style x:Key="CharactersTextBoxesStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
         <Setter Property="Background" Value="{ThemeResource TextControlBackground}"/>

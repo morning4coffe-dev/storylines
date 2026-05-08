@@ -1,12 +1,14 @@
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
 using Storylines.Services;
+using System;
 
 namespace Storylines.Views.Dialogs
 {
     public class StorylinesContentDialog : ContentDialog
     {
         private readonly WindowContext _windowContext;
+        private int _openTransientCount;
         private bool _isPointerInside;
         private bool _outsideTapSubscribed;
 
@@ -22,7 +24,19 @@ namespace Storylines.Views.Dialogs
 
         public bool CloseOnOutsideTap { get; set; }
 
-        protected virtual bool CanCloseOnOutsideTap() => true;
+        protected bool HasOpenTransientElements => _openTransientCount > 0;
+
+        protected void NotifyTransientOpened()
+        {
+            _openTransientCount++;
+        }
+
+        protected void NotifyTransientClosed()
+        {
+            _openTransientCount = Math.Max(0, _openTransientCount - 1);
+        }
+
+        protected virtual bool CanCloseOnOutsideTap() => !HasOpenTransientElements;
 
         private void OnManagedDialogOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
         {
@@ -40,6 +54,7 @@ namespace Storylines.Views.Dialogs
 
             _windowContext.RootElement.PointerPressed -= OnRootPointerPressed;
             _outsideTapSubscribed = false;
+            _openTransientCount = 0;
             _isPointerInside = false;
         }
 

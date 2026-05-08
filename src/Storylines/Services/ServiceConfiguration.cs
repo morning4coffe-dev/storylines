@@ -60,6 +60,10 @@ namespace Storylines.Services
             services.AddTransient<ViewModels.Settings.GeneralSettingsViewModel>();
             services.AddTransient<ViewModels.Settings.PersonalizationSettingsViewModel>();
             services.AddTransient<ViewModels.Settings.AccessibilitySettingsViewModel>();
+#if DEBUG
+            services.AddScoped<IDeveloperDiagnosticsService, DeveloperDiagnosticsService>();
+            services.AddTransient<ViewModels.Settings.DeveloperSettingsViewModel>();
+#endif
 
 #if PRIVATE_PLUGINS
             services.AddScoped<Interfaces.IBranchingDialogueStore, ProjectStateBranchingDialogueStore>();

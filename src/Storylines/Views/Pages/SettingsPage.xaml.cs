@@ -3,8 +3,10 @@ using Storylines.Constants;
 using Storylines.Views.Pages.Settings;
 using System;
 using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Media.Animation;
 using Storylines.Services;
+using Windows.ApplicationModel.Resources;
 
 namespace Storylines.Views.Pages
 {
@@ -13,10 +15,15 @@ namespace Storylines.Views.Pages
         private const double MinimalPaneBreakpoint = LayoutConstants.SettingsMinimalPaneBreakpoint;
         private const double CompactPaneBreakpoint = LayoutConstants.SettingsCompactPaneBreakpoint;
         private NavigationViewPaneDisplayMode? _lastPaneDisplayMode;
+        private readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
 
         public SettingsPage()
         {
             InitializeComponent();
+
+#if DEBUG
+            AddDeveloperNavigationItem();
+#endif
 
             App.GetService<WindowContext>().AppView.page = AppView.Pages.Settings;
 
@@ -39,6 +46,9 @@ namespace Storylines.Views.Pages
                 "General" => typeof(GeneralPage),
                 "Personalize" => typeof(PersonalizationPage),
                 "Accessibility" => typeof(AccessibilityPage),
+#if DEBUG
+                "Developer" => typeof(DeveloperPage),
+#endif
                 "About" => typeof(AboutPage),
                 _ => null
             };
@@ -93,5 +103,26 @@ namespace Storylines.Views.Pages
                 if (item is NavigationViewItem && (item as NavigationViewItem).Tag.ToString() == "About")
                     SelectAboutPage();
         }
+
+#if DEBUG
+        private void AddDeveloperNavigationItem()
+        {
+            string label = _resources.GetString("developer.Content");
+            var item = new NavigationViewItem
+            {
+                Content = label,
+                Tag = "Developer",
+                CornerRadius = new CornerRadius(4),
+                Icon = new FontIcon
+                {
+                    Glyph = "\uE943",
+                    Style = (Style)Application.Current.Resources["AppSymbolIconStyle"],
+                }
+            };
+
+            AutomationProperties.SetName(item, label);
+            settingsNavigationView.MenuItems.Add(item);
+        }
+#endif
     }
 }

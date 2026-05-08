@@ -8,35 +8,90 @@
              xmlns:interactivity="using:Microsoft.Xaml.Interactivity"
              mc:Ignorable="d">
 
-    <InfoBar Width="400"
-             IsClosable="True"
-             Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
-             BorderBrush="{ThemeResource ElementBorderColor}"
-             BorderThickness="{ThemeResource ElementBorderThickness}">
-        <interactivity:Interaction.Behaviors>
-            <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
-        </interactivity:Interaction.Behaviors>
+    <StackPanel HorizontalAlignment="Center"
+                Spacing="8">
 
-        <animations:Implicit.ShowAnimations>
-            <animations:TranslationAnimation Duration="0:0:0.5"
-                                             From="0, 35, 0"
-                                             To="0"
-                                             EasingMode="EaseOut"
-                                             EasingType="Back" />
-            <animations:OpacityAnimation Duration="0:0:0.5"
-                                         From="0"
-                                         To="1.0" />
-        </animations:Implicit.ShowAnimations>
-
-        <animations:Implicit.HideAnimations>
-            <animations:TranslationAnimation Duration="0:0:0.5"
+        <!--  Persistent notification slot: update available, review prompt, etc.  -->
+        <InfoBar x:Name="PersistentInfoBar"
+                 IsOpen="False"
+                 Visibility="Collapsed"
+                 IsClosable="True"
+                 Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
+                 BorderBrush="{ThemeResource ElementBorderColor}"
+                 BorderThickness="{ThemeResource ElementBorderThickness}"
+                 Closed="OnPersistentInfoBarClosed">
+            <InfoBar.Content>
+                <StackPanel Spacing="8">
+                    <TextBlock x:Name="PersistentDetailText"
+                               Visibility="Collapsed"
+                               Opacity="0.85"
+                               TextWrapping="WrapWholeWords" />
+                    <ProgressBar x:Name="PersistentProgressBar"
+                                 Minimum="0"
+                                 Maximum="100"
+                                 Height="4"
+                                 Margin="0,12,12,12"
+                                 Visibility="Collapsed" />
+                    <StackPanel x:Name="PersistentButtonsPanel"
+                                Orientation="Horizontal"
+                                Spacing="8"
+                                Margin="0,-10,0,12"
+                                Visibility="Collapsed" />
+                </StackPanel>
+            </InfoBar.Content>
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
                                              From="0"
-                                             To="0, 35, 0"
-                                             EasingMode="EaseIn"
-                                             EasingType="Back" />
-            <animations:OpacityAnimation Duration="0:0:0.5"
-                                         From="1.0"
-                                         To="0" />
-        </animations:Implicit.HideAnimations>
-    </InfoBar>
+                                             To="1.0" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
+            </animations:Implicit.HideAnimations>
+        </InfoBar>
+
+        <!--  Transient notification queue  -->
+        <InfoBar x:Name="TransientInfoBar"
+                 Width="400"
+                 IsClosable="True"
+                 Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
+                 BorderBrush="{ThemeResource ElementBorderColor}"
+                 BorderThickness="{ThemeResource ElementBorderThickness}">
+            <interactivity:Interaction.Behaviors>
+                <behaviors:StackedNotificationsBehavior x:Name="NotificationQueue" />
+            </interactivity:Interaction.Behaviors>
+            <animations:Implicit.ShowAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0, 35, 0"
+                                                 To="0"
+                                                 EasingMode="EaseOut"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="0"
+                                             To="1.0" />
+            </animations:Implicit.ShowAnimations>
+            <animations:Implicit.HideAnimations>
+                <animations:TranslationAnimation Duration="0:0:0.5"
+                                                 From="0"
+                                                 To="0, 35, 0"
+                                                 EasingMode="EaseIn"
+                                                 EasingType="Back" />
+                <animations:OpacityAnimation Duration="0:0:0.5"
+                                             From="1.0"
+                                             To="0" />
+            </animations:Implicit.HideAnimations>
+        </InfoBar>
+
+    </StackPanel>
 </UserControl>

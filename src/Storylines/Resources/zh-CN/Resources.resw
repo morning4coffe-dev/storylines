@@ -943,7 +943,7 @@
   <data name="recoveryRestoreDialogCancel" xml:space="preserve">
     <value>暂不处理</value>
   </data>
-  <data name="experience.Title" xml:space="preserve">
+  <data name="experience" xml:space="preserve">
     <value>Tell us about your experience</value>
   </data>
   <data name="fileDoesNotExist.Text" xml:space="preserve">
@@ -1039,16 +1039,16 @@
   <data name="recurrentsTitle.Text" xml:space="preserve">
     <value>Manage Your Subscriptions</value>
   </data>
-  <data name="reviewDialog.Text" xml:space="preserve">
+  <data name="reviewDialog" xml:space="preserve">
     <value>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</value>
   </data>
-  <data name="reviewDialogOption1.Content" xml:space="preserve">
+  <data name="reviewDialogOption1" xml:space="preserve">
     <value>Rate now</value>
   </data>
-  <data name="reviewDialogOption2.Content" xml:space="preserve">
+  <data name="reviewDialogOption2" xml:space="preserve">
     <value>Not now</value>
   </data>
-  <data name="reviewDialogOption3.Content" xml:space="preserve">
+  <data name="reviewDialogOption3" xml:space="preserve">
     <value>Never show again</value>
   </data>
   <data name="reviewRequestThankYou.Title" xml:space="preserve">
@@ -1087,10 +1087,10 @@
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
     <value>在安装完成之前某些功能可能会受到限制。</value>
   </data>
-  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+  <data name="storeUpdateInstallNow" xml:space="preserve">
     <value>立即安装</value>
   </data>
-  <data name="storeUpdateLater.Content" xml:space="preserve">
+  <data name="storeUpdateLater" xml:space="preserve">
     <value>稍后</value>
   </data>
   <data name="storeUpdateInstallingMessage" xml:space="preserve">
@@ -1375,6 +1375,93 @@
   </data>
   <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>没有可朗读的文本</value></data>
   <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>请先输入或选择一些文本。</value></data>
+  <data name="developer.Content" xml:space="preserve">
+    <value>开发者</value>
+  </data>
+  <data name="developerText.Text" xml:space="preserve">
+    <value>开发者</value>
+  </data>
+  <data name="developerRuntimeSection.Text" xml:space="preserve">
+    <value>运行时诊断</value>
+  </data>
+  <data name="developerCurrentPageLabel.Text" xml:space="preserve">
+    <value>当前页面</value>
+  </data>
+  <data name="developerCurrentThemeLabel.Text" xml:space="preserve">
+    <value>当前主题</value>
+  </data>
+  <data name="developerWindowSizeLabel.Text" xml:space="preserve">
+    <value>窗口大小</value>
+  </data>
+  <data name="developerCurrentDialogLabel.Text" xml:space="preserve">
+    <value>当前对话框</value>
+  </data>
+  <data name="developerHiddenControlsSection.Text" xml:space="preserve">
+    <value>不可见控件</value>
+  </data>
+  <data name="developerHiddenControlsDescription.Text" xml:space="preserve">
+    <value>查看当前活动可视化树中隐藏的控件。</value>
+  </data>
+  <data name="developerRefreshSnapshotButton.Content" xml:space="preserve">
+    <value>刷新快照</value>
+  </data>
+  <data name="developerHiddenControlsCountLabel.Text" xml:space="preserve">
+    <value>匹配控件</value>
+  </data>
+  <data name="developerAttachedBehaviorsSection.Text" xml:space="preserve">
+    <value>不可见行为</value>
+  </data>
+  <data name="developerAttachedBehaviorsDescription.Text" xml:space="preserve">
+    <value>查看未呈现自身界面的附加行为。</value>
+  </data>
+  <data name="developerAttachedBehaviorsCountLabel.Text" xml:space="preserve">
+    <value>附加行为</value>
+  </data>
+  <data name="developerNotificationsSection.Text" xml:space="preserve">
+    <value>通知</value>
+  </data>
+  <data name="developerNotificationsDescription.Text" xml:space="preserve">
+    <value>预览通知界面，包括评价请求提示。</value>
+  </data>
+  <data name="developerShowTransientNotificationButton.Content" xml:space="preserve">
+    <value>显示临时通知</value>
+  </data>
+  <data name="developerShowReviewPromptButton.Content" xml:space="preserve">
+    <value>显示评价请求</value>
+  </data>
+  <data name="developerDismissPersistentNotificationButton.Content" xml:space="preserve">
+    <value>关闭持久通知</value>
+  </data>
+  <data name="developerDialogsSection.Text" xml:space="preserve">
+    <value>对话框</value>
+  </data>
+  <data name="developerDialogsDescription.Text" xml:space="preserve">
+    <value>通过共享对话框服务打开现有应用对话框。</value>
+  </data>
+  <data name="developerOpenLoadDialogButton.Content" xml:space="preserve">
+    <value>打开加载项目对话框</value>
+  </data>
+  <data name="developerOpenShortcutsDialogButton.Content" xml:space="preserve">
+    <value>打开快捷键对话框</value>
+  </data>
+  <data name="developerOpenModePickerDialogButton.Content" xml:space="preserve">
+    <value>打开模式选择器对话框</value>
+  </data>
+  <data name="developerOpenProjectInfoDialogButton.Content" xml:space="preserve">
+    <value>打开项目信息对话框</value>
+  </data>
+  <data name="developerTransientNotificationTitle" xml:space="preserve">
+    <value>开发者预览</value>
+  </data>
+  <data name="developerTransientNotificationMessage" xml:space="preserve">
+    <value>这是一个仅供调试使用的通知预览。</value>
+  </data>
+  <data name="developerNoDialogOpen" xml:space="preserve">
+    <value>没有打开的对话框</value>
+  </data>
+  <data name="developerUnknownValue" xml:space="preserve">
+    <value>未知</value>
+  </data>
 </root>
 
 

@@ -197,22 +197,6 @@ namespace Storylines.Views.Controls
             _navigation?.NavigateTo(Storylines.Services.Interfaces.NavigationTarget.BranchingDialogue);
     #endif
         }
-
-        private void OnDictationButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_projectState.Chapters.Count == 0)
-            {
-                _projectState.AddChapter(ProjectState.GetRandomChapterName());
-                _textEditor.SelectedChapterIndex = _projectState.Chapters.Count - 1;
-            }
-
-            _textEditor.Focus();
-
-            if (_speechHub.ToggleDictationCommand.CanExecute(null))
-            {
-                _speechHub.ToggleDictationCommand.Execute(null);
-            }
-        }
         #endregion
 
         #region FORMAT
