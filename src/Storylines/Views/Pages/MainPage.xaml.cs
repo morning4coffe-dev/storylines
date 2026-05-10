@@ -20,7 +20,7 @@ namespace Storylines.Views.Pages
 
         private ChaptersList ChapterList => _windowContext.ChapterList;
         private MainCommandBar CommandBar => _windowContext.CommandBar;
-        private ChapterTextBox ChapterText => _windowContext.ChapterText;
+        private Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor ChapterText => _windowContext.ChapterText;
 
         private readonly EventAggregator _events;
         private readonly MainPageViewModel _viewModel;

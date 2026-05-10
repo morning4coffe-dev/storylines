@@ -2,6 +2,7 @@
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:components="using:Storylines.Views.Controls"
+             xmlns:dialogueEditor="using:Storylines.Views.Controls.DialogueEditor"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:vm="using:Storylines.ViewModels"
@@ -69,7 +70,7 @@
                                    Margin="8,0"
                                    Visibility="{x:Bind ViewModel.DefaultCommandBarVisibility, Mode=OneWay}" />
 
-        <components:ChapterTextBox x:Name="chapterTextBoxMainPage"
+        <dialogueEditor:BranchingDialogueEditor x:Name="chapterTextBoxMainPage"
                                    Grid.Row="1"
                                    FormattingBarVisibility="{x:Bind ViewModel.FormattingBarVisibility, Mode=OneWay}"
                                    IsReadOnly="{x:Bind ViewModel.IsChapterTextReadOnly, Mode=OneWay}"

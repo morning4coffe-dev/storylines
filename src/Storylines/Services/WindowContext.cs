@@ -24,7 +24,7 @@ namespace Storylines.Services
         public CharactersPage CharactersPage { get; internal set; }
         public ChaptersList ChapterList { get; internal set; }
         public MainCommandBar CommandBar { get; internal set; }
-        public ChapterTextBox ChapterText { get; internal set; }
+        public Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor ChapterText { get; internal set; }
         public TextHighlighter Highlighter { get; } = new TextHighlighter();
         internal bool IsInitialized { get; set; }
 

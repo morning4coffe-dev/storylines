@@ -33,7 +33,7 @@ namespace Storylines.Views.Controls
 
         private MainPage CurrentMainPage => _windowContext?.MainPage;
 
-        private ChapterTextBox CurrentChapterText => _windowContext?.ChapterText;
+        private Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor CurrentChapterText => _windowContext?.ChapterText;
 
         public MainCommandBar()
         {

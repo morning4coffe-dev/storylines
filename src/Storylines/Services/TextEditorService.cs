@@ -114,7 +114,7 @@ namespace Storylines.Services
             ApplyEditorText(chapterText, chapter, Microsoft.UI.Text.TextSetOptions.FormatRtf, chapter.Text ?? string.Empty, restoreChapterLocation: true);
         }
 
-        private void ApplyEditorText(ChapterTextBox chapterText, Chapter chapter, TextSetOptions options, string sourceText, bool restoreChapterLocation)
+        private void ApplyEditorText(Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor chapterText, Chapter chapter, TextSetOptions options, string sourceText, bool restoreChapterLocation)
         {
             var textBox = chapterText?.textBox;
             if (textBox is null)
@@ -141,7 +141,7 @@ namespace Storylines.Services
             }
         }
 
-        private static void SyncLoadedChapterText(Chapter chapter, MyRichEditBox textBox, string sourceText)
+        private static void SyncLoadedChapterText(Chapter chapter, Microsoft.UI.Xaml.Controls.RichEditBox textBox, string sourceText)
         {
             if (chapter is null || textBox is null)
                 return;
@@ -157,7 +157,7 @@ namespace Storylines.Services
                 chapter.Text = normalizedChapterText;
         }
 
-        private void ScheduleProgrammaticChangeCompletion(MyRichEditBox textBox, ChapterTextBox chapterText, Chapter chapter, bool restoreChapterLocation)
+        private void ScheduleProgrammaticChangeCompletion(Microsoft.UI.Xaml.Controls.RichEditBox textBox, Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor chapterText, Chapter chapter, bool restoreChapterLocation)
         {
             textBox.DispatcherQueue.TryEnqueue(DispatcherQueuePriority.Low, () =>
             {
@@ -182,7 +182,7 @@ namespace Storylines.Services
             return _projectState.Chapters[selectedIndex];
         }
 
-        private static void RestoreChapterLocation(ChapterTextBox chapterText, Chapter chapter)
+        private static void RestoreChapterLocation(Storylines.Views.Controls.DialogueEditor.BranchingDialogueEditor chapterText, Chapter chapter)
         {
             var textBox = chapterText?.textBox;
             if (textBox is null || chapter is null)
