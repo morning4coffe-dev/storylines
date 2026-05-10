@@ -117,7 +117,7 @@
                                        Opacity=".7"
                                        Grid.Column="2"
                                        Grid.Row="2" />
-                            <TextBlock Text="{Binding lastEditedFormatted}"
+                            <TextBlock Text="{Binding LastEditedFormatted}"
                                        FontSize="12"
                                        HorizontalAlignment="Right"
                                        Opacity=".8"

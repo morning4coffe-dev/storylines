@@ -17,7 +17,7 @@ namespace Storylines.Services
 
             services.AddSingleton<ILogger, DebugLogger>();
             services.AddSingleton<IWindowManager, WindowManager>();
-            services.AddSingleton<ITelemetryProvider, AppCenterTelemetryProvider>();
+            services.AddSingleton<ITelemetryProvider, SentryTelemetryProvider>();
             services.AddSingleton<JsonSaveSerializer>();
             services.AddSingleton<LegacySrlSerializer>();
 
