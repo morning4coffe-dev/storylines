@@ -10,7 +10,7 @@ using Microsoft.UI.Xaml.Input;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectFileInfoDialogue : StorylinesContentDialog
+    public sealed partial class ProjectFileInfoDialogue : AppContentDialog
     {
         private static IProjectPersistenceService ProjectPersistence => App.TryGetService<IProjectPersistenceService>();
 

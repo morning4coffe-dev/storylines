@@ -10,7 +10,7 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectRenamerDialogue : StorylinesContentDialog
+    public sealed partial class ProjectRenamerDialogue : AppContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
 

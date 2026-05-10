@@ -11,7 +11,7 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ChapterCreatorOrRenamer : StorylinesContentDialog
+    public sealed partial class ChapterCreatorOrRenamer : AppContentDialog
     {
         public enum DialogTask { Create, Rename }
 

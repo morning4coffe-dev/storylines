@@ -10,7 +10,7 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ShortcutsDialogue : StorylinesContentDialog
+    public sealed partial class ShortcutsDialogue : AppContentDialog
     {
         public List<ShortcutDefinition> GlobalShortcuts { get; }
         public List<ShortcutDefinition> MainPageShortcuts { get; }

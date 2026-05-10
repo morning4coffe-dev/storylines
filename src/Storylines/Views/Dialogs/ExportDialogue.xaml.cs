@@ -10,7 +10,7 @@ using Storylines.Helpers;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ExportDialogue : StorylinesShellDialog
+    public sealed partial class ExportDialogue : AppShellDialog
     {
         public ExportDialogViewModel ViewModel { get; }
 

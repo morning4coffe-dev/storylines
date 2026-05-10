@@ -1358,6 +1358,15 @@
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Enter mode</value>
   </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Edit mode</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Focus mode</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Read-only mode</value>
+  </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>Experimental</value>
   </data>

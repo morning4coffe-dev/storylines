@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1222,6 +1222,15 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Spustit režim</value>
+  </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Upravit</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Soustředění</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Pouze pro čtení</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>Experimentální</value>

@@ -13,7 +13,7 @@ using Windows.ApplicationModel.Resources;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class GlobalSearchDialogue : StorylinesContentDialog
+    public sealed partial class GlobalSearchDialogue : AppContentDialog
     {
         private readonly List<GlobalSearchResult> _results = new List<GlobalSearchResult>();
         private readonly INavigationService _navigation;

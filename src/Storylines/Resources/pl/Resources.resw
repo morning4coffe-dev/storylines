@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -941,6 +941,15 @@
   </data>
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Włącz tryb</value>
+  </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Tryb edycji</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Tryb skupienia</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Tryb tylko do odczytu</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>Eksperymentalne</value>

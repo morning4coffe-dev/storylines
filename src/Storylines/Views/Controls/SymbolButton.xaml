@@ -6,16 +6,16 @@
              mc:Ignorable="d"
              d:DesignHeight="30">
 
-    <Button Style="{x:Bind Style}"
+    <Button Style="{x:Bind Style, Mode=OneWay}"
             Height="38"
             CornerRadius="4"
             Click="Button_Click"
             HorizontalAlignment="Stretch"
-            AutomationProperties.Name="{x:Bind Text}">
+            AutomationProperties.Name="{x:Bind Text, Mode=OneWay}">
         <StackPanel Orientation="Horizontal"
                     Spacing="4">
             <Grid>
-                <FontIcon Glyph="{x:Bind Glyph}"
+                <FontIcon Glyph="{x:Bind Glyph, Mode=OneWay}"
                           RenderTransformOrigin=".5,.5">
                     <FontIcon.RenderTransform>
                         <CompositeTransform ScaleX=".85"
@@ -23,7 +23,7 @@
                     </FontIcon.RenderTransform>
                 </FontIcon>
             </Grid>
-            <TextBlock Text="{x:Bind Text}" />
+            <TextBlock Text="{x:Bind Text, Mode=OneWay}" />
         </StackPanel>
     </Button>
 </UserControl>

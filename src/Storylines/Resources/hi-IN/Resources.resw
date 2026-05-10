@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype"><value>text/microsoft-resx</value></resheader>
   <resheader name="version"><value>2.0</value></resheader>
@@ -940,6 +940,15 @@
   </data>
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>मोड शुरू करें</value>
+  </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>संपादन मोड</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>फोकस मोड</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>केवल पढ़ने के लिए मोड</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>प्रायोगिक</value>

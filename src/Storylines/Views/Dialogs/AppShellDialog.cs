@@ -6,7 +6,7 @@ using Storylines.Views.Controls;
 
 namespace Storylines.Views.Dialogs
 {
-    public class StorylinesShellDialog : StorylinesContentDialog
+    public abstract class AppShellDialog : AppContentDialog
     {
         private readonly Grid _rootGrid;
         private readonly StackPanel _stackPanel;
@@ -22,118 +22,118 @@ namespace Storylines.Views.Dialogs
         public static readonly DependencyProperty DialogTitleProperty = DependencyProperty.Register(
             nameof(DialogTitle),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogSubtitleProperty = DependencyProperty.Register(
             nameof(DialogSubtitle),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty HeaderContentProperty = DependencyProperty.Register(
             nameof(HeaderContent),
             typeof(object),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(null, OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogBodyProperty = DependencyProperty.Register(
             nameof(DialogBody),
             typeof(object),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(null, OnShellPropertyChanged));
 
         public static readonly DependencyProperty FooterContentProperty = DependencyProperty.Register(
             nameof(FooterContent),
             typeof(object),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(null, OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogPaddingProperty = DependencyProperty.Register(
             nameof(DialogPadding),
             typeof(Thickness),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(new Thickness(4), OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogSpacingProperty = DependencyProperty.Register(
             nameof(DialogSpacing),
             typeof(double),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(16d, OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogMinWidthProperty = DependencyProperty.Register(
             nameof(DialogMinWidth),
             typeof(double),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(340d, OnShellPropertyChanged));
 
         public static readonly DependencyProperty DialogMaxWidthProperty = DependencyProperty.Register(
             nameof(DialogMaxWidth),
             typeof(double),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(double.PositiveInfinity, OnShellPropertyChanged));
 
         public static readonly DependencyProperty UseDefaultFooterProperty = DependencyProperty.Register(
             nameof(UseDefaultFooter),
             typeof(bool),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(true, OnShellPropertyChanged));
 
         public static readonly DependencyProperty PrimaryActionTextProperty = DependencyProperty.Register(
             nameof(PrimaryActionText),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty PrimaryActionGlyphProperty = DependencyProperty.Register(
             nameof(PrimaryActionGlyph),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty IsPrimaryActionEnabledProperty = DependencyProperty.Register(
             nameof(IsPrimaryActionEnabled),
             typeof(bool),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(true, OnShellPropertyChanged));
 
         public static readonly DependencyProperty PrimaryActionVisibilityProperty = DependencyProperty.Register(
             nameof(PrimaryActionVisibility),
             typeof(Visibility),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(Visibility.Visible, OnShellPropertyChanged));
 
         public static readonly DependencyProperty SecondaryActionTextProperty = DependencyProperty.Register(
             nameof(SecondaryActionText),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty SecondaryActionGlyphProperty = DependencyProperty.Register(
             nameof(SecondaryActionGlyph),
             typeof(string),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(string.Empty, OnShellPropertyChanged));
 
         public static readonly DependencyProperty IsSecondaryActionEnabledProperty = DependencyProperty.Register(
             nameof(IsSecondaryActionEnabled),
             typeof(bool),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(true, OnShellPropertyChanged));
 
         public static readonly DependencyProperty SecondaryActionVisibilityProperty = DependencyProperty.Register(
             nameof(SecondaryActionVisibility),
             typeof(Visibility),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(Visibility.Visible, OnShellPropertyChanged));
 
         public static readonly DependencyProperty UseCancelSecondaryActionProperty = DependencyProperty.Register(
             nameof(UseCancelSecondaryAction),
             typeof(bool),
-            typeof(StorylinesShellDialog),
+            typeof(AppShellDialog),
             new PropertyMetadata(true, OnShellPropertyChanged));
 
-        public StorylinesShellDialog()
+        public AppShellDialog()
         {
             _rootGrid = new Grid();
 
@@ -321,13 +321,13 @@ namespace Storylines.Views.Dialogs
                 && PrimaryActionVisibility == Visibility.Visible
                 && !HasOpenTransientElements;
 
-        protected virtual Task<bool> ExecutePrimaryActionAsync() => Task.FromResult(true);
+        protected abstract Task<bool> ExecutePrimaryActionAsync();
 
         protected virtual Task<bool> ExecuteSecondaryActionAsync() => Task.FromResult(true);
 
         private static void OnShellPropertyChanged(DependencyObject dependencyObject, DependencyPropertyChangedEventArgs args)
         {
-            if (dependencyObject is StorylinesShellDialog dialog)
+            if (dependencyObject is AppShellDialog dialog)
                 dialog.ApplyShellVisuals();
         }
 

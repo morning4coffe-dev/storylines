@@ -19,7 +19,7 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ProjectStatsDialogue : StorylinesContentDialog
+    public sealed partial class ProjectStatsDialogue : AppContentDialog
     {
         private static ProjectState ProjectState => App.GetService<ProjectState>();
         private static WindowContext WindowContext => App.GetService<WindowContext>();

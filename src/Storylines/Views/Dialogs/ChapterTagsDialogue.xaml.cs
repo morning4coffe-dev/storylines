@@ -13,7 +13,7 @@ using Storylines.Services.Interfaces;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ChapterTagsDialogue : StorylinesContentDialog
+    public sealed partial class ChapterTagsDialogue : AppContentDialog
     {
         private readonly Chapter _chapter;
 

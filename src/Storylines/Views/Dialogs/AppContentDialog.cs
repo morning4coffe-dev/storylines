@@ -5,14 +5,14 @@ using System;
 
 namespace Storylines.Views.Dialogs
 {
-    public class StorylinesContentDialog : ContentDialog
+    public class AppContentDialog : ContentDialog
     {
         private readonly WindowContext _windowContext;
         private int _openTransientCount;
         private bool _isPointerInside;
         private bool _outsideTapSubscribed;
 
-        public StorylinesContentDialog()
+        public AppContentDialog()
         {
             _windowContext = App.TryGetService<WindowContext>();
 

@@ -12,7 +12,7 @@ using System;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class LoadProjectDialogue : StorylinesContentDialog
+    public sealed partial class LoadProjectDialogue : AppContentDialog
     {
         private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
         private static WindowContext WindowContext => App.GetService<WindowContext>();

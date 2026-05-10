@@ -1,4 +1,4 @@
-<dialogs:StorylinesShellDialog x:Class="Storylines.Views.Dialogs.ModePickerDialogue"
+<dialogs:AppShellDialog x:Class="Storylines.Views.Dialogs.ModePickerDialogue"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -8,7 +8,7 @@
                 mc:Ignorable="d"
                 DialogMinWidth="360">
 
-    <dialogs:StorylinesShellDialog.DialogBody>
+    <dialogs:AppShellDialog.DialogBody>
         <StackPanel Spacing="16"
                     Orientation="Vertical">
 
@@ -17,9 +17,10 @@
                         XYFocusKeyboardNavigation="Enabled"
                         HorizontalAlignment="Center">
                 <Button x:Name="editCard"
+                        x:Uid="editCard"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnEditCard_Click">
-                    <StackPanel Spacing="6"
+                    <StackPanel Spacing="10"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <FontIcon Glyph="&#xE70F;"
@@ -27,15 +28,15 @@
                                   HorizontalAlignment="Center" />
                         <TextBlock x:Uid="modeEdit"
                                    Text="Edit"
-                                   FontSize="13"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
 
                 <Button x:Name="focusCard"
+                        x:Uid="focusCard"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnFocusCard_Click">
-                    <StackPanel Spacing="6"
+                    <StackPanel Spacing="10"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <FontIcon Glyph="&#xE1D5;"
@@ -43,15 +44,15 @@
                                   HorizontalAlignment="Center" />
                         <TextBlock x:Uid="modeFocus"
                                    Text="Focus"
-                                   FontSize="13"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
 
                 <Button x:Name="readOnlyCard"
+                        x:Uid="readOnlyCard"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnReadOnlyCard_Click">
-                    <StackPanel Spacing="6"
+                    <StackPanel Spacing="10"
                                 VerticalAlignment="Center"
                                 HorizontalAlignment="Center">
                         <FontIcon Glyph="&#xE8A5;"
@@ -59,7 +60,6 @@
                                   HorizontalAlignment="Center" />
                         <TextBlock x:Uid="modeReadOnly"
                                    Text="Read-only"
-                                   FontSize="13"
                                    HorizontalAlignment="Center" />
                     </StackPanel>
                 </Button>
@@ -123,5 +123,5 @@
                 </StackPanel>
             </StackPanel>
         </StackPanel>
-    </dialogs:StorylinesShellDialog.DialogBody>
-</dialogs:StorylinesShellDialog>
+    </dialogs:AppShellDialog.DialogBody>
+</dialogs:AppShellDialog>

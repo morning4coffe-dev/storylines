@@ -1,4 +1,4 @@
-<dialogs:StorylinesContentDialog x:Class="Storylines.Views.Dialogs.ChapterTagsDialogue"
+<dialogs:AppContentDialog x:Class="Storylines.Views.Dialogs.ChapterTagsDialogue"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
@@ -115,4 +115,4 @@
                                          Click="OnCancelButton_Click" />
         </Grid>
     </StackPanel>
-</dialogs:StorylinesContentDialog>
+</dialogs:AppContentDialog>

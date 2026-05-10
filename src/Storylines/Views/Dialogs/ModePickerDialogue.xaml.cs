@@ -12,7 +12,7 @@ using Windows.ApplicationModel.Resources;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class ModePickerDialogue : StorylinesShellDialog
+    public sealed partial class ModePickerDialogue : AppShellDialog
     {
         private static readonly ResourceLoader _resources = ResourceLoader.GetForViewIndependentUse();
         private enum SelectedMode { Edit, Focus, ReadOnly }

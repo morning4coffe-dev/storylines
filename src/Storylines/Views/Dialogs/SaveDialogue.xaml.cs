@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class SaveDialogue : StorylinesContentDialog
+    public sealed partial class SaveDialogue : AppContentDialog
     {
         private readonly ILogger _logger;
         private readonly IProjectPersistenceService _persistence;

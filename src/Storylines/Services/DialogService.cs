@@ -66,7 +66,7 @@ namespace Storylines.Services
             if (definition is null)
                 return ContentDialogResult.None;
 
-            var dialog = new StorylinesContentDialog
+            var dialog = new AppContentDialog
             {
                 Title = definition.Title,
                 Content = definition.Content,

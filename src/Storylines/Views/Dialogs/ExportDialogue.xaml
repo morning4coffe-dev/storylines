@@ -1,4 +1,4 @@
-<dialogs:StorylinesShellDialog x:Class="Storylines.Views.Dialogs.ExportDialogue"
+﻿<dialogs:AppShellDialog x:Class="Storylines.Views.Dialogs.ExportDialogue"
                 xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                 xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                 xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
@@ -13,13 +13,14 @@
                 DialogMaxWidth="640"
                 x:DefaultBindMode="OneTime">
 
-    <dialogs:StorylinesShellDialog.DialogBody>
+    <dialogs:AppShellDialog.DialogBody>
         <StackPanel Spacing="16"
                     VerticalAlignment="Stretch"
                     HorizontalAlignment="Stretch">
             <StackPanel Spacing="8"
                         Orientation="Horizontal"
                         HorizontalAlignment="Center"
+                        XYFocusKeyboardNavigation="Enabled"
                         Visibility="Visible">
                 <StackPanel.ChildrenTransitions>
                     <TransitionCollection>
@@ -32,7 +33,9 @@
                 <Button x:Name="chooseExportChaptersButton"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnChooseExportChaptersButton_Click">
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="10"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
                         <FontIcon Glyph="" />
                         <TextBlock Text="{x:Bind resources:ExportDialogue.OptionChapters}" />
                     </StackPanel>
@@ -41,7 +44,9 @@
                 <Button x:Name="chooseExportDialoguesButton"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnChooseExportDialoguesButton_Click">
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="10"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
                         <FontIcon Glyph="" />
                         <TextBlock Text="{x:Bind resources:ExportDialogue.OptionDialogues}" />
                     </StackPanel>
@@ -50,7 +55,9 @@
                 <Button x:Name="chooseExportCharactersButton"
                         Style="{StaticResource DialogSelectionCardStyle}"
                         Click="OnChooseExportCharactersButton_Click">
-                    <StackPanel Spacing="10">
+                    <StackPanel Spacing="10"
+                                VerticalAlignment="Center"
+                                HorizontalAlignment="Center">
                         <FontIcon Glyph="" />
                         <TextBlock Text="{x:Bind resources:ExportDialogue.OptionCharacters}" />
                     </StackPanel>
@@ -219,5 +226,5 @@
                 </animations:Implicit.ShowAnimations>
             </Grid>
         </StackPanel>
-    </dialogs:StorylinesShellDialog.DialogBody>
-</dialogs:StorylinesShellDialog>
+    </dialogs:AppShellDialog.DialogBody>
+</dialogs:AppShellDialog>

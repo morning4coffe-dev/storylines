@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <resheader name="resmimetype">
     <value>text/microsoft-resx</value>
@@ -1207,6 +1207,15 @@ il pulsante "Aggiungi nuovo personaggio".</value>
   </data>
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Attiva modalità</value>
+  </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Modalità modifica</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Modalità concentrazione</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Modalità sola lettura</value>
   </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
     <value>Sperimentale</value>

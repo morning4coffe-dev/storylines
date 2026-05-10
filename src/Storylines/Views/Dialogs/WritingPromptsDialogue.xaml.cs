@@ -12,7 +12,7 @@ using Microsoft.UI.Xaml.Controls;
 
 namespace Storylines.Views.Dialogs
 {
-    public sealed partial class WritingPromptsDialogue : StorylinesContentDialog
+    public sealed partial class WritingPromptsDialogue : AppContentDialog
     {
         private static readonly Random _rng = new Random();
         private readonly IChapterWorkflowService _chapterWorkflow;
