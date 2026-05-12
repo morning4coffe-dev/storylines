@@ -18,7 +18,8 @@
                   MaxHeight="350"
                   SelectionMode="Single"
                   IsItemClickEnabled="True"
-                  ItemClick="OnResultItem_Click">
+                  ItemClick="OnResultItem_Click"
+                  ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Margin="0,4"
@@ -41,7 +42,7 @@
 
         <TextBlock x:Name="noResultsText"
                    x:Uid="globalSearchNoResults"
-                   Visibility="Collapsed"
+                   Visibility="{x:Bind ViewModel.NoResultsVisibility, Mode=OneWay}"
                    Opacity="0.5"
                    HorizontalAlignment="Center" />
     </StackPanel>

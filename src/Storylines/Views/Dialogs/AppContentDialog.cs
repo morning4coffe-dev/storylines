@@ -1,77 +1,72 @@
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Input;
-using Storylines.Services;
-using System;
 
-namespace Storylines.Views.Dialogs
+namespace Storylines.Views.Dialogs;
+
+public class AppContentDialog : ContentDialog
 {
-    public class AppContentDialog : ContentDialog
+    private readonly WindowContext _windowContext;
+    private int _openTransientCount;
+    private bool _isPointerInside;
+    private bool _outsideTapSubscribed;
+
+    public AppContentDialog()
     {
-        private readonly WindowContext _windowContext;
-        private int _openTransientCount;
-        private bool _isPointerInside;
-        private bool _outsideTapSubscribed;
+        _windowContext = App.TryGetService<WindowContext>();
 
-        public AppContentDialog()
-        {
-            _windowContext = App.TryGetService<WindowContext>();
+        Opened += OnManagedDialogOpened;
+        Closed += OnManagedDialogClosed;
+        PointerEntered += OnDialogPointerEntered;
+        PointerExited += OnDialogPointerExited;
+    }
 
-            Opened += OnManagedDialogOpened;
-            Closed += OnManagedDialogClosed;
-            PointerEntered += OnDialogPointerEntered;
-            PointerExited += OnDialogPointerExited;
-        }
+    public bool CloseOnOutsideTap { get; set; }
 
-        public bool CloseOnOutsideTap { get; set; }
+    protected bool HasOpenTransientElements => _openTransientCount > 0;
 
-        protected bool HasOpenTransientElements => _openTransientCount > 0;
+    protected void NotifyTransientOpened()
+    {
+        _openTransientCount++;
+    }
 
-        protected void NotifyTransientOpened()
-        {
-            _openTransientCount++;
-        }
+    protected void NotifyTransientClosed()
+    {
+        _openTransientCount = Math.Max(0, _openTransientCount - 1);
+    }
 
-        protected void NotifyTransientClosed()
-        {
-            _openTransientCount = Math.Max(0, _openTransientCount - 1);
-        }
+    protected virtual bool CanCloseOnOutsideTap() => !HasOpenTransientElements;
 
-        protected virtual bool CanCloseOnOutsideTap() => !HasOpenTransientElements;
+    private void OnManagedDialogOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+    {
+        if (!CloseOnOutsideTap || _outsideTapSubscribed || _windowContext?.RootElement is null)
+            return;
 
-        private void OnManagedDialogOpened(ContentDialog sender, ContentDialogOpenedEventArgs args)
-        {
-            if (!CloseOnOutsideTap || _outsideTapSubscribed || _windowContext?.RootElement is null)
-                return;
+        _windowContext.RootElement.PointerPressed += OnRootPointerPressed;
+        _outsideTapSubscribed = true;
+    }
 
-            _windowContext.RootElement.PointerPressed += OnRootPointerPressed;
-            _outsideTapSubscribed = true;
-        }
+    private void OnManagedDialogClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
+    {
+        if (!_outsideTapSubscribed || _windowContext?.RootElement is null)
+            return;
 
-        private void OnManagedDialogClosed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            if (!_outsideTapSubscribed || _windowContext?.RootElement is null)
-                return;
+        _windowContext.RootElement.PointerPressed -= OnRootPointerPressed;
+        _outsideTapSubscribed = false;
+        _openTransientCount = 0;
+        _isPointerInside = false;
+    }
 
-            _windowContext.RootElement.PointerPressed -= OnRootPointerPressed;
-            _outsideTapSubscribed = false;
-            _openTransientCount = 0;
-            _isPointerInside = false;
-        }
+    private void OnDialogPointerEntered(object sender, PointerRoutedEventArgs e)
+    {
+        _isPointerInside = true;
+    }
 
-        private void OnDialogPointerEntered(object sender, PointerRoutedEventArgs e)
-        {
-            _isPointerInside = true;
-        }
+    private void OnDialogPointerExited(object sender, PointerRoutedEventArgs e)
+    {
+        _isPointerInside = false;
+    }
 
-        private void OnDialogPointerExited(object sender, PointerRoutedEventArgs e)
-        {
-            _isPointerInside = false;
-        }
-
-        private void OnRootPointerPressed(object sender, PointerRoutedEventArgs e)
-        {
-            if (!_isPointerInside && CanCloseOnOutsideTap())
-                Hide();
-        }
+    private void OnRootPointerPressed(object sender, PointerRoutedEventArgs e)
+    {
+        if (!_isPointerInside && CanCloseOnOutsideTap())
+            Hide();
     }
 }

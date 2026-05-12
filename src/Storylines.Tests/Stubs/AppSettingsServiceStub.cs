@@ -1,5 +1,3 @@
-using Storylines.Services;
-using Storylines.Services.Interfaces;
 using Windows.UI;
 
 namespace Storylines.Tests.Stubs;

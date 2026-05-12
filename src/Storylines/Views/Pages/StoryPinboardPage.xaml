@@ -64,7 +64,7 @@
                         ToolTipService.ToolTip="Auto-arrange cards in a grid"
                         Padding="8"
                         CornerRadius="4"
-                        Click="OnAutoArrange_Click">
+                        Command="{x:Bind ViewModel.AutoArrangeChaptersCommand}">
                     <FontIcon Glyph="&#xE8A9;" FontSize="14" />
                 </Button>
                 <TextBlock x:Uid="pinboardHelpText"

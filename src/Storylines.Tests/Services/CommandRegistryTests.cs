@@ -1,8 +1,4 @@
-using System;
-using System.Linq;
 using System.Windows.Input;
-using Storylines.Services;
-using Storylines.Services.Interfaces;
 using Xunit;
 
 namespace Storylines.Tests.Services;

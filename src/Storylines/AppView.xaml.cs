@@ -1,27 +1,13 @@
-using Microsoft.UI;
-using Microsoft.UI.Xaml.Controls;
 using Storylines.Views.Controls;
 using Storylines.Views.Dialogs;
 using Storylines.Views.Pages;
-using Storylines.Helpers;
-using Storylines.Services;
-using Storylines.Models;
-using Storylines.ViewModels;
-using System;
-using Windows.ApplicationModel.Resources;
-using Windows.Storage;
 using Windows.UI;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Input;
-using Microsoft.UI.Xaml.Media;
 using Microsoft.UI.Xaml.Media.Animation;
-using Storylines.Services.Interfaces;
 
-namespace Storylines
-{
+namespace Storylines;
+
     public sealed partial class AppView : Page
     {
-
 
         private readonly WindowContext _windowContext;
         private readonly AppViewModel _viewModel;
@@ -59,42 +45,50 @@ namespace Storylines
             // Subscribe to back navigation via AppWindow (no SystemNavigationManager in WinUI 3)
 
             // Subscribe to tools state changes published by the persistence service.
+            // All handlers are dispatched to the UI thread because Publish can be called
+            // from background threads (e.g. DictationService, autosave, recovery).
             _events.Subscribe<ToolsStateChangedEvent>(e =>
-            {
-                if (_windowContext.MainPage is not null)
-                    _windowContext.MainPage.EnableOrDisableToolsForStorylinesDocuments(e.IsStorylinesDocument);
-            });
+                DispatcherQueue.TryEnqueue(() =>
+                {
+                    if (_windowContext.MainPage is not null)
+                        _windowContext.MainPage.UpdateToolsForDocument(e.IsStorylinesDocument);
+                }));
 
             // Route INotificationService events to UI — decouples service from AppView.current refs.
             _events.Subscribe<InAppNotificationEvent>(e =>
-                DisplayInAppNotification(e.Severity, e.Title, e.Message, e.Duration));
+                DispatcherQueue.TryEnqueue(() =>
+                    DisplayInAppNotification(e.Severity, e.Title, e.Message, e.Duration)));
 
             _events.Subscribe<PersistentNotificationEvent>(e =>
-                notificationHost.ShowPersistentNotification(e));
+                DispatcherQueue.TryEnqueue(() =>
+                    notificationHost.ShowPersistentNotification(e)));
 
             _events.Subscribe<UpdatePersistentProgressEvent>(e =>
-                notificationHost.UpdatePersistentProgress(e.Value, e.IsIndeterminate));
+                DispatcherQueue.TryEnqueue(() =>
+                    notificationHost.UpdatePersistentProgress(e.Value, e.IsIndeterminate)));
 
             _events.Subscribe<DismissPersistentNotificationEvent>(_ =>
-                notificationHost.DismissPersistentNotification());
+                DispatcherQueue.TryEnqueue(() =>
+                    notificationHost.DismissPersistentNotification()));
 
             _events.Subscribe<ProgressBarEvent>(e =>
-            {
-                var mainPage = _windowContext?.MainPage;
-                if (mainPage?.mainProgressBar is null) return;
-
-                if (!e.Show)
+                DispatcherQueue.TryEnqueue(() =>
                 {
-                    mainPage.mainProgressBar.Visibility = Visibility.Collapsed;
-                    return;
-                }
+                    var mainPage = _windowContext?.MainPage;
+                    if (mainPage?.mainProgressBar is null) return;
 
-                mainPage.mainProgressBar.Visibility = Visibility.Visible;
-                mainPage.mainProgressBar.IsIndeterminate = e.IsIndeterminate;
-                mainPage.mainProgressBar.Value = e.Value;
-                mainPage.mainProgressBar.ShowPaused = e.State == ProgressBarEvent.ProgressState.Paused;
-                mainPage.mainProgressBar.ShowError = e.State == ProgressBarEvent.ProgressState.Error;
-            });
+                    if (!e.Show)
+                    {
+                        mainPage.mainProgressBar.Visibility = Visibility.Collapsed;
+                        return;
+                    }
+
+                    mainPage.mainProgressBar.Visibility = Visibility.Visible;
+                    mainPage.mainProgressBar.IsIndeterminate = e.IsIndeterminate;
+                    mainPage.mainProgressBar.Value = e.Value;
+                    mainPage.mainProgressBar.ShowPaused = e.State == ProgressBarEvent.ProgressState.Paused;
+                    mainPage.mainProgressBar.ShowError = e.State == ProgressBarEvent.ProgressState.Error;
+                }));
 
             if (SettingsValues.autosaveEnabled)
                 _persistence.EnableAutosave();
@@ -374,4 +368,3 @@ namespace Storylines
         }
         #endregion
     }
-}

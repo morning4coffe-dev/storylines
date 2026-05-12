@@ -1,5 +1,3 @@
-using Storylines.Models;
-using System.Linq;
 using Xunit;
 
 namespace Storylines.Tests.Models;

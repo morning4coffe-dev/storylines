@@ -53,9 +53,10 @@
                   BorderBrush="{ThemeResource ElementBorderColor}"
                   BorderThickness="{ThemeResource ElementBorderThickness}">
                 <TextBlock x:Name="projectFileInfoRun"
+                           Text="{x:Bind ViewModel.FileInfoText, Mode=OneWay}"
                            TextWrapping="Wrap"
                            LineHeight="24"
-                           FontSize="13">N/A</TextBlock>
+                           FontSize="13" />
             </Grid>
         </ScrollViewer>
     </Grid>

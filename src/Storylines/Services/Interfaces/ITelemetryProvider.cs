@@ -1,17 +1,13 @@
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
-namespace Storylines.Services.Interfaces
+namespace Storylines.Services.Interfaces;
+
+public interface ITelemetryProvider
 {
-    public interface ITelemetryProvider
-    {
-        string ProviderName { get; }
+    string ProviderName { get; }
 
-        Task InitializeAsync();
+    Task InitializeAsync();
 
-        void TrackEvent(string eventName, IReadOnlyDictionary<string, string> properties);
+    void TrackEvent(string eventName, IReadOnlyDictionary<string, string> properties);
 
-        void TrackError(Exception exception, IReadOnlyDictionary<string, string> properties, string attachmentText = null, string attachmentFileName = null);
-    }
+    void TrackError(Exception exception, IReadOnlyDictionary<string, string> properties, string attachmentText = null, string attachmentFileName = null);
 }

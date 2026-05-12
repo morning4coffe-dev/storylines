@@ -1,75 +1,68 @@
-using Storylines.Services.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.Storage;
 using Windows.Storage.Pickers;
 
-namespace Storylines.Services
+namespace Storylines.Services;
+
+public class FilePickerService : IFilePickerService
 {
-    public class FilePickerService : IFilePickerService
+    private readonly WindowContext _windowContext;
+
+    public FilePickerService(WindowContext windowContext)
     {
-        private readonly WindowContext _windowContext;
+        _windowContext = windowContext;
+    }
 
-        public FilePickerService(WindowContext windowContext)
+    public async Task<StorageFolder> PickFolderAsync()
+    {
+        var picker = new FolderPicker
         {
-            _windowContext = windowContext;
-        }
+            ViewMode = PickerViewMode.Thumbnail,
+            SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+        };
+        picker.FileTypeFilter.Add("*");
 
-        public async Task<StorageFolder> PickFolderAsync()
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+
+        return await picker.PickSingleFolderAsync();
+    }
+
+    public async Task<StorageFile> PickSaveFileAsync(SaveFilePickerRequest request)
+    {
+        if (request?.FileExtensions is null || request.FileExtensions.Count == 0)
+            return null;
+
+        var picker = new FileSavePicker
         {
-            var picker = new FolderPicker
-            {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add("*");
+            SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+            SuggestedFileName = request.SuggestedFileName,
+        };
 
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+        var displayTypeName = !string.IsNullOrWhiteSpace(request.DisplayTypeName)
+            ? request.DisplayTypeName
+            : request.FileExtensions[0].TrimStart('.').ToUpperInvariant();
 
-            return await picker.PickSingleFolderAsync();
-        }
+        picker.FileTypeChoices.Add(displayTypeName, request.FileExtensions.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
 
-        public async Task<StorageFile> PickSaveFileAsync(SaveFilePickerRequest request)
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
+
+        return await picker.PickSaveFileAsync();
+    }
+
+    public async Task<StorageFile> PickOpenFileAsync(IReadOnlyList<string> fileExtensions)
+    {
+        if (fileExtensions is null || fileExtensions.Count == 0)
+            return null;
+
+        var picker = new FileOpenPicker
         {
-            if (request?.FileExtensions is null || request.FileExtensions.Count == 0)
-                return null;
+            ViewMode = PickerViewMode.Thumbnail,
+            SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
+        };
 
-            var picker = new FileSavePicker
-            {
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-                SuggestedFileName = request.SuggestedFileName,
-            };
+        foreach (var extension in fileExtensions.Where(extension => !string.IsNullOrWhiteSpace(extension)).Distinct(StringComparer.OrdinalIgnoreCase))
+            picker.FileTypeFilter.Add(extension);
 
-            var displayTypeName = !string.IsNullOrWhiteSpace(request.DisplayTypeName)
-                ? request.DisplayTypeName
-                : request.FileExtensions[0].TrimStart('.').ToUpperInvariant();
+        WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
 
-            picker.FileTypeChoices.Add(displayTypeName, request.FileExtensions.Distinct(StringComparer.OrdinalIgnoreCase).ToList());
-
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
-
-            return await picker.PickSaveFileAsync();
-        }
-
-        public async Task<StorageFile> PickOpenFileAsync(IReadOnlyList<string> fileExtensions)
-        {
-            if (fileExtensions is null || fileExtensions.Count == 0)
-                return null;
-
-            var picker = new FileOpenPicker
-            {
-                ViewMode = PickerViewMode.Thumbnail,
-                SuggestedStartLocation = PickerLocationId.DocumentsLibrary,
-            };
-
-            foreach (var extension in fileExtensions.Where(extension => !string.IsNullOrWhiteSpace(extension)).Distinct(StringComparer.OrdinalIgnoreCase))
-                picker.FileTypeFilter.Add(extension);
-
-            WinRT.Interop.InitializeWithWindow.Initialize(picker, _windowContext.Hwnd);
-
-            return await picker.PickSingleFileAsync();
-        }
+        return await picker.PickSingleFileAsync();
     }
 }

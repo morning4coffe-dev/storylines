@@ -59,14 +59,15 @@
                 <TextBox x:Name="notesTextBox"
                          x:Uid="chapterNotesPaneTextBox"
                          x:FieldModifier="public"
+                         Text="{Binding NotesText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsFieldsEnabled}"
                          TextWrapping="Wrap"
                          AcceptsReturn="True"
                          Background="Transparent"
                          BorderThickness="0"
                          Padding="0,4"
                          FontSize="13"
-                         ScrollViewer.VerticalScrollBarVisibility="Auto"
-                         TextChanged="OnNotesTextBox_TextChanged" />
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" />
             </PivotItem>
 
             <!-- Synopsis tab -->
@@ -79,14 +80,15 @@
                     <TextBox x:Name="synopsisTextBox"
                              x:Uid="notesPaneSynopsisBox"
                              x:FieldModifier="public"
+                             Text="{Binding SynopsisText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding IsFieldsEnabled}"
                              TextWrapping="Wrap"
                              AcceptsReturn="True"
                              Background="Transparent"
                              BorderThickness="0"
                              Padding="0,4"
                              FontSize="13"
-                             ScrollViewer.VerticalScrollBarVisibility="Auto"
-                             TextChanged="OnSynopsisTextBox_TextChanged" />
+                             ScrollViewer.VerticalScrollBarVisibility="Auto" />
                 </StackPanel>
             </PivotItem>
 
@@ -100,12 +102,13 @@
                     <TextBox x:Name="locationTextBox"
                              x:Uid="notesPaneLocationBox"
                              x:FieldModifier="public"
+                             Text="{Binding LocationText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding IsFieldsEnabled}"
                              TextWrapping="Wrap"
                              Background="Transparent"
                              BorderThickness="0"
                              Padding="0,4"
-                             FontSize="13"
-                             TextChanged="OnLocationTextBox_TextChanged" />
+                             FontSize="13" />
                 </StackPanel>
             </PivotItem>
 
@@ -119,12 +122,13 @@
                     <TextBox x:Name="plotThreadsTextBox"
                              x:Uid="notesPanePlotBox"
                              x:FieldModifier="public"
+                             Text="{Binding PlotThreadsText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                             IsEnabled="{Binding IsFieldsEnabled}"
                              TextWrapping="Wrap"
                              Background="Transparent"
                              BorderThickness="0"
                              Padding="0,4"
-                             FontSize="13"
-                             TextChanged="OnPlotThreadsTextBox_TextChanged" />
+                             FontSize="13" />
                 </StackPanel>
             </PivotItem>
         </Pivot>

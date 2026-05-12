@@ -1,16 +1,14 @@
 using Storylines.ViewModels.Settings;
-using Microsoft.UI.Xaml.Controls;
 
-namespace Storylines.Views.Pages.Settings
+namespace Storylines.Views.Pages.Settings;
+
+public sealed partial class GeneralPage : Page
 {
-    public sealed partial class GeneralPage : Page
-    {
-        public GeneralSettingsViewModel ViewModel { get; }
+    public GeneralSettingsViewModel ViewModel { get; }
 
-        public GeneralPage()
-        {
-            ViewModel = App.GetService<GeneralSettingsViewModel>();
-            InitializeComponent();
-        }
+    public GeneralPage()
+    {
+        ViewModel = App.GetService<GeneralSettingsViewModel>();
+        InitializeComponent();
     }
 }

@@ -1,4 +1,4 @@
-namespace Storylines.Helpers;
+namespace Storylines.Tests.Shims;
 
 internal static class NotificationManager
 {

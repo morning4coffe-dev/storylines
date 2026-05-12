@@ -1,628 +1,615 @@
-using Storylines.Helpers;
-using Storylines.Models;
-using Storylines.Services.Interfaces;
 using Storylines.Services.Persistence;
 using Storylines.Services.Serializers;
-using Storylines.ViewModels;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading;
-using System.Threading.Tasks;
 using Windows.ApplicationModel;
-using Windows.ApplicationModel.Resources;
-using Windows.Storage;
-using Microsoft.UI.Xaml;
 
-namespace Storylines.Services
+namespace Storylines.Services;
+
+public class ProjectPersistenceService : IProjectPersistenceService
 {
-    public class ProjectPersistenceService : IProjectPersistenceService
+    private readonly EventAggregator _events;
+    private readonly IDialogService _dialogs;
+    private readonly IFileService _fileService;
+    private readonly JsonSaveSerializer _jsonSerializer;
+    private readonly LegacySrlSerializer _legacySerializer;
+    private readonly ILogger _logger;
+    private readonly ProjectState _projectState;
+    private readonly ITextEditorService _textEditor;
+    private readonly IUndoRedoService _undoRedo;
+    private readonly INotificationService _notifications;
+    private readonly WindowContext _windowContext;
+    private readonly IWindowManager _windowManager;
+    private readonly Dictionary<string, DocumentPersistenceHandlerBase> _handlers;
+    private readonly SemaphoreSlim _operationLock = new SemaphoreSlim(1, 1);
+
+    private DispatcherTimer _autosaveTimer;
+    private AfterSaveAction _afterSaveAction;
+
+    private enum AfterSaveAction
     {
-        private readonly EventAggregator _events;
-        private readonly IDialogService _dialogs;
-        private readonly IFileService _fileService;
-        private readonly JsonSaveSerializer _jsonSerializer;
-        private readonly LegacySrlSerializer _legacySerializer;
-        private readonly ILogger _logger;
-        private readonly ProjectState _projectState;
-        private readonly ITextEditorService _textEditor;
-        private readonly IUndoRedoService _undoRedo;
-        private readonly INotificationService _notifications;
-        private readonly WindowContext _windowContext;
-        private readonly IWindowManager _windowManager;
-        private readonly Dictionary<string, DocumentPersistenceHandlerBase> _handlers;
-        private readonly SemaphoreSlim _operationLock = new SemaphoreSlim(1, 1);
+        None,
+        ClearEverything,
+        Exit
+    }
 
-        private DispatcherTimer _autosaveTimer;
-        private AfterSaveAction _afterSaveAction;
+    public ProjectPersistenceService(
+        EventAggregator events,
+        IDialogService dialogs,
+        IFileService fileService,
+        JsonSaveSerializer jsonSerializer,
+        LegacySrlSerializer legacySerializer,
+        ILogger logger,
+        ProjectState projectState,
+        ITextEditorService textEditor,
+        IUndoRedoService undoRedo,
+        INotificationService notifications,
+        WindowContext windowContext,
+        IWindowManager windowManager)
+    {
+        _events = events;
+        _dialogs = dialogs;
+        _fileService = fileService;
+        _jsonSerializer = jsonSerializer;
+        _legacySerializer = legacySerializer;
+        _undoRedo = undoRedo;
+        _notifications = notifications;
+        _logger = logger;
+        _projectState = projectState;
+        _textEditor = textEditor;
+        _windowContext = windowContext;
+        _windowManager = windowManager;
 
-        private enum AfterSaveAction
+        _handlers = new Dictionary<string, DocumentPersistenceHandlerBase>(StringComparer.OrdinalIgnoreCase)
         {
-            None,
-            ClearEverything,
-            Exit
-        }
+            [".srl"] = new StorylinesDocumentPersistenceHandler(
+                _fileService,
+                _dialogs,
+                _events,
+                _logger,
+                _projectState,
+                _textEditor,
+                _jsonSerializer,
+                _legacySerializer,
+                CollectProjectData,
+                NormalizeProjectData,
+                LoadVariables,
+                OnProjectLoaded,
+                _notifications),
+            [".txt"] = new PlainTextDocumentPersistenceHandler(
+                _fileService,
+                _dialogs,
+                _events,
+                _logger,
+                _projectState,
+                _textEditor,
+                OnProjectLoaded,
+                _notifications)
+        };
+    }
 
-        public ProjectPersistenceService(
-            EventAggregator events,
-            IDialogService dialogs,
-            IFileService fileService,
-            JsonSaveSerializer jsonSerializer,
-            LegacySrlSerializer legacySerializer,
-            ILogger logger,
-            ProjectState projectState,
-            ITextEditorService textEditor,
-            IUndoRedoService undoRedo,
-            INotificationService notifications,
-            WindowContext windowContext,
-            IWindowManager windowManager)
+    public Dictionary<string, string> SavedValues { get; } = new Dictionary<string, string>();
+
+    public ProjectFile CurrentProject { get; set; }
+
+    public void Save()
+    {
+        _ = SaveAsync();
+    }
+
+    public Task SaveAsync()
+    {
+        return SaveCurrentProjectAsync(AfterSaveAction.None);
+    }
+
+    public void SaveCopy()
+    {
+        _dialogs.OpenSaveCopyDialogue();
+    }
+
+    public void SaveAndExitOrClearAll(bool exit)
+    {
+        _ = SaveAndExitOrClearAllAsync(exit);
+    }
+
+    public Task SaveAndExitOrClearAllAsync(bool exit)
+    {
+        return SaveCurrentProjectAsync(exit ? AfterSaveAction.Exit : AfterSaveAction.ClearEverything);
+    }
+
+    public void CancelPendingAfterSaveAction()
+    {
+        _afterSaveAction = AfterSaveAction.None;
+    }
+
+    public ProjectData CollectProjectData()
+    {
+        var data = new ProjectData
         {
-            _events = events;
-            _dialogs = dialogs;
-            _fileService = fileService;
-            _jsonSerializer = jsonSerializer;
-            _legacySerializer = legacySerializer;
-            _undoRedo = undoRedo;
-            _notifications = notifications;
-            _logger = logger;
-            _projectState = projectState;
-            _textEditor = textEditor;
-            _windowContext = windowContext;
-            _windowManager = windowManager;
+            Version = $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}",
+            LastOpenedChapter = _textEditor.SelectedChapterIndex,
+            Name = CurrentProject?.projectName
+        };
 
-            _handlers = new Dictionary<string, DocumentPersistenceHandlerBase>(StringComparer.OrdinalIgnoreCase)
+        foreach (var character in _projectState.Characters)
+        {
+            var charData = new CharacterData
             {
-                [".srl"] = new StorylinesDocumentPersistenceHandler(
-                    _fileService,
-                    _dialogs,
-                    _events,
-                    _logger,
-                    _projectState,
-                    _textEditor,
-                    _jsonSerializer,
-                    _legacySerializer,
-                    CollectProjectData,
-                    NormalizeProjectData,
-                    LoadVariables,
-                    OnProjectLoaded,
-                    _notifications),
-                [".txt"] = new PlainTextDocumentPersistenceHandler(
-                    _fileService,
-                    _dialogs,
-                    _events,
-                    _logger,
-                    _projectState,
-                    _textEditor,
-                    OnProjectLoaded,
-                    _notifications)
-            };
-        }
-
-        public Dictionary<string, string> SavedValues { get; } = new Dictionary<string, string>();
-
-        public ProjectFile CurrentProject { get; set; }
-
-        public void Save()
-        {
-            _ = SaveAsync();
-        }
-
-        public Task SaveAsync()
-        {
-            return SaveCurrentProjectAsync(AfterSaveAction.None);
-        }
-
-        public void SaveCopy()
-        {
-            _dialogs.OpenSaveCopyDialogue();
-        }
-
-        public void SaveAndExitOrClearAll(bool exit)
-        {
-            _ = SaveAndExitOrClearAllAsync(exit);
-        }
-
-        public Task SaveAndExitOrClearAllAsync(bool exit)
-        {
-            return SaveCurrentProjectAsync(exit ? AfterSaveAction.Exit : AfterSaveAction.ClearEverything);
-        }
-
-        public void CancelPendingAfterSaveAction()
-        {
-            _afterSaveAction = AfterSaveAction.None;
-        }
-
-        public ProjectData CollectProjectData()
-        {
-            var data = new ProjectData
-            {
-                Version = $"{Package.Current.Id.Version.Major}.{Package.Current.Id.Version.Minor}.{Package.Current.Id.Version.Build}.{Package.Current.Id.Version.Revision}",
-                LastOpenedChapter = _textEditor.SelectedChapterIndex,
-                Name = CurrentProject?.projectName
+                Name = character.Name,
+                Description = character.Description,
+                PictureFileName = character.Picture?.FileName ?? string.Empty,
+                Role = character.Role,
+                Age = character.Age,
+                Appearance = character.Appearance,
+                Traits = character.Traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
             };
 
-            foreach (var character in _projectState.Characters)
+            if (character.Relationships?.Count > 0)
             {
-                var charData = new CharacterData
+                charData.Relationships = character.Relationships.Select(relationship => new CharacterRelationshipData
                 {
-                    Name = character.Name,
-                    Description = character.Description,
-                    PictureFileName = character.Picture?.FileName ?? string.Empty,
-                    Role = character.Role,
-                    Age = character.Age,
-                    Appearance = character.Appearance,
-                    Traits = character.Traits?.Where(item => !string.IsNullOrWhiteSpace(item)).ToList()
-                };
-
-                if (character.Relationships?.Count > 0)
-                {
-                    charData.Relationships = character.Relationships.Select(relationship => new CharacterRelationshipData
-                    {
-                        TargetName = _projectState.FindCharacter(relationship.TargetCharacterToken)?.Name ?? relationship.TargetCharacterToken,
-                        Type = relationship.Type
-                    }).ToList();
-                }
-
-                data.Characters.Add(charData);
+                    TargetName = _projectState.FindCharacter(relationship.TargetCharacterToken)?.Name ?? relationship.TargetCharacterToken,
+                    Type = relationship.Type
+                }).ToList();
             }
 
-            foreach (var chapter in _projectState.Chapters)
+            data.Characters.Add(charData);
+        }
+
+        foreach (var chapter in _projectState.Chapters)
+        {
+            data.Chapters.Add(new ChapterData
             {
-                data.Chapters.Add(new ChapterData
-                {
-                    Id = chapter.Token,
-                    Name = chapter.Name,
-                    Text = chapter.Text,
-                    LastCaretPosition = chapter.LastCaretPosition > 0 ? chapter.LastCaretPosition : (int?)null,
-                    LastVerticalOffset = chapter.LastVerticalOffset > 0 ? chapter.LastVerticalOffset : (double?)null,
-                    Notes = chapter.Notes ?? string.Empty,
-                    Synopsis = chapter.Synopsis,
-                    WordCountGoal = chapter.WordCountGoal,
-                    Tags = chapter.Tags?.Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList(),
-                    PinboardX = chapter.PinboardX != 0 ? chapter.PinboardX : (double?)null,
-                    PinboardY = chapter.PinboardY != 0 ? chapter.PinboardY : (double?)null,
-                    Status = chapter.Status != ChapterStatus.Draft ? chapter.Status.ToString() : null,
-                    Location = chapter.Location,
-                    PlotThreads = chapter.PlotThreads?.Count > 0 ? chapter.PlotThreads : null
-                });
-            }
-
-            if (_projectState.PinboardConnections?.Count > 0)
-                data.PinboardConnections = _projectState.PinboardConnections;
-
-            if (_projectState.PlotThreads?.Count > 0)
-                data.PlotThreads = _projectState.PlotThreads;
-
-            return data;
+                Id = chapter.Token,
+                Name = chapter.Name,
+                Text = chapter.Text,
+                LastCaretPosition = chapter.LastCaretPosition > 0 ? chapter.LastCaretPosition : (int?)null,
+                LastVerticalOffset = chapter.LastVerticalOffset > 0 ? chapter.LastVerticalOffset : (double?)null,
+                Notes = chapter.Notes ?? string.Empty,
+                Synopsis = chapter.Synopsis,
+                WordCountGoal = chapter.WordCountGoal,
+                Tags = chapter.Tags?.Where(tag => !string.IsNullOrWhiteSpace(tag)).ToList(),
+                PinboardX = chapter.PinboardX != 0 ? chapter.PinboardX : (double?)null,
+                PinboardY = chapter.PinboardY != 0 ? chapter.PinboardY : (double?)null,
+                Status = chapter.Status != ChapterStatus.Draft ? chapter.Status.ToString() : null,
+                Location = chapter.Location,
+                PlotThreads = chapter.PlotThreads?.Count > 0 ? chapter.PlotThreads : null
+            });
         }
 
-        public async Task OpenFileExplorerSaveAsync(string fileName)
+        if (_projectState.PinboardConnections?.Count > 0)
+            data.PinboardConnections = _projectState.PinboardConnections;
+
+        if (_projectState.PlotThreads?.Count > 0)
+            data.PlotThreads = _projectState.PlotThreads;
+
+        return data;
+    }
+
+    public async Task OpenFileExplorerSaveAsync(string fileName)
+    {
+        var folder = await _fileService.PickFolderForSaveAsync();
+        if (folder is null)
+            return;
+
+        await NewFileAsync(folder, $"{fileName}.srl");
+    }
+
+    public async Task NewFileAsync(StorageFolder folder, string fullFileName)
+    {
+        if (folder is null)
+            throw new ArgumentNullException(nameof(folder));
+
+        var file = await folder.CreateFileAsync(fullFileName, CreationCollisionOption.OpenIfExists);
+        var project = EnsureCurrentProject();
+
+        project.file = file;
+        ProjectFile.New(file);
+
+        await PersistCurrentProjectAsync();
+    }
+
+    public void Load(ProjectFile project)
+    {
+        _ = LoadAsync(project);
+    }
+
+    public async Task LoadAsync(ProjectFile project)
+    {
+        if (project is null)
+            throw new ArgumentNullException(nameof(project));
+
+        if (project.file is null)
         {
-            var folder = await _fileService.PickFolderForSaveAsync();
-            if (folder is null)
-                return;
-
-            await NewFileAsync(folder, $"{fileName}.srl");
-        }
-
-        public async Task NewFileAsync(StorageFolder folder, string fullFileName)
-        {
-            if (folder is null)
-                throw new ArgumentNullException(nameof(folder));
-
-            var file = await folder.CreateFileAsync(fullFileName, CreationCollisionOption.OpenIfExists);
-            var project = EnsureCurrentProject();
-
-            project.file = file;
-            ProjectFile.New(file);
-
-            await PersistCurrentProjectAsync();
-        }
-
-        public void Load(ProjectFile project)
-        {
-            _ = LoadAsync(project);
-        }
-
-        public async Task LoadAsync(ProjectFile project)
-        {
-            if (project is null)
-                throw new ArgumentNullException(nameof(project));
-
+            project.file = await OpenFileExplorerLoadAsync();
             if (project.file is null)
-            {
-                project.file = await OpenFileExplorerLoadAsync();
-                if (project.file is null)
-                    return;
-            }
-
-            await _operationLock.WaitAsync();
-
-            try
-            {
-                CurrentProject = project;
-
-                if (App.GetService<IPreferencesService>().Contains(SettingsValueStrings.LoadLastProjectOnStart))
-                    App.GetService<IPreferencesService>().Set(SettingsValueStrings.LoadLastProjectOnStart, project.Token);
-
-                _notifications.ShowProgressBar(true);
-
-                if (!TryResolveHandler(project.file, out var handler))
-                {
-                    _logger.Error($"Unsupported project file type: {project.file.FileType}");
-                    ShowLoadErrorNotification();
-                    _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
-                    return;
-                }
-
-                await handler.LoadAsync(project);
-            }
-            finally
-            {
-                _operationLock.Release();
-            }
+                return;
         }
 
-        public async Task<bool> TryRestoreRecoveryAsync()
+        await _operationLock.WaitAsync();
+
+        try
         {
-            if (!RecoveryService.HasRecoveryData())
-                return false;
+            CurrentProject = project;
 
-            var recoveryJson = await RecoveryService.GetRecoveryJsonAsync();
-            if (!_jsonSerializer.CanDeserialize(recoveryJson))
+            if (App.GetService<IPreferencesService>().Contains(SettingsValueStrings.LoadLastProjectOnStart))
+                App.GetService<IPreferencesService>().Set(SettingsValueStrings.LoadLastProjectOnStart, project.Token);
+
+            _notifications.ShowProgressBar(true);
+
+            if (!TryResolveHandler(project.file, out var handler))
             {
-                await RecoveryService.ClearRecoveryDataAsync();
-                return false;
-            }
-
-            var projectData = NormalizeProjectData(_jsonSerializer.Deserialize(recoveryJson));
-            var recoveredProject = await CreateRecoveredProjectAsync(projectData);
-            var documentType = recoveredProject?.file?.FileType ?? RecoveryService.GetRecoveryDocumentType();
-
-            await _operationLock.WaitAsync();
-
-            try
-            {
-                CurrentProject = recoveredProject;
-                _notifications.ShowProgressBar(true);
-
-                if (string.Equals(documentType, ".txt", StringComparison.OrdinalIgnoreCase))
-                {
-                    var plainTextHandler = _handlers[".txt"] as PlainTextDocumentPersistenceHandler;
-                    if (plainTextHandler is null)
-                        throw new InvalidOperationException("Plain text recovery handler is not available.");
-
-                    await plainTextHandler.LoadTextAsync(CurrentProject, GetRecoveredPlainText(projectData));
-                }
-                else
-                {
-                    var storylinesHandler = _handlers[".srl"] as StorylinesDocumentPersistenceHandler;
-                    if (storylinesHandler is null)
-                        throw new InvalidOperationException("Storylines recovery handler is not available.");
-
-                    await storylinesHandler.LoadProjectDataAsync(CurrentProject, projectData);
-                }
-
-                _undoRedo.MarkDirty();
-                _events.Publish(new TitleBarUpdateEvent());
-                return true;
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Failed to restore recovery data", ex);
+                _logger.Error($"Unsupported project file type: {project.file.FileType}");
                 ShowLoadErrorNotification();
                 _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
-                return false;
-            }
-            finally
-            {
-                _operationLock.Release();
-            }
-        }
-
-        public void DefaultLaunch(IStorageItem storageItem)
-        {
-            var file = storageItem as StorageFile;
-            if (file is null)
                 return;
+            }
 
-            Load(new ProjectFile { file = file });
+            await handler.LoadAsync(project);
+        }
+        finally
+        {
+            _operationLock.Release();
+        }
+    }
 
-            if (!ProjectFile.CheckIfProjectExists(file))
-                ProjectFile.New(file);
+    public async Task<bool> TryRestoreRecoveryAsync()
+    {
+        if (!RecoveryService.HasRecoveryData())
+            return false;
+
+        var recoveryJson = await RecoveryService.GetRecoveryJsonAsync();
+        if (!_jsonSerializer.CanDeserialize(recoveryJson))
+        {
+            await RecoveryService.ClearRecoveryDataAsync();
+            return false;
         }
 
-        public void EnableAutosave()
-        {
-            StopAutosaveTimer();
+        var projectData = NormalizeProjectData(_jsonSerializer.Deserialize(recoveryJson));
+        var recoveredProject = await CreateRecoveredProjectAsync(projectData);
+        var documentType = recoveredProject?.file?.FileType ?? RecoveryService.GetRecoveryDocumentType();
 
-            App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, true);
-            _events.Publish(new SettingChangedEvent
+        await _operationLock.WaitAsync();
+
+        try
+        {
+            CurrentProject = recoveredProject;
+            _notifications.ShowProgressBar(true);
+
+            if (string.Equals(documentType, ".txt", StringComparison.OrdinalIgnoreCase))
             {
-                SettingKey = SettingsValueStrings.AutosaveEnabled,
-                Value = true
-            });
+                var plainTextHandler = _handlers[".txt"] as PlainTextDocumentPersistenceHandler;
+                if (plainTextHandler is null)
+                    throw new InvalidOperationException("Plain text recovery handler is not available.");
 
-            _autosaveTimer = new DispatcherTimer
+                await plainTextHandler.LoadTextAsync(CurrentProject, GetRecoveredPlainText(projectData));
+            }
+            else
             {
-                Interval = GetAutosaveInterval()
-            };
+                var storylinesHandler = _handlers[".srl"] as StorylinesDocumentPersistenceHandler;
+                if (storylinesHandler is null)
+                    throw new InvalidOperationException("Storylines recovery handler is not available.");
 
-            _autosaveTimer.Tick += OnAutosaveTimerTick;
-            _autosaveTimer.Start();
+                await storylinesHandler.LoadProjectDataAsync(CurrentProject, projectData);
+            }
 
-            _ = TryAutosaveAsync();
+            _undoRedo.MarkDirty();
+            _events.Publish(new TitleBarUpdateEvent());
+            return true;
+        }
+        catch (Exception ex)
+        {
+            _logger.Error("Failed to restore recovery data", ex);
+            ShowLoadErrorNotification();
+            _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
+            return false;
+        }
+        finally
+        {
+            _operationLock.Release();
+        }
+    }
+
+    public void DefaultLaunch(IStorageItem storageItem)
+    {
+        var file = storageItem as StorageFile;
+        if (file is null)
+            return;
+
+        Load(new ProjectFile { file = file });
+
+        if (!ProjectFile.CheckIfProjectExists(file))
+            ProjectFile.New(file);
+    }
+
+    public void EnableAutosave()
+    {
+        StopAutosaveTimer();
+
+        App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, true);
+        _events.Publish(new SettingChangedEvent
+        {
+            SettingKey = SettingsValueStrings.AutosaveEnabled,
+            Value = true
+        });
+
+        _autosaveTimer = new DispatcherTimer
+        {
+            Interval = GetAutosaveInterval()
+        };
+
+        _autosaveTimer.Tick += OnAutosaveTimerTick;
+        _autosaveTimer.Start();
+
+        _ = TryAutosaveAsync();
+    }
+
+    public void DisableAutosave()
+    {
+        StopAutosaveTimer();
+        App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, false);
+        _events.Publish(new SettingChangedEvent
+        {
+            SettingKey = SettingsValueStrings.AutosaveEnabled,
+            Value = false
+        });
+    }
+
+    public void RefreshAutosave()
+    {
+        if (SettingsValues.autosaveEnabled)
+            EnableAutosave();
+    }
+
+    private async Task SaveCurrentProjectAsync(AfterSaveAction afterSaveAction)
+    {
+        _afterSaveAction = afterSaveAction;
+
+        if (EnsureCurrentProject().file is null)
+        {
+            _dialogs.OpenSaveDialogue();
+            return;
         }
 
-        public void DisableAutosave()
-        {
-            StopAutosaveTimer();
-            App.GetService<IPreferencesService>().Set(SettingsValueStrings.AutosaveEnabled, false);
-            _events.Publish(new SettingChangedEvent
-            {
-                SettingKey = SettingsValueStrings.AutosaveEnabled,
-                Value = false
-            });
-        }
+        await PersistCurrentProjectAsync();
+    }
 
-        public void RefreshAutosave()
-        {
-            if (SettingsValues.autosaveEnabled)
-                EnableAutosave();
-        }
+    private async Task PersistCurrentProjectAsync()
+    {
+        await _operationLock.WaitAsync();
 
-        private async Task SaveCurrentProjectAsync(AfterSaveAction afterSaveAction)
+        try
         {
-            _afterSaveAction = afterSaveAction;
-
-            if (EnsureCurrentProject().file is null)
+            var project = EnsureCurrentProject();
+            if (project.file is null)
             {
                 _dialogs.OpenSaveDialogue();
                 return;
             }
 
-            await PersistCurrentProjectAsync();
-        }
+            _notifications.ShowProgressBar(true);
 
-        private async Task PersistCurrentProjectAsync()
-        {
-            await _operationLock.WaitAsync();
-
-            try
+            if (!TryResolveHandler(project.file, out var handler))
             {
-                var project = EnsureCurrentProject();
-                if (project.file is null)
-                {
-                    _dialogs.OpenSaveDialogue();
-                    return;
-                }
-
-                _notifications.ShowProgressBar(true);
-
-                if (!TryResolveHandler(project.file, out var handler))
-                {
-                    _logger.Error($"Unsupported project file type: {project.file.FileType}");
-                    ShowSaveErrorNotification();
-                    _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
-                    _afterSaveAction = AfterSaveAction.None;
-                    return;
-                }
-
-                await handler.SaveAsync(project);
-                await RecoveryService.ClearRecoveryDataAsync();
-
-                CompleteAfterSave();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error("Failed to write project file", ex);
+                _logger.Error($"Unsupported project file type: {project.file.FileType}");
                 ShowSaveErrorNotification();
                 _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
                 _afterSaveAction = AfterSaveAction.None;
+                return;
             }
-            finally
-            {
-                _operationLock.Release();
-            }
+
+            await handler.SaveAsync(project);
+            await RecoveryService.ClearRecoveryDataAsync();
+
+            CompleteAfterSave();
         }
-
-        private ProjectFile EnsureCurrentProject()
+        catch (Exception ex)
         {
-            CurrentProject ??= new ProjectFile();
-            return CurrentProject;
-        }
-
-        private async Task<ProjectFile> CreateRecoveredProjectAsync(ProjectData projectData)
-        {
-            var token = RecoveryService.GetRecoveryProjectToken();
-            if (string.IsNullOrWhiteSpace(token))
-                return CreateTransientRecoveredProject(projectData);
-
-            try
-            {
-                var file = await ProjectFile.GetProjectFromTokenAsync(token);
-                if (file is null)
-                    return CreateTransientRecoveredProject(projectData);
-
-                var project = await ProjectFile.LoadExistingAsync(file, token);
-                project.ProjectName = string.IsNullOrWhiteSpace(projectData?.Name) ? project.ProjectName : projectData.Name;
-                project.ProjectVersion = projectData?.Version;
-                return project;
-            }
-            catch (Exception ex)
-            {
-                _logger.Warning($"Failed to re-associate recovered project with its source file: {ex.Message}");
-                return CreateTransientRecoveredProject(projectData);
-            }
-        }
-
-        private static ProjectFile CreateTransientRecoveredProject(ProjectData projectData)
-        {
-            var name = !string.IsNullOrWhiteSpace(projectData?.Name)
-                ? projectData.Name
-                : projectData?.Chapters?.FirstOrDefault()?.Name;
-
-            return new ProjectFile
-            {
-                Name = name,
-                ProjectName = name,
-                ProjectVersion = projectData?.Version
-            };
-        }
-
-        private static string GetRecoveredPlainText(ProjectData projectData)
-        {
-            return projectData?.Chapters?.FirstOrDefault()?.Text ?? string.Empty;
-        }
-
-        private bool TryResolveHandler(StorageFile file, out DocumentPersistenceHandlerBase handler)
-        {
-            handler = null;
-            return file is not null && _handlers.TryGetValue(file.FileType, out handler);
-        }
-
-        private async Task<StorageFile> OpenFileExplorerLoadAsync()
-        {
-            var file = await _fileService.PickFileForOpenAsync();
-            if (file is null)
-                return null;
-
-            if (!ProjectFile.CheckIfProjectExists(file))
-                ProjectFile.New(file);
-
-            return file;
-        }
-
-        private void CompleteAfterSave()
-        {
-            var pendingAction = _afterSaveAction;
+            _logger.Error("Failed to write project file", ex);
+            ShowSaveErrorNotification();
+            _notifications.UpdateProgressBar(0, Storylines.Services.Interfaces.ProgressBarState.Error);
             _afterSaveAction = AfterSaveAction.None;
-
-            _undoRedo.MarkClean();
-
-            switch (pendingAction)
-            {
-                case AfterSaveAction.None:
-                    _events.Publish(new TitleBarUpdateEvent());
-                    break;
-                case AfterSaveAction.ClearEverything:
-                    CurrentProject = null;
-                    _dialogs.ClearEverything();
-                    _dialogs.OpenLoadDialogue();
-                    break;
-                case AfterSaveAction.Exit:
-                    _windowManager.Close(_windowContext);
-                    break;
-            }
-
-            _notifications.HideProgressBar();
         }
-
-        private void LoadVariables(ProjectData projectData)
+        finally
         {
-            // Route selection through ITextEditorService so persistence has no VM dependency.
-            // The ChaptersListViewModel observes SelectedChapterIndex via its own bindings.
-            _textEditor.SelectedChapterIndex = projectData.LastOpenedChapter;
+            _operationLock.Release();
         }
+    }
 
-        private void OnProjectLoaded()
+    private ProjectFile EnsureCurrentProject()
+    {
+        CurrentProject ??= new ProjectFile();
+        return CurrentProject;
+    }
+
+    private async Task<ProjectFile> CreateRecoveredProjectAsync(ProjectData projectData)
+    {
+        var token = RecoveryService.GetRecoveryProjectToken();
+        if (string.IsNullOrWhiteSpace(token))
+            return CreateTransientRecoveredProject(projectData);
+
+        try
         {
-            _undoRedo.MarkClean();
-            SavedValues.Clear();
-            _events.Publish(new TitleBarUpdateEvent());
+            var file = await ProjectFile.GetProjectFromTokenAsync(token);
+            if (file is null)
+                return CreateTransientRecoveredProject(projectData);
 
-            _notifications.HideProgressBar();
+            var project = await ProjectFile.LoadExistingAsync(file, token);
+            project.ProjectName = string.IsNullOrWhiteSpace(projectData?.Name) ? project.ProjectName : projectData.Name;
+            project.ProjectVersion = projectData?.Version;
+            return project;
         }
-
-        private void OnAutosaveTimerTick(object sender, object e)
+        catch (Exception ex)
         {
-            _ = TryAutosaveAsync();
+            _logger.Warning($"Failed to re-associate recovered project with its source file: {ex.Message}");
+            return CreateTransientRecoveredProject(projectData);
         }
+    }
 
-        private async Task TryAutosaveAsync()
+    private static ProjectFile CreateTransientRecoveredProject(ProjectData projectData)
+    {
+        var name = !string.IsNullOrWhiteSpace(projectData?.Name)
+            ? projectData.Name
+            : projectData?.Chapters?.FirstOrDefault()?.Name;
+
+        return new ProjectFile
         {
-            if (!SettingsValues.autosaveEnabled || !_undoRedo.IsDirty || CurrentProject?.file is null || _afterSaveAction != AfterSaveAction.None)
-                return;
+            Name = name,
+            ProjectName = name,
+            ProjectVersion = projectData?.Version
+        };
+    }
 
-            try
-            {
-                await SaveAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.Warning($"Autosave failed: {ex.Message}");
-            }
-        }
+    private static string GetRecoveredPlainText(ProjectData projectData)
+    {
+        return projectData?.Chapters?.FirstOrDefault()?.Text ?? string.Empty;
+    }
 
-        private void StopAutosaveTimer()
+    private bool TryResolveHandler(StorageFile file, out DocumentPersistenceHandlerBase handler)
+    {
+        handler = null;
+        return file is not null && _handlers.TryGetValue(file.FileType, out handler);
+    }
+
+    private async Task<StorageFile> OpenFileExplorerLoadAsync()
+    {
+        var file = await _fileService.PickFileForOpenAsync();
+        if (file is null)
+            return null;
+
+        if (!ProjectFile.CheckIfProjectExists(file))
+            ProjectFile.New(file);
+
+        return file;
+    }
+
+    private void CompleteAfterSave()
+    {
+        var pendingAction = _afterSaveAction;
+        _afterSaveAction = AfterSaveAction.None;
+
+        _undoRedo.MarkClean();
+
+        switch (pendingAction)
         {
-            if (_autosaveTimer is null)
-                return;
-
-            _autosaveTimer.Tick -= OnAutosaveTimerTick;
-            _autosaveTimer.Stop();
-            _autosaveTimer = null;
+            case AfterSaveAction.None:
+                _events.Publish(new TitleBarUpdateEvent());
+                break;
+            case AfterSaveAction.ClearEverything:
+                CurrentProject = null;
+                _dialogs.ClearEverything();
+                _dialogs.OpenLoadDialogue();
+                break;
+            case AfterSaveAction.Exit:
+                _windowManager.Close(_windowContext);
+                break;
         }
 
-        private static TimeSpan GetAutosaveInterval()
+        _notifications.HideProgressBar();
+    }
+
+    private void LoadVariables(ProjectData projectData)
+    {
+        // Route selection through ITextEditorService so persistence has no VM dependency.
+        // The ChaptersListViewModel observes SelectedChapterIndex via its own bindings.
+        _textEditor.SelectedChapterIndex = projectData.LastOpenedChapter;
+    }
+
+    private void OnProjectLoaded()
+    {
+        _undoRedo.MarkClean();
+        SavedValues.Clear();
+        _events.Publish(new TitleBarUpdateEvent());
+
+        _notifications.HideProgressBar();
+    }
+
+    private void OnAutosaveTimerTick(object sender, object e)
+    {
+        _ = TryAutosaveAsync();
+    }
+
+    private async Task TryAutosaveAsync()
+    {
+        if (!SettingsValues.autosaveEnabled || !_undoRedo.IsDirty || CurrentProject?.file is null || _afterSaveAction != AfterSaveAction.None)
+            return;
+
+        try
         {
-            var interval = SettingsValues.autosaveInterval;
-            return interval >= 1
-                ? TimeSpan.FromMinutes(interval)
-                : TimeSpan.FromSeconds(interval * 60);
+            await SaveAsync();
         }
-
-        private void ShowSaveErrorNotification()
+        catch (Exception ex)
         {
-            _notifications.ShowNotification(new NotificationRequest
-            {
-                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                Title = ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"),
-                Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
-            });
+            _logger.Warning($"Autosave failed: {ex.Message}");
         }
+    }
 
-        private void ShowLoadErrorNotification()
+    private void StopAutosaveTimer()
+    {
+        if (_autosaveTimer is null)
+            return;
+
+        _autosaveTimer.Tick -= OnAutosaveTimerTick;
+        _autosaveTimer.Stop();
+        _autosaveTimer = null;
+    }
+
+    private static TimeSpan GetAutosaveInterval()
+    {
+        var interval = SettingsValues.autosaveInterval;
+        return interval >= 1
+            ? TimeSpan.FromMinutes(interval)
+            : TimeSpan.FromSeconds(interval * 60);
+    }
+
+    private void ShowSaveErrorNotification()
+    {
+        _notifications.ShowNotification(new NotificationRequest
         {
-            _notifications.ShowNotification(new NotificationRequest
-            {
-                Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
-                Title = ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
-                Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
-            });
-        }
+            Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+            Title = ResourceLoader.GetForViewIndependentUse().GetString("saveSaveSystemErrorText"),
+            Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
+        });
+    }
 
-        private static ProjectData NormalizeProjectData(ProjectData projectData)
+    private void ShowLoadErrorNotification()
+    {
+        _notifications.ShowNotification(new NotificationRequest
         {
-            projectData ??= new ProjectData();
-            projectData.Chapters ??= new List<ChapterData>();
-            projectData.Characters ??= new List<CharacterData>();
-            projectData.PinboardConnections ??= new List<PinboardConnectionData>();
-            projectData.PlotThreads ??= new List<string>();
+            Severity = Microsoft.UI.Xaml.Controls.InfoBarSeverity.Error,
+            Title = ResourceLoader.GetForViewIndependentUse().GetString("loadSaveSystemErrorText"),
+            Duration = TimeSpan.FromSeconds(Constants.LayoutConstants.NotificationDismissSeconds + 6)
+        });
+    }
 
-            var chapterIds = new HashSet<string>();
-            foreach (var chapter in projectData.Chapters)
-            {
-                if (chapter is null)
-                    continue;
+    private static ProjectData NormalizeProjectData(ProjectData projectData)
+    {
+        projectData ??= new ProjectData();
+        projectData.Chapters ??= new List<ChapterData>();
+        projectData.Characters ??= new List<CharacterData>();
+        projectData.PinboardConnections ??= new List<PinboardConnectionData>();
+        projectData.PlotThreads ??= new List<string>();
 
-                chapter.Id = EnsureUniqueId(chapter.Id, chapterIds);
-                chapter.Name ??= string.Empty;
-                chapter.Text ??= string.Empty;
-                chapter.Notes ??= string.Empty;
-            }
-
-            return projectData;
-        }
-
-        private static string EnsureUniqueId(string id, HashSet<string> existing)
+        var chapterIds = new HashSet<string>();
+        foreach (var chapter in projectData.Chapters)
         {
-            var candidate = string.IsNullOrWhiteSpace(id) ? Guid.NewGuid().ToString() : id;
-            while (existing.Contains(candidate))
-                candidate = Guid.NewGuid().ToString();
+            if (chapter is null)
+                continue;
 
-            existing.Add(candidate);
-            return candidate;
+            chapter.Id = EnsureUniqueId(chapter.Id, chapterIds);
+            chapter.Name ??= string.Empty;
+            chapter.Text ??= string.Empty;
+            chapter.Notes ??= string.Empty;
         }
+
+        return projectData;
+    }
+
+    private static string EnsureUniqueId(string id, HashSet<string> existing)
+    {
+        var candidate = string.IsNullOrWhiteSpace(id) ? Guid.NewGuid().ToString() : id;
+        while (existing.Contains(candidate))
+            candidate = Guid.NewGuid().ToString();
+
+        existing.Add(candidate);
+        return candidate;
     }
 }

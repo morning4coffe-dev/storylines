@@ -1,15 +1,9 @@
-using Microsoft.UI.Xaml.Controls;
-using Storylines.Constants;
 using Storylines.Views.Pages.Settings;
-using System;
-using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Automation;
 using Microsoft.UI.Xaml.Media.Animation;
-using Storylines.Services;
-using Windows.ApplicationModel.Resources;
 
-namespace Storylines.Views.Pages
-{
+namespace Storylines.Views.Pages;
+
     public sealed partial class SettingsPage : Microsoft.UI.Xaml.Controls.Page
     {
         private const double MinimalPaneBreakpoint = LayoutConstants.SettingsMinimalPaneBreakpoint;
@@ -125,4 +119,3 @@ namespace Storylines.Views.Pages
         }
 #endif
     }
-}

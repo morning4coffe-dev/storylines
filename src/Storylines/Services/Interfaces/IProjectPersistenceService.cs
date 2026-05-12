@@ -1,46 +1,41 @@
-using Storylines.Models;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace Storylines.Services.Interfaces
+namespace Storylines.Services.Interfaces;
+
+public interface IProjectPersistenceService
 {
-    public interface IProjectPersistenceService
-    {
-        Dictionary<string, string> SavedValues { get; }
+    Dictionary<string, string> SavedValues { get; }
 
-        ProjectFile CurrentProject { get; set; }
+    ProjectFile CurrentProject { get; set; }
 
-        void Save();
+    void Save();
 
-        Task SaveAsync();
+    Task SaveAsync();
 
-        void SaveCopy();
+    void SaveCopy();
 
-        void SaveAndExitOrClearAll(bool exit);
+    void SaveAndExitOrClearAll(bool exit);
 
-        Task SaveAndExitOrClearAllAsync(bool exit);
+    Task SaveAndExitOrClearAllAsync(bool exit);
 
-        void CancelPendingAfterSaveAction();
+    void CancelPendingAfterSaveAction();
 
-        ProjectData CollectProjectData();
+    ProjectData CollectProjectData();
 
-        Task OpenFileExplorerSaveAsync(string fileName);
+    Task OpenFileExplorerSaveAsync(string fileName);
 
-        Task NewFileAsync(StorageFolder folder, string fullFileName);
+    Task NewFileAsync(StorageFolder folder, string fullFileName);
 
-        void Load(ProjectFile project);
+    void Load(ProjectFile project);
 
-        Task LoadAsync(ProjectFile project);
+    Task LoadAsync(ProjectFile project);
 
-        Task<bool> TryRestoreRecoveryAsync();
+    Task<bool> TryRestoreRecoveryAsync();
 
-        void DefaultLaunch(IStorageItem storageItem);
+    void DefaultLaunch(IStorageItem storageItem);
 
-        void EnableAutosave();
+    void EnableAutosave();
 
-        void DisableAutosave();
+    void DisableAutosave();
 
-        void RefreshAutosave();
-    }
+    void RefreshAutosave();
 }

@@ -214,7 +214,8 @@
                         Grid.Row="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Spacing="18">
+                        Spacing="18"
+                        Visibility="{x:Bind ViewModel.NoCharactersVisibility, Mode=OneWay}">
                 <FontIcon Glyph=""
                           RenderTransformOrigin=".5,.5">
                     <FontIcon.RenderTransform>
@@ -246,7 +247,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="12"
-                            Visibility="Collapsed">
+                            Visibility="{x:Bind ViewModel.NoSearchResultsVisibility, Mode=OneWay}">
                     <FontIcon Glyph="&#xE721;"
                               Opacity="0.7"
                               RenderTransformOrigin=".5,.5">
@@ -320,7 +321,7 @@
                     OverflowButtonVisibility="Auto">
             <AppBarButton x:Name="undoButton"
                           x:FieldModifier="public"
-                          Click="OnUndoButton_Click"
+                          Command="{x:Bind ViewModel.UndoCommand}"
                           IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Undo" />
@@ -328,7 +329,7 @@
             </AppBarButton>
             <AppBarButton x:Name="redoButton"
                           x:FieldModifier="public"
-                          Click="OnRedoButton_Click"
+                          Command="{x:Bind ViewModel.RedoCommand}"
                           IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Redo" />
@@ -338,7 +339,7 @@
             <AppBarButton x:Name="addButton"
                           x:Uid="add"
                           x:FieldModifier="public"
-                          Click="OnAddButton_Click"
+                          Command="{x:Bind ViewModel.AddCharacterCommand}"
                           IsCompact="True"
                           IsEnabled="{x:Bind listView.IsEnabled}">
                 <AppBarButton.Icon>
@@ -348,7 +349,7 @@
 
             <AppBarToggleButton x:Name="editButton"
                                 x:FieldModifier="public"
-                                Click="OnEditButton_Click"
+                                Command="{x:Bind ViewModel.ToggleEditModeCommand}"
                                 IsChecked="{x:Bind ViewModel.IsEditMode, Mode=OneWay}"
                                 IsEnabled="{x:Bind ViewModel.IsCharacterSelected, Mode=OneWay}"
                                 Label="{x:Bind ViewModel.EditButtonLabel, Mode=OneWay}">
@@ -364,7 +365,7 @@
                 <Button x:Uid="cancel"
                         Height="36"
                         VerticalAlignment="Center"
-                        Click="OnCancelEditButton_Click" />
+                        Command="{x:Bind ViewModel.CancelEditCommand}" />
             </AppBarElementContainer>
             <AppBarButton x:Name="exportButton"
                           x:Uid="export"
@@ -546,7 +547,8 @@
                     </Grid>
                     <ListView x:Name="relationshipsListView"
                               MaxHeight="200"
-                              SelectionMode="None">
+                              SelectionMode="None"
+                              ItemsSource="{x:Bind ViewModel.RelationshipItems, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,2">
@@ -587,7 +589,7 @@
                                x:Uid="noRelationshipsText"
                                Opacity="0.5"
                                FontSize="12"
-                               Visibility="Collapsed" />
+                               Visibility="{x:Bind ViewModel.NoRelationshipsVisibility, Mode=OneWay}" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

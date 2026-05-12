@@ -291,8 +291,7 @@
                         IsThumbToolTipEnabled="False"
                         Maximum="100"
                         Minimum="13"
-                        ValueChanged="OnTextBoxZoomSlider_ValueChanged"
-                        Value="25" />
+                        Value="{x:Bind ViewModel.ZoomLevel, Mode=TwoWay}" />
 
                 <HyperlinkButton x:Name="textBoxZoomTextHyperlink"
                                  MinWidth="50"
@@ -317,7 +316,7 @@
                                                       Height="40"
                                                       Margin="0,-10,-1,0"
                                                       HorizontalAlignment="Right"
-                                                      Click="ResetZoomButton_Click"
+                                                      Command="{x:Bind ViewModel.ResetZoomCommand}"
                                                       ToolTipService.ToolTip="Reset">
                                             <AppBarButton.Icon>
                                                 <FontIcon Glyph=""
@@ -354,7 +353,7 @@
                     Width="40"
                     Background="Transparent"
                     BorderThickness="0"
-                    Click="OnCloseChapterListComponent_Click">
+                    Command="{x:Bind ViewModel.ToggleChapterListCommand}">
                 <SymbolIcon x:Name="closeOpenChapterListComponentIcon"
                             Width="25"
                             Margin="0,0,-7,0"

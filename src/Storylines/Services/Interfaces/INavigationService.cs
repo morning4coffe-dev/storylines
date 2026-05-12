@@ -1,8 +1,6 @@
-using System;
-using Microsoft.UI.Xaml.Controls;
 
-namespace Storylines.Services.Interfaces
-{
+namespace Storylines.Services.Interfaces;
+
     public interface INavigationService
     {
         void Initialize(Frame frame);
@@ -23,4 +21,3 @@ namespace Storylines.Services.Interfaces
 #endif
         Pinboard
     }
-}

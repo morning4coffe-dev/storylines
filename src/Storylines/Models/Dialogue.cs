@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Storylines.Models
 {
@@ -41,11 +37,10 @@ namespace Storylines.Models
         /// <returns>A list of legacy structured dialogue snippets.</returns>
         public static List<string> GetInText(string txt)
         {
-            return LegacyStructuredDialogueRegex
+            return [.. LegacyStructuredDialogueRegex
                 .Matches(txt ?? string.Empty)
                 .Cast<Match>()
-                .Select(match => match.Value)
-                .ToList();
+                .Select(match => match.Value)];
         }
 
         /// <summary>

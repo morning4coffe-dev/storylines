@@ -1,9 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Storylines.Models
-{
+namespace Storylines.Models;
+
     public enum ExportTarget
     {
         None,
@@ -227,4 +224,3 @@ namespace Storylines.Models
             return _capabilities.FirstOrDefault(capability => capability.Target == target);
         }
     }
-}

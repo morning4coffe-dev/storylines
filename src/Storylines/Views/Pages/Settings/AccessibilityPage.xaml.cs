@@ -1,16 +1,14 @@
 using Storylines.ViewModels.Settings;
-using Microsoft.UI.Xaml.Controls;
 
-namespace Storylines.Views.Pages.Settings
+namespace Storylines.Views.Pages.Settings;
+
+public sealed partial class AccessibilityPage : Page
 {
-    public sealed partial class AccessibilityPage : Page
-    {
-        public AccessibilitySettingsViewModel ViewModel { get; }
+    public AccessibilitySettingsViewModel ViewModel { get; }
 
-        public AccessibilityPage()
-        {
-            ViewModel = App.GetService<AccessibilitySettingsViewModel>();
-            InitializeComponent();
-        }
+    public AccessibilityPage()
+    {
+        ViewModel = App.GetService<AccessibilitySettingsViewModel>();
+        InitializeComponent();
     }
 }

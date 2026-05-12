@@ -1,21 +1,11 @@
 using Storylines.Views.Pages;
-using Storylines.Helpers;
-using Storylines.Services;
-using Storylines.Models;
-using Storylines.Services.Interfaces;
-using Storylines.ViewModels;
-using System;
-using Windows.Storage;
 using Windows.System;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Microsoft.UI.Xaml.Media;
 using Storylines.Views.Dialogs;
 using Storylines.Services.Modes;
 using System.ComponentModel;
 
-namespace Storylines.Views.Controls
-{
+namespace Storylines.Views.Controls;
+
     public sealed partial class MainCommandBar : UserControl
     {
         private readonly ChaptersListViewModel _chaptersListViewModel;
@@ -279,7 +269,8 @@ namespace Storylines.Views.Controls
                 readAloudButton.IsEnabled = _speechHub.CanShowReadAloudControls || HasReadableText();
 
             if (dictationButton is not null)
-                dictationButton.IsEnabled = _speechHub.IsDictating || (CurrentMainPage?.IsEditorCommandContextActive ?? false);
+                dictationButton.IsEnabled = _speechHub.IsDictating || 
+                    (CurrentMainPage?.ViewModel is { IsChapterSelected: true, TextFormattingContextActive: true, IsChapterTextReadOnly: false });
         }
 
         private bool HasReadableText()
@@ -366,4 +357,3 @@ namespace Storylines.Views.Controls
         #region HELP
         #endregion
     }
-}

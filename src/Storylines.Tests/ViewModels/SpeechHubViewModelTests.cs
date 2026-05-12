@@ -1,8 +1,4 @@
-using Storylines.Services;
-using Storylines.Services.Interfaces;
 using Storylines.Tests.Stubs;
-using Storylines.ViewModels;
-using Microsoft.UI.Xaml.Controls;
 using Xunit;
 
 namespace Storylines.Tests.ViewModels;

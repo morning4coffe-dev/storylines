@@ -1,12 +1,6 @@
-using Microsoft.UI.Xaml.Controls;
-using Storylines.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace Storylines.Services.Interfaces
-{
+namespace Storylines.Services.Interfaces;
+
     public sealed class ExportRequest
     {
         public ExportTarget Target { get; set; }
@@ -51,4 +45,3 @@ namespace Storylines.Services.Interfaces
         BranchingDialogueGraphData ImportBranchingDialogueJson(string json);
 #endif
     }
-}

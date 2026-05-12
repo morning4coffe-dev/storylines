@@ -1,124 +1,31 @@
 using Storylines.Views.Pages;
-using Storylines.Models;
-using System.Linq;
-using Microsoft.UI.Xaml;
-using Microsoft.UI.Xaml.Controls;
-using Storylines.Helpers;
-using Storylines.Services;
 
-namespace Storylines.Views.Controls
+namespace Storylines.Views.Controls;
+
+public sealed partial class ChapterNotesPane : UserControl
 {
-    public sealed partial class ChapterNotesPane : UserControl
+    private readonly WindowContext _windowContext;
+    private readonly ChapterNotesPaneViewModel _viewModel;
+
+    private MainPage CurrentMainPage => _windowContext?.MainPage;
+
+    public ChapterNotesPaneViewModel ViewModel => _viewModel;
+
+    public ChapterNotesPane()
     {
-        private readonly WindowContext _windowContext;
-        private bool _isUpdating;
+        InitializeComponent();
+        _windowContext = App.GetService<WindowContext>();
+        _viewModel = App.GetService<ChapterNotesPaneViewModel>();
+        DataContext = _viewModel;
+    }
 
-        private ChaptersList CurrentChapterList => _windowContext?.ChapterList;
+    public void LoadNotes()
+    {
+        _viewModel.LoadNotes();
+    }
 
-        private MainPage CurrentMainPage => _windowContext?.MainPage;
-
-        public ChapterNotesPane()
-        {
-            InitializeComponent();
-            _windowContext = App.GetService<WindowContext>();
-        }
-
-        public void LoadNotes()
-        {
-            _isUpdating = true;
-
-            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
-            {
-                notesTextBox.Text = chapter.Notes ?? string.Empty;
-                notesTextBox.IsEnabled = true;
-
-                synopsisTextBox.Text = chapter.Synopsis ?? string.Empty;
-                synopsisTextBox.IsEnabled = true;
-
-                locationTextBox.Text = chapter.Location ?? string.Empty;
-                locationTextBox.IsEnabled = true;
-
-                plotThreadsTextBox.Text = chapter.PlotThreads?.Count > 0 ? string.Join(", ", chapter.PlotThreads) : string.Empty;
-                plotThreadsTextBox.IsEnabled = true;
-            }
-            else
-            {
-                notesTextBox.Text = string.Empty;
-                notesTextBox.IsEnabled = false;
-
-                synopsisTextBox.Text = string.Empty;
-                synopsisTextBox.IsEnabled = false;
-
-                locationTextBox.Text = string.Empty;
-                locationTextBox.IsEnabled = false;
-
-                plotThreadsTextBox.Text = string.Empty;
-                plotThreadsTextBox.IsEnabled = false;
-            }
-
-            _isUpdating = false;
-        }
-
-        private void OnNotesTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_isUpdating) return;
-
-            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
-            {
-                chapter.Notes = notesTextBox.Text;
-                TimeTravelSystem.SomethingChanged();
-            }
-        }
-
-        private void OnSynopsisTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_isUpdating) return;
-
-            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
-            {
-                chapter.Synopsis = synopsisTextBox.Text;
-                TimeTravelSystem.SomethingChanged();
-            }
-        }
-
-        private void OnLocationTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_isUpdating) return;
-
-            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
-            {
-                chapter.Location = locationTextBox.Text;
-                TimeTravelSystem.SomethingChanged();
-            }
-        }
-
-        private void OnPlotThreadsTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            if (_isUpdating) return;
-
-            if (CurrentChapterList?.listView?.SelectedItem is Chapter chapter)
-            {
-                chapter.PlotThreads = (plotThreadsTextBox.Text ?? string.Empty)
-                    .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
-                    .Select(t => t.Trim())
-                    .Where(t => !string.IsNullOrWhiteSpace(t))
-                    .Distinct(System.StringComparer.CurrentCultureIgnoreCase)
-                    .ToList();
-
-                // Auto-register new plot threads in the project
-                foreach (var thread in chapter.PlotThreads)
-                {
-                    if (!App.GetService<ProjectState>().PlotThreads.Contains(thread, System.StringComparer.CurrentCultureIgnoreCase))
-                        App.GetService<ProjectState>().PlotThreads.Add(thread);
-                }
-
-                TimeTravelSystem.SomethingChanged();
-            }
-        }
-
-        private void OnCollapseButton_Click(object sender, RoutedEventArgs e)
-        {
-            CurrentMainPage?.ToggleNotesPane(false);
-        }
+    private void OnCollapseButton_Click(object sender, RoutedEventArgs e)
+    {
+        CurrentMainPage?.ToggleNotesPane(false);
     }
 }

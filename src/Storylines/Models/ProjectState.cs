@@ -1,14 +1,6 @@
-using Storylines.Helpers;
-using Storylines.Services;
-using System;
-using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Linq;
-using System.Threading.Tasks;
-using Windows.ApplicationModel.Resources;
 
-namespace Storylines.Models
-{
+namespace Storylines.Models;
+
     public class ProjectState
     {
         public ObservableCollection<Chapter> Chapters { get; } = new ObservableCollection<Chapter>();
@@ -350,4 +342,3 @@ namespace Storylines.Models
             return character;
         }
     }
-}
