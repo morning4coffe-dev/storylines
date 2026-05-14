@@ -56,6 +56,7 @@
     <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />
     <Compile Include="..\Storylines\ViewModels\InspectorViewModel.cs" Link="LinkedSources\InspectorViewModel.cs" />
     <Compile Include="..\Storylines\ViewModels\SpeechHubViewModel.cs" Link="LinkedSources\SpeechHubViewModel.cs" />
+    <Compile Include="..\Storylines\ViewModels\Settings\GeneralSettingsViewModel.cs" Link="LinkedSources\GeneralSettingsViewModel.cs" />
   </ItemGroup>
 
 </Project>

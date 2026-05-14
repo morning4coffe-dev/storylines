@@ -9,6 +9,7 @@
                 <controls:XamlControlsResources />
                 <ResourceDictionary Source="Resources/ResourceDictionaries/MainStyleDictionary.xaml" />
                 <ResourceDictionary Source="Resources/ResourceDictionaries/AppIconography.xaml" />
+                <ResourceDictionary Source="Resources/ResourceDictionaries/RightAlignedToggleSwitchStyle.xaml" />
             </ResourceDictionary.MergedDictionaries>
         </ResourceDictionary>
     </Application.Resources>

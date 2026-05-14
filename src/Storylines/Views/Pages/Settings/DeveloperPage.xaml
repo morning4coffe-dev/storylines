@@ -4,13 +4,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:diagnostics="using:Storylines.Services.Interfaces"
+      xmlns:controls="using:Storylines.Views.Controls"
       mc:Ignorable="d">
-
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel Margin="32,24,32,24"
-                    Spacing="12"
-                    HorizontalAlignment="Center"
-                    MaxWidth="1000">
+    
+    <controls:SettingsPageLayout>
+        <StackPanel Spacing="10">
             <TextBlock x:Uid="developerText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -228,5 +226,5 @@
                 </StackPanel>
             </Border>
         </StackPanel>
-    </ScrollViewer>
+    </controls:SettingsPageLayout>
 </Page>
