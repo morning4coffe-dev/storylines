@@ -12,6 +12,10 @@
     <UseWinUI>true</UseWinUI>
     <EnableMsixTooling>true</EnableMsixTooling>
     <WindowsPackageType>MSIX</WindowsPackageType>
+
+    <!-- Self-contained deployment: bundle .NET Runtime + Windows App SDK so users don't need to install them -->
+    <SelfContained>true</SelfContained>
+    <WindowsAppSDKSelfContained>true</WindowsAppSDKSelfContained>
     <LangVersion>latest</LangVersion>
     <Nullable>enable</Nullable>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -32,6 +36,14 @@
     <Version>0.8.8.0</Version>
     <AssemblyVersion>0.8.8.0</AssemblyVersion>
     <FileVersion>0.8.8.0</FileVersion>
+  </PropertyGroup>
+
+  <!-- Trim unused framework assemblies in Release to reduce MSIX package size.
+       TrimMode=partial only trims assemblies that opt in (e.g. .NET BCL), keeping
+       reflection-heavy libraries like Newtonsoft.Json intact. -->
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'">
+    <PublishTrimmed>true</PublishTrimmed>
+    <TrimMode>partial</TrimMode>
   </PropertyGroup>
 
   <!-- Read Package.appxmanifest and use its Identity/@Version as the project's version values -->
