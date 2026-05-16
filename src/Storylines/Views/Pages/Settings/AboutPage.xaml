@@ -4,6 +4,7 @@
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:constants="using:Storylines.Constants"
+      xmlns:controls="using:Storylines.Views.Controls"
     mc:Ignorable="d">
 
     <Page.Resources>
@@ -14,39 +15,8 @@
         </ResourceDictionary>
     </Page.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto">
-        <StackPanel x:Name="aboutPage"
-                    Margin="16,16,16,24"
-                    Spacing="10"
-                    HorizontalAlignment="Center"
-                    MaxWidth="1000">
-            <VisualStateManager.VisualStateGroups>
-                <VisualStateGroup>
-                    <VisualState x:Name="CompactLayout">
-                        <VisualState.Setters>
-                            <Setter Target="aboutPage.Margin"
-                                    Value="16,16,16,24" />
-                            <Setter Target="linksStack.Orientation"
-                                    Value="Vertical" />
-                            <Setter Target="linksStack.Spacing"
-                                    Value="8" />
-                        </VisualState.Setters>
-                    </VisualState>
-                    <VisualState x:Name="WideLayout">
-                        <VisualState.StateTriggers>
-                            <AdaptiveTrigger MinWindowWidth="{x:Bind constants:LayoutConstants.SettingsWideLayoutBreakpoint}" />
-                        </VisualState.StateTriggers>
-                        <VisualState.Setters>
-                            <Setter Target="aboutPage.Margin"
-                                    Value="32,24,32,24" />
-                            <Setter Target="linksStack.Orientation"
-                                    Value="Horizontal" />
-                            <Setter Target="linksStack.Spacing"
-                                    Value="80" />
-                        </VisualState.Setters>
-                    </VisualState>
-                </VisualStateGroup>
-            </VisualStateManager.VisualStateGroups>
+    <controls:SettingsPageLayout>
+        <StackPanel Spacing="10">
             <TextBlock x:Uid="aboutText"
                        FontSize="25"
                        Margin="0,-5,0,5"
@@ -63,7 +33,7 @@
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
                 <Image Source="/Assets/Icons/Storylines-icon.png"
-                       Margin="10, 0"
+                       Margin="15, 0"
                        Width="35"
                        VerticalAlignment="Center"
                        HorizontalAlignment="Center" />
@@ -184,5 +154,5 @@
             </Expander>
 
         </StackPanel>
-    </ScrollViewer>
+    </controls:SettingsPageLayout>
 </Page>
