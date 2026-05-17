@@ -5,31 +5,63 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d">
 
-    <!-- Root is hit-test transparent so the underlying (read-only) editor still
-         receives scroll/selection input. Only the exit pill is interactive. -->
-    <Grid Background="Transparent" IsHitTestVisible="False">
-        <Button x:Name="exitPill"
-                x:Uid="readOnlyExitPillButton"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Bottom"
-                Margin="0,0,0,24"
-                Padding="14,8"
-                CornerRadius="24"
-                IsHitTestVisible="True"
+    <Grid>
+        <Border HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Margin="16,0,16,0"
+                Padding="14,10"
                 Background="{ThemeResource LayerFillColorDefaultBrush}"
                 BorderBrush="{ThemeResource CardStrokeColorDefaultBrush}"
                 BorderThickness="1"
-                Click="OnExitPill_Click">
-            <StackPanel Orientation="Horizontal" Spacing="10">
-                <FontIcon Glyph="&#xE72E;"
-                          Style="{StaticResource AppSymbolIconStyle}"
-                          FontSize="14"
-                          Foreground="{ThemeResource TextForeground}" />
-                <TextBlock x:Uid="readOnlyExitPill"
-                           VerticalAlignment="Center"
-                           FontSize="13"
-                           Foreground="{ThemeResource TextForeground}" />
-            </StackPanel>
-        </Button>
+                CornerRadius="14">
+            <Border.Shadow>
+                <ThemeShadow />
+            </Border.Shadow>
+
+            <Grid ColumnSpacing="12">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <Border Width="28"
+                        Height="28"
+                        CornerRadius="14"
+                    Background="{ThemeResource ElementAcrylicBackground}">
+                    <FontIcon Glyph="&#xE8A5;"
+                              FontSize="14"
+                              HorizontalAlignment="Center"
+                              VerticalAlignment="Center"
+                              Foreground="{ThemeResource TextForeground}" />
+                </Border>
+
+                <StackPanel Grid.Column="1"
+                            Spacing="2"
+                            VerticalAlignment="Center">
+                    <TextBlock x:Name="modeTitleText"
+                               FontSize="13"
+                               FontWeight="SemiBold" />
+                    <TextBlock x:Name="modeDescriptionText"
+                               FontSize="12"
+                               Opacity="0.72" />
+                </StackPanel>
+
+                <Button x:Name="exitPill"
+                        x:Uid="readOnlyExitPillButton"
+                        Grid.Column="2"
+                        Width="36"
+                        Height="36"
+                        Padding="0"
+                        VerticalAlignment="Center"
+                        CornerRadius="18"
+                        Click="OnExitPill_Click">
+                    <FontIcon Glyph="&#xE711;"
+                              Style="{StaticResource AppSymbolIconStyle}"
+                              FontSize="14"
+                              Foreground="{ThemeResource TextForeground}" />
+                </Button>
+            </Grid>
+        </Border>
     </Grid>
 </UserControl>

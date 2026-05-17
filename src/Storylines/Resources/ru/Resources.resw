@@ -27,16 +27,16 @@
   <data name="newUpdateAvailable2.Text" xml:space="preserve">
     <value>для загрузки.</value>
   </data>
-  <data name="reviewDialog.Text" xml:space="preserve">
+  <data name="reviewDialog" xml:space="preserve">
     <value>Вам нравится это приложение? Пожалуйста, оставьте отзыв в Microsoft Store.</value>
   </data>
-  <data name="reviewDialogOption1.Content" xml:space="preserve">
+  <data name="reviewDialogOption1" xml:space="preserve">
     <value>Оценить</value>
   </data>
-  <data name="reviewDialogOption2.Content" xml:space="preserve">
+  <data name="reviewDialogOption2" xml:space="preserve">
     <value>Не сейчас</value>
   </data>
-  <data name="reviewDialogOption3.Content" xml:space="preserve">
+  <data name="reviewDialogOption3" xml:space="preserve">
     <value>Не показывать снова</value>
   </data>
   <data name="italian.Content" xml:space="preserve">
@@ -71,6 +71,24 @@
   </data>
   <data name="dictation.Label" xml:space="preserve">
     <value>Голосовой ввод</value>
+  </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>Доступ к микрофону запрещен.</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>Доступ к микрофону запрещен</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>Разрешите доступ к микрофону в параметрах Windows, чтобы использовать диктовку.</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>Диктовка недоступна на этом устройстве.</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>Ошибка диктовки.</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>Слушаю…</value>
   </data>
   <data name="edit.Label" xml:space="preserve">
     <value>Изменить</value>
@@ -447,7 +465,7 @@
   <data name="findOne.Text" xml:space="preserve">
     <value>Найти</value>
   </data>
-  <data name="experience.Title" xml:space="preserve">
+  <data name="experience" xml:space="preserve">
     <value>Расскажите о своем опыте</value>
   </data>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
@@ -459,10 +477,10 @@
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
     <value>Некоторые функции могут быть ограничены, пока установка не завершится.</value>
   </data>
-  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+  <data name="storeUpdateInstallNow" xml:space="preserve">
     <value>Установить сейчас</value>
   </data>
-  <data name="storeUpdateLater.Content" xml:space="preserve">
+  <data name="storeUpdateLater" xml:space="preserve">
     <value>Позже</value>
   </data>
   <data name="storeUpdateInstallingMessage" xml:space="preserve">
@@ -656,7 +674,7 @@
     <value>Расчетное время чтения</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Статистика проекта</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Аналитика</value>
@@ -1011,49 +1029,49 @@
     <value>By chapter</value>
   </data>
   <data name="chapterListCloseButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Close</value>
+    <value>Закрыть</value>
   </data>
   <data name="chapterListOptionsButton.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Options</value>
+    <value>Параметры</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>Внешность и визуальные заметки</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>Примеры реплик</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>Предпросмотр диалогов пока недоступен. Добавьте несколько реплик в главу, и они появятся здесь.</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>Диалоговые реплики пока не найдены.</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>Встречается в {0} главах и содержит {1} реплик диалога.</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>Использование диалогов</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>Поиск персонажей</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>Ни один персонаж не соответствует вашему запросу.</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>Черты характера (через запятую)</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>Дневная цель по словам</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>Отслеживайте ежедневный прогресс письма. Установите 0, чтобы отключить.</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>Все персонажи</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>Ни один персонаж не соответствует этому запросу.</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ выбрать · Enter подтвердить · Esc закрыть</value>
@@ -1065,34 +1083,34 @@
     <value>Нажмите Enter во время написания, чтобы быстро вставить реплику персонажа. Стрелками ↑↓ выберите персонажа, затем Enter для подтверждения. Диалоги также можно преобразовать в узлы ветвящегося диалога.</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>Недавние</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>Найти персонажа</value>
   </data>
   <data name="editorFontFamilySetting.Text" xml:space="preserve">
-    <value>Font family</value>
+    <value>Семейство шрифта</value>
   </data>
   <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
-    <value>Default font used for new text in the editor.</value>
+    <value>Шрифт по умолчанию для нового текста в редакторе.</value>
   </data>
   <data name="editorFontSizeSetting.Text" xml:space="preserve">
-    <value>Font size</value>
+    <value>Размер шрифта</value>
   </data>
   <data name="githubBannerDescription.Text" xml:space="preserve">
-    <value>Click here to give Storylines a Star on GitHub</value>
+    <value>Нажмите здесь, чтобы поставить Storylines звезду на GitHub</value>
   </data>
   <data name="githubBannerTitle.Text" xml:space="preserve">
-    <value>GitHub Stars Count</value>
+    <value>Количество звёзд на GitHub</value>
   </data>
   <data name="min" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>Untitled</value>
+    <value>Без названия</value>
   </data>
   <data name="newCharacterName" xml:space="preserve">
-    <value>New Character</value>
+    <value>Новый персонаж</value>
   </data>
   <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
     <value>Auto-arrange</value>
@@ -1116,7 +1134,7 @@
     <value>Text Editor</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>Недавние проекты</value>
   </data>
   <data name="writingGoalSetting.Text" xml:space="preserve">
     <value>Writing Goal</value>
@@ -1159,6 +1177,12 @@
   <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Режим только чтения</value>
   </data>
+  <data name="typewriterModeButton.Label" xml:space="preserve">
+    <value>Печатная машинка</value>
+  </data>
+  <data name="typewriterModeButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Режим машинки - курсор остается по центру (Ctrl+Shift+W)</value>
+  </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Выберите режим письма</value>
   </data>
@@ -1183,14 +1207,23 @@
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Включить режим</value>
   </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Режим редактирования</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Режим фокуса</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Режим только чтение</value>
+  </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>Экспериментальные</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>Включить экспериментальные функции</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Открывает функции, которые все еще находятся в разработке, например глобальный поиск в строке заголовка и ветвящиеся диалоги.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Холст истории</value>
@@ -1199,13 +1232,13 @@
     <value>Подсказки для письма</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} диалоговых узлов</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>Открыть в редакторе диалогов</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>Содержит ветвящийся диалог</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>Жирный</value>
@@ -1236,12 +1269,6 @@
   </data>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>Выйти из режима только для чтения</value>
-  </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>Нажмите на целевой отрывок для соединения</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Отменить соединение</value>
   </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Ярлыки</value></data>
   <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Глобальный</value></data>
@@ -1290,10 +1317,10 @@
   <data name="saveProjectName" xml:space="preserve"><value>Название проекта:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"О лесной королеве"</value></data>
   <data name="projectStatistics.Text" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Статистика проекта</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
-    <value>Word frequency</value>
+    <value>Частота слов</value>
   </data>
   <data name="projectFileInfoButton.Label" xml:space="preserve">
     <value>Информация о файле</value>
@@ -1358,6 +1385,95 @@
   </data>
   <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
     <value>Закрыть</value>
+  </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>Нечего читать вслух</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>Сначала введите или выделите текст.</value></data>
+  <data name="developer.Content" xml:space="preserve">
+    <value>Разработчик</value>
+  </data>
+  <data name="developerText.Text" xml:space="preserve">
+    <value>Разработчик</value>
+  </data>
+  <data name="developerRuntimeSection.Text" xml:space="preserve">
+    <value>Диагностика во время выполнения</value>
+  </data>
+  <data name="developerCurrentPageLabel.Text" xml:space="preserve">
+    <value>Текущая страница</value>
+  </data>
+  <data name="developerCurrentThemeLabel.Text" xml:space="preserve">
+    <value>Текущая тема</value>
+  </data>
+  <data name="developerWindowSizeLabel.Text" xml:space="preserve">
+    <value>Размер окна</value>
+  </data>
+  <data name="developerCurrentDialogLabel.Text" xml:space="preserve">
+    <value>Текущий диалог</value>
+  </data>
+  <data name="developerHiddenControlsSection.Text" xml:space="preserve">
+    <value>Невидимые элементы управления</value>
+  </data>
+  <data name="developerHiddenControlsDescription.Text" xml:space="preserve">
+    <value>Просматривайте скрытые элементы управления из активного визуального дерева.</value>
+  </data>
+  <data name="developerRefreshSnapshotButton.Content" xml:space="preserve">
+    <value>Обновить снимок</value>
+  </data>
+  <data name="developerHiddenControlsCountLabel.Text" xml:space="preserve">
+    <value>Найденные элементы управления</value>
+  </data>
+  <data name="developerAttachedBehaviorsSection.Text" xml:space="preserve">
+    <value>Невидимые поведения</value>
+  </data>
+  <data name="developerAttachedBehaviorsDescription.Text" xml:space="preserve">
+    <value>Просматривайте подключенные поведения, которые не отображают собственный интерфейс.</value>
+  </data>
+  <data name="developerAttachedBehaviorsCountLabel.Text" xml:space="preserve">
+    <value>Подключенные поведения</value>
+  </data>
+  <data name="developerNotificationsSection.Text" xml:space="preserve">
+    <value>Уведомления</value>
+  </data>
+  <data name="developerNotificationsDescription.Text" xml:space="preserve">
+    <value>Просматривайте поверхности уведомлений, включая запрос на отзыв.</value>
+  </data>
+  <data name="developerShowTransientNotificationButton.Content" xml:space="preserve">
+    <value>Показать временное уведомление</value>
+  </data>
+  <data name="developerShowReviewPromptButton.Content" xml:space="preserve">
+    <value>Показать запрос на отзыв</value>
+  </data>
+  <data name="developerDismissPersistentNotificationButton.Content" xml:space="preserve">
+    <value>Закрыть постоянное уведомление</value>
+  </data>
+  <data name="developerDialogsSection.Text" xml:space="preserve">
+    <value>Диалоги</value>
+  </data>
+  <data name="developerDialogsDescription.Text" xml:space="preserve">
+    <value>Открывайте существующие диалоги приложения через общую службу диалогов.</value>
+  </data>
+  <data name="developerOpenLoadDialogButton.Content" xml:space="preserve">
+    <value>Открыть диалог загрузки проекта</value>
+  </data>
+  <data name="developerOpenShortcutsDialogButton.Content" xml:space="preserve">
+    <value>Открыть диалог сочетаний клавиш</value>
+  </data>
+  <data name="developerOpenModePickerDialogButton.Content" xml:space="preserve">
+    <value>Открыть диалог выбора режима</value>
+  </data>
+  <data name="developerOpenProjectInfoDialogButton.Content" xml:space="preserve">
+    <value>Открыть диалог сведений о проекте</value>
+  </data>
+  <data name="developerTransientNotificationTitle" xml:space="preserve">
+    <value>Предпросмотр разработчика</value>
+  </data>
+  <data name="developerTransientNotificationMessage" xml:space="preserve">
+    <value>Это предварительный просмотр уведомления только для отладки.</value>
+  </data>
+  <data name="developerNoDialogOpen" xml:space="preserve">
+    <value>Нет открытых диалогов</value>
+  </data>
+  <data name="developerUnknownValue" xml:space="preserve">
+    <value>Неизвестно</value>
   </data>
 </root>
 

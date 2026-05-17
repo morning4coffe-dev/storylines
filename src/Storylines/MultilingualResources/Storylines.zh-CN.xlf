@@ -14,11 +14,11 @@
           <source>This update is required and some features may stay limited until it finishes installing.</source>
           <target state="translated">这是必需更新，在安装完成之前某些功能可能会受到限制。</target>
         </trans-unit>
-        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateInstallNow" translate="yes" xml:space="preserve">
           <source>Install now</source>
           <target state="translated">立即安装</target>
         </trans-unit>
-        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateLater" translate="yes" xml:space="preserve">
           <source>Later</source>
           <target state="translated">稍后</target>
         </trans-unit>
@@ -318,6 +318,30 @@
           <source>Dictation</source>
           <target state="translated">语音输入</target>
         </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">麦克风访问被拒绝。</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">麦克风访问被拒绝</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">请在 Windows 设置中允许麦克风访问，以使用语音输入。</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">此设备不支持语音输入。</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">语音输入出错。</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">正在聆听…</target>
+        </trans-unit>
         <trans-unit id="done" translate="yes" xml:space="preserve">
           <source>Done</source>
           <target state="new">Done</target>
@@ -371,7 +395,7 @@ Did you want to exit without saving your progress?</source>
           <source>Unsaved progress</source>
           <target state="new">Unsaved progress</target>
         </trans-unit>
-        <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
+        <trans-unit id="experience" translate="yes" xml:space="preserve">
           <source>Tell us about your experience</source>
           <target state="new">Tell us about your experience</target>
         </trans-unit>
@@ -698,19 +722,19 @@ the "Add new character" button.</source>
           <source>Report a bug</source>
           <target state="translated">报告错误</target>
         </trans-unit>
-        <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialog" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
           <target state="new">Are you enjoying this app? Please consider leaving a review on Microsoft Store.</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption1" translate="yes" xml:space="preserve">
           <source>Rate now</source>
           <target state="new">Rate now</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption2.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption2" translate="yes" xml:space="preserve">
           <source>Not now</source>
           <target state="new">Not now</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption3" translate="yes" xml:space="preserve">
           <source>Never show again</source>
           <target state="new">Never show again</target>
         </trans-unit>

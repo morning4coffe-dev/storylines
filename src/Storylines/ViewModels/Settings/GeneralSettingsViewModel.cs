@@ -1,136 +1,131 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using CommunityToolkit.Mvvm.Input;
-using Storylines.Services.Interfaces;
-using System;
 using System.Globalization;
 
-namespace Storylines.ViewModels.Settings
+namespace Storylines.ViewModels.Settings;
+
+public partial class GeneralSettingsViewModel : ObservableObject
 {
-    public partial class GeneralSettingsViewModel : ObservableObject
+    private readonly IAppSettingsService _settings;
+    private bool _isInitializing;
+    private bool _isSynchronizing;
+
+    [ObservableProperty]
+    private string _chapterName;
+
+    [ObservableProperty]
+    private bool _exitDialogueEnabled;
+
+    [ObservableProperty]
+    private bool _loadLastProjectOnStart;
+
+    [ObservableProperty]
+    private bool _autosaveEnabled;
+
+    [ObservableProperty]
+    private string _autosaveIntervalKey;
+
+    [ObservableProperty]
+    private double _dailyWordGoal;
+
+    [ObservableProperty]
+    private bool _experimentalFeaturesEnabled;
+
+    public GeneralSettingsViewModel(IAppSettingsService settings)
     {
-        private readonly IAppSettingsService _settings;
-        private bool _isInitializing;
-        private bool _isSynchronizing;
+        _settings = settings;
 
-        [ObservableProperty]
-        private string _chapterName;
+        _isInitializing = true;
+        _chapterName = _settings.ChapterName;
+        _exitDialogueEnabled = _settings.ExitDialogueEnabled;
+        _loadLastProjectOnStart = _settings.LoadLastProjectOnStart;
+        _autosaveEnabled = _settings.AutosaveEnabled;
+        _autosaveIntervalKey = _settings.AutosaveInterval.ToString(CultureInfo.InvariantCulture);
+        _dailyWordGoal = _settings.DailyWordGoal;
+        _experimentalFeaturesEnabled = _settings.ExperimentalFeaturesEnabled;
+        _isInitializing = false;
+    }
 
-        [ObservableProperty]
-        private bool _exitDialogueEnabled;
+    [RelayCommand]
+    private void ResetChapterName()
+    {
+        _settings.ResetChapterName();
+        UpdateSilently(() => ChapterName = _settings.ChapterName);
+    }
 
-        [ObservableProperty]
-        private bool _loadLastProjectOnStart;
+    partial void OnChapterNameChanged(string value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-        [ObservableProperty]
-        private bool _autosaveEnabled;
+        _settings.ChapterName = value;
+    }
 
-        [ObservableProperty]
-        private string _autosaveIntervalKey;
+    partial void OnExitDialogueEnabledChanged(bool value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-        [ObservableProperty]
-        private double _dailyWordGoal;
+        _settings.ExitDialogueEnabled = value;
+    }
 
-        [ObservableProperty]
-        private bool _experimentalFeaturesEnabled;
+    partial void OnLoadLastProjectOnStartChanged(bool value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-        public GeneralSettingsViewModel(IAppSettingsService settings)
-        {
-            _settings = settings;
+        _settings.LoadLastProjectOnStart = value;
 
-            _isInitializing = true;
-            _chapterName = _settings.ChapterName;
-            _exitDialogueEnabled = _settings.ExitDialogueEnabled;
-            _loadLastProjectOnStart = _settings.LoadLastProjectOnStart;
-            _autosaveEnabled = _settings.AutosaveEnabled;
-            _autosaveIntervalKey = _settings.AutosaveInterval.ToString(CultureInfo.InvariantCulture);
-            _dailyWordGoal = _settings.DailyWordGoal;
-            _experimentalFeaturesEnabled = _settings.ExperimentalFeaturesEnabled;
-            _isInitializing = false;
-        }
+        if (_settings.LoadLastProjectOnStart != value)
+            UpdateSilently(() => LoadLastProjectOnStart = _settings.LoadLastProjectOnStart);
+    }
 
-        [RelayCommand]
-        private void ResetChapterName()
-        {
-            _settings.ResetChapterName();
-            UpdateSilently(() => ChapterName = _settings.ChapterName);
-        }
+    partial void OnAutosaveEnabledChanged(bool value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-        partial void OnChapterNameChanged(string value)
-        {
-            if (ShouldSkipUpdate())
-                return;
+        _settings.AutosaveEnabled = value;
 
-            _settings.ChapterName = value;
-        }
+        if (_settings.AutosaveEnabled != value)
+            UpdateSilently(() => AutosaveEnabled = _settings.AutosaveEnabled);
+    }
 
-        partial void OnExitDialogueEnabledChanged(bool value)
-        {
-            if (ShouldSkipUpdate())
-                return;
+    partial void OnAutosaveIntervalKeyChanged(string value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-            _settings.ExitDialogueEnabled = value;
-        }
+        if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double interval))
+            return;
 
-        partial void OnLoadLastProjectOnStartChanged(bool value)
-        {
-            if (ShouldSkipUpdate())
-                return;
+        _settings.AutosaveInterval = interval;
 
-            _settings.LoadLastProjectOnStart = value;
+        string normalizedInterval = _settings.AutosaveInterval.ToString(CultureInfo.InvariantCulture);
+        if (!string.Equals(normalizedInterval, value, StringComparison.Ordinal))
+            UpdateSilently(() => AutosaveIntervalKey = normalizedInterval);
+    }
 
-            if (_settings.LoadLastProjectOnStart != value)
-                UpdateSilently(() => LoadLastProjectOnStart = _settings.LoadLastProjectOnStart);
-        }
+    partial void OnDailyWordGoalChanged(double value)
+    {
+        if (ShouldSkipUpdate() || double.IsNaN(value))
+            return;
 
-        partial void OnAutosaveEnabledChanged(bool value)
-        {
-            if (ShouldSkipUpdate())
-                return;
+        _settings.DailyWordGoal = (int)Math.Round(value);
+    }
 
-            _settings.AutosaveEnabled = value;
+    partial void OnExperimentalFeaturesEnabledChanged(bool value)
+    {
+        if (ShouldSkipUpdate())
+            return;
 
-            if (_settings.AutosaveEnabled != value)
-                UpdateSilently(() => AutosaveEnabled = _settings.AutosaveEnabled);
-        }
+        _settings.ExperimentalFeaturesEnabled = value;
+    }
 
-        partial void OnAutosaveIntervalKeyChanged(string value)
-        {
-            if (ShouldSkipUpdate())
-                return;
+    private bool ShouldSkipUpdate() => _isInitializing || _isSynchronizing;
 
-            if (!double.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture, out double interval))
-                return;
-
-            _settings.AutosaveInterval = interval;
-
-            string normalizedInterval = _settings.AutosaveInterval.ToString(CultureInfo.InvariantCulture);
-            if (!string.Equals(normalizedInterval, value, StringComparison.Ordinal))
-                UpdateSilently(() => AutosaveIntervalKey = normalizedInterval);
-        }
-
-        partial void OnDailyWordGoalChanged(double value)
-        {
-            if (ShouldSkipUpdate() || double.IsNaN(value))
-                return;
-
-            _settings.DailyWordGoal = (int)Math.Round(value);
-        }
-
-        partial void OnExperimentalFeaturesEnabledChanged(bool value)
-        {
-            if (ShouldSkipUpdate())
-                return;
-
-            _settings.ExperimentalFeaturesEnabled = value;
-        }
-
-        private bool ShouldSkipUpdate() => _isInitializing || _isSynchronizing;
-
-        private void UpdateSilently(Action update)
-        {
-            _isSynchronizing = true;
-            update();
-            _isSynchronizing = false;
-        }
+    private void UpdateSilently(Action update)
+    {
+        _isSynchronizing = true;
+        update();
+        _isSynchronizing = false;
     }
 }

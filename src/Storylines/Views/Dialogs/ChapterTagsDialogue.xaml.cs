@@ -1,180 +1,95 @@
-using Microsoft.Toolkit.Uwp.UI.Controls;
-using Storylines.Services;
-using Storylines.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Storylines.Helpers;
+using CommunityToolkit.WinUI.Controls;
 
-namespace Storylines.Views.Dialogs
+namespace Storylines.Views.Dialogs;
+
+public sealed partial class ChapterTagsDialogue : AppContentDialog
 {
-    public sealed partial class ChapterTagsDialogue : ContentDialog
+    private readonly ChapterTagsViewModel _viewModel;
+
+    public ChapterTagsViewModel ViewModel => _viewModel;
+
+    public ChapterTagsDialogue(Chapter chapter)
     {
-        public static ChapterTagsDialogue current;
+        _viewModel = new ChapterTagsViewModel(App.GetService<ProjectState>(), chapter);
+        InitializeComponent();
+        CloseOnOutsideTap = true;
+    }
 
-        private Chapter _chapter;
+    public static void Open(Chapter chapter)
+    {
+        _ = OpenAsync(chapter);
+    }
 
-        public ChapterTagsDialogue()
+    public static Task<ContentDialogResult> OpenAsync(Chapter chapter)
+    {
+        return App.GetService<IDialogService>().ShowAsync(new ChapterTagsDialogue(chapter));
+    }
+
+    private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+    {
+        _viewModel.Initialize();
+
+        chapterNameText.Text = _viewModel.ChapterName;
+
+        tagsTokenBox.Items.Clear();
+        foreach (var tag in _viewModel.CurrentTags)
+            tagsTokenBox.Items.Add(tag);
+    }
+
+    private void OnSuggestionPill_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button btn && btn.Content is string tag)
         {
-            InitializeComponent();
-            current = this;
-            RequestedTheme = AppView.current.ActualTheme;
-            AppView.currentlyOpenedDialogue = this;
-            InitializeClickOutToClose();
+            _viewModel.AddSuggestionCommand.Execute(tag);
+            if (!GetCurrentTags().Contains(tag, StringComparer.CurrentCultureIgnoreCase))
+                tagsTokenBox.Items.Add(tag);
         }
+    }
 
-        public static void Open(Chapter chapter)
-        {
-            AppView.currentlyOpenedDialogue?.Hide();
+    private void OnTagsTokenBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
+    {
+        if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
+            sender.ItemsSource = _viewModel.GetAutoSuggestions(sender.Text.Trim()).ToList();
+    }
 
-            var dlg = new ChapterTagsDialogue();
-            dlg._chapter = chapter;
-            _ = dlg.ShowAsync();
-        }
+    private void OnTokenItem_Added(TokenizingTextBox sender, object args)
+    {
+        SyncTagsToViewModel();
+        _viewModel.RefreshSuggestions();
+        _viewModel.RefreshSavedPresets();
+    }
 
-        // ─── Lifecycle ────────────────────────────────────────────────
+    private void OnTokenItem_Removing(TokenizingTextBox sender, TokenItemRemovingEventArgs args)
+    {
+        SyncTagsToViewModel();
+        _viewModel.RefreshSuggestions();
+    }
 
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
-        {
-            chapterNameText.Text = _chapter?.Name ?? string.Empty;
+    private void OnRemovePreset_Click(object sender, RoutedEventArgs e)
+    {
+        if ((sender as FrameworkElement)?.Tag is string preset)
+            _viewModel.RemovePresetCommand.Execute(preset);
+    }
 
-            // Populate existing tags
-            tagsTokenBox.Items.Clear();
-            if (_chapter?.Tags != null)
-                foreach (var tag in _chapter.Tags)
-                    tagsTokenBox.Items.Add(tag);
+    private void OnSaveButton_Click(object sender, RoutedEventArgs e)
+    {
+        SyncTagsToViewModel();
+        _viewModel.SaveCommand.Execute(null);
+        Hide();
+    }
 
-            // Populate suggestion pills — presets minus already-added tags
-            RefreshSuggestions();
-            RefreshSavedPresets();
-        }
+    private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
 
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-            current = null;
-        }
+    private void SyncTagsToViewModel()
+    {
+        _viewModel.CurrentTags = GetCurrentTags();
+    }
 
-        // ─── Suggestions ──────────────────────────────────────────────
-
-        private void RefreshSuggestions()
-        {
-            var current = GetCurrentTags();
-            var suggestions = ChapterTagsService
-                .GetAllSuggestions(App.GetService<ProjectState>().Chapters)
-                .Where(s => !current.Contains(s, StringComparer.CurrentCultureIgnoreCase))
-                .Take(12)
-                .ToList();
-
-            suggestionPills.ItemsSource = suggestions;
-        }
-
-        private void RefreshSavedPresets()
-        {
-            var presets = ChapterTagsService
-                .GetPresets()
-                .OrderBy(preset => preset, StringComparer.CurrentCultureIgnoreCase)
-                .ToList();
-
-            savedPresetsList.ItemsSource = presets;
-            savedPresetsEmptyText.Visibility = presets.Count == 0 ? Visibility.Visible : Visibility.Collapsed;
-        }
-
-        private List<string> GetCurrentTags()
-        {
-            var list = new List<string>();
-            foreach (var item in tagsTokenBox.Items)
-                list.Add(item?.ToString() ?? string.Empty);
-            return list;
-        }
-
-        private void OnSuggestionPill_Click(object sender, RoutedEventArgs e)
-        {
-            if (sender is Button btn && btn.Content is string tag)
-            {
-                if (!GetCurrentTags().Contains(tag, StringComparer.CurrentCultureIgnoreCase))
-                    tagsTokenBox.Items.Add(tag);
-
-                RefreshSuggestions();
-            }
-        }
-
-        // ─── Token events ─────────────────────────────────────────────
-
-        private void OnTagsTokenBox_TextChanged(AutoSuggestBox sender, AutoSuggestBoxTextChangedEventArgs args)
-        {
-            if (args.Reason == AutoSuggestionBoxTextChangeReason.UserInput)
-            {
-                var query = sender.Text.Trim();
-                var allSuggestions = ChapterTagsService.GetAllSuggestions(App.GetService<ProjectState>().Chapters);
-                sender.ItemsSource = string.IsNullOrWhiteSpace(query)
-                    ? allSuggestions
-                    : allSuggestions.Where(s => s.StartsWith(query, StringComparison.CurrentCultureIgnoreCase)).ToList();
-            }
-        }
-
-        private void OnTokenItem_Added(TokenizingTextBox sender, object args)
-        {
-            // Persist new tags to presets
-            if (args is string tag && !string.IsNullOrWhiteSpace(tag))
-                ChapterTagsService.AddPreset(tag.Trim());
-
-            RefreshSuggestions();
-            RefreshSavedPresets();
-        }
-
-        private void OnTokenItem_Removing(TokenizingTextBox sender, TokenItemRemovingEventArgs args)
-        {
-            RefreshSuggestions();
-        }
-
-        private void OnRemovePreset_Click(object sender, RoutedEventArgs e)
-        {
-            if ((sender as FrameworkElement)?.Tag is string preset && !string.IsNullOrWhiteSpace(preset))
-            {
-                ChapterTagsService.RemovePreset(preset);
-                RefreshSuggestions();
-                RefreshSavedPresets();
-            }
-        }
-
-        // ─── Action buttons ───────────────────────────────────────────
-
-        private void OnSaveButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_chapter == null) return;
-
-            var newTags = GetCurrentTags()
-                .Where(t => !string.IsNullOrWhiteSpace(t))
-                .Distinct(StringComparer.CurrentCultureIgnoreCase)
-                .ToList();
-
-            _chapter.Tags = newTags;
-            TimeTravelSystem.SomethingChanged();
-
-            Hide();
-        }
-
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e) => Hide();
-
-        // ─── Click-outside-to-close ───────────────────────────────────
-
-        private bool _isHide = true;
-
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-            PointerExited += (s, e) => _isHide = true;
-            PointerEntered += (s, e) => _isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (_isHide)
-                Hide();
-        }
+    private List<string> GetCurrentTags()
+    {
+        var list = new List<string>();
+        foreach (var item in tagsTokenBox.Items)
+            list.Add(item?.ToString() ?? string.Empty);
+        return list;
     }
 }

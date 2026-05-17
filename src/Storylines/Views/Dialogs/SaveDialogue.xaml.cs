@@ -1,200 +1,110 @@
-using Storylines.Services;
-using Storylines.Services.Interfaces;
-using Storylines.Models;
-using System;
-using System.Collections.ObjectModel;
-using Windows.Storage;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using System.Threading.Tasks;
 
-namespace Storylines.Views.Dialogs
+namespace Storylines.Views.Dialogs;
+
+public sealed partial class SaveDialogue : AppContentDialog
 {
-    public sealed partial class SaveDialogue : ContentDialog
+    private bool _submitted;
+
+    public SaveDialogueViewModel ViewModel { get; }
+
+    public enum Type { Save, SaveCopy }
+
+    public SaveDialogue(Type dialogType)
     {
-        private readonly ILogger _logger;
-        private readonly IProjectPersistenceService _persistence;
-        private readonly ProjectState _projectState;
+        ViewModel = new SaveDialogueViewModel(
+            App.GetService<ILogger>(),
+            App.GetService<IProjectPersistenceService>(),
+            App.GetService<ProjectState>(),
+            App.GetService<IFilePickerService>(),
+            dialogType);
 
-        public static SaveDialogue saveDialogue;
-        public StorageFolder saveFolder;
+        InitializeComponent();
+        CloseOnOutsideTap = true;
 
-        public ObservableCollection<string> extensions { get; private set; } = new ObservableCollection<string>();
-        private bool _submitted;
-        private int _collisionCheckVersion;
+        extensionComboBox.IsEnabled = ViewModel.IsExtensionSelectionEnabled;
+        extensionComboBox.SelectedIndex = 0;
 
-        public enum Type { Save, SaveCopy }
-        private static Type type;
+        title.Text = Storylines.Resources.SaveDialogue.Title(dialogType);
+    }
 
-        public SaveDialogue()
+    public static void Open(Type type)
+    {
+        _ = OpenAsync(type);
+    }
+
+    public static Task<ContentDialogResult> OpenAsync(Type type)
+    {
+        return App.GetService<IDialogService>().ShowAsync(new SaveDialogue(type));
+    }
+
+    private void OnSaveToLocationButton_Click(object sender, RoutedEventArgs e)
+    {
+        _ = ChooseLocationAsync();
+    }
+
+    private void OnSaveLocationFrame_Tapped(object sender, TappedRoutedEventArgs e)
+    {
+        _ = ChooseLocationAsync();
+    }
+
+    private async Task ChooseLocationAsync()
+    {
+        await ViewModel.ChooseSaveLocationCommand.ExecuteAsync(null);
+        if (ViewModel.HasLocation)
         {
-            InitializeComponent();
-            saveDialogue = this;
-
-            _logger = App.GetService<ILogger>();
-            _persistence = App.GetService<IProjectPersistenceService>();
-            _projectState = App.GetService<ProjectState>();
-
-            InitializeClickOutToClose();
-
-            saveDialogue.RequestedTheme = AppView.current.ActualTheme;
-            AppView.currentlyOpenedDialogue = saveDialogue;
-
-            extensions.Add(".srl");
-
-            if (_projectState.Chapters.Count <= 1 && _projectState.Characters.Count == 0)
-                extensions.Add(".txt");
-            else 
-                extensionComboBox.IsEnabled = false;
-
-            extensionComboBox.SelectedIndex = 0;
-
-            title.Text = Storylines.Resources.SaveDialogue.Title(type);
+            locationTextPlaceholder.Visibility = Visibility.Collapsed;
         }
+    }
 
-        public static void Open(Type type)
-        {
-            var currentDialog = AppView.currentlyOpenedDialogue;
-            if (currentDialog == LoadProjectDialogue.loadFile)
-                LoadProjectDialogue.loadFile.isEscape = false;
+    private void OnTextBox_TextChanged(object sender, TextChangedEventArgs e)
+    {
+        ViewModel.FileName = fileNameText.Text;
+        ViewModel.ProjectName = nameText.Text;
+    }
 
-            AppView.currentlyOpenedDialogue = null;
-            currentDialog?.Hide();
+    private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
+    {
+        await ViewModel.SubmitCommand.ExecuteAsync(null);
+        _submitted = true;
+        Hide();
+    }
 
-            SaveDialogue.type = type;
-            _ = new SaveDialogue().ShowAsync();
-        }
+    private void OnCancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Hide();
+    }
 
-        public async Task ChooseFileToSaveAsync()
-        {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add("*");
+    private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Enter && ViewModel.IsSubmitEnabled)
+            OnSubmitButton_Click(sender, new RoutedEventArgs());
+    }
 
-            StorageFolder folder = await picker.PickSingleFolderAsync();
+    private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
+    {
+        if (!_submitted)
+            ViewModel.CancelCommand.Execute(null);
+    }
 
-            if (folder != null)
-            {
-                saveFolder = folder;
-                locationText.Text = folder.Path;
-                locationText.Visibility = Visibility.Visible;
-                locationTextPlaceholder.Visibility = Visibility.Collapsed;
+    private void Button_Click(object sender, RoutedEventArgs e)
+    {
+        _ = ChooseLocationAsync();
+    }
 
-                _ = SomethingChangedAsync(true);
-            }
-        }
+    bool isFlyoutOpen = false;
+    private void OnExtensionComboBox_DropDownOpened(object sender, object e)
+    {
+        isFlyoutOpen = true;
+    }
 
-        private async Task SomethingChangedAsync(bool nameOrLocation)
-        {
-            submitButton.IsEnabled = saveFolder != null && SettingsValues.IsStringSaveable(fileNameText.Text);
+    private void OnExtensionComboBox_DropDownClosed(object sender, object e)
+    {
+        isFlyoutOpen = false;
+        ViewModel.SelectedExtensionIndex = extensionComboBox.SelectedIndex;
+    }
 
-            if (!nameOrLocation || saveFolder == null || string.IsNullOrEmpty(fileNameText.Text))
-            {
-                nameCollisionWarning.Visibility = Visibility.Collapsed;
-                return;
-            }
-
-            var collisionCheckVersion = ++_collisionCheckVersion;
-
-            try
-            {
-                var fileName = $"{fileNameText.Text}{extensionComboBox.SelectedItem}";
-                var file = await saveFolder.TryGetItemAsync(fileName);
-
-                if (collisionCheckVersion != _collisionCheckVersion)
-                    return;
-
-                nameCollisionWarning.Visibility = file != null ? Visibility.Visible : Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                if (collisionCheckVersion == _collisionCheckVersion)
-                    nameCollisionWarning.Visibility = Visibility.Collapsed;
-
-                _logger?.Warning($"Failed to check for file collision: {ex.Message}");
-            }
-        }
-
-        private async void OnSubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (_persistence.CurrentProject == null)
-                _persistence.CurrentProject = new ProjectFile();
-
-            _persistence.CurrentProject.projectName = nameText.Text;
-            await _persistence.NewFileAsync(saveFolder, $"{fileNameText.Text}{extensionComboBox.SelectedItem}");
-            _submitted = true;
-            saveDialogue.Hide();
-        }
-
-        private void OnSaveToLocationButton_Click(object sender, RoutedEventArgs e)
-        {
-            _ = ChooseFileToSaveAsync();
-        }
-
-        private void OnSaveLocationFrame_Tapped(object sender, TappedRoutedEventArgs e)
-        {
-            _ = ChooseFileToSaveAsync();
-        }
-
-        private void OnTextBox_TextChanged(object sender, TextChangedEventArgs e)
-        {
-            _ = SomethingChangedAsync(true);
-        }
-
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            saveDialogue.Hide();
-        }
-
-        private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
-                    OnSubmitButton_Click(sender, new RoutedEventArgs());
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-
-            if (!_submitted)
-                _persistence.CancelPendingAfterSaveAction();
-
-            AppView.currentlyOpenedDialogue = null;
-        }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
-        {
-            _ = ChooseFileToSaveAsync();
-        }
-
-        bool isFlyoutOpen = false;
-        private void OnExtensionComboBox_DropDownOpened(object sender, object e)
-        {
-            isFlyoutOpen = true;
-        }
-
-        private void OnExtensionComboBox_DropDownClosed(object sender, object e)
-        {
-            isFlyoutOpen = false;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide && !isFlyoutOpen)
-                Hide();
-        }
+    protected override bool CanCloseOnOutsideTap()
+    {
+        return !isFlyoutOpen;
     }
 }

@@ -10,19 +10,28 @@ You can contribute to Storylines by:
 # How to Build and Run Storylines from source
 
 * Make sure your machine is running on Windows 10 1903+.
-* Make sure you have Visual Studio 2019 16.2+ installed.
-* Make sure you have the "Universal Windows Platform development" component installed for Visual Studio.
+* Make sure you have Visual Studio 2022 or later installed.
+* Make sure the ".NET desktop development" and "Windows application development" workloads are installed for Visual Studio.
+* Make sure the .NET 9 SDK from `global.json` is available if you want to use the command line.
 * Open src/Storylines.sln with Visual Studio and set Solution Platform to x64(amd64).
 * Once opened, right-click on the solution and click on "Restore NuGet Packages".
 * Now you should be able to build and run Storylines on your machine. If it fails, try to close the solution and reopen it again.
-**If x64 doesn't work, use the architecture of your system*
+* If x64 doesn't work, use the architecture of your system.
+
+Command-line build and test:
+
+```powershell
+msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug /t:Restore
+msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug
+dotnet test src/Storylines.Tests/Storylines.Tests.csproj --platform x64
+```
 
 # Internationalization and localization
 
-### Adding a new language (requires Visual Studio 2019 and Multilingual App Toolkit)
-- Ensure you have Visual Studio 2019 and the [Multilingual App Toolkit extension](https://marketplace.visualstudio.com/items?itemName=MultilingualAppToolkit.MultilingualAppToolkit-18308).
+### Adding a new language (requires Visual Studio and Multilingual App Toolkit)
+- Ensure you have Visual Studio and the [Multilingual App Toolkit extension](https://marketplace.visualstudio.com/items?itemName=MultilingualAppToolkit.MultilingualAppToolkit-18308).
 - Fork and clone this repo.
-- Open in VS 2019.
+- Open the solution in Visual Studio.
 - Right click on the `Storylines` project.
 - Select Multilingual App Toolkit > Add translation language.
     - If you get a message saying "Translation Provider Manager Issue," just click Ok and ignore it. It's unrelated to adding a language.

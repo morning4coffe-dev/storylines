@@ -1,12 +1,13 @@
-﻿<ResourceDictionary
+<ResourceDictionary
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:dialogs="using:Storylines.Views.Dialogs">
     
     <ResourceDictionary.ThemeDictionaries>
         <ResourceDictionary x:Key="Light">
-            <AcrylicBrush x:Key="AppAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="#EDEDED" TintOpacity="0.95" FallbackColor="LightGray"/>
-            <AcrylicBrush x:Key="ElementAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="White" TintOpacity="1" Opacity="1" FallbackColor="White"/>
-            <AcrylicBrush x:Key="DialogueAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="White" TintOpacity=".9" Opacity="1" FallbackColor="White"/>
+            <AcrylicBrush x:Key="AppAcrylicBackground" TintColor="#EDEDED" TintOpacity="0.95" FallbackColor="LightGray"/>
+            <AcrylicBrush x:Key="ElementAcrylicBackground" TintColor="White" TintOpacity="1" Opacity="1" FallbackColor="White"/>
+            <AcrylicBrush x:Key="DialogueAcrylicBackground" TintColor="White" TintOpacity=".9" Opacity="1" FallbackColor="White"/>
 
             <SolidColorBrush x:Key="SeparatorFill" Color="Black"/>
             <SolidColorBrush x:Key="TextForeground" Color="Black"/>
@@ -23,9 +24,9 @@
         </ResourceDictionary>
 
         <ResourceDictionary x:Key="Dark">
-            <AcrylicBrush x:Key="AppAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.98" FallbackColor="#1C1C1C"/>
-            <AcrylicBrush x:Key="ElementAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.95" Opacity="1" FallbackColor="#0F0F0F"/>
-            <AcrylicBrush x:Key="DialogueAcrylicBackground" BackgroundSource="HostBackdrop" TintColor="Black" TintOpacity="0.9" Opacity="1" FallbackColor="#0F0F0F"/>
+            <AcrylicBrush x:Key="AppAcrylicBackground" TintColor="Black" TintOpacity="0.98" FallbackColor="#1C1C1C"/>
+            <AcrylicBrush x:Key="ElementAcrylicBackground" TintColor="Black" TintOpacity="0.95" Opacity="1" FallbackColor="#0F0F0F"/>
+            <AcrylicBrush x:Key="DialogueAcrylicBackground" TintColor="Black" TintOpacity="0.9" Opacity="1" FallbackColor="#0F0F0F"/>
 
             <SolidColorBrush x:Key="SeparatorFill" Color="White"/>
             <SolidColorBrush x:Key="TextForeground" Color="White"/>
@@ -70,6 +71,10 @@
     <Color x:Key="SystemAccentColorLight2">#BE5A00</Color>
     <Color x:Key="SystemAccentColorLight3">#BE5A00</Color>
 
+    <!-- WinUI 3 defaults to variable fonts; restore the crisper UWP-era family app-wide. -->
+    <FontFamily x:Key="ContentControlThemeFontFamily">Segoe UI</FontFamily>
+    <FontFamily x:Key="TextControlThemeFontFamily">Segoe UI</FontFamily>
+
     <x:Double x:Key="AppCaptionFontSize">12</x:Double>
 
     <Style x:Key="AppSymbolIconStyle" TargetType="FontIcon">
@@ -84,7 +89,49 @@
         <Setter Property="FontWeight" Value="Medium"/>
         <Setter Property="Grid.ColumnSpan" Value="2"/>
     </Style>
-    
+
+    <Style x:Key="DialogButtonStyle" TargetType="Button">
+        <Setter Property="CornerRadius" Value="4"/>
+    </Style>
+
+    <Style TargetType="dialogs:AppContentDialog">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{ThemeResource DialogueAcrylicBackground}" />
+        <Setter Property="PrimaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="SecondaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="CloseButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+    </Style>
+
+    <Style TargetType="dialogs:AppShellDialog">
+        <Setter Property="CornerRadius" Value="8" />
+        <Setter Property="Background" Value="{ThemeResource DialogueAcrylicBackground}" />
+        <Setter Property="PrimaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="SecondaryButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+        <Setter Property="CloseButtonStyle" Value="{StaticResource DialogButtonStyle}" />
+    </Style>
+
+    <Style x:Key="DialogSelectionCardStyle"
+           TargetType="Button">
+        <Setter Property="Width"
+                Value="110" />
+        <Setter Property="Height"
+                Value="120" />
+        <Setter Property="CornerRadius"
+                Value="8" />
+        <Setter Property="Padding"
+                Value="12" />
+        <Setter Property="Background"
+                Value="{ThemeResource LayerFillColorDefaultBrush}" />
+        <Setter Property="BorderBrush"
+                Value="{ThemeResource CardStrokeColorDefaultBrush}" />
+        <Setter Property="BorderThickness"
+                Value="1" />
+        <Setter Property="HorizontalContentAlignment"
+                Value="Stretch" />
+        <Setter Property="VerticalContentAlignment"
+                Value="Stretch" />
+    </Style>
+     
     <Style x:Key="CharactersTextBoxesStyle" TargetType="TextBox">
         <Setter Property="Foreground" Value="{ThemeResource TextControlForeground}"/>
         <Setter Property="Background" Value="{ThemeResource TextControlBackground}"/>
@@ -327,7 +374,7 @@
     </Style>
 
     <Style x:Key="BaseTextBlockStyle" TargetType="TextBlock">
-        <Setter Property="FontFamily" Value="XamlAutoFontFamily"/>
+        <Setter Property="FontFamily" Value="{ThemeResource ContentControlThemeFontFamily}"/>
         <Setter Property="FontWeight" Value="SemiBold"/>
         <Setter Property="FontSize" Value="14"/>
         <Setter Property="TextTrimming" Value="None"/>

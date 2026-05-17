@@ -1,6 +1,4 @@
-using System.Collections.Generic;
 using Storylines.Services.Serializers;
-using Storylines.Models;
 using Xunit;
 
 namespace Storylines.Tests.Serializers;

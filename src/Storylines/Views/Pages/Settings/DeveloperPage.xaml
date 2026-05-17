@@ -1,0 +1,230 @@
+<Page x:Class="Storylines.Views.Pages.Settings.DeveloperPage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+      xmlns:diagnostics="using:Storylines.Services.Interfaces"
+      xmlns:controls="using:Storylines.Views.Controls"
+      mc:Ignorable="d">
+    
+    <controls:SettingsPageLayout>
+        <StackPanel Spacing="10">
+            <TextBlock x:Uid="developerText"
+                       FontSize="25"
+                       Margin="0,-5,0,5"
+                       FontWeight="SemiBold" />
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,20">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="developerRuntimeSection"
+                               FontWeight="SemiBold" />
+
+                    <Grid ColumnSpacing="16"
+                          RowSpacing="8">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+
+                        <TextBlock x:Uid="developerCurrentPageLabel" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{x:Bind ViewModel.CurrentPage, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+
+                        <TextBlock x:Uid="developerCurrentThemeLabel"
+                                   Grid.Row="1" />
+                        <TextBlock Grid.Row="1"
+                                   Grid.Column="1"
+                                   Text="{x:Bind ViewModel.CurrentTheme, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+
+                        <TextBlock x:Uid="developerWindowSizeLabel"
+                                   Grid.Row="2" />
+                        <TextBlock Grid.Row="2"
+                                   Grid.Column="1"
+                                   Text="{x:Bind ViewModel.WindowSize, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+
+                        <TextBlock x:Uid="developerCurrentDialogLabel"
+                                   Grid.Row="3" />
+                        <TextBlock Grid.Row="3"
+                                   Grid.Column="1"
+                                   Text="{x:Bind ViewModel.CurrentDialog, Mode=OneWay}"
+                                   TextWrapping="WrapWholeWords" />
+                    </Grid>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,20">
+                <StackPanel Spacing="12">
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="Auto" />
+                        </Grid.ColumnDefinitions>
+
+                        <StackPanel Spacing="2">
+                            <TextBlock x:Uid="developerHiddenControlsSection"
+                                       FontWeight="SemiBold" />
+                            <TextBlock x:Uid="developerHiddenControlsDescription"
+                                       Opacity="0.75"
+                                       TextWrapping="WrapWholeWords" />
+                        </StackPanel>
+
+                        <Button x:Uid="developerRefreshSnapshotButton"
+                                Grid.Column="1"
+                                Command="{x:Bind ViewModel.RefreshSnapshotCommand}" />
+                    </Grid>
+
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Uid="developerHiddenControlsCountLabel" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{x:Bind ViewModel.InvisibleControlCount, Mode=OneWay}" />
+                    </Grid>
+
+                    <ListView MaxHeight="280"
+                              SelectionMode="None"
+                              IsItemClickEnabled="False"
+                              ItemsSource="{x:Bind ViewModel.InvisibleControls, Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="diagnostics:DeveloperDiagnosticItem">
+                                <StackPanel Padding="0,8"
+                                            Spacing="2">
+                                    <TextBlock Text="{x:Bind Title}"
+                                               TextWrapping="WrapWholeWords" />
+                                    <TextBlock Text="{x:Bind Detail}"
+                                               FontSize="12"
+                                               Opacity="0.75"
+                                               TextWrapping="WrapWholeWords" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,20">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="developerAttachedBehaviorsSection"
+                               FontWeight="SemiBold" />
+                    <TextBlock x:Uid="developerAttachedBehaviorsDescription"
+                               Opacity="0.75"
+                               TextWrapping="WrapWholeWords" />
+
+                    <Grid ColumnSpacing="16">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="220" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <TextBlock x:Uid="developerAttachedBehaviorsCountLabel" />
+                        <TextBlock Grid.Column="1"
+                                   Text="{x:Bind ViewModel.AttachedBehaviorCount, Mode=OneWay}" />
+                    </Grid>
+
+                    <ListView MaxHeight="280"
+                              SelectionMode="None"
+                              IsItemClickEnabled="False"
+                              ItemsSource="{x:Bind ViewModel.AttachedBehaviors, Mode=OneWay}">
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="diagnostics:DeveloperDiagnosticItem">
+                                <StackPanel Padding="0,8"
+                                            Spacing="2">
+                                    <TextBlock Text="{x:Bind Title}"
+                                               TextWrapping="WrapWholeWords" />
+                                    <TextBlock Text="{x:Bind Detail}"
+                                               FontSize="12"
+                                               Opacity="0.75"
+                                               TextWrapping="WrapWholeWords" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,20">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="developerNotificationsSection"
+                               FontWeight="SemiBold" />
+                    <TextBlock x:Uid="developerNotificationsDescription"
+                               Opacity="0.75"
+                               TextWrapping="WrapWholeWords" />
+
+                    <StackPanel Spacing="8">
+                        <Button x:Uid="developerShowTransientNotificationButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.ShowTransientNotificationCommand}" />
+                        <Button x:Uid="developerShowReviewPromptButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.ShowReviewPromptCommand}" />
+                        <Button x:Uid="developerDismissPersistentNotificationButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.DismissPersistentNotificationCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+
+            <Border Background="{ThemeResource LayerFillColorDefaultBrush}"
+                    BorderBrush="{ThemeResource ElementBorderColor}"
+                    BorderThickness="{ThemeResource ElementBorderThickness}"
+                    CornerRadius="4"
+                    Padding="16,20">
+                <StackPanel Spacing="12">
+                    <TextBlock x:Uid="developerDialogsSection"
+                               FontWeight="SemiBold" />
+                    <TextBlock x:Uid="developerDialogsDescription"
+                               Opacity="0.75"
+                               TextWrapping="WrapWholeWords" />
+
+                    <StackPanel Spacing="8">
+                        <Button x:Uid="developerOpenLoadDialogButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.OpenLoadDialogCommand}" />
+                        <Button x:Uid="developerOpenShortcutsDialogButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.OpenShortcutsDialogCommand}" />
+                        <Button x:Uid="developerOpenModePickerDialogButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.OpenModePickerDialogCommand}" />
+                        <Button x:Uid="developerOpenProjectInfoDialogButton"
+                                HorizontalAlignment="Left"
+                                MinWidth="240"
+                                Command="{x:Bind ViewModel.OpenProjectInfoDialogCommand}" />
+                    </StackPanel>
+                </StackPanel>
+            </Border>
+        </StackPanel>
+    </controls:SettingsPageLayout>
+</Page>

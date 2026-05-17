@@ -3,12 +3,11 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
+            xmlns:controls="using:Storylines.Views.Controls"
       xmlns:vm="using:Storylines.ViewModels"
       KeyboardAcceleratorPlacementMode="Hidden"
       mc:Ignorable="d"
-      muxc:BackdropMaterial.ApplyToRootOrPageBackground="True"
       Background="{ThemeResource AppAcrylicBackground}">
 
     <!--  Global keyboard accelerators. Per-page accelerators live in each Page's XAML.
@@ -49,79 +48,45 @@
           DragOver="OnGrid_DragOver"
           Drop="OnGrid_Drop">
         <Grid.RowDefinitions>
-            <RowDefinition Height="48" />
+            <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
         </Grid.RowDefinitions>
-        <Grid Margin="4,0"
-              VerticalAlignment="Center"
-              Background="Transparent">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="auto" />
-                <ColumnDefinition />
-            </Grid.ColumnDefinitions>
-            <AppBarButton x:Name="backButton"
-                          x:FieldModifier="public"
-                          Icon="Back"
-                          Width="40"
-                          Height="40"
-                          Foreground="{ThemeResource AppTitleColor}"
-                          Margin="4,0,-4,0"
-                          CornerRadius="6"
-                          Visibility="{x:Bind ViewModel.BackButtonVisibility, Mode=OneWay}"
-                          Click="OnBackButton_Click" />
-
-            <StackPanel VerticalAlignment="Center"
-                        Grid.Column="1"
-                        Orientation="Horizontal"
-                        Margin="8,0,0,0"
-                        Spacing="10">
-                <Image HorizontalAlignment="Left"
-                       VerticalAlignment="Center"
-                       Source="Assets/Square44x44Logo.png"
-                       Width="24"
-                       Height="24"
-                       Visibility="Visible" />
-                <TextBlock x:Name="appHeader"
-                           Text="{x:Bind ViewModel.TitleText, Mode=OneWay}"
-                           FontSize="12.5"
-                           Foreground="{ThemeResource AppTitleColor}"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CaptionTextBlockStyle}" />
-                <TextBlock x:Name="appHeaderSave"
-                           Text="{x:Bind ViewModel.UnsavedIndicatorText, Mode=OneWay}"
-                           Visibility="{x:Bind ViewModel.UnsavedIndicatorVisibility, Mode=OneWay}"
-                           FontSize="12.5"
-                           Opacity=".75"
-                           Margin="-5,0,0,0"
-                           Foreground="{ThemeResource AppTitleColor}"
-                           VerticalAlignment="Center"
-                           Style="{StaticResource CaptionTextBlockStyle}">
-                     <animations:Implicit.ShowAnimations>
-                        <animations:TranslationAnimation Duration="0:0:0.2"
-                                                         From="0, 8, 0"
-                                                         To="0"
-                                                         EasingMode="EaseOut"
-                                                         EasingType="Back" />
-                        <animations:OpacityAnimation Duration="0:0:0.121"
-                                                     From="0"
-                                                     To="1.0" />
-                    </animations:Implicit.ShowAnimations>
-                </TextBlock>
-            </StackPanel>
-            <Grid x:Name="appTitleBar"
+        <TitleBar x:Name="appTitleBar"
                   x:FieldModifier="public"
-                  IsHitTestVisible="True"
-                  Height="48"
-                  HorizontalAlignment="Stretch"
+                  AutomationProperties.AutomationId="AppTitleBar"
                   Background="Transparent"
-                  Grid.Column="1" />
-        </Grid>
+                  Title="{x:Bind ViewModel.TitleText, Mode=OneWay}"
+                  Subtitle="{x:Bind ViewModel.UnsavedIndicatorText, Mode=OneWay}"
+                  IsPaneToggleButtonVisible="False"
+                  IsBackButtonVisible="{x:Bind ViewModel.IsBackButtonVisible, Mode=OneWay}"
+                  IsBackButtonEnabled="{x:Bind ViewModel.IsBackButtonEnabled, Mode=OneWay}"
+                  BackRequested="OnAppTitleBar_BackRequested">
+            <TitleBar.IconSource>
+                <ImageIconSource ImageSource="Assets/StoreLogo.png" />
+            </TitleBar.IconSource>
+
+            <TitleBar.Content>
+                <AutoSuggestBox x:Name="titleBarSearchBox"
+                                Width="320"
+                                MinWidth="220"
+                                MaxWidth="420"
+                                QueryIcon="Find"
+                                Visibility="{x:Bind ViewModel.TitleBarSearchVisibility, Mode=OneWay}"
+                                PlaceholderText="{x:Bind ViewModel.SearchText, Mode=OneWay}"
+                                QuerySubmitted="OnTitleBarSearchBox_QuerySubmitted" />
+            </TitleBar.Content>
+
+            <!--<TitleBar.RightHeader>
+                <PersonPicture Initials="DT" Height="32"/>
+            </TitleBar.RightHeader>-->
+        </TitleBar>
 
         <Grid x:Name="mainGrid"
               Grid.Row="1"
               x:FieldModifier="public">
             <Frame x:Name="pagesView"
-                   x:FieldModifier="public">
+                   x:FieldModifier="public"
+                   AutomationProperties.AutomationId="MainFrame">
                 <Frame.ContentTransitions>
                     <TransitionCollection>
                         <NavigationThemeTransition>
@@ -134,228 +99,11 @@
             </Frame>
         </Grid>
 
-        <muxc:InfoBar x:Name="updateAvailableInfoBar"
-                      x:FieldModifier="public"
-                      x:Uid="updateAvailableTitle"
-                      IsOpen="False"
-                      Visibility="Collapsed"
-                      Severity="Informational"
-                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
-                      BorderBrush="{ThemeResource ElementBorderColor}"
-                      BorderThickness="{ThemeResource ElementBorderThickness}"
-                      Grid.Row="1"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Center"
-                      Width="440"
-                      Margin="0, 80"
-                      Closed="OnUpdateAvailableInfoBar_Closed">
-            <muxc:InfoBar.Content>
-                <StackPanel Margin="0,-4,0,0"
-                            Spacing="10">
-                    <TextBlock x:Name="updateAvailableInfoBarText"
-                               x:FieldModifier="public"
-                               x:Uid="storeUpdateAvailableMessage"
-                               TextWrapping="WrapWholeWords" />
-                    <TextBlock x:Name="updateAvailableInfoBarDetailText"
-                               x:FieldModifier="public"
-                               Visibility="Collapsed"
-                               Opacity="0.85"
-                               TextWrapping="WrapWholeWords" />
-                    <ProgressBar x:Name="updateAvailableProgressBar"
-                                 x:FieldModifier="public"
-                                 Minimum="0"
-                                 Maximum="100"
-                                 Height="4"
-                                 Visibility="Collapsed" />
-                    <StackPanel x:Name="updateAvailableActionsPanel"
-                                x:FieldModifier="public"
-                                Orientation="Horizontal"
-                                Spacing="8"
-                                Margin="0,0,0,12">
-                        <Button x:Name="updateAvailablePrimaryButton"
-                                x:FieldModifier="public"
-                                x:Uid="storeUpdateInstallNow"
-                                Click="OnUpdateAvailablePrimaryButton_Click" />
-                        <Button x:Name="updateAvailableSecondaryButton"
-                                x:FieldModifier="public"
-                                x:Uid="storeUpdateLater"
-                                Click="OnUpdateAvailableSecondaryButton_Click" />
-                    </StackPanel>
-                </StackPanel>
-            </muxc:InfoBar.Content>
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
 
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0, 35, 0"
-                                                 To="0"
-                                                 EasingMode="EaseOut"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="0"
-                                             To="1.0" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0"
-                                                 To="0, 35, 0"
-                                                 EasingMode="EaseIn"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="1.0"
-                                             To="0" />
-            </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
-
-        <muxc:InfoBar x:Name="reviewRequestInfoBar"
-                      x:FieldModifier="public"
-                      x:Uid="experience"
-                      IsOpen="False"
-                      Visibility="Collapsed"
-                      Severity="Informational"
-                      Width="420"
-                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
-                      BorderBrush="{ThemeResource ElementBorderColor}"
-                      BorderThickness="{ThemeResource ElementBorderThickness}"
-                      Grid.Row="1"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Center"
-                      Margin="0, 80"
-                      CloseButtonClick="OnRateNotNow_CloseButtonClick">
-            <muxc:InfoBar.Content>
-                <StackPanel Margin="0,-4,0,0">
-                    <RichTextBlock IsTextSelectionEnabled="False">
-                        <Paragraph>
-                            <Run x:Uid="reviewDialog" />
-                            <LineBreak />
-                        </Paragraph>
-                    </RichTextBlock>
-
-                    <StackPanel Spacing="8"
-                                Margin="0,-4,0,20"
-                                Orientation="Horizontal">
-                        <Button  x:Uid="reviewDialogOption1"
-                                 Click="OnRateNowButton_Click" />
-                        <Button  x:Uid="reviewDialogOption2"
-                                 Click="OnRateNotNow_Click" />
-                        <Button  x:Uid="reviewDialogOption3"
-                                 Click="OnRateNeverShowAgain_Click" />
-                    </StackPanel>
-                </StackPanel>
-            </muxc:InfoBar.Content>
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0, 35, 0"
-                                                 To="0"
-                                                 EasingMode="EaseOut"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="0"
-                                             To="1.0" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0"
-                                                 To="0, 35, 0"
-                                                 EasingMode="EaseIn"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="1.0"
-                                             To="0" />
-            </animations:Implicit.HideAnimations>
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
-        </muxc:InfoBar>
-
-        <muxc:InfoBar x:Name="reviewRequestThankYouInfoBar"
-                      x:Uid="reviewRequestThankYou"
-                      x:FieldModifier="public"
-                      IsOpen="False"
-                      Visibility="Collapsed"
-                      Severity="Success"
-                      Grid.Row="1"
-                      VerticalAlignment="Bottom"
-                      Width="300"
-                      Margin="0, 80"
-                      BorderBrush="{ThemeResource ElementBorderColor}"
-                      BorderThickness="{ThemeResource ElementBorderThickness}"
-                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}">
-            <muxc:InfoBar.IconSource>
-                <muxc:FontIconSource Glyph="" />
-            </muxc:InfoBar.IconSource>
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0, 35, 0"
-                                                 To="0"
-                                                 EasingMode="EaseOut"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="0"
-                                             To="1.0" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0"
-                                                 To="0, 35, 0"
-                                                 EasingMode="EaseIn"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="1.0"
-                                             To="0" />
-            </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
-
-        <muxc:InfoBar x:Name="alertNotificationInfoBar"
-                      x:FieldModifier="public"
-                      IsOpen="False"
-                      Visibility="Collapsed"
-                      Severity="Error"
-                      Title="N/A"
-                      Width="400"
-                      Background="{ThemeResource SystemControlBaseHighAcrylicElementBrush}"
-                      BorderBrush="{ThemeResource ElementBorderColor}"
-                      BorderThickness="{ThemeResource ElementBorderThickness}"
-                      Grid.Row="1"
-                      VerticalAlignment="Bottom"
-                      HorizontalAlignment="Center"
-                      Margin="0, 80"
-                      CloseButtonClick="OnAlertNotificationInfoBar_CloseButtonClick">
-            <muxc:InfoBar.Content>
-                <StackPanel Margin="0,-4,0,0"
-                            x:Name="alertNotificationInfoBarTextStack"
-                            x:FieldModifier="public">
-                    <RichTextBlock IsTextSelectionEnabled="False">
-                        <Paragraph>
-                            <Run x:Name="alertNotificationInfoBarText"
-                                 x:FieldModifier="public">N/A</Run>
-                            <LineBreak />
-                        </Paragraph>
-                    </RichTextBlock>
-                </StackPanel>
-            </muxc:InfoBar.Content>
-            <animations:Implicit.ShowAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0, 35, 0"
-                                                 To="0"
-                                                 EasingMode="EaseOut"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="0"
-                                             To="1.0" />
-            </animations:Implicit.ShowAnimations>
-            <animations:Implicit.HideAnimations>
-                <animations:TranslationAnimation Duration="0:0:0.5"
-                                                 From="0"
-                                                 To="0, 35, 0"
-                                                 EasingMode="EaseIn"
-                                                 EasingType="Back" />
-                <animations:OpacityAnimation Duration="0:0:0.5"
-                                             From="1.0"
-                                             To="0" />
-            </animations:Implicit.HideAnimations>
-        </muxc:InfoBar>
+        <controls:NotificationHost x:Name="notificationHost"
+                                   Grid.Row="1"
+                                   VerticalAlignment="Bottom"
+                                   HorizontalAlignment="Center"
+                                   Margin="0, 80" />
     </Grid>
 </Page>

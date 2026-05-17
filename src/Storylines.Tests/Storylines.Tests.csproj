@@ -1,7 +1,7 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <TargetFramework>net9.0</TargetFramework>
     <IsPackable>false</IsPackable>
     <ImplicitUsings>disable</ImplicitUsings>
     <Nullable>enable</Nullable>
@@ -38,21 +38,25 @@
     <Compile Include="..\Storylines\Services\Interfaces\ISaveSerializer.cs" Link="LinkedSources\ISaveSerializer.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\ICommandRegistry.cs" Link="LinkedSources\ICommandRegistry.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\IDictationService.cs" Link="LinkedSources\IDictationService.cs" />
+    <Compile Include="..\Storylines\Services\Interfaces\IReadAloudService.cs" Link="LinkedSources\IReadAloudService.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\IInspectorViewModel.cs" Link="LinkedSources\IInspectorViewModel.cs" />
-    <Compile Include="..\Storylines\Services\Interfaces\INotificationService.cs" Link="LinkedSources\INotificationService.cs" />
+    <!-- INotificationService.cs omitted: uses WinUI types (InfoBarSeverity, IconSource) -->
     <Compile Include="..\Storylines\Services\Serializers\JsonSaveSerializer.cs" Link="LinkedSources\JsonSaveSerializer.cs" />
     <Compile Include="..\Storylines\Services\Serializers\LegacySrlSerializer.cs" Link="LinkedSources\LegacySrlSerializer.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\ISpeechService.cs" Link="LinkedSources\ISpeechService.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\ITextEditorService.cs" Link="LinkedSources\ITextEditorService.cs" />
     <Compile Include="..\Storylines\Services\Interfaces\IWritingStatsService.cs" Link="LinkedSources\IWritingStatsService.cs" />
+    <Compile Include="..\Storylines\Constants\LayoutConstants.cs" Link="LinkedSources\LayoutConstants.cs" />
     <Compile Include="..\Storylines\DataStructures\PartialStack.cs" Link="LinkedSources\PartialStack.cs" />
     <Compile Include="..\Storylines\Helpers\UndoRedoManager.cs" Link="LinkedSources\UndoRedoManager.cs" />
     <Compile Include="..\Storylines\Helpers\RecentProjectDeduplicator.cs" Link="LinkedSources\RecentProjectDeduplicator.cs" />
     <Compile Include="..\Storylines\Helpers\ChapterTextNormalization.cs" Link="LinkedSources\ChapterTextNormalization.cs" />
     <Compile Include="..\Storylines\Models\Dialogue.cs" Link="LinkedSources\Dialogue.cs" />
+    <!-- SpeechHubStrings.cs omitted: uses WinUI ResourceLoader -->
     <Compile Include="..\Storylines\Services\TelemetryEventPropertyBuilder.cs" Link="LinkedSources\TelemetryEventPropertyBuilder.cs" />
     <Compile Include="..\Storylines\ViewModels\InspectorViewModel.cs" Link="LinkedSources\InspectorViewModel.cs" />
-    <Compile Include="..\Storylines\ViewModels\SpeechHubViewModel.cs" Link="LinkedSources\SpeechHubViewModel.cs" />
+    <!-- SpeechHubViewModel.cs omitted: uses WinUI types (Visibility, ResourceLoader) -->
+    <Compile Include="..\Storylines\ViewModels\Settings\GeneralSettingsViewModel.cs" Link="LinkedSources\GeneralSettingsViewModel.cs" />
   </ItemGroup>
 
 </Project>

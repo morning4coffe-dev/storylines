@@ -3,8 +3,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+             xmlns:animations="using:CommunityToolkit.WinUI.Animations"
              xmlns:vm="using:Storylines.ViewModels"
              mc:Ignorable="d"
              d:DesignHeight="100"
@@ -88,29 +87,29 @@
                                     </VisualState>
                                 </VisualStateGroup>
                             </VisualStateManager.VisualStateGroups>
-                            <muxc:AnimatedIcon x:Name="Content"
+                            <AnimatedIcon x:Name="Content"
                                                AutomationProperties.AccessibilityView="Raw"
                                                HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}"
                                                Height="16"
                                                MirroredWhenRightToLeft="True"
-                                               muxc:AnimatedIcon.State="Normal"
+                                               AnimatedIcon.State="Normal"
                                                VerticalAlignment="{TemplateBinding VerticalContentAlignment}"
                                                Width="16">
-                                <muxc:AnimatedIcon.FallbackIconSource>
-                                    <muxc:FontIconSource FontFamily="{Binding FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
+                                <AnimatedIcon.FallbackIconSource>
+                                    <FontIconSource FontFamily="{Binding FontFamily, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                          FontSize="{Binding FontSize, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                          Glyph="{Binding Content, RelativeSource={RelativeSource Mode=TemplatedParent}}"
                                                          MirroredWhenRightToLeft="True" />
-                                </muxc:AnimatedIcon.FallbackIconSource>
+                                </AnimatedIcon.FallbackIconSource>
                                 <animatedvisuals:AnimatedBackVisualSource />
-                            </muxc:AnimatedIcon>
+                            </AnimatedIcon>
                         </Grid>
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
         </Style>
         <Style x:Key="NavigationViewStyle"
-               TargetType="muxc:NavigationView">
+               TargetType="NavigationView">
             <Setter Property="PaneToggleButtonStyle"
                     Value="{StaticResource PaneToggleButtonStyle}" />
             <Setter Property="IsTabStop"
@@ -119,7 +118,7 @@
                     Value="{ThemeResource NavigationViewCompactPaneLength}" />
             <Setter Property="Template">
                 <Setter.Value>
-                    <ControlTemplate TargetType="muxc:NavigationView">
+                    <ControlTemplate TargetType="NavigationView">
                         <Grid x:Name="RootGrid">
                             <VisualStateManager.VisualStateGroups>
                                 <VisualStateGroup x:Name="DisplayModeGroup">
@@ -436,21 +435,21 @@
                                                         IsTabStop="False"
                                                         Margin="{ThemeResource NavigationViewItemInnerHeaderMargin}"
                                                         VerticalContentAlignment="Stretch" />
-                                        <muxc:ItemsRepeaterScrollHost Grid.Column="3">
+                                        <ItemsRepeaterScrollHost Grid.Column="3">
                                             <ScrollViewer HorizontalScrollBarVisibility="Hidden"
                                                           HorizontalScrollMode="Disabled"
                                                           VerticalScrollBarVisibility="Hidden"
                                                           VerticalScrollMode="Disabled">
-                                                <muxc:ItemsRepeater x:Name="TopNavMenuItemsHost"
+                                                <ItemsRepeater x:Name="TopNavMenuItemsHost"
                                                                     AutomationProperties.AccessibilityView="Content"
                                                                     AutomationProperties.LandmarkType="Navigation"
                                                                     AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}">
-                                                    <muxc:ItemsRepeater.Layout>
-                                                        <muxc:StackLayout Orientation="Horizontal" />
-                                                    </muxc:ItemsRepeater.Layout>
-                                                </muxc:ItemsRepeater>
+                                                    <ItemsRepeater.Layout>
+                                                        <StackLayout Orientation="Horizontal" />
+                                                    </ItemsRepeater.Layout>
+                                                </ItemsRepeater>
                                             </ScrollViewer>
-                                        </muxc:ItemsRepeaterScrollHost>
+                                        </ItemsRepeaterScrollHost>
                                         <Button x:Name="TopNavOverflowButton"
                                             x:Uid="topNavOverflowButton"
                                                 Grid.Column="4"
@@ -501,16 +500,16 @@
                                                             </Setter>
                                                         </Style>
                                                     </Flyout.FlyoutPresenterStyle>
-                                                    <muxc:ItemsRepeaterScrollHost>
+                                                    <ItemsRepeaterScrollHost>
                                                         <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                                            <muxc:ItemsRepeater x:Name="TopNavMenuItemsOverflowHost"
+                                                            <ItemsRepeater x:Name="TopNavMenuItemsOverflowHost"
                                                                                 AutomationProperties.AccessibilityView="Content">
-                                                                <muxc:ItemsRepeater.Layout>
-                                                                    <muxc:StackLayout />
-                                                                </muxc:ItemsRepeater.Layout>
-                                                            </muxc:ItemsRepeater>
+                                                                <ItemsRepeater.Layout>
+                                                                    <StackLayout />
+                                                                </ItemsRepeater.Layout>
+                                                            </ItemsRepeater>
                                                         </ScrollViewer>
-                                                    </muxc:ItemsRepeaterScrollHost>
+                                                    </ItemsRepeaterScrollHost>
                                                 </Flyout>
                                             </Button.Flyout>
                                         </Button>
@@ -534,14 +533,14 @@
                                                         HorizontalContentAlignment="Stretch"
                                                         IsTabStop="False"
                                                         VerticalContentAlignment="Stretch" />
-                                        <muxc:ItemsRepeater x:Name="TopFooterMenuItemsHost"
+                                        <ItemsRepeater x:Name="TopFooterMenuItemsHost"
                                                             AutomationProperties.AccessibilityView="Content"
                                                             Grid.Column="8"
                                                             AutomationProperties.LandmarkType="Navigation">
-                                            <muxc:ItemsRepeater.Layout>
-                                                <muxc:StackLayout Orientation="Horizontal" />
-                                            </muxc:ItemsRepeater.Layout>
-                                        </muxc:ItemsRepeater>
+                                            <ItemsRepeater.Layout>
+                                                <StackLayout Orientation="Horizontal" />
+                                            </ItemsRepeater.Layout>
+                                        </ItemsRepeater>
                                     </Grid>
                                     <Border x:Name="TopNavContentOverlayAreaGrid"
                                             Child="{TemplateBinding ContentOverlay}" />
@@ -668,21 +667,21 @@
                                                     <RowDefinition Height="Auto" />
                                                     <RowDefinition Height="Auto" />
                                                 </Grid.RowDefinitions>
-                                                <muxc:ItemsRepeaterScrollHost HorizontalAlignment="Stretch"
+                                                <ItemsRepeaterScrollHost HorizontalAlignment="Stretch"
                                                                               VerticalAlignment="Stretch">
                                                     <ScrollViewer x:Name="MenuItemsScrollViewer"
                                                                   TabNavigation="Local"
                                                                   VerticalScrollBarVisibility="Auto">
-                                                        <muxc:ItemsRepeater x:Name="MenuItemsHost"
+                                                        <ItemsRepeater x:Name="MenuItemsHost"
                                                                             AutomationProperties.AccessibilityView="Content"
                                                                             AutomationProperties.Name="{TemplateBinding AutomationProperties.Name}">
-                                                            <muxc:ItemsRepeater.Layout>
-                                                                <muxc:StackLayout />
-                                                            </muxc:ItemsRepeater.Layout>
-                                                        </muxc:ItemsRepeater>
+                                                            <ItemsRepeater.Layout>
+                                                                <StackLayout />
+                                                            </ItemsRepeater.Layout>
+                                                        </ItemsRepeater>
                                                     </ScrollViewer>
-                                                </muxc:ItemsRepeaterScrollHost>
-                                                <muxc:NavigationViewItemSeparator x:Name="VisualItemsSeparator"
+                                                </ItemsRepeaterScrollHost>
+                                                <NavigationViewItemSeparator x:Name="VisualItemsSeparator"
                                                                                   HorizontalAlignment="Stretch"
                                                                                   Margin="0,0,0,2"
                                                                                   Grid.Row="1"
@@ -694,17 +693,17 @@
                                                                 Margin="0,0,0,4"
                                                                 Grid.Row="2"
                                                                 VerticalContentAlignment="Stretch" />
-                                                <muxc:ItemsRepeaterScrollHost Grid.Row="3">
+                                                <ItemsRepeaterScrollHost Grid.Row="3">
                                                     <ScrollViewer x:Name="FooterItemsScrollViewer"
                                                                   VerticalScrollBarVisibility="Auto">
-                                                        <muxc:ItemsRepeater x:Name="FooterMenuItemsHost"
+                                                        <ItemsRepeater x:Name="FooterMenuItemsHost"
                                                                             AutomationProperties.AccessibilityView="Content">
-                                                            <muxc:ItemsRepeater.Layout>
-                                                                <muxc:StackLayout />
-                                                            </muxc:ItemsRepeater.Layout>
-                                                        </muxc:ItemsRepeater>
+                                                            <ItemsRepeater.Layout>
+                                                                <StackLayout />
+                                                            </ItemsRepeater.Layout>
+                                                        </ItemsRepeater>
                                                     </ScrollViewer>
-                                                </muxc:ItemsRepeaterScrollHost>
+                                                </ItemsRepeaterScrollHost>
                                             </Grid>
                                         </Grid>
                                     </SplitView.Pane>
@@ -763,26 +762,31 @@
     </UserControl.Resources>
 
     <Grid>
-        <muxc:NavigationView Style="{StaticResource NavigationViewStyle}"
+        <NavigationView Style="{StaticResource NavigationViewStyle}"
+                             AutomationProperties.AutomationId="MainCommandBar"
                              PaneDisplayMode="Top"
                              IsBackEnabled="False"
                              IsBackButtonVisible="Collapsed"
                              SelectionChanged="NavigationView_SelectionChanged">
-            <muxc:NavigationView.MenuItems>
-                <muxc:NavigationViewItem x:Uid="file"
+            <NavigationView.MenuItems>
+                <NavigationViewItem x:Uid="file"
+                                         AutomationProperties.AutomationId="NavItem_File"
                                          Tag="0"
                                          IsSelected="True" />
-                <muxc:NavigationViewItem x:Uid="insert"
+                <NavigationViewItem x:Uid="insert"
+                                         AutomationProperties.AutomationId="NavItem_Insert"
                                          Tag="1" />
-                <muxc:NavigationViewItem x:Uid="view"
+                <NavigationViewItem x:Uid="view"
+                                         AutomationProperties.AutomationId="NavItem_View"
                                          Tag="2">
-                    <!--<muxc:NavigationViewItem.InfoBadge>
-                        <muxc:InfoBadge x:Name="infoBadge1"/>
-                    </muxc:NavigationViewItem.InfoBadge>-->
-                </muxc:NavigationViewItem>
-                <muxc:NavigationViewItem x:Uid="help"
+                    <!--<NavigationViewItem.InfoBadge>
+                        <InfoBadge x:Name="infoBadge1"/>
+                    </NavigationViewItem.InfoBadge>-->
+                </NavigationViewItem>
+                <NavigationViewItem x:Uid="help"
+                                         AutomationProperties.AutomationId="NavItem_Help"
                                          Tag="3" />
-            </muxc:NavigationView.MenuItems>
+            </NavigationView.MenuItems>
 
             <Grid x:Name="navigationGrid"
                   x:FieldModifier="public"
@@ -801,12 +805,14 @@
                             Visibility="Collapsed">
                     <AppBarButton x:Name="undoButton"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="UndoButton"
                                   Icon="Undo"
                                   CornerRadius="4"
                                   IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}"
                                   Command="{x:Bind ViewModel.UndoCommand}" />
                     <AppBarButton x:Name="redoButton"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="RedoButton"
                                   Icon="Redo"
                                   CornerRadius="4"
                                   IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}"
@@ -815,6 +821,7 @@
                     <AppBarButton x:Name="saveButton"
                                   x:Uid="save"
                                   x:FieldModifier="public"
+                                  AutomationProperties.AutomationId="SaveButton"
                                   Icon="Save"
                                   IsEnabled="{x:Bind ViewModel.IsSaveEnabled, Mode=OneWay}"
                                   CornerRadius="4"
@@ -834,6 +841,7 @@
 
                     <AppBarButton x:Name="loadButton"
                                   x:Uid="load"
+                                  AutomationProperties.AutomationId="LoadButton"
                                   CornerRadius="4"
                                   Command="{x:Bind ViewModel.LoadCommand}">
                         <AppBarButton.Icon>
@@ -920,6 +928,18 @@
                         <AppBarButton.Icon>
                             <FontIcon Glyph="&#xE8BD;"
                                       Style="{StaticResource AppSymbolIconStyle}" />
+                        </AppBarButton.Icon>
+                    </AppBarButton>
+
+                    <AppBarButton x:Name="branchingDialogueButton"
+                                  x:Uid="branchingDialogue"
+                                  x:FieldModifier="public"
+                                  CornerRadius="4"
+                                  Visibility="Collapsed"
+                                  Click="OnBranchingDialogueButton_Click">
+                        <AppBarButton.Icon>
+                            <FontIcon Glyph="{StaticResource AppIconGlyphBranchingDialogue}"
+                                      Style="{StaticResource AppFeatureIconStyle}" />
                         </AppBarButton.Icon>
                     </AppBarButton>
 
@@ -1038,17 +1058,6 @@
                         </Flyout>
                     </AppBarButton>
 
-                    <AppBarSeparator />
-                    <AppBarButton x:Name="dictationStartButton"
-                                  x:FieldModifier="public"
-                                  x:Uid="dictation"
-                                  CornerRadius="4"
-                                  Click="OnDictationButton_Click">
-                        <AppBarButton.Icon>
-                            <FontIcon Glyph="" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
-
                     <animations:Implicit.ShowAnimations>
                         <animations:TranslationAnimation Duration="0:0:0.4"
                                                          From="8, 0, 0"
@@ -1071,14 +1080,14 @@
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
                     </AppBarButton>
-                    <AppBarButton x:Name="readOnlyModeButton"
-                                  x:Uid="ReadOnlyMode"
-                                  CornerRadius="4"
-                                  Command="{x:Bind ViewModel.OpenReadOnlyModeCommand}">
-                        <AppBarButton.Icon>
+                    <AppBarToggleButton x:Name="readOnlyModeButton"
+                                        x:Uid="ReadOnlyMode"
+                                        CornerRadius="4"
+                                        Click="OnReadOnlyModeButton_Click">
+                        <AppBarToggleButton.Icon>
                             <FontIcon Glyph="&#xE8A5;" />
-                        </AppBarButton.Icon>
-                    </AppBarButton>
+                        </AppBarToggleButton.Icon>
+                    </AppBarToggleButton>
 
                     <AppBarToggleButton x:Name="typewriterModeButton"
                                         x:Uid="typewriterModeButton"
@@ -1197,7 +1206,7 @@
                                   x:Uid="readAloud"
                                   x:FieldModifier="public"
                                   CornerRadius="4"
-                                  Click="OnReadAloudButton_Click">
+                                  Command="{x:Bind SpeechHub.StartReadAloudCommand}">
                         <AppBarButton.Icon>
                             <FontIcon Glyph="" />
                         </AppBarButton.Icon>
@@ -1217,7 +1226,7 @@
 
                     <AppBarElementContainer x:Name="readAloudControllHolder"
                                             x:FieldModifier="public"
-                                            Visibility="Collapsed"
+                                            Visibility="{x:Bind SpeechHub.ReadAloudControlsVisibility, Mode=OneWay}"
                                             VerticalContentAlignment="Center"
                                             Margin="4,0,0,0">
                         <Grid CornerRadius="4"
@@ -1234,7 +1243,7 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  Click="OnStopButton_Click">
+                                                  Command="{x:Bind SpeechHub.StopReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1249,8 +1258,8 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  IsEnabled="False"
-                                                  Click="OnPlayButton_Click">
+                                                  IsEnabled="{x:Bind SpeechHub.IsReadAloudPaused, Mode=OneWay}"
+                                                  Command="{x:Bind SpeechHub.ResumeReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1265,7 +1274,8 @@
                                                   CornerRadius="4"
                                                   Height="38"
                                                   Width="44"
-                                                  Click="OnPauseButton_Click">
+                                                  IsEnabled="{x:Bind SpeechHub.IsReadAloudPlaying, Mode=OneWay}"
+                                                  Command="{x:Bind SpeechHub.PauseReadAloudCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph=""
                                                       RenderTransformOrigin="0.5,-1">
@@ -1282,7 +1292,7 @@
                                                   Width="44"
                                                   ToolTipService.ToolTip="Next paragraph"
                                                   AutomationProperties.Name="Next paragraph"
-                                                  Click="OnNextParagraphButton_Click">
+                                                  Command="{x:Bind SpeechHub.NextParagraphCommand}">
                                         <AppBarButton.Icon>
                                             <FontIcon Glyph="&#xE893;"
                                                       RenderTransformOrigin="0.5,-1">
@@ -1294,10 +1304,12 @@
                                         </AppBarButton.Icon>
                                     </AppBarButton>
                                 </StackPanel>
-                                <muxc:ProgressBar x:Name="readAloudProgressBar"
+                                <ProgressBar x:Name="readAloudProgressBar"
                                                   Width="180"
                                                   HorizontalAlignment="Left"
-                                                  Value="0" />
+                                                  Minimum="0"
+                                                  Maximum="1"
+                                                  Value="{x:Bind SpeechHub.ReadAloudProgress, Mode=OneWay}" />
                             </StackPanel>
                             <animations:Implicit.ShowAnimations>
                                 <animations:SizeAnimation Duration="0:0:0.4"
@@ -1320,10 +1332,7 @@
                     </animations:Implicit.ShowAnimations>
                 </CommandBar>
             </Grid>
-        </muxc:NavigationView>
+        </NavigationView>
 
-        <MediaElement x:Name="readAloudMediaElement"
-                      AudioCategory="Speech"
-                      MediaEnded="OnReadAloudMediaElement_MediaEnded" />
     </Grid>
 </UserControl>

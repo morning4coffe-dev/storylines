@@ -1,6 +1,3 @@
-using Storylines.Models;
-using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace Storylines.Tests.Models

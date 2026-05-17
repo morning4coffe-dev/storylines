@@ -1,18 +1,17 @@
-namespace Storylines.Services.Modes
+namespace Storylines.Services.Modes;
+
+public interface IEditorMode
 {
-    public interface IEditorMode
-    {
-        string Id { get; }
-        string DisplayNameKey { get; }
-        string DescriptionKey { get; }
-        string IconGlyph { get; }
+    string Id { get; }
+    string DisplayNameKey { get; }
+    string DescriptionKey { get; }
+    string IconGlyph { get; }
 
-        ModeChromeConfig Chrome { get; }
+    ModeChromeConfig Chrome { get; }
 
-        bool CanLeave { get; }
+    bool CanLeave { get; }
 
-        void Enter();
-        void Leave();
-        void OnTextChanged();
-    }
+    void Enter();
+    void Leave();
+    void OnTextChanged();
 }

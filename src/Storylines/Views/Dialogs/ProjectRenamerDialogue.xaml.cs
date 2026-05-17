@@ -1,90 +1,50 @@
 using Storylines.Views.Pages;
-using Storylines.Models;
-using System;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Storylines.Services;
-using Storylines.Services.Interfaces;
 
-namespace Storylines.Views.Dialogs
+namespace Storylines.Views.Dialogs;
+
+public sealed partial class ProjectRenamerDialogue : AppContentDialog
 {
-    public sealed partial class ProjectRenamerDialogue : ContentDialog
+    private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+
+    public ProjectRenamerDialogue()
     {
-        private static IProjectPersistenceService Persistence => App.GetService<IProjectPersistenceService>();
+        this.InitializeComponent();
+        CloseOnOutsideTap = true;
+    }
 
-        public static ProjectRenamerDialogue projectRenamer;
+    public static async System.Threading.Tasks.Task Open()
+    {
+        await App.GetService<IDialogService>().ShowAsync(new ProjectRenamerDialogue());
+    }
 
-        public ProjectRenamerDialogue()
-        {
-            this.InitializeComponent();
-            projectRenamer = this;
+    private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+    {
+        if (string.IsNullOrEmpty(Persistence.CurrentProject?.projectName))
+            titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueCreate");
+        else
+            titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueRename");
 
-            InitializeClickOutToClose();
+        chapterNameBox.Text = Persistence.CurrentProject?.projectName;
+    }
 
-            AppView.currentlyOpenedDialogue = projectRenamer;
-            projectRenamer.RequestedTheme = AppView.current.ActualTheme;
-        }
+    private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
+    {
+        if (Persistence.CurrentProject is not null)
+            Persistence.CurrentProject.projectName = chapterNameBox.Text;
+        App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
 
-        public static async System.Threading.Tasks.Task Open()
-        {
-            await new ProjectRenamerDialogue().ShowAsync();
-        }
+        Hide();
+        //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
+    }
 
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
-        {
-            if (string.IsNullOrEmpty(Persistence.CurrentProject?.projectName))
-                titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueCreate");
-            else
-                titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
+    private void OnCancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Hide();
+    }
 
-            chapterNameBox.Text = Persistence.CurrentProject?.projectName;
-        }
-
-        private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            if (Persistence.CurrentProject != null)
-                Persistence.CurrentProject.projectName = chapterNameBox.Text;
-            App.GetService<EventAggregator>().Publish(new TitleBarUpdateEvent());
-
-            projectRenamer.Hide();
-            //_ = MainPage.ChapterText.textBox.Focus(FocusState.Keyboard);
-        }
-
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            projectRenamer.Hide();
-        }
-
-        private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
-                OnSubmitButton_Click(sender, new RoutedEventArgs());
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-
-            if (ReferenceEquals(projectRenamer, this))
-                projectRenamer = null;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide)
-                Hide();
-        }
+    private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
+            OnSubmitButton_Click(sender, new RoutedEventArgs());
     }
 }

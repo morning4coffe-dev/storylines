@@ -1,4 +1,3 @@
-using Storylines.ViewModels;
 using Xunit;
 
 namespace Storylines.Tests.ViewModels;

@@ -1,30 +1,24 @@
-using Storylines.Helpers;
-using Storylines.Services.Interfaces;
-using System;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
 
-namespace Storylines.Views.Controls
+namespace Storylines.Views.Controls;
+
+public sealed partial class WhatsNextBanner : UserControl
 {
-    public sealed partial class WhatsNextBanner : UserControl
+    public WhatsNextBanner()
     {
-        public WhatsNextBanner()
-        {
-            this.InitializeComponent();
-        }
+        this.InitializeComponent();
+    }
 
-        private void Recurrents_OnClick(object sender, RoutedEventArgs e)
-        {
-            _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com/detail/9N5MJT8G06KC?launch=true&cid=storylines-banner&mode=mini"));
+    private void Recurrents_OnClick(object sender, RoutedEventArgs e)
+    {
+        _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://apps.microsoft.com/detail/9N5MJT8G06KC?launch=true&cid=storylines-banner&mode=mini"));
 
-            App.TryGetService<ITelemetryService>()?.TrackBannerClicked("recurrents", "microsoft_store");
-        }
+        App.TryGetService<ITelemetryService>()?.TrackBannerClicked("recurrents", "microsoft_store");
+    }
 
-        private void GitHubBanner_OnClick(object sender, RoutedEventArgs e)
-        {
-            _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/morning4coffe-dev/storylines"));
+    private void GitHubBanner_OnClick(object sender, RoutedEventArgs e)
+    {
+        _ = Windows.System.Launcher.LaunchUriAsync(new Uri("https://github.com/morning4coffe-dev/storylines"));
 
-            App.TryGetService<ITelemetryService>()?.TrackBannerClicked("github", "github_repository");
-        }
+        App.TryGetService<ITelemetryService>()?.TrackBannerClicked("github", "github_repository");
     }
 }

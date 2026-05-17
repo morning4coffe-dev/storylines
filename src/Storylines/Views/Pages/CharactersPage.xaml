@@ -1,11 +1,10 @@
 <Page x:Class="Storylines.Views.Pages.CharactersPage"
       xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
       xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-      xmlns:controls="using:Microsoft.Toolkit.Uwp.UI.Controls"
+      xmlns:controls="using:CommunityToolkit.WinUI.Controls"
       xmlns:variables="using:Storylines.Models"
       xmlns:vm="using:Storylines.ViewModels"
       Loaded="Page_Loaded"
@@ -180,6 +179,7 @@
                       Grid.Row="3"
                       Margin="-5,0"
                       x:FieldModifier="public"
+                      IsEnabled="{x:Bind ViewModel.IsListEnabled, Mode=OneWay}"
                       ItemsSource="{x:Bind FilteredCharacters, Mode=OneWay}"
                       SelectionChanged="OnListDetailsView_SelectionChanged">
                 <ListView.ItemTemplate>
@@ -214,7 +214,8 @@
                         Grid.Row="3"
                         HorizontalAlignment="Center"
                         VerticalAlignment="Center"
-                        Spacing="18">
+                        Spacing="18"
+                        Visibility="{x:Bind ViewModel.NoCharactersVisibility, Mode=OneWay}">
                 <FontIcon Glyph=""
                           RenderTransformOrigin=".5,.5">
                     <FontIcon.RenderTransform>
@@ -246,7 +247,7 @@
                             HorizontalAlignment="Center"
                             VerticalAlignment="Center"
                             Spacing="12"
-                            Visibility="Collapsed">
+                            Visibility="{x:Bind ViewModel.NoSearchResultsVisibility, Mode=OneWay}">
                     <FontIcon Glyph="&#xE721;"
                               Opacity="0.7"
                               RenderTransformOrigin=".5,.5">
@@ -320,7 +321,7 @@
                     OverflowButtonVisibility="Auto">
             <AppBarButton x:Name="undoButton"
                           x:FieldModifier="public"
-                          Click="OnUndoButton_Click"
+                          Command="{x:Bind ViewModel.UndoCommand}"
                           IsEnabled="{x:Bind ViewModel.CanUndo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Undo" />
@@ -328,7 +329,7 @@
             </AppBarButton>
             <AppBarButton x:Name="redoButton"
                           x:FieldModifier="public"
-                          Click="OnRedoButton_Click"
+                          Command="{x:Bind ViewModel.RedoCommand}"
                           IsEnabled="{x:Bind ViewModel.CanRedo, Mode=OneWay}">
                 <AppBarButton.Icon>
                     <SymbolIcon Symbol="Redo" />
@@ -338,7 +339,7 @@
             <AppBarButton x:Name="addButton"
                           x:Uid="add"
                           x:FieldModifier="public"
-                          Click="OnAddButton_Click"
+                          Command="{x:Bind ViewModel.AddCharacterCommand}"
                           IsCompact="True"
                           IsEnabled="{x:Bind listView.IsEnabled}">
                 <AppBarButton.Icon>
@@ -348,11 +349,13 @@
 
             <AppBarToggleButton x:Name="editButton"
                                 x:FieldModifier="public"
-                                Click="OnEditButton_Click"
-                                IsChecked="{Binding isEditModeEnabled}"
-                                IsEnabled="False">
+                                Command="{x:Bind ViewModel.ToggleEditModeCommand}"
+                                IsChecked="{x:Bind ViewModel.IsEditMode, Mode=OneWay}"
+                                IsEnabled="{x:Bind ViewModel.IsCharacterSelected, Mode=OneWay}"
+                                Label="{x:Bind ViewModel.EditButtonLabel, Mode=OneWay}">
                 <AppBarToggleButton.Icon>
-                    <FontIcon x:Name="editButtonIcon" />
+                    <FontIcon x:Name="editButtonIcon"
+                              Glyph="{x:Bind ViewModel.EditButtonGlyph, Mode=OneWay}" />
                 </AppBarToggleButton.Icon>
             </AppBarToggleButton>
             <AppBarElementContainer x:Name="cancelButton"
@@ -362,7 +365,7 @@
                 <Button x:Uid="cancel"
                         Height="36"
                         VerticalAlignment="Center"
-                        Click="OnCancelEditButton_Click" />
+                        Command="{x:Bind ViewModel.CancelEditCommand}" />
             </AppBarElementContainer>
             <AppBarButton x:Name="exportButton"
                           x:Uid="export"
@@ -397,8 +400,9 @@
                     </Grid.ColumnDefinitions>
                     <PersonPicture x:Name="profilePicture"
                                    Height="60"
-                                   DisplayName="{Binding ElementName=nameBox, Path=Text}"
-                                   IsTapEnabled="False"
+                                   DisplayName="{x:Bind ViewModel.NameText, Mode=OneWay}"
+                                   IsTapEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                                   ProfilePicture="{x:Bind ViewModel.ProfilePicture, Mode=OneWay}"
                                    Tapped="OnProfilePicture_Tapped" />
                     <Button Width="60"
                             Height="60"
@@ -406,10 +410,10 @@
                             CornerRadius="800"
                             IsEnabled="{x:Bind profilePicture.IsTapEnabled, Mode=OneWay}"
                             Style="{StaticResource ProfilePictureButton}" />
-                    <muxc:TeachingTip x:Name="profilePictureFlyout"
+                    <TeachingTip x:Name="profilePictureFlyout"
                                       Background="{ThemeResource AppAcrylicBackground}"
                                       Target="{x:Bind profilePicture}">
-                        <muxc:TeachingTip.Content>
+                        <TeachingTip.Content>
                             <StackPanel Padding="2,0,2,-12"
                                         HorizontalAlignment="Stretch">
                                 <TextBlock x:Uid="profilePicturesFlyout"
@@ -453,8 +457,8 @@
                                     </StackPanel>
                                 </ScrollViewer>
                             </StackPanel>
-                        </muxc:TeachingTip.Content>
-                    </muxc:TeachingTip>
+                        </TeachingTip.Content>
+                    </TeachingTip>
                     <TextBox x:Name="nameBox"
                              x:Uid="characterPlaceholderName"
                              Grid.Column="2"
@@ -462,7 +466,8 @@
                              Padding="12,7"
                              HorizontalAlignment="Stretch"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.NameText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -477,7 +482,8 @@
                              Height="38"
                              Padding="12,7"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.RoleText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                     <TextBox x:Name="ageBox"
@@ -486,7 +492,8 @@
                              Height="38"
                              Padding="12,7"
                              CornerRadius="4"
-                             IsEnabled="False"
+                             IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                             Text="{x:Bind ViewModel.AgeText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                              Style="{StaticResource CharactersTextBoxesStyle}"
                              TextChanged="Box_TextChanged" />
                 </Grid>
@@ -495,7 +502,7 @@
                          MinHeight="38"
                          Padding="4,4"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
                          TokenDelimiter=","
                          TokenItemAdded="OnTraitsTokenItem_Added"
                          TokenItemRemoving="OnTraitsTokenItem_Removing"
@@ -504,7 +511,8 @@
                          x:Uid="characterAppearance"
                          MinHeight="90"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                         Text="{x:Bind ViewModel.AppearanceText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged"
                          TextWrapping="Wrap" />
@@ -512,7 +520,8 @@
                          x:Uid="ownDescription"
                          MinHeight="150"
                          CornerRadius="4"
-                         IsEnabled="False"
+                         IsEnabled="{x:Bind ViewModel.IsFieldsEnabled, Mode=OneWay}"
+                         Text="{x:Bind ViewModel.DescriptionText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                          Style="{StaticResource CharactersTextBoxesStyle}"
                          TextChanged="Box_TextChanged"
                          TextWrapping="Wrap" />
@@ -528,7 +537,7 @@
                                 Background="Transparent"
                                 BorderThickness="0"
                                 Padding="4"
-                                IsEnabled="False"
+                                IsEnabled="{x:Bind ViewModel.IsCharacterSelected, Mode=OneWay}"
                                 Click="OnAddRelationship_Click">
                             <StackPanel Orientation="Horizontal" Spacing="4">
                                 <FontIcon Glyph="&#xE710;" FontSize="12" />
@@ -538,7 +547,8 @@
                     </Grid>
                     <ListView x:Name="relationshipsListView"
                               MaxHeight="200"
-                              SelectionMode="None">
+                              SelectionMode="None"
+                              ItemsSource="{x:Bind ViewModel.RelationshipItems, Mode=OneWay}">
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <Grid Margin="0,2">
@@ -579,7 +589,7 @@
                                x:Uid="noRelationshipsText"
                                Opacity="0.5"
                                FontSize="12"
-                               Visibility="Collapsed" />
+                               Visibility="{x:Bind ViewModel.NoRelationshipsVisibility, Mode=OneWay}" />
                 </StackPanel>
             </StackPanel>
         </ScrollViewer>

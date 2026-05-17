@@ -1,14 +1,11 @@
-using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace Storylines.Services.Interfaces
+namespace Storylines.Services.Interfaces;
+
+public interface IFileService
 {
-    public interface IFileService
-    {
-        Task WriteAsync(StorageFile file, string content);
-        Task<string> ReadAsync(StorageFile file);
-        Task<StorageFile> PickFileForOpenAsync();
-        Task<StorageFolder> PickFolderForSaveAsync();
-        Task<StorageFile> CreateFileAsync(StorageFolder folder, string fileName);
-    }
+    Task WriteAsync(StorageFile file, string content);
+    Task<string> ReadAsync(StorageFile file);
+    Task<StorageFile> PickFileForOpenAsync();
+    Task<StorageFolder> PickFolderForSaveAsync();
+    Task<StorageFile> CreateFileAsync(StorageFolder folder, string fileName);
 }

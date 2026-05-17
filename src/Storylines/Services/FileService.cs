@@ -1,55 +1,39 @@
-using Storylines.Services.Interfaces;
-using System;
-using System.Threading.Tasks;
-using Windows.Security.Cryptography;
-using Windows.Storage;
-using Windows.Storage.Streams;
+namespace Storylines.Services;
 
-namespace Storylines.Services
+public class FileService : IFileService
 {
-    public class FileService : IFileService
+    private readonly IFilePickerService _filePicker;
+
+    public FileService(IFilePickerService filePicker)
     {
-        public async Task WriteAsync(StorageFile file, string content)
-        {
-            if (file == null)
-                throw new ArgumentNullException(nameof(file));
+        _filePicker = filePicker;
+    }
 
-            await FileIO.WriteTextAsync(file, content ?? string.Empty);
-        }
+    public async Task WriteAsync(StorageFile file, string content)
+    {
+        if (file is null)
+            throw new ArgumentNullException(nameof(file));
 
-        public async Task<string> ReadAsync(StorageFile file)
-        {
-            return await FileIO.ReadTextAsync(file);
-        }
+        await FileIO.WriteTextAsync(file, content ?? string.Empty);
+    }
 
-        public async Task<StorageFile> PickFileForOpenAsync()
-        {
-            var picker = new Windows.Storage.Pickers.FileOpenPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary,
-            };
-            picker.FileTypeFilter.Add(".srl");
-            picker.FileTypeFilter.Add(".txt");
+    public async Task<string> ReadAsync(StorageFile file)
+    {
+        return await FileIO.ReadTextAsync(file);
+    }
 
-            return await picker.PickSingleFileAsync();
-        }
+    public async Task<StorageFile> PickFileForOpenAsync()
+    {
+        return await _filePicker.PickOpenFileAsync(new[] { ".srl", ".txt" });
+    }
 
-        public async Task<StorageFolder> PickFolderForSaveAsync()
-        {
-            var picker = new Windows.Storage.Pickers.FolderPicker
-            {
-                ViewMode = Windows.Storage.Pickers.PickerViewMode.Thumbnail,
-                SuggestedStartLocation = Windows.Storage.Pickers.PickerLocationId.DocumentsLibrary
-            };
-            picker.FileTypeFilter.Add("*");
+    public async Task<StorageFolder> PickFolderForSaveAsync()
+    {
+        return await _filePicker.PickFolderAsync();
+    }
 
-            return await picker.PickSingleFolderAsync();
-        }
-
-        public async Task<StorageFile> CreateFileAsync(StorageFolder folder, string fileName)
-        {
-            return await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
-        }
+    public async Task<StorageFile> CreateFileAsync(StorageFolder folder, string fileName)
+    {
+        return await folder.CreateFileAsync(fileName, CreationCollisionOption.OpenIfExists);
     }
 }

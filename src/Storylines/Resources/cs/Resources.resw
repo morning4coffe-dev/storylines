@@ -27,16 +27,16 @@
   <data name="newUpdateAvailable2.Text" xml:space="preserve">
     <value>pro stažení.</value>
   </data>
-  <data name="reviewDialog.Text" xml:space="preserve">
+  <data name="reviewDialog" xml:space="preserve">
     <value>Líbí se vám tato aplikace? Pokud ano, byli bychom rádi, kdybyste ji zvážil/a ohodnotit na Microsoft Store.</value>
   </data>
-  <data name="reviewDialogOption1.Content" xml:space="preserve">
+  <data name="reviewDialogOption1" xml:space="preserve">
     <value>Ohodnotit</value>
   </data>
-  <data name="reviewDialogOption2.Content" xml:space="preserve">
+  <data name="reviewDialogOption2" xml:space="preserve">
     <value>Později</value>
   </data>
-  <data name="reviewDialogOption3.Content" xml:space="preserve">
+  <data name="reviewDialogOption3" xml:space="preserve">
     <value>Znovu nezobrazovat</value>
   </data>
   <data name="reviewRequestThankYou.Title" xml:space="preserve">
@@ -294,6 +294,39 @@
   <data name="readAloudVolumeSetting.Text" xml:space="preserve">
     <value>Hlasitost</value>
   </data>
+  <data name="readAloudRateSetting.Text" xml:space="preserve">
+    <value>Rychlost čtení</value>
+  </data>
+  <data name="readAloudPitchSetting.Text" xml:space="preserve">
+    <value>Výška hlasu</value>
+  </data>
+  <data name="readAloudTestVoiceSetting.Text" xml:space="preserve">
+    <value>Vyzkoušet hlas</value>
+  </data>
+  <data name="readAloudTestVoiceButton.Content" xml:space="preserve">
+    <value>Přehrát ukázku</value>
+  </data>
+  <data name="dictationLanguageSetting.Text" xml:space="preserve">
+    <value>Jazyk diktování</value>
+  </data>
+  <data name="dictationPermissionDeniedStatus" xml:space="preserve">
+    <value>Přístup k mikrofonu byl odepřen.</value>
+  </data>
+  <data name="dictationPermissionDeniedTitle" xml:space="preserve">
+    <value>Přístup k mikrofonu byl odepřen</value>
+  </data>
+  <data name="dictationPermissionDeniedMessage" xml:space="preserve">
+    <value>Povolte přístup k mikrofonu v Nastavení Windows, chcete-li používat diktování.</value>
+  </data>
+  <data name="dictationUnsupportedStatus" xml:space="preserve">
+    <value>Diktování není na tomto zařízení k dispozici.</value>
+  </data>
+  <data name="dictationErrorStatus" xml:space="preserve">
+    <value>Chyba diktování.</value>
+  </data>
+  <data name="dictationListeningStatus" xml:space="preserve">
+    <value>Poslouchám…</value>
+  </data>
   <data name="whiteTextBackgroundSetting.Text" xml:space="preserve">
     <value>Bílé pozadí hlavního textu</value>
   </data>
@@ -438,7 +471,7 @@
   <data name="findOne.Text" xml:space="preserve">
     <value>Najít</value>
   </data>
-  <data name="experience.Title" xml:space="preserve">
+  <data name="experience" xml:space="preserve">
     <value>Podělte se o svojí zkušenosti</value>
   </data>
   <data name="updateAvailableTitle.Title" xml:space="preserve">
@@ -450,10 +483,10 @@
   <data name="storeUpdateMandatoryMessage" xml:space="preserve">
     <value>Některé funkce mohou zůstat omezené, dokud se nedokončí instalace této aktualizace.</value>
   </data>
-  <data name="storeUpdateInstallNow.Content" xml:space="preserve">
+  <data name="storeUpdateInstallNow" xml:space="preserve">
     <value>Instalovat nyní</value>
   </data>
-  <data name="storeUpdateLater.Content" xml:space="preserve">
+  <data name="storeUpdateLater" xml:space="preserve">
     <value>Později</value>
   </data>
   <data name="storeUpdateInstallingMessage" xml:space="preserve">
@@ -660,7 +693,7 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Přibližná doba čtení</value>
   </data>
   <data name="textAnalytics.Label" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Statistiky projektu</value>
   </data>
   <data name="analytics.Text" xml:space="preserve">
     <value>Statistiky</value>
@@ -1015,49 +1048,49 @@ na tlačítko "Přidat novou postavu".</value>
     <value>A-Z</value>
   </data>
   <data name="autosave.ToolTipService.ToolTip" xml:space="preserve">
-    <value>Autosave (adjust interval in Settings &gt; General)</value>
+    <value>Automatické ukládání (interval upravíte v Nastavení &gt; Obecné)</value>
   </data>
   <data name="byChapterText.Text" xml:space="preserve">
-    <value>By chapter</value>
+    <value>Podle kapitoly</value>
   </data>
   <data name="characterAppearance.PlaceholderText" xml:space="preserve">
-    <value>Appearance and visual notes</value>
+    <value>Vzhled a vizuální poznámky</value>
   </data>
   <data name="characterDialoguePreview.Text" xml:space="preserve">
-    <value>Sample lines</value>
+    <value>Ukázkové repliky</value>
   </data>
   <data name="characterDialoguePreviewEmpty.Text" xml:space="preserve">
-    <value>No dialogue preview yet. Add some lines in a chapter and they will appear here.</value>
+    <value>Náhled dialogů zatím není k dispozici. Přidejte do kapitoly několik replik a zobrazí se zde.</value>
   </data>
   <data name="characterDialogueStatsEmpty" xml:space="preserve">
-    <value>No dialogue lines found yet.</value>
+    <value>Zatím nebyly nalezeny žádné dialogové repliky.</value>
   </data>
   <data name="characterDialogueStatsFormat" xml:space="preserve">
-    <value>Appears in {0} chapter(s) and has {1} dialogue line(s).</value>
+    <value>Objevuje se v {0} kapitolách a má {1} dialogových replik.</value>
   </data>
   <data name="characterDialogueUsage.Text" xml:space="preserve">
-    <value>Dialogue usage</value>
+    <value>Využití v dialozích</value>
   </data>
   <data name="characterSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Search characters</value>
+    <value>Hledat postavy</value>
   </data>
   <data name="charactersSearchEmpty.Text" xml:space="preserve">
-    <value>No characters match your search.</value>
+    <value>Žádné postavy neodpovídají vašemu hledání.</value>
   </data>
   <data name="characterTraits.PlaceholderText" xml:space="preserve">
-    <value>Traits (comma separated)</value>
+    <value>Vlastnosti (oddělené čárkou)</value>
   </data>
   <data name="dailyWordGoalSetting.Text" xml:space="preserve">
-    <value>Daily word goal</value>
+    <value>Denní cíl slov</value>
   </data>
   <data name="dailyWordGoalSettingDesc.Text" xml:space="preserve">
-    <value>Track your daily writing progress. Set to 0 to disable.</value>
+    <value>Sledujte svůj denní postup v psaní. Nastavte 0 pro vypnutí.</value>
   </data>
   <data name="dialoguePickerAll.Text" xml:space="preserve">
-    <value>All characters</value>
+    <value>Všechny postavy</value>
   </data>
   <data name="dialoguePickerNoResults.Text" xml:space="preserve">
-    <value>No characters match this search.</value>
+    <value>Žádné postavy neodpovídají tomuto hledání.</value>
   </data>
   <data name="dialoguePopupHint.Text" xml:space="preserve">
     <value>↑↓ k výběru · Enter k potvrzení · Esc k zavření</value>
@@ -1069,31 +1102,31 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Stiskněte Enter při psaní pro rychlé vložení dialogových řádků postav. Šipkami ↑↓ vyberte postavu a potvrďte klávesou Enter. Dialogy lze také převést na větvené uzly.</value>
   </data>
   <data name="dialoguePickerRecent.Text" xml:space="preserve">
-    <value>Recent</value>
+    <value>Nedávné</value>
   </data>
   <data name="dialoguePickerSearchBox.PlaceholderText" xml:space="preserve">
-    <value>Find character</value>
+    <value>Najít postavu</value>
   </data>
   <data name="editorFontFamilySetting.Text" xml:space="preserve">
-    <value>Font family</value>
+    <value>Rodina písma</value>
   </data>
   <data name="editorFontFamilySettingDesc.Text" xml:space="preserve">
-    <value>Default font used for new text in the editor.</value>
+    <value>Výchozí písmo použité pro nový text v editoru.</value>
   </data>
   <data name="editorFontSizeSetting.Text" xml:space="preserve">
-    <value>Font size</value>
+    <value>Velikost písma</value>
   </data>
   <data name="githubBannerDescription.Text" xml:space="preserve">
-    <value>Click here to give Storylines a Star on GitHub</value>
+    <value>To se počítá! Klikněte sem a dejte Storylines hvězdu na GitHubu</value>
   </data>
   <data name="githubBannerTitle.Text" xml:space="preserve">
-    <value>GitHub Stars Count</value>
+    <value>Počet oblíbení na GitHubu</value>
   </data>
   <data name="min" xml:space="preserve">
     <value>min</value>
   </data>
   <data name="newChapter.PlaceholderText" xml:space="preserve">
-    <value>Untitled</value>
+    <value>Bez názvu</value>
   </data>
   <data name="pinboardAutoArrangeButton.AutomationProperties.Name" xml:space="preserve">
     <value>Auto-arrange</value>
@@ -1114,13 +1147,13 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Manage Your Subscriptions</value>
   </data>
   <data name="textEditorSetting.Text" xml:space="preserve">
-    <value>Text Editor</value>
+    <value>Textový editor</value>
   </data>
   <data name="welcomePanelRecentProjects.Text" xml:space="preserve">
-    <value>Recent projects</value>
+    <value>Nedávné projekty</value>
   </data>
   <data name="writingGoalSetting.Text" xml:space="preserve">
-    <value>Writing Goal</value>
+    <value>Cíl psaní</value>
   </data>
   <data name="zToA.Text" xml:space="preserve">
     <value>Z-A</value>
@@ -1160,6 +1193,12 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="ReadOnlyMode.ToolTipService.ToolTip" xml:space="preserve">
     <value>Režim pouze pro čtení</value>
   </data>
+  <data name="typewriterModeButton.Label" xml:space="preserve">
+    <value>Psací stroj</value>
+  </data>
+  <data name="typewriterModeButton.ToolTipService.ToolTip" xml:space="preserve">
+    <value>Režim psacího stroje - kurzor zůstává vycentrovaný (Ctrl+Shift+W)</value>
+  </data>
   <data name="modePickerTitle.Text" xml:space="preserve">
     <value>Zvolte režim psaní</value>
   </data>
@@ -1184,14 +1223,23 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="modeEnterButton.Text" xml:space="preserve">
     <value>Spustit režim</value>
   </data>
+  <data name="editCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Upravit</value>
+  </data>
+  <data name="focusCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Soustředění</value>
+  </data>
+  <data name="readOnlyCard.AutomationProperties.Name" xml:space="preserve">
+    <value>Režim Pouze pro čtení</value>
+  </data>
   <data name="experimentalSetting.Text" xml:space="preserve">
-    <value>Experimental</value>
+    <value>Experimentální</value>
   </data>
   <data name="experimentalFeaturesToggle.Text" xml:space="preserve">
-    <value>Enable experimental features</value>
+    <value>Povolit experimentální funkce</value>
   </data>
   <data name="experimentalFeaturesToggleDesc.Text" xml:space="preserve">
-    <value>Unlock features still in development, such as branching dialogue.</value>
+    <value>Odemkne funkce, které jsou stále ve vývoji, například globální hledání v záhlaví a větvené dialogy.</value>
   </data>
   <data name="pinboardButton.Label" xml:space="preserve">
     <value>Příběhové plátno</value>
@@ -1200,13 +1248,13 @@ na tlačítko "Přidat novou postavu".</value>
     <value>Psací podněty</value>
   </data>
   <data name="characterDialogueNodeCountFormat" xml:space="preserve">
-    <value>{0} dialogue node(s)</value>
+    <value>{0} dialogových uzlů</value>
   </data>
   <data name="characterViewDialogueNodes.Content" xml:space="preserve">
-    <value>View in dialogue editor</value>
+    <value>Zobrazit v editoru dialogů</value>
   </data>
   <data name="pinboardDialogueIndicator" xml:space="preserve">
-    <value>Has branching dialogue</value>
+    <value>Obsahuje větvený dialog</value>
   </data>
   <data name="boldTextButton.Label" xml:space="preserve">
     <value>Tučné</value>
@@ -1238,12 +1286,6 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="readOnlyExitPillButton.AutomationProperties.Name" xml:space="preserve">
     <value>Ukončit režim pouze pro čtení</value>
   </data>
-  <data name="connectionModeText.Text" xml:space="preserve">
-    <value>Klikněte na cílový úsek pro propojení</value>
-  </data>
-  <data name="cancelConnectionButton.AutomationProperties.Name" xml:space="preserve">
-    <value>Zrušit propojení</value>
-  </data>
   <data name="shortcutsDialogueTitle.Text" xml:space="preserve"><value>Zkratky</value></data>
   <data name="shortcutsGlobalExpander.Header" xml:space="preserve"><value>Globální</value></data>
   <data name="shortcutsMainPageExpander.Header" xml:space="preserve"><value>Hlavní stránka</value></data>
@@ -1262,6 +1304,7 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="shortcutSearch" xml:space="preserve"><value>Vyhledat v textu</value></data>
   <data name="shortcutSearchAndReplace" xml:space="preserve"><value>Najít a nahradit</value></data>
   <data name="shortcutToggleDialogueMode" xml:space="preserve"><value>Přepnout režim dialogů</value></data>
+  <data name="shortcutToggleDictation" xml:space="preserve"><value>Přepnout diktování</value></data>
   <data name="shortcutBold" xml:space="preserve"><value>Tučně</value></data>
   <data name="shortcutItalic" xml:space="preserve"><value>Kurzíva</value></data>
   <data name="shortcutUnderline" xml:space="preserve"><value>Podtržení textu</value></data>
@@ -1291,10 +1334,10 @@ na tlačítko "Přidat novou postavu".</value>
   <data name="saveProjectName" xml:space="preserve"><value>Název projektu:</value></data>
   <data name="saveProjectNamePlaceholder" xml:space="preserve"><value>"O královně koblih"</value></data>
   <data name="projectStatistics.Text" xml:space="preserve">
-    <value>Project Statistics</value>
+    <value>Statistiky projektu</value>
   </data>
   <data name="wordDistribution.Text" xml:space="preserve">
-    <value>Word frequency</value>
+    <value>Frekvence slov</value>
   </data>
   <data name="projectFileInfoButton.Label" xml:space="preserve">
     <value>Informace o souboru</value>
@@ -1359,6 +1402,95 @@ na tlačítko "Přidat novou postavu".</value>
   </data>
   <data name="projectFileInfoDialogue.CloseButtonText" xml:space="preserve">
     <value>Zavřít</value>
+  </data>
+  <data name="speechReadAloudNoTextTitle" xml:space="preserve"><value>Není co předčítat</value></data>
+  <data name="speechReadAloudNoTextMessage" xml:space="preserve"><value>Nejprve napište nebo vyberte nějaký text.</value></data>
+  <data name="developer.Content" xml:space="preserve">
+    <value>Vývojář</value>
+  </data>
+  <data name="developerText.Text" xml:space="preserve">
+    <value>Vývojář</value>
+  </data>
+  <data name="developerRuntimeSection.Text" xml:space="preserve">
+    <value>Diagnostika běhu</value>
+  </data>
+  <data name="developerCurrentPageLabel.Text" xml:space="preserve">
+    <value>Aktuální stránka</value>
+  </data>
+  <data name="developerCurrentThemeLabel.Text" xml:space="preserve">
+    <value>Aktuální motiv</value>
+  </data>
+  <data name="developerWindowSizeLabel.Text" xml:space="preserve">
+    <value>Velikost okna</value>
+  </data>
+  <data name="developerCurrentDialogLabel.Text" xml:space="preserve">
+    <value>Aktuální dialog</value>
+  </data>
+  <data name="developerHiddenControlsSection.Text" xml:space="preserve">
+    <value>Neviditelné ovládací prvky</value>
+  </data>
+  <data name="developerHiddenControlsDescription.Text" xml:space="preserve">
+    <value>Zobrazuje aktuálně skryté ovládací prvky z aktivního vizuálního stromu.</value>
+  </data>
+  <data name="developerRefreshSnapshotButton.Content" xml:space="preserve">
+    <value>Obnovit snímek</value>
+  </data>
+  <data name="developerHiddenControlsCountLabel.Text" xml:space="preserve">
+    <value>Nalezené ovládací prvky</value>
+  </data>
+  <data name="developerAttachedBehaviorsSection.Text" xml:space="preserve">
+    <value>Neviditelná chování</value>
+  </data>
+  <data name="developerAttachedBehaviorsDescription.Text" xml:space="preserve">
+    <value>Zobrazuje připojená chování, která nevykreslují vlastní uživatelské rozhraní.</value>
+  </data>
+  <data name="developerAttachedBehaviorsCountLabel.Text" xml:space="preserve">
+    <value>Připojená chování</value>
+  </data>
+  <data name="developerNotificationsSection.Text" xml:space="preserve">
+    <value>Oznámení</value>
+  </data>
+  <data name="developerNotificationsDescription.Text" xml:space="preserve">
+    <value>Zobrazí náhled oznamovacích prvků včetně výzvy k hodnocení.</value>
+  </data>
+  <data name="developerShowTransientNotificationButton.Content" xml:space="preserve">
+    <value>Zobrazit dočasné oznámení</value>
+  </data>
+  <data name="developerShowReviewPromptButton.Content" xml:space="preserve">
+    <value>Zobrazit výzvu k hodnocení</value>
+  </data>
+  <data name="developerDismissPersistentNotificationButton.Content" xml:space="preserve">
+    <value>Zavřít trvalé oznámení</value>
+  </data>
+  <data name="developerDialogsSection.Text" xml:space="preserve">
+    <value>Dialogy</value>
+  </data>
+  <data name="developerDialogsDescription.Text" xml:space="preserve">
+    <value>Otevře existující dialogy aplikace přes sdílenou dialogovou službu.</value>
+  </data>
+  <data name="developerOpenLoadDialogButton.Content" xml:space="preserve">
+    <value>Otevřít dialog načtení projektu</value>
+  </data>
+  <data name="developerOpenShortcutsDialogButton.Content" xml:space="preserve">
+    <value>Otevřít dialog zkratek</value>
+  </data>
+  <data name="developerOpenModePickerDialogButton.Content" xml:space="preserve">
+    <value>Otevřít dialog výběru režimu</value>
+  </data>
+  <data name="developerOpenProjectInfoDialogButton.Content" xml:space="preserve">
+    <value>Otevřít dialog informací o projektu</value>
+  </data>
+  <data name="developerTransientNotificationTitle" xml:space="preserve">
+    <value>Vývojářský náhled</value>
+  </data>
+  <data name="developerTransientNotificationMessage" xml:space="preserve">
+    <value>Toto je náhled oznámení pouze pro ladění.</value>
+  </data>
+  <data name="developerNoDialogOpen" xml:space="preserve">
+    <value>Žádný dialog není otevřen</value>
+  </data>
+  <data name="developerUnknownValue" xml:space="preserve">
+    <value>Neznámé</value>
   </data>
 </root>
 

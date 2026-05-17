@@ -1,90 +1,86 @@
-using CommunityToolkit.Mvvm.ComponentModel;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Storylines.Models
+namespace Storylines.Models;
+
+public enum ChapterStatus
 {
-    public enum ChapterStatus
+    Draft,
+    Writing,
+    Revision,
+    Final
+}
+
+public partial class Chapter : ObservableObject
+{
+    [ObservableProperty]
+    private string _name;
+
+    [ObservableProperty]
+    private string _text;
+
+    [ObservableProperty]
+    private string _notes;
+
+    [ObservableProperty]
+    private string _synopsis;
+
+    [ObservableProperty]
+    private int? _wordCountGoal;
+
+    [ObservableProperty]
+    private double _pinboardX;
+
+    [ObservableProperty]
+    private double _pinboardY;
+
+    [ObservableProperty]
+    private ChapterStatus _status = ChapterStatus.Draft;
+
+    [ObservableProperty]
+    private string _location;
+
+    [ObservableProperty]
+    private int _lastCaretPosition;
+
+    [ObservableProperty]
+    private double _lastVerticalOffset;
+
+    private List<string> _plotThreads = new List<string>();
+    public List<string> PlotThreads
     {
-        Draft,
-        Writing,
-        Revision,
-        Final
+        get => _plotThreads;
+        set => SetProperty(ref _plotThreads, value ?? new List<string>());
     }
 
-    public partial class Chapter : ObservableObject
+    private List<string> _tags = new List<string>();
+    public List<string> Tags
     {
-        [ObservableProperty]
-        private string _name;
-
-        [ObservableProperty]
-        private string _text;
-
-        [ObservableProperty]
-        private string _notes;
-
-        [ObservableProperty]
-        private string _synopsis;
-
-        [ObservableProperty]
-        private int? _wordCountGoal;
-
-        [ObservableProperty]
-        private double _pinboardX;
-
-        [ObservableProperty]
-        private double _pinboardY;
-
-        [ObservableProperty]
-        private ChapterStatus _status = ChapterStatus.Draft;
-
-        [ObservableProperty]
-        private string _location;
-
-        [ObservableProperty]
-        private int _lastCaretPosition;
-
-        [ObservableProperty]
-        private double _lastVerticalOffset;
-
-        private List<string> _plotThreads = new List<string>();
-        public List<string> PlotThreads
+        get => _tags;
+        set
         {
-            get => _plotThreads;
-            set => SetProperty(ref _plotThreads, value ?? new List<string>());
+            if (SetProperty(ref _tags, value ?? new List<string>()))
+                OnPropertyChanged(nameof(TagsText));
         }
+    }
 
-        private List<string> _tags = new List<string>();
-        public List<string> Tags
+    public string TagsText
+    {
+        get => _tags is null || _tags.Count == 0 ? string.Empty : string.Join(", ", _tags);
+        set
         {
-            get => _tags;
-            set
-            {
-                if (SetProperty(ref _tags, value ?? new List<string>()))
-                    OnPropertyChanged(nameof(TagsText));
-            }
+            Tags = (value ?? string.Empty)
+                .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
+                .Select(t => t.Trim())
+                .Where(t => !string.IsNullOrWhiteSpace(t))
+                .Distinct(System.StringComparer.CurrentCultureIgnoreCase)
+                .ToList();
+            OnPropertyChanged();
         }
+    }
 
-        public string TagsText
-        {
-            get => _tags == null || _tags.Count == 0 ? string.Empty : string.Join(", ", _tags);
-            set
-            {
-                Tags = (value ?? string.Empty)
-                    .Split(',', System.StringSplitOptions.RemoveEmptyEntries)
-                    .Select(t => t.Trim())
-                    .Where(t => !string.IsNullOrWhiteSpace(t))
-                    .Distinct(System.StringComparer.CurrentCultureIgnoreCase)
-                    .ToList();
-                OnPropertyChanged();
-            }
-        }
+    public string Token { get; private set; }
 
-        public string Token { get; private set; }
-
-        public void SetToken(string token)
-        {
-            Token = token;
-        }
+    public void SetToken(string token)
+    {
+        Token = token;
     }
 }

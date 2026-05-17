@@ -5,8 +5,7 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
       xmlns:variables="using:Storylines.Models"
       xmlns:converters="using:Storylines.Converters"
-      xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
-      xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+      xmlns:animations="using:CommunityToolkit.WinUI.Animations"
       mc:Ignorable="d"
       Loaded="Page_Loaded">
 
@@ -26,21 +25,10 @@
               BorderBrush="{ThemeResource ElementBorderColor}"
               BorderThickness="0,0,0,1">
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="Auto" />
                 <ColumnDefinition Width="*" />
                 <ColumnDefinition Width="Auto" />
             </Grid.ColumnDefinitions>
-            <Button x:Name="backButton"
-                    x:Uid="pinboardBackButton"
-                    Background="Transparent"
-                    BorderThickness="0"
-                    CornerRadius="4"
-                    Padding="8"
-                    Click="OnBackButton_Click">
-                <FontIcon Glyph="&#xE72B;" FontSize="14" />
-            </Button>
-            <StackPanel Grid.Column="1"
-                        Margin="12,0"
+            <StackPanel Grid.Column="0"
                         VerticalAlignment="Center">
                 <TextBlock x:Uid="storyCanvasTitle"
                            FontSize="18"
@@ -49,7 +37,7 @@
                            FontSize="12"
                            Opacity="0.6" />
             </StackPanel>
-            <StackPanel Grid.Column="2"
+            <StackPanel Grid.Column="1"
                         Orientation="Horizontal"
                         Spacing="8"
                         VerticalAlignment="Center">
@@ -76,7 +64,7 @@
                         ToolTipService.ToolTip="Auto-arrange cards in a grid"
                         Padding="8"
                         CornerRadius="4"
-                        Click="OnAutoArrange_Click">
+                        Command="{x:Bind ViewModel.AutoArrangeChaptersCommand}">
                     <FontIcon Glyph="&#xE8A9;" FontSize="14" />
                 </Button>
                 <TextBlock x:Uid="pinboardHelpText"

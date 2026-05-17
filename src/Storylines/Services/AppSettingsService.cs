@@ -1,232 +1,249 @@
-using Storylines.Services.Interfaces;
-using System;
-using Windows.ApplicationModel.Resources;
 using Windows.Globalization;
-using Windows.Storage;
 using Windows.UI;
 
-namespace Storylines.Services
+namespace Storylines.Services;
+
+public class AppSettingsService : IAppSettingsService
 {
-    public class AppSettingsService : IAppSettingsService
+    private readonly EventAggregator _events;
+    private readonly IProjectPersistenceService _persistence;
+    private readonly IPreferencesService _preferences;
+    private readonly ResourceLoader _resources;
+
+    public AppSettingsService(EventAggregator events, IProjectPersistenceService persistence, IPreferencesService preferences)
     {
-        private readonly EventAggregator _events;
-        private readonly IProjectPersistenceService _persistence;
-        private readonly ApplicationDataContainer _localSettings;
-        private readonly ResourceLoader _resources;
+        _events = events;
+        _persistence = persistence;
+        _preferences = preferences;
+        _resources = ResourceLoader.GetForViewIndependentUse();
+    }
 
-        public AppSettingsService(EventAggregator events, IProjectPersistenceService persistence)
+    public SettingsValues.SelectedTheme SelectedTheme
+    {
+        get => SettingsValues.selectedTheme;
+        set => ThemeSettings.ChangeTheme((int)value, ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
+    }
+
+    public SettingsValues.SelectedAccent SelectedAccent
+    {
+        get => SettingsValues.selectedAccent;
+        set
         {
-            _events = events;
-            _persistence = persistence;
-            _localSettings = ApplicationData.Current.LocalSettings;
-            _resources = ResourceLoader.GetForViewIndependentUse();
+            SettingsValues.selectedAccent = value;
+            ThemeSettings.InitializeAppAccentColor();
         }
+    }
 
-        public SettingsValues.SelectedTheme SelectedTheme
+    public Color CustomAccentColor
+    {
+        get => SettingsValues.customAccentColor;
+        set
         {
-            get => SettingsValues.selectedTheme;
-            set => ThemeSettings.ChangeTheme((int)value, ThemeSettings.themeListener.CurrentTheme.ToElementTheme());
+            SettingsValues.customAccentColor = value;
+            ThemeSettings.InitializeAppAccentColor();
         }
+    }
 
-        public SettingsValues.SelectedAccent SelectedAccent
+    public string ChapterName
+    {
+        get => SettingsValues.chapterName;
+        set => _preferences.Set(SettingsValueStrings.ChapterName, value ?? DefaultChapterName);
+    }
+
+    public string DefaultChapterName => _resources.GetString("chapterName");
+
+    public bool ExitDialogueEnabled
+    {
+        get => SettingsValues.exitDiagEnabled;
+        set => _preferences.Set(SettingsValueStrings.ExitDialogueOn, value);
+    }
+
+    public bool LoadLastProjectOnStart
+    {
+        get => _preferences.Contains(SettingsValueStrings.LoadLastProjectOnStart);
+        set
         {
-            get => SettingsValues.selectedAccent;
-            set
+            if (value)
+                _preferences.Set(SettingsValueStrings.LoadLastProjectOnStart, _persistence.CurrentProject?.Token);
+            else
+                _preferences.Remove(SettingsValueStrings.LoadLastProjectOnStart);
+        }
+    }
+
+    public bool AutosaveEnabled
+    {
+        get => SettingsValues.autosaveEnabled;
+        set
+        {
+            if (!value)
             {
-                SettingsValues.selectedAccent = value;
-                ThemeSettings.InitializeAppAccentColor();
+                _persistence.DisableAutosave();
+                return;
             }
-        }
 
-        public Color CustomAccentColor
+            if (_persistence.CurrentProject?.file is null)
+                return;
+
+            _persistence.EnableAutosave();
+        }
+    }
+
+    public double AutosaveInterval
+    {
+        get => SettingsValues.autosaveInterval;
+        set
         {
-            get => SettingsValues.customAccentColor;
-            set
-            {
-                SettingsValues.customAccentColor = value;
-                ThemeSettings.InitializeAppAccentColor();
-            }
-        }
+            _preferences.Set(SettingsValueStrings.AutosaveInterval, value);
 
-        public string ChapterName
+            if (AutosaveEnabled)
+                _persistence.RefreshAutosave();
+        }
+    }
+
+    public int DailyWordGoal
+    {
+        get => SettingsValues.dailyWordGoal;
+        set => _preferences.Set(SettingsValueStrings.DailyWordGoal, Math.Max(0, value));
+    }
+
+    public int WritingStreakDays
+    {
+        get => _preferences.Get(SettingsValueStrings.WritingStreakDays, 0);
+        set => _preferences.Set(SettingsValueStrings.WritingStreakDays, Math.Max(0, value));
+    }
+
+    public bool ExperimentalFeaturesEnabled
+    {
+        get => SettingsValues.experimentalFeaturesEnabled;
+        set
         {
-            get => SettingsValues.chapterName;
-            set => _localSettings.Values[SettingsValueStrings.ChapterName] = value ?? DefaultChapterName;
+            _preferences.Set(SettingsValueStrings.ExperimentalFeaturesEnabled, value);
+            Publish(SettingsValueStrings.ExperimentalFeaturesEnabled, value);
         }
+    }
 
-        public string DefaultChapterName => _resources.GetString("chapterName");
+    public bool AddChapterOnPageDownEnabled
+    {
+        get => SettingsValues.newChapterShortcut;
+        set => _preferences.Set(SettingsValueStrings.OnPageDownNewChapterEnabled, value);
+    }
 
-        public bool ExitDialogueEnabled
+    public string EditorFontFamily
+    {
+        get => SettingsValues.editorFontFamily;
+        set
         {
-            get => SettingsValues.exitDiagEnabled;
-            set => _localSettings.Values[SettingsValueStrings.ExitDialogueOn] = value;
+            string fontFamily = string.IsNullOrWhiteSpace(value) ? "Segoe UI" : value;
+            _preferences.Set(SettingsValueStrings.EditorFontFamily, fontFamily);
+            Publish(SettingsValueStrings.EditorFontFamily, fontFamily);
         }
+    }
 
-        public bool LoadLastProjectOnStart
+    public double EditorFontSize
+    {
+        get => SettingsValues.editorFontSize;
+        set
         {
-            get => _localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] != null;
-            set => _localSettings.Values[SettingsValueStrings.LoadLastProjectOnStart] = value
-                ? _persistence.CurrentProject?.Token
-                : null;
+            double size = Clamp(value, 8, 24);
+            _preferences.Set(SettingsValueStrings.EditorFontSize, size);
+            Publish(SettingsValueStrings.EditorFontSize, size);
         }
+    }
 
-        public bool AutosaveEnabled
+    public double EditorZoom
+    {
+        get => _preferences.Get(SettingsValueStrings.ZoomValue, 25d);
+        set
         {
-            get => SettingsValues.autosaveEnabled;
-            set
-            {
-                if (!value)
-                {
-                    _persistence.DisableAutosave();
-                    return;
-                }
-
-                if (_persistence.CurrentProject?.file == null)
-                    return;
-
-                _persistence.EnableAutosave();
-            }
+            double zoom = Clamp(value, 13, 100);
+            _preferences.Set(SettingsValueStrings.ZoomValue, zoom);
+            Publish(SettingsValueStrings.ZoomValue, zoom);
         }
+    }
 
-        public double AutosaveInterval
+    public string UserLanguage
+    {
+        get => SettingsValues.language;
+        set
         {
-            get => SettingsValues.autosaveInterval;
-            set
-            {
-                _localSettings.Values[SettingsValueStrings.AutosaveInterval] = value;
-
-                if (AutosaveEnabled)
-                    _persistence.RefreshAutosave();
-            }
+            string languageTag = value ?? string.Empty;
+            ApplicationLanguages.PrimaryLanguageOverride = languageTag;
+            _preferences.Set(SettingsValueStrings.UserLanguage, languageTag);
         }
+    }
 
-        public int DailyWordGoal
+    public double ReadAloudVolume
+    {
+        get => _preferences.Get(SettingsValueStrings.ReadAloudVolume, 75d);
+        set => _preferences.Set(SettingsValueStrings.ReadAloudVolume, Clamp(value, 0, 100));
+    }
+
+    public string ReadAloudVoiceId
+    {
+        get => _preferences.Get<string>(SettingsValueStrings.ReadAloudVoice);
+        set => _preferences.Set(SettingsValueStrings.ReadAloudVoice, value);
+    }
+
+    public double ReadAloudRate
+    {
+        get => _preferences.Get(SettingsValueStrings.ReadAloudRate, 1.0d);
+        set => _preferences.Set(SettingsValueStrings.ReadAloudRate, Clamp(value, 0.5, 2.0));
+    }
+
+    public double ReadAloudPitch
+    {
+        get => _preferences.Get(SettingsValueStrings.ReadAloudPitch, 1.0d);
+        set => _preferences.Set(SettingsValueStrings.ReadAloudPitch, Clamp(value, 0.0, 2.0));
+    }
+
+    public string DictationLanguage
+    {
+        get => _preferences.Get<string>(SettingsValueStrings.DictationLanguage) ?? string.Empty;
+        set => _preferences.Set(SettingsValueStrings.DictationLanguage, value ?? string.Empty);
+    }
+
+    public bool TextBoxSolidBackground
+    {
+        get => SettingsValues.whiteTextBackground;
+        set
         {
-            get => SettingsValues.dailyWordGoal;
-            set => _localSettings.Values[SettingsValueStrings.DailyWordGoal] = Math.Max(0, value);
+            _preferences.Set(SettingsValueStrings.TextBoxSolidBackground, value);
+            Publish(SettingsValueStrings.TextBoxSolidBackground, value);
         }
+    }
 
-        public int WritingStreakDays
+    public bool DialogueModeEnabled
+    {
+        get => SettingsValues.dialogueModeEnabled;
+        set => _preferences.Set(SettingsValueStrings.DialogueModeEnabled, value);
+    }
+
+    public void ResetChapterName()
+    {
+        ChapterName = DefaultChapterName;
+    }
+
+    public bool IsUserLanguageSupported() => SettingsValues.IsUserLanguageSupported();
+
+    public bool LanguageTagsMatch(string left, string right) => SettingsValues.LanguageTagsMatch(left, right);
+
+    private void Publish(string settingKey, object value)
+    {
+        _events.Publish(new SettingChangedEvent
         {
-            get => Convert.ToInt32(_localSettings.Values[SettingsValueStrings.WritingStreakDays] ?? 0);
-            set => _localSettings.Values[SettingsValueStrings.WritingStreakDays] = Math.Max(0, value);
-        }
+            SettingKey = settingKey,
+            Value = value
+        });
+    }
 
-        public bool ExperimentalFeaturesEnabled
-        {
-            get => SettingsValues.experimentalFeaturesEnabled;
-            set
-            {
-                _localSettings.Values[SettingsValueStrings.ExperimentalFeaturesEnabled] = value;
-                Publish(SettingsValueStrings.ExperimentalFeaturesEnabled, value);
-            }
-        }
+    private static double Clamp(double value, double min, double max)
+    {
+        if (value < min)
+            return min;
 
-        public bool AddChapterOnPageDownEnabled
-        {
-            get => SettingsValues.newChapterShortcut;
-            set => _localSettings.Values[SettingsValueStrings.OnPageDownNewChapterEnabled] = value;
-        }
+        if (value > max)
+            return max;
 
-        public string EditorFontFamily
-        {
-            get => SettingsValues.editorFontFamily;
-            set
-            {
-                string fontFamily = string.IsNullOrWhiteSpace(value) ? "Segoe UI" : value;
-                _localSettings.Values[SettingsValueStrings.EditorFontFamily] = fontFamily;
-                Publish(SettingsValueStrings.EditorFontFamily, fontFamily);
-            }
-        }
-
-        public double EditorFontSize
-        {
-            get => SettingsValues.editorFontSize;
-            set
-            {
-                double size = Clamp(value, 8, 24);
-                _localSettings.Values[SettingsValueStrings.EditorFontSize] = size;
-                Publish(SettingsValueStrings.EditorFontSize, size);
-            }
-        }
-
-        public double EditorZoom
-        {
-            get => Convert.ToDouble(_localSettings.Values[SettingsValueStrings.ZoomValue] ?? 25d);
-            set
-            {
-                double zoom = Clamp(value, 13, 100);
-                _localSettings.Values[SettingsValueStrings.ZoomValue] = zoom;
-                Publish(SettingsValueStrings.ZoomValue, zoom);
-            }
-        }
-
-        public string UserLanguage
-        {
-            get => SettingsValues.language;
-            set
-            {
-                string languageTag = value ?? string.Empty;
-                ApplicationLanguages.PrimaryLanguageOverride = languageTag;
-                _localSettings.Values[SettingsValueStrings.UserLanguage] = languageTag;
-            }
-        }
-
-        public double ReadAloudVolume
-        {
-            get => Convert.ToDouble(_localSettings.Values[SettingsValueStrings.ReadAloudVolume] ?? 75d);
-            set => _localSettings.Values[SettingsValueStrings.ReadAloudVolume] = Clamp(value, 0, 100);
-        }
-
-        public string ReadAloudVoiceId
-        {
-            get => _localSettings.Values[SettingsValueStrings.ReadAloudVoice]?.ToString();
-            set => _localSettings.Values[SettingsValueStrings.ReadAloudVoice] = value;
-        }
-
-        public bool TextBoxSolidBackground
-        {
-            get => SettingsValues.whiteTextBackground;
-            set
-            {
-                _localSettings.Values[SettingsValueStrings.TextBoxSolidBackground] = value;
-                Publish(SettingsValueStrings.TextBoxSolidBackground, value);
-            }
-        }
-
-        public bool DialogueModeEnabled
-        {
-            get => SettingsValues.dialogueModeEnabled;
-            set => _localSettings.Values[SettingsValueStrings.DialogueModeEnabled] = value;
-        }
-
-        public void ResetChapterName()
-        {
-            ChapterName = DefaultChapterName;
-        }
-
-        public bool IsUserLanguageSupported() => SettingsValues.IsUserLanguageSupported();
-
-        public bool LanguageTagsMatch(string left, string right) => SettingsValues.LanguageTagsMatch(left, right);
-
-        private void Publish(string settingKey, object value)
-        {
-            _events.Publish(new SettingChangedEvent
-            {
-                SettingKey = settingKey,
-                Value = value
-            });
-        }
-
-        private static double Clamp(double value, double min, double max)
-        {
-            if (value < min)
-                return min;
-
-            if (value > max)
-                return max;
-
-            return value;
-        }
+        return value;
     }
 }

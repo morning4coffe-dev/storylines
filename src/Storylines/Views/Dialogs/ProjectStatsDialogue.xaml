@@ -1,11 +1,10 @@
-<ContentDialog x:Class="Storylines.Views.Dialogs.ProjectStatsDialogue"
+<dialogs:AppContentDialog x:Class="Storylines.Views.Dialogs.ProjectStatsDialogue"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-               xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
+               xmlns:dialogs="using:Storylines.Views.Dialogs"
                mc:Ignorable="d"
-               Closed="ContentDialog_Closed"
                CornerRadius="8">
 
     <Grid Margin="4, 0"                
@@ -60,16 +59,16 @@
                                    LineHeight="24"
                                    FontSize="13">N/A</TextBlock>
                     </Grid>
-                    <muxc:Expander HorizontalAlignment="Stretch"
+                    <Expander HorizontalAlignment="Stretch"
                                    HorizontalContentAlignment="Stretch"
                                    IsExpanded="False"
                                    Padding="0">
-                        <muxc:Expander.Header>
+                        <Expander.Header>
                             <TextBlock x:Uid="wordDistribution"
                                        FontSize="13"
                                        Opacity="0.8" />
-                        </muxc:Expander.Header>
-                        <muxc:Expander.Content>
+                        </Expander.Header>
+                        <Expander.Content>
                             <TextBox x:Name="wordDistributionTextBox"
                                      HorizontalAlignment="Stretch"
                                      MaxHeight="200"
@@ -78,8 +77,8 @@
                                      ScrollViewer.VerticalScrollBarVisibility="Auto"
                                      ScrollViewer.HorizontalScrollBarVisibility="Auto"
                                      Text="N/A" />
-                        </muxc:Expander.Content>
-                    </muxc:Expander>
+                        </Expander.Content>
+                    </Expander>
                 </StackPanel>
 
                 <!-- Story overview -->
@@ -166,5 +165,5 @@
             </StackPanel>
         </ScrollViewer>
     </Grid>
-</ContentDialog>
+</dialogs:AppContentDialog>
 

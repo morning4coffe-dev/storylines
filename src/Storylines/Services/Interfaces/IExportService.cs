@@ -1,12 +1,6 @@
-using Microsoft.UI.Xaml.Controls;
-using Storylines.Models;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Windows.Storage;
 
-namespace Storylines.Services.Interfaces
-{
+namespace Storylines.Services.Interfaces;
+
     public sealed class ExportRequest
     {
         public ExportTarget Target { get; set; }
@@ -18,6 +12,9 @@ namespace Storylines.Services.Interfaces
         public IReadOnlyList<string> CharacterTokens { get; set; } = Array.Empty<string>();
         public IReadOnlyList<string> DialogueCharacterTokens { get; set; } = Array.Empty<string>();
         public bool IncludeChapterName { get; set; }
+#if PRIVATE_PLUGINS
+        public object Graph { get; set; }
+#endif
     }
 
     public sealed class ExportOperationResult
@@ -44,5 +41,7 @@ namespace Storylines.Services.Interfaces
         IReadOnlyList<ExportCapabilityDefinition> GetCapabilities();
         ExportCapabilityDefinition GetCapability(ExportTarget target);
         Task<ExportOperationResult> ExportAsync(ExportRequest request);
+#if PRIVATE_PLUGINS
+        BranchingDialogueGraphData ImportBranchingDialogueJson(string json);
+#endif
     }
-}

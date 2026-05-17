@@ -14,11 +14,11 @@
           <source>This update is required and some features may stay limited until it finishes installing.</source>
           <target state="translated">Это обновление обязательно, и некоторые функции могут быть ограничены, пока установка не завершится.</target>
         </trans-unit>
-        <trans-unit id="storeUpdateInstallNow.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateInstallNow" translate="yes" xml:space="preserve">
           <source>Install now</source>
           <target state="translated">Установить сейчас</target>
         </trans-unit>
-        <trans-unit id="storeUpdateLater.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="storeUpdateLater" translate="yes" xml:space="preserve">
           <source>Later</source>
           <target state="translated">Позже</target>
         </trans-unit>
@@ -70,19 +70,19 @@
           <source>to download it.</source>
           <target state="translated">для загрузки.</target>
         </trans-unit>
-        <trans-unit id="reviewDialog.Text" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialog" translate="yes" xml:space="preserve">
           <source>Are you enjoying this app? Please consider leaving a review on Microsoft Store.</source>
           <target state="translated">Вам нравится это приложение? Пожалуйста, оставьте отзыв в Microsoft Store.</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption1.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption1" translate="yes" xml:space="preserve">
           <source>Rate now</source>
           <target state="translated">Оценить</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption2.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption2" translate="yes" xml:space="preserve">
           <source>Not now</source>
           <target state="translated">Не сейчас</target>
         </trans-unit>
-        <trans-unit id="reviewDialogOption3.Content" translate="yes" xml:space="preserve">
+        <trans-unit id="reviewDialogOption3" translate="yes" xml:space="preserve">
           <source>Never show again</source>
           <target state="translated">Не показывать снова</target>
         </trans-unit>
@@ -137,6 +137,30 @@
         <trans-unit id="dictation.Label" translate="yes" xml:space="preserve">
           <source>Dictation</source>
           <target state="translated">Голосовой ввод</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedStatus" translate="yes" xml:space="preserve">
+          <source>Microphone access denied.</source>
+          <target state="translated">Доступ к микрофону запрещен.</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedTitle" translate="yes" xml:space="preserve">
+          <source>Microphone access denied</source>
+          <target state="translated">Доступ к микрофону запрещен</target>
+        </trans-unit>
+        <trans-unit id="dictationPermissionDeniedMessage" translate="yes" xml:space="preserve">
+          <source>Grant microphone access in Windows Settings to use dictation.</source>
+          <target state="translated">Разрешите доступ к микрофону в параметрах Windows, чтобы использовать диктовку.</target>
+        </trans-unit>
+        <trans-unit id="dictationUnsupportedStatus" translate="yes" xml:space="preserve">
+          <source>Dictation is not available on this device.</source>
+          <target state="translated">Диктовка недоступна на этом устройстве.</target>
+        </trans-unit>
+        <trans-unit id="dictationErrorStatus" translate="yes" xml:space="preserve">
+          <source>Dictation error.</source>
+          <target state="translated">Ошибка диктовки.</target>
+        </trans-unit>
+        <trans-unit id="dictationListeningStatus" translate="yes" xml:space="preserve">
+          <source>Listening…</source>
+          <target state="translated">Слушаю…</target>
         </trans-unit>
         <trans-unit id="edit.Label" translate="yes" xml:space="preserve">
           <source>Edit</source>
@@ -629,7 +653,7 @@ Did you want to exit without saving your progress?</source>
           <source>Find one</source>
           <target state="translated">Найти</target>
         </trans-unit>
-        <trans-unit id="experience.Title" translate="yes" xml:space="preserve">
+        <trans-unit id="experience" translate="yes" xml:space="preserve">
           <source>Tell us about your experience</source>
           <target state="translated">Расскажите о своем опыте</target>
         </trans-unit>

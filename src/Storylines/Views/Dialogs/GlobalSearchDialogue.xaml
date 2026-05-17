@@ -1,8 +1,9 @@
-<ContentDialog x:Class="Storylines.Views.Dialogs.GlobalSearchDialogue"
+<dialogs:AppContentDialog x:Class="Storylines.Views.Dialogs.GlobalSearchDialogue"
                xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
                xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
                xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+               xmlns:dialogs="using:Storylines.Views.Dialogs"
                mc:Ignorable="d"
                x:Uid="globalSearchDialogue"
                DefaultButton="Primary"
@@ -13,22 +14,22 @@
                  x:Uid="globalSearchBox"
                  TextChanged="OnSearchBox_TextChanged" />
 
-        <TextBlock x:Name="resultsCountText"
-                   FontSize="12"
-                   Opacity="0.6" />
-
         <ListView x:Name="resultsListView"
                   MaxHeight="350"
                   SelectionMode="Single"
                   IsItemClickEnabled="True"
-                  ItemClick="OnResultItem_Click">
+                  ItemClick="OnResultItem_Click"
+                  ItemsSource="{x:Bind ViewModel.Results, Mode=OneWay}">
             <ListView.ItemTemplate>
                 <DataTemplate>
-                    <StackPanel Margin="0,4">
-                        <TextBlock Text="{Binding ChapterName}"
+                    <StackPanel Margin="0,4"
+                                Spacing="4"
+                                Opacity="{Binding RowOpacity}">
+                        <TextBlock Text="{Binding Title}"
                                    FontWeight="SemiBold"
                                    FontSize="13" />
-                        <TextBlock Text="{Binding MatchPreview}"
+                        <TextBlock Text="{Binding Description}"
+                                   Visibility="{Binding DescriptionVisibility}"
                                    FontSize="12"
                                    Opacity="0.75"
                                    TextWrapping="WrapWholeWords"
@@ -41,8 +42,8 @@
 
         <TextBlock x:Name="noResultsText"
                    x:Uid="globalSearchNoResults"
-                   Visibility="Collapsed"
+                   Visibility="{x:Bind ViewModel.NoResultsVisibility, Mode=OneWay}"
                    Opacity="0.5"
                    HorizontalAlignment="Center" />
     </StackPanel>
-</ContentDialog>
+</dialogs:AppContentDialog>

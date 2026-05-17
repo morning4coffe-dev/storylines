@@ -3,8 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:muxc="using:Microsoft.UI.Xaml.Controls"
-             xmlns:animations="using:Microsoft.Toolkit.Uwp.UI.Animations"
+             xmlns:animations="using:CommunityToolkit.WinUI.Animations"
              xmlns:components="using:Storylines.Views.Controls"
              xmlns:variables="using:Storylines.Models"
              mc:Ignorable="d"
@@ -426,9 +425,9 @@
                                       LostFocus="OnTextBox_LostFocus"
                                       PointerWheelChanged="OnTextBox_PointerWheelChanged"
                                       Tapped="OnTextBoxRectangle_Tapped">
-                <RichEditBox.HandwritingView>
+                <!--<RichEditBox.HandwritingView>
                     <HandwritingView PlacementAlignment="Auto" />
-                </RichEditBox.HandwritingView>
+                </RichEditBox.HandwritingView>-->
             </components:MyRichEditBox>
         </ScrollViewer>
 
@@ -486,14 +485,14 @@
         </Popup>
 
         <!-- Teaching tip shown on first dialogue mode activation -->
-        <muxc:TeachingTip x:Name="dialogueTeachingTip"
+        <TeachingTip x:Name="dialogueTeachingTip"
                           x:Uid="dialogueTeachingTip"
                           PreferredPlacement="Bottom"
                           IsLightDismissEnabled="True">
-            <muxc:TeachingTip.IconSource>
-                <muxc:FontIconSource Glyph="&#xE8BD;" />
-            </muxc:TeachingTip.IconSource>
-        </muxc:TeachingTip>
+            <TeachingTip.IconSource>
+                <FontIconSource Glyph="&#xE8BD;" />
+            </TeachingTip.IconSource>
+        </TeachingTip>
 
         <Rectangle x:Name="textBoxRectangle"
                    x:FieldModifier="public"

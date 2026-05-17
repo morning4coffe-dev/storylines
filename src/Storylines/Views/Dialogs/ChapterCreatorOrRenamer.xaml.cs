@@ -1,113 +1,77 @@
 using Storylines.Views.Pages;
-using Storylines.Models;
-using System;
-using Windows.ApplicationModel.Resources;
-using Windows.UI.Xaml;
-using Windows.UI.Xaml.Controls;
-using Windows.UI.Xaml.Input;
-using Storylines.Services;
 
-namespace Storylines.Views.Dialogs
+namespace Storylines.Views.Dialogs;
+
+public sealed partial class ChapterCreatorOrRenamer : AppContentDialog
 {
-    public sealed partial class ChapterCreatorOrRenamer : ContentDialog
+    public enum DialogTask { Create, Rename }
+
+    private readonly Chapter _chapterToRename;
+    private readonly bool _doubleTapped;
+    private readonly DialogTask _currentTask;
+
+    public ChapterCreatorOrRenamer(Chapter chapterToRename, bool doubleTapped)
     {
-        public static ChapterCreatorOrRenamer chapterCreator;
+        this.InitializeComponent();
+        CloseOnOutsideTap = true;
+        _chapterToRename = chapterToRename;
+        _doubleTapped = doubleTapped;
+        _currentTask = chapterToRename is null ? DialogTask.Create : DialogTask.Rename;
+    }
 
-        public enum Task { Create, Rename };
-        public static Task currentTask = Task.Create;
+    public static void Open(Chapter chapter, bool doubleTap)
+    {
+        _ = OpenAsync(chapter, doubleTap);
+    }
 
-        public static Chapter chapterToRename;
+    public static Task<ContentDialogResult> OpenAsync(Chapter chapter, bool doubleTap)
+    {
+        return App.GetService<IDialogService>().ShowAsync(new ChapterCreatorOrRenamer(chapter, doubleTap));
+    }
 
-        private static bool doubleTapped;
-
-        public ChapterCreatorOrRenamer()
+    private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
+    {
+        switch (_currentTask)
         {
-            this.InitializeComponent();
-            chapterCreator = this;
-
-            InitializeClickOutToClose();
-
-            AppView.currentlyOpenedDialogue = chapterCreator;
-            chapterCreator.RequestedTheme = AppView.current.ActualTheme;
+            case DialogTask.Create:
+                titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueCreate");
+                break;
+            case DialogTask.Rename:
+                titleText.Text = ResourceLoader.GetForViewIndependentUse().GetString("chapterDialogueRename");
+                chapterNameBox.Text = _chapterToRename.Name;
+                break;
         }
+    }
 
-        public static void Open(Chapter chapter, bool doubleTap)
+    private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
+    {
+        var chapterWorkflow = App.GetService<Storylines.Services.Interfaces.IChapterWorkflowService>();
+
+        switch (_currentTask)
         {
-            if (chapter != null)
-            {
-                currentTask = Task.Rename;
-                chapterToRename = chapter;
-            }
-            else
-                currentTask = Task.Create;
-
-            doubleTapped = doubleTap;
-            _ = new ChapterCreatorOrRenamer().ShowAsync();
+            case DialogTask.Create:
+                chapterWorkflow.CreateChapterFromInput(chapterNameBox.Text);
+                break;
+            case DialogTask.Rename:
+                chapterWorkflow.RenameChapter(_chapterToRename.Token, chapterNameBox.Text);
+                break;
         }
+        Hide();
+    }
 
-        private void ContentDialog_Opened(ContentDialog sender, ContentDialogOpenedEventArgs args)
-        {
-            switch (currentTask)
-            {
-                case Task.Create:
-                    titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueCreate");
-                    break;
-                case Task.Rename:
-                    titleText.Text = ResourceLoader.GetForCurrentView().GetString("chapterDialogueRename");
-                    chapterNameBox.Text = chapterToRename.Name;
-                    break;
-            }
-        }
+    private void OnCancelButton_Click(object sender, RoutedEventArgs e)
+    {
+        Hide();
+    }
 
-        private void OnSubmitButton_Click(object sender, RoutedEventArgs e)
-        {
-            var chapterWorkflow = App.GetService<Storylines.Services.Interfaces.IChapterWorkflowService>();
+    private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
+    {
+        if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
+            OnSubmitButton_Click(sender, new RoutedEventArgs());
+    }
 
-            switch (currentTask)
-            {
-                case Task.Create:
-                    chapterWorkflow.CreateChapterFromInput(chapterNameBox.Text);
-                    break;
-                case Task.Rename:
-                    chapterWorkflow.RenameChapter(chapterToRename.Token, chapterNameBox.Text);
-                    break;
-            }
-            chapterCreator.Hide();
-        }
-
-        private void OnCancelButton_Click(object sender, RoutedEventArgs e)
-        {
-            chapterCreator.Hide();
-        }
-
-        private void ContentDialog_KeyDown(object sender, KeyRoutedEventArgs e)
-        {
-            if (e.Key == Windows.System.VirtualKey.Enter && submitButton.IsEnabled)
-                OnSubmitButton_Click(sender, new RoutedEventArgs());
-        }
-
-        private void ContentDialog_Closed(ContentDialog sender, ContentDialogClosedEventArgs args)
-        {
-            Window.Current.CoreWindow.PointerPressed -= OnWindowPointerPressed;
-            AppView.currentlyOpenedDialogue = null;
-
-            if (ReferenceEquals(chapterCreator, this))
-                chapterCreator = null;
-        }
-
-        bool isHide = true;
-        private void InitializeClickOutToClose()
-        {
-            Window.Current.CoreWindow.PointerPressed += OnWindowPointerPressed;
-
-            PointerExited += (s, e) => isHide = true;
-            PointerEntered += (s, e) => isHide = false;
-        }
-
-        private void OnWindowPointerPressed(Windows.UI.Core.CoreWindow sender, Windows.UI.Core.PointerEventArgs args)
-        {
-            if (isHide && !doubleTapped)
-                Hide();
-        }
+    protected override bool CanCloseOnOutsideTap()
+    {
+        return !_doubleTapped;
     }
 }

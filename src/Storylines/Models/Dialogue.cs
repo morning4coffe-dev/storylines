@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text.RegularExpressions;
 
 namespace Storylines.Models
 {
@@ -41,11 +37,10 @@ namespace Storylines.Models
         /// <returns>A list of legacy structured dialogue snippets.</returns>
         public static List<string> GetInText(string txt)
         {
-            return LegacyStructuredDialogueRegex
+            return [.. LegacyStructuredDialogueRegex
                 .Matches(txt ?? string.Empty)
                 .Cast<Match>()
-                .Select(match => match.Value)
-                .ToList();
+                .Select(match => match.Value)];
         }
 
         /// <summary>
@@ -115,7 +110,7 @@ namespace Storylines.Models
         {
             var dialogues = new List<Dialogue>();
 
-            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+            if (string.IsNullOrWhiteSpace(txt) || characterNames is null || characterNames.Count == 0)
                 return dialogues;
 
             var normalizedText = (txt ?? string.Empty).Replace("\r\n", "\n");
@@ -176,7 +171,7 @@ namespace Storylines.Models
         {
             var dialogues = new List<Dialogue>();
 
-            if (string.IsNullOrWhiteSpace(txt) || characterNames == null || characterNames.Count == 0)
+            if (string.IsNullOrWhiteSpace(txt) || characterNames is null || characterNames.Count == 0)
                 return dialogues;
 
             var nameLookup = characterNames.ToDictionary(name => name.ToUpperInvariant(), name => name, StringComparer.OrdinalIgnoreCase);
