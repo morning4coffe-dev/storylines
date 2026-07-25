@@ -28,4 +28,4 @@ jobs:
         run: msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug
 
       - name: Run tests
-        run: dotnet test src/Storylines.Tests/Storylines.Tests.csproj --platform x64 --no-build --verbosity normal
+        run: dotnet test src/Storylines.Tests/Storylines.Tests.csproj --no-build --verbosity normal

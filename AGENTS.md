@@ -38,7 +38,7 @@ msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug /t:Restore
 msbuild src/Storylines.sln /p:Platform=x64 /p:Configuration=Debug
 
 # Run tests
-dotnet test src/Storylines.Tests/Storylines.Tests.csproj --platform x64
+dotnet test src/Storylines.Tests/Storylines.Tests.csproj
 ```
 
 If you are working in the multi-repo private-plugin workspace, prefer `../storylines-dialogue-plugin/scripts/Invoke-StorylinesBuild.ps1` because it resolves `MSBuild.exe` explicitly.
