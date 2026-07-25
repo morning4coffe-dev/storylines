@@ -53,10 +53,23 @@ public partial class App : Application
         var pendingItem = GetActivatedStorageItem(AppInstance.GetCurrent().GetActivatedEventArgs());
         var windowManager = Services.GetRequiredService<IWindowManager>();
         var context = windowManager.CreateDocumentWindow(pendingItem, "OnLaunched");
+#if DEBUG
+        var runApplicationE2E = Testing.ApplicationE2EHook.HasPendingRequest;
+#else
+        const bool runApplicationE2E = false;
+#endif
 
         await windowManager.RunAsync(context, async () =>
         {
-            await ActivateAsync(context, "launch", !hasRecoveryData && pendingItem is null);
+            await ActivateAsync(context, "launch", !runApplicationE2E && !hasRecoveryData && pendingItem is null);
+
+#if DEBUG
+            if (runApplicationE2E)
+            {
+                await Testing.ApplicationE2EHook.RunAsync(context);
+                return;
+            }
+#endif
 
             if (hasRecoveryData)
             {
