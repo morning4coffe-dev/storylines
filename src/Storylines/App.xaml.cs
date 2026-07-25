@@ -282,6 +282,12 @@ public partial class App : Application
 
     private void App_UnhandledException(object sender, Microsoft.UI.Xaml.UnhandledExceptionEventArgs e)
     {
+#if DEBUG
+        var details = e.Exception?.ToString() ?? e.Message;
+        System.IO.File.WriteAllText(
+            System.IO.Path.Combine(System.IO.Path.GetTempPath(), "Storylines-unhandled.txt"),
+            details);
+#endif
         App.TryGetService<ITelemetryService>()?.TrackUnhandledException(e.Exception, e.Message);
 
         e.Handled = true;
