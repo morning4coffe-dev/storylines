@@ -182,8 +182,10 @@ public partial class App : Application
             ThemeSettings.Initialize();
             if (openLoadDialog)
                 GetService<IDialogService>().OpenLoadDialogue();
+#if !DEBUG
             MicrosoftStoreFunctions.InitializeReview();
             ObserveBackgroundOperation(MicrosoftStoreFunctions.CheckForNewUpdateAvailableAsync(), "Failed to check for updates");
+#endif
             context.IsInitialized = true;
         }
 
