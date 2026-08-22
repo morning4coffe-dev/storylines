@@ -1,0 +1,48 @@
+- name: type/bug
+  color: d73a4a
+  description: Something is not working as expected
+- name: type/feature
+  color: a2eeef
+  description: New capability or user-visible enhancement
+- name: type/task
+  color: cfd3d7
+  description: Maintenance, cleanup, or project work
+- name: kind/dependency
+  color: 0366d6
+  description: Dependency update
+- name: kind/documentation
+  color: 0075ca
+  description: Documentation-only change
+- name: kind/security
+  color: b60205
+  description: Security-related change
+- name: area/dotnet
+  color: 512bd4
+  description: .NET, C#, XAML, WinUI, MAUI, or Uno work
+- name: area/js-ts
+  color: f1e05a
+  description: JavaScript or TypeScript work
+- name: area/python
+  color: 3572A5
+  description: Python work
+- name: area/dart
+  color: 00B4AB
+  description: Dart or Flutter work
+- name: area/static-site
+  color: e34c26
+  description: Static website or content work
+- name: priority/p0
+  color: b60205
+  description: Critical and urgent
+- name: priority/p1
+  color: d93f0b
+  description: Important
+- name: priority/p2
+  color: fbca04
+  description: Normal priority
+- name: status/blocked
+  color: 000000
+  description: Blocked by an external dependency or decision
+- name: do-not-merge/work-in-progress
+  color: e99695
+  description: Not ready to merge
